@@ -4,9 +4,9 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>SAVY – Manger intelligent, livré chez vous | الأكل الذكي</title>
-  <meta name="description" content="SAVY – La première livraison de repas sains propulsée par l'IA au Maroc. Casablanca."/>
+  <meta name="description" content="SAVY – La première livraison de repas sains propulsée par l'IA au Maroc. Tétouan."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=DM+Sans:wght@400;500;600;700&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Syne:wght@700;800;900&family=DM+Sans:wght@400;500;600;700&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet"/>
   <style>
     :root {
       --bg:       #EEF7F3;
@@ -42,7 +42,7 @@
     .su4{ animation:slideUp .55s .3s ease both; }
 
     /* ── FONTS ── */
-    .fh { font-family:'Syne',sans-serif; }
+    .fh { font-family:'Cormorant Garamond','Syne',serif; letter-spacing:0.01em; }
     .far{ font-family:'Tajawal',sans-serif; }
     .fb { font-family:'DM Sans',sans-serif; }
 
@@ -103,7 +103,7 @@
     }
     .city-dot { width:7px; height:7px; border-radius:50%; background:var(--green); display:inline-block; animation:pulse 1.5s infinite; }
     .city-badge span.label { color:var(--green); font-size:12px; font-weight:700; }
-    h1.hero-title { font-size:clamp(36px,5.5vw,62px); font-weight:900; line-height:1.1; color:var(--text); margin-bottom:18px; }
+    h1.hero-title { font-size:clamp(42px,6vw,72px); font-weight:700; line-height:1.08; color:var(--text); margin-bottom:18px; }
     h1.hero-title .accent { color:var(--green); }
     .hero-sub { font-size:16px; line-height:1.8; color:var(--sub); max-width:480px; margin-bottom:32px; }
     .email-wrap { display:flex; gap:10px; max-width:490px; flex-wrap:wrap; margin-bottom:10px; }
@@ -142,7 +142,7 @@
     /* ── STEPS ── */
     #how { padding:72px clamp(16px,4vw,56px); background:#fff; border-top:1px solid var(--border); }
     .section-header { text-align:center; margin-bottom:48px; }
-    .section-title { font-family:'Syne',sans-serif; font-size:clamp(26px,4vw,40px); font-weight:900; color:var(--text); margin-bottom:10px; }
+    .section-title { font-family:'Cormorant Garamond',serif; font-size:clamp(30px,4.5vw,48px); font-weight:700; color:var(--text); margin-bottom:10px; letter-spacing:0.01em; }
     .title-bar { width:48px; height:4px; background:var(--green); border-radius:99px; margin:0 auto; }
     .steps-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; max-width:1100px; margin:0 auto; }
     .step-card { background:#fff; border-radius:20px; padding:24px 20px; box-shadow:var(--shadow); border:1px solid var(--border); transition:all .2s; }
@@ -555,7 +555,7 @@ let submitted  = false;
 ═══════════════════════════════════════════ */
 const copy = {
   fr:{
-    city:"🇲🇦 Casablanca · Bientôt",
+    city:"🇲🇦 Tétouan · Bientôt",
     tagline:"La livraison de repas sains propulsée par l'IA",
     h1:'Mangez mieux,<br><span class="accent">livré chez vous.</span>',
     sub:"SAVY conçoit votre repas selon vos objectifs nutritionnels, cuisinés avec des saveurs locales et internationales. 45 minutes. Frais garanti.",
@@ -589,7 +589,7 @@ const copy = {
     chips:["Inscrits","Livraison","Note"],
   },
   ar:{
-    city:"🇲🇦 الدار البيضاء · قريباً",
+    city:"🇲🇦 تطوان · قريباً",
     tagline:"توصيل الطعام الصحي بالذكاء الاصطناعي",
     h1:'توقف عن تناول<br><span class="accent">الوجبات "العشوائية". صمم وجبتك بذكاء.</span>',
     sub:'في SAVY، لا نؤمن بوجبة واحدة تناسب الجميع. شيف الذكاء الاصطناعي الخاص بنا يقوم بحساب كل جرام من البروتين والكربوهيدرات ليتناسب مع أهدافك أنت فقط.',
@@ -634,7 +634,7 @@ function setLang(l){
   document.body.dir = l==="ar" ? "rtl" : "ltr";
   const t = copy[l];
   const isAr = l==="ar";
-  const ff = isAr ? "font-family:'Tajawal',sans-serif;" : "font-family:'Syne',sans-serif;";
+  const ff = isAr ? "font-family:'Tajawal',sans-serif;" : "font-family:'Cormorant Garamond',serif;font-weight:700;";
   const fb = isAr ? "font-family:'Tajawal',sans-serif;" : "";
 
   // Nav
