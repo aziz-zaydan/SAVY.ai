@@ -1,6 +1,6 @@
 # 🤖 SAVY — Smart Healthy Food Delivery | توصيل الطعام الصحي بالذكاء الاصطناعي
 
-**SAVY** is an AI-powered healthy food delivery app launching in Casablanca, Morocco.
+**SAVY** is an AI-powered healthy food delivery app launching in Tetouan, Morocco.
 
 🌐 **Live site:** [savy-maroc.netlify.app](https://savy-maroc.netlify.app)
 
