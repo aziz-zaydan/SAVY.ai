@@ -200,3 +200,136 @@
 
   <section id="hero">
     <div class="hero-inner">
+      <div class="hero-left">
+        <span class="hero-tag" data-t="tag">Bientôt à Tétouan 🚀</span>
+        <h1 class="hero-title" data-t="title">Manger intelligent,<br>livré chez vous.</h1>
+        <p class="hero-sub" data-t="sub">SAVY utilise l'IA pour composer des repas sains adaptés à vos objectifs. Frais, local, et sans effort.</p>
+        
+        <div class="email-wrap">
+          <input type="email" class="email-inp" placeholder="Email..." id="email-field">
+          <button class="btn-cta" onclick="subscribe()">
+            <span data-t="cta">Rejoindre la liste</span>
+          </button>
+        </div>
+      </div>
+      
+      <div class="hero-right">
+        <div class="robot-float">
+          <svg width="240" height="240" viewBox="0 0 200 200">
+            <circle cx="100" cy="100" r="90" fill="#DFF0E9"/>
+            <rect x="60" y="70" width="80" height="60" rx="20" fill="#008060"/>
+            <circle cx="85" cy="95" r="6" fill="#fff">
+              <animate attributeName="opacity" values="1;0.2;1" dur="3s" infinite />
+            </circle>
+            <circle cx="115" cy="95" r="6" fill="#fff">
+              <animate attributeName="opacity" values="1;0.2;1" dur="3s" infinite />
+            </circle>
+            <path d="M85 110 Q100 120 115 110" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="menu">
+    <div class="section-head">
+      <h2 data-t="menu_title" style="font-family:Syne; font-size:40px; margin-bottom:10px;">Explorez le Menu</h2>
+      <p data-t="menu_sub" style="color:var(--sub)">Des plats validés par nos nutritionnistes.</p>
+    </div>
+
+    <div class="filter-row" id="filters">
+      <div class="f-pill active" onclick="filterMenu('all')">All</div>
+      <div class="f-pill" onclick="filterMenu('protein')">High Protein</div>
+      <div class="f-pill" onclick="filterMenu('vegan')">Vegan</div>
+      <div class="f-pill" onclick="filterMenu('keto')">Keto</div>
+    </div>
+
+    <div class="menu-grid" id="menu-container">
+      </div>
+
+    <div class="agent-box">
+      <div id="inline-msgs">
+        <div class="bot-m"><strong>SAVY AI:</strong> Salam! Je suis votre chef intelligent. Quel est votre objectif aujourd'hui ? (Perte de poids, Muscle, Énergie)</div>
+      </div>
+      <div class="agent-input-wrap">
+        <input type="text" id="ai-input" placeholder="Parlez à SAVY...">
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const translations = {
+      fr: {
+        tag: "Bientôt à Tétouan 🚀",
+        title: "Manger intelligent,<br>livré chez vous.",
+        sub: "SAVY utilise l'IA pour composer des repas sains adaptés à vos objectifs. Frais, local, et sans effort.",
+        cta: "Rejoindre la liste",
+        menu_title: "Explorez le Menu",
+        menu_sub: "Des plats validés par nos nutritionnistes.",
+        menu: "Menu", concept: "Concept"
+      },
+      ar: {
+        tag: "قريباً في تطوان 🚀",
+        title: "كول ذكي،<br>يوصلك تال الدار.",
+        sub: "سافي كايستعمل الذكاء الاصطناعي باش يوجّد ليك ماكلة صحية على حساب أهدافك. طريّة، محليّة، وبلا تمارة.",
+        cta: "تسجل دابا",
+        menu_title: "شوف المنيو ديالنا",
+        menu_sub: "أطباق مصاوبة من طرف خبراء التغذية.",
+        menu: "المنيو", concept: "فكرة سافي"
+      }
+    };
+
+    let currentLang = 'fr';
+
+    function toggleLang() {
+      currentLang = currentLang === 'fr' ? 'ar' : 'fr';
+      document.body.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+      document.getElementById('lang-toggle').textContent = currentLang === 'fr' ? 'العربية 🇲🇦' : 'Français 🇫🇷';
+      
+      document.querySelectorAll('[data-t]').forEach(el => {
+        const key = el.getAttribute('data-t');
+        el.innerHTML = translations[currentLang][key];
+      });
+      renderMenu();
+    }
+
+    const dishes = [
+      { id: 1, name: "Salmon Zen Bowl", desc: "Saumon grillé, quinoa, avocat.", type: "protein", emoji: "🍱" },
+      { id: 2, name: "Tofu Power", desc: "Tofu mariné, brocoli, riz complet.", type: "vegan", emoji: "🥗" },
+      { id: 3, name: "Keto Steak", desc: "Boeuf, beurre aux herbes, asperges.", type: "keto", emoji: "🥩" },
+      { id: 4, name: "Green Detox", desc: "Kale, pomme, noix, sauce citron.", type: "vegan", emoji: "🥬" }
+    ];
+
+    function renderMenu(filter = 'all') {
+      const container = document.getElementById('menu-container');
+      container.innerHTML = dishes
+        .filter(d => filter === 'all' || d.type === filter)
+        .map(d => `
+          <div class="dish-card">
+            <div class="dish-emoji">${d.emoji}</div>
+            <div class="dish-info">
+              <div class="dish-name">${d.name}</div>
+              <div class="dish-desc">${d.desc}</div>
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        `).join('');
+    }
+
+    function filterMenu(type) {
+      document.querySelectorAll('.f-pill').forEach(p => p.classList.remove('active'));
+      event.target.classList.add('active');
+      renderMenu(type);
+    }
+
+    function subscribe() {
+      const email = document.getElementById('email-field').value;
+      if(email) {
+        alert(currentLang === 'fr' ? "Merci! Vous êtes sur la liste." : "شكرا! تم تسجيلك بنجاح.");
+      }
+    }
+
+    renderMenu();
+  </script>
+</body>
+</html>
