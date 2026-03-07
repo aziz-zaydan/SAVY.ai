@@ -4,7 +4,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>SAVY – Manger intelligent, livré chez vous | الأكل الذكي</title>
-  <meta name="description" content="SAVY – La première livraison de repas sains propulsée par l'IA au Maroc. Tétouan."/>
+  <meta name="description" content="SAVY – La première livraison de repas sains propulsée par l'IA au Maroc. Tétouan, M'diq, Martil — Bientôt."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Syne:wght@700;800;900&family=DM+Sans:wght@400;500;600;700&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet"/>
   <style>
@@ -310,6 +310,26 @@
   </div>
 </nav>
 
+<!-- ══ LAUNCH BANNER ══ -->
+<div id="launch-banner" style="
+  background: var(--green);
+  color: #fff;
+  text-align: center;
+  padding: 10px 16px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+">
+  <span style="animation: pulse 1.5s infinite; display:inline-block; width:8px; height:8px; border-radius:50%; background:#4ade80;"></span>
+  <span id="banner-text">🚀 SAVY arrive bientôt à Tétouan, M'diq, Martil & toute la région — Rejoignez la liste avant le lancement !</span>
+</div>
+
 <!-- ══ HERO ════════════════════════════════════════════ -->
 <section id="hero">
   <div class="dot-grid"></div>
@@ -317,26 +337,103 @@
 
     <!-- Left -->
     <div>
+      <!-- 1. City badge -->
       <div class="city-badge su">
         <span class="city-dot"></span>
-        <span class="label" id="hero-city">🇲🇦 Casablanca · Bientôt</span>
+        <span class="label" id="hero-city">🇲🇦 Tétouan · M'diq · Martil — Bientôt</span>
       </div>
 
       <p class="fb su" id="hero-tagline"
-        style="color:var(--muted);font-size:12px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px;">
+        style="color:var(--muted);font-size:12px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:16px;">
         La livraison de repas sains propulsée par l'IA
       </p>
 
-      <h1 class="hero-title fh su2" id="hero-h1">
+      <!-- 2. SAVY AGENT — right after city/tagline, before title+email -->
+      <div class="su2" style="margin-bottom:24px;max-width:500px;">
+
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+          <div style="width:40px;height:40px;border-radius:13px;background:var(--green);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 14px rgba(0,128,96,0.3);">
+            <svg width="24" height="24" viewBox="0 0 80 80" fill="none">
+              <ellipse cx="40" cy="21" rx="13" ry="5" fill="white" opacity=".9"/>
+              <rect x="27" y="16" width="26" height="14" rx="4" fill="white" opacity=".9"/>
+              <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="white"/>
+              <rect x="26" y="28" width="28" height="20" rx="9" fill="white"/>
+              <circle cx="34" cy="37" r="3.2" fill="#008060"/>
+              <circle cx="46" cy="37" r="3.2" fill="#008060"/>
+              <rect x="28" y="50" width="24" height="18" rx="5" fill="white"/>
+              <text x="40" y="63" text-anchor="middle" font-size="9" font-weight="900" fill="#008060" font-family="system-ui">A</text>
+            </svg>
+          </div>
+          <div style="flex:1;">
+            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:15px;color:var(--text);">SAVY</div>
+            <div style="font-size:11px;color:var(--muted);font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:5px;">
+              <span style="width:6px;height:6px;border-radius:50%;background:#4ade80;display:inline-block;animation:pulse 1.5s infinite;"></span>
+              <span id="inline-status">En ligne · Composez votre repas idéal</span>
+            </div>
+          </div>
+          <button onclick="resetInlineAgent()" title="Recommencer" style="background:var(--greenXL);border:1px solid var(--border);color:var(--green);width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .2s;" onmouseover="this.style.background='var(--mint)'" onmouseout="this.style.background='var(--greenXL)'">↺</button>
+        </div>
+
+        <div id="inline-msgs" style="
+          background:#fff;border-radius:18px;border:1.5px solid var(--border);
+          padding:14px;min-height:90px;max-height:200px;overflow-y:auto;
+          display:flex;flex-direction:column;gap:10px;
+          box-shadow:var(--shadow);scroll-behavior:smooth;margin-bottom:8px;
+        "></div>
+
+        <div id="inline-qr" style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:8px;"></div>
+
+        <div id="inline-input-area" style="display:flex;gap:8px;">
+          <input id="inline-input" placeholder="Répondez à SAVY..." style="
+            flex:1;padding:11px 15px;border-radius:13px;
+            border:1.5px solid var(--border);font-size:13px;
+            outline:none;font-family:'DM Sans',sans-serif;color:var(--text);
+            background:var(--bg);transition:border-color .2s;
+          " onkeydown="if(event.key==='Enter') inlineSend()"
+          onfocus="this.style.borderColor='var(--green)';this.style.background='#fff'"
+          onblur="this.style.borderColor='var(--border)';this.style.background='var(--bg)'"/>
+          <button onclick="inlineSend()" id="inline-send" style="
+            width:40px;height:40px;border-radius:13px;border:none;
+            background:var(--green);color:#fff;cursor:pointer;
+            display:flex;align-items:center;justify-content:center;
+            box-shadow:0 4px 12px rgba(0,128,96,0.3);transition:all .2s;flex-shrink:0;
+          " onmouseover="this.style.background='var(--greenL)'" onmouseout="this.style.background='var(--green)'">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/></svg>
+          </button>
+        </div>
+
+        <div id="inline-email-area" style="display:none;margin-top:8px;">
+          <div style="display:flex;gap:8px;">
+            <input id="inline-email" type="email" placeholder="votre@email.com" style="
+              flex:1;padding:11px 15px;border-radius:13px;
+              border:1.5px solid var(--green);font-size:13px;
+              outline:none;font-family:'DM Sans',sans-serif;color:var(--text);background:#fff;
+            "/>
+            <button onclick="inlineSaveMeal()" id="inline-save-btn" style="
+              padding:11px 16px;border-radius:13px;border:none;
+              background:var(--green);color:#fff;font-size:13px;font-weight:700;
+              cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;
+              box-shadow:0 4px 12px rgba(0,128,96,0.3);
+            ">Réserver 🔒</button>
+          </div>
+          <p id="inline-email-note" style="font-size:11px;color:var(--muted);font-family:'DM Sans',sans-serif;margin-top:6px;">
+            🎁 Votre repas sera sauvegardé + 20% de réduction au lancement
+          </p>
+        </div>
+      </div>
+
+      <!-- 3. H1 Title -->
+      <h1 class="hero-title fh su3" id="hero-h1">
         Mangez mieux,<br>
         <span class="accent">livré chez vous.</span>
       </h1>
 
+      <!-- 4. Description -->
       <p class="hero-sub fb su3" id="hero-sub">
         SAVY conçoit votre repas selon vos objectifs nutritionnels, cuisinés avec des saveurs locales et internationales. 45 minutes. Frais garanti.
       </p>
 
-      <!-- Email form -->
+      <!-- 5. Email form -->
       <div id="form-area" class="su4">
         <div class="email-wrap">
           <input class="email-inp" id="email-hero" type="email"
@@ -367,6 +464,7 @@
           <div class="proof-stars">⭐⭐⭐⭐⭐</div>
         </div>
       </div>
+
     </div>
 
     <!-- Right -->
@@ -394,6 +492,147 @@
         <div class="chip"><div style="font-size:16px">👥</div><div class="chip-val">312+</div><div class="chip-lbl fb" id="chip-inscrits">Inscrits</div></div>
         <div class="chip"><div style="font-size:16px">⚡</div><div class="chip-val">45min</div><div class="chip-lbl fb" id="chip-livraison">Livraison</div></div>
         <div class="chip"><div style="font-size:16px">⭐</div><div class="chip-val">4.9★</div><div class="chip-lbl fb" id="chip-note">Note</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ AI CHEF AGENT SECTION ══════════════════════════════ -->
+<section id="ai-section" style="padding:72px clamp(16px,4vw,56px); background:var(--bg); border-top:1px solid var(--border);">
+  <div style="max-width:960px; margin:0 auto;">
+
+    <!-- Section header -->
+    <div style="text-align:center; margin-bottom:48px;">
+      <div style="display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:99px;background:var(--greenXL);border:1px solid var(--border);margin-bottom:16px;">
+        <span style="width:7px;height:7px;border-radius:50%;background:var(--green);display:inline-block;animation:pulse 1.5s infinite;"></span>
+        <span style="color:var(--green);font-size:12px;font-weight:700;font-family:'DM Sans',sans-serif;" id="agent-section-badge">En ligne maintenant</span>
+      </div>
+      <h2 class="section-title fh" id="agent-section-title">Parlez à SAVY — votre chef IA</h2>
+      <p style="color:var(--sub);font-size:15px;font-family:'DM Sans',sans-serif;margin-top:8px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.7;" id="agent-section-sub">
+        Décrivez vos objectifs. SAVY compose votre repas parfait en temps réel — personnalisé, sain, et livré bientôt à Tétouan.
+      </p>
+      <div class="title-bar" style="margin-top:14px;"></div>
+    </div>
+
+    <!-- Main agent card — two columns on desktop -->
+    <div style="display:grid;grid-template-columns:1fr 1.6fr;gap:32px;align-items:start;">
+
+      <!-- Left: SAVY identity card -->
+      <div style="background:#fff;border-radius:24px;padding:28px;border:1px solid var(--border);box-shadow:var(--shadow);text-align:center;">
+        <!-- Animated robot -->
+        <div style="animation:float 3.5s ease-in-out infinite;display:inline-block;margin-bottom:16px;filter:drop-shadow(0 8px 24px rgba(0,128,96,0.2));">
+          <svg width="100" height="100" viewBox="0 0 80 80" fill="none">
+            <rect width="80" height="80" rx="20" fill="#008060"/>
+            <ellipse cx="40" cy="21" rx="13" ry="5" fill="white" opacity=".9"/>
+            <rect x="27" y="16" width="26" height="14" rx="4" fill="white" opacity=".9"/>
+            <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="white"/>
+            <rect x="26" y="28" width="28" height="20" rx="9" fill="white"/>
+            <circle cx="34" cy="37" r="3.2" fill="#008060"/>
+            <circle cx="46" cy="37" r="3.2" fill="#008060"/>
+            <circle cx="35" cy="36" r="1.2" fill="white" opacity=".6"/>
+            <circle cx="47" cy="36" r="1.2" fill="white" opacity=".6"/>
+            <rect x="28" y="50" width="24" height="18" rx="5" fill="white"/>
+            <text x="40" y="63" text-anchor="middle" font-size="9" font-weight="900" fill="#008060" font-family="system-ui">A</text>
+            <circle cx="19" cy="58" r="5" fill="white" opacity=".9"/>
+            <line x1="24" y1="56" x2="28" y2="55" stroke="white" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="61" cy="58" r="5" fill="white" opacity=".9"/>
+            <line x1="56" y1="56" x2="52" y2="55" stroke="white" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div style="font-family:'Cormorant Garamond',serif;font-weight:700;font-size:22px;color:var(--text);margin-bottom:4px;">SAVY</div>
+        <div style="font-family:'DM Sans',sans-serif;font-size:12px;color:var(--muted);margin-bottom:20px;" id="savy-role">Chef IA Personnalisé 🤖</div>
+
+        <!-- Capabilities -->
+        <div style="display:flex;flex-direction:column;gap:10px;text-align:left;">
+          <div id="cap-list"></div>
+        </div>
+
+        <!-- Stats row -->
+        <div style="display:flex;gap:8px;margin-top:20px;justify-content:center;">
+          <div style="flex:1;padding:10px 6px;background:var(--greenXL);border-radius:12px;text-align:center;">
+            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:16px;color:var(--green);">100%</div>
+            <div style="font-size:10px;color:var(--muted);font-family:'DM Sans',sans-serif;" id="cap-s1">Personnalisé</div>
+          </div>
+          <div style="flex:1;padding:10px 6px;background:var(--greenXL);border-radius:12px;text-align:center;">
+            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:16px;color:var(--green);">⚡</div>
+            <div style="font-size:10px;color:var(--muted);font-family:'DM Sans',sans-serif;" id="cap-s2">Instantané</div>
+          </div>
+          <div style="flex:1;padding:10px 6px;background:var(--greenXL);border-radius:12px;text-align:center;">
+            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:16px;color:var(--green);">🆓</div>
+            <div style="font-size:10px;color:var(--muted);font-family:'DM Sans',sans-serif;" id="cap-s3">Gratuit</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Chat interface -->
+      <div style="background:#fff;border-radius:24px;border:1px solid var(--border);box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column;">
+
+        <!-- Chat header -->
+        <div style="background:var(--green);padding:14px 18px;display:flex;align-items:center;gap:10px;">
+          <div style="width:34px;height:34px;border-radius:11px;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="20" height="20" viewBox="0 0 80 80" fill="none">
+              <ellipse cx="40" cy="21" rx="13" ry="5" fill="white" opacity=".9"/>
+              <rect x="27" y="16" width="26" height="14" rx="4" fill="white" opacity=".9"/>
+              <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="white"/>
+              <rect x="26" y="28" width="28" height="20" rx="9" fill="white"/>
+              <circle cx="34" cy="37" r="3.2" fill="#008060"/><circle cx="46" cy="37" r="3.2" fill="#008060"/>
+              <rect x="28" y="50" width="24" height="18" rx="5" fill="white"/>
+            </svg>
+          </div>
+          <div style="flex:1;">
+            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:14px;color:#fff;">SAVY</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.75);display:flex;align-items:center;gap:5px;font-family:'DM Sans',sans-serif;">
+              <span style="width:6px;height:6px;border-radius:50%;background:#4ade80;animation:pulse 1.5s infinite;display:inline-block;"></span>
+              <span id="inline-status">En ligne · Prêt à composer votre repas</span>
+            </div>
+          </div>
+          <button onclick="resetInlineAgent()" title="Recommencer" style="background:rgba(255,255,255,0.15);border:none;color:#fff;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:background .2s;" onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'">↺</button>
+        </div>
+
+        <!-- Messages -->
+        <div id="inline-msgs" style="padding:16px;min-height:200px;max-height:340px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;scroll-behavior:smooth;background:#fafffe;"></div>
+
+        <!-- Quick replies -->
+        <div id="inline-qr" style="padding:0 14px 8px;display:flex;gap:8px;flex-wrap:wrap;background:#fafffe;"></div>
+
+        <!-- Input -->
+        <div id="inline-input-area" style="padding:12px 14px;border-top:1px solid var(--border);display:flex;gap:8px;background:#fff;">
+          <input id="inline-input" placeholder="Répondez à SAVY..." style="
+            flex:1;padding:11px 15px;border-radius:13px;
+            border:1.5px solid var(--border);font-size:13px;
+            outline:none;font-family:'DM Sans',sans-serif;color:var(--text);
+            background:var(--bg);transition:border-color .2s;
+          " onkeydown="if(event.key==='Enter') inlineSend()"
+          onfocus="this.style.borderColor='var(--green)';this.style.background='#fff'"
+          onblur="this.style.borderColor='var(--border)';this.style.background='var(--bg)'"/>
+          <button onclick="inlineSend()" id="inline-send" style="
+            width:40px;height:40px;border-radius:13px;border:none;
+            background:var(--green);color:#fff;cursor:pointer;
+            display:flex;align-items:center;justify-content:center;
+            box-shadow:0 4px 12px rgba(0,128,96,0.3);transition:all .2s;flex-shrink:0;
+          " onmouseover="this.style.background='var(--greenL)'" onmouseout="this.style.background='var(--green)'">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/></svg>
+          </button>
+        </div>
+
+        <!-- Email capture -->
+        <div id="inline-email-area" style="display:none;padding:12px 14px;border-top:1px solid var(--border);background:var(--greenXL);">
+          <div style="display:flex;gap:8px;">
+            <input id="inline-email" type="email" placeholder="votre@email.com" style="
+              flex:1;padding:11px 15px;border-radius:13px;
+              border:1.5px solid var(--green);font-size:13px;
+              outline:none;font-family:'DM Sans',sans-serif;color:var(--text);background:#fff;
+            "/>
+            <button onclick="inlineSaveMeal()" id="inline-save-btn" style="
+              padding:11px 16px;border-radius:13px;border:none;
+              background:var(--green);color:#fff;font-size:13px;font-weight:700;
+              cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;
+            ">Réserver 🔒</button>
+          </div>
+          <p id="inline-email-note" style="font-size:11px;color:var(--sub);font-family:'DM Sans',sans-serif;margin-top:6px;">
+            🎁 Votre repas sera sauvegardé + 20% de réduction au lancement
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -500,7 +739,7 @@
     <span>SAVY</span>
     <span style="color:var(--muted);font-size:12px;font-family:'DM Sans',sans-serif;" id="footer-loc">· 🇲🇦 Maroc</span>
   </div>
-  <p class="fb" id="footer-copy">© 2025 SAVY · L'alimentation saine par l'IA au Maroc</p>
+  <p class="fb" id="footer-copy">© 2025 SAVY · Tétouan, M'diq & Martil · L'alimentation saine par l'IA</p>
   <div class="footer-links">
     <a href="#" class="nav-link fb" style="font-size:11px;" id="fl-1">Confidentialité</a>
     <a href="#" class="nav-link fb" style="font-size:11px;" id="fl-2">Conditions</a>
@@ -513,22 +752,28 @@
    DATA
 ═══════════════════════════════════════════ */
 const dishes = [
-  {id:1, e:"🍆",name:"Zaalouk Bowl",       ar:"طاجين الزعلوك", cal:340,p:12,c:44,t:20,r:4.8,tag:"Vegan",       badge:"",           cuis:"🇲🇦",f:"vegan"},
-  {id:2, e:"🫘",name:"Bissara Soup",        ar:"بيصارة",         cal:260,p:14,c:38,t:15,r:4.7,tag:"Vegan",       badge:"Best Seller",cuis:"🇲🇦",f:"vegan"},
-  {id:3, e:"🐟",name:"Chermoula Salmon",   ar:"سمك بالشرمولة", cal:480,p:44,c:22,t:25,r:4.9,tag:"High Protein",badge:"Chef's Pick",cuis:"🇲🇦",f:"high-protein"},
-  {id:4, e:"🍗",name:"Poulet M'Charmel",   ar:"دجاج معمر",      cal:420,p:38,c:28,t:30,r:4.8,tag:"High Protein",badge:"",           cuis:"🇲🇦",f:"high-protein"},
-  {id:5, e:"🥗",name:"Quinoa Poke Bowl",   ar:"بوكي بول كينوا",cal:410,p:22,c:52,t:15,r:4.9,tag:"Vegan",       badge:"Trending",   cuis:"🌏",f:"vegan"},
-  {id:6, e:"🍜",name:"Miso Ramen Léger",   ar:"رامن ميسو",      cal:360,p:18,c:42,t:20,r:4.7,tag:"Low Carb",    badge:"",           cuis:"🌏",f:"low-carb"},
-  {id:7, e:"🥟",name:"Gyoza Poulet",       ar:"جيوزا دجاج",     cal:310,p:26,c:32,t:20,r:4.6,tag:"High Protein",badge:"New",        cuis:"🌏",f:"high-protein"},
-  {id:8, e:"🍱",name:"Buddha Bowl Thaï",   ar:"بوذا بول تايلندي",cal:390,p:20,c:50,t:18,r:4.8,tag:"Vegan",    badge:"",           cuis:"🌏",f:"vegan"},
-  {id:9, e:"🥙",name:"Wrap Falafel",       ar:"راب فلافل",      cal:370,p:16,c:48,t:15,r:4.7,tag:"Vegan",       badge:"Best Seller",cuis:"🌊",f:"vegan"},
-  {id:10,e:"🐠",name:"Branzino Grillé",    ar:"سمك مشوي",       cal:460,p:42,c:18,t:25,r:4.9,tag:"High Protein",badge:"Chef's Pick",cuis:"🌊",f:"high-protein"},
-  {id:11,e:"🥗",name:"Salade Niçoise",     ar:"سلطة نيسواز",    cal:340,p:28,c:22,t:10,r:4.6,tag:"Low Carb",    badge:"",           cuis:"🌊",f:"low-carb"},
-  {id:12,e:"🫙",name:"Greek Yogurt Bowl",  ar:"يوغرت يوناني",   cal:290,p:18,c:34,t:5, r:4.8,tag:"Gluten-Free",badge:"",           cuis:"🌊",f:"gluten-free"},
-  {id:13,e:"🌯",name:"Burrito Bowl",       ar:"بوريتو بول",     cal:440,p:36,c:48,t:20,r:4.7,tag:"High Protein",badge:"Trending",   cuis:"🌎",f:"high-protein"},
-  {id:14,e:"🫐",name:"Açaí Power Bowl",    ar:"بول أساي",       cal:300,p:12,c:44,t:10,r:4.8,tag:"Vegan",       badge:"",           cuis:"🌎",f:"vegan"},
-  {id:15,e:"🥑",name:"Avocado Toast Boost",ar:"توست أفوكادو",   cal:350,p:14,c:38,t:8, r:4.6,tag:"Vegan",       badge:"",           cuis:"🌎",f:"vegan"},
-  {id:16,e:"🥩",name:"Smash Burger Léger", ar:"برغر صحي",       cal:490,p:40,c:36,t:25,r:4.7,tag:"High Protein",badge:"New",        cuis:"🌎",f:"high-protein"},
+  // 🇲🇦 Moroccan — healthy traditional
+  {id:1,  e:"🥣", name:"Bissara Detox Bowl",      ar:"بيصارة ديتوكس",        cal:210,p:14,c:28,t:15,r:4.9,tag:"Vegan",        badge:"Best Seller", cuis:"🇲🇦",f:"vegan"},
+  {id:2,  e:"🍆", name:"Zaalouk & Quinoa",         ar:"زعلوك مع الكينوا",      cal:290,p:13,c:38,t:20,r:4.8,tag:"Vegan",        badge:"",            cuis:"🇲🇦",f:"vegan"},
+  {id:3,  e:"🐟", name:"Chermoula Salmon Fit",     ar:"سمك شرمولة فيت",       cal:380,p:44,c:12,t:25,r:4.9,tag:"High Protein",  badge:"Chef's Pick", cuis:"🇲🇦",f:"high-protein"},
+  {id:4,  e:"🍗", name:"Poulet Citron Confit",     ar:"دجاج بالحامض المعصر",  cal:320,p:40,c:14,t:30,r:4.8,tag:"High Protein",  badge:"",            cuis:"🇲🇦",f:"high-protein"},
+  {id:5,  e:"🌿", name:"Harira Légère",            ar:"حريرة خفيفة",          cal:180,p:10,c:26,t:20,r:4.7,tag:"Low Carb",      badge:"Ramadan ❤️",  cuis:"🇲🇦",f:"low-carb"},
+  {id:6,  e:"🥗", name:"Taktouka Fraîche",         ar:"تقطوعة طازجة",         cal:160,p:6, c:22,t:10,r:4.6,tag:"Gluten-Free",   badge:"",            cuis:"🇲🇦",f:"gluten-free"},
+  // 🌏 Asian — clean & light
+  {id:7,  e:"🥗", name:"Poke Bowl Saumon",         ar:"بوكي بول السلمون",     cal:390,p:32,c:36,t:15,r:4.9,tag:"High Protein",  badge:"Trending",    cuis:"🌏",f:"high-protein"},
+  {id:8,  e:"🍜", name:"Bouillon Miso & Légumes",  ar:"مرق ميسو بالخضر",      cal:140,p:9, c:18,t:12,r:4.7,tag:"Low Carb",      badge:"",            cuis:"🌏",f:"low-carb"},
+  {id:9,  e:"🍱", name:"Buddha Bowl Thaï",         ar:"بوذا بول تايلندي",     cal:360,p:18,c:44,t:18,r:4.8,tag:"Vegan",        badge:"",            cuis:"🌏",f:"vegan"},
+  {id:10, e:"🥬", name:"Salade Wakame Grillée",    ar:"سلطة واكامي مشوية",    cal:120,p:8, c:10,t:10,r:4.6,tag:"Gluten-Free",   badge:"New",         cuis:"🌏",f:"gluten-free"},
+  // 🌊 Mediterranean — fresh & balanced
+  {id:11, e:"🥙", name:"Wrap Falafel Complet",     ar:"راب فلافل كامل",       cal:310,p:14,c:42,t:15,r:4.7,tag:"Vegan",        badge:"Best Seller", cuis:"🌊",f:"vegan"},
+  {id:12, e:"🐠", name:"Branzino & Légumes Rôtis", ar:"سمك مشوي بالخضر",     cal:370,p:42,c:12,t:25,r:4.9,tag:"High Protein",  badge:"Chef's Pick", cuis:"🌊",f:"high-protein"},
+  {id:13, e:"🥗", name:"Salade Grecque Protéinée", ar:"سلطة يونانية بروتينية",cal:280,p:22,c:16,t:10,r:4.7,tag:"Low Carb",      badge:"",            cuis:"🌊",f:"low-carb"},
+  {id:14, e:"🫙", name:"Yaourt Grec & Grenade",    ar:"يوغرت يوناني بالرمان", cal:190,p:16,c:22,t:5, r:4.8,tag:"Gluten-Free",   badge:"",            cuis:"🌊",f:"gluten-free"},
+  // 🌎 Healthy International
+  {id:15, e:"🌯", name:"Burrito Bowl Quinoa",      ar:"بوريتو بول كينوا",     cal:420,p:34,c:46,t:20,r:4.7,tag:"High Protein",  badge:"Trending",    cuis:"🌎",f:"high-protein"},
+  {id:16, e:"🫐", name:"Açaí & Chia Bowl",         ar:"بول أساي وشيا",        cal:260,p:10,c:38,t:10,r:4.8,tag:"Vegan",        badge:"Superfood",   cuis:"🌎",f:"vegan"},
+  {id:17, e:"🥑", name:"Avocado Egg Power Toast",  ar:"توست أفوكادو وبيض",    cal:310,p:18,c:28,t:8, r:4.7,tag:"Gluten-Free",   badge:"",            cuis:"🌎",f:"gluten-free"},
+  {id:18, e:"🥦", name:"Green Detox Bowl",         ar:"بول ديتوكس أخضر",      cal:180,p:12,c:20,t:12,r:4.6,tag:"Low Carb",      badge:"New",         cuis:"🌎",f:"low-carb"},
 ];
 
 const cuisineTabs = [
@@ -555,7 +800,7 @@ let submitted  = false;
 ═══════════════════════════════════════════ */
 const copy = {
   fr:{
-    city:"🇲🇦 Tétouan · Bientôt",
+    city:"🇲🇦 Tétouan · M'diq · Martil — Bientôt",
     tagline:"La livraison de repas sains propulsée par l'IA",
     h1:'Mangez mieux,<br><span class="accent">livré chez vous.</span>',
     sub:"SAVY conçoit votre repas selon vos objectifs nutritionnels, cuisinés avec des saveurs locales et internationales. 45 minutes. Frais garanti.",
@@ -584,12 +829,12 @@ const copy = {
     finalSub:"Les membres fondateurs bénéficient de 30% de réduction sur leur première commande.",
     finalNote:"🔒 Aucun spam · Désabonnement libre",
     finalOk:"🎉 Vous êtes sur la liste !",
-    footerCopy:"© 2025 SAVY · L'alimentation saine par l'IA au Maroc",
+    footerCopy:"© 2025 SAVY · Tétouan, M'diq & Martil · L'alimentation saine par l'IA",
     fl:["Confidentialité","Conditions","Contact"],
     chips:["Inscrits","Livraison","Note"],
   },
   ar:{
-    city:"🇲🇦 تطوان · قريباً",
+    city:"🇲🇦 تطوان · مضيق · مرتيل — قريباً",
     tagline:"توصيل الطعام الصحي بالذكاء الاصطناعي",
     h1:'توقف عن تناول<br><span class="accent">الوجبات "العشوائية". صمم وجبتك بذكاء.</span>',
     sub:'في SAVY، لا نؤمن بوجبة واحدة تناسب الجميع. شيف الذكاء الاصطناعي الخاص بنا يقوم بحساب كل جرام من البروتين والكربوهيدرات ليتناسب مع أهدافك أنت فقط.',
@@ -619,7 +864,7 @@ const copy = {
     finalSub:"سجّل بريدك الآن واحصل على خصم 20% عند الافتتاح. وجبتك الذكية في انتظارك.",
     finalNote:"🔒 لا إزعاج · يمكن إلغاء الاشتراك في أي وقت",
     finalOk:"🎉 أنت في القائمة!",
-    footerCopy:"© 2025 SAVY · الأكل الصحي بالذكاء الاصطناعي في المغرب",
+    footerCopy:"© 2025 SAVY · تطوان، مضيق، مرتيل · الأكل الصحي بالذكاء الاصطناعي",
     fl:["الخصوصية","الشروط","تواصل"],
     chips:["مشترك","توصيل","تقييم"],
   }
@@ -636,6 +881,12 @@ function setLang(l){
   const isAr = l==="ar";
   const ff = isAr ? "font-family:'Tajawal',sans-serif;" : "font-family:'Cormorant Garamond',serif;font-weight:700;";
   const fb = isAr ? "font-family:'Tajawal',sans-serif;" : "";
+
+  // Banner
+  document.getElementById("banner-text").textContent = isAr
+    ? "🚀 SAVY قادمة قريباً إلى تطوان، مضيق، مرتيل وكل المنطقة — انضم للقائمة قبل الإطلاق!"
+    : "🚀 SAVY arrive bientôt à Tétouan, M'diq, Martil & toute la région — Rejoignez la liste avant le lancement !";
+  patchInlineLang(l);
 
   // Nav
   document.querySelectorAll(".lang-btn").forEach((b,i)=>b.classList.toggle("active", (i===0&&l==="fr")||(i===1&&l==="ar")));
@@ -911,6 +1162,309 @@ window.addEventListener("scroll",()=>{
   document.getElementById("navbar").style.boxShadow =
     window.scrollY>40 ? "0 2px 20px rgba(0,128,96,0.1)" : "none";
 });
+/* ═══════════════════════════════════════════
+   INLINE AI AGENT
+═══════════════════════════════════════════ */
+let inlineHistory = [];
+let inlineMealDone = false;
+let inlineMeal = null;
+
+function getInlineSystem() {
+  const isDarija = lang === "ar";
+  return `You are SAVY — the AI chef and soul of SAVY, a healthy food delivery app launching soon in Tétouan, Morocco (also serving M'diq and Martil).
+
+${isDarija ? `⚠️ ABSOLUTE RULE: You MUST speak MOROCCAN DARIJA in EVERY message. Never formal Arabic. Never French. Even if the visitor writes French or formal Arabic — you ALWAYS reply in Darija. This is your identity. Examples: "salam", "wach bghiti", "safi", "mzyan", "daba", "smiytek", "kayn", "bessah", "3la", "b", "f", "mn", "7it", "9leb", "9der", "nhar", "gha", "walo", "waaat", "3tini", "nchof", "7jez". Use franco-arab (latin letters + numbers) freely.` : `⚠️ ABSOLUTE RULE: Always speak French. Warm, natural, conversational French.`}
+
+━━━ WHO YOU ARE ━━━
+Your name is SAVY. You are not a chatbot — you are a real character: a passionate Moroccan chef powered by AI. You care deeply about health and you love your culture.
+
+About SAVY (share naturally when there's an opening — never forced, max 1-2 sentences):
+- SAVY = Smart + Savvy + the Moroccan word "سوّى / sawwa" (to cook)
+- Founded by a Moroccan chef who believes healthy food should taste incredible, not boring
+- Every dish is designed by AI to match YOUR exact goals — calories, protein, taste
+- Launching soon in Tétouan, M'diq, Martil — because the north deserves better food 🇲🇦
+- Mission: make eating healthy as easy as ordering pizza
+
+━━━ CONVERSATION FLOW ━━━
+One message at a time. 2-3 sentences max. Build suspense.
+
+Step 1 — Greet as SAVY, ask name:
+${isDarija ? `Darija: "Salam! 👋 Ana SAVY 🤖 — chef dyalek b l-intelligence artificielle. Kan9der n9lb lik wajba s7iya mzyana, m9issa 3lik b la précision. Smiytek ch'no? 😊"` : `French: "Bonjour ! 👋 Je suis SAVY 🤖 — votre chef IA personnel. Je compose des repas sains sur-mesure pour vous. Comment vous appelez-vous ? 😊"`}
+
+Step 2 — Ask health goal:
+${isDarija ? `"Chno l-but dyalek? Bghiti: t7ed weight / tbni muscle / 3endek energy ktar / takol s7i w barak?"` : `"Votre objectif : perdre du poids / prendre du muscle / plus d'énergie / manger sainement ?"`}
+
+Step 3 — Ask food preference (viande/poisson/végétarien/allergie). If natural opening exists, mention 1 sentence about SAVY.
+
+Step 4 — Ask calorie level:
+${isDarija ? `"Bghiti chi haja: khfifa (- 450 kcal) / m3tedla (450-600 kcal) / boost kbir (600+)?"` : `"Niveau calorique : léger (-450 kcal) / équilibré (450-600) / boost (600+) ?"`}
+
+Step 5 — Build suspense: ${isDarija ? `"Daba kan9lb lik l-wajba dyalek...⚡"` : `"Je compose votre repas...⚡"`} then output the meal in EXACTLY this format:
+NOM: [creative healthy meal name in French]
+EMOJI: [one food emoji]
+CAL: [number] kcal
+PROTÉINES: [number]g
+GLUCIDES: [number]g
+DESCRIPTION: [mouth-watering sentence ${isDarija ? "in Darija" : "in French"}]
+
+Step 6 — Suspense message:
+${isDarija ? `"L-wajba dyalek waaat 🔒 SAVY gha tla3 f Tétouan, M'diq w Martil — khelli l-email dyalek bsh n9yed lik iyah nhar l-launch! 🇲🇦"` : `"Votre repas est prêt mais verrouillé 🔒 — SAVY arrive bientôt à Tétouan. Laissez votre email pour que je le garde rien que pour vous !"`}
+
+━━━ HARD RULES ━━━
+- ${isDarija ? "ALWAYS DARIJA. Never formal Arabic (فصحى). Never French. Non-negotiable." : "ALWAYS FRENCH. Non-negotiable."}
+- Never reveal the full recipe
+- Never break character — you ARE SAVY`;
+}
+
+
+function resetInlineAgent() {
+  inlineHistory = [];
+  inlineMealDone = false;
+  inlineMeal = null;
+  document.getElementById("inline-msgs").innerHTML = "";
+  document.getElementById("inline-qr").innerHTML = "";
+  document.getElementById("inline-email-area").style.display = "none";
+  document.getElementById("inline-input-area").style.display = "flex";
+  document.getElementById("inline-input").disabled = false;
+  document.getElementById("inline-send").disabled = false;
+  setTimeout(initInlineAgent, 200);
+}
+
+function inlineAddBot(text) {
+  const msgs = document.getElementById("inline-msgs");
+  const typing = document.getElementById("inline-typing");
+  if (typing) typing.remove();
+
+  if (text.includes("NOM:")) {
+    inlineMeal = parseMealCardInline(text);
+    msgs.insertAdjacentHTML("beforeend", inlineMeal.html);
+    setTimeout(() => inlineShowSuspense(), 700);
+  } else {
+    msgs.insertAdjacentHTML("beforeend", `
+      <div style="display:flex;gap:8px;align-items:flex-end;max-width:88%;">
+        <div style="width:26px;height:26px;border-radius:9px;background:var(--greenXL);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;">🤖</div>
+        <div style="padding:10px 13px;border-radius:14px;border-bottom-left-radius:3px;background:var(--greenXL);color:var(--text);font-size:13px;line-height:1.6;font-family:'DM Sans',sans-serif;">${text.replace(/\n/g,"<br>")}</div>
+      </div>`);
+  }
+  inlineHistory.push({ role:"assistant", content:text });
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function parseMealCardInline(text) {
+  const get = (k) => { const m = text.match(new RegExp(k+":\\s*(.+?)(?:\\n|$)")); return m?m[1].trim():""; };
+  const name=get("NOM"), emoji=get("EMOJI")||"🍽️", cal=get("CAL"),
+        prot=get("PROTÉINES")||get("PROTEIN")||"", carbs=get("GLUCIDES")||"", desc=get("DESCRIPTION");
+  inlineMeal = { name, emoji, cal, prot, carbs };
+  return { name, emoji, html:`
+    <div style="border:1.5px solid var(--green);border-radius:16px;padding:14px;background:linear-gradient(135deg,var(--greenXL),#fff);animation:popIn .4s ease;">
+      <div style="font-size:32px;text-align:center;margin-bottom:8px;">${emoji}</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-weight:700;font-size:16px;color:var(--green);margin-bottom:8px;">${name}</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
+        <span style="padding:3px 9px;border-radius:8px;background:#fff;border:1px solid var(--border);font-size:11px;color:var(--sub);font-family:'DM Sans',sans-serif;">🔥 ${cal}</span>
+        <span style="padding:3px 9px;border-radius:8px;background:#fff;border:1px solid var(--border);font-size:11px;color:var(--sub);font-family:'DM Sans',sans-serif;">💪 ${prot}</span>
+        <span style="padding:3px 9px;border-radius:8px;background:#fff;border:1px solid var(--border);font-size:11px;color:var(--sub);font-family:'DM Sans',sans-serif;">🌾 ${carbs}</span>
+      </div>
+      <div style="font-size:12px;color:var(--sub);font-style:italic;font-family:'DM Sans',sans-serif;line-height:1.6;">${desc}</div>
+    </div>` };
+}
+
+function inlineShowSuspense() {
+  const isAr = lang === "ar";
+  const msgs = document.getElementById("inline-msgs");
+  msgs.insertAdjacentHTML("beforeend", `
+    <div style="border-radius:16px;padding:14px;background:linear-gradient(135deg,#001a14,#003322);text-align:center;animation:popIn .5s ease;">
+      <div style="font-size:28px;margin-bottom:8px;">🔒</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-weight:700;font-size:15px;color:#00E896;margin-bottom:6px;">
+        ${isAr ? "L-wajba dyalek waaat... lkn magolhach daba! 👀" : "Votre repas est prêt... mais il est verrouillé !"}
+      </div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.65);font-family:'DM Sans',sans-serif;line-height:1.6;">
+        ${isAr
+          ? "SAVY gha tla3 f Tétouan, M'diq w Martil — khelli l-email dyalek bsh n9yed lik l-wajba nhar l-launch 👇🇲🇦"
+          : "SAVY arrive bientôt à Tétouan, M'diq & Martil. Laissez votre email pour que je garde ce repas rien que pour vous 👇"}
+      </div>
+    </div>`);
+  msgs.scrollTop = msgs.scrollHeight;
+
+  // Show email capture, hide input
+  document.getElementById("inline-email-area").style.display = "block";
+  document.getElementById("inline-input-area").style.display = "none";
+  document.getElementById("inline-qr").innerHTML = "";
+  if (isAr) {
+    document.getElementById("inline-email").placeholder = "email dyalek hna...";
+    document.getElementById("inline-save-btn").textContent = "7jez l-wajba 🔒";
+    document.getElementById("inline-email-note").textContent = "🎁 L-wajba dyalek m7fouza + réduction 20% nhar l-launch";
+  }
+  inlineMealDone = true;
+}
+
+async function inlineSaveMeal() {
+  const email = document.getElementById("inline-email").value.trim();
+  const isAr = lang === "ar";
+  if (!email.includes("@")) {
+    document.getElementById("inline-email").style.borderColor = "#e53935";
+    setTimeout(() => document.getElementById("inline-email").style.borderColor = "var(--green)", 1500);
+    return;
+  }
+  if (MAILCHIMP_URL !== "PASTE_YOUR_MAILCHIMP_URL_HERE") await sendToMailchimp(email);
+  document.getElementById("email-hero").value  = email;
+  document.getElementById("email-final").value = email;
+  showSuccess();
+  document.getElementById("inline-email-area").style.display = "none";
+  const msgs = document.getElementById("inline-msgs");
+  msgs.insertAdjacentHTML("beforeend", `
+    <div style="display:flex;gap:8px;align-items:flex-end;max-width:88%;">
+      <div style="width:26px;height:26px;border-radius:9px;background:var(--green);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;">🤖</div>
+      <div style="padding:10px 13px;border-radius:14px;border-bottom-left-radius:3px;background:var(--green);color:#fff;font-size:13px;line-height:1.6;font-family:'DM Sans',sans-serif;">
+        ${isAr
+          ? `✅ Mzyan bzzaf! ${inlineMeal?.emoji||"🍽️"} L-wajba dyalek m7jouza. Nchofok f Tétouan ! 🚀🇲🇦`
+          : `✅ Parfait ! ${inlineMeal?.emoji||"🍽️"} Votre repas est réservé. À très bientôt à Tétouan ! 🚀🇲🇦`}
+      </div>
+    </div>`);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function inlineAddUser(text) {
+  const msgs = document.getElementById("inline-msgs");
+  msgs.insertAdjacentHTML("beforeend", `
+    <div style="display:flex;justify-content:flex-end;">
+      <div style="padding:10px 13px;border-radius:14px;border-bottom-right-radius:3px;background:var(--green);color:#fff;font-size:13px;line-height:1.6;font-family:'DM Sans',sans-serif;max-width:80%;">${text}</div>
+    </div>`);
+  inlineHistory.push({ role:"user", content:text });
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function inlineShowTyping() {
+  const msgs = document.getElementById("inline-msgs");
+  const old = document.getElementById("inline-typing");
+  if (old) old.remove();
+  msgs.insertAdjacentHTML("beforeend", `
+    <div id="inline-typing" style="display:flex;gap:8px;align-items:flex-end;">
+      <div style="width:26px;height:26px;border-radius:9px;background:var(--greenXL);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;">🤖</div>
+      <div style="padding:10px 14px;border-radius:14px;border-bottom-left-radius:3px;background:var(--greenXL);">
+        <div style="display:flex;gap:4px;">
+          <span style="width:7px;height:7px;border-radius:50%;background:var(--muted);animation:typingDot 1.2s infinite;display:inline-block;"></span>
+          <span style="width:7px;height:7px;border-radius:50%;background:var(--muted);animation:typingDot 1.2s .2s infinite;display:inline-block;"></span>
+          <span style="width:7px;height:7px;border-radius:50%;background:var(--muted);animation:typingDot 1.2s .4s infinite;display:inline-block;"></span>
+        </div>
+      </div>
+    </div>`);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function inlineSetQR(opts) {
+  document.getElementById("inline-qr").innerHTML = opts.map(o =>
+    `<button onclick="inlineQR('${o.replace(/'/g,"\\'")}')" style="
+      padding:7px 14px;border-radius:99px;border:1.5px solid var(--border);
+      background:#fff;color:var(--green);font-size:12px;font-weight:600;
+      cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;
+    " onmouseover="this.style.background='var(--greenXL)';this.style.borderColor='var(--green)'"
+       onmouseout="this.style.background='#fff';this.style.borderColor='var(--border)'">${o}</button>`
+  ).join("");
+}
+
+function inlineQR(text) {
+  document.getElementById("inline-qr").innerHTML = "";
+  inlineAddUser(text);
+  inlineCallAI();
+}
+
+function inlineSend() {
+  const inp = document.getElementById("inline-input");
+  const text = inp.value.trim();
+  if (!text) return;
+  inp.value = "";
+  document.getElementById("inline-qr").innerHTML = "";
+  inlineAddUser(text);
+  inlineCallAI();
+}
+
+async function inlineCallAI() {
+  const send = document.getElementById("inline-send");
+  const inp  = document.getElementById("inline-input");
+  send.disabled = true; inp.disabled = true;
+  document.getElementById("inline-status").textContent = lang==="ar" ? "يفكر..." : "En train de réfléchir...";
+  inlineShowTyping();
+  try {
+    const res = await fetch("https://api.anthropic.com/v1/messages", {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({
+        model:"claude-sonnet-4-20250514",
+        max_tokens:400,
+        system: getInlineSystem(),
+        messages: inlineHistory.filter(m=>m.role!=="system")
+      })
+    });
+    const data = await res.json();
+    const reply = data.content?.[0]?.text || (lang==="ar"?"عذراً، حدث خطأ.":"Désolé, une erreur s'est produite.");
+    inlineAddBot(reply);
+    document.getElementById("inline-status").textContent = lang==="ar" ? "متصل · جاهز" : "En ligne · Prêt";
+  } catch(e) {
+    const t = document.getElementById("inline-typing");
+    if(t) t.remove();
+    inlineAddBot(lang==="ar" ? "عذراً، تحقق من اتصالك بالإنترنت 🙏" : "Désolé, vérifiez votre connexion 🙏");
+  }
+  send.disabled = false; inp.disabled = false; inp.focus();
+}
+
+function initInlineAgent() {
+  inlineHistory = [];
+  inlineMealDone = false;
+  const isAr = lang === "ar";
+  const greeting = isAr
+    ? "Salam! 👋 Ana SAVY 🤖 — chef dyalek b l-intelligence artificielle. Kan9der n9lb lik wajba s7iya mzyana, m9issa 3lik nta/nti b la précision. Smiytek ch'no? 😊"
+    : "Bonjour ! 👋 Je suis SAVY 🤖 — votre chef IA personnel. Je compose des repas sains sur-mesure, calibrés exactement pour vous. Comment vous appelez-vous ? 😊";
+  inlineAddBot(greeting);
+  inlineSetQR(isAr
+    ? ["3tini chi ma3louma 3la SAVY", "Nbda daba 🚀"]
+    : ["En savoir plus sur SAVY", "Commencer maintenant 🚀"]);
+}
+
+function renderCapList() {
+  const isAr = lang === "ar";
+  const caps = isAr
+    ? ["🎯 Kay fhem l-ahdaf s7iya dyalek","🧠 Kay 7seb macro b la précision","🌍 Recipes s7iya mn partout f dnia","🔒 L-wajba dyalek tantsenna nhar l-launch"]
+    : ["🎯 Comprend vos objectifs santé","🧠 Calcule vos macros exactement","🌍 Recettes saines du monde entier","🔒 Votre repas vous attend au lancement"];
+  document.getElementById("cap-list").innerHTML = caps.map(c => `
+    <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);">
+      <span style="font-size:14px;">${c.slice(0,2)}</span>
+      <span style="font-size:12px;color:var(--sub);font-family:'DM Sans',sans-serif;">${c.slice(2).trim()}</span>
+    </div>`).join("");
+  // Section labels
+  const isArEl = document.getElementById("agent-section-badge");
+  if(isArEl) isArEl.textContent = isAr ? "متصل الآن" : "En ligne maintenant";
+  const title = document.getElementById("agent-section-title");
+  if(title) { title.textContent = isAr ? "تحدث مع SAVY — شيفك الذكي" : "Parlez à SAVY — votre chef IA"; title.style.fontFamily = isAr ? "'Tajawal',sans-serif" : "'Cormorant Garamond',serif"; }
+  const sub = document.getElementById("agent-section-sub");
+  if(sub) sub.textContent = isAr ? "أخبر SAVY عن أهدافك. سيصمم لك وجبتك المثالية الصحية في الوقت الفعلي — مخصصة، طازجة، وتصل قريباً إلى تطوان." : "Décrivez vos objectifs. SAVY compose votre repas parfait en temps réel — personnalisé, sain, et livré bientôt à Tétouan.";
+  const role = document.getElementById("savy-role");
+  if(role) role.textContent = isAr ? "شيف ذكاء اصطناعي شخصي 🤖" : "Chef IA Personnalisé 🤖";
+  const s1=document.getElementById("cap-s1"), s2=document.getElementById("cap-s2"), s3=document.getElementById("cap-s3");
+  if(s1) s1.textContent=isAr?"مخصص":"Personnalisé";
+  if(s2) s2.textContent=isAr?"فوري":"Instantané";
+  if(s3) s3.textContent=isAr?"مجاني":"Gratuit";
+}
+
+// also update inline agent language on lang switch
+const _origSetLang = setLang;
+// patch setLang to also update inline titles
+function patchInlineLang(l) {
+  const isAr = l === "ar";
+  const inlineStatus = document.getElementById("inline-status");
+  const inlineInput  = document.getElementById("inline-input");
+  if (inlineStatus) inlineStatus.textContent = isAr ? "Connecté · Wahed chef AI f Tétouan 🇲🇦" : "En ligne · Prêt à composer votre repas";
+  if (inlineInput)  inlineInput.placeholder  = isAr ? "Jaweb SAVY hna..." : "Répondez à SAVY...";
+  renderCapList();
+}
+
+// Call init on load
+window.addEventListener("DOMContentLoaded", () => { setTimeout(initInlineAgent, 400); renderCapList(); });
+
+// Typing animation keyframe (add dynamically)
+const styleTag = document.createElement("style");
+styleTag.textContent = `@keyframes typingDot { 0%,60%,100%{transform:translateY(0);opacity:.5} 30%{transform:translateY(-6px);opacity:1} }`;
+document.head.appendChild(styleTag);
+
 </script>
 </body>
 </html>
