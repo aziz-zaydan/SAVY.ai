@@ -1,0 +1,81 @@
+/* ── RESPONSIVE IMPROVEMENTS ── */
+@media(max-width: 760px) {
+  /* Navbar Adjustments */
+  #navbar {
+    height: auto;
+    padding: 10px 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+  .nav-links { display: none; } /* Keeps links hidden for simplicity on mobile */
+  
+  /* Hero Section Adjustments */
+  #hero {
+    padding: 40px 16px;
+    text-align: center;
+  }
+  .hero-inner {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  
+  /* Show and Scale Hero Illustration */
+  .hero-right {
+    display: flex; /* Changed from none to show the robot */
+    order: -1; /* Puts the robot above the text on mobile */
+  }
+  .robot-float svg {
+    width: 120px;
+    height: 120px;
+  }
+
+  /* Text & Form Adjustments */
+  h1.hero-title {
+    font-size: 36px;
+    line-height: 1.2;
+  }
+  .hero-sub {
+    margin: 0 auto 24px;
+  }
+  .email-wrap {
+    flex-direction: column;
+    width: 100%;
+  }
+  .email-inp {
+    width: 100%;
+    min-width: unset;
+  }
+  .btn-cta {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Grid Adjustments */
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .stat-card {
+    padding: 16px 10px;
+  }
+  
+  /* Chat Agent Box */
+  #inline-msgs {
+    max-height: 160px;
+  }
+  
+  /* Menu Item Adjustments */
+  .dish-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+  }
+  .dish-macros {
+    justify-content: center;
+  }
+  .dish-macros .meta {
+    margin: 10px 0 0 0;
+    width: 100%;
+  }
+}
