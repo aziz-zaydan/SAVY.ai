@@ -497,155 +497,25 @@
   </div>
 </section>
 
-<!-- ══ AI CHEF AGENT SECTION ══════════════════════════════ -->
-<section id="ai-section" style="padding:72px clamp(16px,4vw,56px); background:var(--bg); border-top:1px solid var(--border);">
-  <div style="max-width:960px; margin:0 auto;">
-
-    <!-- Section header -->
-    <div style="text-align:center; margin-bottom:48px;">
-      <div style="display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:99px;background:var(--greenXL);border:1px solid var(--border);margin-bottom:16px;">
-        <span style="width:7px;height:7px;border-radius:50%;background:var(--green);display:inline-block;animation:pulse 1.5s infinite;"></span>
-        <span style="color:var(--green);font-size:12px;font-weight:700;font-family:'DM Sans',sans-serif;" id="agent-section-badge">En ligne maintenant</span>
-      </div>
-      <h2 class="section-title fh" id="agent-section-title">Parlez à SAVY — votre chef IA</h2>
-      <p style="color:var(--sub);font-size:15px;font-family:'DM Sans',sans-serif;margin-top:8px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.7;" id="agent-section-sub">
-        Décrivez vos objectifs. SAVY compose votre repas parfait en temps réel — personnalisé, sain, et livré bientôt à Tétouan.
-      </p>
-      <div class="title-bar" style="margin-top:14px;"></div>
+<!-- ══ BENEFITS ═══════════════════════════════════════════ -->
+<section id="how" style="padding:72px clamp(16px,4vw,56px); background:#fff; border-top:1px solid var(--border);">
+  <div style="max-width:1100px; margin:0 auto;">
+    <div class="section-header">
+      <h2 class="section-title fh" id="how-title">Ce que SAVY fait pour vous</h2>
+      <p style="color:var(--sub);font-size:15px;font-family:'DM Sans',sans-serif;margin-top:8px;" id="how-sub">Une expérience pensée du début à la fin</p>
+      <div class="title-bar" style="margin-top:10px;"></div>
     </div>
 
-    <!-- Main agent card — two columns on desktop -->
-    <div style="display:grid;grid-template-columns:1fr 1.6fr;gap:32px;align-items:start;">
+    <!-- Big benefit cards row -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-bottom:32px;" id="benefits-grid"></div>
 
-      <!-- Left: SAVY identity card -->
-      <div style="background:#fff;border-radius:24px;padding:28px;border:1px solid var(--border);box-shadow:var(--shadow);text-align:center;">
-        <!-- Animated robot -->
-        <div style="animation:float 3.5s ease-in-out infinite;display:inline-block;margin-bottom:16px;filter:drop-shadow(0 8px 24px rgba(0,128,96,0.2));">
-          <svg width="100" height="100" viewBox="0 0 80 80" fill="none">
-            <rect width="80" height="80" rx="20" fill="#008060"/>
-            <ellipse cx="40" cy="21" rx="13" ry="5" fill="white" opacity=".9"/>
-            <rect x="27" y="16" width="26" height="14" rx="4" fill="white" opacity=".9"/>
-            <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="white"/>
-            <rect x="26" y="28" width="28" height="20" rx="9" fill="white"/>
-            <circle cx="34" cy="37" r="3.2" fill="#008060"/>
-            <circle cx="46" cy="37" r="3.2" fill="#008060"/>
-            <circle cx="35" cy="36" r="1.2" fill="white" opacity=".6"/>
-            <circle cx="47" cy="36" r="1.2" fill="white" opacity=".6"/>
-            <rect x="28" y="50" width="24" height="18" rx="5" fill="white"/>
-            <text x="40" y="63" text-anchor="middle" font-size="9" font-weight="900" fill="#008060" font-family="system-ui">A</text>
-            <circle cx="19" cy="58" r="5" fill="white" opacity=".9"/>
-            <line x1="24" y1="56" x2="28" y2="55" stroke="white" stroke-width="3" stroke-linecap="round"/>
-            <circle cx="61" cy="58" r="5" fill="white" opacity=".9"/>
-            <line x1="56" y1="56" x2="52" y2="55" stroke="white" stroke-width="3" stroke-linecap="round"/>
-          </svg>
-        </div>
-        <div style="font-family:'Cormorant Garamond',serif;font-weight:700;font-size:22px;color:var(--text);margin-bottom:4px;">SAVY</div>
-        <div style="font-family:'DM Sans',sans-serif;font-size:12px;color:var(--muted);margin-bottom:20px;" id="savy-role">Chef IA Personnalisé 🤖</div>
-
-        <!-- Capabilities -->
-        <div style="display:flex;flex-direction:column;gap:10px;text-align:left;">
-          <div id="cap-list"></div>
-        </div>
-
-        <!-- Stats row -->
-        <div style="display:flex;gap:8px;margin-top:20px;justify-content:center;">
-          <div style="flex:1;padding:10px 6px;background:var(--greenXL);border-radius:12px;text-align:center;">
-            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:16px;color:var(--green);">100%</div>
-            <div style="font-size:10px;color:var(--muted);font-family:'DM Sans',sans-serif;" id="cap-s1">Personnalisé</div>
-          </div>
-          <div style="flex:1;padding:10px 6px;background:var(--greenXL);border-radius:12px;text-align:center;">
-            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:16px;color:var(--green);">⚡</div>
-            <div style="font-size:10px;color:var(--muted);font-family:'DM Sans',sans-serif;" id="cap-s2">Instantané</div>
-          </div>
-          <div style="flex:1;padding:10px 6px;background:var(--greenXL);border-radius:12px;text-align:center;">
-            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:16px;color:var(--green);">🆓</div>
-            <div style="font-size:10px;color:var(--muted);font-family:'DM Sans',sans-serif;" id="cap-s3">Gratuit</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Right: Chat interface -->
-      <div style="background:#fff;border-radius:24px;border:1px solid var(--border);box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column;">
-
-        <!-- Chat header -->
-        <div style="background:var(--green);padding:14px 18px;display:flex;align-items:center;gap:10px;">
-          <div style="width:34px;height:34px;border-radius:11px;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-            <svg width="20" height="20" viewBox="0 0 80 80" fill="none">
-              <ellipse cx="40" cy="21" rx="13" ry="5" fill="white" opacity=".9"/>
-              <rect x="27" y="16" width="26" height="14" rx="4" fill="white" opacity=".9"/>
-              <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="white"/>
-              <rect x="26" y="28" width="28" height="20" rx="9" fill="white"/>
-              <circle cx="34" cy="37" r="3.2" fill="#008060"/><circle cx="46" cy="37" r="3.2" fill="#008060"/>
-              <rect x="28" y="50" width="24" height="18" rx="5" fill="white"/>
-            </svg>
-          </div>
-          <div style="flex:1;">
-            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:14px;color:#fff;">SAVY</div>
-            <div style="font-size:11px;color:rgba(255,255,255,0.75);display:flex;align-items:center;gap:5px;font-family:'DM Sans',sans-serif;">
-              <span style="width:6px;height:6px;border-radius:50%;background:#4ade80;animation:pulse 1.5s infinite;display:inline-block;"></span>
-              <span id="inline-status">En ligne · Prêt à composer votre repas</span>
-            </div>
-          </div>
-          <button onclick="resetInlineAgent()" title="Recommencer" style="background:rgba(255,255,255,0.15);border:none;color:#fff;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:background .2s;" onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'">↺</button>
-        </div>
-
-        <!-- Messages -->
-        <div id="inline-msgs" style="padding:16px;min-height:200px;max-height:340px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;scroll-behavior:smooth;background:#fafffe;"></div>
-
-        <!-- Quick replies -->
-        <div id="inline-qr" style="padding:0 14px 8px;display:flex;gap:8px;flex-wrap:wrap;background:#fafffe;"></div>
-
-        <!-- Input -->
-        <div id="inline-input-area" style="padding:12px 14px;border-top:1px solid var(--border);display:flex;gap:8px;background:#fff;">
-          <input id="inline-input" placeholder="Répondez à SAVY..." style="
-            flex:1;padding:11px 15px;border-radius:13px;
-            border:1.5px solid var(--border);font-size:13px;
-            outline:none;font-family:'DM Sans',sans-serif;color:var(--text);
-            background:var(--bg);transition:border-color .2s;
-          " onkeydown="if(event.key==='Enter') inlineSend()"
-          onfocus="this.style.borderColor='var(--green)';this.style.background='#fff'"
-          onblur="this.style.borderColor='var(--border)';this.style.background='var(--bg)'"/>
-          <button onclick="inlineSend()" id="inline-send" style="
-            width:40px;height:40px;border-radius:13px;border:none;
-            background:var(--green);color:#fff;cursor:pointer;
-            display:flex;align-items:center;justify-content:center;
-            box-shadow:0 4px 12px rgba(0,128,96,0.3);transition:all .2s;flex-shrink:0;
-          " onmouseover="this.style.background='var(--greenL)'" onmouseout="this.style.background='var(--green)'">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/></svg>
-          </button>
-        </div>
-
-        <!-- Email capture -->
-        <div id="inline-email-area" style="display:none;padding:12px 14px;border-top:1px solid var(--border);background:var(--greenXL);">
-          <div style="display:flex;gap:8px;">
-            <input id="inline-email" type="email" placeholder="votre@email.com" style="
-              flex:1;padding:11px 15px;border-radius:13px;
-              border:1.5px solid var(--green);font-size:13px;
-              outline:none;font-family:'DM Sans',sans-serif;color:var(--text);background:#fff;
-            "/>
-            <button onclick="inlineSaveMeal()" id="inline-save-btn" style="
-              padding:11px 16px;border-radius:13px;border:none;
-              background:var(--green);color:#fff;font-size:13px;font-weight:700;
-              cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;
-            ">Réserver 🔒</button>
-          </div>
-          <p id="inline-email-note" style="font-size:11px;color:var(--sub);font-family:'DM Sans',sans-serif;margin-top:6px;">
-            🎁 Votre repas sera sauvegardé + 20% de réduction au lancement
-          </p>
-        </div>
-      </div>
+    <!-- Bottom proof strip -->
+    <div style="background:var(--greenXL);border-radius:20px;padding:24px 28px;border:1px solid var(--border);display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between;align-items:center;">
+      <div id="proof-strip-text" style="font-family:'DM Sans',sans-serif;font-size:14px;color:var(--sub);max-width:420px;line-height:1.7;"></div>
+      <button class="btn-cta" onclick="document.getElementById('email-hero').focus();window.scrollTo({top:0,behavior:'smooth'})">
+        <span id="benefits-cta">Rejoindre la liste →</span>
+      </button>
     </div>
-  </div>
-</section>
-
-<!-- ══ HOW IT WORKS ══════════════════════════════════════ -->
-<section id="how">
-  <div class="section-header">
-    <h2 class="section-title fh" id="how-title">Comment ça marche</h2>
-    <div class="title-bar"></div>
-  </div>
-  <div class="steps-grid" id="steps-grid">
-    <!-- Populated by JS -->
   </div>
 </section>
 
@@ -752,36 +622,45 @@
    DATA
 ═══════════════════════════════════════════ */
 const dishes = [
-  // 🇲🇦 Moroccan — healthy traditional
-  {id:1,  e:"🥣", name:"Bissara Detox Bowl",      ar:"بيصارة ديتوكس",        cal:210,p:14,c:28,t:15,r:4.9,tag:"Vegan",        badge:"Best Seller", cuis:"🇲🇦",f:"vegan"},
-  {id:2,  e:"🍆", name:"Zaalouk & Quinoa",         ar:"زعلوك مع الكينوا",      cal:290,p:13,c:38,t:20,r:4.8,tag:"Vegan",        badge:"",            cuis:"🇲🇦",f:"vegan"},
-  {id:3,  e:"🐟", name:"Chermoula Salmon Fit",     ar:"سمك شرمولة فيت",       cal:380,p:44,c:12,t:25,r:4.9,tag:"High Protein",  badge:"Chef's Pick", cuis:"🇲🇦",f:"high-protein"},
-  {id:4,  e:"🍗", name:"Poulet Citron Confit",     ar:"دجاج بالحامض المعصر",  cal:320,p:40,c:14,t:30,r:4.8,tag:"High Protein",  badge:"",            cuis:"🇲🇦",f:"high-protein"},
-  {id:5,  e:"🌿", name:"Harira Légère",            ar:"حريرة خفيفة",          cal:180,p:10,c:26,t:20,r:4.7,tag:"Low Carb",      badge:"Ramadan ❤️",  cuis:"🇲🇦",f:"low-carb"},
-  {id:6,  e:"🥗", name:"Taktouka Fraîche",         ar:"تقطوعة طازجة",         cal:160,p:6, c:22,t:10,r:4.6,tag:"Gluten-Free",   badge:"",            cuis:"🇲🇦",f:"gluten-free"},
-  // 🌏 Asian — clean & light
-  {id:7,  e:"🥗", name:"Poke Bowl Saumon",         ar:"بوكي بول السلمون",     cal:390,p:32,c:36,t:15,r:4.9,tag:"High Protein",  badge:"Trending",    cuis:"🌏",f:"high-protein"},
-  {id:8,  e:"🍜", name:"Bouillon Miso & Légumes",  ar:"مرق ميسو بالخضر",      cal:140,p:9, c:18,t:12,r:4.7,tag:"Low Carb",      badge:"",            cuis:"🌏",f:"low-carb"},
-  {id:9,  e:"🍱", name:"Buddha Bowl Thaï",         ar:"بوذا بول تايلندي",     cal:360,p:18,c:44,t:18,r:4.8,tag:"Vegan",        badge:"",            cuis:"🌏",f:"vegan"},
-  {id:10, e:"🥬", name:"Salade Wakame Grillée",    ar:"سلطة واكامي مشوية",    cal:120,p:8, c:10,t:10,r:4.6,tag:"Gluten-Free",   badge:"New",         cuis:"🌏",f:"gluten-free"},
-  // 🌊 Mediterranean — fresh & balanced
-  {id:11, e:"🥙", name:"Wrap Falafel Complet",     ar:"راب فلافل كامل",       cal:310,p:14,c:42,t:15,r:4.7,tag:"Vegan",        badge:"Best Seller", cuis:"🌊",f:"vegan"},
-  {id:12, e:"🐠", name:"Branzino & Légumes Rôtis", ar:"سمك مشوي بالخضر",     cal:370,p:42,c:12,t:25,r:4.9,tag:"High Protein",  badge:"Chef's Pick", cuis:"🌊",f:"high-protein"},
-  {id:13, e:"🥗", name:"Salade Grecque Protéinée", ar:"سلطة يونانية بروتينية",cal:280,p:22,c:16,t:10,r:4.7,tag:"Low Carb",      badge:"",            cuis:"🌊",f:"low-carb"},
-  {id:14, e:"🫙", name:"Yaourt Grec & Grenade",    ar:"يوغرت يوناني بالرمان", cal:190,p:16,c:22,t:5, r:4.8,tag:"Gluten-Free",   badge:"",            cuis:"🌊",f:"gluten-free"},
-  // 🌎 Healthy International
-  {id:15, e:"🌯", name:"Burrito Bowl Quinoa",      ar:"بوريتو بول كينوا",     cal:420,p:34,c:46,t:20,r:4.7,tag:"High Protein",  badge:"Trending",    cuis:"🌎",f:"high-protein"},
-  {id:16, e:"🫐", name:"Açaí & Chia Bowl",         ar:"بول أساي وشيا",        cal:260,p:10,c:38,t:10,r:4.8,tag:"Vegan",        badge:"Superfood",   cuis:"🌎",f:"vegan"},
-  {id:17, e:"🥑", name:"Avocado Egg Power Toast",  ar:"توست أفوكادو وبيض",    cal:310,p:18,c:28,t:8, r:4.7,tag:"Gluten-Free",   badge:"",            cuis:"🌎",f:"gluten-free"},
-  {id:18, e:"🥦", name:"Green Detox Bowl",         ar:"بول ديتوكس أخضر",      cal:180,p:12,c:20,t:12,r:4.6,tag:"Low Carb",      badge:"New",         cuis:"🌎",f:"low-carb"},
+  // 🇮🇹 Italian
+  {id:1,  e:"🥗", name:"Salade Caprese Protéinée",   ar:"سلطة كابريزي بروتين",    cal:290,p:20,c:14,t:10,r:4.7,tag:"Gluten-Free", badge:"",            cuis:"🇮🇹",f:"gluten-free"},
+  {id:2,  e:"🍝", name:"Pasta Primavera Light",       ar:"باستا خضروات خفيفة",     cal:360,p:16,c:52,t:20,r:4.6,tag:"Vegan",       badge:"",            cuis:"🇮🇹",f:"vegan"},
+  {id:3,  e:"🐟", name:"Branzino al Limone",          ar:"سمك برانزينو بالليمون",  cal:370,p:42,c:10,t:25,r:4.9,tag:"High Protein", badge:"Chef's Pick", cuis:"🇮🇹",f:"high-protein"},
+  {id:4,  e:"🥬", name:"Minestrone Détox",            ar:"شوربة مينيسترون ديتوكس", cal:150,p:8, c:24,t:15,r:4.6,tag:"Vegan",       badge:"Low Cal",     cuis:"🇮🇹",f:"vegan"},
+  {id:5,  e:"🍗", name:"Poulet Piccata Léger",        ar:"دجاج بيكاتا خفيف",       cal:340,p:38,c:12,t:22,r:4.8,tag:"High Protein", badge:"New",         cuis:"🇮🇹",f:"high-protein"},
+  // 🇫🇷 French
+  {id:6,  e:"🥗", name:"Salade Niçoise Fit",          ar:"سلطة نيسواز فيت",        cal:310,p:26,c:18,t:10,r:4.8,tag:"Low Carb",    badge:"Best Seller", cuis:"🇫🇷",f:"low-carb"},
+  {id:7,  e:"🍳", name:"Omelette aux Fines Herbes",   ar:"أومليت بالأعشاب",        cal:240,p:20,c:6, t:10,r:4.7,tag:"Gluten-Free", badge:"",            cuis:"🇫🇷",f:"gluten-free"},
+  {id:8,  e:"🐟", name:"Saumon en Papillote",         ar:"سلمون مطهو بالبخار",     cal:390,p:44,c:8, t:22,r:4.9,tag:"High Protein", badge:"Chef's Pick", cuis:"🇫🇷",f:"high-protein"},
+  {id:9,  e:"🥣", name:"Soupe à l'Oignon Légère",    ar:"شوربة البصل الخفيفة",    cal:160,p:7, c:22,t:18,r:4.6,tag:"Low Carb",    badge:"",            cuis:"🇫🇷",f:"low-carb"},
+  {id:10, e:"🥬", name:"Ratatouille Provençale",      ar:"راتاتوي بروفانسال",       cal:180,p:5, c:26,t:20,r:4.7,tag:"Vegan",       badge:"Trending",    cuis:"🇫🇷",f:"vegan"},
+  // 🇬🇷 Mediterranean
+  {id:11, e:"🥙", name:"Wrap Falafel Complet",        ar:"راب فلافل كامل",         cal:310,p:14,c:42,t:15,r:4.7,tag:"Vegan",       badge:"Best Seller", cuis:"🇬🇷",f:"vegan"},
+  {id:12, e:"🥗", name:"Salade Grecque Protéinée",    ar:"سلطة يونانية بروتينية",  cal:280,p:22,c:16,t:10,r:4.7,tag:"Low Carb",    badge:"",            cuis:"🇬🇷",f:"low-carb"},
+  {id:13, e:"🫙", name:"Yaourt Grec & Grenade",       ar:"يوغرت يوناني بالرمان",   cal:190,p:16,c:22,t:5, r:4.8,tag:"Gluten-Free", badge:"",            cuis:"🇬🇷",f:"gluten-free"},
+  {id:14, e:"🧆", name:"Assiette Mezze Santé",        ar:"طبق مزة صحي",            cal:320,p:14,c:36,t:15,r:4.8,tag:"Vegan",       badge:"Trending",    cuis:"🇬🇷",f:"vegan"},
+  {id:15, e:"🐠", name:"Daurade Grillée & Tabboulé",  ar:"سمك مشوي مع تبولة",      cal:380,p:40,c:20,t:22,r:4.9,tag:"High Protein", badge:"",            cuis:"🇬🇷",f:"high-protein"},
+  // 🇯🇵 Asiatique
+  {id:16, e:"🥗", name:"Poke Bowl Saumon",            ar:"بوكي بول السلمون",       cal:390,p:32,c:36,t:15,r:4.9,tag:"High Protein", badge:"Trending",    cuis:"🇯🇵",f:"high-protein"},
+  {id:17, e:"🍜", name:"Bouillon Miso & Légumes",     ar:"مرق ميسو بالخضر",        cal:140,p:9, c:18,t:12,r:4.7,tag:"Low Carb",    badge:"",            cuis:"🇯🇵",f:"low-carb"},
+  {id:18, e:"🍱", name:"Buddha Bowl Thaï",            ar:"بوذا بول تايلندي",       cal:360,p:18,c:44,t:18,r:4.8,tag:"Vegan",       badge:"",            cuis:"🇯🇵",f:"vegan"},
+  {id:19, e:"🥟", name:"Gyoza Poulet Vapeur",         ar:"جيوزا دجاج بالبخار",     cal:270,p:24,c:28,t:18,r:4.7,tag:"High Protein", badge:"New",         cuis:"🇯🇵",f:"high-protein"},
+  {id:20, e:"🍣", name:"Temaki Saumon Avocat",        ar:"تيماكي سلمون وأفوكادو",  cal:310,p:22,c:30,t:10,r:4.8,tag:"Gluten-Free", badge:"",            cuis:"🇯🇵",f:"gluten-free"},
+  // 🌎 Américain
+  {id:21, e:"🌯", name:"Burrito Bowl Quinoa",         ar:"بوريتو بول كينوا",        cal:420,p:34,c:46,t:20,r:4.7,tag:"High Protein", badge:"Trending",    cuis:"🌎",f:"high-protein"},
+  {id:22, e:"🫐", name:"Açaí & Chia Power Bowl",      ar:"بول أساي وشيا",          cal:260,p:10,c:38,t:10,r:4.8,tag:"Vegan",       badge:"Superfood",   cuis:"🌎",f:"vegan"},
+  {id:23, e:"🥑", name:"Avocado Egg Power Toast",     ar:"توست أفوكادو وبيض",       cal:310,p:18,c:28,t:8, r:4.7,tag:"Gluten-Free", badge:"",            cuis:"🌎",f:"gluten-free"},
+  {id:24, e:"🌮", name:"Tacos Poisson Grillé",        ar:"تاكوس سمك مشوي",          cal:330,p:28,c:34,t:18,r:4.8,tag:"High Protein", badge:"",            cuis:"🌎",f:"high-protein"},
+  {id:25, e:"🥗", name:"Cobb Salad Healthy",          ar:"سلطة كوب صحية",           cal:320,p:26,c:16,t:10,r:4.7,tag:"Low Carb",    badge:"",            cuis:"🌎",f:"low-carb"},
 ];
 
 const cuisineTabs = [
-  {id:"all",flag:"🌍",fr:"Tout",          ar:"الكل"},
-  {id:"🇲🇦", flag:"🇲🇦",fr:"Marocain",      ar:"مغربي"},
-  {id:"🌏",  flag:"🌏",fr:"Asiatique",     ar:"آسيوي"},
-  {id:"🌊",  flag:"🌊",fr:"Méditerranéen", ar:"متوسطي"},
-  {id:"🌎",  flag:"🌎",fr:"Américain",     ar:"أمريكي"},
+  {id:"all", flag:"🌍", fr:"Tout",          ar:"الكل"},
+  {id:"🇮🇹",  flag:"🇮🇹", fr:"Italien",       ar:"إيطالي"},
+  {id:"🇫🇷",  flag:"🇫🇷", fr:"Français",      ar:"فرنسي"},
+  {id:"🇬🇷",  flag:"🇬🇷", fr:"Méditerranéen", ar:"متوسطي"},
+  {id:"🇯🇵",  flag:"🇯🇵", fr:"Asiatique",     ar:"آسيوي"},
+  {id:"🌎",   flag:"🌎", fr:"Américain",     ar:"أمريكي"},
 ];
 const dietFilters = ["All","Vegan","High Protein","Low Carb","Gluten-Free"];
 const filterMap = {"All":"all","Vegan":"vegan","High Protein":"high-protein","Low Carb":"low-carb","Gluten-Free":"gluten-free"};
@@ -811,7 +690,18 @@ const copy = {
     proof:"personnes inscrites",
     navMenu:"Menu", navHow:"Comment ça marche", navAbout:"À propos",
     navCta:"Rejoindre",
-    how:"Comment ça marche",
+    how:"Ce que SAVY fait pour vous",
+    howSub:"Une expérience pensée du début à la fin",
+    benefitsCta:"Rejoindre la liste →",
+    proofStrip:"🇲🇦 SAVY est fondée à Tétouan par un chef passionné qui croit que manger sain ne devrait jamais être ennuyeux. Chaque plat est conçu par notre IA pour correspondre exactement à vos objectifs — pas un gramme de plus, pas un gramme de moins.",
+    benefits:[
+      {icon:"🤖", color:"#008060", title:"Repas 100% personnalisé",     desc:"Notre IA analyse vos objectifs, allergies et préférences pour composer un repas unique — jamais le même pour tout le monde."},
+      {icon:"⚡", color:"#F4A330", title:"Livré en 45 minutes",          desc:"Préparé frais à la commande et livré chaud à votre porte à Tétouan, M'diq et Martil. Jamais congelé."},
+      {icon:"🥗", color:"#00A878", title:"Macros calculés à la gramme", desc:"Calories, protéines, glucides, lipides — chaque chiffre est optimisé par l'IA pour votre corps et vos objectifs."},
+      {icon:"🌍", color:"#7C3AED", title:"Cuisines du monde entier",    desc:"Marocain, Japonais, Italien, Grec, Indien, Américain — 6 cuisines internationales, toutes revisitées pour la santé."},
+      {icon:"💰", color:"#E53935", title:"Prix accessible",             desc:"Des repas sains de qualité à partir de 45 MAD. Membres fondateurs : 30% de réduction sur leur première commande."},
+      {icon:"🔒", color:"#008060", title:"Zéro compromis sur la qualité",desc:"Ingrédients locaux frais, sans additifs, sans colorants. SAVY travaille avec les meilleurs producteurs de la région."},
+    ],
     steps:[
       {icon:"🎯",t:"Vos objectifs",         d:"Dites-nous votre régime et vos calories cibles en 30 secondes."},
       {icon:"🤖",t:"L'IA crée votre repas", d:"SAVY compose un menu équilibré, personnalisé pour vous."},
@@ -846,7 +736,18 @@ const copy = {
     proof:"شخص انضم",
     navMenu:"القائمة", navHow:"كيف يعمل", navAbout:"حولنا",
     navCta:"سجّل",
-    how:"كيف يعمل",
+    how:"شو كيدير SAVY ليك",
+    howSub:"تجربة مفكر فيها من البداية لنهاية",
+    benefitsCta:"سجّل بريدك الآن →",
+    proofStrip:"🇲🇦 SAVY أسسها شيف مغربي من تطوان — واحد كيؤمن بلي الأكل الصحي لازم يكون بنين، مش حشيش. كل وجبة كتصمم ليك الـ AI بالضبط — ما كاينش وجبة واحدة تناسب الجميع.",
+    benefits:[
+      {icon:"🤖", color:"#008060", title:"وجبة مصممة 100% ليك",         desc:"الـ AI ديالنا كيحلل أهدافك، الحساسية ديالك، والأذواق ديالك — وكيصمم وجبة فريدة ما كاينش حتا واحد عندها بحالك."},
+      {icon:"⚡", color:"#F4A330", title:"توصيل في 45 دقيقة",           desc:"كيتحضر طازج ويوصل ساخن لبابك في تطوان، مضيق، ومرتيل. ما كاين مجمد."},
+      {icon:"🥗", color:"#00A878", title:"الماكرو محسوب بالغرام",       desc:"السعرات، البروتين، الكربوهيدرات، الدهون — كل رقم محسوب بالـ AI لجسمك وأهدافك."},
+      {icon:"🌍", color:"#7C3AED", title:"مطابخ عالمية من كل بلاد",    desc:"مغربي، ياباني، إيطالي، يوناني، هندي، أمريكي — 6 مطابخ دوليين، كلهم معدلين للصحة."},
+      {icon:"💰", color:"#E53935", title:"بثمن معقول",                  desc:"وجبات صحية من جودة عالية ابتداء من 45 درهم. الأعضاء المؤسسون: خصم 30% على الطلب الأول."},
+      {icon:"🔒", color:"#008060", title:"بلا حلول وسط على الجودة",     desc:"مكونات محلية طازجة، بلا مضافات. SAVY كتخدم مع أحسن المنتجين في المنطقة."},
+    ],
     steps:[
       {icon:"🎯",t:"حدد أهدافك",          d:"أخبر SAVY عن نظامك الغذائي وسعراتك في 30 ثانية."},
       {icon:"🤖",t:"الذكاء يصمم وجبتك",   d:"SAVY تصمم قائمة متوازنة ومخصصة لك."},
@@ -912,10 +813,13 @@ function setLang(l){
   document.getElementById("chip-livraison").textContent = t.chips[1];
   document.getElementById("chip-note").textContent      = t.chips[2];
 
-  // How
+  // Benefits section
   document.getElementById("how-title").textContent = t.how;
   document.getElementById("how-title").style.cssText = ff;
-  renderSteps();
+  document.getElementById("how-sub").textContent = t.howSub;
+  document.getElementById("benefits-cta").textContent = t.benefitsCta;
+  document.getElementById("proof-strip-text").textContent = t.proofStrip;
+  renderBenefits();
 
   // Stats
   renderStats();
@@ -947,17 +851,19 @@ function setLang(l){
 }
 
 /* ═══════════════════════════════════════════
-   STEPS
+   BENEFITS
 ═══════════════════════════════════════════ */
-function renderSteps(){
+function renderBenefits(){
   const t = copy[lang];
   const isAr = lang==="ar";
-  document.getElementById("steps-grid").innerHTML = t.steps.map((s,i)=>`
-    <div class="step-card" style="animation:slideUp .5s ${i*.1}s ease both">
-      <div class="step-icon">${s.icon}</div>
-      <div class="step-num">${i+1}</div>
-      <div class="step-title ${isAr?"far":"fh"}" style="text-align:${isAr?"right":"left"}">${s.t}</div>
-      <div class="step-desc ${isAr?"far":"fb"}" style="text-align:${isAr?"right":"left"}">${s.d}</div>
+  document.getElementById("benefits-grid").innerHTML = t.benefits.map((b,i)=>`
+    <div style="background:#fff;border-radius:20px;padding:24px;border:1px solid var(--border);box-shadow:var(--shadow);transition:all .2s;animation:slideUp .5s ${i*.08}s ease both;"
+      onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadowH)'"
+      onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)'">
+      <div style="width:48px;height:48px;border-radius:16px;background:${b.color}18;border:1px solid ${b.color}30;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:14px;">${b.icon}</div>
+      <div style="font-family:${isAr?"'Tajawal'":" 'Syne'"}, sans-serif;font-weight:${isAr?800:800};font-size:15px;color:var(--text);margin-bottom:8px;text-align:${isAr?"right":"left"};">${b.title}</div>
+      <div style="font-size:13px;color:var(--sub);line-height:1.7;font-family:${isAr?"'Tajawal'":"'DM Sans'"}, sans-serif;text-align:${isAr?"right":"left"};">${b.desc}</div>
+      <div style="margin-top:12px;width:28px;height:3px;border-radius:99px;background:${b.color};${isAr?"margin-right:0;margin-left:auto;":""}"></div>
     </div>`).join("");
 }
 
@@ -1151,8 +1057,11 @@ async function submitEmail2() {
 /* ═══════════════════════════════════════════
    INIT
 ═══════════════════════════════════════════ */
-renderSteps();
+renderBenefits();
 renderStats();
+document.getElementById("how-sub").textContent = copy[lang].howSub;
+document.getElementById("proof-strip-text").textContent = copy[lang].proofStrip;
+document.getElementById("benefits-cta").textContent = copy[lang].benefitsCta;
 renderCuisineTabs();
 renderDietFilters();
 renderDishes();
@@ -1421,28 +1330,17 @@ function initInlineAgent() {
 }
 
 function renderCapList() {
+  const el = document.getElementById("cap-list");
+  if (!el) return; // element removed, skip safely
   const isAr = lang === "ar";
   const caps = isAr
     ? ["🎯 Kay fhem l-ahdaf s7iya dyalek","🧠 Kay 7seb macro b la précision","🌍 Recipes s7iya mn partout f dnia","🔒 L-wajba dyalek tantsenna nhar l-launch"]
     : ["🎯 Comprend vos objectifs santé","🧠 Calcule vos macros exactement","🌍 Recettes saines du monde entier","🔒 Votre repas vous attend au lancement"];
-  document.getElementById("cap-list").innerHTML = caps.map(c => `
+  el.innerHTML = caps.map(c => `
     <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);">
       <span style="font-size:14px;">${c.slice(0,2)}</span>
       <span style="font-size:12px;color:var(--sub);font-family:'DM Sans',sans-serif;">${c.slice(2).trim()}</span>
     </div>`).join("");
-  // Section labels
-  const isArEl = document.getElementById("agent-section-badge");
-  if(isArEl) isArEl.textContent = isAr ? "متصل الآن" : "En ligne maintenant";
-  const title = document.getElementById("agent-section-title");
-  if(title) { title.textContent = isAr ? "تحدث مع SAVY — شيفك الذكي" : "Parlez à SAVY — votre chef IA"; title.style.fontFamily = isAr ? "'Tajawal',sans-serif" : "'Cormorant Garamond',serif"; }
-  const sub = document.getElementById("agent-section-sub");
-  if(sub) sub.textContent = isAr ? "أخبر SAVY عن أهدافك. سيصمم لك وجبتك المثالية الصحية في الوقت الفعلي — مخصصة، طازجة، وتصل قريباً إلى تطوان." : "Décrivez vos objectifs. SAVY compose votre repas parfait en temps réel — personnalisé, sain, et livré bientôt à Tétouan.";
-  const role = document.getElementById("savy-role");
-  if(role) role.textContent = isAr ? "شيف ذكاء اصطناعي شخصي 🤖" : "Chef IA Personnalisé 🤖";
-  const s1=document.getElementById("cap-s1"), s2=document.getElementById("cap-s2"), s3=document.getElementById("cap-s3");
-  if(s1) s1.textContent=isAr?"مخصص":"Personnalisé";
-  if(s2) s2.textContent=isAr?"فوري":"Instantané";
-  if(s3) s3.textContent=isAr?"مجاني":"Gratuit";
 }
 
 // also update inline agent language on lang switch
