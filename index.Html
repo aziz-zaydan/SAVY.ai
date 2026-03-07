@@ -1287,7 +1287,19 @@ function inlineSend() {
   inlineCallAI();
 }
 
+/* ─── ANTHROPIC API KEY ───────────────────────────────────
+   Paste your Anthropic API key below (get one at console.anthropic.com)
+   ──────────────────────────────────────────────────────── */
+const ANTHROPIC_API_KEY = "PASTE_YOUR_API_KEY_HERE";
+
 async function inlineCallAI() {
+  // Show API key setup prompt if not configured
+  if (!ANTHROPIC_API_KEY || ANTHROPIC_API_KEY === "PASTE_YOUR_API_KEY_HERE") {
+    inlineAddBot(lang==="ar"
+      ? "⚙️ SAVY gha tkun prête — khasso wahed API key mn Anthropic. Kellem l-admin!"
+      : "⚙️ SAVY sera bientôt prête ! Une clé API Anthropic doit être configurée. Contactez l'administrateur.");
+    return;
+  }
   const send = document.getElementById("inline-send");
   const inp  = document.getElementById("inline-input");
   send.disabled = true; inp.disabled = true;
@@ -1296,7 +1308,12 @@ async function inlineCallAI() {
   try {
     const res = await fetch("https://api.anthropic.com/v1/messages", {
       method:"POST",
-      headers:{ "Content-Type":"application/json" },
+      headers:{
+        "Content-Type":"application/json",
+        "x-api-key": ANTHROPIC_API_KEY,
+        "anthropic-version": "2023-06-01",
+        "anthropic-dangerous-direct-browser-access": "true"
+      },
       body: JSON.stringify({
         model:"claude-sonnet-4-20250514",
         max_tokens:400,
@@ -1304,14 +1321,21 @@ async function inlineCallAI() {
         messages: inlineHistory.filter(m=>m.role!=="system")
       })
     });
+    if (!res.ok) {
+      const err = await res.json().catch(()=>({}));
+      throw new Error(err?.error?.message || `HTTP ${res.status}`);
+    }
     const data = await res.json();
     const reply = data.content?.[0]?.text || (lang==="ar"?"عذراً، حدث خطأ.":"Désolé, une erreur s'est produite.");
     inlineAddBot(reply);
-    document.getElementById("inline-status").textContent = lang==="ar" ? "متصل · جاهز" : "En ligne · Prêt";
+    document.getElementById("inline-status").textContent = lang==="ar" ? "Connecté · Wahed chef AI f Tétouan 🇲🇦" : "En ligne · Prêt";
   } catch(e) {
     const t = document.getElementById("inline-typing");
     if(t) t.remove();
-    inlineAddBot(lang==="ar" ? "عذراً، تحقق من اتصالك بالإنترنت 🙏" : "Désolé, vérifiez votre connexion 🙏");
+    console.error("SAVY API error:", e);
+    inlineAddBot(lang==="ar"
+      ? "Smeh liya, kayn chi mochkil tekni 🙏 Essa merra okhra!"
+      : "Désolé, une erreur technique est survenue 🙏 Réessayez dans un instant !");
   }
   send.disabled = false; inp.disabled = false; inp.focus();
 }
