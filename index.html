@@ -25,26 +25,158 @@
 
     /* Hero Section */
     #hero { padding: 40px 5%; text-align: center; }
-    h1 { font-family: 'Syne', sans-serif; font-size: clamp(32px, 8vw, 60px); line-height: 1; margin-bottom: 20px; }
-    .hero-sub { color: var(--sub); margin-bottom: 30px; font-size: 18px; }
+    h1 { font-family: 'Syne', sans-serif; font-size: clamp(32px, 8vw, 60px); line-height: 1.1; margin-bottom: 20px; }
+    .hero-sub { color: var(--sub); margin-bottom: 30px; font-size: 18px; max-width: 600px; margin-inline: auto; }
     
-    .email-wrap { 
-      max-width: 500px; margin: 0 auto 40px; display: flex; flex-direction: column; gap: 10px; 
-    }
-    input { padding: 16px; border-radius: 15px; border: 1px solid var(--border); font-size: 16px; outline: none; }
-    .btn-cta { background: var(--green); color: #fff; padding: 16px; border-radius: 15px; border: none; font-weight: 800; cursor: pointer; }
+    .email-wrap { max-width: 500px; margin: 0 auto 40px; display: flex; flex-direction: column; gap: 10px; }
+    input[type="email"] { padding: 16px; border-radius: 15px; border: 1px solid var(--border); font-size: 16px; outline: none; }
+    .btn-cta { background: var(--green); color: #fff; padding: 16px; border-radius: 15px; border: none; font-weight: 800; cursor: pointer; transition: 0.3s; }
+    .btn-cta:hover { opacity: 0.9; transform: scale(0.98); }
 
     /* AI Chat Agent Box */
     .agent-container {
       max-width: 600px; margin: 20px auto; background: #0D1F18; border-radius: 25px; padding: 20px; color: #fff;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2); text-align: left;
     }
+    [dir="rtl"] .agent-container { text-align: right; }
     .agent-header { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; border-bottom: 1px solid #2A3F36; padding-bottom: 10px; }
     .status-dot { width: 10px; height: 10px; background: #00ff88; border-radius: 50%; animation: pulse 2s infinite; }
-    #inline-msgs { height: 250px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; margin-bottom: 15px; padding-right: 5px; }
-    .msg { padding: 10px 15px; border-radius: 15px; max-width: 85%; font-size: 14px; line-height: 1.4; }
-    .bot { background: #1A2F26; align-self: flex-start; border-bottom-left-radius: 2px; }
-    .user { background: var(--green); align-self: flex-end; border-bottom-right-radius: 2px; }
+    #inline-msgs { height: 250px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; margin-bottom: 15px; padding-right: 5px; scroll-behavior: smooth; }
+    
+    /* Scrollbar */
+    #inline-msgs::-webkit-scrollbar { width: 4px; }
+    #inline-msgs::-webkit-scrollbar-thumb { background: #2A3F36; border-radius: 10px; }
+
+    .msg { padding: 12px 16px; border-radius: 18px; max-width: 85%; font-size: 14px; line-height: 1.5; position: relative; }
+    .bot { background: #1A2F26; align-self: flex-start; border-bottom-left-radius: 2px; color: #E0E0E0; }
+    .user { background: var(--green); align-self: flex-end; border-bottom-right-radius: 2px; color: #fff; }
     
     .input-area { display: flex; background: #1A2F26; border-radius: 15px; padding: 5px; }
-    .input-area
+    .input-area input { background: transparent; border: none; color: #fff; flex: 1; padding: 12px; outline: none; font-size: 14px; }
+    
+    @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+
+    /* Desktop View adjustments */
+    @media (min-width: 768px) {
+      .email-wrap { flex-direction: row; background: #fff; padding: 8px; border-radius: 20px; border: 1px solid var(--border); }
+      input[type="email"] { border: none; flex: 1; }
+      .btn-cta { width: auto; padding: 12px 30px; }
+      #hero { padding: 80px 5%; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="navbar">
+    <div class="logo">SAVY</div>
+    <button class="lang-btn" onclick="toggleLang()" id="lang-btn">العربية 🇲🇦</button>
+  </nav>
+
+  <section id="hero">
+    <h1 id="title">Manger intelligent,<br>livré chez vous.</h1>
+    <p class="hero-sub" id="sub">L'IA qui compose vos repas sains à Tétouan. Frais, local et sur mesure.</p>
+    
+    <div class="email-wrap">
+      <input type="email" id="email" placeholder="Votre email...">
+      <button class="btn-cta" onclick="alert('Merci! / شكرا!')" id="cta">Rejoindre la liste</button>
+    </div>
+
+    <div class="agent-container">
+      <div class="agent-header">
+        <div class="status-dot"></div>
+        <span id="agent-status" style="font-weight: 700; font-size: 13px; color: #8FBFAA;">SAVY AI Chef (En ligne)</span>
+      </div>
+      <div id="inline-msgs">
+        <div class="msg bot">Salam! مرحبا! أنا الشيف الذكي ديال سافي. كيفاش نقدر نعاونك تاكل صحي اليوم؟</div>
+      </div>
+      <div class="input-area">
+        <input type="text" id="ai-input" placeholder="Posez une question / سولني أي حاجة...">
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // 1. ترجمة الموقع
+    const texts = {
+      fr: { 
+        title: "Manger intelligent,<br>livré chez vous.", 
+        sub: "L'IA qui compose vos repas sains à Tétouan. Frais, local et sur mesure.", 
+        cta: "Rejoindre la liste", 
+        status: "SAVY AI Chef (En ligne)", 
+        btn: "العربية 🇲🇦", 
+        placeholder: "Posez une question / سولني...",
+        error: "Désolé, il y a un petit problème technique. Réessayez !"
+      },
+      ar: { 
+        title: "كول ذكي،<br>يوصلك تال الدار.", 
+        sub: "الذكاء الاصطناعي كيصاوب ليك ماكلتك ف تطوان. طرية، محلية، وعلى قد قياسك.", 
+        cta: "تسجل دابا", 
+        status: "SAVY شاف (متصل)", 
+        btn: "Français 🇫🇷", 
+        placeholder: "سولني أي حاجة...",
+        error: "سمح لي، وقع مشكل تقني. حاول مرة أخرى!"
+      }
+    };
+
+    let currentLang = 'fr';
+    function toggleLang() {
+      currentLang = currentLang === 'fr' ? 'ar' : 'fr';
+      document.body.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+      document.getElementById('title').innerHTML = texts[currentLang].title;
+      document.getElementById('sub').textContent = texts[currentLang].sub;
+      document.getElementById('cta').textContent = texts[currentLang].cta;
+      document.getElementById('agent-status').textContent = texts[currentLang].status;
+      document.getElementById('lang-btn').textContent = texts[currentLang].btn;
+      document.getElementById('ai-input').placeholder = texts[currentLang].placeholder;
+    }
+
+    // 2. منطق المحادثة الذكية (AI Agent Logic)
+    const aiInput = document.getElementById('ai-input');
+    const msgContainer = document.getElementById('inline-msgs');
+
+    aiInput.addEventListener('keypress', async (e) => {
+      if (e.key === 'Enter' && aiInput.value.trim() !== "") {
+        const userText = aiInput.value;
+        aiInput.value = "";
+
+        // إضافة رسالة المستخدم للواجهة
+        msgContainer.innerHTML += `<div class="msg user">${userText}</div>`;
+        msgContainer.scrollTop = msgContainer.scrollHeight;
+
+        // إظهار حالة "جاري الرد"
+        const thinkingId = "think-" + Date.now();
+        msgContainer.innerHTML += `<div class="msg bot" id="${thinkingId}">...</div>`;
+        msgContainer.scrollTop = msgContainer.scrollHeight;
+
+        try {
+          // الاتصال بـ Netlify Function (تأكد أن المسار صحيح في مشروعك)
+          const response = await fetch('/.netlify/functions/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              model: "claude-3-haiku-20240307",
+              max_tokens: 400,
+              system: "أنت هو SAVY، شاف خبير في التغذية الصحية من مدينة تطوان، المغرب. تجيب الزوار بلهجة تطوانية لطيفة ومزيج من العربية والفرنسية. هدفك هو مساعدتهم على اختيار وجبات صحية وتحفيزهم. لا تذكر أنك AI، تصرف كأنك شاف حقيقي.",
+              messages: [{ role: "user", content: userText }]
+            })
+          });
+
+          const data = await response.json();
+          
+          if (data && data.content && data.content[0]) {
+             const botReply = data.content[0].text;
+             document.getElementById(thinkingId).textContent = botReply;
+          } else {
+             throw new Error("Invalid response");
+          }
+
+        } catch (err) {
+          document.getElementById(thinkingId).textContent = texts[currentLang].error;
+          console.error("AI Error:", err);
+        }
+        msgContainer.scrollTop = msgContainer.scrollHeight;
+      }
+    });
+  </script>
+</body>
+</html>
