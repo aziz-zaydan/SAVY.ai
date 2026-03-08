@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SAVY – Manger intelligent, livré chez vous | الذكاء و المذاق</title>
+  <title>SAVY – Manger intelligent, livré chez vous | الأكل الذكي</title>
   <meta name="description" content="SAVY – La première livraison de repas sains propulsée par l'IA au Maroc. Tétouan, M'diq, Martil — Bientôt."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Syne:wght@700;800;900&family=DM+Sans:wght@400;500;600;700&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet"/>
@@ -28,8 +28,8 @@
       --bg:       #060E09;
       --card:     #0C1A0F;
       --mint:     #0C1A0F;
-      --green:    #00C87A;
-      --greenL:   #00E68A;
+      --green:    #008060;
+      --greenL:   #00A878;
       --greenXL:  #0C1A0F;
       --text:     #EAF5EE;
       --sub:      #7ABFA3;
@@ -45,12 +45,19 @@
     [data-theme="dark"] body { background:#060E09; color:var(--text); }
     [data-theme="dark"] .step-card,
     [data-theme="dark"] .stat-card,
-    [data-theme="dark"] .dish-card { background:#0C1A0F; border-color:#152A1A; }
+    [data-theme="dark"] .dish-card { background:#0C1A0F; border-color:#D4AF37; }
+    /* ── Dark mode: clear, readable input fields ── */
+    /* Gold input boxes in dark mode */
     [data-theme="dark"] input,
-    [data-theme="dark"] textarea { background:#0C1A0F !important; color:var(--text) !important; border-color:#152A1A !important; }
+    [data-theme="dark"] textarea        { background:#1C1500 !important; color:#F5E6B0 !important; border-color:#D4AF37 !important; border-width:1.5px !important; }
     [data-theme="dark"] input::placeholder,
-    [data-theme="dark"] textarea::placeholder { color:#4A4020 !important; }
-    [data-theme="dark"] #quiz-msgs { background:#0C1A0F; border-color:#152A1A; }
+    [data-theme="dark"] textarea::placeholder { color:#8A7A3A !important; }
+    [data-theme="dark"] input:focus,
+    [data-theme="dark"] textarea:focus  { background:#231900 !important; border-color:#F0CB5A !important; box-shadow:0 0 0 3px rgba(212,175,55,0.2) !important; }
+    [data-theme="dark"] .email-inp,
+    [data-theme="dark"] .search-inp     { background:#1C1500 !important; color:#F5E6B0 !important; border-color:#D4AF37 !important; }
+    [data-theme="dark"] .email-inp:focus,
+    [data-theme="dark"] .search-inp:focus { background:#231900 !important; border-color:#F0CB5A !important; box-shadow:0 0 0 3px rgba(212,175,55,0.2) !important; }
     [data-theme="dark"] #quiz-msgs > div > div:first-of-type { background:#0F2214 !important; }
     [data-theme="dark"] #navbar { background:rgba(6,14,9,0.97); border-color:#152A1A; backdrop-filter:blur(12px); }
     [data-theme="dark"] .lang-wrap { background:#0C1A0F; border-color:#152A1A; }
@@ -63,11 +70,11 @@
     [data-theme="dark"] .menu-section,
     [data-theme="dark"] .final-cta,
     [data-theme="dark"] footer { background:#060E09; }
-    [data-theme="dark"] .btn-outline { background:transparent; color:var(--green); border-color:var(--border); }
-    [data-theme="dark"] .btn-outline:hover { background:var(--green); color:#060E09; }
+    [data-theme="dark"] .btn-outline { background:transparent; color:#008060; border-color:#008060; }
+    [data-theme="dark"] .btn-outline:hover { background:#008060; color:#fff; }
     [data-theme="dark"] #theme-btn { background:#0C1A0F; color:var(--text); border-color:var(--border); }
     [data-theme="dark"] #theme-btn:hover { background:var(--greenXL); color:var(--green); }
-    [data-theme="dark"] .dish-tab { background:#0C1A0F; color:#7A6A2A; border-color:#152A1A; }
+    [data-theme="dark"] .dish-tab { background:#0C1A0F; color:#D4AF37; border-color:#D4AF37; }
     [data-theme="dark"] .dish-tab.active { background:var(--green); color:#060E09; border-color:var(--green); }
     [data-theme="dark"] .proof-strip { background:linear-gradient(135deg,#0C1A0F,#060E09); border:1px solid #152A1A; }
     [data-theme="dark"] .av { border-color:#060E09; }
@@ -76,14 +83,14 @@
     [data-theme="dark"] .nav-logo span { color:var(--text); }
     [data-theme="dark"] .nav-link { color:var(--sub); }
     [data-theme="dark"] .nav-link:hover { color:var(--green); }
-    [data-theme="dark"] .btn-cta { background:var(--green); color:#fff; }
-    [data-theme="dark"] .btn-cta:hover { background:var(--greenL); }
+    [data-theme="dark"] .btn-cta { background:#008060 !important; color:#fff !important; box-shadow:0 4px 18px rgba(0,128,96,0.4) !important; }
+    [data-theme="dark"] .btn-cta:hover { background:#00A878 !important; }
     [data-theme="dark"] #savy-quiz-wrap > div:first-child { border-bottom:1px solid #152A1A; }
     [data-theme="dark"] .hero-sub, [data-theme="dark"] .proof-text { color:var(--sub); }
     [data-theme="dark"] ::-webkit-scrollbar-track { background:#060E09; }
     [data-theme="dark"] ::-webkit-scrollbar-thumb { background:#152A1A; border-radius:4px; }
     [data-theme="dark"] #how  { background:var(--bg) !important; border-color:var(--border) !important; }
-    [data-theme="dark"] #menu { background:var(--bg) !important; border-color:var(--border) !important; }
+    [data-theme="dark"] #menu { background:var(--bg) !important; border-color:#D4AF37 !important; }
     [data-theme="dark"] #stats { background:#060E09 !important; }
     [data-theme="dark"] .step-card { background:var(--card) !important; border-color:var(--border) !important; }
     [data-theme="dark"] .step-icon { background:#0F2214 !important; border-color:var(--border) !important; }
@@ -91,15 +98,15 @@
     [data-theme="dark"] .stat-val  { color:var(--green) !important; }
     [data-theme="dark"] .chip      { background:var(--card) !important; border-color:var(--border) !important; }
     [data-theme="dark"] .chip-val  { color:var(--green) !important; }
-    [data-theme="dark"] .dish-card { background:var(--card) !important; border-color:var(--border) !important; }
+    [data-theme="dark"] .dish-card { background:var(--card) !important; border-color:#D4AF37 !important; }
     [data-theme="dark"] .title-bar { background:var(--green) !important; }
     [data-theme="dark"] .step-num  { background:var(--green) !important; color:#fff !important; }
-    [data-theme="dark"] .email-inp, [data-theme="dark"] .search-inp { background:var(--card) !important; color:var(--text) !important; border-color:var(--border) !important; }
-    [data-theme="dark"] .pill      { background:var(--card) !important; border-color:var(--border) !important; color:var(--sub) !important; }
+    /* overridden by gold input block above */
+    [data-theme="dark"] .pill      { background:var(--card) !important; border-color:#D4AF37 !important; color:#D4AF37 !important; }
     [data-theme="dark"] .pill.active { background:var(--green) !important; color:#060E09 !important; }
     [data-theme="dark"] .cart-bar button { background:var(--card) !important; }
     [data-theme="dark"] footer     { background:var(--card) !important; border-color:var(--border) !important; }
-    [data-theme="dark"] #quiz-msgs { background:var(--card) !important; border-color:var(--border) !important; }
+    [data-theme="dark"] #quiz-msgs { background:#120F00 !important; border-color:#D4AF37 !important; border-width:1.5px !important; }
     [data-theme="dark"] #tab-phone { background:var(--card) !important; color:var(--text) !important; border-color:var(--border) !important; }
     *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
     html { scroll-behavior:smooth; }
@@ -386,8 +393,8 @@
       onmouseover="this.style.borderColor='var(--green)'"
       onmouseout="this.style.borderColor='var(--border)'">🌙</button>
     <div class="lang-wrap">
-      <button class="lang-btn active" onclick="setLang('fr')">🇫🇷 FR</button>
-      <button class="lang-btn"        onclick="setLang('ar')">🇲🇦 AR</button>
+      <button class="lang-btn"        onclick="setLang('fr')">🇫🇷 FR</button>
+      <button class="lang-btn active" onclick="setLang('ar')">🇲🇦 AR</button>
     </div>
     <button class="btn-cta btn-cta-sm" onclick="document.getElementById('email-hero').focus()">
       <span id="nav-cta">Rejoindre</span>
@@ -762,8 +769,8 @@ const filterMap = {"All":"all","Vegan":"vegan","High Protein":"high-protein","Lo
 /* ═══════════════════════════════════════════
    STATE
 ═══════════════════════════════════════════ */
-let lang       = "fr";
-let darkMode   = false;
+let lang       = "ar";
+let darkMode   = true;
 
 function toggleTheme() {
   darkMode = !darkMode;
@@ -772,10 +779,13 @@ function toggleTheme() {
   localStorage.setItem("savy-theme", darkMode ? "dark" : "light");
 }
 
-// Restore saved theme on load
+// Restore saved preference, otherwise use defaults (dark + ar)
 (function() {
-  const saved = localStorage.getItem("savy-theme");
-  if (saved === "dark") { darkMode = true; document.documentElement.setAttribute("data-theme","dark"); document.addEventListener("DOMContentLoaded",()=>{ const b=document.getElementById("theme-btn"); if(b) b.textContent="☀️"; }); }
+  const savedTheme = localStorage.getItem("savy-theme");
+  const savedLang  = localStorage.getItem("savy-lang");
+  if (savedTheme === "light") { darkMode = false; }
+  else { darkMode = true; document.documentElement.setAttribute("data-theme","dark"); }
+  if (savedLang) lang = savedLang;
 })();
 let activeCuis = "all";
 let activeDiet = "All";
@@ -837,23 +847,23 @@ const copy = {
     h1:'توقف عن تناول<br><span class="accent">الوجبات "العشوائية". صمم وجبتك بذكاء.</span>',
     sub:'في SAVY، لا نؤمن بوجبة واحدة تناسب الجميع. شيف الذكاء الاصطناعي الخاص بنا يقوم بحساب كل جرام من البروتين والكربوهيدرات ليتناسب مع أهدافك أنت فقط.',
     cta:"سجّل بريدك الآن →",
-    ctaNote:"🎁 كن أول من يختبر 'الذكاء و المذاق' في يوليو — خصم 20% عند الافتتاح",
+    ctaNote:"🎁 كن أول من يختبر 'ذكاء المذاق' في يوليو — خصم 20% عند الافتتاح",
     ph:"بريدك الإلكتروني",
     ok:"🎉 أنت في القائمة!",
-    okSub:"مرحباً! أنت العضو رقم #313.",
+    okSub:"مرحباً! أنت العضو المؤسس رقم #313.",
     proof:"شخص انضم",
     navMenu:"القائمة", navHow:"كيف يعمل", navAbout:"حولنا",
     navCta:"سجّل",
-    how:"باش غايفيدك  SAVY ",
+    how:"شو كيدير SAVY ليك",
     howSub:"تجربة مفكر فيها من البداية لنهاية",
     benefitsCta:"سجّل بريدك الآن →",
-    proofStrip:"🇲🇦 SAVY أسسها شيف مغربي محترف، من — واحد كيأمن بلي الأكل الصحي لازم يكون بنين، وزوين. كل وجبة كتصمم ليك الـ AI بالضبط — ما كاينش وجبة واحدة تناسب الجميع.",
+    proofStrip:"🇲🇦 SAVY أسسها شيف مغربي من تطوان — واحد كيؤمن بلي الأكل الصحي لازم يكون بنين، مش حشيش. كل وجبة كتصمم ليك الـ AI بالضبط — ما كاينش وجبة واحدة تناسب الجميع.",
     benefits:[
-      {icon:"🤖", color:"#008060", title:"وجبة مصممة 100% ليك",         desc:"الـ AI ديالنا كيحلل أهدافك، الحساسية ديالك، والأذواق ديالك — وكيصمم وجبة فريدة ما كاينش حتا واحد عندو بحالك."},
-      {icon:"⚡", color:"#F4A330", title:"توصيل في 55 دقيقة",           desc:"كيتحضر بسرعة ويوصل ساخن لبابك في تطوان، مضيق، ومرتيل. ما كاين مجمد."},
+      {icon:"🤖", color:"#008060", title:"وجبة مصممة 100% ليك",         desc:"الـ AI ديالنا كيحلل أهدافك، الحساسية ديالك، والأذواق ديالك — وكيصمم وجبة فريدة ما كاينش حتا واحد عندها بحالك."},
+      {icon:"⚡", color:"#F4A330", title:"توصيل في 45 دقيقة",           desc:"كيتحضر طازج ويوصل ساخن لبابك في تطوان، مضيق، ومرتيل. ما كاين مجمد."},
       {icon:"🥗", color:"#00A878", title:"الماكرو محسوب بالغرام",       desc:"السعرات، البروتين، الكربوهيدرات، الدهون — كل رقم محسوب بالـ AI لجسمك وأهدافك."},
       {icon:"🌍", color:"#7C3AED", title:"مطابخ عالمية من كل بلاد",    desc:"مغربي، ياباني، إيطالي، يوناني، هندي، أمريكي — 6 مطابخ دوليين، كلهم معدلين للصحة."},
-      {icon:"💰", color:"#E53935", title:"بثمن معقول",                  desc:"وجبات صحية من جودة عالية ابتداء من 55 درهم. الأعضاء الأوائل: خصم 30% على الطلب الأول."},
+      {icon:"💰", color:"#E53935", title:"بثمن معقول",                  desc:"وجبات صحية من جودة عالية ابتداء من 45 درهم. الأعضاء المؤسسون: خصم 30% على الطلب الأول."},
       {icon:"🔒", color:"#008060", title:"بلا حلول وسط على الجودة",     desc:"مكونات محلية طازجة، بلا مضافات. SAVY كتخدم مع أحسن المنتجين في المنطقة."},
     ],
     steps:[
@@ -884,6 +894,7 @@ const copy = {
 ═══════════════════════════════════════════ */
 function setLang(l){
   lang = l;
+  localStorage.setItem("savy-lang", l);
   document.documentElement.lang = l;
   document.body.dir = l==="ar" ? "rtl" : "ltr";
   const t = copy[l];
@@ -893,7 +904,7 @@ function setLang(l){
 
   // Banner
   document.getElementById("banner-text").textContent = isAr
-    ? "🚀 SAVY  قريباً في تطوان، مضيق، مرتيل وكل المنطقة — انضم للقائمة قبل الإطلاق!"
+    ? "🚀 SAVY قادمة قريباً إلى تطوان، مضيق، مرتيل وكل المنطقة — انضم للقائمة قبل الإطلاق!"
     : "🚀 SAVY arrive bientôt à Tétouan, M'diq, Martil & toute la région — Rejoignez la liste avant le lancement !";
   quizPatchLang(l);
 
@@ -1087,22 +1098,33 @@ function toggleCart(id){
 const MAILCHIMP_URL = "PASTE_YOUR_MAILCHIMP_URL_HERE";
 
 /* ═══════════════════════════════════════════
-   GOOGLE SHEETS — Paste your Apps Script URL below
-   (see instructions in README)
+   FORMSPREE — Paste your Formspree URL below
+   1. Go to formspree.io → sign up free
+   2. Create a new form → copy your URL
+   3. Paste it below (looks like: https://formspree.io/f/xxxxxxxx)
 ═══════════════════════════════════════════ */
-const SHEETS_URL = "PASTE_YOUR_GOOGLE_SCRIPT_URL_HERE";
+const FORMSPREE_URL = "https://script.google.com/macros/s/AKfycby4_iSl8QALKorwpEElMHf0qxsnhLyxkVQdvnoGISy8gMj5zGJcqn5gRwQwvPXMQMf8AQ/exec";
 
 async function saveToSheets(data) {
-  if (!SHEETS_URL || SHEETS_URL === "PASTE_YOUR_GOOGLE_SCRIPT_URL_HERE") return;
+  if (!FORMSPREE_URL || FORMSPREE_URL === "PASTE_YOUR_FORMSPREE_URL_HERE") return;
   try {
-    await fetch(SHEETS_URL, {
+    await fetch(FORMSPREE_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-      mode: "no-cors" // Google Apps Script requires no-cors
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify({
+        "Prénom":      data.name     || "",
+        "Objectif":    data.goal     || "",
+        "Préférence":  data.pref     || "",
+        "Calories":    data.cal      || "",
+        "Email":       data.email    || "",
+        "Téléphone":   data.phone    || "",
+        "Nom complet": data.fullname || "",
+        "Message":     data.message  || "",
+        "Langue":      data.lang     || ""
+      })
     });
   } catch(e) {
-    console.warn("Sheets save failed:", e);
+    console.warn("Formspree save failed:", e);
   }
 }
 
@@ -1277,47 +1299,47 @@ const mealLib = {
 
 const quizSteps = {
   fr: [
-    { msg: "Bonjour et bienvenue ! 😊 Je suis SAVY, votre chef IA personnel. En quelques questions, je vais composer un repas sain fait exactement pour vous. Pour commencer, comment puis-je vous appeler ?", type: "input" },
-    { msg: (n) => `Ravie de vous rencontrer, ${n} ! 🌿 Pour vous proposer le repas qui vous correspond vraiment, j'aurais besoin de connaître votre objectif. Lequel vous correspond le mieux ?`, type: "choice",
+    { msg: "Bonjour ! 😊 Moi c'est SAVY — votre chef personnel. Je ne pose que 3 questions et je vous prépare un repas fait pour vous, pas pour tout le monde. Juste pour commencer... comment vous appelez-vous ?", type: "input" },
+    { msg: (n) => `${n}, ravi de vous rencontrer ! 🙏\nAlors dites-moi franchement — pourquoi vous êtes là aujourd'hui ? Quel est votre vrai objectif ?`, type: "choice",
       choices: [
-        { label: "🏃 Je souhaite perdre du poids",    val: "weight" },
-        { label: "💪 Je veux prendre du muscle",      val: "muscle" },
-        { label: "⚡ J'ai besoin de plus d'énergie",  val: "energy" },
-        { label: "🥗 Je veux simplement mieux manger", val: "sain"  },
+        { label: "🏃 Perdre du poids",               val: "weight" },
+        { label: "💪 Gagner du muscle",               val: "muscle" },
+        { label: "⚡ Avoir plus d'énergie",           val: "energy" },
+        { label: "🥗 Mieux manger, simplement",       val: "sain"   },
       ]},
-    { msg: "Très bien, merci ! 🙏 Pour affiner votre repas, quelle est votre préférence alimentaire ?", type: "choice",
+    { msg: (n) => `Bien reçu ! C'est exactement ce genre d'objectif que j'adore travailler.\nUne chose importante — qu'est-ce que vous aimez manger ?`, type: "choice",
       choices: [
-        { label: "🥩 Je mange de la viande",  val: "viande"  },
-        { label: "🐟 Je préfère le poisson",  val: "poisson" },
-        { label: "🌿 Je suis végétarien(ne)", val: "vegan"   },
+        { label: "🥩 Viande — j'adore ça",           val: "viande"  },
+        { label: "🐟 Poisson — ma préférence",        val: "poisson" },
+        { label: "🌿 Végétarien — pas de viande",     val: "vegan"   },
       ]},
-    { msg: "Parfait ! Une dernière question, promis 😊 — quel niveau calorique vous convient le mieux ?", type: "choice",
+    { msg: "Parfait, dernière question — et c'est la plus importante ! 😄\nQuel type de repas vous correspond le mieux ?", type: "choice",
       choices: [
         { label: "🌿 Léger — moins de 450 kcal",     val: "light"    },
         { label: "⚖️ Équilibré — entre 450 et 600",  val: "balanced" },
-        { label: "🔥 Généreux — plus de 600 kcal",   val: "boost"    },
+        { label: "🔥 Costaud — plus de 600 kcal",    val: "boost"    },
       ]},
   ],
   ar: [
     { msg: "Mrhba bik ! 😊 Ana SAVY — chef dyalek b l-intelligence artificielle. 3ndi tjriba kbira f majal lwajabat, ghadi n9lb m3ak 3la wajba s7iya u tkun ldida, mssawba 3la wedk b la précision. Wesh momkin t3rfni b issmek ?", type: "input" },
-    { msg: (n) => `Shrf b ma3riftek, ${n} ! 🌿 Bach n9dr n9lb lik l-wajba li kat7wej, ghadi nkhalik t3ref — chno l-but dyalek ?`, type: "choice",
+    { msg: (n) => `${n}, yishrfni n3rfek ! 🙏\nKhberni b ssra7a — 3lach jiti lhna lyom ? Chno l-but li kat7wej t7aqeq ?`, type: "choice",
       choices: [
-        { label: "🏃 Bghi n9ess mel wazn dyali",    val: "weight" },
-        { label: "💪 Bghi nbni jism w muscle",       val: "muscle" },
-        { label: "⚡ Bghi 3endi energy ktar f n'har",  val: "energy" },
-        { label: "🥗 Bghi nakol s7i w mzyan",         val: "sain"   },
+        { label: "🏃 Bghi n9ess f l-wazn dyali",         val: "weight" },
+        { label: "💪 Bghi nbni jism w n9wi",              val: "muscle" },
+        { label: "⚡ Bghi 3endi energy ktar f n'har",     val: "energy" },
+        { label: "🥗 Bghi nakol s7i — 7aja basita",      val: "sain"   },
       ]},
-    { msg: "Shukran bzzaf ! 🙏 Daba 3tini ma3louma wahda okhra — chno t7eb takol ?", type: "choice",
+    { msg: (n) => `Mfhoom ! Had n-naw3 d l-ahdaf kayn3jebni bzzaf n-khdmo 3lih.\nSu'al mouhim — chno lli kat7eb takol ?`, type: "choice",
       choices: [
-        { label: "🥩 Kant7eb l-l7em",       val: "viande"  },
-        { label: "🐟 Kant7eb l-h'wt",       val: "poisson" },
-        { label: "🌿 Kant7eb l-khodra",     val: "vegan"   },
+        { label: "🥩 L7em — hadchi lli kan7bo",           val: "viande"  },
+        { label: "🐟 H'wt — howa l-mofadal dyali",       val: "poisson" },
+        { label: "🌿 Khodra — bla l7em w h'wt",          val: "vegan"   },
       ]},
-    { msg: "Zwin ! Su'al wahid o khlas, wou3dek 😊 — chhal d les calories kat7wej ?", type: "choice",
+    { msg: "Zwin ! Akhir su'al — u howa l-mouhim ! 😄\nChno n-naw3 d l-wajba lli kan7wej ?", type: "choice",
       choices: [
-        { label: "🌿 Khfifa — less men 450 kcal",   val: "light"    },
-        { label: "⚖️ M3tedla — bin 450 o 600 kcal", val: "balanced" },
-        { label: "🔥 Kbira — fok 600 kcal",         val: "boost"    },
+        { label: "🌿 Khfifa — less men 450 kcal",        val: "light"    },
+        { label: "⚖️ M3tedla — bin 450 u 600 kcal",     val: "balanced" },
+        { label: "🔥 Gania u kbira — fok 600 kcal",     val: "boost"    },
       ]},
   ]
 };
@@ -1418,8 +1440,8 @@ function quizAdvance() {
 function quizRevealMeal() {
   const isAr = lang === "ar";
   const thinkMsg = isAr
-    ? "Shukran, ${quizName} ! ✨ Daba kan7der lik wajbtek... wahd l-lahda s'ghira w ghadi twali !"
-    : `Merci pour vos réponses, ${quizName} ! ✨ Je prépare votre repas personnalisé... quelques instants seulement.`;
+    ? `Wakha ${quizName}... daba kan7seb. ⏳ Khas nshof ach mzyan lik — wahd thiniya u ghadi nwerik !`
+    : `Ok ${quizName}, je réfléchis... ⏳ Je veux vraiment trouver ce qui vous correspond. Une seconde !`;
   quizBot(thinkMsg);
 
   setTimeout(() => {
@@ -1427,7 +1449,7 @@ function quizRevealMeal() {
                   mealLib.sain.poisson.balanced;
     const name  = meal.n || meal.name || "Repas SAVY";
     const desc  = isAr
-      ? "Had l-wajba mfessla 3lik nta/nti — t7dert b koll 3inaya bach twafi l-ahdaf dyalek w t3jbek b le goût dyalha. 🤌"
+      ? `Sawbtha lik khas nta/nti — ma shi wajba 3adiya. Kol haja fiyha sababa 7sab but dyalek. Jarrbha u golili raiyek ! 🤌`
       : meal.desc;
 
     const msgs = document.getElementById("quiz-msgs");
@@ -1450,8 +1472,8 @@ function quizRevealMeal() {
     // Suspense lock message
     setTimeout(() => {
       const lockMsg = isAr
-        ? "Wajba Diyalk Ghatji zwina bzzaf ! 🔒 SAVY 9ariban f medintek — Tétouan, M'diq w Martil. Khelli l-email dyalek hna — ghadi n7fdo lik had l-wajba o n3awdok b khsm 20% nhar l-iftitah. 🇲🇦"
-        : `Votre repas est prêt et il vous attend ! 🔒\n\nSAVY arrive très bientôt à Tétouan, M'diq et Martil. Laissez-nous votre adresse email — nous conserverons ce repas pour vous et vous offrirons 20% de réduction dès le lancement. 🇲🇦`;
+        ? `Haha, wajbtek kayna u zwina bzzaf ! 😄\n\nDaba 3ndi su'al — wash bghiti n7fdhalk iyaha 7ta nhar ma ntla3o ? SAVY 9ariban f medintek — Tétouan, M'diq u Martil. Khellini l-email aw raqem dyalek, u nta awl lli ghadi nkhdem lih — m3a khsm 20% ! 🇲🇦`
+        : `Franchement ${quizName}... ce repas vous va vraiment bien. 😄\n\nJe voudrais vous le mettre de côté. SAVY arrive très bientôt à Tétouan, M'diq et Martil. Donnez-moi juste votre contact — et je vous appelle en premier dès qu'on est prêts, avec 20% de réduction. 🇲🇦`;
       quizBot(lockMsg);
       setTimeout(() => {
         const isAr2 = lang === "ar";
@@ -1511,8 +1533,8 @@ function quizSaveContact() {
 
   document.getElementById("quiz-email-area").style.display = "none";
   quizBot(isAr
-    ? `Shukran bzzaf, ${quizName} ! 🎉 Wajbtek m7jouza b koll mhebba. SAVY 9ariban f medintek — Sir/Siri b s7a ! 🚀🇲🇦`
-    : `Merci beaucoup, ${quizName} ! 🎉 Votre repas est bien réservé. Nous avons hâte de vous accueillir très bientôt. Prenez soin de vous ! 🚀🇲🇦`);
+    ? `${quizName}, mregistri 3ndi ! 🎉 Rani farhane bik — ghadi tkun men awlin lli ghadi nkhdem lihom. Tsna wajbtek, katji 9rib ! 🚀🇲🇦`
+    : `C'est fait, ${quizName} ! 🎉 Votre repas vous attend. Vous serez parmi les premiers que j'appellerai — j'ai vraiment hâte de cuisiner pour vous. À très bientôt ! 🚀🇲🇦`);
   document.getElementById("quiz-status").textContent = isAr ? "Shukran — Nchofok 9rib 🇲🇦" : "Merci — À très bientôt 🇲🇦";
 }
 
@@ -1565,7 +1587,18 @@ function quizInit() {
   }, 1100);
 }
 
-window.addEventListener("DOMContentLoaded", () => setTimeout(quizInit, 400));
+window.addEventListener("DOMContentLoaded", () => {
+  // Apply dark mode icon
+  const btn = document.getElementById("theme-btn");
+  if (btn) btn.textContent = darkMode ? "☀️" : "🌙";
+  if (darkMode) document.documentElement.setAttribute("data-theme", "dark");
+
+  // Apply saved or default language
+  setLang(lang);
+
+  // Start quiz
+  setTimeout(quizInit, 400);
+});
 
 // Typing animation keyframe (add dynamically)
 const styleTag = document.createElement("style");
