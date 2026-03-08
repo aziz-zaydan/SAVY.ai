@@ -1,3 +1,5 @@
+const fetch = require('node-fetch');
+
 exports.handler = async function(event) {
   if (event.httpMethod !== "POST") {
     return { statusCode: 405, body: "Method Not Allowed" };
@@ -19,7 +21,7 @@ exports.handler = async function(event) {
     const data = await response.json();
 
     return {
-      statusCode: response.status,
+      statusCode: 200,
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
     };
