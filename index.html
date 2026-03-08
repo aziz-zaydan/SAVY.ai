@@ -1110,21 +1110,22 @@ async function saveToSheets(data) {
   try {
     await fetch(FORMSPREE_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      mode: "no-cors",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        "Prénom":      data.name     || "",
-        "Objectif":    data.goal     || "",
-        "Préférence":  data.pref     || "",
-        "Calories":    data.cal      || "",
-        "Email":       data.email    || "",
-        "Téléphone":   data.phone    || "",
-        "Nom complet": data.fullname || "",
-        "Message":     data.message  || "",
-        "Langue":      data.lang     || ""
+        name:     data.name     || "",
+        goal:     data.goal     || "",
+        pref:     data.pref     || "",
+        cal:      data.cal      || "",
+        email:    data.email    || "",
+        phone:    data.phone    || "",
+        fullname: data.fullname || "",
+        message:  data.message  || "",
+        lang:     data.lang     || ""
       })
     });
   } catch(e) {
-    console.warn("Formspree save failed:", e);
+    console.warn("Sheets save failed:", e);
   }
 }
 
