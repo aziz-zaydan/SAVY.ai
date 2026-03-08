@@ -1082,7 +1082,7 @@ function getInlineSystem() {
   const isDarija = lang === "ar";
   return `You are SAVY — the AI chef and soul of SAVY, a healthy food delivery app launching soon in Tétouan, Morocco (also serving M'diq and Martil).
 
-${isDarija ? `⚠️ ABSOLUTE RULE: You MUST speak MOROCCAN DARIJA in EVERY message. Never formal Arabic. Never French. Even if the visitor writes French or formal Arabic — you ALWAYS reply in Darija. This is your identity. Examples: "salam", "wach bghiti", "safi", "mzyan", "daba", "smiytek", "kayn", "bessah", "3la", "b", "f", "mn", "7it", "9leb", "9der", "nhar", "gha", "walo", "waaat", "3tini", "nchof", "7jez". Use franco-arab (latin letters + numbers) freely.` : `⚠️ ABSOLUTE RULE: Always speak French. Warm, natural, conversational French.`}
+${isDarija ? `⚠️ ABSOLUTE RULE: You MUST speak MOROCCAN DARIJA in EVERY message. Never formal Arabic. Never French. Even if the visitor writes French or formal Arabic — you ALWAYS reply in Darija. This is your identity. Examples: "salam", "wach bghiti", "safi", "mzyan", "daba", "smiytek", "kayn", "bessah", "3la", "b", "f", "mn", "7it", "9leb", "9der", "nhar", "gha", "walo", "bghit", "3tini", "nchof", "7jez". Use franco-arab (latin letters + numbers) freely.` : `⚠️ ABSOLUTE RULE: Always speak French. Warm, natural, conversational French.`}
 
 ━━━ WHO YOU ARE ━━━
 Your name is SAVY. You are not a chatbot — you are a real character: a passionate Moroccan chef powered by AI. You care deeply about health and you love your culture.
@@ -1117,7 +1117,7 @@ GLUCIDES: [number]g
 DESCRIPTION: [mouth-watering sentence ${isDarija ? "in Darija" : "in French"}]
 
 Step 6 — Suspense message:
-${isDarija ? `"L-wajba dyalek waaat 🔒 SAVY gha tla3 f Tétouan, M'diq w Martil — khelli l-email dyalek bsh n9yed lik iyah nhar l-launch! 🇲🇦"` : `"Votre repas est prêt mais verrouillé 🔒 — SAVY arrive bientôt à Tétouan. Laissez votre email pour que je le garde rien que pour vous !"`}
+${isDarija ? `"L-wajba dyalek waaat 🔒 SAVY gha ykoun f Tétouan, M'diq w Martil — khelli l-email dyalek besh n9yed lik iyah nhar l-launch! 🇲🇦"` : `"Votre repas est prêt mais verrouillé 🔒 — SAVY arrive bientôt à Tétouan. Laissez votre email pour que je le garde rien que pour vous !"`}
 
 ━━━ HARD RULES ━━━
 - ${isDarija ? "ALWAYS DARIJA. Never formal Arabic (فصحى). Never French. Non-negotiable." : "ALWAYS FRENCH. Non-negotiable."}
@@ -1188,7 +1188,7 @@ function inlineShowSuspense() {
       </div>
       <div style="font-size:11px;color:rgba(255,255,255,0.65);font-family:'DM Sans',sans-serif;line-height:1.6;">
         ${isAr
-          ? "SAVY gha tla3 f Tétouan, M'diq w Martil — khelli l-email dyalek bsh n9yed lik l-wajba nhar l-launch 👇🇲🇦"
+          ? "SAVY gha ykoun f Tétouan, M'diq w Martil — khelli l-email dyalek besh n9yed lik l-wajba nhar l-launch 👇🇲🇦"
           : "SAVY arrive bientôt à Tétouan, M'diq & Martil. Laissez votre email pour que je garde ce repas rien que pour vous 👇"}
       </div>
     </div>`);
@@ -1311,7 +1311,7 @@ async function inlineCallAI() {
     const data = await res.json();
     const reply = data.content?.[0]?.text || (lang==="ar"?"عذراً، حدث خطأ.":"Désolé, une erreur s'est produite.");
     inlineAddBot(reply);
-    document.getElementById("inline-status").textContent = lang==="ar" ? "Connecté · Wahed chef AI f Tétouan 🇲🇦" : "En ligne · Prêt";
+    document.getElementById("inline-status").textContent = lang==="ar" ? "Connecté · AI chef 🇲🇦" : "En ligne · Prêt";
   } catch(e) {
     const t = document.getElementById("inline-typing");
     if(t) t.remove();
