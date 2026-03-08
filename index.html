@@ -24,6 +24,83 @@
       --shadow:   0 2px 16px rgba(0,128,96,0.08);
       --shadowH:  0 8px 32px rgba(0,128,96,0.15);
     }
+    [data-theme="dark"] {
+      --bg:       #060E09;
+      --card:     #0C1A0F;
+      --mint:     #0C1A0F;
+      --green:    #00C87A;
+      --greenL:   #00E68A;
+      --greenXL:  #0C1A0F;
+      --text:     #EAF5EE;
+      --sub:      #7ABFA3;
+      --muted:    #6B5A1A;
+      --border:   #152A1A;
+      --orange:   #F4A330;
+      --orangeBg: #1A1200;
+      --gold:     #D4AF37;
+      --goldL:    #F0CB5A;
+      --shadow:   0 2px 20px rgba(0,0,0,0.7);
+      --shadowH:  0 8px 36px rgba(0,200,122,0.18);
+    }
+    [data-theme="dark"] body { background:#060E09; color:var(--text); }
+    [data-theme="dark"] .step-card,
+    [data-theme="dark"] .stat-card,
+    [data-theme="dark"] .dish-card { background:#0C1A0F; border-color:#152A1A; }
+    [data-theme="dark"] input,
+    [data-theme="dark"] textarea { background:#0C1A0F !important; color:var(--text) !important; border-color:#152A1A !important; }
+    [data-theme="dark"] input::placeholder,
+    [data-theme="dark"] textarea::placeholder { color:#4A4020 !important; }
+    [data-theme="dark"] #quiz-msgs { background:#0C1A0F; border-color:#152A1A; }
+    [data-theme="dark"] #quiz-msgs > div > div:first-of-type { background:#0F2214 !important; }
+    [data-theme="dark"] #navbar { background:rgba(6,14,9,0.97); border-color:#152A1A; backdrop-filter:blur(12px); }
+    [data-theme="dark"] .lang-wrap { background:#0C1A0F; border-color:#152A1A; }
+    [data-theme="dark"] .lang-btn { color:var(--sub); }
+    [data-theme="dark"] .lang-btn.active { background:var(--green); color:#060E09; }
+    [data-theme="dark"] #launch-banner { background:linear-gradient(90deg,#060E09,#0C1A0F,#060E09); border-bottom:1px solid var(--border); color:var(--text); }
+    [data-theme="dark"] .hero-section { background:#060E09; }
+    [data-theme="dark"] .benefits-section,
+    [data-theme="dark"] .stats-bar,
+    [data-theme="dark"] .menu-section,
+    [data-theme="dark"] .final-cta,
+    [data-theme="dark"] footer { background:#060E09; }
+    [data-theme="dark"] .btn-outline { background:transparent; color:var(--green); border-color:var(--border); }
+    [data-theme="dark"] .btn-outline:hover { background:var(--green); color:#060E09; }
+    [data-theme="dark"] #theme-btn { background:#0C1A0F; color:var(--text); border-color:var(--border); }
+    [data-theme="dark"] #theme-btn:hover { background:var(--greenXL); color:var(--green); }
+    [data-theme="dark"] .dish-tab { background:#0C1A0F; color:#7A6A2A; border-color:#152A1A; }
+    [data-theme="dark"] .dish-tab.active { background:var(--green); color:#060E09; border-color:var(--green); }
+    [data-theme="dark"] .proof-strip { background:linear-gradient(135deg,#0C1A0F,#060E09); border:1px solid #152A1A; }
+    [data-theme="dark"] .av { border-color:#060E09; }
+    [data-theme="dark"] h1, [data-theme="dark"] h2, [data-theme="dark"] h3 { color:var(--text); }
+    [data-theme="dark"] .accent { color:var(--green); }
+    [data-theme="dark"] .nav-logo span { color:var(--text); }
+    [data-theme="dark"] .nav-link { color:var(--sub); }
+    [data-theme="dark"] .nav-link:hover { color:var(--green); }
+    [data-theme="dark"] .btn-cta { background:var(--green); color:#fff; }
+    [data-theme="dark"] .btn-cta:hover { background:var(--greenL); }
+    [data-theme="dark"] #savy-quiz-wrap > div:first-child { border-bottom:1px solid #152A1A; }
+    [data-theme="dark"] .hero-sub, [data-theme="dark"] .proof-text { color:var(--sub); }
+    [data-theme="dark"] ::-webkit-scrollbar-track { background:#060E09; }
+    [data-theme="dark"] ::-webkit-scrollbar-thumb { background:#152A1A; border-radius:4px; }
+    [data-theme="dark"] #how  { background:var(--bg) !important; border-color:var(--border) !important; }
+    [data-theme="dark"] #menu { background:var(--bg) !important; border-color:var(--border) !important; }
+    [data-theme="dark"] #stats { background:#060E09 !important; }
+    [data-theme="dark"] .step-card { background:var(--card) !important; border-color:var(--border) !important; }
+    [data-theme="dark"] .step-icon { background:#0F2214 !important; border-color:var(--border) !important; }
+    [data-theme="dark"] .stat-card { background:var(--card) !important; border-color:var(--border) !important; }
+    [data-theme="dark"] .stat-val  { color:var(--green) !important; }
+    [data-theme="dark"] .chip      { background:var(--card) !important; border-color:var(--border) !important; }
+    [data-theme="dark"] .chip-val  { color:var(--green) !important; }
+    [data-theme="dark"] .dish-card { background:var(--card) !important; border-color:var(--border) !important; }
+    [data-theme="dark"] .title-bar { background:var(--green) !important; }
+    [data-theme="dark"] .step-num  { background:var(--green) !important; color:#fff !important; }
+    [data-theme="dark"] .email-inp, [data-theme="dark"] .search-inp { background:var(--card) !important; color:var(--text) !important; border-color:var(--border) !important; }
+    [data-theme="dark"] .pill      { background:var(--card) !important; border-color:var(--border) !important; color:var(--sub) !important; }
+    [data-theme="dark"] .pill.active { background:var(--green) !important; color:#060E09 !important; }
+    [data-theme="dark"] .cart-bar button { background:var(--card) !important; }
+    [data-theme="dark"] footer     { background:var(--card) !important; border-color:var(--border) !important; }
+    [data-theme="dark"] #quiz-msgs { background:var(--card) !important; border-color:var(--border) !important; }
+    [data-theme="dark"] #tab-phone { background:var(--card) !important; color:var(--text) !important; border-color:var(--border) !important; }
     *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
     html { scroll-behavior:smooth; }
     body { font-family:'DM Sans',system-ui,sans-serif; background:var(--bg); color:var(--text); overflow-x:hidden; }
@@ -60,7 +137,7 @@
     .nav-links { display:flex; gap:24px; }
     .nav-link { color:var(--sub); font-size:13px; font-weight:600; background:none; border:none; cursor:pointer; transition:color .2s; text-decoration:none; }
     .nav-link:hover { color:var(--green); }
-    .lang-wrap { display:flex; gap:4px; background:#fff; border-radius:99px; padding:3px 4px; border:1px solid var(--border); }
+    .lang-wrap { display:flex; gap:4px; background:var(--card); border-radius:99px; padding:3px 4px; border:1px solid var(--border); }
     .lang-btn { padding:5px 12px; border-radius:99px; border:none; cursor:pointer; font-size:12px; font-weight:700; transition:all .2s; background:transparent; color:var(--sub); font-family:'DM Sans',sans-serif; }
     .lang-btn.active { background:var(--green); color:#fff; }
     .btn-cta {
@@ -73,7 +150,7 @@
     .btn-cta:hover { background:var(--greenL); transform:translateY(-2px); box-shadow:0 10px 32px rgba(0,168,120,.3); }
     .btn-cta-sm { padding:9px 18px; font-size:12px; border-radius:10px; }
     .btn-outline {
-      background:#fff; color:var(--green); border:1.5px solid var(--border);
+      background:var(--card); color:var(--green); border:1.5px solid var(--border);
       cursor:pointer; border-radius:14px; padding:14px 24px;
       font-size:14px; font-weight:700; transition:all .2s;
       font-family:'DM Sans',sans-serif;
@@ -109,7 +186,7 @@
     .email-wrap { display:flex; gap:10px; max-width:490px; flex-wrap:wrap; margin-bottom:10px; }
     .email-inp {
       flex:1; padding:14px 18px; border-radius:14px;
-      border:1.5px solid var(--border); background:#fff;
+      border:1.5px solid var(--border); background:var(--card);
       font-size:14px; outline:none; color:var(--text);
       transition:border-color .2s; min-width:220px;
       font-family:'DM Sans',sans-serif;
@@ -135,17 +212,17 @@
     .hero-right { display:flex; flex-direction:column; align-items:center; gap:18px; }
     .robot-float { animation:float 3.5s ease-in-out infinite; filter:drop-shadow(0 16px 40px rgba(0,128,96,.2)); }
     .stat-chips { display:flex; gap:10px; }
-    .chip { padding:12px 14px; border-radius:16px; text-align:center; background:#fff; border:1px solid var(--border); box-shadow:var(--shadow); }
+    .chip { padding:12px 14px; border-radius:16px; text-align:center; background:var(--card); border:1px solid var(--border); box-shadow:var(--shadow); }
     .chip-val { font-family:'Syne',sans-serif; color:var(--green); font-weight:800; font-size:14px; margin-top:3px; }
     .chip-lbl { color:var(--muted); font-size:10px; margin-top:1px; }
 
     /* ── STEPS ── */
-    #how { padding:72px clamp(16px,4vw,56px); background:#fff; border-top:1px solid var(--border); }
+    #how { padding:72px clamp(16px,4vw,56px); background:var(--bg); border-top:1px solid var(--border); }
     .section-header { text-align:center; margin-bottom:48px; }
     .section-title { font-family:'Cormorant Garamond',serif; font-size:clamp(30px,4.5vw,48px); font-weight:700; color:var(--text); margin-bottom:10px; letter-spacing:0.01em; }
     .title-bar { width:48px; height:4px; background:var(--green); border-radius:99px; margin:0 auto; }
     .steps-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; max-width:1100px; margin:0 auto; }
-    .step-card { background:#fff; border-radius:20px; padding:24px 20px; box-shadow:var(--shadow); border:1px solid var(--border); transition:all .2s; }
+    .step-card { background:var(--card); border-radius:20px; padding:24px 20px; box-shadow:var(--shadow); border:1px solid var(--border); transition:all .2s; }
     .step-card:hover { box-shadow:var(--shadowH); transform:translateY(-3px); }
     .step-icon { width:50px; height:50px; border-radius:16px; background:var(--greenXL); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:24px; margin-bottom:14px; }
     .step-num { width:24px; height:24px; border-radius:50%; background:var(--green); display:flex; align-items:center; justify-content:center; color:#fff; font-size:11px; font-weight:900; margin-bottom:10px; font-family:'Syne',sans-serif; }
@@ -155,18 +232,18 @@
     /* ── STATS ── */
     #stats { padding:52px clamp(16px,4vw,56px); background:var(--bg); }
     .stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; max-width:1100px; margin:0 auto; }
-    .stat-card { background:#fff; border-radius:20px; padding:24px 16px; text-align:center; box-shadow:var(--shadow); border:1px solid var(--border); }
+    .stat-card { background:var(--card); border-radius:20px; padding:24px 16px; text-align:center; box-shadow:var(--shadow); border:1px solid var(--border); }
     .stat-val { font-family:'Syne',sans-serif; font-size:clamp(22px,3.5vw,34px); font-weight:900; color:var(--green); margin-bottom:6px; }
     .stat-lbl { font-size:13px; color:var(--muted); }
 
     /* ── MENU ── */
-    #menu { padding:72px clamp(16px,4vw,56px) 80px; background:#fff; border-top:1px solid var(--border); }
+    #menu { padding:72px clamp(16px,4vw,56px) 80px; background:var(--bg); border-top:1px solid var(--border); }
     .menu-inner { max-width:780px; margin:0 auto; }
     .search-wrap { position:relative; margin-bottom:18px; }
     .search-icon { position:absolute; left:14px; top:50%; transform:translateY(-50%); pointer-events:none; }
     .search-inp {
       width:100%; padding:14px 18px 14px 44px; border-radius:16px;
-      border:1.5px solid var(--border); background:#fff;
+      border:1.5px solid var(--border); background:var(--card);
       font-size:14px; outline:none; color:var(--text);
       transition:border-color .2s; box-shadow:var(--shadow);
       font-family:'DM Sans',sans-serif;
@@ -188,10 +265,10 @@
       margin-bottom:16px; animation:popIn .3s ease;
     }
     .cart-bar span { color:#fff; font-size:13px; font-weight:600; }
-    .cart-bar button { background:#fff; color:var(--green); border:none; border-radius:10px; padding:7px 16px; font-size:12px; font-weight:700; cursor:pointer; font-family:'DM Sans',sans-serif; }
+    .cart-bar button { background:var(--card); color:var(--green); border:none; border-radius:10px; padding:7px 16px; font-size:12px; font-weight:700; cursor:pointer; font-family:'DM Sans',sans-serif; }
     .dishes { display:flex; flex-direction:column; gap:14px; }
     .dish-card {
-      background:#fff; border-radius:20px; padding:16px 18px;
+      background:var(--card); border-radius:20px; padding:16px 18px;
       box-shadow:var(--shadow); border:1px solid var(--border);
       display:flex; align-items:center; gap:14px;
       transition:all .22s; animation:slideUp .4s ease both;
@@ -231,7 +308,7 @@
     .final-sub { font-size:15px; color:var(--sub); line-height:1.8; margin-bottom:36px; max-width:400px; margin-left:auto; margin-right:auto; }
     .social-links { display:flex; gap:10px; justify-content:center; margin-top:32px; flex-wrap:wrap; }
     .social-btn {
-      padding:11px 18px; border-radius:14px; background:#fff;
+      padding:11px 18px; border-radius:14px; background:var(--card);
       border:1px solid var(--border); display:flex; align-items:center; gap:9px;
       cursor:pointer; transition:all .2s; text-decoration:none;
       box-shadow:var(--shadow);
@@ -243,7 +320,7 @@
     /* ── FOOTER ── */
     footer {
       padding:26px clamp(16px,4vw,56px);
-      border-top:1px solid var(--border); background:#fff;
+      border-top:1px solid var(--border); background:var(--card);
       display:flex; align-items:center; justify-content:space-between;
       flex-wrap:wrap; gap:14px;
     }
@@ -300,6 +377,14 @@
   </div>
 
   <div style="display:flex;gap:8px;align-items:center;">
+    <!-- Theme toggle -->
+    <button id="theme-btn" onclick="toggleTheme()" title="Changer le thème" style="
+      width:36px;height:36px;border-radius:50%;border:1px solid var(--border);
+      background:var(--card,#fff);color:var(--text);font-size:16px;cursor:pointer;
+      display:flex;align-items:center;justify-content:center;transition:all .2s;
+      box-shadow:var(--shadow);"
+      onmouseover="this.style.borderColor='var(--green)'"
+      onmouseout="this.style.borderColor='var(--border)'">🌙</button>
     <div class="lang-wrap">
       <button class="lang-btn active" onclick="setLang('fr')">🇫🇷 FR</button>
       <button class="lang-btn"        onclick="setLang('ar')">🇲🇦 AR</button>
@@ -348,9 +433,10 @@
         La livraison de repas sains propulsée par l'IA
       </p>
 
-      <!-- 2. SAVY AGENT — right after city/tagline, before title+email -->
-      <div class="su2" style="margin-bottom:24px;max-width:500px;">
+      <!-- 2. SAVY QUIZ — no API, fully local -->
+      <div class="su2" style="margin-bottom:24px;max-width:500px;" id="savy-quiz-wrap">
 
+        <!-- Header bar -->
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
           <div style="width:40px;height:40px;border-radius:13px;background:var(--green);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 14px rgba(0,128,96,0.3);">
             <svg width="24" height="24" viewBox="0 0 80 80" fill="none">
@@ -368,57 +454,65 @@
             <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:15px;color:var(--text);">SAVY</div>
             <div style="font-size:11px;color:var(--muted);font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:5px;">
               <span style="width:6px;height:6px;border-radius:50%;background:#4ade80;display:inline-block;animation:pulse 1.5s infinite;"></span>
-              <span id="inline-status">En ligne · Composez votre repas idéal</span>
+              <span id="quiz-status">En ligne · Chef SAVY 🇲🇦</span>
             </div>
           </div>
-          <button onclick="resetInlineAgent()" title="Recommencer" style="background:var(--greenXL);border:1px solid var(--border);color:var(--green);width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .2s;" onmouseover="this.style.background='var(--mint)'" onmouseout="this.style.background='var(--greenXL)'">↺</button>
+          <button onclick="quizReset()" title="Recommencer" style="background:var(--greenXL);border:1px solid var(--border);color:var(--green);width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .2s;">↺</button>
         </div>
 
-        <div id="inline-msgs" style="
-          background:#fff;border-radius:18px;border:1.5px solid var(--border);
-          padding:14px;min-height:90px;max-height:200px;overflow-y:auto;
-          display:flex;flex-direction:column;gap:10px;
-          box-shadow:var(--shadow);scroll-behavior:smooth;margin-bottom:8px;
-        "></div>
+        <!-- Chat window -->
+        <div id="quiz-msgs" style="background:var(--card);border-radius:18px;border:1.5px solid var(--border);padding:14px;min-height:90px;max-height:220px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;box-shadow:var(--shadow);scroll-behavior:smooth;margin-bottom:8px;"></div>
 
-        <div id="inline-qr" style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:8px;"></div>
+        <!-- Choice buttons -->
+        <div id="quiz-choices" style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:8px;"></div>
 
-        <div id="inline-input-area" style="display:flex;gap:8px;">
-          <input id="inline-input" placeholder="Répondez à SAVY..." style="
-            flex:1;padding:11px 15px;border-radius:13px;
-            border:1.5px solid var(--border);font-size:13px;
-            outline:none;font-family:'DM Sans',sans-serif;color:var(--text);
-            background:var(--bg);transition:border-color .2s;
-          " onkeydown="if(event.key==='Enter') inlineSend()"
-          onfocus="this.style.borderColor='var(--green)';this.style.background='#fff'"
-          onblur="this.style.borderColor='var(--border)';this.style.background='var(--bg)'"/>
-          <button onclick="inlineSend()" id="inline-send" style="
-            width:40px;height:40px;border-radius:13px;border:none;
-            background:var(--green);color:#fff;cursor:pointer;
-            display:flex;align-items:center;justify-content:center;
-            box-shadow:0 4px 12px rgba(0,128,96,0.3);transition:all .2s;flex-shrink:0;
-          " onmouseover="this.style.background='var(--greenL)'" onmouseout="this.style.background='var(--green)'">
+        <!-- Name input (step 0 only) -->
+        <div id="quiz-input-area" style="display:none;display:flex;gap:8px;">
+          <input id="quiz-name-inp" placeholder="Votre prénom..." style="flex:1;padding:11px 15px;border-radius:13px;border:1.5px solid var(--border);font-size:13px;outline:none;font-family:'DM Sans',sans-serif;color:var(--text);background:var(--bg);transition:border-color .2s;"
+            onkeydown="if(event.key==='Enter') quizSubmitName()"
+            onfocus="this.style.borderColor='var(--green)';this.style.background='#fff'"
+            onblur="this.style.borderColor='var(--border)';this.style.background='var(--bg)'"/>
+          <button onclick="quizSubmitName()" style="width:40px;height:40px;border-radius:13px;border:none;background:var(--green);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,128,96,0.3);flex-shrink:0;">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/></svg>
           </button>
         </div>
 
-        <div id="inline-email-area" style="display:none;margin-top:8px;">
-          <div style="display:flex;gap:8px;">
-            <input id="inline-email" type="email" placeholder="votre@email.com" style="
-              flex:1;padding:11px 15px;border-radius:13px;
-              border:1.5px solid var(--green);font-size:13px;
-              outline:none;font-family:'DM Sans',sans-serif;color:var(--text);background:#fff;
-            "/>
-            <button onclick="inlineSaveMeal()" id="inline-save-btn" style="
-              padding:11px 16px;border-radius:13px;border:none;
-              background:var(--green);color:#fff;font-size:13px;font-weight:700;
-              cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;
-              box-shadow:0 4px 12px rgba(0,128,96,0.3);
-            ">Réserver 🔒</button>
+        <!-- Contact capture (final step) -->
+        <div id="quiz-email-area" style="display:none;margin-top:8px;">
+
+          <!-- Toggle tabs -->
+          <div style="display:flex;gap:8px;margin-bottom:10px;">
+            <button id="tab-email" onclick="quizSetTab('email')" style="flex:1;padding:8px;border-radius:10px;border:1.5px solid var(--green);background:var(--green);color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;">
+              📧 <span id="tab-email-lbl">Email</span>
+            </button>
+            <button id="tab-phone" onclick="quizSetTab('phone')" style="flex:1;padding:8px;border-radius:10px;border:1.5px solid var(--border);background:var(--card);color:var(--text);font-size:12px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;">
+              📱 <span id="tab-phone-lbl">Téléphone</span>
+            </button>
           </div>
-          <p id="inline-email-note" style="font-size:11px;color:var(--muted);font-family:'DM Sans',sans-serif;margin-top:6px;">
-            🎁 Votre repas sera sauvegardé + 20% de réduction au lancement
-          </p>
+
+          <!-- Email fields -->
+          <div id="contact-email-fields">
+            <input id="quiz-email" type="email" placeholder="votre@email.com" style="width:100%;box-sizing:border-box;padding:11px 15px;border-radius:13px;border:1.5px solid var(--border);font-size:13px;outline:none;font-family:'DM Sans',sans-serif;color:var(--text);background:var(--card);margin-bottom:8px;"
+              onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='var(--border)'"/>
+          </div>
+
+          <!-- Phone fields -->
+          <div id="contact-phone-fields" style="display:none;">
+            <input id="quiz-fullname" type="text" placeholder="Nom complet" style="width:100%;box-sizing:border-box;padding:11px 15px;border-radius:13px;border:1.5px solid var(--border);font-size:13px;outline:none;font-family:'DM Sans',sans-serif;color:var(--text);background:var(--card);margin-bottom:8px;"
+              onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='var(--border)'"/>
+            <input id="quiz-phone" type="tel" placeholder="+212 6XX XXX XXX" style="width:100%;box-sizing:border-box;padding:11px 15px;border-radius:13px;border:1.5px solid var(--border);font-size:13px;outline:none;font-family:'DM Sans',sans-serif;color:var(--text);background:var(--card);margin-bottom:8px;"
+              onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='var(--border)'"/>
+          </div>
+
+          <!-- Optional message (always shown) -->
+          <textarea id="quiz-message" rows="2" placeholder="Un message pour SAVY ? (optionnel)" style="width:100%;box-sizing:border-box;padding:11px 15px;border-radius:13px;border:1.5px solid var(--border);font-size:13px;outline:none;font-family:'DM Sans',sans-serif;color:var(--text);background:var(--card);resize:none;margin-bottom:8px;"
+            onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='var(--border)'"></textarea>
+
+          <!-- Submit button -->
+          <button onclick="quizSaveContact()" id="quiz-save-btn" style="width:100%;padding:12px;border-radius:13px;border:none;background:var(--green);color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;box-shadow:0 4px 12px rgba(0,128,96,0.3);transition:all .2s;">
+            <span id="quiz-save-lbl">Réserver ma place 🔒</span>
+          </button>
+          <p id="quiz-email-note" style="font-size:11px;color:var(--muted);font-family:'DM Sans',sans-serif;margin-top:6px;text-align:center;">🎁 Votre repas sauvegardé + 20% de réduction au lancement</p>
         </div>
       </div>
 
@@ -498,7 +592,7 @@
 </section>
 
 <!-- ══ BENEFITS ═══════════════════════════════════════════ -->
-<section id="how" style="padding:72px clamp(16px,4vw,56px); background:#fff; border-top:1px solid var(--border);">
+<section id="how" style="padding:72px clamp(16px,4vw,56px); background:var(--bg); border-top:1px solid var(--border);">
   <div style="max-width:1100px; margin:0 auto;">
     <div class="section-header">
       <h2 class="section-title fh" id="how-title">Ce que SAVY fait pour vous</h2>
@@ -669,6 +763,20 @@ const filterMap = {"All":"all","Vegan":"vegan","High Protein":"high-protein","Lo
    STATE
 ═══════════════════════════════════════════ */
 let lang       = "fr";
+let darkMode   = false;
+
+function toggleTheme() {
+  darkMode = !darkMode;
+  document.documentElement.setAttribute("data-theme", darkMode ? "dark" : "light");
+  document.getElementById("theme-btn").textContent = darkMode ? "☀️" : "🌙";
+  localStorage.setItem("savy-theme", darkMode ? "dark" : "light");
+}
+
+// Restore saved theme on load
+(function() {
+  const saved = localStorage.getItem("savy-theme");
+  if (saved === "dark") { darkMode = true; document.documentElement.setAttribute("data-theme","dark"); document.addEventListener("DOMContentLoaded",()=>{ const b=document.getElementById("theme-btn"); if(b) b.textContent="☀️"; }); }
+})();
 let activeCuis = "all";
 let activeDiet = "All";
 let cart       = [];
@@ -683,7 +791,7 @@ const copy = {
     tagline:"La livraison de repas sains propulsée par l'IA",
     h1:'Mangez mieux,<br><span class="accent">livré chez vous.</span>',
     sub:"SAVY conçoit votre repas selon vos objectifs nutritionnels, cuisinés avec des saveurs locales et internationales. 45 minutes. Frais garanti.",
-    cta:"Rejoindre la liste →", ctaNote:"🎁 30% de réduction pour les premier membres ",
+    cta:"Rejoindre la liste →", ctaNote:"🎁 30% de réduction pour les membres fondateurs",
     ph:"Votre adresse email",
     ok:"🎉 Vous êtes sur la liste !",
     okSub:"Bienvenue ! Vous êtes membre fondateur #313.",
@@ -729,30 +837,30 @@ const copy = {
     h1:'توقف عن تناول<br><span class="accent">الوجبات "العشوائية". صمم وجبتك بذكاء.</span>',
     sub:'في SAVY، لا نؤمن بوجبة واحدة تناسب الجميع. شيف الذكاء الاصطناعي الخاص بنا يقوم بحساب كل جرام من البروتين والكربوهيدرات ليتناسب مع أهدافك أنت فقط.',
     cta:"سجّل بريدك الآن →",
-    ctaNote:"🎁 كن أول من يختبر 'الذكاء و المذاق' في يوليو — خصم 20% عند الافتتاح",
+    ctaNote:"🎁 كن أول من يختبر 'ذكاء المذاق' في يوليو — خصم 20% عند الافتتاح",
     ph:"بريدك الإلكتروني",
     ok:"🎉 أنت في القائمة!",
-    okSub:"مرحباً! أنت العضو رقم #313.",
+    okSub:"مرحباً! أنت العضو المؤسس رقم #313.",
     proof:"شخص انضم",
     navMenu:"القائمة", navHow:"كيف يعمل", navAbout:"حولنا",
     navCta:"سجّل",
-    how:"شنو كيوفر ليك SAVY ",
+    how:"شو كيدير SAVY ليك",
     howSub:"تجربة مفكر فيها من البداية لنهاية",
     benefitsCta:"سجّل بريدك الآن →",
-    proofStrip:"🇲🇦 SAVY أسسها شيف مغربي في تطوان — واحد كيأمن بلي الأكل الصحي لازم يكون بنين. كل وجبة كتصمم ليك الـ AI بالضبط — ما كاينش وجبة واحدة تناسب الجميع.",
+    proofStrip:"🇲🇦 SAVY أسسها شيف مغربي من تطوان — واحد كيؤمن بلي الأكل الصحي لازم يكون بنين، مش حشيش. كل وجبة كتصمم ليك الـ AI بالضبط — ما كاينش وجبة واحدة تناسب الجميع.",
     benefits:[
-      {icon:"🤖", color:"#008060", title:"وجبة مصممة 100% ليك",         desc:"الـ AI ديالنا كيحلل أهدافك، الحساسية ديالك، والأذواق ديالك — وكيصمم وجبة فريدة ما كاينش حتا واحد عندو بحالك."},
-      {icon:"⚡", color:"#F4A330", title:"توصيل في 45 دقيقة",           desc:"كيتحضر بدقة و سرعة ويوصل ساخن لبابك في تطوان، مضيق، ومرتيل. ما كاين مجمد."},
+      {icon:"🤖", color:"#008060", title:"وجبة مصممة 100% ليك",         desc:"الـ AI ديالنا كيحلل أهدافك، الحساسية ديالك، والأذواق ديالك — وكيصمم وجبة فريدة ما كاينش حتا واحد عندها بحالك."},
+      {icon:"⚡", color:"#F4A330", title:"توصيل في 45 دقيقة",           desc:"كيتحضر طازج ويوصل ساخن لبابك في تطوان، مضيق، ومرتيل. ما كاين مجمد."},
       {icon:"🥗", color:"#00A878", title:"الماكرو محسوب بالغرام",       desc:"السعرات، البروتين، الكربوهيدرات، الدهون — كل رقم محسوب بالـ AI لجسمك وأهدافك."},
-      {icon:"🌍", color:"#7C3AED", title:"أطباق عالمية ",    desc:"مغربي، ياباني، إيطالي، يوناني، هندي  أمريكي — 6 مطابخ عالمية، كلهم معدلين للصحة."},
-      {icon:"💰", color:"#E53935", title:"بثمن معقول",                  desc:"وجبات صحية من جودة عالية ابتداء من 45 درهم. الأعضاء الأوائل: خصم 30% على الطلب الأول."},
+      {icon:"🌍", color:"#7C3AED", title:"مطابخ عالمية من كل بلاد",    desc:"مغربي، ياباني، إيطالي، يوناني، هندي، أمريكي — 6 مطابخ دوليين، كلهم معدلين للصحة."},
+      {icon:"💰", color:"#E53935", title:"بثمن معقول",                  desc:"وجبات صحية من جودة عالية ابتداء من 45 درهم. الأعضاء المؤسسون: خصم 30% على الطلب الأول."},
       {icon:"🔒", color:"#008060", title:"بلا حلول وسط على الجودة",     desc:"مكونات محلية طازجة، بلا مضافات. SAVY كتخدم مع أحسن المنتجين في المنطقة."},
     ],
     steps:[
       {icon:"🎯",t:"حدد أهدافك",          d:"أخبر SAVY عن نظامك الغذائي وسعراتك في 30 ثانية."},
       {icon:"🤖",t:"الذكاء يصمم وجبتك",   d:"SAVY تصمم قائمة متوازنة ومخصصة لك."},
-      {icon:"👨‍🍳",t:"الشيف يطبخها يحب",  d:"مُحضَّر بمكونات محلية عالية الجودة."},
-      {icon:"🛵",t:"توصيل في 45 دقيقة",   d:"لبابك، ساخن ولذيذ، مضمون."},
+      {icon:"👨‍🍳",t:"الشيف يطبخ طازجاً",  d:"مُحضَّر بمكونات محلية عالية الجودة."},
+      {icon:"🛵",t:"توصيل في 45 دقيقة",   d:"لبابك، ساخن وطازج، مضمون."},
     ],
     stats:[{v:"45 دقيقة",l:"التوصيل"},{v:"+312",l:"مشترك"},{v:"4.9 ★",l:"الرضا"},{v:"100%",l:"طازج"}],
     menuTitle:"قائمتنا",
@@ -785,9 +893,9 @@ function setLang(l){
 
   // Banner
   document.getElementById("banner-text").textContent = isAr
-    ? "🚀 SAVY قريباً في تطوان، مضيق، مرتيل — انضم للقائمة قبل الإطلاق!"
+    ? "🚀 SAVY قادمة قريباً إلى تطوان، مضيق، مرتيل وكل المنطقة — انضم للقائمة قبل الإطلاق!"
     : "🚀 SAVY arrive bientôt à Tétouan, M'diq, Martil & toute la région — Rejoignez la liste avant le lancement !";
-  patchInlineLang(l);
+  quizPatchLang(l);
 
   // Nav
   document.querySelectorAll(".lang-btn").forEach((b,i)=>b.classList.toggle("active", (i===0&&l==="fr")||(i===1&&l==="ar")));
@@ -857,7 +965,7 @@ function renderBenefits(){
   const t = copy[lang];
   const isAr = lang==="ar";
   document.getElementById("benefits-grid").innerHTML = t.benefits.map((b,i)=>`
-    <div style="background:#fff;border-radius:20px;padding:24px;border:1px solid var(--border);box-shadow:var(--shadow);transition:all .2s;animation:slideUp .5s ${i*.08}s ease both;"
+    <div style="background:var(--card);border-radius:20px;padding:24px;border:1px solid var(--border);box-shadow:var(--shadow);transition:all .2s;animation:slideUp .5s ${i*.08}s ease both;"
       onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadowH)'"
       onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)'">
       <div style="width:48px;height:48px;border-radius:16px;background:${b.color}18;border:1px solid ${b.color}30;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:14px;">${b.icon}</div>
@@ -978,6 +1086,26 @@ function toggleCart(id){
 ═══════════════════════════════════════════ */
 const MAILCHIMP_URL = "PASTE_YOUR_MAILCHIMP_URL_HERE";
 
+/* ═══════════════════════════════════════════
+   GOOGLE SHEETS — Paste your Apps Script URL below
+   (see instructions in README)
+═══════════════════════════════════════════ */
+const SHEETS_URL = "PASTE_YOUR_GOOGLE_SCRIPT_URL_HERE";
+
+async function saveToSheets(data) {
+  if (!SHEETS_URL || SHEETS_URL === "PASTE_YOUR_GOOGLE_SCRIPT_URL_HERE") return;
+  try {
+    await fetch(SHEETS_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+      mode: "no-cors" // Google Apps Script requires no-cors
+    });
+  } catch(e) {
+    console.warn("Sheets save failed:", e);
+  }
+}
+
 async function sendToMailchimp(email) {
   // Mailchimp requires JSONP to avoid CORS — we use a hidden iframe trick
   return new Promise((resolve) => {
@@ -1072,298 +1200,372 @@ window.addEventListener("scroll",()=>{
     window.scrollY>40 ? "0 2px 20px rgba(0,128,96,0.1)" : "none";
 });
 /* ═══════════════════════════════════════════
-   INLINE AI AGENT
+   SAVY QUIZ — no API, fully local
 ═══════════════════════════════════════════ */
-let inlineHistory = [];
-let inlineMealDone = false;
-let inlineMeal = null;
 
-function getInlineSystem() {
-  const isDarija = lang === "ar";
-  return `You are SAVY — the AI chef and soul of SAVY, a healthy food delivery app launching soon in Tétouan, Morocco (also serving M'diq and Martil).
-
-${isDarija ? `⚠️ ABSOLUTE RULE: You MUST speak MOROCCAN DARIJA in EVERY message. Never formal Arabic. Never French. Even if the visitor writes French or formal Arabic — you ALWAYS reply in Darija. This is your identity. Examples: "salam", "wach bghiti", "safi", "mzyan", "daba", "smiytek", "kayn", "bessah", "3la", "b", "f", "mn", "7it", "9leb", "9der", "nhar", "gha", "walo", "bghit", "3tini", "nchof", "7jez". Use franco-arab (latin letters + numbers) freely.` : `⚠️ ABSOLUTE RULE: Always speak French. Warm, natural, conversational French.`}
-
-━━━ WHO YOU ARE ━━━
-Your name is SAVY. You are not a chatbot — you are a real character: a passionate Moroccan chef powered by AI. You care deeply about health and you love your culture.
-
-About SAVY (share naturally when there's an opening — never forced, max 1-2 sentences):
-- SAVY = Smart + Savvy + the Moroccan word "سوّى / sawwa" (to cook)
-- Founded by a Moroccan chef who believes healthy food should taste incredible, not boring
-- Every dish is designed by AI to match YOUR exact goals — calories, protein, taste
-- Launching soon in Tétouan, M'diq, Martil — because the north deserves better food 🇲🇦
-- Mission: make eating healthy as easy as ordering pizza
-
-━━━ CONVERSATION FLOW ━━━
-One message at a time. 2-3 sentences max. Build suspense.
-
-Step 1 — Greet as SAVY, ask name:
-${isDarija ? `Darija: "Salam! 👋 Ana SAVY 🤖 — chef dyalek b l-intelligence artificielle. Kan9der n9lb lik wajba s7iya mzyana, m9issa 3lik b la précision. Smiytek ch'no? 😊"` : `French: "Bonjour ! 👋 Je suis SAVY 🤖 — votre chef IA personnel. Je compose des repas sains sur-mesure pour vous. Comment vous appelez-vous ? 😊"`}
-
-Step 2 — Ask health goal:
-${isDarija ? `"Chno l-but dyalek? Bghiti: t7ed weight / tbni muscle / 3endek energy ktar / takol s7i w barak?"` : `"Votre objectif : perdre du poids / prendre du muscle / plus d'énergie / manger sainement ?"`}
-
-Step 3 — Ask food preference (viande/poisson/végétarien/allergie). If natural opening exists, mention 1 sentence about SAVY.
-
-Step 4 — Ask calorie level:
-${isDarija ? `"Bghiti chi haja: khfifa (- 450 kcal) / m3tedla (450-600 kcal) / boost kbir (600+)?"` : `"Niveau calorique : léger (-450 kcal) / équilibré (450-600) / boost (600+) ?"`}
-
-Step 5 — Build suspense: ${isDarija ? `"Daba kan9lb lik l-wajba dyalek...⚡"` : `"Je compose votre repas...⚡"`} then output the meal in EXACTLY this format:
-NOM: [creative healthy meal name in French]
-EMOJI: [one food emoji]
-CAL: [number] kcal
-PROTÉINES: [number]g
-GLUCIDES: [number]g
-DESCRIPTION: [mouth-watering sentence ${isDarija ? "in Darija" : "in French"}]
-
-Step 6 — Suspense message:
-${isDarija ? `"L-wajba dyalek waaat 🔒 SAVY gha ykoun f Tétouan, M'diq w Martil — khelli l-email dyalek besh n9yed lik iyah nhar l-launch! 🇲🇦"` : `"Votre repas est prêt mais verrouillé 🔒 — SAVY arrive bientôt à Tétouan. Laissez votre email pour que je le garde rien que pour vous !"`}
-
-━━━ HARD RULES ━━━
-- ${isDarija ? "ALWAYS DARIJA. Never formal Arabic (فصحى). Never French. Non-negotiable." : "ALWAYS FRENCH. Non-negotiable."}
-- Never reveal the full recipe
-- Never break character — you ARE SAVY`;
-}
-
-
-function resetInlineAgent() {
-  inlineHistory = [];
-  inlineMealDone = false;
-  inlineMeal = null;
-  document.getElementById("inline-msgs").innerHTML = "";
-  document.getElementById("inline-qr").innerHTML = "";
-  document.getElementById("inline-email-area").style.display = "none";
-  document.getElementById("inline-input-area").style.display = "flex";
-  document.getElementById("inline-input").disabled = false;
-  document.getElementById("inline-send").disabled = false;
-  setTimeout(initInlineAgent, 200);
-}
-
-function inlineAddBot(text) {
-  const msgs = document.getElementById("inline-msgs");
-  const typing = document.getElementById("inline-typing");
-  if (typing) typing.remove();
-
-  if (text.includes("NOM:")) {
-    inlineMeal = parseMealCardInline(text);
-    msgs.insertAdjacentHTML("beforeend", inlineMeal.html);
-    setTimeout(() => inlineShowSuspense(), 700);
-  } else {
-    msgs.insertAdjacentHTML("beforeend", `
-      <div style="display:flex;gap:8px;align-items:flex-end;max-width:88%;">
-        <div style="width:26px;height:26px;border-radius:9px;background:var(--greenXL);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;">🤖</div>
-        <div style="padding:10px 13px;border-radius:14px;border-bottom-left-radius:3px;background:var(--greenXL);color:var(--text);font-size:13px;line-height:1.6;font-family:'DM Sans',sans-serif;">${text.replace(/\n/g,"<br>")}</div>
-      </div>`);
-  }
-  inlineHistory.push({ role:"assistant", content:text });
-  msgs.scrollTop = msgs.scrollHeight;
-}
-
-function parseMealCardInline(text) {
-  const get = (k) => { const m = text.match(new RegExp(k+":\\s*(.+?)(?:\\n|$)")); return m?m[1].trim():""; };
-  const name=get("NOM"), emoji=get("EMOJI")||"🍽️", cal=get("CAL"),
-        prot=get("PROTÉINES")||get("PROTEIN")||"", carbs=get("GLUCIDES")||"", desc=get("DESCRIPTION");
-  inlineMeal = { name, emoji, cal, prot, carbs };
-  return { name, emoji, html:`
-    <div style="border:1.5px solid var(--green);border-radius:16px;padding:14px;background:linear-gradient(135deg,var(--greenXL),#fff);animation:popIn .4s ease;">
-      <div style="font-size:32px;text-align:center;margin-bottom:8px;">${emoji}</div>
-      <div style="font-family:'Cormorant Garamond',serif;font-weight:700;font-size:16px;color:var(--green);margin-bottom:8px;">${name}</div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
-        <span style="padding:3px 9px;border-radius:8px;background:#fff;border:1px solid var(--border);font-size:11px;color:var(--sub);font-family:'DM Sans',sans-serif;">🔥 ${cal}</span>
-        <span style="padding:3px 9px;border-radius:8px;background:#fff;border:1px solid var(--border);font-size:11px;color:var(--sub);font-family:'DM Sans',sans-serif;">💪 ${prot}</span>
-        <span style="padding:3px 9px;border-radius:8px;background:#fff;border:1px solid var(--border);font-size:11px;color:var(--sub);font-family:'DM Sans',sans-serif;">🌾 ${carbs}</span>
-      </div>
-      <div style="font-size:12px;color:var(--sub);font-style:italic;font-family:'DM Sans',sans-serif;line-height:1.6;">${desc}</div>
-    </div>` };
-}
-
-function inlineShowSuspense() {
-  const isAr = lang === "ar";
-  const msgs = document.getElementById("inline-msgs");
-  msgs.insertAdjacentHTML("beforeend", `
-    <div style="border-radius:16px;padding:14px;background:linear-gradient(135deg,#001a14,#003322);text-align:center;animation:popIn .5s ease;">
-      <div style="font-size:28px;margin-bottom:8px;">🔒</div>
-      <div style="font-family:'Cormorant Garamond',serif;font-weight:700;font-size:15px;color:#00E896;margin-bottom:6px;">
-        ${isAr ? "L-wajba dyalek waaat... lkn magolhach daba! 👀" : "Votre repas est prêt... mais il est verrouillé !"}
-      </div>
-      <div style="font-size:11px;color:rgba(255,255,255,0.65);font-family:'DM Sans',sans-serif;line-height:1.6;">
-        ${isAr
-          ? "SAVY gha ykoun f Tétouan, M'diq w Martil — khelli l-email dyalek besh n9yed lik l-wajba nhar l-launch 👇🇲🇦"
-          : "SAVY arrive bientôt à Tétouan, M'diq & Martil. Laissez votre email pour que je garde ce repas rien que pour vous 👇"}
-      </div>
-    </div>`);
-  msgs.scrollTop = msgs.scrollHeight;
-
-  // Show email capture, hide input
-  document.getElementById("inline-email-area").style.display = "block";
-  document.getElementById("inline-input-area").style.display = "none";
-  document.getElementById("inline-qr").innerHTML = "";
-  if (isAr) {
-    document.getElementById("inline-email").placeholder = "email dyalek hna...";
-    document.getElementById("inline-save-btn").textContent = "7jez l-wajba 🔒";
-    document.getElementById("inline-email-note").textContent = "🎁 L-wajba dyalek m7fouza + réduction 20% nhar l-launch";
-  }
-  inlineMealDone = true;
-}
-
-async function inlineSaveMeal() {
-  const email = document.getElementById("inline-email").value.trim();
-  const isAr = lang === "ar";
-  if (!email.includes("@")) {
-    document.getElementById("inline-email").style.borderColor = "#e53935";
-    setTimeout(() => document.getElementById("inline-email").style.borderColor = "var(--green)", 1500);
-    return;
-  }
-  if (MAILCHIMP_URL !== "PASTE_YOUR_MAILCHIMP_URL_HERE") await sendToMailchimp(email);
-  document.getElementById("email-hero").value  = email;
-  document.getElementById("email-final").value = email;
-  showSuccess();
-  document.getElementById("inline-email-area").style.display = "none";
-  const msgs = document.getElementById("inline-msgs");
-  msgs.insertAdjacentHTML("beforeend", `
-    <div style="display:flex;gap:8px;align-items:flex-end;max-width:88%;">
-      <div style="width:26px;height:26px;border-radius:9px;background:var(--green);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;">🤖</div>
-      <div style="padding:10px 13px;border-radius:14px;border-bottom-left-radius:3px;background:var(--green);color:#fff;font-size:13px;line-height:1.6;font-family:'DM Sans',sans-serif;">
-        ${isAr
-          ? `✅ Mzyan bzzaf! ${inlineMeal?.emoji||"🍽️"} L-wajba dyalek m7jouza. Nchofok f Tétouan ! 🚀🇲🇦`
-          : `✅ Parfait ! ${inlineMeal?.emoji||"🍽️"} Votre repas est réservé. À très bientôt à Tétouan ! 🚀🇲🇦`}
-      </div>
-    </div>`);
-  msgs.scrollTop = msgs.scrollHeight;
-}
-
-function inlineAddUser(text) {
-  const msgs = document.getElementById("inline-msgs");
-  msgs.insertAdjacentHTML("beforeend", `
-    <div style="display:flex;justify-content:flex-end;">
-      <div style="padding:10px 13px;border-radius:14px;border-bottom-right-radius:3px;background:var(--green);color:#fff;font-size:13px;line-height:1.6;font-family:'DM Sans',sans-serif;max-width:80%;">${text}</div>
-    </div>`);
-  inlineHistory.push({ role:"user", content:text });
-  msgs.scrollTop = msgs.scrollHeight;
-}
-
-function inlineShowTyping() {
-  const msgs = document.getElementById("inline-msgs");
-  const old = document.getElementById("inline-typing");
-  if (old) old.remove();
-  msgs.insertAdjacentHTML("beforeend", `
-    <div id="inline-typing" style="display:flex;gap:8px;align-items:flex-end;">
-      <div style="width:26px;height:26px;border-radius:9px;background:var(--greenXL);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;">🤖</div>
-      <div style="padding:10px 14px;border-radius:14px;border-bottom-left-radius:3px;background:var(--greenXL);">
-        <div style="display:flex;gap:4px;">
-          <span style="width:7px;height:7px;border-radius:50%;background:var(--muted);animation:typingDot 1.2s infinite;display:inline-block;"></span>
-          <span style="width:7px;height:7px;border-radius:50%;background:var(--muted);animation:typingDot 1.2s .2s infinite;display:inline-block;"></span>
-          <span style="width:7px;height:7px;border-radius:50%;background:var(--muted);animation:typingDot 1.2s .4s infinite;display:inline-block;"></span>
-        </div>
-      </div>
-    </div>`);
-  msgs.scrollTop = msgs.scrollHeight;
-}
-
-function inlineSetQR(opts) {
-  document.getElementById("inline-qr").innerHTML = opts.map(o =>
-    `<button onclick="inlineQR('${o.replace(/'/g,"\\'")}')" style="
-      padding:7px 14px;border-radius:99px;border:1.5px solid var(--border);
-      background:#fff;color:var(--green);font-size:12px;font-weight:600;
-      cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;
-    " onmouseover="this.style.background='var(--greenXL)';this.style.borderColor='var(--green)'"
-       onmouseout="this.style.background='#fff';this.style.borderColor='var(--border)'">${o}</button>`
-  ).join("");
-}
-
-function inlineQR(text) {
-  document.getElementById("inline-qr").innerHTML = "";
-  inlineAddUser(text);
-  inlineCallAI();
-}
-
-function inlineSend() {
-  const inp = document.getElementById("inline-input");
-  const text = inp.value.trim();
-  if (!text) return;
-  inp.value = "";
-  document.getElementById("inline-qr").innerHTML = "";
-  inlineAddUser(text);
-  inlineCallAI();
-}
-
-async function inlineCallAI() {
-  const send = document.getElementById("inline-send");
-  const inp  = document.getElementById("inline-input");
-  send.disabled = true; inp.disabled = true;
-  document.getElementById("inline-status").textContent = lang==="ar" ? "يفكر..." : "En train de réfléchir...";
-  inlineShowTyping();
-  try {
-    const res = await fetch("/.netlify/functions/chat", {
-      method:"POST",
-      headers:{ "Content-Type":"application/json" },
-      body: JSON.stringify({
-        model:"claude-sonnet-4-20250514",
-        max_tokens:400,
-        system: getInlineSystem(),
-        messages: inlineHistory.filter(m=>m.role!=="system")
-      })
-    });
-    if (!res.ok) {
-      const err = await res.json().catch(()=>({}));
-      throw new Error(err?.error?.message || `HTTP ${res.status}`);
+// ── Meal library keyed by [goal][pref][cal] ──
+const mealLib = {
+  weight: {
+    viande: {
+      light:    {e:"🥗", n:"Poulet Grillé & Légumes Vapeur",    cal:310, p:38, c:14, desc:"Un filet de poulet doré, légumes croquants — léger, sain, irrésistible."},
+      balanced: {e:"🍗", n:"Bowl Poulet Citron & Quinoa",        cal:480, p:42, c:36, desc:"Quinoa parfumé, poulet juteux et une touche de citron confit."},
+      boost:    {e:"🥩", n:"Steak Haché & Patate Douce Rôtie",  cal:620, p:48, c:52, desc:"Viande maigre, douceur de patate — le combo puissance absolue."},
+    },
+    poisson: {
+      light:    {e:"🐟", n:"Filet de Daurade & Salade Fraîche",  cal:290, p:36, c:8,  desc:"Daurade grillée, salade croquante — la mer dans votre assiette."},
+      balanced: {e:"🍣", n:"Poke Bowl Saumon Avocat",             cal:460, p:34, c:38, desc:"Saumon fondant, avocat crémeux, riz vinaigré — pur bonheur."},
+      boost:    {e:"🐠", n:"Saumon Teriyaki & Riz Complet",      cal:610, p:46, c:56, desc:"Glaçage teriyaki maison, riz moelleux — une explosion umami."},
+    },
+    vegan: {
+      light:    {e:"🥦", n:"Buddha Bowl Détox Vert",             cal:270, p:14, c:32, desc:"Brocoli, épinards, pois chiches — un bol qui nettoie et nourrit."},
+      balanced: {e:"🌯", n:"Wrap Falafel & Houmous Maison",      cal:450, p:18, c:54, desc:"Falafel croustillant, houmous onctueux — le classique revisité."},
+      boost:    {e:"🍛", n:"Dal Rouge & Riz Basmati",            cal:590, p:22, c:78, desc:"Lentilles épicées, riz parfumé — réconfort végétal complet."},
     }
-    const data = await res.json();
-    const reply = data.content?.[0]?.text || (lang==="ar"?"عذراً، حدث خطأ.":"Désolé, une erreur s'est produite.");
-    inlineAddBot(reply);
-    document.getElementById("inline-status").textContent = lang==="ar" ? "Connecté · AI chef 🇲🇦" : "En ligne · Prêt";
-  } catch(e) {
-    const t = document.getElementById("inline-typing");
-    if(t) t.remove();
-    console.error("SAVY API error:", e);
-    inlineAddBot(lang==="ar"
-      ? "Smeh liya, kayn chi mochkil tekni 🙏 Essa merra okhra!"
-      : "Désolé, une erreur technique est survenue 🙏 Réessayez dans un instant !");
+  },
+  muscle: {
+    viande: {
+      light:    {e:"🍗", n:"Poulet Rôti & Brocoli Vapeur",       cal:420, p:52, c:12, desc:"Ultra-protéiné, sans excès — pour construire sans gonfler."},
+      balanced: {e:"🥩", n:"Steak de Boeuf & Patate Douce",      cal:560, p:56, c:40, desc:"Protéines de haute qualité, glucides lents — la formule croissance."},
+      boost:    {e:"🍖", n:"Power Bowl Viande & Légumineuses",   cal:680, p:60, c:58, desc:"Boeuf, pois chiches, riz complet — un repas de champion."},
+    },
+    poisson: {
+      light:    {e:"🐟", n:"Thon & Edamame Bowl",                cal:400, p:48, c:18, desc:"Thon frais, edamame croquant — protéines marines à l'état pur."},
+      balanced: {e:"🐠", n:"Saumon Grillé & Lentilles Vertes",  cal:540, p:50, c:34, desc:"Oméga-3 et protéines végétales — le duo de la performance."},
+      boost:    {e:"🍣", n:"Saumon Poché & Quinoa Complet",      cal:670, p:58, c:52, desc:"Chaque gramme travaille pour vos muscles — goût inclus."},
+    },
+    vegan: {
+      light:    {e:"🌿", n:"Tofu Grillé & Brocoli Sesame",       cal:380, p:36, c:16, desc:"Tofu doré au sésame, brocoli al dente — protéines végétales max."},
+      balanced: {e:"🫘", n:"Bowl Quinoa, Pois Chiches & Avocat", cal:520, p:34, c:46, desc:"Acides aminés complets, graisses saines — plein de force verte."},
+      boost:    {e:"🍛", n:"Tempeh Teriyaki & Riz Noir",         cal:640, p:44, c:60, desc:"Tempeh fermenté, riz noir antioxydant — la recette des athlètes vegan."},
+    }
+  },
+  energy: {
+    viande: {
+      light:    {e:"🥗", n:"Salade Niçoise au Poulet",           cal:350, p:32, c:18, desc:"Fraîcheur méditerranéenne, protéines légères — énergie douce et durable."},
+      balanced: {e:"🍗", n:"Poulet & Pâtes Complètes",          cal:500, p:38, c:48, desc:"Glucides lents, protéines maigres — le carburant de la journée."},
+      boost:    {e:"🌯", n:"Burrito Bowl Poulet Energisant",     cal:650, p:44, c:62, desc:"Riz, haricots, poulet épicé — une bombe d'énergie en bol."},
+    },
+    poisson: {
+      light:    {e:"🐟", n:"Salade de Thon & Avocat",            cal:320, p:30, c:14, desc:"Légère et nutritive — le petit coup de boost du milieu de journée."},
+      balanced: {e:"🍱", n:"Bowl Saumon & Edamame",              cal:490, p:36, c:42, desc:"Oméga-3 pour le cerveau, glucides pour les muscles — parfait équilibre."},
+      boost:    {e:"🐠", n:"Poke Bowl Énergie Max",              cal:640, p:40, c:60, desc:"Tout ce dont votre corps a besoin pour une journée intense."},
+    },
+    vegan: {
+      light:    {e:"🫐", n:"Açaí & Chia Power Bowl",             cal:300, p:10, c:46, desc:"Superaliments purs — antioxydants, énergie naturelle, goût sublime."},
+      balanced: {e:"🥑", n:"Avocado Toast & Œuf Poché",          cal:460, p:20, c:42, desc:"Graisses saines, protéines douces — le brunch qui tient toute la journée."},
+      boost:    {e:"🍌", n:"Green Smoothie Bowl Tropical",       cal:580, p:16, c:80, desc:"Banane, épinards, granola maison — énergie tropicale en bol."},
+    }
+  },
+  sain: {
+    viande: {
+      light:    {e:"🥗", n:"Wrap Poulet & Légumes Croquants",    cal:370, p:30, c:32, desc:"Frais, coloré, équilibré — manger sain n'a jamais été aussi bon."},
+      balanced: {e:"🍗", n:"Poulet Rôti & Légumes Rôtis",        cal:490, p:36, c:36, desc:"Simplicité et qualité — légumes de saison, poulet tendre."},
+      boost:    {e:"🌯", n:"Bowl Complet Poulet & Céréales",     cal:610, p:42, c:54, desc:"Un repas complet qui coche toutes les cases nutritionnelles."},
+    },
+    poisson: {
+      light:    {e:"🐟", n:"Branzino al Limone & Asperges",      cal:350, p:38, c:10, desc:"Poisson fin, asperges croquantes, citron — la légèreté italienne."},
+      balanced: {e:"🍣", n:"Saumon en Papillote & Couscous",     cal:510, p:40, c:44, desc:"Cuisson douce, saveurs préservées — le repas sain par excellence."},
+      boost:    {e:"🐠", n:"Plateau Fruits de Mer & Quinoa",     cal:600, p:46, c:50, desc:"Générosité marine, base nutritive — un festin sain et complet."},
+    },
+    vegan: {
+      light:    {e:"🥬", name:"Minestrone Légumes & Pesto",       cal:280, p:10, c:38, desc:"Soupe généreuse, pesto parfumé — réconfort végétal léger."},
+      balanced: {e:"🧆", n:"Assiette Mezze Équilibrée",           cal:460, p:16, c:52, desc:"Houmous, falafel, taboulé — un voyage méditerranéen sain."},
+      boost:    {e:"🍛", n:"Buddha Bowl Complet 7 Légumes",      cal:580, p:22, c:68, desc:"Sept légumes, graines, sauce tahini — la santé en bol."},
+    }
   }
-  send.disabled = false; inp.disabled = false; inp.focus();
+};
+
+const quizSteps = {
+  fr: [
+    { msg: "Bonjour et bienvenue ! 😊 Je suis SAVY, votre chef IA personnel. En quelques questions, je vais composer un repas sain fait exactement pour vous. Pour commencer, comment puis-je vous appeler ?", type: "input" },
+    { msg: (n) => `Ravie de vous rencontrer, ${n} ! 🌿 Pour vous proposer le repas qui vous correspond vraiment, j'aurais besoin de connaître votre objectif. Lequel vous correspond le mieux ?`, type: "choice",
+      choices: [
+        { label: "🏃 Je souhaite perdre du poids",    val: "weight" },
+        { label: "💪 Je veux prendre du muscle",      val: "muscle" },
+        { label: "⚡ J'ai besoin de plus d'énergie",  val: "energy" },
+        { label: "🥗 Je veux simplement mieux manger", val: "sain"  },
+      ]},
+    { msg: "Très bien, merci ! 🙏 Pour affiner votre repas, quelle est votre préférence alimentaire ?", type: "choice",
+      choices: [
+        { label: "🥩 Je mange de la viande",  val: "viande"  },
+        { label: "🐟 Je préfère le poisson",  val: "poisson" },
+        { label: "🌿 Je suis végétarien(ne)", val: "vegan"   },
+      ]},
+    { msg: "Parfait ! Une dernière question, promis 😊 — quel niveau calorique vous convient le mieux ?", type: "choice",
+      choices: [
+        { label: "🌿 Léger — moins de 450 kcal",     val: "light"    },
+        { label: "⚖️ Équilibré — entre 450 et 600",  val: "balanced" },
+        { label: "🔥 Généreux — plus de 600 kcal",   val: "boost"    },
+      ]},
+  ],
+  ar: [
+    { msg: "Mrhba bik ! 😊 Ana SAVY — chef dyalek b l-intelligence artificielle. 3ndi tjriba kbira f majal lwajabat, ghadi n9lb m3ak 3la wajba s7iya u tkun ldida, mssawba 3la wedk b la précision. Wesh momkin t3rfni b issmek ?", type: "input" },
+    { msg: (n) => `Shrf b ma3riftek, ${n} ! 🌿 Bach n9dr n9lb lik l-wajba li kat7wej, ghadi nkhalik t3ref — chno l-but dyalek ?`, type: "choice",
+      choices: [
+        { label: "🏃 Bghi n9ess mel wazn dyali",    val: "weight" },
+        { label: "💪 Bghi nbni jism w muscle",       val: "muscle" },
+        { label: "⚡ Bghi 3endi energy ktar f n'har",  val: "energy" },
+        { label: "🥗 Bghi nakol s7i w mzyan",         val: "sain"   },
+      ]},
+    { msg: "Shukran bzzaf ! 🙏 Daba 3tini ma3louma wahda okhra — chno t7eb takol ?", type: "choice",
+      choices: [
+        { label: "🥩 Kant7eb l-l7em",       val: "viande"  },
+        { label: "🐟 Kant7eb l-h'wt",       val: "poisson" },
+        { label: "🌿 Kant7eb l-khodra",     val: "vegan"   },
+      ]},
+    { msg: "Zwin ! Su'al wahid o khlas, wou3dek 😊 — chhal d les calories kat7wej ?", type: "choice",
+      choices: [
+        { label: "🌿 Khfifa — less men 450 kcal",   val: "light"    },
+        { label: "⚖️ M3tedla — bin 450 o 600 kcal", val: "balanced" },
+        { label: "🔥 Kbira — fok 600 kcal",         val: "boost"    },
+      ]},
+  ]
+};
+
+let quizStep = 0;
+let quizName = "";
+let quizGoal = "";
+let quizPref = "";
+let quizCal  = "";
+
+function quizBot(text, delay=0) {
+  setTimeout(() => {
+    const msgs = document.getElementById("quiz-msgs");
+    // typing indicator
+    const typing = document.createElement("div");
+    typing.id = "quiz-typing";
+    typing.style.cssText = "display:flex;align-items:center;gap:6px;padding:6px 10px;";
+    typing.innerHTML = `<img src="data:image/svg+xml,%3Csvg width='22' height='22' viewBox='0 0 80 80' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='80' height='80' rx='18' fill='%23e8f5f1'/%3E%3Cellipse cx='40' cy='21' rx='13' ry='5' fill='%23008060' opacity='.9'/%3E%3Crect x='27' y='16' width='26' height='14' rx='4' fill='%23008060' opacity='.9'/%3E%3Cellipse cx='40' cy='13' rx='9.5' ry='8' fill='%23008060'/%3E%3Crect x='26' y='28' width='28' height='20' rx='9' fill='%23008060'/%3E%3Ccircle cx='34' cy='37' r='3.2' fill='white'/%3E%3Ccircle cx='46' cy='37' r='3.2' fill='white'/%3E%3Crect x='28' y='50' width='24' height='18' rx='5' fill='%23008060'/%3E%3C/svg%3E" style="width:22px;height:22px;border-radius:8px;flex-shrink:0;">
+      <div style="display:flex;gap:3px;align-items:center;padding:8px 12px;background:var(--greenXL);border-radius:12px 12px 12px 4px;">
+        <span style="width:5px;height:5px;border-radius:50%;background:var(--green);animation:typingDot .9s 0s infinite;display:inline-block;"></span>
+        <span style="width:5px;height:5px;border-radius:50%;background:var(--green);animation:typingDot .9s .2s infinite;display:inline-block;"></span>
+        <span style="width:5px;height:5px;border-radius:50%;background:var(--green);animation:typingDot .9s .4s infinite;display:inline-block;"></span>
+      </div>`;
+    msgs.appendChild(typing);
+    msgs.scrollTop = msgs.scrollHeight;
+
+    setTimeout(() => {
+      typing.remove();
+      const div = document.createElement("div");
+      div.style.cssText = "display:flex;align-items:flex-end;gap:6px;animation:slideUp .3s ease;";
+      div.innerHTML = `<img src="data:image/svg+xml,%3Csvg width='22' height='22' viewBox='0 0 80 80' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='80' height='80' rx='18' fill='%23e8f5f1'/%3E%3Cellipse cx='40' cy='21' rx='13' ry='5' fill='%23008060' opacity='.9'/%3E%3Crect x='27' y='16' width='26' height='14' rx='4' fill='%23008060' opacity='.9'/%3E%3Cellipse cx='40' cy='13' rx='9.5' ry='8' fill='%23008060'/%3E%3Crect x='26' y='28' width='28' height='20' rx='9' fill='%23008060'/%3E%3Ccircle cx='34' cy='37' r='3.2' fill='white'/%3E%3Ccircle cx='46' cy='37' r='3.2' fill='white'/%3E%3Crect x='28' y='50' width='24' height='18' rx='5' fill='%23008060'/%3E%3C/svg%3E" style="width:22px;height:22px;border-radius:8px;flex-shrink:0;margin-bottom:2px;">
+        <div style="max-width:85%;padding:10px 13px;background:var(--greenXL);border-radius:12px 12px 12px 4px;font-size:13px;color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.55;">${text}</div>`;
+      msgs.appendChild(div);
+      msgs.scrollTop = msgs.scrollHeight;
+    }, 700);
+  }, delay);
 }
 
-function initInlineAgent() {
-  inlineHistory = [];
-  inlineMealDone = false;
+function quizUser(text) {
+  const msgs = document.getElementById("quiz-msgs");
+  const div = document.createElement("div");
+  div.style.cssText = "display:flex;justify-content:flex-end;animation:slideUp .3s ease;";
+  div.innerHTML = `<div style="max-width:80%;padding:10px 13px;background:var(--green);border-radius:12px 12px 4px 12px;font-size:13px;color:#fff;font-family:'DM Sans',sans-serif;line-height:1.5;">${text}</div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function quizShowChoices(choices) {
+  const c = document.getElementById("quiz-choices");
+  c.innerHTML = choices.map(ch => `
+    <button onclick="quizPick('${ch.val}','${ch.label.replace(/'/g,"\'")}',this)"
+      style="padding:8px 14px;border-radius:99px;border:1.5px solid var(--border);background:var(--card);
+      font-size:12px;font-family:'DM Sans',sans-serif;color:var(--text);cursor:pointer;transition:all .2s;white-space:nowrap;"
+      onmouseover="this.style.background='var(--green)';this.style.color='#fff';this.style.borderColor='var(--green)'"
+      onmouseout="this.style.background='var(--card)';this.style.color='var(--text)';this.style.borderColor='var(--border)'">
+      ${ch.label}
+    </button>`).join("");
+}
+
+function quizPick(val, label, btn) {
+  document.getElementById("quiz-choices").innerHTML = "";
+  quizUser(label);
+  if (quizStep === 1) { quizGoal = val; }
+  else if (quizStep === 2) { quizPref = val; }
+  else if (quizStep === 3) { quizCal = val; quizRevealMeal(); return; }
+  quizStep++;
+  quizAdvance();
+}
+
+function quizSubmitName() {
+  const inp = document.getElementById("quiz-name-inp");
+  const name = inp.value.trim();
+  if (!name) return;
+  inp.value = "";
+  document.getElementById("quiz-input-area").style.display = "none";
+  quizUser(name);
+  quizName = name;
+  quizStep = 1;
+  quizAdvance();
+}
+
+function quizAdvance() {
+  const steps = quizSteps[lang] || quizSteps.fr;
+  const step = steps[quizStep];
+  if (!step) return;
+  const msg = typeof step.msg === "function" ? step.msg(quizName) : step.msg;
+  quizBot(msg);
+  if (step.type === "input") {
+    setTimeout(() => {
+      document.getElementById("quiz-input-area").style.display = "flex";
+      document.getElementById("quiz-name-inp").focus();
+    }, 1100);
+  } else if (step.type === "choice") {
+    setTimeout(() => quizShowChoices(step.choices), 1100);
+  }
+}
+
+function quizRevealMeal() {
   const isAr = lang === "ar";
-  const greeting = isAr
-    ? "Salam! 👋 Ana SAVY 🤖 — chef dyalek b l-intelligence artificielle. Kan9der n9lb lik wajba s7iya mzyana, m9issa 3lik nta/nti b la précision. Smiytek ch'no? 😊"
-    : "Bonjour ! 👋 Je suis SAVY 🤖 — votre chef IA personnel. Je compose des repas sains sur-mesure, calibrés exactement pour vous. Comment vous appelez-vous ? 😊";
-  inlineAddBot(greeting);
-  inlineSetQR(isAr
-    ? ["3tini chi ma3louma 3la SAVY", "Nbda daba 🚀"]
-    : ["En savoir plus sur SAVY", "Commencer maintenant 🚀"]);
+  const thinkMsg = isAr
+    ? "Shukran, ${quizName} ! ✨ Daba kan7der lik wajbtek... wahd l-lahda s'ghira w ghadi twali !"
+    : `Merci pour vos réponses, ${quizName} ! ✨ Je prépare votre repas personnalisé... quelques instants seulement.`;
+  quizBot(thinkMsg);
+
+  setTimeout(() => {
+    const meal = (mealLib[quizGoal]?.[quizPref]?.[quizCal]) ||
+                  mealLib.sain.poisson.balanced;
+    const name  = meal.n || meal.name || "Repas SAVY";
+    const desc  = isAr
+      ? "Had l-wajba mfessla 3lik nta/nti — t7dert b koll 3inaya bach twafi l-ahdaf dyalek w t3jbek b le goût dyalha. 🤌"
+      : meal.desc;
+
+    const msgs = document.getElementById("quiz-msgs");
+    const card = document.createElement("div");
+    card.style.cssText = "animation:popIn .4s ease;";
+    card.innerHTML = `
+      <div style="border:1.5px solid var(--green);border-radius:16px;padding:14px;background:linear-gradient(135deg,var(--greenXL),var(--card));">
+        <div style="font-size:32px;text-align:center;margin-bottom:8px;">${meal.e}</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-weight:700;font-size:16px;color:var(--green);margin-bottom:8px;">${name}</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
+          <span style="padding:3px 9px;border-radius:8px;background:var(--card);border:1px solid var(--border);font-size:11px;color:var(--sub);font-family:'DM Sans',sans-serif;">🔥 ${meal.cal} kcal</span>
+          <span style="padding:3px 9px;border-radius:8px;background:var(--card);border:1px solid var(--border);font-size:11px;color:var(--sub);font-family:'DM Sans',sans-serif;">💪 ${meal.p}g protéines</span>
+          <span style="padding:3px 9px;border-radius:8px;background:var(--card);border:1px solid var(--border);font-size:11px;color:var(--sub);font-family:'DM Sans',sans-serif;">🌾 ${meal.c}g glucides</span>
+        </div>
+        <div style="font-size:12px;color:var(--sub);font-style:italic;font-family:'DM Sans',sans-serif;line-height:1.6;">${desc}</div>
+      </div>`;
+    msgs.appendChild(card);
+    msgs.scrollTop = msgs.scrollHeight;
+
+    // Suspense lock message
+    setTimeout(() => {
+      const lockMsg = isAr
+        ? "Wajba Diyalk Ghatji zwina bzzaf ! 🔒 SAVY 9ariban f medintek — Tétouan, M'diq w Martil. Khelli l-email dyalek hna — ghadi n7fdo lik had l-wajba o n3awdok b khsm 20% nhar l-iftitah. 🇲🇦"
+        : `Votre repas est prêt et il vous attend ! 🔒\n\nSAVY arrive très bientôt à Tétouan, M'diq et Martil. Laissez-nous votre adresse email — nous conserverons ce repas pour vous et vous offrirons 20% de réduction dès le lancement. 🇲🇦`;
+      quizBot(lockMsg);
+      setTimeout(() => {
+        const isAr2 = lang === "ar";
+        quizSetTab("email");
+        quizPatchContactLang(isAr2);
+        document.getElementById("quiz-email-area").style.display = "block";
+      }, 1100);
+    }, 800);
+  }, 1500);
 }
 
-function renderCapList() {
-  const el = document.getElementById("cap-list");
-  if (!el) return; // element removed, skip safely
+let quizContactTab = "email";
+
+function quizSetTab(tab) {
+  quizContactTab = tab;
+  document.getElementById("contact-email-fields").style.display = tab === "email" ? "block" : "none";
+  document.getElementById("contact-phone-fields").style.display = tab === "phone" ? "block" : "none";
+  const eBtn = document.getElementById("tab-email");
+  const pBtn = document.getElementById("tab-phone");
+  eBtn.style.cssText += `background:${tab==="email"?"var(--green)":"#fff"};color:${tab==="email"?"#fff":"var(--text)"};border-color:${tab==="email"?"var(--green)":"var(--border)"};`;
+  pBtn.style.cssText += `background:${tab==="phone"?"var(--green)":"#fff"};color:${tab==="phone"?"#fff":"var(--text)"};border-color:${tab==="phone"?"var(--green)":"var(--border)"};`;
+}
+
+function quizSaveContact() {
   const isAr = lang === "ar";
-  const caps = isAr
-    ? ["🎯 Kay fhem l-ahdaf s7iya dyalek","🧠 Kay 7seb macro b la précision","🌍 Recipes s7iya mn partout f dnia","🔒 L-wajba dyalek tantsenna nhar l-launch"]
-    : ["🎯 Comprend vos objectifs santé","🧠 Calcule vos macros exactement","🌍 Recettes saines du monde entier","🔒 Votre repas vous attend au lancement"];
-  el.innerHTML = caps.map(c => `
-    <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);">
-      <span style="font-size:14px;">${c.slice(0,2)}</span>
-      <span style="font-size:12px;color:var(--sub);font-family:'DM Sans',sans-serif;">${c.slice(2).trim()}</span>
-    </div>`).join("");
+  const message = (document.getElementById("quiz-message")?.value || "").trim();
+
+  const sheetData = {
+    name:     quizName,
+    goal:     quizGoal,
+    pref:     quizPref,
+    cal:      quizCal,
+    message:  message,
+    lang:     lang
+  };
+
+  if (quizContactTab === "email") {
+    const email = (document.getElementById("quiz-email")?.value || "").trim();
+    if (!email || !email.includes("@")) {
+      document.getElementById("quiz-email").style.borderColor = "#e53935";
+      return;
+    }
+    sendToMailchimp(email);
+    sheetData.email = email;
+    saveToSheets(sheetData);
+    quizUser(email + (message ? ` · "${message}"` : ""));
+  } else {
+    const fullname = (document.getElementById("quiz-fullname")?.value || "").trim();
+    const phone    = (document.getElementById("quiz-phone")?.value || "").trim();
+    if (!fullname) { document.getElementById("quiz-fullname").style.borderColor = "#e53935"; return; }
+    if (!phone)    { document.getElementById("quiz-phone").style.borderColor    = "#e53935"; return; }
+    sheetData.fullname = fullname;
+    sheetData.phone    = phone;
+    saveToSheets(sheetData);
+    quizUser(`${fullname} · ${phone}` + (message ? ` · "${message}"` : ""));
+  }
+
+  document.getElementById("quiz-email-area").style.display = "none";
+  quizBot(isAr
+    ? `Shukran bzzaf, ${quizName} ! 🎉 Wajbtek m7jouza b koll mhebba. SAVY 9ariban f medintek — Sir/Siri b s7a ! 🚀🇲🇦`
+    : `Merci beaucoup, ${quizName} ! 🎉 Votre repas est bien réservé. Nous avons hâte de vous accueillir très bientôt. Prenez soin de vous ! 🚀🇲🇦`);
+  document.getElementById("quiz-status").textContent = isAr ? "Shukran — Nchofok 9rib 🇲🇦" : "Merci — À très bientôt 🇲🇦";
 }
 
-// also update inline agent language on lang switch
-const _origSetLang = setLang;
-// patch setLang to also update inline titles
-function patchInlineLang(l) {
+function quizPatchContactLang(isAr) {
+  const els = {
+    "tab-email-lbl":  isAr ? "Email"                             : "Email",
+    "tab-phone-lbl":  isAr ? "Téléphone"                         : "Téléphone",
+    "quiz-save-lbl":  isAr ? "7jez blasti 🔒"                   : "Réserver ma place 🔒",
+    "quiz-email-note":isAr ? "🎁 Wajbtek m7fouza + khsm 20% nhar l-launch" : "🎁 Votre repas sauvegardé + 20% de réduction au lancement",
+  };
+  Object.entries(els).forEach(([id, txt]) => { const el = document.getElementById(id); if (el) el.textContent = txt; });
+  const msg = document.getElementById("quiz-message");
+  const fn  = document.getElementById("quiz-fullname");
+  const em  = document.getElementById("quiz-email");
+  if (msg) msg.placeholder = isAr ? "Chi message l SAVY ? (ikhtiyari)" : "Un message pour SAVY ? (optionnel)";
+  if (fn)  fn.placeholder  = isAr ? "Smiytek kamla..."                 : "Nom complet";
+  if (em)  em.placeholder  = isAr ? "email dyalek..."                  : "votre@email.com";
+}
+
+// legacy alias kept for lock-message callback
+function quizSaveEmail() { quizSaveContact(); }
+
+
+function quizReset() {
+  quizStep = 0; quizName = ""; quizGoal = ""; quizPref = ""; quizCal = "";
+  document.getElementById("quiz-msgs").innerHTML = "";
+  document.getElementById("quiz-choices").innerHTML = "";
+  document.getElementById("quiz-email-area").style.display = "none";
+  document.getElementById("quiz-input-area").style.display = "none";
+  quizInit();
+}
+
+function quizPatchLang(l) {
   const isAr = l === "ar";
-  const inlineStatus = document.getElementById("inline-status");
-  const inlineInput  = document.getElementById("inline-input");
-  if (inlineStatus) inlineStatus.textContent = isAr ? "Connecté · Wahed chef AI f Tétouan 🇲🇦" : "En ligne · Prêt à composer votre repas";
-  if (inlineInput)  inlineInput.placeholder  = isAr ? "Jaweb SAVY hna..." : "Répondez à SAVY...";
-  renderCapList();
+  const status = document.getElementById("quiz-status");
+  const inp    = document.getElementById("quiz-name-inp");
+  if (status) status.textContent = isAr ? "Connecté · Chef SAVY 🇲🇦" : "En ligne · Chef SAVY 🇲🇦";
+  if (inp)    inp.placeholder    = isAr ? "Smiytek ch'no..." : "Votre prénom...";
+  quizPatchContactLang(isAr);
+  // Restart quiz in new language
+  quizReset();
 }
 
-// Call init on load
-window.addEventListener("DOMContentLoaded", () => { setTimeout(initInlineAgent, 400); renderCapList(); });
+function quizInit() {
+  const steps = quizSteps[lang] || quizSteps.fr;
+  quizBot(steps[0].msg);
+  setTimeout(() => {
+    document.getElementById("quiz-input-area").style.display = "flex";
+    document.getElementById("quiz-name-inp").focus();
+  }, 1100);
+}
+
+window.addEventListener("DOMContentLoaded", () => setTimeout(quizInit, 400));
 
 // Typing animation keyframe (add dynamically)
 const styleTag = document.createElement("style");
