@@ -440,7 +440,7 @@
         La livraison de repas sains propulsée par l'IA
       </p>
 
-      <!-- 2. SAVY QUIZ — no API, fully local -->
+      <!-- 2. SAVY AI CHEF QUIZ -->
       <div class="su2" style="margin-bottom:24px;max-width:500px;" id="savy-quiz-wrap">
 
         <!-- Header bar -->
@@ -458,68 +458,50 @@
             </svg>
           </div>
           <div style="flex:1;">
-            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:15px;color:var(--text);">SAVY</div>
+            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:15px;color:var(--text);">SAVY AI Chef</div>
             <div style="font-size:11px;color:var(--muted);font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:5px;">
               <span style="width:6px;height:6px;border-radius:50%;background:#4ade80;display:inline-block;animation:pulse 1.5s infinite;"></span>
               <span id="quiz-status">En ligne · Chef SAVY 🇲🇦</span>
             </div>
           </div>
-          <button onclick="quizReset()" title="Recommencer" style="background:var(--greenXL);border:1px solid var(--border);color:var(--green);width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .2s;">↺</button>
+          <button onclick="quizReset()" title="Restart" style="background:var(--greenXL);border:1px solid var(--border);color:var(--green);width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .2s;">↺</button>
+        </div>
+
+        <!-- Progress bar -->
+        <div style="height:3px;background:var(--border);border-radius:99px;margin-bottom:10px;overflow:hidden;">
+          <div id="quiz-progress" style="height:100%;background:var(--green);border-radius:99px;width:0%;transition:width .5s ease;"></div>
         </div>
 
         <!-- Chat window -->
-        <div id="quiz-msgs" style="background:var(--card);border-radius:18px;border:1.5px solid var(--border);padding:14px;min-height:90px;max-height:220px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;box-shadow:var(--shadow);scroll-behavior:smooth;margin-bottom:8px;"></div>
+        <div id="quiz-msgs" style="background:var(--card);border-radius:18px;border:1.5px solid var(--border);padding:14px;min-height:100px;max-height:240px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;box-shadow:var(--shadow);scroll-behavior:smooth;margin-bottom:10px;"></div>
 
         <!-- Choice buttons -->
         <div id="quiz-choices" style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:8px;"></div>
 
-        <!-- Name input (step 0 only) -->
-        <div id="quiz-input-area" style="display:none;display:flex;gap:8px;">
-          <input id="quiz-name-inp" placeholder="Votre prénom..." style="flex:1;padding:11px 15px;border-radius:13px;border:1.5px solid var(--border);font-size:13px;outline:none;font-family:'DM Sans',sans-serif;color:var(--text);background:var(--bg);transition:border-color .2s;"
-            onkeydown="if(event.key==='Enter') quizSubmitName()"
-            onfocus="this.style.borderColor='var(--green)';this.style.background='#fff'"
-            onblur="this.style.borderColor='var(--border)';this.style.background='var(--bg)'"/>
-          <button onclick="quizSubmitName()" style="width:40px;height:40px;border-radius:13px;border:none;background:var(--green);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,128,96,0.3);flex-shrink:0;">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/></svg>
+        <!-- Lead form (final step) -->
+        <div id="quiz-lead-form" style="display:none;margin-top:4px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
+            <input id="lead-name" type="text" placeholder="Prénom / الاسم" style="padding:11px 13px;border-radius:13px;border:1.5px solid var(--border);font-size:13px;outline:none;font-family:'DM Sans',sans-serif;color:var(--text);background:var(--card);width:100%;box-sizing:border-box;"
+              onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='var(--border)'"/>
+            <select id="lead-city" style="padding:11px 13px;border-radius:13px;border:1.5px solid var(--border);font-size:13px;outline:none;font-family:'DM Sans',sans-serif;color:var(--text);background:var(--card);width:100%;box-sizing:border-box;cursor:pointer;"
+              onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='var(--border)'">
+              <option value="">Ville / المدينة</option>
+              <option>Tétouan</option>
+              <option>M'diq</option>
+              <option>Martil</option>
+              <option>Fnideq</option>
+              <option>Chefchaouen</option>
+              <option>Autre</option>
+            </select>
+          </div>
+          <input id="lead-whatsapp" type="tel" placeholder="WhatsApp (+212 6XX XXX XXX)" style="width:100%;box-sizing:border-box;padding:11px 13px;border-radius:13px;border:1.5px solid var(--border);font-size:13px;outline:none;font-family:'DM Sans',sans-serif;color:var(--text);background:var(--card);margin-bottom:8px;"
+            onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='var(--border)'"/>
+          <input id="lead-email" type="email" placeholder="Email (optionnel)" style="width:100%;box-sizing:border-box;padding:11px 13px;border-radius:13px;border:1.5px solid var(--border);font-size:13px;outline:none;font-family:'DM Sans',sans-serif;color:var(--text);background:var(--card);margin-bottom:10px;"
+            onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='var(--border)'"/>
+          <button onclick="quizSubmitLead()" style="width:100%;padding:13px;border-radius:13px;border:none;background:var(--green);color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;box-shadow:0 4px 16px rgba(0,128,96,0.35);transition:all .2s;letter-spacing:.3px;">
+            🧬 <span id="lead-btn-lbl">Révéler mon équation nutritionnelle</span>
           </button>
-        </div>
-
-        <!-- Contact capture (final step) -->
-        <div id="quiz-email-area" style="display:none;margin-top:8px;">
-
-          <!-- Toggle tabs -->
-          <div style="display:flex;gap:8px;margin-bottom:10px;">
-            <button id="tab-email" onclick="quizSetTab('email')" style="flex:1;padding:8px;border-radius:10px;border:1.5px solid var(--green);background:var(--green);color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;">
-              📧 <span id="tab-email-lbl">Email</span>
-            </button>
-            <button id="tab-phone" onclick="quizSetTab('phone')" style="flex:1;padding:8px;border-radius:10px;border:1.5px solid var(--border);background:var(--card);color:var(--text);font-size:12px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;">
-              📱 <span id="tab-phone-lbl">Téléphone</span>
-            </button>
-          </div>
-
-          <!-- Email fields -->
-          <div id="contact-email-fields">
-            <input id="quiz-email" type="email" placeholder="votre@email.com" style="width:100%;box-sizing:border-box;padding:11px 15px;border-radius:13px;border:1.5px solid var(--border);font-size:13px;outline:none;font-family:'DM Sans',sans-serif;color:var(--text);background:var(--card);margin-bottom:8px;"
-              onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='var(--border)'"/>
-          </div>
-
-          <!-- Phone fields -->
-          <div id="contact-phone-fields" style="display:none;">
-            <input id="quiz-fullname" type="text" placeholder="Nom complet" style="width:100%;box-sizing:border-box;padding:11px 15px;border-radius:13px;border:1.5px solid var(--border);font-size:13px;outline:none;font-family:'DM Sans',sans-serif;color:var(--text);background:var(--card);margin-bottom:8px;"
-              onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='var(--border)'"/>
-            <input id="quiz-phone" type="tel" placeholder="+212 6XX XXX XXX" style="width:100%;box-sizing:border-box;padding:11px 15px;border-radius:13px;border:1.5px solid var(--border);font-size:13px;outline:none;font-family:'DM Sans',sans-serif;color:var(--text);background:var(--card);margin-bottom:8px;"
-              onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='var(--border)'"/>
-          </div>
-
-          <!-- Optional message (always shown) -->
-          <textarea id="quiz-message" rows="2" placeholder="Un message pour SAVY ? (optionnel)" style="width:100%;box-sizing:border-box;padding:11px 15px;border-radius:13px;border:1.5px solid var(--border);font-size:13px;outline:none;font-family:'DM Sans',sans-serif;color:var(--text);background:var(--card);resize:none;margin-bottom:8px;"
-            onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='var(--border)'"></textarea>
-
-          <!-- Submit button -->
-          <button onclick="quizSaveContact()" id="quiz-save-btn" style="width:100%;padding:12px;border-radius:13px;border:none;background:var(--green);color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;box-shadow:0 4px 12px rgba(0,128,96,0.3);transition:all .2s;">
-            <span id="quiz-save-lbl">Réserver ma place 🔒</span>
-          </button>
-          <p id="quiz-email-note" style="font-size:11px;color:var(--muted);font-family:'DM Sans',sans-serif;margin-top:6px;text-align:center;">🎁 Votre repas sauvegardé + 20% de réduction au lancement</p>
+          <p style="font-size:11px;color:var(--muted);font-family:'DM Sans',sans-serif;margin-top:6px;text-align:center;">🔒 Vos données sont privées — jamais partagées</p>
         </div>
       </div>
 
@@ -1103,27 +1085,51 @@ const MAILCHIMP_URL = "PASTE_YOUR_MAILCHIMP_URL_HERE";
    2. Create a new form → copy your URL
    3. Paste it below (looks like: https://formspree.io/f/xxxxxxxx)
 ═══════════════════════════════════════════ */
-const FORMSPREE_URL = "https://script.google.com/macros/s/AKfycbxsbW4f5tl170iIVVeQyAjbSuYw4q3S3yvfJQJgT908PPCDJxfcyTTWT3ZCq4JFy9cPTQ/exec";
+const FORMSPREE_URL = "https://script.google.com/macros/s/AKfycbze50a82fqgJodjNmIZLpis7TuVfveQ9c_x1aHXVEsDwEiiT0bqHhQlKCiL1LfZbO3-Gg/exec";
 
 async function saveToSheets(data) {
   if (!FORMSPREE_URL || FORMSPREE_URL === "PASTE_YOUR_FORMSPREE_URL_HERE") return;
   try {
-    await fetch(FORMSPREE_URL, {
-      method: "POST",
-      mode: "no-cors",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name:     data.name     || "",
-        goal:     data.goal     || "",
-        pref:     data.pref     || "",
-        cal:      data.cal      || "",
-        email:    data.email    || "",
-        phone:    data.phone    || "",
-        fullname: data.fullname || "",
-        message:  data.message  || "",
-        lang:     data.lang     || ""
-      })
+    // Use hidden form + iframe to bypass CORS with Google Apps Script
+    const iframe = document.createElement("iframe");
+    iframe.name = "savy-hidden-frame";
+    iframe.style.display = "none";
+    document.body.appendChild(iframe);
+
+    const form = document.createElement("form");
+    form.method = "POST";
+    form.action = FORMSPREE_URL;
+    form.target = "savy-hidden-frame";
+
+    const fields = {
+      name:      data.name      || "",
+      goal:      data.goal      || "",
+      activity:  data.activity  || "",
+      flavor:    data.flavor    || "",
+      packaging: data.packaging || "",
+      city:      data.city      || "",
+      whatsapp:  data.whatsapp  || "",
+      email:     data.email     || "",
+      message:   data.message   || "",
+      lang:      data.lang      || ""
+    };
+
+    Object.entries(fields).forEach(([key, val]) => {
+      const input = document.createElement("input");
+      input.type  = "hidden";
+      input.name  = key;
+      input.value = val;
+      form.appendChild(input);
     });
+
+    document.body.appendChild(form);
+    form.submit();
+
+    setTimeout(() => {
+      document.body.removeChild(form);
+      document.body.removeChild(iframe);
+    }, 3000);
+
   } catch(e) {
     console.warn("Sheets save failed:", e);
   }
@@ -1227,366 +1233,288 @@ window.addEventListener("scroll",()=>{
 ═══════════════════════════════════════════ */
 
 // ── Meal library keyed by [goal][pref][cal] ──
-const mealLib = {
-  weight: {
-    viande: {
-      light:    {e:"🥗", n:"Poulet Grillé & Légumes Vapeur",    cal:310, p:38, c:14, desc:"Un filet de poulet doré, légumes croquants — léger, sain, irrésistible."},
-      balanced: {e:"🍗", n:"Bowl Poulet Citron & Quinoa",        cal:480, p:42, c:36, desc:"Quinoa parfumé, poulet juteux et une touche de citron confit."},
-      boost:    {e:"🥩", n:"Steak Haché & Patate Douce Rôtie",  cal:620, p:48, c:52, desc:"Viande maigre, douceur de patate — le combo puissance absolue."},
-    },
-    poisson: {
-      light:    {e:"🐟", n:"Filet de Daurade & Salade Fraîche",  cal:290, p:36, c:8,  desc:"Daurade grillée, salade croquante — la mer dans votre assiette."},
-      balanced: {e:"🍣", n:"Poke Bowl Saumon Avocat",             cal:460, p:34, c:38, desc:"Saumon fondant, avocat crémeux, riz vinaigré — pur bonheur."},
-      boost:    {e:"🐠", n:"Saumon Teriyaki & Riz Complet",      cal:610, p:46, c:56, desc:"Glaçage teriyaki maison, riz moelleux — une explosion umami."},
-    },
-    vegan: {
-      light:    {e:"🥦", n:"Buddha Bowl Détox Vert",             cal:270, p:14, c:32, desc:"Brocoli, épinards, pois chiches — un bol qui nettoie et nourrit."},
-      balanced: {e:"🌯", n:"Wrap Falafel & Houmous Maison",      cal:450, p:18, c:54, desc:"Falafel croustillant, houmous onctueux — le classique revisité."},
-      boost:    {e:"🍛", n:"Dal Rouge & Riz Basmati",            cal:590, p:22, c:78, desc:"Lentilles épicées, riz parfumé — réconfort végétal complet."},
-    }
-  },
-  muscle: {
-    viande: {
-      light:    {e:"🍗", n:"Poulet Rôti & Brocoli Vapeur",       cal:420, p:52, c:12, desc:"Ultra-protéiné, sans excès — pour construire sans gonfler."},
-      balanced: {e:"🥩", n:"Steak de Boeuf & Patate Douce",      cal:560, p:56, c:40, desc:"Protéines de haute qualité, glucides lents — la formule croissance."},
-      boost:    {e:"🍖", n:"Power Bowl Viande & Légumineuses",   cal:680, p:60, c:58, desc:"Boeuf, pois chiches, riz complet — un repas de champion."},
-    },
-    poisson: {
-      light:    {e:"🐟", n:"Thon & Edamame Bowl",                cal:400, p:48, c:18, desc:"Thon frais, edamame croquant — protéines marines à l'état pur."},
-      balanced: {e:"🐠", n:"Saumon Grillé & Lentilles Vertes",  cal:540, p:50, c:34, desc:"Oméga-3 et protéines végétales — le duo de la performance."},
-      boost:    {e:"🍣", n:"Saumon Poché & Quinoa Complet",      cal:670, p:58, c:52, desc:"Chaque gramme travaille pour vos muscles — goût inclus."},
-    },
-    vegan: {
-      light:    {e:"🌿", n:"Tofu Grillé & Brocoli Sesame",       cal:380, p:36, c:16, desc:"Tofu doré au sésame, brocoli al dente — protéines végétales max."},
-      balanced: {e:"🫘", n:"Bowl Quinoa, Pois Chiches & Avocat", cal:520, p:34, c:46, desc:"Acides aminés complets, graisses saines — plein de force verte."},
-      boost:    {e:"🍛", n:"Tempeh Teriyaki & Riz Noir",         cal:640, p:44, c:60, desc:"Tempeh fermenté, riz noir antioxydant — la recette des athlètes vegan."},
-    }
-  },
-  energy: {
-    viande: {
-      light:    {e:"🥗", n:"Salade Niçoise au Poulet",           cal:350, p:32, c:18, desc:"Fraîcheur méditerranéenne, protéines légères — énergie douce et durable."},
-      balanced: {e:"🍗", n:"Poulet & Pâtes Complètes",          cal:500, p:38, c:48, desc:"Glucides lents, protéines maigres — le carburant de la journée."},
-      boost:    {e:"🌯", n:"Burrito Bowl Poulet Energisant",     cal:650, p:44, c:62, desc:"Riz, haricots, poulet épicé — une bombe d'énergie en bol."},
-    },
-    poisson: {
-      light:    {e:"🐟", n:"Salade de Thon & Avocat",            cal:320, p:30, c:14, desc:"Légère et nutritive — le petit coup de boost du milieu de journée."},
-      balanced: {e:"🍱", n:"Bowl Saumon & Edamame",              cal:490, p:36, c:42, desc:"Oméga-3 pour le cerveau, glucides pour les muscles — parfait équilibre."},
-      boost:    {e:"🐠", n:"Poke Bowl Énergie Max",              cal:640, p:40, c:60, desc:"Tout ce dont votre corps a besoin pour une journée intense."},
-    },
-    vegan: {
-      light:    {e:"🫐", n:"Açaí & Chia Power Bowl",             cal:300, p:10, c:46, desc:"Superaliments purs — antioxydants, énergie naturelle, goût sublime."},
-      balanced: {e:"🥑", n:"Avocado Toast & Œuf Poché",          cal:460, p:20, c:42, desc:"Graisses saines, protéines douces — le brunch qui tient toute la journée."},
-      boost:    {e:"🍌", n:"Green Smoothie Bowl Tropical",       cal:580, p:16, c:80, desc:"Banane, épinards, granola maison — énergie tropicale en bol."},
-    }
-  },
-  sain: {
-    viande: {
-      light:    {e:"🥗", n:"Wrap Poulet & Légumes Croquants",    cal:370, p:30, c:32, desc:"Frais, coloré, équilibré — manger sain n'a jamais été aussi bon."},
-      balanced: {e:"🍗", n:"Poulet Rôti & Légumes Rôtis",        cal:490, p:36, c:36, desc:"Simplicité et qualité — légumes de saison, poulet tendre."},
-      boost:    {e:"🌯", n:"Bowl Complet Poulet & Céréales",     cal:610, p:42, c:54, desc:"Un repas complet qui coche toutes les cases nutritionnelles."},
-    },
-    poisson: {
-      light:    {e:"🐟", n:"Branzino al Limone & Asperges",      cal:350, p:38, c:10, desc:"Poisson fin, asperges croquantes, citron — la légèreté italienne."},
-      balanced: {e:"🍣", n:"Saumon en Papillote & Couscous",     cal:510, p:40, c:44, desc:"Cuisson douce, saveurs préservées — le repas sain par excellence."},
-      boost:    {e:"🐠", n:"Plateau Fruits de Mer & Quinoa",     cal:600, p:46, c:50, desc:"Générosité marine, base nutritive — un festin sain et complet."},
-    },
-    vegan: {
-      light:    {e:"🥬", name:"Minestrone Légumes & Pesto",       cal:280, p:10, c:38, desc:"Soupe généreuse, pesto parfumé — réconfort végétal léger."},
-      balanced: {e:"🧆", n:"Assiette Mezze Équilibrée",           cal:460, p:16, c:52, desc:"Houmous, falafel, taboulé — un voyage méditerranéen sain."},
-      boost:    {e:"🍛", n:"Buddha Bowl Complet 7 Légumes",      cal:580, p:22, c:68, desc:"Sept légumes, graines, sauce tahini — la santé en bol."},
-    }
-  }
-};
+/* ═══════════════════════════════════════════
+   SAVY AI CHEF — 5-Step Quiz Engine
+═══════════════════════════════════════════ */
 
-const quizSteps = {
-  fr: [
-    { msg: "Bonjour ! 😊 Moi c'est SAVY — votre chef personnel. Je ne pose que 3 questions et je vous prépare un repas fait pour vous, pas pour tout le monde. Juste pour commencer... comment vous appelez-vous ?", type: "input" },
-    { msg: (n) => `${n}, ravi de vous rencontrer ! 🙏\nAlors dites-moi franchement — pourquoi vous êtes là aujourd'hui ? Quel est votre vrai objectif ?`, type: "choice",
-      choices: [
-        { label: "🏃 Perdre du poids",               val: "weight" },
-        { label: "💪 Gagner du muscle",               val: "muscle" },
-        { label: "⚡ Avoir plus d'énergie",           val: "energy" },
-        { label: "🥗 Mieux manger, simplement",       val: "sain"   },
-      ]},
-    { msg: (n) => `Bien reçu ! C'est exactement ce genre d'objectif que j'adore travailler.\nUne chose importante — qu'est-ce que vous aimez manger ?`, type: "choice",
-      choices: [
-        { label: "🥩 Viande — j'adore ça",           val: "viande"  },
-        { label: "🐟 Poisson — ma préférence",        val: "poisson" },
-        { label: "🌿 Végétarien — pas de viande",     val: "vegan"   },
-      ]},
-    { msg: "Parfait, dernière question — et c'est la plus importante ! 😄\nQuel type de repas vous correspond le mieux ?", type: "choice",
-      choices: [
-        { label: "🌿 Léger — moins de 450 kcal",     val: "light"    },
-        { label: "⚖️ Équilibré — entre 450 et 600",  val: "balanced" },
-        { label: "🔥 Costaud — plus de 600 kcal",    val: "boost"    },
-      ]},
-  ],
-  ar: [
-    { msg: "Mrhba bik ! 😊 Ana SAVY — chef dyalek b l-intelligence artificielle. 3ndi tjriba kbira f majal lwajabat, ghadi n9lb m3ak 3la wajba s7iya u tkun ldida, mssawba 3la wedk b la précision. Wesh momkin t3rfni b issmek ?", type: "input" },
-    { msg: (n) => `${n}, yishrfni n3rfek ! 🙏\nKhberni b ssra7a — 3lach jiti lhna lyom ? Chno l-but li kat7wej t7aqeq ?`, type: "choice",
-      choices: [
-        { label: "🏃 Bghi n9ess f l-wazn dyali",         val: "weight" },
-        { label: "💪 Bghi nbni jism w n9wi",              val: "muscle" },
-        { label: "⚡ Bghi 3endi energy ktar f n'har",     val: "energy" },
-        { label: "🥗 Bghi nakol s7i — 7aja basita",      val: "sain"   },
-      ]},
-    { msg: (n) => `Mfhoom ! Had n-naw3 d l-ahdaf kayn3jebni bzzaf n-khdmo 3lih.\nSu'al mouhim — chno lli kat7eb takol ?`, type: "choice",
-      choices: [
-        { label: "🥩 L7em — hadchi lli kan7bo",           val: "viande"  },
-        { label: "🐟 H'wt — howa l-mofadal dyali",       val: "poisson" },
-        { label: "🌿 Khodra — bla l7em w h'wt",          val: "vegan"   },
-      ]},
-    { msg: "Zwin ! Akhir su'al — u howa l-mouhim ! 😄\nChno n-naw3 d l-wajba lli kan7wej ?", type: "choice",
-      choices: [
-        { label: "🌿 Khfifa — less men 450 kcal",        val: "light"    },
-        { label: "⚖️ M3tedla — bin 450 u 600 kcal",     val: "balanced" },
-        { label: "🔥 Gania u kbira — fok 600 kcal",     val: "boost"    },
-      ]},
-  ]
-};
+// ── Macro engine based on goal × activity × flavor ──
+function calcMacros(goal, activity, flavor) {
+  const base = {
+    weight:    { cal:420, p:38, c:32, f:14 },
+    muscle:    { cal:620, p:52, c:58, f:16 },
+    energy:    { cal:520, p:36, c:64, f:14 },
+    delicious: { cal:560, p:30, c:62, f:18 },
+  }[goal] || { cal:480, p:36, c:44, f:14 };
 
-let quizStep = 0;
-let quizName = "";
-let quizGoal = "";
-let quizPref = "";
-let quizCal  = "";
+  const actMult = { sedentary:0.88, moderate:1.0, active:1.15 }[activity] || 1.0;
+  const cal  = Math.round(base.cal  * actMult / 10) * 10;
+  const prot = Math.round(base.p    * actMult);
+  const carb = Math.round(base.c    * actMult);
+  const fat  = Math.round(base.f    * actMult);
 
-function quizBot(text, delay=0) {
-  setTimeout(() => {
-    const msgs = document.getElementById("quiz-msgs");
-    // typing indicator
-    const typing = document.createElement("div");
-    typing.id = "quiz-typing";
-    typing.style.cssText = "display:flex;align-items:center;gap:6px;padding:6px 10px;";
-    typing.innerHTML = `<img src="data:image/svg+xml,%3Csvg width='22' height='22' viewBox='0 0 80 80' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='80' height='80' rx='18' fill='%23e8f5f1'/%3E%3Cellipse cx='40' cy='21' rx='13' ry='5' fill='%23008060' opacity='.9'/%3E%3Crect x='27' y='16' width='26' height='14' rx='4' fill='%23008060' opacity='.9'/%3E%3Cellipse cx='40' cy='13' rx='9.5' ry='8' fill='%23008060'/%3E%3Crect x='26' y='28' width='28' height='20' rx='9' fill='%23008060'/%3E%3Ccircle cx='34' cy='37' r='3.2' fill='white'/%3E%3Ccircle cx='46' cy='37' r='3.2' fill='white'/%3E%3Crect x='28' y='50' width='24' height='18' rx='5' fill='%23008060'/%3E%3C/svg%3E" style="width:22px;height:22px;border-radius:8px;flex-shrink:0;">
-      <div style="display:flex;gap:3px;align-items:center;padding:8px 12px;background:var(--greenXL);border-radius:12px 12px 12px 4px;">
-        <span style="width:5px;height:5px;border-radius:50%;background:var(--green);animation:typingDot .9s 0s infinite;display:inline-block;"></span>
-        <span style="width:5px;height:5px;border-radius:50%;background:var(--green);animation:typingDot .9s .2s infinite;display:inline-block;"></span>
-        <span style="width:5px;height:5px;border-radius:50%;background:var(--green);animation:typingDot .9s .4s infinite;display:inline-block;"></span>
-      </div>`;
-    msgs.appendChild(typing);
-    msgs.scrollTop = msgs.scrollHeight;
+  const meals = {
+    asian:   { weight:"🍣 Poke Bowl Saumon & Edamame",        muscle:"🍜 Ramen Poulet & Tofu Fermenté",      energy:"🥢 Buddha Bowl Thaï aux 7 Graines",       delicious:"🥟 Gyoza Croustillants & Ramen au Beurre"    },
+    mediter: { weight:"🥗 Salade Grecque & Daurade Grillée",  muscle:"🫙 Assiette Mezze & Poulet Rôti",       energy:"🌿 Bowl Falafel, Houmous & Taboulé",       delicious:"🧆 Moussaka Crémeuse & Pain Pita Chaud"      },
+    mexican: { weight:"🌮 Tacos Poisson Grillé & Salsa",      muscle:"🌯 Burrito Bowl Quinoa & Boeuf Épicé",  energy:"🫔 Wrap Avocat, Haricots Noirs & Lime",    delicious:"🌶️ Quesadilla Fromage Fondu & Guacamole"     },
+    fastfood:{ weight:"🍔 Burger Poulet Grillé & Salade",     muscle:"🌭 Double Burger Boeuf & Œuf",          energy:"🍟 Box Poulet Croustillant & Patate Douce", delicious:"🍔 Smash Burger Fromage & Sauce Secrète SAVY" },
+    moroccan:{ weight:"🫕 Tajine Poulet & Légumes Léger",     muscle:"🍖 Méchoui & Couscous aux 7 Légumes",   energy:"🥘 Harira, Msemen & Miel Naturel",          delicious:"🥐 Pastilla Poulet Amandes & Cannelle"        },
+  };
+  const dish = (meals[flavor] || meals.moroccan)[goal] || "🍽️ Repas SAVY sur-mesure";
 
-    setTimeout(() => {
-      typing.remove();
-      const div = document.createElement("div");
-      div.style.cssText = "display:flex;align-items:flex-end;gap:6px;animation:slideUp .3s ease;";
-      div.innerHTML = `<img src="data:image/svg+xml,%3Csvg width='22' height='22' viewBox='0 0 80 80' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='80' height='80' rx='18' fill='%23e8f5f1'/%3E%3Cellipse cx='40' cy='21' rx='13' ry='5' fill='%23008060' opacity='.9'/%3E%3Crect x='27' y='16' width='26' height='14' rx='4' fill='%23008060' opacity='.9'/%3E%3Cellipse cx='40' cy='13' rx='9.5' ry='8' fill='%23008060'/%3E%3Crect x='26' y='28' width='28' height='20' rx='9' fill='%23008060'/%3E%3Ccircle cx='34' cy='37' r='3.2' fill='white'/%3E%3Ccircle cx='46' cy='37' r='3.2' fill='white'/%3E%3Crect x='28' y='50' width='24' height='18' rx='5' fill='%23008060'/%3E%3C/svg%3E" style="width:22px;height:22px;border-radius:8px;flex-shrink:0;margin-bottom:2px;">
-        <div style="max-width:85%;padding:10px 13px;background:var(--greenXL);border-radius:12px 12px 12px 4px;font-size:13px;color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.55;">${text}</div>`;
-      msgs.appendChild(div);
-      msgs.scrollTop = msgs.scrollHeight;
-    }, 700);
-  }, delay);
+  return { cal, prot, carb, fat, dish };
 }
 
-function quizUser(text) {
+// ── State ──
+let qStep    = 0;
+let qGoal    = "";
+let qActivity= "";
+let qFlavor  = "";
+let qPack    = "";
+const TOTAL_STEPS = 5;
+
+function qProgress(step) {
+  const bar = document.getElementById("quiz-progress");
+  if (bar) bar.style.width = Math.round((step/TOTAL_STEPS)*100)+"%";
+}
+
+// ── Bot message renderer ──
+function quizBot(text) {
+  const msgs = document.getElementById("quiz-msgs");
+
+  // typing indicator
+  const typing = document.createElement("div");
+  typing.id = "q-typing";
+  typing.style.cssText = "display:flex;align-items:center;gap:6px;";
+  typing.innerHTML = `
+    <div style="width:22px;height:22px;border-radius:8px;background:var(--green);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+      <svg width="12" height="12" viewBox="0 0 80 80" fill="none"><ellipse cx="40" cy="13" rx="9.5" ry="8" fill="white"/><rect x="26" y="28" width="28" height="20" rx="9" fill="white"/></svg>
+    </div>
+    <div style="padding:8px 12px;background:var(--greenXL);border-radius:12px 12px 12px 4px;display:flex;gap:3px;align-items:center;">
+      <span style="width:5px;height:5px;border-radius:50%;background:var(--green);animation:typingDot .9s 0s infinite;display:inline-block;"></span>
+      <span style="width:5px;height:5px;border-radius:50%;background:var(--green);animation:typingDot .9s .2s infinite;display:inline-block;"></span>
+      <span style="width:5px;height:5px;border-radius:50%;background:var(--green);animation:typingDot .9s .4s infinite;display:inline-block;"></span>
+    </div>`;
+  msgs.appendChild(typing);
+  msgs.scrollTop = msgs.scrollHeight;
+
+  setTimeout(() => {
+    typing.remove();
+    const div = document.createElement("div");
+    div.style.cssText = "display:flex;align-items:flex-end;gap:6px;animation:slideUp .3s ease;";
+    div.innerHTML = `
+      <div style="width:22px;height:22px;border-radius:8px;background:var(--green);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-bottom:2px;">
+        <svg width="12" height="12" viewBox="0 0 80 80" fill="none"><ellipse cx="40" cy="13" rx="9.5" ry="8" fill="white"/><rect x="26" y="28" width="28" height="20" rx="9" fill="white"/></svg>
+      </div>
+      <div style="max-width:85%;padding:10px 13px;background:var(--greenXL);border-radius:12px 12px 12px 4px;font-size:13px;color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.6;">${text}</div>`;
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+  }, 700);
+}
+
+function quizUser(text, emoji) {
   const msgs = document.getElementById("quiz-msgs");
   const div = document.createElement("div");
   div.style.cssText = "display:flex;justify-content:flex-end;animation:slideUp .3s ease;";
-  div.innerHTML = `<div style="max-width:80%;padding:10px 13px;background:var(--green);border-radius:12px 12px 4px 12px;font-size:13px;color:#fff;font-family:'DM Sans',sans-serif;line-height:1.5;">${text}</div>`;
+  div.innerHTML = `<div style="max-width:80%;padding:10px 13px;background:var(--green);border-radius:12px 12px 4px 12px;font-size:13px;color:#fff;font-family:'DM Sans',sans-serif;line-height:1.5;">${emoji ? emoji+' ' : ''}${text}</div>`;
   msgs.appendChild(div);
   msgs.scrollTop = msgs.scrollHeight;
 }
 
 function quizShowChoices(choices) {
-  const c = document.getElementById("quiz-choices");
-  c.innerHTML = choices.map(ch => `
-    <button onclick="quizPick('${ch.val}','${ch.label.replace(/'/g,"\'")}',this)"
-      style="padding:8px 14px;border-radius:99px;border:1.5px solid var(--border);background:var(--card);
-      font-size:12px;font-family:'DM Sans',sans-serif;color:var(--text);cursor:pointer;transition:all .2s;white-space:nowrap;"
+  const box = document.getElementById("quiz-choices");
+  box.innerHTML = choices.map(ch => `
+    <button onclick="quizPick('${ch.val}','${ch.label.replace(/'/g,"\'")}','${ch.emoji||''}')"
+      style="padding:9px 15px;border-radius:99px;border:1.5px solid var(--border);background:var(--card);
+      font-size:12px;font-family:'DM Sans',sans-serif;color:var(--text);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:5px;"
       onmouseover="this.style.background='var(--green)';this.style.color='#fff';this.style.borderColor='var(--green)'"
       onmouseout="this.style.background='var(--card)';this.style.color='var(--text)';this.style.borderColor='var(--border)'">
-      ${ch.label}
+      ${ch.emoji} <span>${ch.label}</span>
     </button>`).join("");
 }
 
-function quizPick(val, label, btn) {
+function quizPick(val, label, emoji) {
   document.getElementById("quiz-choices").innerHTML = "";
-  quizUser(label);
-  if (quizStep === 1) { quizGoal = val; }
-  else if (quizStep === 2) { quizPref = val; }
-  else if (quizStep === 3) { quizCal = val; quizRevealMeal(); return; }
-  quizStep++;
-  quizAdvance();
+  quizUser(label, emoji);
+  qStep++;
+
+  if      (qStep === 1) { qGoal     = val; qProgress(1); setTimeout(quizStep2, 900); }
+  else if (qStep === 2) { qActivity = val; qProgress(2); setTimeout(quizStep3, 900); }
+  else if (qStep === 3) { qFlavor   = val; qProgress(3); setTimeout(quizStep4, 900); }
+  else if (qStep === 4) { qPack     = val; qProgress(4); setTimeout(quizStep5, 900); }
 }
 
-function quizSubmitName() {
-  const inp = document.getElementById("quiz-name-inp");
-  const name = inp.value.trim();
-  if (!name) return;
-  inp.value = "";
-  document.getElementById("quiz-input-area").style.display = "none";
-  quizUser(name);
-  quizName = name;
-  quizStep = 1;
-  quizAdvance();
+// ── Step 1: Goal ─────────────────────────────────────
+function quizStep1() {
+  const isAr = lang==="ar";
+  quizBot(isAr
+    ? "أهلاً وسهلاً بيك فـ SAVY ! 🌟<br>أنا الشيف ديال الـ AI — غادي نصمم ليك وجبة على قياسك.<br><br><strong>شنو هو الهدف اللي بغيتي توصله؟</strong>"
+    : "Welcome to the future of food. 🌟<br>I am the <strong>SAVY AI Chef</strong> — here to engineer your perfect meal.<br><br><strong>What is your primary body goal?</strong>");
+  setTimeout(() => quizShowChoices([
+    { val:"weight",    label: isAr ? "خسارة الوزن"       : "Weight Loss",        emoji:"📉" },
+    { val:"muscle",    label: isAr ? "بناء العضلات"      : "Muscle Gain",        emoji:"🏋️" },
+    { val:"energy",    label: isAr ? "طاقة عالية"        : "High Energy",        emoji:"⚡" },
+    { val:"delicious", label: isAr ? "حاجة لذيذة فقط"   : "Something Delicious",emoji:"😋" },
+  ]), 900);
 }
 
-function quizAdvance() {
-  const steps = quizSteps[lang] || quizSteps.fr;
-  const step = steps[quizStep];
-  if (!step) return;
-  const msg = typeof step.msg === "function" ? step.msg(quizName) : step.msg;
-  quizBot(msg);
-  if (step.type === "input") {
-    setTimeout(() => {
-      document.getElementById("quiz-input-area").style.display = "flex";
-      document.getElementById("quiz-name-inp").focus();
-    }, 1100);
-  } else if (step.type === "choice") {
-    setTimeout(() => quizShowChoices(step.choices), 1100);
-  }
+// ── Step 2: Activity ──────────────────────────────────
+function quizStep2() {
+  const isAr = lang==="ar";
+  quizBot(isAr
+    ? "ممتاز ! 💪<br><strong>كفاش داير نهارك ؟</strong>"
+    : "Got it! 💪<br><strong>How active is your daily routine?</strong>");
+  setTimeout(() => quizShowChoices([
+    { val:"sedentary", label: isAr ? "جالس فالمكتب"   : "Sedentary",     emoji:"🖱️" },
+    { val:"moderate",  label: isAr ? "نشاط معتدل"      : "Moderate",      emoji:"🚶" },
+    { val:"active",    label: isAr ? "نشيط بزاف"       : "Highly Active", emoji:"🔥" },
+  ]), 900);
 }
 
-function quizRevealMeal() {
-  const isAr = lang === "ar";
-  const thinkMsg = isAr
-    ? `Wakha ${quizName}... daba kan7seb. ⏳ Khas nshof ach mzyan lik — wahd thiniya u ghadi nwerik !`
-    : `Ok ${quizName}, je réfléchis... ⏳ Je veux vraiment trouver ce qui vous correspond. Une seconde !`;
-  quizBot(thinkMsg);
+// ── Step 3: Flavor ────────────────────────────────────
+function quizStep3() {
+  const isAr = lang==="ar";
+  quizBot(isAr
+    ? "رائع ! 🌍<br><strong>شنو هو المذاق اللي كيعجبك؟</strong>"
+    : "Excellent taste! 🌍<br><strong>Which global flavor profile excites you?</strong>");
+  setTimeout(() => quizShowChoices([
+    { val:"asian",    label: isAr ? "آسيوي فيوجن"     : "Asian Fusion",    emoji:"🍣" },
+    { val:"mediter",  label: isAr ? "متوسطي"           : "Mediterranean",   emoji:"🥗" },
+    { val:"mexican",  label: isAr ? "مكسيكي حار"      : "Mexican Heat",    emoji:"🌮" },
+    { val:"fastfood", label: isAr ? "فاست فود صحي"    : "Healthy Fast Food",emoji:"🍔" },
+    { val:"moroccan", label: isAr ? "مغربي أصيل"      : "Moroccan",        emoji:"🫕" },
+  ]), 900);
+}
+
+// ── Step 4: Packaging ─────────────────────────────────
+function quizStep4() {
+  const isAr = lang==="ar";
+  quizBot(isAr
+    ? "اللمسة الأخيرة ! ✨<br><strong>نوجدوا ليك العلبة الخضراء أو الوردية؟</strong>"
+    : "Final touch! ✨<br><strong>Your signature SAVY packaging — which speaks to you?</strong>");
+  setTimeout(() => quizShowChoices([
+    { val:"green", label: isAr ? "زمردي (رجال)"      : "Signature Emerald 🟢", emoji:"💚" },
+    { val:"pink",  label: isAr ? "وردي (نساء)"       : "Premium Pink 🌸",      emoji:"🩷" },
+  ]), 900);
+}
+
+// ── Step 5: Lead form ─────────────────────────────────
+function quizStep5() {
+  const isAr = lang==="ar";
+  qProgress(5);
+  quizBot(isAr
+    ? "مزيان ! معادلتك الغذائية جاهزة 🧬<br><strong>فين نصيفطوا ليك النتائج ودعوة الوصول المبكر؟</strong>"
+    : "Perfect! Your AI equation is ready 🧬<br><strong>Where should we send your personalized results and early access invite?</strong>");
+  setTimeout(() => {
+    const isAr2 = lang==="ar";
+    const btn = document.getElementById("lead-btn-lbl");
+    const city = document.getElementById("lead-city");
+    if (btn) btn.textContent = isAr2 ? "🧬 اكشف معادلتي الغذائية" : "🧬 Révéler mon équation nutritionnelle";
+    if (city) {
+      city.options[0].text = isAr2 ? "المدينة" : "Ville / المدينة";
+    }
+    document.getElementById("quiz-lead-form").style.display = "block";
+  }, 900);
+}
+
+// ── Submit lead ───────────────────────────────────────
+function quizSubmitLead() {
+  const isAr = lang==="ar";
+  const name     = (document.getElementById("lead-name")?.value     || "").trim();
+  const city     = (document.getElementById("lead-city")?.value     || "").trim();
+  const whatsapp = (document.getElementById("lead-whatsapp")?.value || "").trim();
+  const email    = (document.getElementById("lead-email")?.value    || "").trim();
+
+  if (!name)     { document.getElementById("lead-name").style.borderColor="#e53935"; return; }
+  if (!city)     { document.getElementById("lead-city").style.borderColor="#e53935"; return; }
+  if (!whatsapp) { document.getElementById("lead-whatsapp").style.borderColor="#e53935"; return; }
+
+  document.getElementById("quiz-lead-form").style.display = "none";
+
+  const userData = `${name} — ${city}`;
+  quizUser(userData, "👤");
+
+  // Save to Google Sheets
+  saveToSheets({ name, city, whatsapp, email, goal:qGoal, activity:qActivity, flavor:qFlavor, packaging:qPack, lang });
+  if (email) sendToMailchimp(email);
+
+  // Calculate macros
+  const { cal, prot, carb, fat, dish } = calcMacros(qGoal, qActivity, qFlavor);
+  const packColor = qPack === "pink" ? "#FF6B9D" : "#008060";
+  const packLabel = qPack === "pink" ? (isAr?"وردي 🌸":"Premium Pink 🌸") : (isAr?"زمردي 🟢":"Emerald Green 🟢");
 
   setTimeout(() => {
-    const meal = (mealLib[quizGoal]?.[quizPref]?.[quizCal]) ||
-                  mealLib.sain.poisson.balanced;
-    const name  = meal.n || meal.name || "Repas SAVY";
-    const desc  = isAr
-      ? `Sawbtha lik khas nta/nti — ma shi wajba 3adiya. Kol haja fiyha sababa 7sab but dyalek. Jarrbha u golili raiyek ! 🤌`
-      : meal.desc;
-
     const msgs = document.getElementById("quiz-msgs");
+
+    // Result card
     const card = document.createElement("div");
-    card.style.cssText = "animation:popIn .4s ease;";
+    card.style.cssText = "animation:popIn .5s ease;";
     card.innerHTML = `
-      <div style="border:1.5px solid var(--green);border-radius:16px;padding:14px;background:linear-gradient(135deg,var(--greenXL),var(--card));">
-        <div style="font-size:32px;text-align:center;margin-bottom:8px;">${meal.e}</div>
-        <div style="font-family:'Cormorant Garamond',serif;font-weight:700;font-size:16px;color:var(--green);margin-bottom:8px;">${name}</div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
-          <span style="padding:3px 9px;border-radius:8px;background:var(--card);border:1px solid var(--border);font-size:11px;color:var(--sub);font-family:'DM Sans',sans-serif;">🔥 ${meal.cal} kcal</span>
-          <span style="padding:3px 9px;border-radius:8px;background:var(--card);border:1px solid var(--border);font-size:11px;color:var(--sub);font-family:'DM Sans',sans-serif;">💪 ${meal.p}g protéines</span>
-          <span style="padding:3px 9px;border-radius:8px;background:var(--card);border:1px solid var(--border);font-size:11px;color:var(--sub);font-family:'DM Sans',sans-serif;">🌾 ${meal.c}g glucides</span>
+      <div style="border:2px solid ${packColor};border-radius:18px;overflow:hidden;background:var(--card);">
+        <!-- Header -->
+        <div style="background:${packColor};padding:12px 16px;display:flex;align-items:center;justify-content:space-between;">
+          <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:14px;color:#fff;">🧬 ${isAr?"نتائجك الشخصية":"Vos Résultats Personnalisés"}</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.85);font-family:'DM Sans',sans-serif;">${packLabel}</div>
         </div>
-        <div style="font-size:12px;color:var(--sub);font-style:italic;font-family:'DM Sans',sans-serif;line-height:1.6;">${desc}</div>
+        <!-- Dish -->
+        <div style="padding:14px 16px;border-bottom:1px solid var(--border);">
+          <div style="font-family:'Cormorant Garamond',serif;font-weight:700;font-size:15px;color:var(--text);margin-bottom:4px;">${dish}</div>
+          <div style="font-size:11px;color:var(--muted);font-family:'DM Sans',sans-serif;">${isAr?"مصممة خصيصاً لك":"Conçu spécifiquement pour vous"}</div>
+        </div>
+        <!-- Macros -->
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0;padding:12px 16px;">
+          <div style="text-align:center;padding:6px;">
+            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:16px;color:${packColor};">${cal}</div>
+            <div style="font-size:10px;color:var(--muted);font-family:'DM Sans',sans-serif;">kcal</div>
+          </div>
+          <div style="text-align:center;padding:6px;border-left:1px solid var(--border);">
+            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:16px;color:${packColor};">${prot}g</div>
+            <div style="font-size:10px;color:var(--muted);font-family:'DM Sans',sans-serif;">${isAr?"بروتين":"Protéine"}</div>
+          </div>
+          <div style="text-align:center;padding:6px;border-left:1px solid var(--border);">
+            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:16px;color:${packColor};">${carb}g</div>
+            <div style="font-size:10px;color:var(--muted);font-family:'DM Sans',sans-serif;">${isAr?"كربوهيدرات":"Glucides"}</div>
+          </div>
+          <div style="text-align:center;padding:6px;border-left:1px solid var(--border);">
+            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:16px;color:${packColor};">${fat}g</div>
+            <div style="font-size:10px;color:var(--muted);font-family:'DM Sans',sans-serif;">${isAr?"دهون":"Lipides"}</div>
+          </div>
+        </div>
+        <!-- Hook -->
+        <div style="padding:12px 16px;background:var(--greenXL);border-top:1px solid var(--border);">
+          <div style="font-size:12px;color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.6;font-weight:600;">
+            ${isAr
+              ? `✅ مكانك محجوز، ${name} ! فريقنا غادي يتواصل معك على WhatsApp بشكل 9rib لتأكيد اشتراكك. 🇲🇦`
+              : `✅ Votre place est réservée, ${name} ! Notre équipe vous contactera sur WhatsApp très bientôt pour confirmer votre abonnement. 🇲🇦`}
+          </div>
+        </div>
       </div>`;
     msgs.appendChild(card);
     msgs.scrollTop = msgs.scrollHeight;
-
-    // Suspense lock message
-    setTimeout(() => {
-      const lockMsg = isAr
-        ? `Haha, wajbtek kayna u zwina bzzaf ! 😄\n\nDaba 3ndi su'al — wash bghiti n7fdhalk iyaha 7ta nhar ma ntla3o ? SAVY 9ariban f medintek — Tétouan, M'diq u Martil. Khellini l-email aw raqem dyalek, u nta awl lli ghadi nkhdem lih — m3a khsm 20% ! 🇲🇦`
-        : `Franchement ${quizName}... ce repas vous va vraiment bien. 😄\n\nJe voudrais vous le mettre de côté. SAVY arrive très bientôt à Tétouan, M'diq et Martil. Donnez-moi juste votre contact — et je vous appelle en premier dès qu'on est prêts, avec 20% de réduction. 🇲🇦`;
-      quizBot(lockMsg);
-      setTimeout(() => {
-        const isAr2 = lang === "ar";
-        quizSetTab("email");
-        quizPatchContactLang(isAr2);
-        document.getElementById("quiz-email-area").style.display = "block";
-      }, 1100);
-    }, 800);
-  }, 1500);
+    qProgress(5);
+    document.getElementById("quiz-status").textContent = isAr ? "✅ مرحباً بك في SAVY 🇲🇦" : "✅ Bienvenue chez SAVY 🇲🇦";
+  }, 1000);
 }
 
-let quizContactTab = "email";
-
-function quizSetTab(tab) {
-  quizContactTab = tab;
-  document.getElementById("contact-email-fields").style.display = tab === "email" ? "block" : "none";
-  document.getElementById("contact-phone-fields").style.display = tab === "phone" ? "block" : "none";
-  const eBtn = document.getElementById("tab-email");
-  const pBtn = document.getElementById("tab-phone");
-  eBtn.style.cssText += `background:${tab==="email"?"var(--green)":"#fff"};color:${tab==="email"?"#fff":"var(--text)"};border-color:${tab==="email"?"var(--green)":"var(--border)"};`;
-  pBtn.style.cssText += `background:${tab==="phone"?"var(--green)":"#fff"};color:${tab==="phone"?"#fff":"var(--text)"};border-color:${tab==="phone"?"var(--green)":"var(--border)"};`;
-}
-
-function quizSaveContact() {
-  const isAr = lang === "ar";
-  const message = (document.getElementById("quiz-message")?.value || "").trim();
-
-  const sheetData = {
-    name:     quizName,
-    goal:     quizGoal,
-    pref:     quizPref,
-    cal:      quizCal,
-    message:  message,
-    lang:     lang
-  };
-
-  if (quizContactTab === "email") {
-    const email = (document.getElementById("quiz-email")?.value || "").trim();
-    if (!email || !email.includes("@")) {
-      document.getElementById("quiz-email").style.borderColor = "#e53935";
-      return;
-    }
-    sendToMailchimp(email);
-    sheetData.email = email;
-    saveToSheets(sheetData);
-    quizUser(email + (message ? ` · "${message}"` : ""));
-  } else {
-    const fullname = (document.getElementById("quiz-fullname")?.value || "").trim();
-    const phone    = (document.getElementById("quiz-phone")?.value || "").trim();
-    if (!fullname) { document.getElementById("quiz-fullname").style.borderColor = "#e53935"; return; }
-    if (!phone)    { document.getElementById("quiz-phone").style.borderColor    = "#e53935"; return; }
-    sheetData.fullname = fullname;
-    sheetData.phone    = phone;
-    saveToSheets(sheetData);
-    quizUser(`${fullname} · ${phone}` + (message ? ` · "${message}"` : ""));
-  }
-
-  document.getElementById("quiz-email-area").style.display = "none";
-  quizBot(isAr
-    ? `${quizName}, mregistri 3ndi ! 🎉 Rani farhane bik — ghadi tkun men awlin lli ghadi nkhdem lihom. Tsna wajbtek, katji 9rib ! 🚀🇲🇦`
-    : `C'est fait, ${quizName} ! 🎉 Votre repas vous attend. Vous serez parmi les premiers que j'appellerai — j'ai vraiment hâte de cuisiner pour vous. À très bientôt ! 🚀🇲🇦`);
-  document.getElementById("quiz-status").textContent = isAr ? "Shukran — Nchofok 9rib 🇲🇦" : "Merci — À très bientôt 🇲🇦";
-}
-
-function quizPatchContactLang(isAr) {
-  const els = {
-    "tab-email-lbl":  isAr ? "Email"                             : "Email",
-    "tab-phone-lbl":  isAr ? "Téléphone"                         : "Téléphone",
-    "quiz-save-lbl":  isAr ? "7jez blasti 🔒"                   : "Réserver ma place 🔒",
-    "quiz-email-note":isAr ? "🎁 Wajbtek m7fouza + khsm 20% nhar l-launch" : "🎁 Votre repas sauvegardé + 20% de réduction au lancement",
-  };
-  Object.entries(els).forEach(([id, txt]) => { const el = document.getElementById(id); if (el) el.textContent = txt; });
-  const msg = document.getElementById("quiz-message");
-  const fn  = document.getElementById("quiz-fullname");
-  const em  = document.getElementById("quiz-email");
-  if (msg) msg.placeholder = isAr ? "Chi message l SAVY ? (ikhtiyari)" : "Un message pour SAVY ? (optionnel)";
-  if (fn)  fn.placeholder  = isAr ? "Smiytek kamla..."                 : "Nom complet";
-  if (em)  em.placeholder  = isAr ? "email dyalek..."                  : "votre@email.com";
-}
-
-// legacy alias kept for lock-message callback
-function quizSaveEmail() { quizSaveContact(); }
-
-
+// ── Reset ─────────────────────────────────────────────
 function quizReset() {
-  quizStep = 0; quizName = ""; quizGoal = ""; quizPref = ""; quizCal = "";
+  qStep = 0; qGoal = ""; qActivity = ""; qFlavor = ""; qPack = "";
   document.getElementById("quiz-msgs").innerHTML = "";
   document.getElementById("quiz-choices").innerHTML = "";
-  document.getElementById("quiz-email-area").style.display = "none";
-  document.getElementById("quiz-input-area").style.display = "none";
-  quizInit();
+  document.getElementById("quiz-lead-form").style.display = "none";
+  qProgress(0);
+  setTimeout(quizStep1, 300);
 }
 
 function quizPatchLang(l) {
   const isAr = l === "ar";
   const status = document.getElementById("quiz-status");
-  const inp    = document.getElementById("quiz-name-inp");
-  if (status) status.textContent = isAr ? "Connecté · Chef SAVY 🇲🇦" : "En ligne · Chef SAVY 🇲🇦";
-  if (inp)    inp.placeholder    = isAr ? "Smiytek ch'no..." : "Votre prénom...";
-  quizPatchContactLang(isAr);
-  // Restart quiz in new language
+  if (status && !status.textContent.includes("✅")) {
+    status.textContent = "En ligne · Chef SAVY 🇲🇦";
+  }
   quizReset();
 }
 
-function quizInit() {
-  const steps = quizSteps[lang] || quizSteps.fr;
-  quizBot(steps[0].msg);
-  setTimeout(() => {
-    document.getElementById("quiz-input-area").style.display = "flex";
-    document.getElementById("quiz-name-inp").focus();
-  }, 1100);
-}
+function quizInit() { quizStep1(); }
 
 window.addEventListener("DOMContentLoaded", () => {
   // Apply dark mode icon
