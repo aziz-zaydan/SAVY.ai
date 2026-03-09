@@ -741,13 +741,13 @@ function toggleTheme() {
   localStorage.setItem("savy-theme", darkMode ? "dark" : "light");
 }
 
-// Restore saved preference, otherwise use defaults (light + ar)
+// Default: light + Arabic — only override if user manually changed it this session
 (function() {
   const savedTheme = localStorage.getItem("savy-theme");
   const savedLang  = localStorage.getItem("savy-lang");
   if (savedTheme === "dark") { darkMode = true; document.documentElement.setAttribute("data-theme","dark"); }
-  // light is default — no attribute needed
-  if (savedLang) lang = savedLang;
+  // always start Arabic unless user explicitly switched to FR
+  if (savedLang === "fr") lang = "fr"; else lang = "ar";
 })();
 let activeCuis = "all";
 let activeDiet = "All";
@@ -1306,40 +1306,138 @@ function quizClearChoices() {
 function quizShowNameInput(placeholder, callback) {
   const box = document.getElementById("quiz-choices");
   box.innerHTML = `
-    <div style="display:flex;gap:8px;width:100%;">
-      <input id="q-name-inp" type="text" placeholder="${placeholder}"
-        style="flex:1;padding:11px 14px;border-radius:13px;border:1.5px solid var(--border);font-size:13px;outline:none;font-family:'DM Sans',sans-serif;color:var(--text);background:var(--card);"
-        onfocus="this.style.borderColor='var(--green)'"
-        onblur="this.style.borderColor='var(--border)'"
-        onkeydown="if(event.key==='Enter') window._nameCallback()"/>
-      <button onclick="window._nameCallback()"
-        style="padding:11px 16px;border-radius:13px;border:none;background:var(--green);color:#fff;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;">
-        →
-      </button>
+    <div style="display:flex;flex-direction:column;gap:6px;width:100%;">
+      <div style="display:flex;gap:8px;">
+        <input id="q-name-inp" type="text" placeholder="${placeholder}"
+          style="flex:1;padding:11px 14px;border-radius:13px;border:1.5px solid var(--border);font-size:13px;outline:none;font-family:'DM Sans',sans-serif;color:var(--text);background:var(--card);"
+          onfocus="this.style.borderColor='var(--green)'"
+          onblur="this.style.borderColor='var(--border)'"
+          onkeydown="if(event.key==='Enter') window._nameCallback()"/>
+        <button onclick="window._nameCallback()"
+          style="padding:11px 16px;border-radius:13px;border:none;background:var(--green);color:#fff;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;">
+          →
+        </button>
+      </div>
+      <span id="q-name-err" style="font-size:11px;color:#e53935;font-family:'DM Sans',sans-serif;display:none;padding:0 4px;">
+        ${lang==="ar" ? "⚠️ الاسم يجب أن يكون 4 أحرف على الأقل" : "⚠️ Le prénom doit contenir au moins 4 lettres"}
+      </span>
     </div>`;
   window._nameCallback = () => {
     const val = (document.getElementById("q-name-inp")?.value || "").trim();
-    if (!val) return;
+    const err = document.getElementById("q-name-err");
+    if (val.length < 4) {
+      if (err) err.style.display = "block";
+      document.getElementById("q-name-inp").style.borderColor = "#e53935";
+      return;
+    }
     quizClearChoices();
     callback(val);
   };
   setTimeout(() => document.getElementById("q-name-inp")?.focus(), 100);
 }
 
+// ── localStorage account helpers ──────────────────────
+function savvySaveAccount(data) {
+  try { localStorage.setItem("savy-account", JSON.stringify(data)); } catch(e) {}
+}
+function savvyLoadAccount() {
+  try { const d = localStorage.getItem("savy-account"); return d ? JSON.parse(d) : null; } catch(e) { return null; }
+}
+function savvyPreFillForm(account) {
+  const set = (id, val) => { const el = document.getElementById(id); if (el && val) el.value = val; };
+  set("lead-fullname", account.fullname);
+  set("lead-phone",    account.phone);
+  set("lead-address",  account.address);
+  if (account.meals) {
+    const sel = document.getElementById("lead-meals");
+    if (sel) sel.value = account.meals;
+  }
+}
+
 // ══════════════════════════════════════════════════════
 //  CONVERSATION STEPS
 // ══════════════════════════════════════════════════════
 
-// Step 1 — Welcome + ask name
+// Step 1 — Welcome + ask name (with returning visitor detection)
 function quizInit() {
-  const isAr = lang === "ar";
+  const isAr    = lang === "ar";
+  const account = savvyLoadAccount();
   qProgress(5);
-  quizBot(isAr
-    ? `مرحباً بيك فـ <strong>SAVY</strong> ! 👋🍽️<br><br>أنا الشيف ديال الـ AI — غادي نساعدك تلقى الوجبة المثالية اللي تناسب حياتك وأهدافك. SAVY هي منصة توصيل الأكل الصحي لتطوان، مديق ومرتيل — بإشراف شيف حقيقي ومكونات طازجة كل يوم. 🇲🇦<br><br><strong>شنو هو اسمك ؟</strong>`
-    : `Bienvenue sur <strong>SAVY</strong> ! 👋🍽️<br><br>Je suis votre Chef IA personnel. SAVY est la plateforme de livraison de repas sains à Tétouan, M'diq et Martil — supervisée par un vrai chef, avec des ingrédients frais chaque jour. 🇲🇦<br><br>Pour commencer, <strong>comment vous appelez-vous ?</strong>`);
+
+  if (account && account.fullname) {
+    // ── Returning visitor ──────────────────────────────
+    const nickname = account.fullname.split(" ")[0];
+    qVisitorName = nickname;
+    quizBot(isAr
+      ? `مرحباً بعودتك <strong>${nickname}</strong> ! 👋🎉<br>سررنا بزيارتك مرة أخرى لـ SAVY.<br><br>عندي معلوماتك محفوظة — هل بغيتي تكمل بنفس المعلومات ؟`
+      : `Content de vous revoir <strong>${nickname}</strong> ! 👋🎉<br>Vos informations sont sauvegardées.<br><br>Voulez-vous continuer avec les mêmes coordonnées ?`);
+    setTimeout(() => {
+      const box = document.getElementById("quiz-choices");
+      box.innerHTML = `
+        <button onclick="quizReturningYes()"
+          style="padding:10px 18px;border-radius:99px;border:1.5px solid var(--green);background:var(--green);color:#fff;font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;">
+          ✅ ${isAr ? "نعم، نفس المعلومات" : "Oui, mes infos enregistrées"}
+        </button>
+        <button onclick="quizReturningNo()"
+          style="padding:10px 18px;border-radius:99px;border:1.5px solid var(--border);background:var(--card);color:var(--text);font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;">
+          ✏️ ${isAr ? "تعديل المعلومات" : "Modifier mes infos"}
+        </button>`;
+    }, 900);
+
+  } else {
+    // ── New visitor ────────────────────────────────────
+    quizBot(isAr
+      ? `مرحباً بيك فـ <strong>SAVY</strong> ! 👋🍽️<br><br>أنا الشيف ديال الـ AI — غادي نساعدك تلقى الوجبة المثالية اللي تناسب حياتك وأهدافك. SAVY هي منصة توصيل الأكل الصحي لتطوان، مديق ومرتيل — بإشراف شيف حقيقي ومكونات طازجة كل يوم. 🇲🇦<br><br><strong>شنو هو اسمك ؟</strong>`
+      : `Bienvenue sur <strong>SAVY</strong> ! 👋🍽️<br><br>Je suis votre Chef IA personnel. SAVY est la plateforme de livraison de repas sains à Tétouan, M'diq et Martil — supervisée par un vrai chef, avec des ingrédients frais chaque jour. 🇲🇦<br><br>Pour commencer, <strong>comment vous appelez-vous ?</strong>`);
+    setTimeout(() => {
+      quizShowNameInput(
+        isAr ? "اكتب اسمك (4 أحرف على الأقل)..." : "Votre prénom (min. 4 lettres)...",
+        (name) => {
+          qVisitorName = name;
+          quizUser(name);
+          qProgress(15);
+          setTimeout(quizAskProfile, 900);
+        }
+      );
+    }, 1200);
+  }
+}
+
+function quizReturningYes() {
+  const isAr    = lang === "ar";
+  const account = savvyLoadAccount();
+  quizClearChoices();
+  quizUser(isAr ? "✅ نعم، نفس المعلومات" : "✅ Oui, mes infos enregistrées");
+  qProgress(15);
+  // Show mini account card
+  setTimeout(() => {
+    const msgs = document.getElementById("quiz-msgs");
+    const card = document.createElement("div");
+    card.innerHTML = `
+      <div style="border:1.5px solid var(--green);border-radius:14px;padding:11px 14px;background:var(--greenXL);font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text);">
+        <div style="font-weight:700;color:var(--green);margin-bottom:6px;">👤 ${isAr?"حسابك":"Votre compte"}</div>
+        <div style="display:flex;flex-direction:column;gap:4px;">
+          <span>📛 ${account.fullname}</span>
+          <span>📱 ${account.phone}</span>
+          <span>📍 ${account.address}</span>
+        </div>
+      </div>`;
+    msgs.appendChild(card);
+    msgs.scrollTop = msgs.scrollHeight;
+    setTimeout(quizAskProfile, 900);
+  }, 700);
+}
+
+function quizReturningNo() {
+  const isAr = lang === "ar";
+  quizClearChoices();
+  quizUser(isAr ? "✏️ بغيت نبدل" : "✏️ Je modifie mes infos");
+  // Clear saved account
+  try { localStorage.removeItem("savy-account"); } catch(e) {}
+  quizBot(isAr ? `<strong>شنو هو اسمك ؟</strong>` : `<strong>Comment vous appelez-vous ?</strong>`);
   setTimeout(() => {
     quizShowNameInput(
-      isAr ? "اكتب اسمك هنا..." : "Votre prénom...",
+      isAr ? "اكتب اسمك (4 أحرف على الأقل)..." : "Votre prénom (min. 4 lettres)...",
       (name) => {
         qVisitorName = name;
         quizUser(name);
@@ -1347,7 +1445,7 @@ function quizInit() {
         setTimeout(quizAskProfile, 900);
       }
     );
-  }, 1200);
+  }, 900);
 }
 
 // Step 2 — Profile
@@ -1544,6 +1642,8 @@ function quizShowLeadForm() {
     const btn = document.getElementById("lead-btn-lbl");
     if (btn) btn.textContent = isAr ? "✅ تأكيد طلبيتي" : "✅ Confirmer ma commande";
     document.getElementById("quiz-lead-form").style.display = "block";
+    const account = savvyLoadAccount();
+    if (account) savvyPreFillForm(account);
     qProgress(85);
   }, 900);
 }
@@ -1674,6 +1774,9 @@ function quizConfirmOrder(fullname, phone, address, meals, payment) {
   if (msgs.lastChild) msgs.removeChild(msgs.lastChild);
   quizUser(isAr ? "✅ مؤكد !" : "✅ Confirmé !");
 
+  // Save to localStorage account
+  savvySaveAccount({ fullname, phone, address, meals });
+
   saveToSheets({
     name: qVisitorName, fullname, phone, address, meals, payment,
     profile:   qProfile,
@@ -1715,12 +1818,17 @@ function quizPatchLang(l) {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-  // Apply dark mode icon
+  // Apply theme
   const btn = document.getElementById("theme-btn");
-  if (btn) btn.textContent = darkMode ? "☀️" : "🌙";
-  if (darkMode) document.documentElement.setAttribute("data-theme", "dark");
+  if (darkMode) {
+    document.documentElement.setAttribute("data-theme", "dark");
+    if (btn) btn.textContent = "☀️";
+  } else {
+    document.documentElement.removeAttribute("data-theme");
+    if (btn) btn.textContent = "🌙";
+  }
 
-  // Apply saved or default language
+  // Apply Arabic by default
   setLang(lang);
 
   // Start quiz
