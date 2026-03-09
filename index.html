@@ -839,10 +839,10 @@ const copy = {
     how:"شو كيدير SAVY ليك",
     howSub:"تجربة مفكر فيها من البداية لنهاية",
     benefitsCta:"سجّل بريدك الآن →",
-    proofStrip:"🇲🇦 SAVY أسسها شيف مغربي من تطوان — واحد كيؤمن بلي الأكل الصحي لازم يكون بنين، مش حشيش. كل وجبة كتصمم ليك الـ AI بالضبط — ما كاينش وجبة واحدة تناسب الجميع.",
+    proofStrip:"🇲🇦 SAVY أسسها شيف مغربي — واحد كيأمن بلي الأكل الصحي لازم يكون بنين، و بجودة عالية. كل وجبة كتصمم ليك الـ AI بالضبط — ما كاينش وجبة واحدة تناسب الجميع.",
     benefits:[
       {icon:"🤖", color:"#008060", title:"وجبة مصممة 100% ليك",         desc:"الـ AI ديالنا كيحلل أهدافك، الحساسية ديالك، والأذواق ديالك — وكيصمم وجبة فريدة ما كاينش حتا واحد عندها بحالك."},
-      {icon:"⚡", color:"#F4A330", title:"توصيل في 45 دقيقة",           desc:"كيتحضر طازج ويوصل ساخن لبابك في تطوان، مضيق، ومرتيل. ما كاين مجمد."},
+      {icon:"⚡", color:"#F4A330", title:"توصيل في 45 دقيقة",           desc:"كيتحضر بسرعة ويوصل ساخن لبابك في تطوان، مضيق، ومرتيل. ما كاين مجمد."},
       {icon:"🥗", color:"#00A878", title:"الماكرو محسوب بالغرام",       desc:"السعرات، البروتين، الكربوهيدرات، الدهون — كل رقم محسوب بالـ AI لجسمك وأهدافك."},
       {icon:"🌍", color:"#7C3AED", title:"مطابخ عالمية من كل بلاد",    desc:"مغربي، ياباني، إيطالي، يوناني، هندي، أمريكي — 6 مطابخ دوليين، كلهم معدلين للصحة."},
       {icon:"💰", color:"#E53935", title:"بثمن معقول",                  desc:"وجبات صحية من جودة عالية ابتداء من 45 درهم. الأعضاء المؤسسون: خصم 30% على الطلب الأول."},
@@ -1353,7 +1353,7 @@ function quizStep1() {
     { val:"weight",    label: isAr ? "خسارة الوزن"       : "Weight Loss",        emoji:"📉" },
     { val:"muscle",    label: isAr ? "بناء العضلات"      : "Muscle Gain",        emoji:"🏋️" },
     { val:"energy",    label: isAr ? "طاقة عالية"        : "High Energy",        emoji:"⚡" },
-    { val:"delicious", label: isAr ? "حاجة لذيذة فقط"   : "Something Delicious",emoji:"😋" },
+    { val:"delicious", label: isAr ? "أكل صحي ولذيد "   : "Something Delicious",emoji:"😋" },
   ]), 900);
 }
 
@@ -1361,7 +1361,7 @@ function quizStep1() {
 function quizStep2() {
   const isAr = lang==="ar";
   quizBot(isAr
-    ? "ممتاز ! 💪<br><strong>كفاش داير نهارك ؟</strong>"
+    ? "ممتاز ! 💪<br><strong>كيفاش كايدوز نهارك ؟</strong>"
     : "Got it! 💪<br><strong>How active is your daily routine?</strong>");
   setTimeout(() => quizShowChoices([
     { val:"sedentary", label: isAr ? "جالس فالمكتب"   : "Sedentary",     emoji:"🖱️" },
@@ -1380,7 +1380,7 @@ function quizStep3() {
     { val:"asian",    label: isAr ? "آسيوي فيوجن"     : "Asian Fusion",    emoji:"🍣" },
     { val:"mediter",  label: isAr ? "متوسطي"           : "Mediterranean",   emoji:"🥗" },
     { val:"mexican",  label: isAr ? "مكسيكي حار"      : "Mexican Heat",    emoji:"🌮" },
-    { val:"fastfood", label: isAr ? "فاست فود صحي"    : "Healthy Fast Food",emoji:"🍔" },
+    { val:"fastfood", label: isAr ? "أكلات سريعة  صحي"    : "Healthy Fast Food",emoji:"🍔" },
     { val:"moroccan", label: isAr ? "مغربي أصيل"      : "Moroccan",        emoji:"🫕" },
   ]), 900);
 }
