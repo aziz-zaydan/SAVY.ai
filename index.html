@@ -407,18 +407,17 @@
   background: var(--green);
   color: #fff;
   text-align: center;
-  padding: 10px 16px;
+  padding: 5px 16px;
   font-family: 'DM Sans', sans-serif;
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.02em;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  flex-wrap: wrap;
+  gap: 7px;
 ">
-  <span style="animation: pulse 1.5s infinite; display:inline-block; width:8px; height:8px; border-radius:50%; background:#4ade80;"></span>
+  <span style="animation: pulse 1.5s infinite; display:inline-block; width:6px; height:6px; border-radius:50%; background:#4ade80; flex-shrink:0;"></span>
   <span id="banner-text">🚀 SAVY arrive bientôt à Tétouan, M'diq, Martil & toute la région — Rejoignez la liste avant le lancement !</span>
 </div>
 
@@ -438,6 +437,17 @@
       <p class="fb su" id="hero-tagline"
         style="color:var(--muted);font-size:12px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:16px;">
         La livraison de repas sains propulsée par l'IA
+      </p>
+
+      <!-- 3. H1 Title -->
+      <h1 class="hero-title fh su3" id="hero-h1">
+        Mangez mieux,<br>
+        <span class="accent">livré chez vous.</span>
+      </h1>
+
+      <!-- 4. Description -->
+      <p class="hero-sub fb su3" id="hero-sub">
+        SAVY conçoit votre repas selon vos objectifs nutritionnels, cuisinés avec des saveurs locales et internationales. 45 minutes. Frais garanti.
       </p>
 
       <!-- 2. SAVY AI CHEF QUIZ -->
@@ -480,59 +490,29 @@
 
         <!-- Lead form (final step) -->
         <div id="quiz-lead-form" style="display:none;margin-top:4px;">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
-            <input id="lead-name" type="text" placeholder="Prénom / الاسم" style="padding:11px 13px;border-radius:13px;border:1.5px solid var(--border);font-size:13px;outline:none;font-family:'DM Sans',sans-serif;color:var(--text);background:var(--card);width:100%;box-sizing:border-box;"
-              onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='var(--border)'"/>
-            <select id="lead-city" style="padding:11px 13px;border-radius:13px;border:1.5px solid var(--border);font-size:13px;outline:none;font-family:'DM Sans',sans-serif;color:var(--text);background:var(--card);width:100%;box-sizing:border-box;cursor:pointer;"
-              onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='var(--border)'">
-              <option value="">Ville / المدينة</option>
-              <option>Tétouan</option>
-              <option>M'diq</option>
-              <option>Martil</option>
-              <option>Fnideq</option>
-              <option>Chefchaouen</option>
-              <option>Autre</option>
-            </select>
-          </div>
-          <input id="lead-whatsapp" type="tel" placeholder="WhatsApp (+212 6XX XXX XXX)" style="width:100%;box-sizing:border-box;padding:11px 13px;border-radius:13px;border:1.5px solid var(--border);font-size:13px;outline:none;font-family:'DM Sans',sans-serif;color:var(--text);background:var(--card);margin-bottom:8px;"
+          <input id="lead-fullname" type="text" placeholder="Nom complet / الاسم الكامل" style="width:100%;box-sizing:border-box;padding:11px 13px;border-radius:13px;border:1.5px solid var(--border);font-size:13px;outline:none;font-family:'DM Sans',sans-serif;color:var(--text);background:var(--card);margin-bottom:8px;"
             onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='var(--border)'"/>
-          <input id="lead-email" type="email" placeholder="Email (optionnel)" style="width:100%;box-sizing:border-box;padding:11px 13px;border-radius:13px;border:1.5px solid var(--border);font-size:13px;outline:none;font-family:'DM Sans',sans-serif;color:var(--text);background:var(--card);margin-bottom:10px;"
+          <input id="lead-phone" type="tel" placeholder="Téléphone / WhatsApp (+212 6XX XXX XXX)" style="width:100%;box-sizing:border-box;padding:11px 13px;border-radius:13px;border:1.5px solid var(--border);font-size:13px;outline:none;font-family:'DM Sans',sans-serif;color:var(--text);background:var(--card);margin-bottom:8px;"
             onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='var(--border)'"/>
+          <input id="lead-address" type="text" placeholder="Adresse de livraison / عنوان التوصيل" style="width:100%;box-sizing:border-box;padding:11px 13px;border-radius:13px;border:1.5px solid var(--border);font-size:13px;outline:none;font-family:'DM Sans',sans-serif;color:var(--text);background:var(--card);margin-bottom:8px;"
+            onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='var(--border)'"/>
+          <select id="lead-meals" style="width:100%;box-sizing:border-box;padding:11px 13px;border-radius:13px;border:1.5px solid var(--border);font-size:13px;outline:none;font-family:'DM Sans',sans-serif;color:var(--text);background:var(--card);margin-bottom:10px;cursor:pointer;"
+            onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='var(--border)'">
+            <option value="">Nombre de repas / عدد الوجبات</option>
+            <option value="1">1 repas / وجبة واحدة</option>
+            <option value="2">2 repas / وجبتين</option>
+            <option value="3">3 repas / 3 وجبات</option>
+            <option value="4">4 repas / 4 وجبات</option>
+            <option value="5+">5+ repas / 5+ وجبات</option>
+          </select>
           <button onclick="quizSubmitLead()" style="width:100%;padding:13px;border-radius:13px;border:none;background:var(--green);color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;box-shadow:0 4px 16px rgba(0,128,96,0.35);transition:all .2s;letter-spacing:.3px;">
-            🧬 <span id="lead-btn-lbl">Révéler mon équation nutritionnelle</span>
+            ✅ <span id="lead-btn-lbl">Confirmer ma commande</span>
           </button>
           <p style="font-size:11px;color:var(--muted);font-family:'DM Sans',sans-serif;margin-top:6px;text-align:center;">🔒 Vos données sont privées — jamais partagées</p>
         </div>
       </div>
 
       <!-- 3. H1 Title -->
-      <h1 class="hero-title fh su3" id="hero-h1">
-        Mangez mieux,<br>
-        <span class="accent">livré chez vous.</span>
-      </h1>
-
-      <!-- 4. Description -->
-      <p class="hero-sub fb su3" id="hero-sub">
-        SAVY conçoit votre repas selon vos objectifs nutritionnels, cuisinés avec des saveurs locales et internationales. 45 minutes. Frais garanti.
-      </p>
-
-      <!-- 5. Email form -->
-      <div id="form-area" class="su4">
-        <div class="email-wrap">
-          <input class="email-inp" id="email-hero" type="email"
-            placeholder="Votre adresse email" autocomplete="email"/>
-          <button class="btn-cta" id="cta-btn" onclick="submitEmail()">
-            <span id="cta-text">Rejoindre la liste →</span>
-          </button>
-        </div>
-        <p class="cta-note fb" id="cta-note">🎁 30% de réduction pour les membres fondateurs</p>
-      </div>
-
-      <!-- Success -->
-      <div id="success-box" class="success-box" style="display:none;">
-        <div class="success-title fh" id="success-title">🎉 Vous êtes sur la liste !</div>
-        <div class="success-sub fb" id="success-sub">Bienvenue ! Vous êtes membre fondateur #313.</div>
-      </div>
 
       <!-- Social proof -->
       <div class="proof su4">
@@ -752,7 +732,7 @@ const filterMap = {"All":"all","Vegan":"vegan","High Protein":"high-protein","Lo
    STATE
 ═══════════════════════════════════════════ */
 let lang       = "ar";
-let darkMode   = true;
+let darkMode   = false;
 
 function toggleTheme() {
   darkMode = !darkMode;
@@ -761,12 +741,12 @@ function toggleTheme() {
   localStorage.setItem("savy-theme", darkMode ? "dark" : "light");
 }
 
-// Restore saved preference, otherwise use defaults (dark + ar)
+// Restore saved preference, otherwise use defaults (light + ar)
 (function() {
   const savedTheme = localStorage.getItem("savy-theme");
   const savedLang  = localStorage.getItem("savy-lang");
-  if (savedTheme === "light") { darkMode = false; }
-  else { darkMode = true; document.documentElement.setAttribute("data-theme","dark"); }
+  if (savedTheme === "dark") { darkMode = true; document.documentElement.setAttribute("data-theme","dark"); }
+  // light is default — no attribute needed
   if (savedLang) lang = savedLang;
 })();
 let activeCuis = "all";
@@ -839,10 +819,10 @@ const copy = {
     how:"شو كيدير SAVY ليك",
     howSub:"تجربة مفكر فيها من البداية لنهاية",
     benefitsCta:"سجّل بريدك الآن →",
-    proofStrip:"🇲🇦 SAVY أسسها شيف مغربي — واحد كيأمن بلي الأكل الصحي لازم يكون بنين، و بجودة عالية. كل وجبة كتصمم ليك الـ AI بالضبط — ما كاينش وجبة واحدة تناسب الجميع.",
+    proofStrip:"🇲🇦 SAVY أسسها شيف مغربي من تطوان — واحد كيؤمن بلي الأكل الصحي لازم يكون بنين، مش حشيش. كل وجبة كتصمم ليك الـ AI بالضبط — ما كاينش وجبة واحدة تناسب الجميع.",
     benefits:[
       {icon:"🤖", color:"#008060", title:"وجبة مصممة 100% ليك",         desc:"الـ AI ديالنا كيحلل أهدافك، الحساسية ديالك، والأذواق ديالك — وكيصمم وجبة فريدة ما كاينش حتا واحد عندها بحالك."},
-      {icon:"⚡", color:"#F4A330", title:"توصيل في 45 دقيقة",           desc:"كيتحضر بسرعة ويوصل ساخن لبابك في تطوان، مضيق، ومرتيل. ما كاين مجمد."},
+      {icon:"⚡", color:"#F4A330", title:"توصيل في 45 دقيقة",           desc:"كيتحضر طازج ويوصل ساخن لبابك في تطوان، مضيق، ومرتيل. ما كاين مجمد."},
       {icon:"🥗", color:"#00A878", title:"الماكرو محسوب بالغرام",       desc:"السعرات، البروتين، الكربوهيدرات، الدهون — كل رقم محسوب بالـ AI لجسمك وأهدافك."},
       {icon:"🌍", color:"#7C3AED", title:"مطابخ عالمية من كل بلاد",    desc:"مغربي، ياباني، إيطالي، يوناني، هندي، أمريكي — 6 مطابخ دوليين، كلهم معدلين للصحة."},
       {icon:"💰", color:"#E53935", title:"بثمن معقول",                  desc:"وجبات صحية من جودة عالية ابتداء من 45 درهم. الأعضاء المؤسسون: خصم 30% على الطلب الأول."},
@@ -886,7 +866,7 @@ function setLang(l){
 
   // Banner
   document.getElementById("banner-text").textContent = isAr
-    ? "🚀 SAVY  قريباً في تطوان، مضيق، مرتيل وكل المنطقة — انضم للقائمة قبل الإطلاق!"
+    ? "🚀 SAVY قادمة قريباً إلى تطوان، مضيق، مرتيل وكل المنطقة — انضم للقائمة قبل الإطلاق!"
     : "🚀 SAVY arrive bientôt à Tétouan, M'diq, Martil & toute la région — Rejoignez la liste avant le lancement !";
   quizPatchLang(l);
 
@@ -904,12 +884,13 @@ function setLang(l){
   document.getElementById("hero-h1").style.cssText = ff + "font-size:clamp(30px,5vw,60px);font-weight:900;line-height:1.15;color:var(--text);margin-bottom:18px;";
   document.getElementById("hero-sub").textContent  = t.sub;
   document.getElementById("hero-sub").style.cssText = fb;
-  document.getElementById("email-hero").placeholder = t.ph;
-  document.getElementById("cta-text").textContent  = t.cta;
-  document.getElementById("cta-note").textContent  = t.ctaNote;
-  document.getElementById("proof-txt").innerHTML   = `<em>312+</em> ${t.proof}`;
-  document.getElementById("success-title").textContent = t.ok;
-  document.getElementById("success-sub").textContent   = t.okSub;
+  const _set = (id, prop, val) => { const el = document.getElementById(id); if (el) el[prop] = val; };
+  _set("email-hero",    "placeholder", t.ph);
+  _set("cta-text",      "textContent", t.cta);
+  _set("cta-note",      "textContent", t.ctaNote);
+  _set("proof-txt",     "innerHTML",   `<em>312+</em> ${t.proof}`);
+  _set("success-title", "textContent", t.ok);
+  _set("success-sub",   "textContent", t.okSub);
   document.getElementById("chip-inscrits").textContent  = t.chips[0];
   document.getElementById("chip-livraison").textContent = t.chips[1];
   document.getElementById("chip-note").textContent      = t.chips[2];
@@ -1103,14 +1084,16 @@ async function saveToSheets(data) {
 
     const fields = {
       name:      data.name      || "",
-      goal:      data.goal      || "",
-      activity:  data.activity  || "",
-      flavor:    data.flavor    || "",
-      packaging: data.packaging || "",
-      city:      data.city      || "",
-      whatsapp:  data.whatsapp  || "",
-      email:     data.email     || "",
-      message:   data.message   || "",
+      fullname:  data.fullname  || "",
+      phone:     data.phone     || "",
+      address:   data.address   || "",
+      meals:     data.meals     || "",
+      profile:   data.profile   || "",
+      delivery:  data.delivery  || "",
+      foodtype:  data.foodtype  || "",
+      fullmeal:  data.fullmeal  || "",
+      sportgoal: data.sportgoal || "",
+      payment:   data.payment   || "",
       lang:      data.lang      || ""
     };
 
@@ -1232,90 +1215,73 @@ window.addEventListener("scroll",()=>{
    SAVY QUIZ — no API, fully local
 ═══════════════════════════════════════════ */
 
-// ── Meal library keyed by [goal][pref][cal] ──
 /* ═══════════════════════════════════════════
-   SAVY AI CHEF — 5-Step Quiz Engine
+   SAVY AI CHEF — Branching Conversation Engine
 ═══════════════════════════════════════════ */
 
-// ── Macro engine based on goal × activity × flavor ──
-function calcMacros(goal, activity, flavor) {
-  const base = {
-    weight:    { cal:420, p:38, c:32, f:14 },
-    muscle:    { cal:620, p:52, c:58, f:16 },
-    energy:    { cal:520, p:36, c:64, f:14 },
-    delicious: { cal:560, p:30, c:62, f:18 },
-  }[goal] || { cal:480, p:36, c:44, f:14 };
-
-  const actMult = { sedentary:0.88, moderate:1.0, active:1.15 }[activity] || 1.0;
-  const cal  = Math.round(base.cal  * actMult / 10) * 10;
-  const prot = Math.round(base.p    * actMult);
-  const carb = Math.round(base.c    * actMult);
-  const fat  = Math.round(base.f    * actMult);
-
-  const meals = {
-    asian:   { weight:"🍣 Poke Bowl Saumon & Edamame",        muscle:"🍜 Ramen Poulet & Tofu Fermenté",      energy:"🥢 Buddha Bowl Thaï aux 7 Graines",       delicious:"🥟 Gyoza Croustillants & Ramen au Beurre"    },
-    mediter: { weight:"🥗 Salade Grecque & Daurade Grillée",  muscle:"🫙 Assiette Mezze & Poulet Rôti",       energy:"🌿 Bowl Falafel, Houmous & Taboulé",       delicious:"🧆 Moussaka Crémeuse & Pain Pita Chaud"      },
-    mexican: { weight:"🌮 Tacos Poisson Grillé & Salsa",      muscle:"🌯 Burrito Bowl Quinoa & Boeuf Épicé",  energy:"🫔 Wrap Avocat, Haricots Noirs & Lime",    delicious:"🌶️ Quesadilla Fromage Fondu & Guacamole"     },
-    fastfood:{ weight:"🍔 Burger Poulet Grillé & Salade",     muscle:"🌭 Double Burger Boeuf & Œuf",          energy:"🍟 Box Poulet Croustillant & Patate Douce", delicious:"🍔 Smash Burger Fromage & Sauce Secrète SAVY" },
-    moroccan:{ weight:"🫕 Tajine Poulet & Légumes Léger",     muscle:"🍖 Méchoui & Couscous aux 7 Légumes",   energy:"🥘 Harira, Msemen & Miel Naturel",          delicious:"🥐 Pastilla Poulet Amandes & Cannelle"        },
+// ── Macro calculator for sportives ────────────────────
+function calcMacros(goal) {
+  const plans = {
+    lose:    { cal:1600, p:130, c:140, f:45, label:"Perte de poids",   meals:["🥗 Salade Poulet Grillé & Quinoa","🐟 Branzino & Légumes Vapeur","🥙 Wrap Thon & Avocat"] },
+    gain:    { cal:2800, p:200, c:300, f:70, label:"Prise de masse",   meals:["🍗 Poulet Rôti, Riz & Œufs","🥩 Steak, Patate Douce & Brocoli","🌯 Burrito Bœuf & Haricots Noirs"] },
+    healthy: { cal:2000, p:150, c:220, f:55, label:"Équilibre & Santé",meals:["🫕 Tajine Poulet & Légumes","🥘 Bowl Méditerranéen","🍣 Poke Bowl Saumon & Edamame"] },
   };
-  const dish = (meals[flavor] || meals.moroccan)[goal] || "🍽️ Repas SAVY sur-mesure";
-
-  return { cal, prot, carb, fat, dish };
+  return plans[goal] || plans.healthy;
 }
 
-// ── State ──
-let qStep    = 0;
-let qGoal    = "";
-let qActivity= "";
-let qFlavor  = "";
-let qPack    = "";
-const TOTAL_STEPS = 5;
+// ── State ─────────────────────────────────────────────
+let qStep      = 0;
+let qVisitorName = "";
+let qProfile   = "";   // employee | student | sportive
+let qDelivery  = "";   // yes | no
+let qFoodType  = "";   // sandwich | burger | salad | fullmeal
+let qFullMeal  = [];   // starter / main / dessert selections
+let qSportGoal = "";   // lose | gain | healthy
+const TOTAL_STEPS = 6;
 
-function qProgress(step) {
+function qProgress(pct) {
   const bar = document.getElementById("quiz-progress");
-  if (bar) bar.style.width = Math.round((step/TOTAL_STEPS)*100)+"%";
+  if (bar) bar.style.width = pct + "%";
 }
 
-// ── Bot message renderer ──
-function quizBot(text) {
+// ── Message renderers ─────────────────────────────────
+function quizBot(text, delay) {
+  delay = delay || 0;
   const msgs = document.getElementById("quiz-msgs");
-
-  // typing indicator
-  const typing = document.createElement("div");
-  typing.id = "q-typing";
-  typing.style.cssText = "display:flex;align-items:center;gap:6px;";
-  typing.innerHTML = `
-    <div style="width:22px;height:22px;border-radius:8px;background:var(--green);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-      <svg width="12" height="12" viewBox="0 0 80 80" fill="none"><ellipse cx="40" cy="13" rx="9.5" ry="8" fill="white"/><rect x="26" y="28" width="28" height="20" rx="9" fill="white"/></svg>
-    </div>
-    <div style="padding:8px 12px;background:var(--greenXL);border-radius:12px 12px 12px 4px;display:flex;gap:3px;align-items:center;">
-      <span style="width:5px;height:5px;border-radius:50%;background:var(--green);animation:typingDot .9s 0s infinite;display:inline-block;"></span>
-      <span style="width:5px;height:5px;border-radius:50%;background:var(--green);animation:typingDot .9s .2s infinite;display:inline-block;"></span>
-      <span style="width:5px;height:5px;border-radius:50%;background:var(--green);animation:typingDot .9s .4s infinite;display:inline-block;"></span>
-    </div>`;
-  msgs.appendChild(typing);
-  msgs.scrollTop = msgs.scrollHeight;
-
   setTimeout(() => {
-    typing.remove();
-    const div = document.createElement("div");
-    div.style.cssText = "display:flex;align-items:flex-end;gap:6px;animation:slideUp .3s ease;";
-    div.innerHTML = `
-      <div style="width:22px;height:22px;border-radius:8px;background:var(--green);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-bottom:2px;">
-        <svg width="12" height="12" viewBox="0 0 80 80" fill="none"><ellipse cx="40" cy="13" rx="9.5" ry="8" fill="white"/><rect x="26" y="28" width="28" height="20" rx="9" fill="white"/></svg>
+    const typing = document.createElement("div");
+    typing.style.cssText = "display:flex;align-items:center;gap:6px;";
+    typing.innerHTML = `
+      <div style="width:24px;height:24px;border-radius:8px;background:var(--green);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <svg width="13" height="13" viewBox="0 0 80 80" fill="none"><ellipse cx="40" cy="13" rx="9.5" ry="8" fill="white"/><rect x="26" y="28" width="28" height="20" rx="9" fill="white"/><circle cx="34" cy="37" r="3" fill="#008060"/><circle cx="46" cy="37" r="3" fill="#008060"/></svg>
       </div>
-      <div style="max-width:85%;padding:10px 13px;background:var(--greenXL);border-radius:12px 12px 12px 4px;font-size:13px;color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.6;">${text}</div>`;
-    msgs.appendChild(div);
+      <div style="padding:8px 12px;background:var(--greenXL);border-radius:12px 12px 12px 4px;display:flex;gap:3px;align-items:center;">
+        <span style="width:5px;height:5px;border-radius:50%;background:var(--green);animation:typingDot .9s 0s infinite;display:inline-block;"></span>
+        <span style="width:5px;height:5px;border-radius:50%;background:var(--green);animation:typingDot .9s .2s infinite;display:inline-block;"></span>
+        <span style="width:5px;height:5px;border-radius:50%;background:var(--green);animation:typingDot .9s .4s infinite;display:inline-block;"></span>
+      </div>`;
+    msgs.appendChild(typing);
     msgs.scrollTop = msgs.scrollHeight;
-  }, 700);
+    setTimeout(() => {
+      typing.remove();
+      const div = document.createElement("div");
+      div.style.cssText = "display:flex;align-items:flex-end;gap:6px;animation:slideUp .3s ease;";
+      div.innerHTML = `
+        <div style="width:24px;height:24px;border-radius:8px;background:var(--green);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-bottom:2px;">
+          <svg width="13" height="13" viewBox="0 0 80 80" fill="none"><ellipse cx="40" cy="13" rx="9.5" ry="8" fill="white"/><rect x="26" y="28" width="28" height="20" rx="9" fill="white"/><circle cx="34" cy="37" r="3" fill="#008060"/><circle cx="46" cy="37" r="3" fill="#008060"/></svg>
+        </div>
+        <div style="max-width:85%;padding:10px 14px;background:var(--greenXL);border-radius:12px 12px 12px 4px;font-size:13px;color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.7;">${text}</div>`;
+      msgs.appendChild(div);
+      msgs.scrollTop = msgs.scrollHeight;
+    }, 750);
+  }, delay);
 }
 
-function quizUser(text, emoji) {
+function quizUser(text) {
   const msgs = document.getElementById("quiz-msgs");
   const div = document.createElement("div");
   div.style.cssText = "display:flex;justify-content:flex-end;animation:slideUp .3s ease;";
-  div.innerHTML = `<div style="max-width:80%;padding:10px 13px;background:var(--green);border-radius:12px 12px 4px 12px;font-size:13px;color:#fff;font-family:'DM Sans',sans-serif;line-height:1.5;">${emoji ? emoji+' ' : ''}${text}</div>`;
+  div.innerHTML = `<div style="max-width:80%;padding:10px 14px;background:var(--green);border-radius:12px 12px 4px 12px;font-size:13px;color:#fff;font-family:'DM Sans',sans-serif;line-height:1.5;">${text}</div>`;
   msgs.appendChild(div);
   msgs.scrollTop = msgs.scrollHeight;
 }
@@ -1323,198 +1289,430 @@ function quizUser(text, emoji) {
 function quizShowChoices(choices) {
   const box = document.getElementById("quiz-choices");
   box.innerHTML = choices.map(ch => `
-    <button onclick="quizPick('${ch.val}','${ch.label.replace(/'/g,"\'")}','${ch.emoji||''}')"
+    <button onclick="quizPick('${ch.val}','${ch.label.replace(/'/g,"&#39;")}')"
       style="padding:9px 15px;border-radius:99px;border:1.5px solid var(--border);background:var(--card);
-      font-size:12px;font-family:'DM Sans',sans-serif;color:var(--text);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:5px;"
+      font-size:12px;font-family:'DM Sans',sans-serif;color:var(--text);cursor:pointer;transition:all .2s;"
       onmouseover="this.style.background='var(--green)';this.style.color='#fff';this.style.borderColor='var(--green)'"
       onmouseout="this.style.background='var(--card)';this.style.color='var(--text)';this.style.borderColor='var(--border)'">
-      ${ch.emoji} <span>${ch.label}</span>
+      ${ch.emoji || ""} ${ch.label}
     </button>`).join("");
 }
 
-function quizPick(val, label, emoji) {
+function quizClearChoices() {
   document.getElementById("quiz-choices").innerHTML = "";
-  quizUser(label, emoji);
-  qStep++;
-
-  if      (qStep === 1) { qGoal     = val; qProgress(1); setTimeout(quizStep2, 900); }
-  else if (qStep === 2) { qActivity = val; qProgress(2); setTimeout(quizStep3, 900); }
-  else if (qStep === 3) { qFlavor   = val; qProgress(3); setTimeout(quizStep4, 900); }
-  else if (qStep === 4) { qPack     = val; qProgress(4); setTimeout(quizStep5, 900); }
 }
 
-// ── Step 1: Goal ─────────────────────────────────────
-function quizStep1() {
-  const isAr = lang==="ar";
-  quizBot(isAr
-    ? "أهلاً وسهلاً بيك فـ SAVY ! 🌟<br>أنا الشيف ديال الـ AI — غادي نصمم ليك وجبة على قياسك.<br><br><strong>شنو هو الهدف اللي بغيتي توصله؟</strong>"
-    : "Welcome to the future of food. 🌟<br>I am the <strong>SAVY AI Chef</strong> — here to engineer your perfect meal.<br><br><strong>What is your primary body goal?</strong>");
-  setTimeout(() => quizShowChoices([
-    { val:"weight",    label: isAr ? "خسارة الوزن"       : "Weight Loss",        emoji:"📉" },
-    { val:"muscle",    label: isAr ? "بناء العضلات"      : "Muscle Gain",        emoji:"🏋️" },
-    { val:"energy",    label: isAr ? "طاقة عالية"        : "High Energy",        emoji:"⚡" },
-    { val:"delicious", label: isAr ? "أكل صحي ولذيد "   : "Something Delicious",emoji:"😋" },
-  ]), 900);
+// ── Name input helpers ────────────────────────────────
+function quizShowNameInput(placeholder, callback) {
+  const box = document.getElementById("quiz-choices");
+  box.innerHTML = `
+    <div style="display:flex;gap:8px;width:100%;">
+      <input id="q-name-inp" type="text" placeholder="${placeholder}"
+        style="flex:1;padding:11px 14px;border-radius:13px;border:1.5px solid var(--border);font-size:13px;outline:none;font-family:'DM Sans',sans-serif;color:var(--text);background:var(--card);"
+        onfocus="this.style.borderColor='var(--green)'"
+        onblur="this.style.borderColor='var(--border)'"
+        onkeydown="if(event.key==='Enter') window._nameCallback()"/>
+      <button onclick="window._nameCallback()"
+        style="padding:11px 16px;border-radius:13px;border:none;background:var(--green);color:#fff;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;">
+        →
+      </button>
+    </div>`;
+  window._nameCallback = () => {
+    const val = (document.getElementById("q-name-inp")?.value || "").trim();
+    if (!val) return;
+    quizClearChoices();
+    callback(val);
+  };
+  setTimeout(() => document.getElementById("q-name-inp")?.focus(), 100);
 }
 
-// ── Step 2: Activity ──────────────────────────────────
-function quizStep2() {
-  const isAr = lang==="ar";
-  quizBot(isAr
-    ? "ممتاز ! 💪<br><strong>كيفاش كايدوز نهارك ؟</strong>"
-    : "Got it! 💪<br><strong>How active is your daily routine?</strong>");
-  setTimeout(() => quizShowChoices([
-    { val:"sedentary", label: isAr ? "جالس فالمكتب"   : "Sedentary",     emoji:"🖱️" },
-    { val:"moderate",  label: isAr ? "نشاط معتدل"      : "Moderate",      emoji:"🚶" },
-    { val:"active",    label: isAr ? "نشيط بزاف"       : "Highly Active", emoji:"🔥" },
-  ]), 900);
-}
+// ══════════════════════════════════════════════════════
+//  CONVERSATION STEPS
+// ══════════════════════════════════════════════════════
 
-// ── Step 3: Flavor ────────────────────────────────────
-function quizStep3() {
-  const isAr = lang==="ar";
-  quizBot(isAr
-    ? "رائع ! 🌍<br><strong>شنو هو المذاق اللي كيعجبك؟</strong>"
-    : "Excellent taste! 🌍<br><strong>Which global flavor profile excites you?</strong>");
-  setTimeout(() => quizShowChoices([
-    { val:"asian",    label: isAr ? "آسيوي فيوجن"     : "Asian Fusion",    emoji:"🍣" },
-    { val:"mediter",  label: isAr ? "متوسطي"           : "Mediterranean",   emoji:"🥗" },
-    { val:"mexican",  label: isAr ? "مكسيكي حار"      : "Mexican Heat",    emoji:"🌮" },
-    { val:"fastfood", label: isAr ? "أكلات سريعة  صحي"    : "Healthy Fast Food",emoji:"🍔" },
-    { val:"moroccan", label: isAr ? "مغربي أصيل"      : "Moroccan",        emoji:"🫕" },
-  ]), 900);
-}
-
-// ── Step 4: Packaging ─────────────────────────────────
-function quizStep4() {
-  const isAr = lang==="ar";
-  quizBot(isAr
-    ? "اللمسة الأخيرة ! ✨<br><strong>نوجدوا ليك العلبة الخضراء أو الوردية؟</strong>"
-    : "Final touch! ✨<br><strong>Your signature SAVY packaging — which speaks to you?</strong>");
-  setTimeout(() => quizShowChoices([
-    { val:"green", label: isAr ? "زمردي (رجال)"      : "Signature Emerald 🟢", emoji:"💚" },
-    { val:"pink",  label: isAr ? "وردي (نساء)"       : "Premium Pink 🌸",      emoji:"🩷" },
-  ]), 900);
-}
-
-// ── Step 5: Lead form ─────────────────────────────────
-function quizStep5() {
-  const isAr = lang==="ar";
+// Step 1 — Welcome + ask name
+function quizInit() {
+  const isAr = lang === "ar";
   qProgress(5);
   quizBot(isAr
-    ? "مزيان ! معادلتك الغذائية جاهزة 🧬<br><strong>فين نصيفطوا ليك النتائج ودعوة الوصول المبكر؟</strong>"
-    : "Perfect! Your AI equation is ready 🧬<br><strong>Where should we send your personalized results and early access invite?</strong>");
+    ? `مرحباً بيك فـ <strong>SAVY</strong> ! 👋🍽️<br><br>أنا الشيف ديال الـ AI — غادي نساعدك تلقى الوجبة المثالية اللي تناسب حياتك وأهدافك. SAVY هي منصة توصيل الأكل الصحي لتطوان، مديق ومرتيل — بإشراف شيف حقيقي ومكونات طازجة كل يوم. 🇲🇦<br><br><strong>شنو هو اسمك ؟</strong>`
+    : `Bienvenue sur <strong>SAVY</strong> ! 👋🍽️<br><br>Je suis votre Chef IA personnel. SAVY est la plateforme de livraison de repas sains à Tétouan, M'diq et Martil — supervisée par un vrai chef, avec des ingrédients frais chaque jour. 🇲🇦<br><br>Pour commencer, <strong>comment vous appelez-vous ?</strong>`);
   setTimeout(() => {
-    const isAr2 = lang==="ar";
-    const btn = document.getElementById("lead-btn-lbl");
-    const city = document.getElementById("lead-city");
-    if (btn) btn.textContent = isAr2 ? "🧬 اكشف معادلتي الغذائية" : "🧬 Révéler mon équation nutritionnelle";
-    if (city) {
-      city.options[0].text = isAr2 ? "المدينة" : "Ville / المدينة";
-    }
-    document.getElementById("quiz-lead-form").style.display = "block";
-  }, 900);
+    quizShowNameInput(
+      isAr ? "اكتب اسمك هنا..." : "Votre prénom...",
+      (name) => {
+        qVisitorName = name;
+        quizUser(name);
+        qProgress(15);
+        setTimeout(quizAskProfile, 900);
+      }
+    );
+  }, 1200);
 }
 
-// ── Submit lead ───────────────────────────────────────
-function quizSubmitLead() {
-  const isAr = lang==="ar";
-  const name     = (document.getElementById("lead-name")?.value     || "").trim();
-  const city     = (document.getElementById("lead-city")?.value     || "").trim();
-  const whatsapp = (document.getElementById("lead-whatsapp")?.value || "").trim();
-  const email    = (document.getElementById("lead-email")?.value    || "").trim();
+// Step 2 — Profile
+function quizAskProfile() {
+  const isAr = lang === "ar";
+  quizBot(isAr
+    ? `أهلاً <strong>${qVisitorName}</strong> ! 😊<br>خبرني شوية على حياتك — <strong>شنو هو وصفك ؟</strong>`
+    : `Enchanté <strong>${qVisitorName}</strong> ! 😊<br>Pour mieux vous servir — <strong>qui êtes-vous ?</strong>`);
+  setTimeout(() => quizShowChoices([
+    { val:"employee", label: isAr ? "موظف 💼"   : "Employé(e) 💼",   emoji:"" },
+    { val:"student",  label: isAr ? "طالب 🎓"   : "Étudiant(e) 🎓",  emoji:"" },
+    { val:"sportive", label: isAr ? "رياضي 🏋️" : "Sportif(ve) 🏋️", emoji:"" },
+  ]), 900);
+}
 
-  if (!name)     { document.getElementById("lead-name").style.borderColor="#e53935"; return; }
-  if (!city)     { document.getElementById("lead-city").style.borderColor="#e53935"; return; }
-  if (!whatsapp) { document.getElementById("lead-whatsapp").style.borderColor="#e53935"; return; }
+function quizPick(val, label) {
+  quizClearChoices();
+  quizUser(label);
 
-  document.getElementById("quiz-lead-form").style.display = "none";
+  if (!qProfile && (val === "employee" || val === "student")) {
+    qProfile = val;
+    qProgress(30);
+    setTimeout(quizAskDelivery, 900);
 
-  const userData = `${name} — ${city}`;
-  quizUser(userData, "👤");
+  } else if (!qProfile && val === "sportive") {
+    qProfile = val;
+    qProgress(30);
+    setTimeout(quizAskSportGoal, 900);
 
-  // Save to Google Sheets
-  saveToSheets({ name, city, whatsapp, email, goal:qGoal, activity:qActivity, flavor:qFlavor, packaging:qPack, lang });
-  if (email) sendToMailchimp(email);
+  } else if (qProfile !== "sportive" && !qDelivery) {
+    qDelivery = val; // yes | no
+    qProgress(45);
+    setTimeout(quizAskFoodType, 900);
 
-  // Calculate macros
-  const { cal, prot, carb, fat, dish } = calcMacros(qGoal, qActivity, qFlavor);
-  const packColor = qPack === "pink" ? "#FF6B9D" : "#008060";
-  const packLabel = qPack === "pink" ? (isAr?"وردي 🌸":"Premium Pink 🌸") : (isAr?"زمردي 🟢":"Emerald Green 🟢");
+  } else if (qProfile !== "sportive" && !qFoodType && val !== "fullmeal") {
+    qFoodType = val;
+    qProgress(60);
+    setTimeout(quizShowLeadForm, 900);
+
+  } else if (qProfile !== "sportive" && !qFoodType && val === "fullmeal") {
+    qFoodType = val;
+    qProgress(55);
+    setTimeout(quizAskFullMeal, 900);
+
+  } else if (qProfile !== "sportive" && qFoodType === "fullmeal" && qFullMeal.length < 3) {
+    qFullMeal.push(val);
+    if (qFullMeal.length < 3) {
+      qProgress(55 + qFullMeal.length * 5);
+      setTimeout(() => quizAskFullMealNext(qFullMeal.length), 900);
+    } else {
+      qProgress(70);
+      setTimeout(quizShowLeadForm, 900);
+    }
+
+  } else if (qProfile === "sportive" && !qSportGoal) {
+    qSportGoal = val;
+    qProgress(60);
+    setTimeout(quizShowSportPlan, 900);
+  }
+}
+
+// ── BRANCH A: Employee / Student ──────────────────────
+
+function quizAskDelivery() {
+  const isAr = lang === "ar";
+  const place = qProfile === "employee"
+    ? (isAr ? "مكتبك" : "votre bureau")
+    : (isAr ? "مدرستك" : "votre école");
+  quizBot(isAr
+    ? `هل تبغي نوصلوا ليك الأكل ل${place} ؟ 🏢`
+    : `Souhaitez-vous une livraison à ${place} ? 🏢`);
+  setTimeout(() => quizShowChoices([
+    { val:"yes", label: isAr ? "نعم، التوصيل ✅" : "Oui, livraison ✅", emoji:"" },
+    { val:"no",  label: isAr ? "لا، سجمعها بنفسي" : "Non, je récupère", emoji:"" },
+  ]), 900);
+}
+
+function quizAskFoodType() {
+  const isAr = lang === "ar";
+  quizBot(isAr
+    ? `ممتاز ! <strong>${qVisitorName}</strong>، شنو النوع ديال الأكل اللي كتفضل ؟ 🍽️`
+    : `Super ! <strong>${qVisitorName}</strong>, quel type de repas vous attire le plus ? 🍽️`);
+  setTimeout(() => quizShowChoices([
+    { val:"sandwich", label: isAr ? "ساندويش 🥪"           : "Sandwich 🥪",           emoji:"" },
+    { val:"burger",   label: isAr ? "برغر 🍔"              : "Burger 🍔",             emoji:"" },
+    { val:"salad",    label: isAr ? "سلطة صحية 🥗"         : "Salade fraîche 🥗",     emoji:"" },
+    { val:"fullmeal", label: isAr ? "وجبة كاملة 🍽️"       : "Repas complet 🍽️",      emoji:"" },
+  ]), 900);
+}
+
+const fullMealCourses = ["starter","main","dessert"];
+const fullMealQuestions = {
+  fr: [
+    { q:"Parfait ! Pour votre <strong>entrée</strong>, qu'est-ce qui vous tente ?", choices:[
+      {val:"salad-v",  label:"🥗 Salade verte"},{val:"soup",   label:"🍵 Soupe du jour"},
+      {val:"bruschetta",label:"🥖 Bruschetta"},{val:"hummus", label:"🧆 Houmous & pita"},
+    ]},
+    { q:"Et en <strong>plat principal</strong> ?", choices:[
+      {val:"chicken",  label:"🍗 Poulet grillé"},{val:"fish",   label:"🐟 Poisson du jour"},
+      {val:"pasta",    label:"🍝 Pâtes maison"},{val:"tajine",  label:"🫕 Tajine marocain"},
+    ]},
+    { q:"Et pour finir, votre <strong>dessert</strong> ?", choices:[
+      {val:"fruit",    label:"🍓 Salade de fruits"},{val:"yogurt", label:"🍦 Yaourt glacé"},
+      {val:"cake",     label:"🍰 Gâteau du jour"},{val:"chebakia",label:"🍯 Chebakia"},
+    ]},
+  ],
+  ar: [
+    { q:"مزيان ! للـ<strong>مقبلات</strong> شنو كيعجبك ؟", choices:[
+      {val:"salad-v",  label:"🥗 سلطة خضراء"},{val:"soup",    label:"🍵 شوربة اليوم"},
+      {val:"bruschetta",label:"🥖 برشتا"},{val:"hummus",   label:"🧆 حمص وخبز"},
+    ]},
+    { q:"والـ<strong>الطبق الرئيسي</strong> ؟", choices:[
+      {val:"chicken",  label:"🍗 دجاج مشوي"},{val:"fish",    label:"🐟 سمك اليوم"},
+      {val:"pasta",    label:"🍝 باستا بيتية"},{val:"tajine",  label:"🫕 طاجين مغربي"},
+    ]},
+    { q:"وأخيرًا الـ<strong>حلوى</strong> ؟", choices:[
+      {val:"fruit",    label:"🍓 سلطة فواكه"},{val:"yogurt",  label:"🍦 يوغورت بارد"},
+      {val:"cake",     label:"🍰 كعكة اليوم"},{val:"chebakia",label:"🍯 شباكية"},
+    ]},
+  ]
+};
+
+function quizAskFullMeal() {
+  const isAr = lang === "ar";
+  const q = (isAr ? fullMealQuestions.ar : fullMealQuestions.fr)[0];
+  quizBot(q.q);
+  setTimeout(() => quizShowChoices(q.choices), 900);
+}
+
+function quizAskFullMealNext(idx) {
+  const isAr = lang === "ar";
+  const q = (isAr ? fullMealQuestions.ar : fullMealQuestions.fr)[idx];
+  quizBot(q.q);
+  setTimeout(() => quizShowChoices(q.choices), 900);
+}
+
+// ── BRANCH B: Sportive ────────────────────────────────
+
+function quizAskSportGoal() {
+  const isAr = lang === "ar";
+  quizBot(isAr
+    ? `رائع <strong>${qVisitorName}</strong> ! 💪 شنو هو هدفك الرياضي ؟`
+    : `Excellent <strong>${qVisitorName}</strong> ! 💪 Quel est votre objectif sportif ?`);
+  setTimeout(() => quizShowChoices([
+    { val:"lose",    label: isAr ? "تخسير الوزن 📉"    : "Perdre du poids 📉",    emoji:"" },
+    { val:"gain",    label: isAr ? "زيادة الكتلة 💪"   : "Prendre de la masse 💪", emoji:"" },
+    { val:"healthy", label: isAr ? "البقاء بصحة جيدة ✅": "Rester en forme ✅",    emoji:"" },
+  ]), 900);
+}
+
+function quizShowSportPlan() {
+  const isAr = lang === "ar";
+  const plan = calcMacros(qSportGoal);
+  const msgs = document.getElementById("quiz-msgs");
+
+  quizBot(isAr
+    ? `شكراً <strong>${qVisitorName}</strong> ! هاهو البرنامج الغذائي المصمم خصيصاً ليك 🧬`
+    : `Voici votre plan nutritionnel sur-mesure <strong>${qVisitorName}</strong> 🧬`);
 
   setTimeout(() => {
-    const msgs = document.getElementById("quiz-msgs");
-
-    // Result card
     const card = document.createElement("div");
     card.style.cssText = "animation:popIn .5s ease;";
     card.innerHTML = `
-      <div style="border:2px solid ${packColor};border-radius:18px;overflow:hidden;background:var(--card);">
-        <!-- Header -->
-        <div style="background:${packColor};padding:12px 16px;display:flex;align-items:center;justify-content:space-between;">
-          <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:14px;color:#fff;">🧬 ${isAr?"نتائجك الشخصية":"Vos Résultats Personnalisés"}</div>
-          <div style="font-size:11px;color:rgba(255,255,255,0.85);font-family:'DM Sans',sans-serif;">${packLabel}</div>
+      <div style="border:2px solid var(--green);border-radius:16px;overflow:hidden;background:var(--card);">
+        <div style="background:var(--green);padding:11px 15px;">
+          <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:13px;color:#fff;">🧬 ${isAr ? "معادلتك الغذائية" : "Votre Équation Nutritionnelle"} — ${plan.label}</div>
         </div>
-        <!-- Dish -->
-        <div style="padding:14px 16px;border-bottom:1px solid var(--border);">
-          <div style="font-family:'Cormorant Garamond',serif;font-weight:700;font-size:15px;color:var(--text);margin-bottom:4px;">${dish}</div>
-          <div style="font-size:11px;color:var(--muted);font-family:'DM Sans',sans-serif;">${isAr?"مصممة خصيصاً لك":"Conçu spécifiquement pour vous"}</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);padding:12px 14px;gap:0;border-bottom:1px solid var(--border);">
+          ${[["🔥",plan.cal,"kcal"],["💪",plan.p+"g",isAr?"بروتين":"Protéine"],["🌾",plan.c+"g",isAr?"كارب":"Glucides"],["🫙",plan.f+"g",isAr?"دهون":"Lipides"]].map(([e,v,l])=>`
+          <div style="text-align:center;padding:5px;${l!=(isAr?"بروتين":"Protéine")&&l!="kcal"?"border-left:1px solid var(--border);":""}">
+            <div style="font-size:11px;margin-bottom:2px;">${e}</div>
+            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:14px;color:var(--green);">${v}</div>
+            <div style="font-size:10px;color:var(--muted);font-family:'DM Sans',sans-serif;">${l}</div>
+          </div>`).join("")}
         </div>
-        <!-- Macros -->
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0;padding:12px 16px;">
-          <div style="text-align:center;padding:6px;">
-            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:16px;color:${packColor};">${cal}</div>
-            <div style="font-size:10px;color:var(--muted);font-family:'DM Sans',sans-serif;">kcal</div>
-          </div>
-          <div style="text-align:center;padding:6px;border-left:1px solid var(--border);">
-            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:16px;color:${packColor};">${prot}g</div>
-            <div style="font-size:10px;color:var(--muted);font-family:'DM Sans',sans-serif;">${isAr?"بروتين":"Protéine"}</div>
-          </div>
-          <div style="text-align:center;padding:6px;border-left:1px solid var(--border);">
-            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:16px;color:${packColor};">${carb}g</div>
-            <div style="font-size:10px;color:var(--muted);font-family:'DM Sans',sans-serif;">${isAr?"كربوهيدرات":"Glucides"}</div>
-          </div>
-          <div style="text-align:center;padding:6px;border-left:1px solid var(--border);">
-            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:16px;color:${packColor};">${fat}g</div>
-            <div style="font-size:10px;color:var(--muted);font-family:'DM Sans',sans-serif;">${isAr?"دهون":"Lipides"}</div>
-          </div>
-        </div>
-        <!-- Hook -->
-        <div style="padding:12px 16px;background:var(--greenXL);border-top:1px solid var(--border);">
-          <div style="font-size:12px;color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.6;font-weight:600;">
-            ${isAr
-              ? `✅ مكانك محجوز، ${name} ! فريقنا غادي يتواصل معك على WhatsApp بشكل 9rib لتأكيد اشتراكك. 🇲🇦`
-              : `✅ Votre place est réservée, ${name} ! Notre équipe vous contactera sur WhatsApp très bientôt pour confirmer votre abonnement. 🇲🇦`}
-          </div>
+        <div style="padding:11px 14px;">
+          <div style="font-size:11px;color:var(--muted);font-family:'DM Sans',sans-serif;margin-bottom:6px;font-weight:600;">${isAr?"🍽️ وجبات مقترحة :":"🍽️ Repas proposés :"}</div>
+          ${plan.meals.map(m=>`<div style="font-size:12px;color:var(--text);font-family:'DM Sans',sans-serif;padding:3px 0;">${m}</div>`).join("")}
         </div>
       </div>`;
     msgs.appendChild(card);
     msgs.scrollTop = msgs.scrollHeight;
-    qProgress(5);
-    document.getElementById("quiz-status").textContent = isAr ? "✅ مرحباً بك في SAVY 🇲🇦" : "✅ Bienvenue chez SAVY 🇲🇦";
+    setTimeout(quizShowLeadForm, 1200);
   }, 1000);
+}
+
+// ── Lead form trigger ─────────────────────────────────
+function quizShowLeadForm() {
+  const isAr = lang === "ar";
+  quizBot(isAr
+    ? `ممتاز ! دابا نحتاج منك بعض المعلومات الشخصية لنكملو الطلبية ديالك 📋`
+    : `Parfait ! Pour finaliser votre commande, j'ai juste besoin de quelques informations 📋`);
+  setTimeout(() => {
+    const btn = document.getElementById("lead-btn-lbl");
+    if (btn) btn.textContent = isAr ? "✅ تأكيد طلبيتي" : "✅ Confirmer ma commande";
+    document.getElementById("quiz-lead-form").style.display = "block";
+    qProgress(85);
+  }, 900);
+}
+
+// ── Submit ────────────────────────────────────────────
+function quizSubmitLead() {
+  const isAr   = lang === "ar";
+  const fullname = (document.getElementById("lead-fullname")?.value || "").trim();
+  const phone    = (document.getElementById("lead-phone")?.value    || "").trim();
+  const address  = (document.getElementById("lead-address")?.value  || "").trim();
+  const meals    = (document.getElementById("lead-meals")?.value    || "").trim();
+
+  const highlight = (id) => { const el = document.getElementById(id); if(el) el.style.borderColor="#e53935"; };
+  if (!fullname) { highlight("lead-fullname"); return; }
+  if (!phone)    { highlight("lead-phone");    return; }
+  if (!address)  { highlight("lead-address");  return; }
+  if (!meals)    { highlight("lead-meals");    return; }
+
+  document.getElementById("quiz-lead-form").style.display = "none";
+  quizUser(`${fullname} — ${address}`);
+  qProgress(88);
+
+  // Ask payment method
+  quizBot(isAr
+    ? `شكراً <strong>${fullname}</strong> ! 💳<br><strong>كيفاش بغيتي تخلص ؟</strong>`
+    : `Parfait <strong>${fullname}</strong> ! 💳<br><strong>Comment souhaitez-vous payer ?</strong>`);
+
+  setTimeout(() => {
+    const box = document.getElementById("quiz-choices");
+    box.innerHTML = `
+      <button onclick="quizPickPayment('card','${fullname}','${phone}','${address}','${meals}')"
+        style="flex:1;min-width:140px;padding:12px 16px;border-radius:13px;border:1.5px solid var(--border);background:var(--card);font-size:13px;font-family:'DM Sans',sans-serif;color:var(--text);cursor:pointer;transition:all .2s;text-align:center;"
+        onmouseover="this.style.background='var(--green)';this.style.color='#fff';this.style.borderColor='var(--green)'"
+        onmouseout="this.style.background='var(--card)';this.style.color='var(--text)';this.style.borderColor='var(--border)'">
+        💳 ${isAr ? "الدفع الآن بالبطاقة" : "Payer maintenant par carte"}
+      </button>
+      <button onclick="quizPickPayment('cash','${fullname}','${phone}','${address}','${meals}')"
+        style="flex:1;min-width:140px;padding:12px 16px;border-radius:13px;border:1.5px solid var(--border);background:var(--card);font-size:13px;font-family:'DM Sans',sans-serif;color:var(--text);cursor:pointer;transition:all .2s;text-align:center;"
+        onmouseover="this.style.background='var(--green)';this.style.color='#fff';this.style.borderColor='var(--green)'"
+        onmouseout="this.style.background='var(--card)';this.style.color='var(--text)';this.style.borderColor='var(--border)'">
+        🚪 ${isAr ? "الدفع عند التوصيل" : "Payer à la livraison"}
+      </button>`;
+  }, 900);
+}
+
+function quizPickPayment(method, fullname, phone, address, meals) {
+  const isAr = lang === "ar";
+  document.getElementById("quiz-choices").innerHTML = "";
+
+  const methodLabel = method === "card"
+    ? (isAr ? "💳 الدفع بالبطاقة" : "💳 Paiement par carte")
+    : (isAr ? "🚪 الدفع عند التوصيل" : "🚪 Paiement à la livraison");
+
+  quizUser(methodLabel);
+  qProgress(94);
+
+  setTimeout(() => {
+    const profileLabel = {
+      employee: isAr ? "موظف 💼" : "Employé(e) 💼",
+      student:  isAr ? "طالب 🎓" : "Étudiant(e) 🎓",
+      sportive: isAr ? "رياضي 🏋️" : "Sportif(ve) 🏋️",
+    }[qProfile] || qProfile;
+
+    const foodLabel = qFoodType === "fullmeal"
+      ? (isAr ? "وجبة كاملة 🍽️" : "Repas complet 🍽️") + (qFullMeal.length ? ` (${qFullMeal.join(", ")})` : "")
+      : qFoodType || qSportGoal;
+
+    const rows = [
+      [isAr?"الاسم الكامل":"Nom complet",  fullname],
+      [isAr?"الهاتف":"Téléphone",           phone],
+      [isAr?"العنوان":"Adresse",            address],
+      [isAr?"عدد الوجبات":"Nbre de repas", meals],
+      [isAr?"الملف الشخصي":"Profil",       profileLabel],
+      [isAr?"الطلب":"Commande",            foodLabel],
+      [isAr?"طريقة الدفع":"Paiement",      methodLabel],
+    ].filter(([,v]) => v);
+
+    const msgs = document.getElementById("quiz-msgs");
+    quizBot(isAr
+      ? `هاهو ملخص طلبيتك — تفضل تأكد ✅`
+      : `Voici le récapitulatif de votre commande ✅`);
+
+    setTimeout(() => {
+      const card = document.createElement("div");
+      card.style.cssText = "animation:popIn .4s ease;";
+      card.innerHTML = `
+        <div style="border:2px solid var(--green);border-radius:16px;overflow:hidden;background:var(--card);">
+          <div style="background:var(--green);padding:10px 15px;">
+            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:13px;color:#fff;">
+              📋 ${isAr ? "ملخص الطلبية" : "Récapitulatif de commande"}
+            </div>
+          </div>
+          <div style="padding:12px 15px;display:flex;flex-direction:column;gap:8px;">
+            ${rows.map(([k,v]) => `
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;font-family:'DM Sans',sans-serif;font-size:12px;">
+                <span style="color:var(--muted);flex-shrink:0;">${k}</span>
+                <span style="color:var(--text);font-weight:600;text-align:right;">${v}</span>
+              </div>`).join("")}
+          </div>
+          <div style="padding:10px 15px;border-top:1px solid var(--border);display:flex;gap:8px;">
+            <button onclick="quizConfirmOrder('${fullname}','${phone}','${address}','${meals}','${method}')"
+              style="flex:1;padding:11px;border-radius:12px;border:none;background:var(--green);color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;box-shadow:0 4px 14px rgba(0,128,96,0.3);">
+              ✅ ${isAr ? "تأكيد الطلبية" : "Confirmer la commande"}
+            </button>
+            <button onclick="quizEditOrder()"
+              style="padding:11px 14px;border-radius:12px;border:1.5px solid var(--border);background:var(--card);color:var(--text);font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;">
+              ✏️
+            </button>
+          </div>
+        </div>`;
+      msgs.appendChild(card);
+      msgs.scrollTop = msgs.scrollHeight;
+    }, 900);
+  }, 600);
+}
+
+function quizEditOrder() {
+  const msgs = document.getElementById("quiz-msgs");
+  // Remove last card
+  if (msgs.lastChild) msgs.removeChild(msgs.lastChild);
+  document.getElementById("quiz-lead-form").style.display = "block";
+  qProgress(85);
+}
+
+function quizConfirmOrder(fullname, phone, address, meals, payment) {
+  const isAr = lang === "ar";
+  const msgs = document.getElementById("quiz-msgs");
+  if (msgs.lastChild) msgs.removeChild(msgs.lastChild);
+  quizUser(isAr ? "✅ مؤكد !" : "✅ Confirmé !");
+
+  saveToSheets({
+    name: qVisitorName, fullname, phone, address, meals, payment,
+    profile:   qProfile,
+    delivery:  qDelivery,
+    foodtype:  qFoodType,
+    fullmeal:  qFullMeal.join(" + "),
+    sportgoal: qSportGoal,
+    lang
+  });
+
+  qProgress(100);
+  document.getElementById("quiz-status").textContent = isAr ? "✅ شكراً — SAVY 🇲🇦" : "✅ Merci — SAVY 🇲🇦";
+
+  setTimeout(() => {
+    quizBot(isAr
+      ? `شكراً جزيلاً <strong>${fullname}</strong> على الثقة اللي كديتيها لـ SAVY وفريقنا ! 🙏❤️<br><br>نتمنولك تجربة رائعة معنا — كنكونو دايما هنا باش نخدمو ليك أحسن وجبة بكل محبة واحتراف. 🍽️🇲🇦<br><br><strong>غادي نوصلك 9ريب !</strong>`
+      : `Un grand merci <strong>${fullname}</strong> pour la confiance que vous accordez à SAVY et à notre équipe ! 🙏❤️<br><br>Nous espérons sincèrement que vous apprécierez cette expérience avec nous. 🍽️🇲🇦<br><br><strong>Nous vous contactons très bientôt !</strong>`);
+  }, 600);
 }
 
 // ── Reset ─────────────────────────────────────────────
 function quizReset() {
-  qStep = 0; qGoal = ""; qActivity = ""; qFlavor = ""; qPack = "";
+  qStep=0; qVisitorName=""; qProfile=""; qDelivery=""; qFoodType=""; qFullMeal=[]; qSportGoal="";
   document.getElementById("quiz-msgs").innerHTML = "";
   document.getElementById("quiz-choices").innerHTML = "";
   document.getElementById("quiz-lead-form").style.display = "none";
+  const fields = ["lead-fullname","lead-phone","lead-address"];
+  fields.forEach(id => { const el=document.getElementById(id); if(el) el.value=""; });
+  const sel = document.getElementById("lead-meals"); if(sel) sel.value="";
   qProgress(0);
-  setTimeout(quizStep1, 300);
+  setTimeout(quizInit, 300);
 }
 
 function quizPatchLang(l) {
-  const isAr = l === "ar";
   const status = document.getElementById("quiz-status");
-  if (status && !status.textContent.includes("✅")) {
+  if (status && !status.textContent.includes("✅"))
     status.textContent = "En ligne · Chef SAVY 🇲🇦";
-  }
   quizReset();
 }
-
-function quizInit() { quizStep1(); }
 
 window.addEventListener("DOMContentLoaded", () => {
   // Apply dark mode icon
