@@ -733,8 +733,33 @@ const filterMap = {"All":"all","Vegan":"vegan","High Protein":"high-protein","Lo
 ═══════════════════════════════════════════ */
 let lang       = "ar";
 let darkMode   = false;
-// Live member count — changes every visit between 312 and 567
-const liveCount = Math.floor(Math.random() * (793 - 215 + 1)) + 215;
+// Animated member count — counts up from 215 to 793 over 20 min, drops by 3 every 30s
+const liveCount = 793;
+function animateCount(el, from, to, duration) {
+  if (!el) return;
+  const steps    = 578;
+  const interval = duration / steps;
+  const stepVal  = (to - from) / steps;
+  let current    = from;
+  let i          = 0;
+
+  el.textContent = Math.round(current) + "+";
+
+  const timer = setInterval(() => {
+    current += stepVal;
+    i++;
+    el.textContent = Math.round(current) + "+";
+    if (i >= steps) { el.textContent = to + "+"; clearInterval(timer); }
+  }, interval);
+
+  // Every 30 seconds — dip by 3 then keep going
+  const dipTimer = setInterval(() => {
+    if (i >= steps) { clearInterval(dipTimer); return; }
+    current -= 3;
+    if (current < from) current = from;
+    el.textContent = Math.round(current) + "+";
+  }, 30000);
+}
 
 function toggleTheme() {
   darkMode = !darkMode;
@@ -957,11 +982,16 @@ function renderBenefits(){
 function renderStats(){
   const t = copy[lang];
   const isAr = lang==="ar";
-  document.getElementById("stats-grid").innerHTML = t.stats.map(s=>`
+  document.getElementById("stats-grid").innerHTML = t.stats.map((s,i)=>`
     <div class="stat-card">
-      <div class="stat-val fh">${s.v}</div>
+      <div class="stat-val fh" ${i===1?'id="live-count-stat"':''}>${s.v}</div>
       <div class="stat-lbl ${isAr?"far":"fb"}">${s.l}</div>
     </div>`).join("");
+  // Re-trigger animation on the stat after render
+  setTimeout(() => {
+    const statEl = document.getElementById("live-count-stat");
+    if (statEl) animateCount(statEl, 215, 793, 1200000);
+  }, 50);
 }
 
 /* ═══════════════════════════════════════════
@@ -1809,11 +1839,13 @@ function quizPatchLang(l) {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-  // Inject live member count
-  const proofEl = document.getElementById("live-count-proof");
-  const chipEl  = document.getElementById("live-count-chip");
-  if (proofEl) proofEl.textContent = liveCount + "+";
-  if (chipEl)  chipEl.textContent  = liveCount;
+  // Animate member count 215 → 793 (runs after setLang builds the elements)
+  setTimeout(() => {
+    const proofEl = document.getElementById("live-count-proof");
+    const chipEl  = document.getElementById("live-count-chip");
+    if (proofEl) animateCount(proofEl, 215, 793, 1200000);
+    if (chipEl)  { chipEl.textContent = "215"; animateCount(chipEl, 215, 793, 1200000); }
+  }, 100);
   // Apply theme
   const btn = document.getElementById("theme-btn");
   if (darkMode) {
