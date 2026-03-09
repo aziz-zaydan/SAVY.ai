@@ -523,7 +523,7 @@
           <div class="av" style="background:linear-gradient(135deg,#80CBC4,#B2DFDB);">M</div>
         </div>
         <div>
-          <div class="proof-text fb" id="proof-txt"><em>312+</em> personnes inscrites</div>
+          <div class="proof-text fb" id="proof-txt"><em id="live-count-proof"></em> personnes inscrites</div>
           <div class="proof-stars">⭐⭐⭐⭐⭐</div>
         </div>
       </div>
@@ -552,7 +552,7 @@
         </svg>
       </div>
       <div class="stat-chips">
-        <div class="chip"><div style="font-size:16px">👥</div><div class="chip-val">312+</div><div class="chip-lbl fb" id="chip-inscrits">Inscrits</div></div>
+        <div class="chip"><div style="font-size:16px">👥</div><div class="chip-val"><span id="live-count-chip"></span>+</div><div class="chip-lbl fb" id="chip-inscrits">Inscrits</div></div>
         <div class="chip"><div style="font-size:16px">⚡</div><div class="chip-val">45min</div><div class="chip-lbl fb" id="chip-livraison">Livraison</div></div>
         <div class="chip"><div style="font-size:16px">⭐</div><div class="chip-val">4.9★</div><div class="chip-lbl fb" id="chip-note">Note</div></div>
       </div>
@@ -733,6 +733,8 @@ const filterMap = {"All":"all","Vegan":"vegan","High Protein":"high-protein","Lo
 ═══════════════════════════════════════════ */
 let lang       = "ar";
 let darkMode   = false;
+// Live member count — changes every visit between 312 and 567
+const liveCount = Math.floor(Math.random() * (567 - 312 + 1)) + 312;
 
 function toggleTheme() {
   darkMode = !darkMode;
@@ -788,7 +790,7 @@ const copy = {
       {icon:"👨‍🍳",t:"Chef cuisine frais",    d:"Préparé avec des ingrédients locaux de qualité."},
       {icon:"🛵",t:"Livré en 45 min",       d:"Chez vous, chaud et frais, garanti."},
     ],
-    stats:[{v:"45 min",l:"Livraison"},{v:"312+",l:"Inscrits"},{v:"4.9 ★",l:"Satisfaction"},{v:"100%",l:"Frais"}],
+    stats:[{v:"45 min",l:"Livraison"},{v:`${liveCount}+`,l:"Inscrits"},{v:"4.9 ★",l:"Satisfaction"},{v:"100%",l:"Frais"}],
     menuTitle:"Notre Menu",
     menuSub:"Des saveurs du monde, optimisées par l'IA pour vos objectifs",
     search:"Rechercher des plats...",
@@ -834,7 +836,7 @@ const copy = {
       {icon:"👨‍🍳",t:"الشيف يطبخ طازجاً",  d:"مُحضَّر بمكونات محلية عالية الجودة."},
       {icon:"🛵",t:"توصيل في 45 دقيقة",   d:"لبابك، ساخن وطازج، مضمون."},
     ],
-    stats:[{v:"45 دقيقة",l:"التوصيل"},{v:"+312",l:"مشترك"},{v:"4.9 ★",l:"الرضا"},{v:"100%",l:"طازج"}],
+    stats:[{v:"45 دقيقة",l:"التوصيل"},{v:`+${liveCount}`,l:"مشترك"},{v:"4.9 ★",l:"الرضا"},{v:"100%",l:"طازج"}],
     menuTitle:"قائمتنا",
     menuSub:"نكهات عالمية محسّنة بالذكاء الاصطناعي لأهدافك",
     search:"ابحث عن الأطباق...",
@@ -888,7 +890,7 @@ function setLang(l){
   _set("email-hero",    "placeholder", t.ph);
   _set("cta-text",      "textContent", t.cta);
   _set("cta-note",      "textContent", t.ctaNote);
-  _set("proof-txt",     "innerHTML",   `<em>312+</em> ${t.proof}`);
+  _set("proof-txt",     "innerHTML",   `<em id="live-count-proof"></em> ${t.proof}`);
   _set("success-title", "textContent", t.ok);
   _set("success-sub",   "textContent", t.okSub);
   document.getElementById("chip-inscrits").textContent  = t.chips[0];
@@ -1807,6 +1809,11 @@ function quizPatchLang(l) {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
+  // Inject live member count
+  const proofEl = document.getElementById("live-count-proof");
+  const chipEl  = document.getElementById("live-count-chip");
+  if (proofEl) proofEl.textContent = liveCount + "+";
+  if (chipEl)  chipEl.textContent  = liveCount;
   // Apply theme
   const btn = document.getElementById("theme-btn");
   if (darkMode) {
