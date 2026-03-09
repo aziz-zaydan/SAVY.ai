@@ -1365,24 +1365,13 @@ function quizInit() {
   qProgress(5);
 
   if (account && account.fullname) {
-    // ── Returning visitor ──────────────────────────────
+    // ── Returning visitor — greet naturally, skip the info talk ──
     const nickname = account.fullname.split(" ")[0];
     qVisitorName = nickname;
     quizBot(isAr
-      ? `مرحباً بعودتك <strong>${nickname}</strong> ! 👋🎉<br>سررنا بزيارتك مرة أخرى لـ SAVY.<br><br>عندي معلوماتك محفوظة — هل بغيتي تكمل بنفس المعلومات ؟`
-      : `Content de vous revoir <strong>${nickname}</strong> ! 👋🎉<br>Vos informations sont sauvegardées.<br><br>Voulez-vous continuer avec les mêmes coordonnées ?`);
-    setTimeout(() => {
-      const box = document.getElementById("quiz-choices");
-      box.innerHTML = `
-        <button onclick="quizReturningYes()"
-          style="padding:10px 18px;border-radius:99px;border:1.5px solid var(--green);background:var(--green);color:#fff;font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;">
-          ✅ ${isAr ? "نعم، نفس المعلومات" : "Oui, mes infos enregistrées"}
-        </button>
-        <button onclick="quizReturningNo()"
-          style="padding:10px 18px;border-radius:99px;border:1.5px solid var(--border);background:var(--card);color:var(--text);font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;">
-          ✏️ ${isAr ? "تعديل المعلومات" : "Modifier mes infos"}
-        </button>`;
-    }, 900);
+      ? `أهلاً <strong>${nickname}</strong> ! 👋😊<br>شحال من وقت ماشفناكش — <strong>علاش جيتي اليوم ؟</strong>`
+      : `Bonjour <strong>${nickname}</strong> ! 👋😊<br>Ça faisait un moment — <strong>qu'est-ce qui vous ferait plaisir aujourd'hui ?</strong>`);
+    setTimeout(() => quizAskProfile(), 1000);
 
   } else {
     // ── New visitor ────────────────────────────────────
