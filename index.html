@@ -1326,9 +1326,7 @@ function quizUser(text) {
   msgs.scrollTop = msgs.scrollHeight;
 }
 
-// ── Send message to Gemini (direct) ──────────────────
-const _GK = "AIzaSyDeT8uNUL8X-bqw40wZvGGRZq8cC7Cdt0c";
-
+// ── Send message to Gemini (via Netlify function) ─────
 async function savySend() {
   if (savyWaitingForInfo || savySubmitted) return;
 
@@ -1344,27 +1342,22 @@ async function savySend() {
   if (btn) btn.disabled = true;
 
   const isAr = lang === "ar";
-  const sys  = isAr
-    ? `أنت "شيف SAVY"، مساعد ذكي وودود لمنصة توصيل الأكل الصحي SAVY في تطوان، مديق ومرتيل بالمغرب. مهمتك: رحب بالزائر، افهم هل هو موظف/طالب أو رياضي، اسأله عن نوع الأكل المفضل، وإذا رياضي احسب له الماكروز. بعد 3-4 رسائل وعندما تفهم طلبه تماماً أضف في آخر ردك: SAVY_COLLECT_INFO — تحدث بالدارجة المغربية، قصير وودود، جملة أو جملتين فقط.`
-    : `Tu es "Chef SAVY", l'assistant IA de SAVY — livraison repas sains à Tétouan, M'diq et Martil. Comprends le profil (employé/étudiant/sportif), les préférences alimentaires, calcule les macros si sportif. Après 3-4 échanges quand tu comprends bien la commande, ajoute à la fin: SAVY_COLLECT_INFO — réponds en 1-2 phrases max, ton chaleureux.`;
 
   try {
-    const res  = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${_GK}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          system_instruction: { parts: [{ text: sys }] },
-          contents: geminiHistory,
-          generationConfig: { temperature: 0.85, maxOutputTokens: 300 }
-        })
-      }
-    );
+    const res  = await fetch("/.netlify/functions/gemini", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ messages: geminiHistory, lang })
+    });
     const data  = await res.json();
-    let reply   = (data?.candidates?.[0]?.content?.parts?.[0]?.text || "").trim();
+    console.log("Gemini response:", JSON.stringify(data).slice(0, 500));
+    let reply   = (data?.reply || "").trim();
 
-    if (!reply) throw new Error("empty");
+    if (!reply) {
+      const errMsg = data?.error || "empty reply";
+      console.error("Gemini empty:", errMsg);
+      throw new Error(errMsg);
+    }
 
     if (reply.includes("SAVY_COLLECT_INFO")) {
       reply = reply.replace("SAVY_COLLECT_INFO", "").trim();
@@ -1377,9 +1370,8 @@ async function savySend() {
       await quizBot(reply);
     }
   } catch(e) {
-    await quizBot(isAr
-      ? "عذراً، كاين مشكل تقني صغير. حاول مرة أخرى 🙏"
-      : "Désolé, petit problème. Réessayez 🙏");
+    console.error("Gemini error:", e);
+    await quizBot(`⚠️ Error: ${e.message}`);
   }
 
   if (btn) btn.disabled = false;
