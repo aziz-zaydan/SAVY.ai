@@ -1,53 +1,49 @@
 const https = require("https");
 
+const CORS = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers": "Content-Type",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Content-Type": "application/json"
+};
+
 exports.handler = async (event) => {
-  if (event.httpMethod !== "POST") {
-    return { statusCode: 405, body: "Method Not Allowed" };
-  }
+  if (event.httpMethod === "OPTIONS") return { statusCode: 200, headers: CORS, body: "" };
+  if (event.httpMethod !== "POST") return { statusCode: 405, headers: CORS, body: JSON.stringify({ error: "Method Not Allowed" }) };
 
   const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) {
-    return { statusCode: 500, body: JSON.stringify({ error: "GEMINI_API_KEY not set" }) };
-  }
+  if (!apiKey) return { statusCode: 500, headers: CORS, body: JSON.stringify({ error: "GEMINI_API_KEY not set" }) };
 
   let body;
-  try { body = JSON.parse(event.body); } 
-  catch { return { statusCode: 400, body: JSON.stringify({ error: "Invalid JSON" }) }; }
+  try { body = JSON.parse(event.body); }
+  catch { return { statusCode: 400, headers: CORS, body: JSON.stringify({ error: "Invalid JSON" }) }; }
 
   const { messages, lang } = body;
+  if (!messages || !Array.isArray(messages) || messages.length === 0) {
+    return { statusCode: 400, headers: CORS, body: JSON.stringify({ error: "messages required" }) };
+  }
 
   const systemPrompt = lang === "ar"
-    ? `أنت "شيف SAVY"، مساعد ذكي وودود لمنصة توصيل الأكل الصحي SAVY في تطوان، مديق ومرتيل بالمغرب.
-مهمتك:
-1. رحب بالزائر بطريقة دافئة وطبيعية.
-2. افهم ما يريد: هل هو موظف/طالب يريد توصيل للمكتب، أو رياضي له أهداف غذائية.
-3. اسأله عن نوع الأكل الذي يفضله (ساندويش، برغر، سلطة، وجبة كاملة...).
-4. إذا كان رياضياً، احسب له البروتين والسعرات والكربوهيدرات حسب هدفه.
-5. عندما تنتهي من فهم طلبه، قل له بالضبط: "SAVY_COLLECT_INFO" في آخر رسالتك (هذا كود سري للنظام).
-تحدث بالدارجة المغربية (العربية المغربية) — طبيعي، ودود، قصير، واضح.
-لا تكتب رسائل طويلة جداً. جملة أو جملتين كافيتان في كل رد.`
-    : `Tu es "Chef SAVY", l'assistant IA sympathique de SAVY — une plateforme de livraison de repas sains à Tétouan, M'diq et Martil au Maroc.
-Ta mission :
-1. Accueille chaleureusement le visiteur.
-2. Comprends ce qu'il veut : employé/étudiant (livraison bureau), ou sportif (objectifs nutritionnels).
-3. Demande-lui ses préférences alimentaires (sandwich, burger, salade, repas complet...).
-4. Si sportif, calcule ses protéines, calories et glucides selon son objectif.
-5. Quand tu as bien compris sa commande, écris exactement "SAVY_COLLECT_INFO" à la fin de ton message (code secret système).
-Parle de façon naturelle, chaleureuse et concise. 1-2 phrases max par réponse.`;
+    ? `أنت "شيف SAVY"، مساعد ذكي وودود لمنصة توصيل الأكل الصحي SAVY في تطوان، مديق ومرتيل بالمغرب. مهمتك: افهم هل الزائر موظف/طالب أو رياضي، اسأله عن نوع الأكل المفضل، وإذا رياضي احسب له الماكروز. بعد 3-4 رسائل وعندما تفهم طلبه تماماً أضف في آخر ردك فقط: SAVY_COLLECT_INFO — تحدث بالدارجة المغربية، قصير وودود، جملة أو جملتين فقط في كل رد.`
+    : `Tu es "Chef SAVY", l'assistant IA de SAVY — livraison repas sains à Tétouan, M'diq et Martil. Comprends le profil (employé/étudiant/sportif), les préférences alimentaires, calcule les macros si sportif. Après 3-4 échanges quand tu comprends bien la commande, ajoute uniquement à la fin: SAVY_COLLECT_INFO — réponds en 1-2 phrases max, ton chaleureux et naturel.`;
+
+  // Inject system prompt into first user message
+  const contents = messages.map((m, i) => {
+    if (i === 0 && m.role === "user") {
+      return { role: "user", parts: [{ text: systemPrompt + "\n\n" + m.parts[0].text }] };
+    }
+    return m;
+  });
 
   const geminiBody = JSON.stringify({
-    system_instruction: { parts: [{ text: systemPrompt }] },
-    contents: messages,
-    generationConfig: {
-      temperature: 0.8,
-      maxOutputTokens: 300,
-    }
+    contents,
+    generationConfig: { temperature: 0.85, maxOutputTokens: 300 }
   });
 
   return new Promise((resolve) => {
     const options = {
       hostname: "generativelanguage.googleapis.com",
-      path: `/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+      path: `/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -61,19 +57,20 @@ Parle de façon naturelle, chaleureuse et concise. 1-2 phrases max par réponse.
       res.on("end", () => {
         try {
           const parsed = JSON.parse(data);
-          const text = parsed?.candidates?.[0]?.content?.parts?.[0]?.text || "";
-          resolve({
-            statusCode: 200,
-            headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
-            body: JSON.stringify({ reply: text })
-          });
+          const text = parsed?.candidates?.[0]?.content?.parts?.[0]?.text;
+          if (text) {
+            resolve({ statusCode: 200, headers: CORS, body: JSON.stringify({ reply: text }) });
+          } else {
+            const errInfo = parsed?.error?.message || parsed?.promptFeedback?.blockReason || JSON.stringify(parsed).slice(0, 200);
+            resolve({ statusCode: 200, headers: CORS, body: JSON.stringify({ reply: "", error: errInfo }) });
+          }
         } catch(e) {
-          resolve({ statusCode: 500, body: JSON.stringify({ error: "Parse error", raw: data }) });
+          resolve({ statusCode: 500, headers: CORS, body: JSON.stringify({ error: "Parse error: " + data.slice(0, 200) }) });
         }
       });
     });
 
-    req.on("error", (e) => resolve({ statusCode: 500, body: JSON.stringify({ error: e.message }) }));
+    req.on("error", (e) => resolve({ statusCode: 500, headers: CORS, body: JSON.stringify({ error: e.message }) }));
     req.write(geminiBody);
     req.end();
   });
