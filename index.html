@@ -1117,19 +1117,27 @@ const MAILCHIMP_URL = "PASTE_YOUR_MAILCHIMP_URL_HERE";
 ═══════════════════════════════════════════ */
 const FORMSPREE_URL = "https://script.google.com/macros/s/AKfycbze50a82fqgJodjNmIZLpis7TuVfveQ9c_x1aHXVEsDwEiiT0bqHhQlKCiL1LfZbO3-Gg/exec";
 
-async function saveToSheets(data) {
-  if (!FORMSPREE_URL || FORMSPREE_URL === "PASTE_YOUR_FORMSPREE_URL_HERE") return;
-  try {
-    // Use hidden form + iframe to bypass CORS with Google Apps Script
-    const iframe = document.createElement("iframe");
-    iframe.name = "savy-hidden-frame";
-    iframe.style.display = "none";
-    document.body.appendChild(iframe);
+async function getSavyResponse(userInput) {
+    try {
+        // 1. إظهار علامة التحميل (Loading...)
+        showTypingIndicator();
 
-    const form = document.createElement("form");
-    form.method = "POST";
-    form.action = FORMSPREE_URL;
-    form.target = "savy-hidden-frame";
+        // 2. الاتصال بـ Gemini API (تأكد من استخدام await بشكل صحيح)
+        const result = await model.generateContent(userInput);
+        const response = await result.response;
+        
+        // 3. الحل هنا: استخراج النص كاملاً قبل عرضه
+        const text = response.text(); 
+
+        // 4. إزالة علامة التحميل وعرض النص
+        hideTypingIndicator();
+        displayMessage(text, 'savy');
+
+    } catch (error) {
+        console.error("SAVY Error:", error);
+        displayMessage("عذراً، وقع خطأ تقني في مطبخنا الرقمي. حاول مرة أخرى!", 'savy');
+    }
+}
 
     const fields = {
       name:      data.name      || "",
