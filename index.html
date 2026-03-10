@@ -3,985 +3,603 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SAVY – Manger intelligent, livré chez vous | الأكل الذكي</title>
-  <meta name="description" content="SAVY – La première livraison de repas sains propulsée par l'IA au Maroc. Tétouan, M'diq, Martil — Bientôt."/>
+  <title>SAVY – Meal Engineer | الشيف الذكي</title>
+  <meta name="description" content="SAVY – Morocco's first AI Personal Chef. Specially Engineered meals, delivered in 45 min. Tétouan · M'diq · Martil."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Syne:wght@700;800;900&family=DM+Sans:wght@400;500;600;700&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet"/>
   <style>
-  /* ══════════════════════════════════════════
-     SAVY — Web3 Food Tech Design System
-  ══════════════════════════════════════════ */
-  :root {
-    --bg:       #050C08;
-    --bg2:      #080F0B;
-    --card:     rgba(10,22,14,0.85);
-    --cardS:    rgba(14,28,18,0.9);
-    --green:    #00D97E;
-    --greenD:   #008060;
-    --greenL:   #00FF9D;
-    --greenXL:  rgba(0,217,126,0.08);
-    --pink:     #FF6B9D;
-    --pinkXL:   rgba(255,107,157,0.07);
-    --text:     #E8F5EF;
-    --sub:      #6BBFA0;
-    --muted:    #3D8068;
-    --border:   rgba(0,217,126,0.18);
-    --borderH:  rgba(0,217,126,0.4);
-    --gold:     #FFD700;
-    --orange:   #FF9B50;
-    --orangeBg: rgba(255,155,80,0.08);
-    --glow:     0 0 30px rgba(0,217,126,0.25);
-    --glowH:    0 0 50px rgba(0,217,126,0.4);
-    --shadow:   0 4px 24px rgba(0,0,0,0.6);
-    --shadowH:  0 8px 40px rgba(0,0,0,0.8);
-    --mint:     rgba(0,217,126,0.05);
-    --greenXL2: rgba(0,217,126,0.12);
-  }
+    :root {
+      --bg:       #EEF7F3;
+      --card:     #FFFFFF;
+      --mint:     #DFF0E9;
+      --green:    #008060;
+      --greenL:   #00A878;
+      --greenXL:  #E6F5EF;
+      --text:     #0D1F18;
+      --sub:      #4A7A66;
+      --muted:    #8FBFAA;
+      --border:   #D4EDE3;
+      --pink:     #E91E8C;
+      --pinkL:    #FF4DB8;
+      --pinkXL:   #FFF0F9;
+      --pinkBorder:#FFB3E0;
+      --orange:   #F4A330;
+      --orangeBg: #FFF3E0;
+      --shadow:   0 2px 16px rgba(0,128,96,0.08);
+      --shadowH:  0 8px 32px rgba(0,128,96,0.15);
+      --glow:     0 0 0 3px rgba(0,128,96,0.15);
+      --navbar-bg: rgba(238,247,243,0.97);
+    }
 
-  /* Light theme override */
-  [data-theme="light"] {
-    --bg:       #F0FAF5;
-    --bg2:      #E6F5EE;
-    --card:     rgba(255,255,255,0.9);
-    --cardS:    rgba(240,250,245,0.95);
-    --green:    #008060;
-    --greenD:   #006B50;
-    --greenL:   #00A878;
-    --greenXL:  rgba(0,128,96,0.08);
-    --pink:     #E8538A;
-    --pinkXL:   rgba(232,83,138,0.07);
-    --text:     #0D1F18;
-    --sub:      #3D8068;
-    --muted:    #7ABFA3;
-    --border:   rgba(0,128,96,0.2);
-    --borderH:  rgba(0,128,96,0.5);
-    --glow:     0 0 20px rgba(0,128,96,0.15);
-    --glowH:    0 0 35px rgba(0,128,96,0.25);
-    --shadow:   0 4px 20px rgba(0,128,96,0.1);
-    --shadowH:  0 8px 36px rgba(0,128,96,0.18);
-    --mint:     rgba(0,128,96,0.05);
-    --greenXL2: rgba(0,128,96,0.1);
-  }
-  [data-theme="light"] body { background:var(--bg); color:var(--text); }
-  [data-theme="light"] .hero-section { background:var(--bg); }
-  [data-theme="light"] #navbar { background:rgba(240,250,245,0.92); border-color:var(--border); }
-  [data-theme="light"] .nav-logo-text { color:var(--text); }
-  [data-theme="light"] .nav-link { color:var(--sub); }
-  [data-theme="light"] .orb { opacity:.15; }
-  [data-theme="light"] #quiz-msgs { background:rgba(255,255,255,0.9) !important; }
-  [data-theme="light"] input,
-  [data-theme="light"] textarea,
-  [data-theme="light"] select { background:rgba(255,255,255,0.95) !important; color:var(--text) !important; border-color:var(--border) !important; }
+    /* ── DARK THEME ── */
+    [data-theme="dark"] {
+      --bg:       #050E09;
+      --card:     #0C1A0F;
+      --mint:     #0D2016;
+      --green:    #00A878;
+      --greenL:   #00C98F;
+      --greenXL:  #0A2016;
+      --text:     #E8F5F0;
+      --sub:      #7BBFA6;
+      --muted:    #3D7A62;
+      --border:   #153024;
+      --pinkXL:   #1A0510;
+      --orangeBg: #1A0F00;
+      --shadow:   0 2px 16px rgba(0,0,0,0.4);
+      --shadowH:  0 8px 32px rgba(0,168,120,0.2);
+      --navbar-bg: rgba(5,14,9,0.97);
+    }
+    [data-theme="dark"] #navbar      { background:var(--navbar-bg); }
+    [data-theme="dark"] .lang-wrap   { background:var(--card); }
+    [data-theme="dark"] #hero        { background:radial-gradient(ellipse 80% 60% at 70% 50%, rgba(0,168,120,0.1) 0%, transparent 70%), var(--bg); }
+    [data-theme="dark"] #how         { background:var(--card); }
+    [data-theme="dark"] #menu        { background:var(--card); }
+    [data-theme="dark"] #final       { background:linear-gradient(135deg, #0A2016, var(--bg)); }
+    [data-theme="dark"] footer       { background:var(--card); }
+    [data-theme="dark"] .step-card   { background:var(--card); }
+    [data-theme="dark"] .stat-card   { background:var(--card); }
+    [data-theme="dark"] .dish-card   { background:var(--card); }
+    [data-theme="dark"] .chip        { background:var(--card); }
+    [data-theme="dark"] .persona-card{ background:var(--card); }
+    [data-theme="dark"] .email-inp   { background:var(--card); border-color:var(--border); color:var(--text); }
+    [data-theme="dark"] .search-inp  { background:var(--card); border-color:var(--border); color:var(--text); }
+    [data-theme="dark"] .social-btn  { background:var(--card); }
+    [data-theme="dark"] #chat-window { background:var(--card); border-color:var(--border); }
+    [data-theme="dark"] #chat-msgs   { background:var(--bg); }
+    [data-theme="dark"] .msg-bot .msg-bubble { background:var(--card); border-color:var(--border); }
+    [data-theme="dark"] .chat-input-area { background:var(--card); border-color:var(--border); }
+    [data-theme="dark"] .chat-inp    { background:var(--bg); border-color:var(--border); color:var(--text); }
+    [data-theme="dark"] .persona-select { background:var(--mint); border-color:var(--border); }
+    [data-theme="dark"] .p-btn       { background:var(--card); border-color:var(--border); }
+    [data-theme="dark"] .q-chip      { background:var(--card); border-color:var(--border); color:var(--text); }
+    [data-theme="dark"] #chat-lead-form { background:var(--card); border-color:var(--border); }
+    [data-theme="dark"] .lead-inp    { background:var(--bg); border-color:var(--border); color:var(--text); }
+    [data-theme="dark"] #persona-highlight { background:var(--card) !important; }
+    [data-theme="dark"] .tag-cuisine { background:var(--mint); color:var(--muted); }
+    [data-theme="dark"] #banner      { background:var(--green); }
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    html { scroll-behavior:smooth; }
+    body { font-family:'DM Sans',system-ui,sans-serif; background:var(--bg); color:var(--text); overflow-x:hidden; }
+    ::-webkit-scrollbar { width:4px; }
+    ::-webkit-scrollbar-thumb { background:var(--mint); border-radius:4px; }
 
-  /* Dark mode — same as default (dark first) */
-  [data-theme="dark"] {
-    --bg:       #050C08;
-    --bg2:      #080F0B;
-    --card:     rgba(10,22,14,0.85);
-    --green:    #00D97E;
-    --greenXL:  rgba(0,217,126,0.08);
-    --text:     #E8F5EF;
-    --sub:      #6BBFA0;
-    --muted:    #3D8068;
-    --border:   rgba(0,217,126,0.18);
-    --gold:     #FFD700;
-    --shadow:   0 4px 24px rgba(0,0,0,0.6);
-    --shadowH:  0 8px 40px rgba(0,0,0,0.8);
-  }
-  [data-theme="dark"] body { background:#050C08; color:var(--text); }
+    /* ── ANIMATIONS ── */
+    @keyframes float   { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+    @keyframes pulse   { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.85)} }
+    @keyframes slideUp { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes popIn   { from{opacity:0;transform:scale(.88)} to{opacity:1;transform:scale(1)} }
+    @keyframes fadeIn  { from{opacity:0} to{opacity:1} }
+    @keyframes chatBounce { 0%,100%{transform:scale(1)} 50%{transform:scale(1.12)} }
+    @keyframes typingDot { 0%,60%,100%{transform:translateY(0);opacity:.4} 30%{transform:translateY(-5px);opacity:1} }
+    @keyframes shimmer { 0%{background-position:-200% 0} 100%{background-position:200% 0} }
+    .su  { animation:slideUp .55s ease both; }
+    .su2 { animation:slideUp .55s .1s ease both; }
+    .su3 { animation:slideUp .55s .2s ease both; }
+    .su4 { animation:slideUp .55s .3s ease both; }
+    .su5 { animation:slideUp .55s .4s ease both; }
 
-  /* ── Reset ── */
-  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
-  html { scroll-behavior:smooth; }
-  body {
-    font-family:'Manrope',system-ui,sans-serif;
-    background:var(--bg);
-    color:var(--text);
-    overflow-x:hidden;
-  }
-  ::-webkit-scrollbar { width:3px; }
-  ::-webkit-scrollbar-thumb { background:var(--green); border-radius:99px; }
+    /* ── FONTS ── */
+    .fh { font-family:'Cormorant Garamond',serif; letter-spacing:0.01em; }
+    .far{ font-family:'Tajawal',sans-serif; }
+    .fb { font-family:'DM Sans',sans-serif; }
+    .fsyne { font-family:'Syne',sans-serif; }
 
-  /* ── Arabic font ── */
-  .far, [dir="rtl"], .ar-text { font-family:'Tajawal',sans-serif; }
-  .fh { font-family:'Oxanium',sans-serif; }
-  .fb { font-family:'Manrope',sans-serif; }
+    /* ── NAVBAR ── */
+    #navbar {
+      position:sticky; top:0; z-index:200;
+      background:var(--navbar-bg); backdrop-filter:blur(16px);
+      border-bottom:1px solid var(--border);
+      padding:0 clamp(16px,4vw,56px); height:66px;
+      display:flex; align-items:center; justify-content:space-between;
+      transition:box-shadow .3s;
+    }
+    .nav-logo { display:flex; align-items:center; gap:10px; text-decoration:none; }
+    .nav-logo span { font-family:'Syne',sans-serif; font-weight:900; font-size:20px; color:var(--text); }
+    .nav-links { display:flex; gap:24px; }
+    .nav-link { color:var(--sub); font-size:13px; font-weight:600; background:none; border:none; cursor:pointer; transition:color .2s; text-decoration:none; }
+    .nav-link:hover { color:var(--green); }
+    .lang-wrap { display:flex; gap:3px; background:#fff; border-radius:99px; padding:3px; border:1px solid var(--border); }
+    .lang-btn { padding:5px 11px; border-radius:99px; border:none; cursor:pointer; font-size:12px; font-weight:700; transition:all .2s; background:transparent; color:var(--sub); font-family:'DM Sans',sans-serif; }
+    .lang-btn.active { background:var(--green); color:#fff; }
+    .btn-cta {
+      background:var(--green); color:#fff; border:none; cursor:pointer;
+      border-radius:14px; padding:14px 26px; font-size:14px; font-weight:700;
+      display:inline-flex; align-items:center; gap:8px;
+      box-shadow:0 6px 24px rgba(0,128,96,0.2); transition:all .25s;
+      font-family:'DM Sans',sans-serif; text-decoration:none;
+    }
+    .btn-cta:hover { background:var(--greenL); transform:translateY(-2px); box-shadow:0 10px 32px rgba(0,168,120,.3); }
+    .btn-cta-sm { padding:8px 16px; font-size:12px; border-radius:10px; }
 
-  /* ── ANIMATIONS ── */
-  @keyframes float    { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
-  @keyframes pulse    { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.3;transform:scale(.8)} }
-  @keyframes slideUp  { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
-  @keyframes popIn    { from{opacity:0;transform:scale(.92)} to{opacity:1;transform:scale(1)} }
-  @keyframes glow     { 0%,100%{box-shadow:0 0 20px rgba(0,217,126,.2)} 50%{box-shadow:0 0 40px rgba(0,217,126,.5)} }
-  @keyframes scan     { 0%{top:-10%} 100%{top:110%} }
-  @keyframes orbFloat { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(30px,-20px) scale(1.05)} 66%{transform:translate(-20px,15px) scale(.95)} }
-  @keyframes fadeIn   { from{opacity:0} to{opacity:1} }
-  @keyframes neonPulse{ 0%,100%{opacity:.6} 50%{opacity:1} }
-  @keyframes shimmer  { 0%{background-position:-200% 0} 100%{background-position:200% 0} }
+    /* ── ANNOUNCEMENT BANNER ── */
+    #banner {
+      background:var(--green); color:#fff; text-align:center;
+      padding:8px 16px; font-size:12px; font-weight:600;
+      font-family:'DM Sans',sans-serif; letter-spacing:.02em;
+    }
+    #banner a { color:#fff; text-decoration:underline; margin-left:8px; cursor:pointer; }
 
-  /* ── Stagger utility ── */
-  .su  { animation:slideUp .7s ease both }
-  .su2 { animation:slideUp .7s .15s ease both }
-  .su3 { animation:slideUp .7s .3s ease both }
-  .su4 { animation:slideUp .7s .45s ease both }
+    /* ── HERO ── */
+    #hero {
+      padding:64px clamp(16px,4vw,56px) 72px;
+      background:radial-gradient(ellipse 80% 60% at 70% 50%, rgba(0,128,96,0.07) 0%, transparent 70%), var(--bg);
+      position:relative; overflow:hidden;
+    }
+    .dot-grid {
+      position:absolute; inset:0; opacity:.3;
+      background-image:radial-gradient(#008060 1px, transparent 1px);
+      background-size:28px 28px; pointer-events:none;
+    }
+    .hero-inner {
+      max-width:1100px; margin:0 auto; position:relative; z-index:1;
+      display:grid; grid-template-columns:1.15fr 1fr; gap:56px; align-items:center;
+    }
+    .city-badge {
+      display:inline-flex; align-items:center; gap:8px;
+      padding:6px 14px; border-radius:99px;
+      background:var(--greenXL); border:1px solid var(--border); margin-bottom:16px;
+    }
+    .city-dot { width:7px; height:7px; border-radius:50%; background:var(--green); display:inline-block; animation:pulse 1.5s infinite; }
+    .city-badge span.label { color:var(--green); font-size:12px; font-weight:700; }
+    h1.hero-title { font-size:clamp(38px,5.5vw,68px); font-weight:700; line-height:1.08; color:var(--text); margin-bottom:16px; }
+    h1.hero-title .accent { color:var(--green); }
+    .hero-sub { font-size:15px; line-height:1.85; color:var(--sub); max-width:480px; margin-bottom:28px; }
+    /* social proof */
+    .proof { display:flex; align-items:center; gap:14px; margin-top:24px; }
+    .avatars { display:flex; }
+    .av { width:30px; height:30px; border-radius:50%; border:2.5px solid var(--bg); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff; }
+    [dir="ltr"] .avatars .av:not(:first-child) { margin-left:-10px; }
+    [dir="rtl"] .avatars .av:not(:first-child) { margin-right:-10px; }
+    .proof-text { font-size:13px; font-weight:600; color:var(--text); }
+    .proof-text em { color:var(--green); font-style:normal; }
+    .proof-stars { font-size:11px; color:var(--muted); margin-top:2px; }
+    /* hero right */
+    .hero-right { display:flex; flex-direction:column; align-items:center; gap:18px; }
+    .robot-float { animation:float 3.5s ease-in-out infinite; filter:drop-shadow(0 16px 40px rgba(0,128,96,.2)); }
+    .stat-chips { display:flex; gap:10px; }
+    .chip { padding:12px 14px; border-radius:16px; text-align:center; background:#fff; border:1px solid var(--border); box-shadow:var(--shadow); }
+    .chip-val { font-family:'Syne',sans-serif; color:var(--green); font-weight:800; font-size:14px; margin-top:3px; }
+    .chip-lbl { color:var(--muted); font-size:10px; margin-top:1px; }
 
-  /* ═══ BACKGROUND ORBS ═══ */
-  .orb {
-    position:fixed; border-radius:50%;
-    filter:blur(80px); pointer-events:none; z-index:0;
-    animation:orbFloat 12s ease-in-out infinite;
-  }
-  .orb-1 {
-    width:500px; height:500px;
-    background:radial-gradient(circle, rgba(0,217,126,.18) 0%, transparent 70%);
-    top:-100px; left:-100px;
-  }
-  .orb-2 {
-    width:400px; height:400px;
-    background:radial-gradient(circle, rgba(255,107,157,.12) 0%, transparent 70%);
-    top:30%; right:-80px;
-    animation-delay:-4s; animation-duration:15s;
-  }
-  .orb-3 {
-    width:300px; height:300px;
-    background:radial-gradient(circle, rgba(0,217,126,.1) 0%, transparent 70%);
-    bottom:20%; left:20%;
-    animation-delay:-8s; animation-duration:18s;
-  }
+    /* ── PERSONA CARDS ── */
+    .persona-intro { margin-bottom:20px; }
+    .persona-intro p { font-size:13px; color:var(--muted); margin-bottom:12px; font-weight:600; }
+    .persona-cards { display:flex; gap:10px; flex-wrap:wrap; }
+    .persona-card {
+      flex:1; min-width:130px; padding:14px 12px; border-radius:18px;
+      border:2px solid var(--border); background:#fff; cursor:pointer;
+      transition:all .22s; text-align:center; position:relative; overflow:hidden;
+    }
+    .persona-card:hover { transform:translateY(-3px); box-shadow:var(--shadowH); }
+    .persona-card.active-pro   { border-color:var(--green);  background:var(--greenXL); }
+    .persona-card.active-glow  { border-color:var(--pink);   background:var(--pinkXL); }
+    .persona-card.active-sport { border-color:#F59E0B; background:#FFFBEB; }
+    .persona-emoji { font-size:26px; margin-bottom:6px; }
+    .persona-label { font-family:'Syne',sans-serif; font-weight:800; font-size:12px; color:var(--text); }
+    .persona-desc  { font-size:10px; color:var(--muted); margin-top:3px; line-height:1.4; }
 
-  /* ═══ GRAIN OVERLAY ═══ */
-  body::before {
-    content:''; position:fixed; inset:0; z-index:1; pointer-events:none;
-    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-    opacity:.4;
-  }
+    /* ── STEPS / HOW ── */
+    #how { padding:72px clamp(16px,4vw,56px); background:#fff; border-top:1px solid var(--border); }
+    .section-header { text-align:center; margin-bottom:48px; }
+    .section-title { font-family:'Cormorant Garamond',serif; font-size:clamp(30px,4.5vw,48px); font-weight:700; color:var(--text); margin-bottom:10px; }
+    .title-bar { width:48px; height:4px; background:var(--green); border-radius:99px; margin:0 auto; }
+    .steps-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; max-width:1100px; margin:0 auto; }
+    .step-card { background:#fff; border-radius:20px; padding:24px 20px; box-shadow:var(--shadow); border:1px solid var(--border); transition:all .2s; }
+    .step-card:hover { box-shadow:var(--shadowH); transform:translateY(-3px); }
+    .step-icon { width:50px; height:50px; border-radius:16px; background:var(--greenXL); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:24px; margin-bottom:14px; }
+    .step-num  { width:24px; height:24px; border-radius:50%; background:var(--green); display:flex; align-items:center; justify-content:center; color:#fff; font-size:11px; font-weight:900; margin-bottom:10px; }
+    .step-title { font-family:'Syne',sans-serif; font-weight:800; font-size:15px; color:var(--text); margin-bottom:8px; }
+    .step-desc  { font-size:13px; color:var(--sub); line-height:1.7; }
 
-  /* ═══ GRID PATTERN ═══ */
-  .dot-grid {
-    position:absolute; inset:0; z-index:0; pointer-events:none;
-    background-image: radial-gradient(circle, rgba(0,217,126,.12) 1px, transparent 1px);
-    background-size:32px 32px;
-    mask-image:radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 100%);
-  }
-  [data-theme="light"] .dot-grid {
-    background-image: radial-gradient(circle, rgba(0,128,96,.1) 1px, transparent 1px);
-  }
+    /* ── STATS ── */
+    #stats { padding:52px clamp(16px,4vw,56px); background:var(--bg); }
+    .stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; max-width:1100px; margin:0 auto; }
+    .stat-card { background:#fff; border-radius:20px; padding:24px 16px; text-align:center; box-shadow:var(--shadow); border:1px solid var(--border); }
+    .stat-val { font-family:'Syne',sans-serif; font-size:clamp(22px,3.5vw,34px); font-weight:900; color:var(--green); margin-bottom:6px; }
+    .stat-lbl { font-size:13px; color:var(--muted); }
 
-  /* ═══ NAVBAR ═══ */
-  #navbar {
-    position:sticky; top:0; z-index:100;
-    display:flex; align-items:center; justify-content:space-between;
-    padding:14px clamp(16px,4vw,48px);
-    background:rgba(5,12,8,0.85);
-    backdrop-filter:blur(20px);
-    border-bottom:1px solid var(--border);
-    transition:all .3s;
-  }
-  [data-theme="light"] #navbar { background:rgba(240,250,245,0.88); }
+    /* ── MENU ── */
+    #menu { padding:72px clamp(16px,4vw,56px) 80px; background:#fff; border-top:1px solid var(--border); }
+    .menu-inner { max-width:780px; margin:0 auto; }
+    .search-wrap { position:relative; margin-bottom:18px; }
+    .search-icon { position:absolute; left:14px; top:50%; transform:translateY(-50%); pointer-events:none; }
+    .search-inp {
+      width:100%; padding:14px 18px 14px 44px; border-radius:16px;
+      border:1.5px solid var(--border); background:#fff;
+      font-size:14px; outline:none; color:var(--text);
+      transition:border-color .2s; box-shadow:var(--shadow);
+      font-family:'DM Sans',sans-serif;
+    }
+    .search-inp:focus { border-color:var(--green); }
+    .search-inp::placeholder { color:var(--muted); }
+    .filter-row { display:flex; gap:8px; overflow-x:auto; padding-bottom:4px; margin-bottom:14px; }
+    .filter-row::-webkit-scrollbar { height:0; }
+    .pill { padding:8px 16px; border-radius:99px; border:none; cursor:pointer; font-weight:700; font-size:12px; white-space:nowrap; flex-shrink:0; transition:all .2s; font-family:'DM Sans',sans-serif; background:var(--mint); color:var(--green); }
+    .pill.active { background:var(--green); color:#fff; }
+    .cart-bar { display:flex; align-items:center; justify-content:space-between; padding:12px 18px; border-radius:14px; background:var(--green); margin-bottom:16px; animation:popIn .3s ease; }
+    .cart-bar span { color:#fff; font-size:13px; font-weight:600; }
+    .cart-bar button { background:#fff; color:var(--green); border:none; border-radius:10px; padding:7px 16px; font-size:12px; font-weight:700; cursor:pointer; font-family:'DM Sans',sans-serif; }
+    .dishes { display:flex; flex-direction:column; gap:14px; }
+    .dish-card { background:#fff; border-radius:20px; padding:16px 18px; box-shadow:var(--shadow); border:1px solid var(--border); display:flex; align-items:center; gap:14px; transition:all .22s; animation:slideUp .4s ease both; }
+    .dish-card:hover { box-shadow:var(--shadowH); transform:translateY(-2px); }
+    .dish-emoji { width:72px; height:72px; border-radius:16px; flex-shrink:0; background:var(--mint); display:flex; align-items:center; justify-content:center; font-size:36px; }
+    .dish-info { flex:1; min-width:0; }
+    .dish-name { font-family:'Syne',sans-serif; font-weight:800; font-size:15px; color:var(--text); margin-bottom:6px; }
+    .dish-name-ar { font-family:'Tajawal',sans-serif; font-weight:700; }
+    .dish-name-sub { font-size:10px; color:var(--muted); margin-top:1px; font-family:'DM Sans',sans-serif; }
+    .dish-tags { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px; }
+    .tag-veg  { padding:3px 10px; border-radius:99px; font-size:11px; font-weight:700; background:var(--greenXL); color:var(--green); }
+    .tag-badge{ padding:3px 10px; border-radius:99px; font-size:11px; font-weight:700; background:var(--orangeBg); color:var(--orange); }
+    .tag-cuisine{ padding:3px 8px; border-radius:99px; font-size:10px; font-weight:600; background:#F5F5F5; color:#888; }
+    .dish-macros { display:flex; align-items:center; gap:10px; flex-wrap:wrap; font-size:12px; color:var(--sub); }
+    .dish-macros .meta { margin-left:auto; color:var(--muted); }
+    .add-btn { width:36px; height:36px; border-radius:50%; border:none; background:var(--mint); color:var(--green); font-size:20px; cursor:pointer; flex-shrink:0; display:flex; align-items:center; justify-content:center; transition:all .2s; }
+    .add-btn.added { background:var(--green); color:#fff; font-size:16px; box-shadow:0 4px 12px rgba(0,128,96,.25); }
+    .empty-state { text-align:center; padding:48px 0; color:var(--muted); }
+    .empty-state .big { font-size:40px; margin-bottom:10px; }
 
-  .nav-logo { display:flex; align-items:center; gap:10px; text-decoration:none; }
-  .nav-logo-icon {
-    width:36px; height:36px; border-radius:10px;
-    background:linear-gradient(135deg, var(--green), var(--greenD));
-    display:flex; align-items:center; justify-content:center;
-    box-shadow:0 0 20px rgba(0,217,126,.4);
-    animation:glow 3s ease-in-out infinite;
-  }
-  .nav-logo-text {
-    font-family:'Oxanium',sans-serif; font-weight:800; font-size:20px;
-    color:var(--text); letter-spacing:.05em;
-  }
-  .nav-logo-text span { color:var(--green); }
+    /* ── FINAL CTA ── */
+    #final { padding:80px clamp(16px,4vw,56px); background:linear-gradient(135deg, var(--greenXL), var(--bg)); border-top:1px solid var(--border); text-align:center; }
+    .final-inner { max-width:560px; margin:0 auto; }
+    .final-title { font-family:'Syne',sans-serif; font-size:clamp(28px,4.5vw,44px); font-weight:900; color:var(--text); margin-bottom:12px; }
+    .final-sub { font-size:15px; color:var(--sub); line-height:1.8; margin-bottom:32px; }
+    .social-links { display:flex; gap:10px; justify-content:center; margin-top:32px; flex-wrap:wrap; }
+    .social-btn { padding:11px 18px; border-radius:14px; background:#fff; border:1px solid var(--border); display:flex; align-items:center; gap:9px; cursor:pointer; transition:all .2s; text-decoration:none; box-shadow:var(--shadow); }
+    .social-btn:hover { border-color:var(--green); box-shadow:var(--shadowH); }
+    .social-btn .s-lbl    { font-size:10px; color:var(--muted); line-height:1; }
+    .social-btn .s-handle { font-size:13px; font-weight:700; color:var(--green); margin-top:2px; }
 
-  .nav-links { display:flex; gap:28px; }
-  @media(max-width:768px) { .nav-links { display:none; } }
-  .nav-link {
-    font-family:'Manrope',sans-serif; font-size:13px; font-weight:500;
-    color:var(--sub); text-decoration:none;
-    transition:color .2s; letter-spacing:.02em;
-  }
-  .nav-link:hover { color:var(--green); }
+    /* ── FOOTER ── */
+    footer { padding:26px clamp(16px,4vw,56px); border-top:1px solid var(--border); background:#fff; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px; }
+    .footer-logo { display:flex; align-items:center; gap:10px; }
+    .footer-logo span { font-family:'Syne',sans-serif; font-weight:900; font-size:17px; color:var(--text); }
+    footer p { font-size:11px; color:var(--muted); }
+    .footer-links { display:flex; gap:18px; }
 
-  .lang-wrap {
-    display:flex; border-radius:99px; overflow:hidden;
-    border:1px solid var(--border);
-    background:rgba(0,217,126,.05);
-  }
-  .lang-btn {
-    padding:6px 12px; font-size:11px; font-weight:600;
-    cursor:pointer; border:none; background:transparent;
-    color:var(--sub); font-family:'Manrope',sans-serif;
-    transition:all .2s;
-  }
-  .lang-btn.active { background:var(--green); color:#050C08; }
+    /* ══════════════════════════════════════
+       FLOATING CHATBOT
+    ══════════════════════════════════════ */
+    #chat-fab {
+      position:fixed; bottom:24px; right:24px; z-index:999;
+      width:60px; height:60px; border-radius:50%;
+      background:var(--green); border:none; cursor:pointer;
+      box-shadow:0 8px 32px rgba(0,128,96,0.4);
+      display:flex; align-items:center; justify-content:center;
+      transition:all .3s; animation:chatBounce 3s ease-in-out infinite;
+    }
+    #chat-fab:hover { transform:scale(1.1); box-shadow:0 12px 40px rgba(0,128,96,0.5); }
+    #chat-fab .fab-badge {
+      position:absolute; top:-4px; right:-4px;
+      width:18px; height:18px; background:var(--pink);
+      border-radius:50%; border:2px solid #fff;
+      font-size:9px; font-weight:900; color:#fff;
+      display:flex; align-items:center; justify-content:center;
+      font-family:'Syne',sans-serif;
+    }
 
-  .btn-cta {
-    padding:10px 20px; border-radius:99px; border:none; cursor:pointer;
-    font-family:'Manrope',sans-serif; font-size:13px; font-weight:700;
-    background:var(--green); color:#050C08;
-    box-shadow:0 0 20px rgba(0,217,126,.35);
-    transition:all .3s; letter-spacing:.02em;
-    position:relative; overflow:hidden;
-  }
-  .btn-cta::after {
-    content:''; position:absolute; inset:0;
-    background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);
-    transform:translateX(-100%); transition:transform .5s;
-  }
-  .btn-cta:hover::after { transform:translateX(100%); }
-  .btn-cta:hover { box-shadow:0 0 35px rgba(0,217,126,.55); transform:translateY(-1px); }
-  .btn-cta-sm { padding:8px 16px; font-size:12px; }
+    /* ── CHAT WINDOW ── */
+    #chat-window {
+      position:fixed; bottom:96px; right:24px; z-index:998;
+      width:360px; max-height:580px;
+      background:#fff; border-radius:24px;
+      box-shadow:0 20px 60px rgba(0,0,0,0.15);
+      border:1px solid var(--border);
+      display:none; flex-direction:column;
+      overflow:hidden; animation:popIn .3s ease;
+    }
+    #chat-window.open { display:flex; }
 
-  .btn-outline {
-    padding:10px 22px; border-radius:99px; cursor:pointer;
-    font-family:'Manrope',sans-serif; font-size:13px; font-weight:600;
-    background:transparent; color:var(--green);
-    border:1.5px solid var(--green);
-    transition:all .3s;
-  }
-  .btn-outline:hover { background:var(--green); color:#050C08; box-shadow:var(--glow); }
+    /* Chat header */
+    .chat-header {
+      background:linear-gradient(135deg, var(--green) 0%, var(--greenL) 100%);
+      padding:16px 18px; display:flex; align-items:center; gap:12px;
+      flex-shrink:0;
+    }
+    .chat-header-avatar {
+      width:42px; height:42px; border-radius:14px;
+      background:rgba(255,255,255,0.2);
+      display:flex; align-items:center; justify-content:center; flex-shrink:0;
+    }
+    .chat-header-info { flex:1; }
+    .chat-header-name  { font-family:'Syne',sans-serif; font-weight:800; font-size:15px; color:#fff; }
+    .chat-header-status{ font-size:11px; color:rgba(255,255,255,0.8); display:flex; align-items:center; gap:5px; margin-top:2px; }
+    .chat-status-dot   { width:6px; height:6px; border-radius:50%; background:#4ade80; animation:pulse 1.5s infinite; }
+    .chat-close { background:rgba(255,255,255,0.15); border:none; color:#fff; width:30px; height:30px; border-radius:50%; cursor:pointer; font-size:16px; display:flex; align-items:center; justify-content:center; transition:background .2s; }
+    .chat-close:hover { background:rgba(255,255,255,0.3); }
 
-  /* ═══ BANNER ═══ */
-  #launch-banner {
-    background:linear-gradient(90deg, rgba(0,217,126,.15), rgba(0,255,157,.08), rgba(0,217,126,.15));
-    border-bottom:1px solid var(--border);
-    color:var(--green);
-    text-align:center; padding:5px 16px;
-    font-family:'Manrope',sans-serif; font-size:11px; font-weight:600;
-    letter-spacing:.08em; text-transform:uppercase;
-    display:flex; align-items:center; justify-content:center; gap:8px;
-  }
-  [data-theme="light"] #launch-banner { background:rgba(0,128,96,.08); color:var(--greenD); }
+    /* Persona selector */
+    .persona-select {
+      padding:14px 16px; background:var(--greenXL); border-bottom:1px solid var(--border); flex-shrink:0;
+    }
+    .persona-select p { font-size:11px; color:var(--sub); font-weight:700; margin-bottom:8px; text-transform:uppercase; letter-spacing:.06em; }
+    .persona-btns { display:flex; gap:7px; }
+    .p-btn {
+      flex:1; padding:10px 6px; border-radius:12px; border:1.5px solid var(--border);
+      background:#fff; cursor:pointer; text-align:center; transition:all .2s;
+      font-family:'DM Sans',sans-serif;
+    }
+    .p-btn .p-icon  { font-size:18px; display:block; }
+    .p-btn .p-label { font-size:10px; font-weight:700; color:var(--text); margin-top:3px; display:block; }
+    .p-btn:hover { transform:translateY(-2px); box-shadow:var(--shadow); }
+    .p-btn.sel-pro   { border-color:var(--green);  background:var(--greenXL); }
+    .p-btn.sel-glow  { border-color:var(--pink);   background:var(--pinkXL); }
+    .p-btn.sel-sport { border-color:#F59E0B; background:#FFFBEB; }
 
-  /* ═══ HERO ═══ */
-  .hero-section, #hero {
-    position:relative; overflow:hidden;
-    padding:72px clamp(16px,4vw,64px) 80px;
-    min-height:100vh;
-    display:flex; align-items:center;
-  }
-  .hero-inner {
-    max-width:1200px; margin:0 auto; width:100%;
-    display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;
-    position:relative; z-index:2;
-  }
-  @media(max-width:900px) {
-    .hero-inner { grid-template-columns:1fr; }
-    .hero-right { display:none; }
-  }
+    /* Chat messages */
+    #chat-msgs {
+      flex:1; overflow-y:auto; padding:14px 16px;
+      display:flex; flex-direction:column; gap:10px;
+      scroll-behavior:smooth; background:var(--bg);
+    }
+    #chat-msgs::-webkit-scrollbar { width:3px; }
+    #chat-msgs::-webkit-scrollbar-thumb { background:var(--mint); }
 
-  /* City badge */
-  .city-badge {
-    display:inline-flex; align-items:center; gap:8px;
-    padding:6px 14px; border-radius:99px;
-    border:1px solid var(--border);
-    background:var(--greenXL);
-    font-family:'Manrope',sans-serif; font-size:12px; font-weight:600;
-    color:var(--green); margin-bottom:20px;
-    backdrop-filter:blur(10px);
-    animation:neonPulse 3s ease-in-out infinite;
-  }
-  .city-dot {
-    width:7px; height:7px; border-radius:50%;
-    background:var(--green);
-    box-shadow:0 0 8px var(--green);
-    animation:pulse 1.5s infinite;
-  }
+    .msg-bot, .msg-user { display:flex; align-items:flex-end; gap:8px; animation:popIn .3s ease; }
+    .msg-user { flex-direction:row-reverse; }
+    .msg-avatar { width:28px; height:28px; border-radius:9px; background:var(--green); flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+    .msg-bubble {
+      max-width:78%; padding:10px 13px; border-radius:16px;
+      font-size:13px; line-height:1.55; font-family:'DM Sans',sans-serif;
+    }
+    .msg-bot  .msg-bubble { background:#fff; color:var(--text); border-radius:16px 16px 16px 4px; border:1px solid var(--border); box-shadow:0 1px 6px rgba(0,0,0,0.05); }
+    .msg-user .msg-bubble { background:var(--green); color:#fff; border-radius:16px 16px 4px 16px; }
+    .msg-glow .msg-bubble { background:linear-gradient(135deg, var(--pink), var(--pinkL)) !important; color:#fff !important; }
 
-  /* Hero title */
-  .hero-title {
-    font-family:'Oxanium',sans-serif;
-    font-size:clamp(38px,5.5vw,72px);
-    font-weight:900; line-height:1.05;
-    color:var(--text); margin-bottom:20px;
-    letter-spacing:-.02em;
-  }
-  .accent {
-    color:var(--green);
-    text-shadow: 0 0 30px rgba(0,217,126,.5), 0 0 60px rgba(0,217,126,.2);
-  }
-  [data-theme="light"] .accent { text-shadow: 0 0 20px rgba(0,128,96,.3); }
+    /* Typing indicator */
+    .typing-dots { display:flex; gap:4px; align-items:center; padding:3px 0; }
+    .typing-dots span { width:7px; height:7px; border-radius:50%; background:var(--muted); animation:typingDot 1.2s infinite; }
+    .typing-dots span:nth-child(2) { animation-delay:.2s; }
+    .typing-dots span:nth-child(3) { animation-delay:.4s; }
 
-  .hero-sub {
-    font-size:15px; line-height:1.75; color:var(--sub);
-    max-width:480px; margin-bottom:28px;
-    font-family:'Manrope',sans-serif;
-  }
+    /* Chat input */
+    .chat-input-area { padding:12px 14px; border-top:1px solid var(--border); background:#fff; flex-shrink:0; }
+    .chat-input-row { display:flex; gap:8px; }
+    .chat-inp {
+      flex:1; padding:11px 14px; border-radius:13px; border:1.5px solid var(--border);
+      font-size:13px; outline:none; color:var(--text); background:var(--bg);
+      font-family:'DM Sans',sans-serif; transition:border-color .2s;
+    }
+    .chat-inp:focus { border-color:var(--green); background:#fff; }
+    .chat-inp::placeholder { color:var(--muted); }
+    .chat-send {
+      width:40px; height:40px; border-radius:12px; border:none;
+      background:var(--green); color:#fff; cursor:pointer; font-size:15px;
+      display:flex; align-items:center; justify-content:center; flex-shrink:0;
+      transition:all .2s;
+    }
+    .chat-send:hover { background:var(--greenL); }
+    .chat-send:disabled { opacity:.5; cursor:not-allowed; }
 
-  /* ── Chat widget ── */
-  #savy-quiz-wrap {
-    background:rgba(10,22,14,.6);
-    backdrop-filter:blur(24px);
-    border:1px solid var(--border);
-    border-radius:20px; padding:16px;
-    box-shadow: 0 0 0 1px rgba(0,217,126,.08), var(--shadow);
-    transition:box-shadow .3s;
-    position:relative; overflow:hidden;
-  }
-  #savy-quiz-wrap::before {
-    content:''; position:absolute; top:0; left:-50%; width:200%; height:1px;
-    background:linear-gradient(90deg,transparent,var(--green),transparent);
-    animation:shimmer 4s linear infinite;
-  }
-  #savy-quiz-wrap:hover { box-shadow:var(--glowH); }
-  [data-theme="light"] #savy-quiz-wrap { background:rgba(255,255,255,.85); }
+    /* Quick reply chips */
+    .quick-chips { display:flex; gap:6px; flex-wrap:wrap; margin-top:8px; }
+    .q-chip {
+      padding:7px 13px; border-radius:99px; border:1.5px solid var(--border);
+      background:#fff; font-size:12px; font-weight:600; cursor:pointer;
+      color:var(--text); font-family:'DM Sans',sans-serif; transition:all .2s; white-space:nowrap;
+    }
+    .q-chip:hover { border-color:var(--green); color:var(--green); background:var(--greenXL); }
+    .q-chip.pink  { border-color:var(--pink); color:var(--pink); background:var(--pinkXL); }
+    .q-chip.pink:hover { background:var(--pink); color:#fff; }
 
-  #quiz-msgs {
-    background:rgba(5,12,8,.5) !important;
-    border:1px solid var(--border) !important;
-    border-radius:14px !important;
-    backdrop-filter:blur(10px) !important;
-  }
-  [data-theme="light"] #quiz-msgs { background:rgba(240,250,245,.8) !important; }
+    /* Lead form inside chat */
+    #chat-lead-form { padding:12px 14px; border-top:1px solid var(--border); background:#fff; flex-shrink:0; display:none; }
+    .lead-inp {
+      width:100%; padding:11px 13px; border-radius:12px; border:1.5px solid var(--border);
+      font-size:13px; outline:none; color:var(--text); background:var(--bg);
+      font-family:'DM Sans',sans-serif; margin-bottom:8px; transition:border-color .2s;
+    }
+    .lead-inp:focus { border-color:var(--green); background:#fff; }
+    .lead-inp::placeholder { color:var(--muted); }
+    .lead-submit {
+      width:100%; padding:12px; border-radius:12px; border:none;
+      background:var(--green); color:#fff; font-size:13px; font-weight:700;
+      cursor:pointer; font-family:'DM Sans',sans-serif;
+      box-shadow:0 4px 16px rgba(0,128,96,0.3); transition:all .2s;
+    }
+    .lead-submit:hover { background:var(--greenL); }
+    .lead-submit-pink {
+      background:linear-gradient(135deg, var(--pink), var(--pinkL));
+      box-shadow:0 4px 16px rgba(233,30,140,0.3);
+    }
+    .lead-submit-pink:hover { opacity:.9; }
 
-  /* ── Social proof ── */
-  .proof { display:flex; align-items:center; gap:12px; margin-top:8px; }
-  .avatars { display:flex; }
-  .av {
-    width:32px; height:32px; border-radius:50%;
-    border:2px solid var(--bg);
-    margin-left:-8px; display:flex; align-items:center;
-    justify-content:center; font-size:12px; font-weight:700; color:#fff;
-    box-shadow:0 0 10px rgba(0,217,126,.2);
-  }
-  .avatars .av:first-child { margin-left:0; }
-  .proof-text { font-size:13px; color:var(--sub); font-family:'Manrope',sans-serif; }
-  .proof-text em { color:var(--green); font-style:normal; font-weight:700; }
-  .proof-stars { font-size:11px; color:var(--gold); letter-spacing:.1em; }
+    /* ── RTL overrides ── */
+    [dir="rtl"] .search-icon    { left:auto; right:14px; }
+    [dir="rtl"] .search-inp     { padding-left:18px; padding-right:44px; }
+    [dir="rtl"] .dish-macros .meta { margin-left:0; margin-right:auto; }
+    [dir="rtl"] #chat-window    { right:auto; left:24px; }
+    [dir="rtl"] #chat-fab       { right:auto; left:24px; }
 
-  /* Hero right */
-  .hero-right {
-    display:flex; flex-direction:column; align-items:center; gap:24px;
-    position:relative;
-  }
-  .robot-float {
-    animation:float 4s ease-in-out infinite;
-    filter:drop-shadow(0 0 30px rgba(0,217,126,.4));
-  }
-  .stat-chips { display:flex; flex-direction:column; gap:10px; width:100%; }
-  .chip {
-    display:flex; align-items:center; gap:12px;
-    padding:12px 16px; border-radius:14px;
-    background:var(--card); backdrop-filter:blur(16px);
-    border:1px solid var(--border);
-    transition:all .3s;
-  }
-  .chip:hover { border-color:var(--green); box-shadow:var(--glow); transform:translateX(4px); }
-  .chip-val { font-family:'Oxanium',sans-serif; color:var(--green); font-weight:700; font-size:16px; }
-  .chip-lbl { font-size:11px; color:var(--muted); font-family:'Manrope',sans-serif; }
-
-  /* ═══ SECTION HEADERS ═══ */
-  .section-header { text-align:center; margin-bottom:48px; }
-  .section-title {
-    font-family:'Oxanium',sans-serif;
-    font-size:clamp(24px,3.5vw,42px);
-    font-weight:800; color:var(--text);
-    letter-spacing:-.02em;
-  }
-  .title-bar {
-    width:48px; height:3px; border-radius:99px;
-    background:linear-gradient(90deg, var(--green), var(--pink));
-    margin:14px auto 0;
-    box-shadow:0 0 12px rgba(0,217,126,.4);
-  }
-
-  /* ═══ BENEFITS ═══ */
-  #how {
-    padding:80px clamp(16px,4vw,64px);
-    background:var(--bg); border-top:1px solid var(--border);
-    position:relative; z-index:2;
-  }
-  .step-card {
-    padding:28px; border-radius:20px;
-    background:var(--card); backdrop-filter:blur(16px);
-    border:1px solid var(--border);
-    transition:all .4s; position:relative; overflow:hidden;
-  }
-  .step-card::before {
-    content:''; position:absolute; top:0; left:0; right:0; height:1px;
-    background:linear-gradient(90deg,transparent,var(--green),transparent);
-    opacity:0; transition:opacity .4s;
-  }
-  .step-card:hover { border-color:var(--borderH); box-shadow:var(--glowH); transform:translateY(-4px); }
-  .step-card:hover::before { opacity:1; }
-  .step-icon {
-    width:52px; height:52px; border-radius:14px;
-    background:var(--greenXL); border:1px solid var(--border);
-    display:flex; align-items:center; justify-content:center;
-    font-size:22px; margin-bottom:16px;
-  }
-  .step-num {
-    position:absolute; top:16px; right:16px;
-    width:24px; height:24px; border-radius:50%;
-    background:var(--green); color:#050C08;
-    font-size:10px; font-weight:800;
-    display:flex; align-items:center; justify-content:center;
-    font-family:'Oxanium',sans-serif;
-  }
-  .step-title {
-    font-family:'Oxanium',sans-serif; font-size:15px; font-weight:700;
-    color:var(--text); margin-bottom:8px;
-  }
-  .step-sub {
-    font-size:13px; color:var(--sub); line-height:1.65;
-    font-family:'Manrope',sans-serif;
-  }
-  .proof-strip {
-    background:var(--greenXL); border-radius:20px;
-    padding:24px 28px; border:1px solid var(--border);
-    display:flex; flex-wrap:wrap; gap:24px;
-    justify-content:space-between; align-items:center;
-    backdrop-filter:blur(10px);
-  }
-
-  /* ═══ STATS ═══ */
-  #stats {
-    padding:40px clamp(16px,4vw,64px);
-    background:linear-gradient(180deg, var(--bg) 0%, rgba(0,217,126,.04) 50%, var(--bg) 100%);
-    border-top:1px solid var(--border); border-bottom:1px solid var(--border);
-    position:relative; z-index:2;
-  }
-  .stats-grid {
-    max-width:900px; margin:0 auto;
-    display:grid; grid-template-columns:repeat(4,1fr); gap:16px;
-  }
-  @media(max-width:600px) { .stats-grid { grid-template-columns:repeat(2,1fr); } }
-  .stat-card {
-    text-align:center; padding:24px 16px;
-    background:var(--card); backdrop-filter:blur(16px);
-    border:1px solid var(--border); border-radius:18px;
-    transition:all .3s;
-  }
-  .stat-card:hover { border-color:var(--borderH); box-shadow:var(--glow); }
-  .stat-val {
-    font-family:'Oxanium',sans-serif;
-    font-size:clamp(22px,3.5vw,36px); font-weight:900;
-    color:var(--green);
-    text-shadow:0 0 20px rgba(0,217,126,.4);
-  }
-  .stat-lbl { font-size:12px; color:var(--muted); margin-top:4px; font-family:'Manrope',sans-serif; }
-
-  /* ═══ MENU ═══ */
-  #menu {
-    padding:80px clamp(16px,4vw,64px);
-    background:var(--bg); border-top:1px solid var(--border);
-    position:relative; z-index:2;
-  }
-  .menu-inner { max-width:1100px; margin:0 auto; }
-  .search-wrap {
-    position:relative; max-width:400px; margin:0 auto 24px;
-  }
-  .search-icon { position:absolute; left:14px; top:50%; transform:translateY(-50%); }
-  .search-inp {
-    width:100%; padding:12px 14px 12px 42px;
-    border-radius:14px; border:1px solid var(--border);
-    background:var(--card); backdrop-filter:blur(10px);
-    color:var(--text); font-size:13px;
-    font-family:'Manrope',sans-serif; outline:none;
-    transition:all .3s;
-  }
-  .search-inp:focus { border-color:var(--green); box-shadow:0 0 15px rgba(0,217,126,.2); }
-  .search-inp::placeholder { color:var(--muted); }
-  .filter-row { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px; justify-content:center; }
-  .pill {
-    padding:7px 16px; border-radius:99px;
-    border:1px solid var(--border);
-    background:var(--card); backdrop-filter:blur(8px);
-    color:var(--sub); font-size:12px; font-weight:600;
-    cursor:pointer; transition:all .25s; font-family:'Manrope',sans-serif;
-  }
-  .pill:hover { border-color:var(--green); color:var(--green); }
-  .pill.active { background:var(--green); color:#050C08; border-color:var(--green); box-shadow:var(--glow); }
-  .dishes {
-    display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:16px;
-    margin-top:24px;
-  }
-  .dish-card {
-    border-radius:18px; overflow:hidden;
-    background:var(--card); backdrop-filter:blur(16px);
-    border:1px solid var(--border);
-    transition:all .35s; cursor:pointer;
-    animation:popIn .4s ease both;
-  }
-  .dish-card:hover { border-color:var(--borderH); box-shadow:var(--glowH); transform:translateY(-4px); }
-  .dish-card.selected { border-color:var(--green); box-shadow:var(--glow); }
-  .dish-img { font-size:52px; text-align:center; padding:20px; background:var(--greenXL); }
-  .dish-body { padding:14px; }
-  .dish-name { font-family:'Oxanium',sans-serif; font-size:14px; font-weight:700; color:var(--text); margin-bottom:4px; }
-  .dish-tab { padding:3px 9px; border-radius:99px; font-size:10px; font-weight:700;
-    border:1px solid var(--border); background:var(--card); color:var(--green); }
-  .dish-price { color:var(--green); font-family:'Oxanium',sans-serif; font-weight:700; font-size:15px; margin-top:8px; }
-  .dish-kcal { font-size:11px; color:var(--muted); margin-top:2px; font-family:'Manrope',sans-serif; }
-  .cart-bar {
-    position:sticky; top:80px; z-index:50;
-    background:var(--card); backdrop-filter:blur(20px);
-    border:1px solid var(--green);
-    border-radius:16px; padding:14px 18px;
-    display:flex; justify-content:space-between; align-items:center;
-    margin-bottom:20px; box-shadow:var(--glow);
-    font-family:'Manrope',sans-serif; font-size:13px; color:var(--text);
-  }
-  .cart-bar button {
-    background:var(--green); color:#050C08;
-    padding:9px 20px; border-radius:99px; border:none;
-    font-weight:700; cursor:pointer; font-family:'Manrope',sans-serif;
-    box-shadow:0 0 15px rgba(0,217,126,.3);
-    transition:all .2s;
-  }
-  .cart-bar button:hover { box-shadow:var(--glow); transform:translateY(-1px); }
-
-  /* ═══ FINAL CTA ═══ */
-  #final {
-    padding:100px clamp(16px,4vw,64px);
-    background:linear-gradient(180deg, var(--bg), rgba(0,217,126,.05));
-    border-top:1px solid var(--border);
-    text-align:center; position:relative; z-index:2;
-  }
-  .final-inner { max-width:600px; margin:0 auto; }
-  #final-title {
-    font-family:'Oxanium',sans-serif;
-    font-size:clamp(28px,4vw,48px);
-    font-weight:900; color:var(--text); margin-bottom:16px;
-    letter-spacing:-.02em;
-  }
-  .email-wrap { display:flex; gap:10px; margin-top:24px; }
-  .email-inp {
-    flex:1; padding:13px 16px; border-radius:14px;
-    border:1px solid var(--border);
-    background:var(--card); backdrop-filter:blur(10px);
-    color:var(--text); font-size:13px;
-    font-family:'Manrope',sans-serif; outline:none; transition:all .3s;
-  }
-  .email-inp:focus { border-color:var(--green); box-shadow:0 0 15px rgba(0,217,126,.2); }
-  .email-inp::placeholder { color:var(--muted); }
-  #final-ok { font-size:13px; color:var(--green); margin-top:10px; display:none; }
-  #final-note { font-size:11px; color:var(--muted); margin-top:8px; font-family:'Manrope',sans-serif; }
-
-  /* ═══ FOOTER ═══ */
-  footer {
-    background:var(--card); backdrop-filter:blur(20px);
-    border-top:1px solid var(--border);
-    padding:40px clamp(16px,4vw,64px) 24px;
-    position:relative; z-index:2;
-  }
-  .footer-grid {
-    max-width:1100px; margin:0 auto;
-    display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:32px;
-    margin-bottom:32px;
-  }
-  @media(max-width:768px) { .footer-grid { grid-template-columns:1fr 1fr; } }
-  @media(max-width:480px) { .footer-grid { grid-template-columns:1fr; } }
-  .footer-brand p { font-size:13px; color:var(--sub); line-height:1.7; margin-top:10px; font-family:'Manrope',sans-serif; }
-  .footer-col h4 {
-    font-family:'Oxanium',sans-serif; font-size:12px; font-weight:700;
-    color:var(--green); letter-spacing:.1em; text-transform:uppercase; margin-bottom:14px;
-  }
-  .footer-col a {
-    display:block; font-size:13px; color:var(--sub);
-    text-decoration:none; margin-bottom:8px; font-family:'Manrope',sans-serif;
-    transition:color .2s;
-  }
-  .footer-col a:hover { color:var(--green); }
-  .footer-bottom {
-    max-width:1100px; margin:0 auto;
-    padding-top:24px; border-top:1px solid var(--border);
-    display:flex; justify-content:space-between; align-items:center;
-    font-size:12px; color:var(--muted); font-family:'Manrope',sans-serif;
-    flex-wrap:wrap; gap:12px;
-  }
-  .social-links { display:flex; gap:10px; }
-  .social-link {
-    width:34px; height:34px; border-radius:10px;
-    border:1px solid var(--border); background:var(--card);
-    display:flex; align-items:center; justify-content:center;
-    font-size:15px; text-decoration:none; transition:all .3s;
-  }
-  .social-link:hover { border-color:var(--green); box-shadow:var(--glow); transform:translateY(-2px); }
-
-  /* ═══ THEME BUTTON ═══ */
-  #theme-btn {
-    width:36px; height:36px; border-radius:50%;
-    border:1px solid var(--border);
-    background:var(--card); color:var(--text);
-    font-size:15px; cursor:pointer;
-    display:flex; align-items:center; justify-content:center;
-    transition:all .2s; backdrop-filter:blur(10px);
-  }
-  #theme-btn:hover { border-color:var(--green); box-shadow:var(--glow); }
-
-  /* ═══ QUIZ CHOICE BUTTONS ═══ */
-  #quiz-choices button {
-    padding:9px 16px; border-radius:99px;
-    border:1px solid var(--border);
-    background:var(--card); color:var(--text);
-    font-size:12px; font-family:'Manrope',sans-serif;
-    cursor:pointer; transition:all .25s;
-    backdrop-filter:blur(8px);
-  }
-  #quiz-choices button:hover {
-    background:var(--green); color:#050C08;
-    border-color:var(--green); box-shadow:var(--glow);
-  }
-
-  /* ═══ LEAD FORM INPUTS ═══ */
-  #quiz-lead-form input,
-  #quiz-lead-form textarea,
-  #quiz-lead-form select {
-    background:rgba(5,12,8,.8) !important;
-    color:var(--text) !important;
-    border-color:var(--border) !important;
-    backdrop-filter:blur(10px);
-  }
-  [data-theme="light"] #quiz-lead-form input,
-  [data-theme="light"] #quiz-lead-form textarea,
-  [data-theme="light"] #quiz-lead-form select {
-    background:rgba(255,255,255,.9) !important;
-    color:#0D1F18 !important;
-  }
-
-  /* ═══ PROOF STRIP ═══ */
-  .proof-strip {
-    background:linear-gradient(135deg, var(--greenXL), var(--pinkXL));
-    border-radius:20px; padding:24px 28px;
-    border:1px solid var(--border);
-    display:flex; flex-wrap:wrap; gap:24px;
-    justify-content:space-between; align-items:center;
-  }
-  #proof-strip-text { font-size:14px; color:var(--sub); max-width:420px; line-height:1.7; font-family:'Manrope',sans-serif; }
-
-  /* ═══ SUCCESS ELEMENTS ═══ */
-  #success-title { font-family:'Oxanium',sans-serif; font-weight:800; color:var(--green); }
-  #success-sub { font-family:'Manrope',sans-serif; color:var(--sub); font-size:13px; }
-
-  /* Tab phone */
-  #tab-phone {
-    width:100%; padding:11px 13px; border-radius:13px;
-    border:1px solid var(--border);
-    background:var(--card); backdrop-filter:blur(10px);
-    color:var(--text); font-family:'Manrope',sans-serif; font-size:13px; outline:none;
-  }
-
-  /* Responsive */
-  @media(max-width:480px) {
-    .hero-title { font-size:32px; }
-    .stats-grid { grid-template-columns:repeat(2,1fr); }
-    .dishes { grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); }
-  }
-</style>
+    /* ── RESPONSIVE ── */
+    @media(max-width:760px){
+      .hero-inner   { grid-template-columns:1fr; }
+      .hero-right   { display:none; }
+      .stats-grid   { grid-template-columns:repeat(2,1fr); }
+      .nav-links    { display:none; }
+      #chat-window  { width:calc(100vw - 32px); right:16px; bottom:88px; }
+    }
+  </style>
 </head>
 <body>
 
-<!-- ORB BACKGROUNDS -->
-<div class="orb orb-1"></div>
-<div class="orb orb-2"></div>
-<div class="orb orb-3"></div>
+<!-- ══ BANNER ══════════════════════════════════════════ -->
+<div id="banner">
+  🍽️ SAVY livre à Tétouan · M'diq · Martil · لا يوجد حد أدنى للطلب
+  <a onclick="openChat()" id="banner-link">Commander maintenant →</a>
+</div>
 
 <!-- ══ NAVBAR ══════════════════════════════════════════ -->
 <nav id="navbar">
   <a class="nav-logo" href="#">
-    <div class="nav-logo-icon">
-      <svg width="22" height="22" viewBox="0 0 80 80" fill="none">
-        <ellipse cx="40" cy="21" rx="13" ry="5" fill="white" opacity=".9"/>
-        <rect x="27" y="16" width="26" height="14" rx="4" fill="white" opacity=".9"/>
-        <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="white"/>
-        <rect x="26" y="28" width="28" height="20" rx="9" fill="white"/>
-        <circle cx="34" cy="37" r="3.2" fill="#00D97E"/>
-        <circle cx="46" cy="37" r="3.2" fill="#00D97E"/>
-        <rect x="28" y="50" width="24" height="18" rx="5" fill="white"/>
-        <text x="40" y="63" text-anchor="middle" font-size="9" font-weight="900" fill="#00D97E" font-family="system-ui">AI</text>
-      </svg>
-    </div>
-    <div class="nav-logo-text">SAV<span>Y</span></div>
+    <svg width="38" height="38" viewBox="0 0 80 80" fill="none">
+      <rect width="80" height="80" rx="20" fill="#008060"/>
+      <ellipse cx="40" cy="21" rx="13" ry="5" fill="white" opacity=".9"/>
+      <rect x="27" y="16" width="26" height="14" rx="4" fill="white" opacity=".9"/>
+      <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="white"/>
+      <rect x="26" y="28" width="28" height="20" rx="9" fill="white"/>
+      <circle cx="34" cy="37" r="3.2" fill="#008060"/>
+      <circle cx="46" cy="37" r="3.2" fill="#008060"/>
+      <circle cx="35" cy="36" r="1.1" fill="white" opacity=".6"/>
+      <circle cx="47" cy="36" r="1.1" fill="white" opacity=".6"/>
+      <rect x="28" y="50" width="24" height="18" rx="5" fill="white"/>
+      <text x="40" y="63" text-anchor="middle" font-size="9" font-weight="900" fill="#008060" font-family="system-ui">AI</text>
+      <circle cx="19" cy="58" r="5" fill="white" opacity=".9"/>
+      <line x1="24" y1="56" x2="28" y2="55" stroke="white" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="61" cy="58" r="5" fill="white" opacity=".9"/>
+      <line x1="56" y1="56" x2="52" y2="55" stroke="white" stroke-width="3" stroke-linecap="round"/>
+    </svg>
+    <span>SAVY</span>
   </a>
-
   <div class="nav-links">
     <a href="#menu"  class="nav-link" id="nl-menu">Menu</a>
     <a href="#how"   class="nav-link" id="nl-how">Comment ça marche</a>
     <a href="#final" class="nav-link" id="nl-about">À propos</a>
   </div>
-
   <div style="display:flex;gap:8px;align-items:center;">
-    <!-- Theme toggle -->
-    <button id="theme-btn" onclick="toggleTheme()" title="Changer le thème" style="
-      width:36px;height:36px;border-radius:50%;border:1px solid var(--border);
-      background:var(--card,#fff);color:var(--text);font-size:16px;cursor:pointer;
-      display:flex;align-items:center;justify-content:center;transition:all .2s;
-      box-shadow:var(--shadow);"
-      onmouseover="this.style.borderColor='var(--green)'"
-      onmouseout="this.style.borderColor='var(--border)'">🌙</button>
     <div class="lang-wrap">
-      <button class="lang-btn"        onclick="setLang('fr')">🇫🇷 FR</button>
-      <button class="lang-btn active" onclick="setLang('ar')">🇲🇦 AR</button>
+      <button class="lang-btn active" onclick="setLang('fr')">🇫🇷 FR</button>
+      <button class="lang-btn"        onclick="setLang('ar')">🇲🇦 AR</button>
     </div>
-    <button class="btn-cta btn-cta-sm" onclick="document.getElementById('email-hero').focus()">
-      <span id="nav-cta">Rejoindre</span>
+    <button id="theme-btn" onclick="toggleTheme()"
+      style="width:36px;height:36px;border-radius:50%;border:1.5px solid var(--border);background:var(--card);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;"
+      onmouseover="this.style.borderColor='var(--green)'" onmouseout="this.style.borderColor='var(--border)'">
+      🌙
+    </button>
+    <button class="btn-cta btn-cta-sm" onclick="openChat()">
+      <span id="nav-cta">Commander</span>
     </button>
   </div>
 </nav>
-
-<!-- ══ LAUNCH BANNER ══ -->
-<div id="launch-banner" style="
-  background: var(--green);
-  color: #fff;
-  text-align: center;
-  padding: 5px 16px;
-  font-family: 'Manrope', sans-serif;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-">
-  <span style="animation: pulse 1.5s infinite; display:inline-block; width:6px; height:6px; border-radius:50%; background:#4ade80; flex-shrink:0;"></span>
-  <span id="banner-text">🧬 Engineered by AI. Cooked with Love. — Tétouan · M'diq · Martil</span>
-</div>
 
 <!-- ══ HERO ════════════════════════════════════════════ -->
 <section id="hero">
   <div class="dot-grid"></div>
   <div class="hero-inner">
-
     <!-- Left -->
     <div>
-      <!-- 1. City badge -->
       <div class="city-badge su">
         <span class="city-dot"></span>
-        <span class="label" id="hero-city">🇲🇦 Tétouan · M'diq · Martil — Bientôt</span>
+        <span class="label" id="hero-city">🇲🇦 Tétouan · M'diq · Martil</span>
       </div>
-
-      <p class="fb su" id="hero-tagline"
-        style="color:var(--muted);font-size:12px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:16px;">
-        Engineered by AI. Cooked with Love.
+      <p class="su" id="hero-tagline" style="color:var(--muted);font-size:12px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px;font-weight:700;">
+        Morocco's First AI Personal Chef
       </p>
-
-      <!-- 3. H1 Title -->
-      <h1 class="hero-title fh su3" id="hero-h1">
-        Votre repas,<br>
-        <span class="accent">engineered for you.</span>
+      <h1 class="hero-title fh su2" id="hero-h1">
+        Engineered for you.<br>
+        <span class="accent">Cooked with love.</span>
       </h1>
-
-      <!-- 4. Description -->
       <p class="hero-sub fb su3" id="hero-sub">
-        Pas de plan générique. Pas de compromis. SAVY calcule chaque macro — puis cuisine avec le soin d'un chef qui vous connaît. 🧬
+        SAVY is your personal Meal Engineer — combining AI precision with a Chef's heart to create meals that fuel your goals, your glow, and your grind.
       </p>
 
-      <!-- Persona pills -->
-      <div class="su2" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;">
-        <div style="padding:6px 14px;border-radius:99px;border:1px solid rgba(0,217,126,.3);background:rgba(0,217,126,.08);font-size:12px;font-weight:600;color:var(--green);font-family:'Manrope',sans-serif;">💼 The Professional</div>
-        <div style="padding:6px 14px;border-radius:99px;border:1px solid rgba(255,155,80,.3);background:rgba(255,155,80,.08);font-size:12px;font-weight:600;color:var(--orange);font-family:'Manrope',sans-serif;">🏋️ The Athlete</div>
-        <div style="padding:6px 14px;border-radius:99px;border:1px solid rgba(255,107,157,.3);background:rgba(255,107,157,.08);font-size:12px;font-weight:600;color:var(--pink);font-family:'Manrope',sans-serif;">🌸 The Glow</div>
-      </div>
-
-      <!-- 2. SAVY AI CHEF QUIZ -->
-      <!-- Order Form -->
-      <div class="su2" style="margin-bottom:24px;max-width:480px;" id="savy-order-wrap">
-
-        <!-- Title -->
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
-          <div style="width:40px;height:40px;border-radius:13px;background:var(--green);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 14px rgba(0,128,96,0.3);">
-            <svg width="22" height="22" viewBox="0 0 80 80" fill="none">
-              <ellipse cx="40" cy="21" rx="13" ry="5" fill="white" opacity=".9"/>
-              <rect x="27" y="16" width="26" height="14" rx="4" fill="white" opacity=".9"/>
-              <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="white"/>
-              <rect x="26" y="28" width="28" height="20" rx="9" fill="white"/>
-              <circle cx="34" cy="37" r="3.2" fill="#008060"/>
-              <circle cx="46" cy="37" r="3.2" fill="#008060"/>
-              <rect x="28" y="50" width="24" height="18" rx="5" fill="white"/>
-              <text x="40" y="63" text-anchor="middle" font-size="9" font-weight="900" fill="#008060" font-family="system-ui">A</text>
-            </svg>
+      <!-- Persona selector -->
+      <div class="persona-intro su4">
+        <p id="persona-label">🧬 Who are you today?</p>
+        <div class="persona-cards" id="persona-cards">
+          <div class="persona-card" onclick="selectPersona('pro')" id="pc-pro">
+            <div class="persona-emoji">💼</div>
+            <div class="persona-label" id="pc-pro-lbl">The Pro</div>
+            <div class="persona-desc" id="pc-pro-desc">Energy & productivity</div>
           </div>
-          <div>
-            <div id="form-title-main" style="font-family:'Syne',sans-serif;font-weight:800;font-size:15px;color:var(--text);">🍽️ Commander maintenant</div>
-            <div style="font-size:11px;color:var(--muted);font-family:'Manrope',sans-serif;display:flex;align-items:center;gap:5px;">
-              <span style="width:6px;height:6px;border-radius:50%;background:#4ade80;display:inline-block;animation:pulse 1.5s infinite;"></span>
-              <span id="form-status">توصيل — تطوان · مديق · مرتيل 🇲🇦</span>
-            </div>
+          <div class="persona-card" onclick="selectPersona('glow')" id="pc-glow">
+            <div class="persona-emoji">🌸</div>
+            <div class="persona-label" id="pc-glow-lbl">The Glow</div>
+            <div class="persona-desc" id="pc-glow-desc">Beauty from within</div>
           </div>
-        </div>
-
-        <!-- The form -->
-        <div id="order-form-box">
-          <input id="of-fullname" type="text"
-            placeholder="الاسم الكامل / Nom complet"
-            style="width:100%;box-sizing:border-box;padding:12px 14px;border-radius:13px;border:1.5px solid var(--border);font-size:13px;outline:none;font-family:'Manrope',sans-serif;color:var(--text);background:var(--card);margin-bottom:8px;transition:border-color .2s;"
-            onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='var(--border)'"/>
-
-          <input id="of-phone" type="tel"
-            placeholder="WhatsApp (+212 6XX XXX XXX)"
-            style="width:100%;box-sizing:border-box;padding:12px 14px;border-radius:13px;border:1.5px solid var(--border);font-size:13px;outline:none;font-family:'Manrope',sans-serif;color:var(--text);background:var(--card);margin-bottom:8px;transition:border-color .2s;"
-            onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='var(--border)'"/>
-
-          <textarea id="of-order" rows="2"
-            placeholder="تفاصيل طلبيتك / Votre commande (ex: 2 repas sans gluten, sportif...)"
-            style="width:100%;box-sizing:border-box;padding:12px 14px;border-radius:13px;border:1.5px solid var(--border);font-size:13px;outline:none;font-family:'Manrope',sans-serif;color:var(--text);background:var(--card);margin-bottom:8px;resize:none;line-height:1.5;transition:border-color .2s;"
-            onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='var(--border)'"></textarea>
-
-          <input id="of-address" type="text"
-            placeholder="عنوان التوصيل / Adresse de livraison"
-            style="width:100%;box-sizing:border-box;padding:12px 14px;border-radius:13px;border:1.5px solid var(--border);font-size:13px;outline:none;font-family:'Manrope',sans-serif;color:var(--text);background:var(--card);margin-bottom:8px;transition:border-color .2s;"
-            onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='var(--border)'"/>
-
-          <select id="of-payment"
-            style="width:100%;box-sizing:border-box;padding:12px 14px;border-radius:13px;border:1.5px solid var(--border);font-size:13px;outline:none;font-family:'Manrope',sans-serif;color:var(--text);background:var(--card);margin-bottom:12px;cursor:pointer;transition:border-color .2s;"
-            onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='var(--border)'">
-            <option value="">💳 طريقة الدفع / Mode de paiement</option>
-            <option value="card">💳 الدفع بالبطاقة / Payer par carte</option>
-            <option value="cash">🚪 الدفع عند التوصيل / Payer à la livraison</option>
-          </select>
-
-          <button onclick="submitOrder()"
-            style="width:100%;padding:14px;border-radius:13px;border:none;background:var(--green);color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:'Manrope',sans-serif;box-shadow:0 4px 16px rgba(0,128,96,0.35);transition:all .2s;letter-spacing:.3px;"
-            onmouseover="this.style.opacity='.88'" onmouseout="this.style.opacity='1'">
-            🍽️ <span id="order-btn-lbl">Confirmer ma commande</span>
-          </button>
-          <p style="font-size:11px;color:var(--muted);font-family:'Manrope',sans-serif;margin-top:7px;text-align:center;">🔒 معلوماتك خاصة — محمية 100%</p>
-        </div>
-
-        <!-- Success state -->
-        <div id="order-success" style="display:none;padding:20px;text-align:center;">
-          <div style="font-size:40px;margin-bottom:10px;">✅</div>
-          <div id="order-success-title" style="font-family:'Syne',sans-serif;font-weight:800;font-size:18px;color:var(--green);margin-bottom:8px;">شكراً ! طلبيتك وصلات 🎉</div>
-          <div id="order-success-sub" style="font-size:13px;color:var(--muted);font-family:'Manrope',sans-serif;line-height:1.6;">غادي نتواصلو معك على WhatsApp 9ريب 🇲🇦</div>
+          <div class="persona-card" onclick="selectPersona('sport')" id="pc-sport">
+            <div class="persona-emoji">🏋️</div>
+            <div class="persona-label" id="pc-sport-lbl">The Athlete</div>
+            <div class="persona-desc" id="pc-sport-desc">Precision fueling</div>
+          </div>
         </div>
       </div>
 
-            <!-- Social proof -->
-      <div class="proof su4">
+      <!-- Social proof -->
+      <div class="proof su5">
         <div class="avatars">
           <div class="av" style="background:linear-gradient(135deg,#008060,#00A878);">Y</div>
-          <div class="av" style="background:linear-gradient(135deg,#00A878,#4DB6AC);">K</div>
-          <div class="av" style="background:linear-gradient(135deg,#4DB6AC,#80CBC4);">N</div>
-          <div class="av" style="background:linear-gradient(135deg,#80CBC4,#B2DFDB);">M</div>
+          <div class="av" style="background:linear-gradient(135deg,#E91E8C,#FF4DB8);">K</div>
+          <div class="av" style="background:linear-gradient(135deg,#F59E0B,#FCD34D);">N</div>
+          <div class="av" style="background:linear-gradient(135deg,#00A878,#4DB6AC);">M</div>
         </div>
         <div>
-          <div class="proof-text fb" id="proof-txt"><em id="live-count-proof"></em> personnes inscrites</div>
+          <div class="proof-text fb"><em id="live-count">793+</em> <span id="proof-txt">personnes inscrites</span></div>
           <div class="proof-stars">⭐⭐⭐⭐⭐</div>
         </div>
       </div>
-
     </div>
 
-    <!-- Right — Web3 Visual Panel -->
-    <div class="hero-right su2">
-      <!-- Central glowing card -->
-      <div style="
-        position:relative; width:100%; max-width:380px;
-        background:rgba(10,22,14,0.7); backdrop-filter:blur(30px);
-        border:1px solid var(--border); border-radius:28px;
-        padding:28px; box-shadow:0 0 60px rgba(0,217,126,.15);
-        overflow:hidden;
-      ">
-        <!-- Top scan line -->
-        <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--green),transparent);animation:shimmer 3s linear infinite;"></div>
-
-        <!-- Header -->
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
-          <div style="display:flex;align-items:center;gap:10px;">
-            <div style="width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--green),#006B50);display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px rgba(0,217,126,.4);">
-              <svg width="24" height="24" viewBox="0 0 80 80" fill="none">
-                <ellipse cx="40" cy="21" rx="13" ry="5" fill="white" opacity=".9"/>
-                <rect x="27" y="16" width="26" height="14" rx="4" fill="white" opacity=".9"/>
-                <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="white"/>
-                <rect x="26" y="28" width="28" height="20" rx="9" fill="white"/>
-                <circle cx="34" cy="37" r="3.2" fill="#00D97E"/>
-                <circle cx="46" cy="37" r="3.2" fill="#00D97E"/>
-                <rect x="28" y="50" width="24" height="18" rx="5" fill="white"/>
-                <text x="40" y="63" text-anchor="middle" font-size="9" font-weight="900" fill="#00D97E" font-family="system-ui">AI</text>
-              </svg>
-            </div>
-            <div>
-              <div style="font-family:'Oxanium',sans-serif;font-weight:800;font-size:14px;color:var(--text);">Chef SAVY</div>
-              <div style="font-size:11px;color:var(--green);display:flex;align-items:center;gap:5px;">
-                <span style="width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);display:inline-block;animation:pulse 1.5s infinite;"></span>
-                AI · En ligne
-              </div>
-            </div>
-          </div>
-          <div style="padding:5px 12px;border-radius:99px;border:1px solid rgba(0,217,126,.3);background:rgba(0,217,126,.08);font-size:10px;font-weight:700;color:var(--green);font-family:'Oxanium',sans-serif;letter-spacing:.1em;">LIVE</div>
-        </div>
-
-        <!-- Meal engineered card -->
-        <div style="
-          background:rgba(0,217,126,.06); border:1px solid rgba(0,217,126,.2);
-          border-radius:16px; padding:16px; margin-bottom:14px;
-        ">
-          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;">
-            <div>
-              <div style="font-size:10px;color:var(--muted);font-family:'Manrope',sans-serif;letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px;">🧬 Meal Engineered</div>
-              <div style="font-family:'Oxanium',sans-serif;font-weight:700;font-size:15px;color:var(--text);">Bowl Protéiné</div>
-              <div style="font-size:12px;color:var(--sub);margin-top:2px;">Poulet grillé · Quinoa · Légumes</div>
-            </div>
-            <div style="font-size:36px;">🥗</div>
-          </div>
-          <!-- Macro bars -->
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:8px;">
-            <div style="text-align:center;">
-              <div style="font-family:'Oxanium',sans-serif;font-size:13px;font-weight:700;color:var(--green);">42g</div>
-              <div style="font-size:10px;color:var(--muted);">Protéines</div>
-              <div style="height:3px;background:rgba(0,217,126,.2);border-radius:99px;margin-top:4px;overflow:hidden;"><div style="width:85%;height:100%;background:var(--green);border-radius:99px;"></div></div>
-            </div>
-            <div style="text-align:center;">
-              <div style="font-family:'Oxanium',sans-serif;font-size:13px;font-weight:700;color:var(--pink);">38g</div>
-              <div style="font-size:10px;color:var(--muted);">Glucides</div>
-              <div style="height:3px;background:rgba(255,107,157,.2);border-radius:99px;margin-top:4px;overflow:hidden;"><div style="width:60%;height:100%;background:var(--pink);border-radius:99px;"></div></div>
-            </div>
-            <div style="text-align:center;">
-              <div style="font-family:'Oxanium',sans-serif;font-size:13px;font-weight:700;color:var(--gold);">12g</div>
-              <div style="font-size:10px;color:var(--muted);">Lipides</div>
-              <div style="height:3px;background:rgba(255,215,0,.2);border-radius:99px;margin-top:4px;overflow:hidden;"><div style="width:40%;height:100%;background:var(--gold);border-radius:99px;"></div></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Stats chips row -->
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
-          <div class="chip" style="flex-direction:column;text-align:center;padding:10px 8px;gap:3px;">
-            <div class="chip-val" style="font-size:14px;"><span id="live-count-chip"></span>+</div>
-            <div class="chip-lbl" id="chip-inscrits">Inscrits</div>
-          </div>
-          <div class="chip" style="flex-direction:column;text-align:center;padding:10px 8px;gap:3px;">
-            <div class="chip-val" style="font-size:14px;">45<span style="font-size:10px;">min</span></div>
-            <div class="chip-lbl" id="chip-livraison">Livraison</div>
-          </div>
-          <div class="chip" style="flex-direction:column;text-align:center;padding:10px 8px;gap:3px;">
-            <div class="chip-val" style="font-size:14px;">4.9<span style="font-size:10px;">★</span></div>
-            <div class="chip-lbl" id="chip-note">Note</div>
-          </div>
-        </div>
+    <!-- Right -->
+    <div class="hero-right">
+      <div class="robot-float">
+        <svg width="190" height="190" viewBox="0 0 80 80" fill="none">
+          <rect width="80" height="80" rx="20" fill="#008060"/>
+          <ellipse cx="40" cy="21" rx="13" ry="5" fill="white" opacity=".9"/>
+          <rect x="27" y="16" width="26" height="14" rx="4" fill="white" opacity=".9"/>
+          <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="white"/>
+          <rect x="26" y="28" width="28" height="20" rx="9" fill="white"/>
+          <circle cx="34" cy="37" r="3.2" fill="#008060"/>
+          <circle cx="46" cy="37" r="3.2" fill="#008060"/>
+          <circle cx="35" cy="36" r="1.2" fill="white" opacity=".6"/>
+          <circle cx="47" cy="36" r="1.2" fill="white" opacity=".6"/>
+          <rect x="28" y="50" width="24" height="18" rx="5" fill="white"/>
+          <text x="40" y="63" text-anchor="middle" font-size="8" font-weight="900" fill="#008060" font-family="system-ui">SAVY</text>
+          <circle cx="19" cy="58" r="5" fill="white" opacity=".9"/>
+          <line x1="24" y1="56" x2="28" y2="55" stroke="white" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="61" cy="58" r="5" fill="white" opacity=".9"/>
+          <line x1="56" y1="56" x2="52" y2="55" stroke="white" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <!-- Persona highlight card -->
+      <div id="persona-highlight" style="background:#fff;border-radius:20px;padding:18px 20px;border:2px solid var(--border);max-width:240px;width:100%;box-shadow:var(--shadow);transition:all .3s;">
+        <div id="ph-icon" style="font-size:28px;margin-bottom:8px;">🧬</div>
+        <div id="ph-title" style="font-family:'Syne',sans-serif;font-weight:800;font-size:14px;color:var(--text);margin-bottom:4px;">Specially Engineered</div>
+        <div id="ph-desc"  style="font-size:12px;color:var(--muted);line-height:1.6;">Every meal is calculated for your exact goals. Not a template — your meal.</div>
+        <button onclick="openChat()" id="ph-btn" style="margin-top:14px;width:100%;padding:11px;border-radius:12px;border:none;background:var(--green);color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;box-shadow:0 4px 14px rgba(0,128,96,0.3);transition:all .2s;">
+          🧬 Engineer My Meal
+        </button>
+      </div>
+      <div class="stat-chips">
+        <div class="chip"><div style="font-size:16px">👥</div><div class="chip-val" id="chip-count">793+</div><div class="chip-lbl" id="chip-inscrits">Inscrits</div></div>
+        <div class="chip"><div style="font-size:16px">⚡</div><div class="chip-val">45min</div><div class="chip-lbl" id="chip-livraison">Livraison</div></div>
+        <div class="chip"><div style="font-size:16px">⭐</div><div class="chip-val">4.9★</div><div class="chip-lbl" id="chip-note">Note</div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══ BENEFITS ═══════════════════════════════════════════ -->
+<!-- ══ HOW IT WORKS ══════════════════════════════════════ -->
 <section id="how">
-  <div style="max-width:1100px; margin:0 auto;">
-    <div class="section-header">
-      <h2 class="section-title fh" id="how-title">Ce que SAVY fait pour vous</h2>
-      <p style="color:var(--sub);font-size:15px;font-family:'Manrope',sans-serif;margin-top:8px;" id="how-sub">Une expérience pensée du début à la fin</p>
-      <div class="title-bar" style="margin-top:10px;"></div>
-    </div>
-
-    <!-- Big benefit cards row -->
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-bottom:32px;" id="benefits-grid"></div>
-
-    <!-- Bottom proof strip -->
-    <div class="proof-strip">
-      <div id="proof-strip-text" style="font-family:'Manrope',sans-serif;font-size:14px;color:var(--sub);max-width:420px;line-height:1.7;"></div>
-      <button class="btn-cta" onclick="document.getElementById('email-hero').focus();window.scrollTo({top:0,behavior:'smooth'})">
-        <span id="benefits-cta">Rejoindre la liste →</span>
-      </button>
-    </div>
+  <div class="section-header">
+    <h2 class="section-title fh" id="how-title">Comment ça marche</h2>
+    <div class="title-bar"></div>
   </div>
+  <div class="steps-grid" id="steps-grid"></div>
 </section>
 
 <!-- ══ STATS ══════════════════════════════════════════════ -->
 <section id="stats">
-  <div class="stats-grid" id="stats-grid">
-    <!-- Populated by JS -->
-  </div>
+  <div class="stats-grid" id="stats-grid"></div>
 </section>
 
 <!-- ══ MENU ═══════════════════════════════════════════════ -->
@@ -989,32 +607,21 @@
   <div class="menu-inner">
     <div class="section-header">
       <h2 class="section-title fh" id="menu-title">Notre Menu</h2>
-      <p class="fb" style="color:var(--sub);font-size:14px;margin-top:6px;" id="menu-sub">Des saveurs du monde, optimisées par l'IA pour vos objectifs</p>
+      <p style="color:var(--sub);font-size:14px;margin-top:6px;" id="menu-sub">Des saveurs du monde, optimisées par l'IA pour vos objectifs</p>
       <div class="title-bar" style="margin-top:10px;"></div>
     </div>
-
-    <!-- Search -->
     <div class="search-wrap">
-      <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none"
-        stroke="#8FBFAA" stroke-width="2" stroke-linecap="round">
+      <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8FBFAA" stroke-width="2" stroke-linecap="round">
         <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
       </svg>
       <input class="search-inp" id="search" placeholder="Rechercher des plats..." oninput="renderDishes()"/>
     </div>
-
-    <!-- Cuisine tabs -->
     <div class="filter-row" id="cuisine-tabs"></div>
-
-    <!-- Diet filters -->
     <div class="filter-row" id="diet-filters"></div>
-
-    <!-- Cart bar -->
     <div class="cart-bar" id="cart-bar" style="display:none;">
       <span id="cart-txt">0 plat sélectionné</span>
-      <button id="order-btn">Commander maintenant</button>
+      <button onclick="openChat()" id="order-btn">Commander maintenant</button>
     </div>
-
-    <!-- Dishes -->
     <div class="dishes" id="dishes-list"></div>
   </div>
 </section>
@@ -1022,478 +629,436 @@
 <!-- ══ FINAL CTA ═══════════════════════════════════════════ -->
 <section id="final">
   <div class="final-inner">
-    <div style="animation:float 3.5s ease-in-out infinite;display:inline-block;margin-bottom:24px;">
-      <div style="
-        width:90px;height:90px;border-radius:24px;
-        background:linear-gradient(135deg,var(--green),#006B50);
-        display:flex;align-items:center;justify-content:center;
-        box-shadow:0 0 50px rgba(0,217,126,.5), 0 0 100px rgba(0,217,126,.2);
-        font-size:44px;
-      ">🧬</div>
+    <div style="animation:float 3.5s ease-in-out infinite;display:inline-block;margin-bottom:24px;filter:drop-shadow(0 8px 24px rgba(0,128,96,.2));">
+      <svg width="90" height="90" viewBox="0 0 80 80" fill="none">
+        <rect width="80" height="80" rx="20" fill="#008060"/>
+        <ellipse cx="40" cy="21" rx="13" ry="5" fill="white" opacity=".9"/>
+        <rect x="27" y="16" width="26" height="14" rx="4" fill="white" opacity=".9"/>
+        <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="white"/>
+        <rect x="26" y="28" width="28" height="20" rx="9" fill="white"/>
+        <circle cx="34" cy="37" r="3.2" fill="#008060"/>
+        <circle cx="46" cy="37" r="3.2" fill="#008060"/>
+        <rect x="28" y="50" width="24" height="18" rx="5" fill="white"/>
+        <text x="40" y="63" text-anchor="middle" font-size="8" font-weight="900" fill="#008060" font-family="system-ui">SAVY</text>
+        <circle cx="19" cy="58" r="5" fill="white" opacity=".9"/>
+        <line x1="24" y1="56" x2="28" y2="55" stroke="white" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="61" cy="58" r="5" fill="white" opacity=".9"/>
+        <line x1="56" y1="56" x2="52" y2="55" stroke="white" stroke-width="3" stroke-linecap="round"/>
+      </svg>
     </div>
-    <h2 class="final-title fh" id="final-title">"Engineered for you. Cooked with Love."</h2>
-    <p class="final-sub fb" id="final-sub">Join Morocco's first AI Personal Chef. Founding members get 30% off their first engineered meal. 🌸</p>
-
-    <div id="form-area-2">
-      <div class="email-wrap" style="justify-content:center;max-width:460px;margin:0 auto 10px;">
-        <input class="email-inp" id="email-final" type="email" placeholder="Votre adresse email"/>
-        <button class="btn-cta" onclick="submitEmail2()"><span id="cta-text-2">Rejoindre →</span></button>
-      </div>
-      <p class="cta-note fb" id="final-note" style="text-align:center;">🔒 Aucun spam · Désabonnement libre</p>
-    </div>
-    <div id="success-final" style="display:none;" class="success-box" style="display:inline-block;">
-      <div class="success-title fh" id="final-ok">🎉 Vous êtes sur la liste !</div>
-    </div>
-
+    <h2 class="final-title" id="final-title">Rejoindre SAVY aujourd'hui</h2>
+    <p style="font-size:15px;color:var(--sub);line-height:1.8;margin-bottom:32px;" id="final-sub">
+      Parlez à votre Chef IA personnel. Votre repas, engineered pour vous, livré en 45 min. 🧬
+    </p>
+    <button class="btn-cta" onclick="openChat()" style="font-size:15px;padding:16px 32px;border-radius:16px;">
+      🧬 <span id="final-cta-txt">Engineer My Meal — Free</span>
+    </button>
+    <p style="font-size:12px;color:var(--muted);margin-top:12px;" id="final-note">🔒 Aucun spam · Juste votre repas parfait</p>
     <div class="social-links">
-      <a class="social-btn" href="https://www.instagram.com/savy.mar?igsh=MWdzNjNkeWZ0NW93Zw==" target="_blank" rel="noopener"><span style="font-size:18px">📸</span><div><div class="s-lbl">Instagram</div><div class="s-handle">@savy.mar</div></div></a>
-      <a class="social-btn" href="https://www.tiktok.com/@savy.ma?_r=1&_t=ZS-94R6uvkwfhN" target="_blank" rel="noopener"><span style="font-size:18px">🎵</span><div><div class="s-lbl">TikTok</div><div class="s-handle">@savy.ma</div></div></a>
+      <a class="social-btn" href="https://www.instagram.com/savy.mar?igsh=MWdzNjNkeWZ0NW93Zw==" target="_blank" rel="noopener">
+        <span style="font-size:18px">📸</span>
+        <div><div class="s-lbl">Instagram</div><div class="s-handle">@savy.mar</div></div>
+      </a>
+      <a class="social-btn" href="https://www.tiktok.com/@savy.ma?_r=1&_t=ZS-94R6uvkwfhN" target="_blank" rel="noopener">
+        <span style="font-size:18px">🎵</span>
+        <div><div class="s-lbl">TikTok</div><div class="s-handle">@savy.ma</div></div>
+      </a>
     </div>
   </div>
 </section>
 
 <!-- ══ FOOTER ══════════════════════════════════════════════ -->
 <footer>
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <div class="nav-logo" style="margin-bottom:14px;display:inline-flex;">
-        <div class="nav-logo-icon" style="width:32px;height:32px;border-radius:9px;">
-          <svg width="18" height="18" viewBox="0 0 80 80" fill="none">
-            <ellipse cx="40" cy="21" rx="13" ry="5" fill="white" opacity=".9"/>
-            <rect x="27" y="16" width="26" height="14" rx="4" fill="white" opacity=".9"/>
-            <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="white"/>
-            <rect x="26" y="28" width="28" height="20" rx="9" fill="white"/>
-            <circle cx="34" cy="37" r="3.2" fill="#00D97E"/>
-            <circle cx="46" cy="37" r="3.2" fill="#00D97E"/>
-            <rect x="28" y="50" width="24" height="18" rx="5" fill="white"/>
-            <text x="40" y="63" text-anchor="middle" font-size="9" font-weight="900" fill="#00D97E" font-family="system-ui">AI</text>
-          </svg>
-        </div>
-        <div class="nav-logo-text" style="font-size:18px;">SAV<span>Y</span></div>
-      </div>
-      <p id="footer-copy">Morocco's first AI Personal Chef — delivering engineered meals to Tétouan, M'diq & Martil. 🇲🇦</p>
-      <div class="social-links" style="margin-top:16px;">
-        <a class="social-link" href="https://www.instagram.com/savy.mar?igsh=MWdzNjNkeWZ0NW93Zw==" target="_blank">📸</a>
-        <a class="social-link" href="https://www.tiktok.com/@savy.ma?_r=1&_t=ZS-94R6uvkwfhN" target="_blank">🎵</a>
-      </div>
-    </div>
-    <div class="footer-col">
-      <h4>Produit</h4>
-      <a href="#how" id="fl-how">Comment ça marche</a>
-      <a href="#menu" id="fl-menu">Notre Menu</a>
-      <a href="#stats" id="fl-stats">Nos chiffres</a>
-    </div>
-    <div class="footer-col">
-      <h4>Villes</h4>
-      <a href="#">Tétouan</a>
-      <a href="#">M'diq</a>
-      <a href="#">Martil</a>
-    </div>
-    <div class="footer-col">
-      <h4>Légal</h4>
-      <a href="#" id="fl-1">Confidentialité</a>
-      <a href="#" id="fl-2">Conditions</a>
-      <a href="#" id="fl-3">Contact</a>
-    </div>
+  <div class="footer-logo">
+    <svg width="30" height="30" viewBox="0 0 80 80" fill="none"><rect width="80" height="80" rx="20" fill="#008060"/><ellipse cx="40" cy="21" rx="13" ry="5" fill="white" opacity=".9"/><rect x="27" y="16" width="26" height="14" rx="4" fill="white" opacity=".9"/><ellipse cx="40" cy="13" rx="9.5" ry="8" fill="white"/><rect x="26" y="28" width="28" height="20" rx="9" fill="white"/><circle cx="34" cy="37" r="3.2" fill="#008060"/><circle cx="46" cy="37" r="3.2" fill="#008060"/><rect x="28" y="50" width="24" height="18" rx="5" fill="white"/><text x="40" y="63" text-anchor="middle" font-size="9" font-weight="900" fill="#008060" font-family="system-ui">A</text></svg>
+    <span>SAVY</span>
+    <span style="color:var(--muted);font-size:12px;" id="footer-loc">· 🇲🇦 Maroc</span>
   </div>
-  <div class="footer-bottom">
-    <span id="footer-loc">© 2025 SAVY · 🇲🇦 Maroc · AI-Powered Food Tech</span>
-    <div class="social-links">
-      <span style="font-size:11px;color:var(--muted);letter-spacing:.08em;">BUILT WITH 🧬 & ❤️</span>
-    </div>
+  <p id="footer-copy">© 2025 SAVY · Morocco's First AI Personal Chef</p>
+  <div class="footer-links">
+    <a href="#" class="nav-link" style="font-size:11px;" id="fl-1">Confidentialité</a>
+    <a href="#" class="nav-link" style="font-size:11px;" id="fl-2">Conditions</a>
+    <a href="#" class="nav-link" style="font-size:11px;" id="fl-3">Contact</a>
   </div>
 </footer>
 
+<!-- ══ FLOATING CHAT BUTTON ════════════════════════════════ -->
+<button id="chat-fab" onclick="openChat()" aria-label="Chat with SAVY">
+  <svg width="28" height="28" viewBox="0 0 80 80" fill="none">
+    <ellipse cx="40" cy="21" rx="13" ry="5" fill="white" opacity=".9"/>
+    <rect x="27" y="16" width="26" height="14" rx="4" fill="white" opacity=".9"/>
+    <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="white"/>
+    <rect x="26" y="28" width="28" height="20" rx="9" fill="white"/>
+    <circle cx="34" cy="37" r="3.2" fill="#008060"/>
+    <circle cx="46" cy="37" r="3.2" fill="#008060"/>
+    <rect x="28" y="50" width="24" height="18" rx="5" fill="white"/>
+    <text x="40" y="63" text-anchor="middle" font-size="9" font-weight="900" fill="#008060" font-family="system-ui">AI</text>
+  </svg>
+  <div class="fab-badge">1</div>
+</button>
+
+<!-- ══ CHAT WINDOW ══════════════════════════════════════════ -->
+<div id="chat-window">
+
+  <!-- Header -->
+  <div class="chat-header">
+    <div class="chat-header-avatar">
+      <svg width="26" height="26" viewBox="0 0 80 80" fill="none">
+        <ellipse cx="40" cy="21" rx="13" ry="5" fill="white" opacity=".9"/>
+        <rect x="27" y="16" width="26" height="14" rx="4" fill="white" opacity=".9"/>
+        <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="white"/>
+        <rect x="26" y="28" width="28" height="20" rx="9" fill="white"/>
+        <circle cx="34" cy="37" r="3.2" fill="#008060"/>
+        <circle cx="46" cy="37" r="3.2" fill="#008060"/>
+        <rect x="28" y="50" width="24" height="18" rx="5" fill="white"/>
+      </svg>
+    </div>
+    <div class="chat-header-info">
+      <div class="chat-header-name">SAVY AI Chef 🧬</div>
+      <div class="chat-header-status">
+        <span class="chat-status-dot"></span>
+        <span id="chat-status-txt">Online · Meal Engineer</span>
+      </div>
+    </div>
+    <button class="chat-close" onclick="closeChat()">✕</button>
+  </div>
+
+  <!-- Persona selector -->
+  <div class="persona-select" id="chat-persona-row">
+    <p id="persona-row-label">I am a...</p>
+    <div class="persona-btns">
+      <button class="p-btn" onclick="chatSetPersona('pro')"   id="cpb-pro">
+        <span class="p-icon">💼</span>
+        <span class="p-label" id="cpb-pro-lbl">Pro</span>
+      </button>
+      <button class="p-btn" onclick="chatSetPersona('glow')"  id="cpb-glow">
+        <span class="p-icon">🌸</span>
+        <span class="p-label" id="cpb-glow-lbl">Glow</span>
+      </button>
+      <button class="p-btn" onclick="chatSetPersona('sport')" id="cpb-sport">
+        <span class="p-icon">🏋️</span>
+        <span class="p-label" id="cpb-sport-lbl">Athlete</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Messages -->
+  <div id="chat-msgs"></div>
+
+  <!-- Lead form -->
+  <div id="chat-lead-form">
+    <input class="lead-inp" id="lead-name"  type="text" placeholder="Your full name / اسمك الكامل"/>
+    <input class="lead-inp" id="lead-city"  type="text" placeholder="Your city / مدينتك (ex: Tétouan)"/>
+    <input class="lead-inp" id="lead-phone" type="tel"  placeholder="WhatsApp (+212 6XX XXX XXX)"/>
+    <button class="lead-submit" id="lead-submit-btn" onclick="submitLead()">
+      🧬 Engineer My Meal Now ✨
+    </button>
+    <p style="font-size:11px;color:var(--muted);text-align:center;margin-top:7px;">🔒 Your info is private · never shared</p>
+  </div>
+
+  <!-- Input area -->
+  <div class="chat-input-area" id="chat-input-area">
+    <div class="chat-input-row">
+      <input class="chat-inp" id="chat-inp" placeholder="Message SAVY..." onkeydown="if(event.key==='Enter')chatSend()"/>
+      <button class="chat-send" id="chat-send-btn" onclick="chatSend()">➤</button>
+    </div>
+    <div class="quick-chips" id="quick-chips"></div>
+  </div>
+</div>
+
 <script>
+/* ═══════════════════════════════════════════
+   CONFIG — Replace these two values
+═══════════════════════════════════════════ */
+const GROQ_API_URL       = "/.netlify/functions/gemini"; // Netlify function proxy
+const GOOGLE_SHEET_URL   = "https://script.google.com/macros/s/AKfycbze50a82fqgJodjNmIZLpis7TuVfveQ9c_x1aHXVEsDwEiiT0bqHhQlKCiL1LfZbO3-Gg/exec";
+
 /* ═══════════════════════════════════════════
    DATA
 ═══════════════════════════════════════════ */
 const dishes = [
-  // 🇮🇹 Italian
-  {id:1,  e:"🥗", name:"Salade Caprese Protéinée",   ar:"سلطة كابريزي بروتين",    cal:290,p:20,c:14,t:10,r:4.7,tag:"Gluten-Free", badge:"",            cuis:"🇮🇹",f:"gluten-free"},
-  {id:2,  e:"🍝", name:"Pasta Primavera Light",       ar:"باستا خضروات خفيفة",     cal:360,p:16,c:52,t:20,r:4.6,tag:"Vegan",       badge:"",            cuis:"🇮🇹",f:"vegan"},
-  {id:3,  e:"🐟", name:"Branzino al Limone",          ar:"سمك برانزينو بالليمون",  cal:370,p:42,c:10,t:25,r:4.9,tag:"High Protein", badge:"Chef's Pick", cuis:"🇮🇹",f:"high-protein"},
-  {id:4,  e:"🥬", name:"Minestrone Détox",            ar:"شوربة مينيسترون ديتوكس", cal:150,p:8, c:24,t:15,r:4.6,tag:"Vegan",       badge:"Low Cal",     cuis:"🇮🇹",f:"vegan"},
-  {id:5,  e:"🍗", name:"Poulet Piccata Léger",        ar:"دجاج بيكاتا خفيف",       cal:340,p:38,c:12,t:22,r:4.8,tag:"High Protein", badge:"New",         cuis:"🇮🇹",f:"high-protein"},
-  // 🇫🇷 French
-  {id:6,  e:"🥗", name:"Salade Niçoise Fit",          ar:"سلطة نيسواز فيت",        cal:310,p:26,c:18,t:10,r:4.8,tag:"Low Carb",    badge:"Best Seller", cuis:"🇫🇷",f:"low-carb"},
-  {id:7,  e:"🍳", name:"Omelette aux Fines Herbes",   ar:"أومليت بالأعشاب",        cal:240,p:20,c:6, t:10,r:4.7,tag:"Gluten-Free", badge:"",            cuis:"🇫🇷",f:"gluten-free"},
-  {id:8,  e:"🐟", name:"Saumon en Papillote",         ar:"سلمون مطهو بالبخار",     cal:390,p:44,c:8, t:22,r:4.9,tag:"High Protein", badge:"Chef's Pick", cuis:"🇫🇷",f:"high-protein"},
-  {id:9,  e:"🥣", name:"Soupe à l'Oignon Légère",    ar:"شوربة البصل الخفيفة",    cal:160,p:7, c:22,t:18,r:4.6,tag:"Low Carb",    badge:"",            cuis:"🇫🇷",f:"low-carb"},
-  {id:10, e:"🥬", name:"Ratatouille Provençale",      ar:"راتاتوي بروفانسال",       cal:180,p:5, c:26,t:20,r:4.7,tag:"Vegan",       badge:"Trending",    cuis:"🇫🇷",f:"vegan"},
-  // 🇬🇷 Mediterranean
-  {id:11, e:"🥙", name:"Wrap Falafel Complet",        ar:"راب فلافل كامل",         cal:310,p:14,c:42,t:15,r:4.7,tag:"Vegan",       badge:"Best Seller", cuis:"🇬🇷",f:"vegan"},
-  {id:12, e:"🥗", name:"Salade Grecque Protéinée",    ar:"سلطة يونانية بروتينية",  cal:280,p:22,c:16,t:10,r:4.7,tag:"Low Carb",    badge:"",            cuis:"🇬🇷",f:"low-carb"},
-  {id:13, e:"🫙", name:"Yaourt Grec & Grenade",       ar:"يوغرت يوناني بالرمان",   cal:190,p:16,c:22,t:5, r:4.8,tag:"Gluten-Free", badge:"",            cuis:"🇬🇷",f:"gluten-free"},
-  {id:14, e:"🧆", name:"Assiette Mezze Santé",        ar:"طبق مزة صحي",            cal:320,p:14,c:36,t:15,r:4.8,tag:"Vegan",       badge:"Trending",    cuis:"🇬🇷",f:"vegan"},
-  {id:15, e:"🐠", name:"Daurade Grillée & Tabboulé",  ar:"سمك مشوي مع تبولة",      cal:380,p:40,c:20,t:22,r:4.9,tag:"High Protein", badge:"",            cuis:"🇬🇷",f:"high-protein"},
-  // 🇯🇵 Asiatique
-  {id:16, e:"🥗", name:"Poke Bowl Saumon",            ar:"بوكي بول السلمون",       cal:390,p:32,c:36,t:15,r:4.9,tag:"High Protein", badge:"Trending",    cuis:"🇯🇵",f:"high-protein"},
-  {id:17, e:"🍜", name:"Bouillon Miso & Légumes",     ar:"مرق ميسو بالخضر",        cal:140,p:9, c:18,t:12,r:4.7,tag:"Low Carb",    badge:"",            cuis:"🇯🇵",f:"low-carb"},
-  {id:18, e:"🍱", name:"Buddha Bowl Thaï",            ar:"بوذا بول تايلندي",       cal:360,p:18,c:44,t:18,r:4.8,tag:"Vegan",       badge:"",            cuis:"🇯🇵",f:"vegan"},
-  {id:19, e:"🥟", name:"Gyoza Poulet Vapeur",         ar:"جيوزا دجاج بالبخار",     cal:270,p:24,c:28,t:18,r:4.7,tag:"High Protein", badge:"New",         cuis:"🇯🇵",f:"high-protein"},
-  {id:20, e:"🍣", name:"Temaki Saumon Avocat",        ar:"تيماكي سلمون وأفوكادو",  cal:310,p:22,c:30,t:10,r:4.8,tag:"Gluten-Free", badge:"",            cuis:"🇯🇵",f:"gluten-free"},
-  // 🌎 Américain
-  {id:21, e:"🌯", name:"Burrito Bowl Quinoa",         ar:"بوريتو بول كينوا",        cal:420,p:34,c:46,t:20,r:4.7,tag:"High Protein", badge:"Trending",    cuis:"🌎",f:"high-protein"},
-  {id:22, e:"🫐", name:"Açaí & Chia Power Bowl",      ar:"بول أساي وشيا",          cal:260,p:10,c:38,t:10,r:4.8,tag:"Vegan",       badge:"Superfood",   cuis:"🌎",f:"vegan"},
-  {id:23, e:"🥑", name:"Avocado Egg Power Toast",     ar:"توست أفوكادو وبيض",       cal:310,p:18,c:28,t:8, r:4.7,tag:"Gluten-Free", badge:"",            cuis:"🌎",f:"gluten-free"},
-  {id:24, e:"🌮", name:"Tacos Poisson Grillé",        ar:"تاكوس سمك مشوي",          cal:330,p:28,c:34,t:18,r:4.8,tag:"High Protein", badge:"",            cuis:"🌎",f:"high-protein"},
-  {id:25, e:"🥗", name:"Cobb Salad Healthy",          ar:"سلطة كوب صحية",           cal:320,p:26,c:16,t:10,r:4.7,tag:"Low Carb",    badge:"",            cuis:"🌎",f:"low-carb"},
+  {id:1,  e:"🍆",name:"Zaalouk Bowl",        ar:"طاجين الزعلوك",  cal:340,p:12,c:44,t:20,r:4.8,tag:"Vegan",        badge:"",            cuis:"🇲🇦",f:"vegan"},
+  {id:2,  e:"🫘",name:"Bissara Soup",         ar:"بيصارة",          cal:260,p:14,c:38,t:15,r:4.7,tag:"Vegan",        badge:"Best Seller", cuis:"🇲🇦",f:"vegan"},
+  {id:3,  e:"🐟",name:"Chermoula Salmon",    ar:"سمك بالشرمولة",  cal:480,p:44,c:22,t:25,r:4.9,tag:"High Protein",  badge:"Chef's Pick", cuis:"🇲🇦",f:"high-protein"},
+  {id:4,  e:"🍗",name:"Poulet M'Charmel",    ar:"دجاج معمر",       cal:420,p:38,c:28,t:30,r:4.8,tag:"High Protein",  badge:"",            cuis:"🇲🇦",f:"high-protein"},
+  {id:5,  e:"🥗",name:"Quinoa Poke Bowl",    ar:"بوكي بول كينوا", cal:410,p:22,c:52,t:15,r:4.9,tag:"Vegan",        badge:"Trending",    cuis:"🌏",f:"vegan"},
+  {id:6,  e:"🍜",name:"Miso Ramen Léger",    ar:"رامن ميسو",       cal:360,p:18,c:42,t:20,r:4.7,tag:"Low Carb",     badge:"",            cuis:"🌏",f:"low-carb"},
+  {id:7,  e:"🥟",name:"Gyoza Poulet",        ar:"جيوزا دجاج",      cal:310,p:26,c:32,t:20,r:4.6,tag:"High Protein",  badge:"New",         cuis:"🌏",f:"high-protein"},
+  {id:8,  e:"🍱",name:"Buddha Bowl Thaï",    ar:"بوذا بول",        cal:390,p:20,c:50,t:18,r:4.8,tag:"Vegan",        badge:"",            cuis:"🌏",f:"vegan"},
+  {id:9,  e:"🥙",name:"Wrap Falafel",        ar:"راب فلافل",       cal:370,p:16,c:48,t:15,r:4.7,tag:"Vegan",        badge:"Best Seller", cuis:"🌊",f:"vegan"},
+  {id:10, e:"🐠",name:"Branzino Grillé",     ar:"سمك مشوي",        cal:460,p:42,c:18,t:25,r:4.9,tag:"High Protein",  badge:"Chef's Pick", cuis:"🌊",f:"high-protein"},
+  {id:11, e:"🥗",name:"Salade Niçoise",      ar:"سلطة نيسواز",     cal:340,p:28,c:22,t:10,r:4.6,tag:"Low Carb",     badge:"",            cuis:"🌊",f:"low-carb"},
+  {id:12, e:"🫙",name:"Greek Yogurt Bowl",   ar:"يوغرت يوناني",    cal:290,p:18,c:34,t:5, r:4.8,tag:"Gluten-Free",  badge:"",            cuis:"🌊",f:"gluten-free"},
+  {id:13, e:"🌯",name:"Burrito Bowl",        ar:"بوريتو بول",      cal:440,p:36,c:48,t:20,r:4.7,tag:"High Protein",  badge:"Trending",    cuis:"🌎",f:"high-protein"},
+  {id:14, e:"🫐",name:"Açaí Power Bowl",     ar:"بول أساي",        cal:300,p:12,c:44,t:10,r:4.8,tag:"Vegan",        badge:"",            cuis:"🌎",f:"vegan"},
+  {id:15, e:"🥑",name:"Avocado Toast Boost", ar:"توست أفوكادو",    cal:350,p:14,c:38,t:8, r:4.6,tag:"Vegan",        badge:"",            cuis:"🌎",f:"vegan"},
+  {id:16, e:"🥩",name:"Smash Burger Léger",  ar:"برغر صحي",        cal:490,p:40,c:36,t:25,r:4.7,tag:"High Protein",  badge:"New",         cuis:"🌎",f:"high-protein"},
 ];
-
-const cuisineTabs = [
-  {id:"all", flag:"🌍", fr:"Tout",          ar:"الكل"},
-  {id:"🇮🇹",  flag:"🇮🇹", fr:"Italien",       ar:"إيطالي"},
-  {id:"🇫🇷",  flag:"🇫🇷", fr:"Français",      ar:"فرنسي"},
-  {id:"🇬🇷",  flag:"🇬🇷", fr:"Méditerranéen", ar:"متوسطي"},
-  {id:"🇯🇵",  flag:"🇯🇵", fr:"Asiatique",     ar:"آسيوي"},
-  {id:"🌎",   flag:"🌎", fr:"Américain",     ar:"أمريكي"},
+const cuisineTabs  = [
+  {id:"all",flag:"🌍",fr:"Tout",           ar:"الكل"},
+  {id:"🇲🇦",flag:"🇲🇦",fr:"Marocain",       ar:"مغربي"},
+  {id:"🌏", flag:"🌏",fr:"Asiatique",      ar:"آسيوي"},
+  {id:"🌊", flag:"🌊",fr:"Méditerranéen",  ar:"متوسطي"},
+  {id:"🌎", flag:"🌎",fr:"Américain",      ar:"أمريكي"},
 ];
 const dietFilters = ["All","Vegan","High Protein","Low Carb","Gluten-Free"];
-const filterMap = {"All":"all","Vegan":"vegan","High Protein":"high-protein","Low Carb":"low-carb","Gluten-Free":"gluten-free"};
+const filterMap   = {"All":"all","Vegan":"vegan","High Protein":"high-protein","Low Carb":"low-carb","Gluten-Free":"gluten-free"};
 
 /* ═══════════════════════════════════════════
    STATE
 ═══════════════════════════════════════════ */
-let lang       = "ar";
-let darkMode   = false;
-// Animated member count — counts up from 215 to 793 over 20 min, drops by 3 every 30s
-const liveCount = 793;
-function animateCount(el, from, to, duration) {
-  if (!el) return;
-  const steps    = 578;
-  const interval = duration / steps;
-  const stepVal  = (to - from) / steps;
-  let current    = from;
-  let i          = 0;
-
-  el.textContent = Math.round(current) + "+";
-
-  const timer = setInterval(() => {
-    current += stepVal;
-    i++;
-    el.textContent = Math.round(current) + "+";
-    if (i >= steps) { el.textContent = to + "+"; clearInterval(timer); }
-  }, interval);
-
-  // Every 30 seconds — dip by 3 then keep going
-  const dipTimer = setInterval(() => {
-    if (i >= steps) { clearInterval(dipTimer); return; }
-    current -= 3;
-    if (current < from) current = from;
-    el.textContent = Math.round(current) + "+";
-  }, 30000);
-}
-
-function toggleTheme() {
-  darkMode = !darkMode;
-  document.documentElement.setAttribute("data-theme", darkMode ? "dark" : "light");
-  document.getElementById("theme-btn").textContent = darkMode ? "☀️" : "🌙";
-  localStorage.setItem("savy-theme", darkMode ? "dark" : "light");
-}
-
-// Default: light + Arabic — only override if user manually changed it this session
-(function() {
-  const savedTheme = localStorage.getItem("savy-theme");
-  const savedLang  = localStorage.getItem("savy-lang");
-  if (savedTheme === "dark") { darkMode = true; document.documentElement.setAttribute("data-theme","dark"); }
-  // always start Arabic unless user explicitly switched to FR
-  if (savedLang === "fr") lang = "fr"; else lang = "ar";
-})();
-let activeCuis = "all";
-let activeDiet = "All";
-let cart       = [];
-let submitted  = false;
+let lang        = "fr";
+let activeCuis  = "all";
+let activeDiet  = "All";
+let cart        = [];
+let persona     = null;        // 'pro' | 'glow' | 'sport' | null
+let chatHistory = [];          // Groq conversation history
+let chatOpen    = false;
+let leadShown   = false;
+let leadDone    = false;
 
 /* ═══════════════════════════════════════════
    COPY
 ═══════════════════════════════════════════ */
 const copy = {
   fr:{
-    city:"🧬 Tétouan · M'diq · Martil — Bientôt disponible",
-    tagline:"Engineered by AI. Cooked with Love.",
-    h1:'Votre repas,<br><span class="accent">spécialement engineered pour vous.</span>',
-    sub:"Pas de plan générique. Pas de compromis. SAVY calcule chaque gramme de protéine, chaque calorie — puis cuisine avec le soin d'un chef qui vous connaît.",
-    cta:"Obtenir mon plan personnalisé →",
-    ctaNote:"🌸 Membres fondateurs · 30% de réduction · Places limitées",
-    ph:"Votre adresse email",
-    ok:"🧬 Votre plan est en cours d'engineering !",
-    okSub:"Bienvenue, Fondateur·trice #313. On vous contacte très bientôt.",
-    proof:"personnes déjà inscrites",
-    navMenu:"Menu", navHow:"How it Works", navAbout:"Notre Histoire",
-    navCta:"Get Started →",
-    how:"The SAVY Difference",
-    howSub:"Engineered by AI. Cooked with Love. Built for you.",
-    benefitsCta:"Start My Journey →",
-    proofStrip:"🇲🇦 Born in Tétouan. Built for every body. SAVY was created by a passionate Moroccan chef who believes healthy food should never feel like a punishment. Every meal is precision-engineered by AI — then cooked with real love, real ingredients, and real care.",
-    benefits:[
-      {icon:"💼", color:"#00D97E", title:"The Professional",
-       desc:"No-crash energy. No decision fatigue. Your lunch is engineered to fuel your 3pm meeting, not ruin it. Time saved. Productivity unlocked."},
-      {icon:"🏋️", color:"#FF9B50", title:"The Athlete",
-       desc:"100% Precision Fueling. Every gram of protein is calculated for your goal — mass, cut, or performance. We respect your grind. 🧬"},
-      {icon:"🌸", color:"#FF6B9D", title:"The Glow Experience",
-       desc:""You deserve a treat that loves you back." Meals engineered for radiance, beauty & self-care — cooked with love for your glow. ✨"},
-      {icon:"🧬", color:"#00D97E", title:"AI Precision",
-       desc:"Macros. Micros. Flavour. Our AI calculates your exact nutritional needs, then our chefs bring it to life with local Moroccan ingredients."},
-      {icon:"⚡", color:"#FFD700", title:"45 Minutes, Always Fresh",
-       desc:"Never frozen. Never reheated. Prepared fresh at your order and delivered hot to your door in Tétouan, M'diq, or Martil."},
-      {icon:"🔒", color:"#00D97E", title:"Zero Compromise",
-       desc:"Local ingredients. No additives. No shortcuts. SAVY works with the best producers in the region — because you deserve nothing less."},
-    ],
+    city:"🇲🇦 Tétouan · M'diq · Martil",
+    tagline:"Morocco's First AI Personal Chef",
+    h1:'Engineered for you.<br><span class="accent">Cooked with love.</span>',
+    sub:"SAVY est votre Meal Engineer personnel — combinant la précision de l'IA avec le cœur d'un Chef pour créer des repas qui nourrissent vos objectifs, votre éclat et votre grind.",
+    personaLabel:"🧬 Qui êtes-vous aujourd'hui ?",
+    pcProLbl:"Le Pro", pcProDesc:"Énergie & productivité",
+    pcGlowLbl:"Le Glow", pcGlowDesc:"Beauté de l'intérieur",
+    pcSportLbl:"L'Athlète", pcSportDesc:"Précision nutritionnelle",
+    proof:"personnes inscrites",
+    navMenu:"Menu", navHow:"Comment ça marche", navAbout:"À propos", navCta:"Commander",
+    how:"Comment ça marche",
     steps:[
-      {icon:"🌸", t:"Tell us about you",       d:"Glow? Grind? Growth? 30 seconds to tell SAVY who you are and what you need."},
-      {icon:"🧬", t:"AI engineers your meal",  d:"Our algorithm calculates your perfect macros and builds your personalized meal plan."},
-      {icon:"👨‍🍳", t:"Cooked with love",        d:"Fresh, local Moroccan ingredients. Prepared by real chefs who care about every detail."},
-      {icon:"🛵", t:"Delivered in 45 min",     d:"Hot. Fresh. Yours. Right at your door — no compromise, ever."},
+      {icon:"🧬",t:"Choisissez votre persona",  d:"Pro, Glow ou Athlète — SAVY adapte votre repas à votre style de vie."},
+      {icon:"🤖",t:"L'IA engineer votre meal",  d:"Chaque gramme de protéine et glucide calculé pour VOS objectifs."},
+      {icon:"👨‍🍳",t:"Chef cuisine avec amour",  d:"Ingrédients locaux frais, préparés à la commande pour vous."},
+      {icon:"🛵",t:"Livré en 45 min",           d:"Chez vous, chaud et frais. Garanti. Toujours."},
     ],
-    stats:[{v:"45 min",l:"Delivery"},{v:`${liveCount}+`,l:"Members"},{v:"4.9 ★",l:"Satisfaction"},{v:"100%",l:"Fresh"}],
-    menuTitle:"Engineered Menu",
-    menuSub:"Every dish is precision-crafted by AI — then cooked with the love of a Moroccan chef.",
-    search:"Search your perfect meal...",
-    cartMsg:(n)=>`${n} meal${n>1?"s":""} selected`,
-    order:"Engineer My Order →",
-    noResult:"No dishes found. Try another filter.",
-    finalTitle:"Engineered for you. Cooked with Love.",
-    finalSub:"Join Morocco's first AI Personal Chef experience. Founding members get 30% off their first engineered meal.",
-    finalNote:"🔒 No spam · Cancel anytime · 🌸 You deserve this",
-    finalOk:"🧬 You're in! Welcome to SAVY.",
-    footerCopy:"© 2025 SAVY · Tétouan, M'diq & Martil · Engineered by AI, Cooked with Love",
-    fl:["Privacy","Terms","Contact"],
-    chips:["Members","Delivery","Rating"],
+    stats:[{v:"45 min",l:"Livraison"},{v:"793+",l:"Inscrits"},{v:"4.9 ★",l:"Satisfaction"},{v:"100%",l:"Frais"}],
+    menuTitle:"Notre Menu", menuSub:"Des saveurs du monde, optimisées par l'IA pour vos objectifs",
+    search:"Rechercher des plats...",
+    cartMsg:(n)=>`${n} plat${n>1?"s":""} sélectionné${n>1?"s":""}`,
+    order:"Commander maintenant",
+    noResult:"Aucun plat trouvé.",
+    finalTitle:"Rejoindre SAVY aujourd'hui",
+    finalSub:"Parlez à votre Chef IA personnel. Votre repas, engineered pour vous. 🧬",
+    finalCta:"Engineer My Meal — Free",
+    finalNote:"🔒 Aucun spam · Juste votre repas parfait",
+    footerCopy:"© 2025 SAVY · Morocco's First AI Personal Chef",
+    fl:["Confidentialité","Conditions","Contact"],
+    chips:["Inscrits","Livraison","Note"],
+    bannerLink:"Commander maintenant →",
+    chatStatus:"En ligne · Meal Engineer",
+    personaRowLabel:"Je suis...",
+    cpbPro:"Pro", cpbGlow:"Glow", cpbSport:"Athlète",
+    leadPlaceholderName:"Votre nom complet",
+    leadPlaceholderCity:"Votre ville (ex: Tétouan)",
+    leadPlaceholderPhone:"WhatsApp (+212 6XX XXX XXX)",
+    leadSubmit:"🧬 Engineer My Meal Now ✨",
+    chatInputPh:"Message SAVY...",
   },
   ar:{
-    city:"🧬 تطوان · مضيق · مرتيل — قريباً",
-    tagline:"مهندَس بالذكاء. مطبوخ بالحب.",
-    h1:'وجبتك،<br><span class="accent">مصممة بالذكاء الاصطناعي خصيصاً ليك.</span>',
-    sub:"مش وجبة عشوائية. مش حلول وسط. SAVY كتحسب كل غرام بروتين وكل سعرة حرارية — وتطبخ بحنان شيف كيعرفك بالاسم.",
-    cta:"احصل على خطتك الشخصية →",
-    ctaNote:"🌸 أعضاء مؤسسون · خصم 30% · أماكن محدودة",
-    ph:"بريدك الإلكتروني",
-    ok:"🧬 وجبتك قيد التصميم الآن!",
-    okSub:"أهلاً، عضو مؤسس #313. غادي نتواصلو معك 9ريب.",
+    city:"🇲🇦 تطوان · مديق · مرتيل",
+    tagline:"أول شيف شخصي بالذكاء الاصطناعي في المغرب",
+    h1:'مصمم لك خصيصاً.<br><span class="accent">مطبوخ بكل حب.</span>',
+    sub:"SAVY هو مهندس وجباتك الشخصي — يجمع بين دقة الذكاء الاصطناعي وقلب الشيف لخلق وجبات تغذي أهدافك وجمالك وأداءك.",
+    personaLabel:"🧬 من أنت اليوم؟",
+    pcProLbl:"المحترف", pcProDesc:"الطاقة والإنتاجية",
+    pcGlowLbl:"الجمال", pcGlowDesc:"الجمال من الداخل",
+    pcSportLbl:"الرياضي", pcSportDesc:"التغذية الدقيقة",
     proof:"شخص انضم",
-    navMenu:"القائمة", navHow:"كيف يشتغل", navAbout:"قصتنا",
-    navCta:"ابدأ →",
-    how:"الفرق مع SAVY",
-    howSub:"مهندَس بالذكاء. مطبوخ بالحب. مصنوع ليك.",
-    benefitsCta:"ابدأ رحلتي →",
-    proofStrip:"🇲🇦 ولدت في تطوان. بُنيت لكل جسم. SAVY أسسها شيف مغربي كيؤمن بلي الأكل الصحي ما خاصوش يكون عقاب. كل وجبة مهندَسة بالـ AI — ومطبوخة بحب حقيقي، مكونات حقيقية، واهتمام حقيقي.",
-    benefits:[
-      {icon:"💼", color:"#00D97E", title:"المهني",
-       desc:"طاقة بلا انهيار. بلا ضياع في القرارات. غداؤك مهندَس يشغل دماغك لاجتماع الساعة 3 — مش يخربه. وقت تحفظ، إنتاجية تضاعف. 💼"},
-      {icon:"🏋️", color:"#FF9B50", title:"الرياضي",
-       desc:"100% Precision Fueling. كل غرام بروتين محسوب لهدفك — كتلة، حرق، أو أداء. راه كنحترمو مجهودك. 🏋️🧬"},
-      {icon:"🌸", color:"#FF6B9D", title:"تجربة Glow",
-       desc:""تستاهلي أكل يحبك بحالك كتحبيه." وجبات مهندَسة للإشراق والجمال والعناية بالنفس — مطبوخة بالحب لـ Glow ديالك. ✨🌸"},
-      {icon:"🧬", color:"#00D97E", title:"دقة الذكاء الاصطناعي",
-       desc:"ماكرو. ميكرو. نكهة. الـ AI ديالنا كيحسب احتياجاتك الغذائية بالضبط، والشيفات كيجيبوها للحياة بمكونات مغربية محلية."},
-      {icon:"⚡", color:"#FFD700", title:"45 دقيقة، دايما طازج",
-       desc:"ما كاين مجمد. ما كاين ريشوفاج. كيتحضر طازج وكيوصل ساخن لبابك في تطوان، مضيق، أو مرتيل."},
-      {icon:"🔒", color:"#00D97E", title:"بلا حلول وسط",
-       desc:"مكونات محلية. بلا مضافات. بلا اختصارات. SAVY كتخدم مع أحسن المنتجين في المنطقة — لأنك تستاهل أحسن شيء."},
-    ],
+    navMenu:"القائمة", navHow:"كيف يعمل", navAbout:"حولنا", navCta:"اطلب الآن",
+    how:"كيف يعمل",
     steps:[
-      {icon:"🌸", t:"حكي لينا عليك",         d:"Glow؟ رياضة؟ شغل؟ 30 ثانية تخبر SAVY من أنت وشنو محتاج."},
-      {icon:"🧬", t:"الذكاء يصمم وجبتك",     d:"خوارزميتنا كتحسب الماكرو المثالي ديالك وتبني خطة وجبتك الشخصية."},
-      {icon:"👨‍🍳", t:"مطبوخ بالحب",           d:"مكونات مغربية طازجة. محضرة من طرف شيفات حقيقيين كيهتمو بكل تفصيلة."},
-      {icon:"🛵", t:"توصيل في 45 دقيقة",     d:"ساخن. طازج. ديالك. لبابك مباشرة — بلا حلول وسط أبداً."},
+      {icon:"🧬",t:"اختر شخصيتك",          d:"محترف، جمال أو رياضي — SAVY يكيّف وجبتك حسب أسلوب حياتك."},
+      {icon:"🤖",t:"الذكاء يصمم وجبتك",    d:"كل غرام من البروتين والكربوهيدرات محسوب لأهدافك أنت."},
+      {icon:"👨‍🍳",t:"الشيف يطبخ بحب",     d:"مكونات محلية طازجة، محضرة لك عند الطلب."},
+      {icon:"🛵",t:"توصيل في 45 دقيقة",    d:"لبابك، ساخن وطازج. مضمون دائماً."},
     ],
-    stats:[{v:"45 دقيقة",l:"التوصيل"},{v:`+${liveCount}`,l:"عضو"},{v:"4.9 ★",l:"الرضا"},{v:"100%",l:"طازج"}],
-    menuTitle:"القائمة المهندَسة",
-    menuSub:"كل طبق مصمم بدقة بالذكاء الاصطناعي — ومطبوخ بحب الشيف المغربي.",
-    search:"ابحث عن وجبتك المثالية...",
-    cartMsg:(n)=>`${n} وجبة مختارة`,
-    order:"هندس طلبيتي →",
-    noResult:"ما لقيناش أطباق. جرب فلتر آخر.",
-    finalTitle:"مهندَس ليك. مطبوخ بالحب.",
-    finalSub:"انضم لأول تجربة شيف شخصي بالذكاء الاصطناعي في المغرب. الأعضاء المؤسسون كيحصلو على خصم 30% في أول وجبة مهندَسة.",
-    finalNote:"🔒 بلا سبام · إلغاء في أي وقت · 🌸 تستاهل هذا",
-    finalOk:"🧬 أنت في القائمة! أهلاً في SAVY.",
-    footerCopy:"© 2025 SAVY · تطوان، مضيق، مرتيل · مهندَس بالذكاء، مطبوخ بالحب",
+    stats:[{v:"45 دق",l:"التوصيل"},{v:"+793",l:"مشترك"},{v:"4.9 ★",l:"الرضا"},{v:"100%",l:"طازج"}],
+    menuTitle:"قائمتنا", menuSub:"نكهات عالمية محسّنة بالذكاء الاصطناعي لأهدافك",
+    search:"ابحث عن الأطباق...",
+    cartMsg:(n)=>`${n} طبق مختار`,
+    order:"اطلب الآن",
+    noResult:"لم يتم العثور على أطباق.",
+    finalTitle:"انضم إلى SAVY اليوم",
+    finalSub:"تحدث مع شيفك الذكي. وجبتك، مصممة لك. 🧬",
+    finalCta:"صمّم وجبتي — مجاناً",
+    finalNote:"🔒 لا إزعاج · فقط وجبتك المثالية",
+    footerCopy:"© 2025 SAVY · أول شيف ذكاء اصطناعي في المغرب",
     fl:["الخصوصية","الشروط","تواصل"],
-    chips:["عضو","توصيل","تقييم"],
+    chips:["مشترك","توصيل","تقييم"],
+    bannerLink:"اطلب الآن →",
+    chatStatus:"متاح · مهندس الوجبات",
+    personaRowLabel:"أنا...",
+    cpbPro:"محترف", cpbGlow:"جمال", cpbSport:"رياضي",
+    leadPlaceholderName:"اسمك الكامل",
+    leadPlaceholderCity:"مدينتك (مثال: تطوان)",
+    leadPlaceholderPhone:"WhatsApp (+212 6XX XXX XXX)",
+    leadSubmit:"🧬 صمّم وجبتي الآن ✨",
+    chatInputPh:"راسل SAVY...",
   }
 };
 
 /* ═══════════════════════════════════════════
-   LANGUAGE SWITCH
-/* ═══════════════════════════════════════════
-   LANGUAGE SWITCH
+   THEME
 ═══════════════════════════════════════════ */
-function setLang(l){
+let darkMode = localStorage.getItem("savy-theme") === "dark";
+
+function applyTheme() {
+  const btn = document.getElementById("theme-btn");
+  if(darkMode) {
+    document.documentElement.setAttribute("data-theme","dark");
+    if(btn) btn.textContent = "☀️";
+  } else {
+    document.documentElement.removeAttribute("data-theme");
+    if(btn) btn.textContent = "🌙";
+  }
+  localStorage.setItem("savy-theme", darkMode ? "dark" : "light");
+}
+
+function toggleTheme() {
+  darkMode = !darkMode;
+  applyTheme();
+}
+
+// Apply on load
+applyTheme();
+
+/* ═══════════════════════════════════════════
+   LANGUAGE
+═══════════════════════════════════════════ */
+function setLang(l) {
   lang = l;
-  localStorage.setItem("savy-lang", l);
   document.documentElement.lang = l;
   document.body.dir = l==="ar" ? "rtl" : "ltr";
   const t = copy[l];
   const isAr = l==="ar";
-  const ff = isAr ? "font-family:'Tajawal',sans-serif;" : "font-family:'Oxanium',serif;font-weight:700;";
+  const ff = isAr ? "font-family:'Tajawal',sans-serif;" : "font-family:'Cormorant Garamond',serif;font-weight:700;";
   const fb = isAr ? "font-family:'Tajawal',sans-serif;" : "";
 
-  // Banner
-  document.getElementById("banner-text").textContent = isAr
-    ? "🚀 SAVY قادمة قريباً إلى تطوان، مضيق، مرتيل وكل المنطقة — انضم للقائمة قبل الإطلاق!"
-    : "🧬 Engineered by AI. Cooked with Love. — Tétouan · M'diq · Martil";
-  quizPatchLang(l);
-
-  // Nav
-  document.querySelectorAll(".lang-btn").forEach((b,i)=>b.classList.toggle("active", (i===0&&l==="fr")||(i===1&&l==="ar")));
+  document.querySelectorAll(".lang-btn").forEach((b,i)=>b.classList.toggle("active",(i===0&&l==="fr")||(i===1&&l==="ar")));
   document.getElementById("nl-menu").textContent  = t.navMenu;
   document.getElementById("nl-how").textContent   = t.navHow;
   document.getElementById("nl-about").textContent = t.navAbout;
   document.getElementById("nav-cta").textContent  = t.navCta;
 
-  // Hero
-  document.getElementById("hero-city").textContent    = t.city;
+  document.getElementById("hero-city").textContent = t.city;
   document.getElementById("hero-tagline").textContent = t.tagline;
   document.getElementById("hero-h1").innerHTML = t.h1;
-  document.getElementById("hero-h1").style.cssText = ff + "font-size:clamp(30px,5vw,60px);font-weight:900;line-height:1.15;color:var(--text);margin-bottom:18px;";
-  document.getElementById("hero-sub").textContent  = t.sub;
-  document.getElementById("hero-sub").style.cssText = fb;
-  const _set = (id, prop, val) => { const el = document.getElementById(id); if (el) el[prop] = val; };
-  _set("email-hero",    "placeholder", t.ph);
-  _set("cta-text",      "textContent", t.cta);
-  _set("cta-note",      "textContent", t.ctaNote);
-  _set("proof-txt",     "innerHTML",   `<em id="live-count-proof"></em> ${t.proof}`);
-  _set("success-title", "textContent", t.ok);
-  _set("success-sub",   "textContent", t.okSub);
+  document.getElementById("hero-h1").style.cssText = ff+"font-size:clamp(38px,5.5vw,68px);font-weight:900;line-height:1.08;color:var(--text);margin-bottom:16px;";
+  document.getElementById("hero-sub").textContent = t.sub;
+  document.getElementById("persona-label").textContent = t.personaLabel;
+  document.getElementById("pc-pro-lbl").textContent    = t.pcProLbl;
+  document.getElementById("pc-pro-desc").textContent   = t.pcProDesc;
+  document.getElementById("pc-glow-lbl").textContent   = t.pcGlowLbl;
+  document.getElementById("pc-glow-desc").textContent  = t.pcGlowDesc;
+  document.getElementById("pc-sport-lbl").textContent  = t.pcSportLbl;
+  document.getElementById("pc-sport-desc").textContent = t.pcSportDesc;
+  document.getElementById("proof-txt").textContent     = t.proof;
   document.getElementById("chip-inscrits").textContent  = t.chips[0];
   document.getElementById("chip-livraison").textContent = t.chips[1];
   document.getElementById("chip-note").textContent      = t.chips[2];
 
-  // Benefits section
   document.getElementById("how-title").textContent = t.how;
   document.getElementById("how-title").style.cssText = ff;
-  document.getElementById("how-sub").textContent = t.howSub;
-  document.getElementById("benefits-cta").textContent = t.benefitsCta;
-  document.getElementById("proof-strip-text").textContent = t.proofStrip;
-  renderBenefits();
-
-  // Stats
+  renderSteps();
   renderStats();
 
-  // Menu
   document.getElementById("menu-title").textContent = t.menuTitle;
   document.getElementById("menu-title").style.cssText = ff;
-  document.getElementById("menu-sub").textContent  = t.menuSub;
-  document.getElementById("search").placeholder    = t.search;
-  document.getElementById("order-btn").textContent = t.order;
-  renderCuisineTabs();
-  renderDietFilters();
-  renderDishes();
+  document.getElementById("menu-sub").textContent   = t.menuSub;
+  document.getElementById("search").placeholder     = t.search;
+  document.getElementById("order-btn").textContent  = t.order;
+  renderCuisineTabs(); renderDietFilters(); renderDishes();
 
-  // Final
-  document.getElementById("final-title").textContent = t.finalTitle;
-  document.getElementById("final-title").style.cssText = ff;
-  document.getElementById("final-sub").textContent   = t.finalSub;
-  document.getElementById("email-final").placeholder = t.ph;
-  document.getElementById("cta-text-2").textContent  = t.cta;
-  document.getElementById("final-note").textContent  = t.finalNote;
-  document.getElementById("final-ok").textContent    = t.finalOk;
-
-  // Footer
-  document.getElementById("footer-copy").textContent = t.footerCopy;
+  document.getElementById("final-title").textContent   = t.finalTitle;
+  document.getElementById("final-cta-txt").textContent = t.finalCta;
+  document.getElementById("final-sub").textContent     = t.finalSub;
+  document.getElementById("final-note").textContent    = t.finalNote;
+  document.getElementById("footer-copy").textContent   = t.footerCopy;
   document.getElementById("fl-1").textContent = t.fl[0];
   document.getElementById("fl-2").textContent = t.fl[1];
   document.getElementById("fl-3").textContent = t.fl[2];
+
+  document.getElementById("chat-status-txt").textContent    = t.chatStatus;
+  document.getElementById("persona-row-label").textContent  = t.personaRowLabel;
+  document.getElementById("banner-link").textContent        = t.bannerLink;
+  document.getElementById("cpb-pro-lbl").textContent        = t.cpbPro;
+  document.getElementById("cpb-glow-lbl").textContent       = t.cpbGlow;
+  document.getElementById("cpb-sport-lbl").textContent      = t.cpbSport;
+  document.getElementById("lead-name").placeholder          = t.leadPlaceholderName;
+  document.getElementById("lead-city").placeholder          = t.leadPlaceholderCity;
+  document.getElementById("lead-phone").placeholder         = t.leadPlaceholderPhone;
+  document.getElementById("lead-submit-btn").textContent    = t.leadSubmit;
+  document.getElementById("chat-inp").placeholder           = t.chatInputPh;
+  document.getElementById("banner-link").textContent        = t.bannerLink;
 }
 
 /* ═══════════════════════════════════════════
-   BENEFITS
+   STEPS / STATS
 ═══════════════════════════════════════════ */
-function renderBenefits(){
-  const t = copy[lang];
-  const isAr = lang==="ar";
-  document.getElementById("benefits-grid").innerHTML = t.benefits.map((b,i)=>`
-    <div style="background:var(--card);border-radius:20px;padding:24px;border:1px solid var(--border);box-shadow:var(--shadow);transition:all .2s;animation:slideUp .5s ${i*.08}s ease both;"
-      onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadowH)'"
-      onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)'">
-      <div style="width:48px;height:48px;border-radius:16px;background:${b.color}18;border:1px solid ${b.color}30;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:14px;">${b.icon}</div>
-      <div style="font-family:${isAr?"'Tajawal'":" 'Oxanium'"}, sans-serif;font-weight:${isAr?800:800};font-size:15px;color:var(--text);margin-bottom:8px;text-align:${isAr?"right":"left"};">${b.title}</div>
-      <div style="font-size:13px;color:var(--sub);line-height:1.7;font-family:${isAr?"'Tajawal'":"'Manrope'"}, sans-serif;text-align:${isAr?"right":"left"};">${b.desc}</div>
-      <div style="margin-top:12px;width:28px;height:3px;border-radius:99px;background:${b.color};${isAr?"margin-right:0;margin-left:auto;":""}"></div>
+function renderSteps(){
+  const t=copy[lang]; const isAr=lang==="ar";
+  document.getElementById("steps-grid").innerHTML = t.steps.map((s,i)=>`
+    <div class="step-card" style="animation:slideUp .5s ${i*.1}s ease both">
+      <div class="step-icon">${s.icon}</div>
+      <div class="step-num">${i+1}</div>
+      <div class="step-title ${isAr?"far":"fsyne"}" style="text-align:${isAr?"right":"left"}">${s.t}</div>
+      <div class="step-desc  ${isAr?"far":"fb"}"    style="text-align:${isAr?"right":"left"}">${s.d}</div>
     </div>`).join("");
 }
-
-/* ═══════════════════════════════════════════
-   STATS
-═══════════════════════════════════════════ */
 function renderStats(){
-  const t = copy[lang];
-  const isAr = lang==="ar";
-  document.getElementById("stats-grid").innerHTML = t.stats.map((s,i)=>`
+  const t=copy[lang]; const isAr=lang==="ar";
+  document.getElementById("stats-grid").innerHTML = t.stats.map(s=>`
     <div class="stat-card">
-      <div class="stat-val fh" ${i===1?'id="live-count-stat"':''}>${s.v}</div>
+      <div class="stat-val fh">${s.v}</div>
       <div class="stat-lbl ${isAr?"far":"fb"}">${s.l}</div>
     </div>`).join("");
-  // Re-trigger animation on the stat after render
-  setTimeout(() => {
-    const statEl = document.getElementById("live-count-stat");
-    if (statEl) animateCount(statEl, 215, 793, 1200000);
-  }, 50);
 }
 
 /* ═══════════════════════════════════════════
-   CUISINE TABS
+   MENU
 ═══════════════════════════════════════════ */
 function renderCuisineTabs(){
-  const isAr = lang==="ar";
+  const isAr=lang==="ar";
   document.getElementById("cuisine-tabs").innerHTML = cuisineTabs.map(c=>`
-    <button class="pill ${activeCuis===c.id?"active":""}"
-      onclick="setCuisine('${c.id}')">
+    <button class="pill ${activeCuis===c.id?"active":""}" onclick="setCuisine('${c.id}')">
       ${c.flag} ${isAr?c.ar:c.fr}
     </button>`).join("");
 }
 function setCuisine(id){ activeCuis=id; renderCuisineTabs(); renderDishes(); }
-
-/* ═══════════════════════════════════════════
-   DIET FILTERS
-═══════════════════════════════════════════ */
 function renderDietFilters(){
   document.getElementById("diet-filters").innerHTML = dietFilters.map(f=>`
-    <button class="pill ${activeDiet===f?"active":""}"
-      onclick="setDiet('${f}')">
-      ${f}
-    </button>`).join("");
+    <button class="pill ${activeDiet===f?"active":""}" onclick="setDiet('${f}')">${f}</button>`).join("");
 }
 function setDiet(f){ activeDiet=f; renderDietFilters(); renderDishes(); }
-
-/* ═══════════════════════════════════════════
-   DISHES
-═══════════════════════════════════════════ */
 function renderDishes(){
-  const t   = copy[lang];
-  const isAr = lang==="ar";
-  const q   = document.getElementById("search").value.toLowerCase();
-  const filtered = dishes.filter(d=>{
-    const ms = d.name.toLowerCase().includes(q) || d.ar.includes(q);
-    const mf = activeDiet==="All" || d.f===filterMap[activeDiet];
-    const mc = activeCuis==="all" || d.cuis===activeCuis;
-    return ms && mf && mc;
+  const t=copy[lang]; const isAr=lang==="ar";
+  const q=document.getElementById("search").value.toLowerCase();
+  const filtered=dishes.filter(d=>{
+    const ms=d.name.toLowerCase().includes(q)||d.ar.includes(q);
+    const mf=activeDiet==="All"||d.f===filterMap[activeDiet];
+    const mc=activeCuis==="all"||d.cuis===activeCuis;
+    return ms&&mf&&mc;
   });
-
-  // Cart bar
-  const cb = document.getElementById("cart-bar");
-  if(cart.length>0){
-    cb.style.display="flex";
-    document.getElementById("cart-txt").textContent = t.cartMsg(cart.length);
-  } else { cb.style.display="none"; }
-
+  const cb=document.getElementById("cart-bar");
+  if(cart.length>0){ cb.style.display="flex"; document.getElementById("cart-txt").textContent=t.cartMsg(cart.length); }
+  else { cb.style.display="none"; }
   if(!filtered.length){
-    document.getElementById("dishes-list").innerHTML=`
-      <div class="empty-state">
-        <div class="big">🔍</div>
-        <p class="${isAr?"far":"fb"}">${t.noResult}</p>
-      </div>`;
+    document.getElementById("dishes-list").innerHTML=`<div class="empty-state"><div class="big">🔍</div><p>${t.noResult}</p></div>`;
     return;
   }
-
-  document.getElementById("dishes-list").innerHTML = filtered.map((d,i)=>`
+  document.getElementById("dishes-list").innerHTML=filtered.map((d,i)=>`
     <div class="dish-card" style="animation-delay:${i*.04}s">
       <div class="dish-emoji">${d.e}</div>
       <div class="dish-info">
-        <div class="${isAr?"dish-name dish-name-ar":"dish-name fh"}"
-          style="text-align:${isAr?"right":"left"}">
+        <div class="${isAr?"dish-name dish-name-ar":"dish-name"}" style="text-align:${isAr?"right":"left"}">
           ${isAr?d.ar:d.name}
           ${isAr?`<div class="dish-name-sub">${d.name}</div>`:""}
         </div>
@@ -1503,235 +1068,464 @@ function renderDishes(){
           <span class="tag-cuisine">${d.cuis}</span>
         </div>
         <div class="dish-macros">
-          <span>🔥 ${d.cal}kcal</span>
-          <span>💪 ${d.p}g P</span>
-          <span>🌾 ${d.c}g C</span>
+          <span>🔥 ${d.cal}kcal</span><span>💪 ${d.p}g P</span><span>🌾 ${d.c}g C</span>
           <span class="meta">⏱ ${d.t}m · ⭐ ${d.r}</span>
         </div>
       </div>
-      <button class="add-btn ${cart.includes(d.id)?"added":""}"
-        onclick="toggleCart(${d.id})">
+      <button class="add-btn ${cart.includes(d.id)?"added":""}" onclick="toggleCart(${d.id})">
         ${cart.includes(d.id)?"✓":"+"}
       </button>
     </div>`).join("");
 }
+function toggleCart(id){ cart=cart.includes(id)?cart.filter(x=>x!==id):[...cart,id]; renderDishes(); }
 
-function toggleCart(id){
-  cart = cart.includes(id) ? cart.filter(x=>x!==id) : [...cart, id];
-  renderDishes();
+/* ═══════════════════════════════════════════
+   PERSONA SELECTION (hero)
+═══════════════════════════════════════════ */
+function selectPersona(p) {
+  persona = p;
+  ["pro","glow","sport"].forEach(x=>{
+    const el=document.getElementById("pc-"+x);
+    el.className="persona-card";
+    if(x===p) el.classList.add("active-"+x);
+  });
+  // Update highlight card
+  const hl = document.getElementById("persona-highlight");
+  const pbt = document.getElementById("ph-btn");
+  if(p==="glow"){
+    hl.style.borderColor=  "var(--pink)";
+    hl.style.background =  "var(--pinkXL)";
+    document.getElementById("ph-icon").textContent  = "🌸";
+    document.getElementById("ph-title").textContent = "The Pink Experience";
+    document.getElementById("ph-desc").textContent  = lang==="ar" ? "وجبات تغذي جمالك من الداخل. مطبوخة بالحب. 💕" : "Meals that fuel your beauty from within. Cooked with love. 💕";
+    pbt.style.background = "linear-gradient(135deg, var(--pink), var(--pinkL))";
+    pbt.style.boxShadow  = "0 4px 14px rgba(233,30,140,0.35)";
+    pbt.textContent = "🌸 Start My Glow Journey";
+  } else if(p==="sport"){
+    hl.style.borderColor  = "#F59E0B";
+    hl.style.background   = "#FFFBEB";
+    document.getElementById("ph-icon").textContent  = "🏋️";
+    document.getElementById("ph-title").textContent = "Precision Fueling";
+    document.getElementById("ph-desc").textContent  = lang==="ar" ? "كل غرام بروتين محسوب لأهدافك. ننظم ماكرو مخصص. 💪" : "Every macro calculated for your performance goals. Engineered for gains. 💪";
+    pbt.style.background = "linear-gradient(135deg, #F59E0B, #FCD34D)";
+    pbt.style.boxShadow  = "0 4px 14px rgba(245,158,11,0.35)";
+    pbt.style.color      = "#78350F";
+    pbt.textContent = "🏋️ Engineer My Performance Meal";
+  } else {
+    hl.style.borderColor  = "var(--green)";
+    hl.style.background   = "var(--greenXL)";
+    document.getElementById("ph-icon").textContent  = "💼";
+    document.getElementById("ph-title").textContent = "Fuel for Productivity";
+    document.getElementById("ph-desc").textContent  = lang==="ar" ? "الطاقة الصحيحة للوقت الصحيح. لا خمول، لا تشتت. ⚡" : "The right energy at the right time. No crash, no distraction. ⚡";
+    pbt.style.background = "var(--green)";
+    pbt.style.boxShadow  = "0 4px 14px rgba(0,128,96,0.35)";
+    pbt.style.color      = "#fff";
+    pbt.textContent = "💼 Engineer My Energy Meal";
+  }
+  openChat();
 }
 
 /* ═══════════════════════════════════════════
-   MAILCHIMP CONFIG
-   ─────────────────────────────────────────
-   INSTRUCTIONS:
-   1. Log in to Mailchimp → Audience → Signup Forms → Embedded Forms
-   2. Find the line: action="https://xxxx.us1.list-manage.com/subscribe/post?u=...&id=..."
-   3. Copy that full URL and paste it below replacing PASTE_YOUR_MAILCHIMP_URL_HERE
+   CHAT OPEN / CLOSE
 ═══════════════════════════════════════════ */
-const MAILCHIMP_URL = "PASTE_YOUR_MAILCHIMP_URL_HERE";
+function openChat() {
+  chatOpen = true;
+  document.getElementById("chat-window").classList.add("open");
+  document.getElementById("chat-fab").style.display = "none";
+  if(chatHistory.length === 0) initChat();
+}
+function closeChat() {
+  chatOpen = false;
+  document.getElementById("chat-window").classList.remove("open");
+  document.getElementById("chat-fab").style.display = "flex";
+}
 
 /* ═══════════════════════════════════════════
-   FORMSPREE — Paste your Formspree URL below
-   1. Go to formspree.io → sign up free
-   2. Create a new form → copy your URL
-   3. Paste it below (looks like: https://formspree.io/f/xxxxxxxx)
+   CHAT PERSONA (inside chat window)
 ═══════════════════════════════════════════ */
-const FORMSPREE_URL = "https://script.google.com/macros/s/AKfycbze50a82fqgJodjNmIZLpis7TuVfveQ9c_x1aHXVEsDwEiiT0bqHhQlKCiL1LfZbO3-Gg/exec";
+function chatSetPersona(p) {
+  persona = p;
+  ["pro","glow","sport"].forEach(x=>{
+    const el=document.getElementById("cpb-"+x);
+    el.className="p-btn";
+    if(x===p) el.classList.add("sel-"+x);
+  });
+  // Reset and re-init with new persona
+  chatHistory = [];
+  document.getElementById("chat-msgs").innerHTML = "";
+  leadShown = false; leadDone = false;
+  document.getElementById("chat-lead-form").style.display = "none";
+  document.getElementById("chat-input-area").style.display = "block";
+  initChat();
+}
 
-async function saveToSheets(data) {
-  if (!FORMSPREE_URL || FORMSPREE_URL === "PASTE_YOUR_FORMSPREE_URL_HERE") return;
+/* ═══════════════════════════════════════════
+   CHAT INIT
+═══════════════════════════════════════════ */
+function initChat() {
+  const isAr = lang==="ar";
+  const p = persona || "pro";
+
+  let greeting;
+  if(p==="glow") {
+    greeting = isAr
+      ? `مرحباً بيكِ في SAVY 🌸✨\nأنا شيف SAVY، هنا باش نصمم ليكِ وجبة تحب جسمك وتغذي جمالك من الداخل.\nبالله علينا، شنو اسمك ؟ 💕`
+      : `Bienvenue chez SAVY 🌸✨\nJe suis Chef SAVY — ici pour engineer une expérience culinaire qui prend soin de toi.\nOn commence par le commencement : comment tu t'appelles ? 💕`;
+  } else if(p==="sport") {
+    greeting = isAr
+      ? `أهلاً رياضي 💪🧬\nأنا SAVY، مهندس وجبتك الشخصي.\nباش نحسب ليك الماكروز الصحيحة، خبرني: شنو هو هدفك — نقصان وزن، كتلة عضلية، أو رياضة عامة؟`
+      : `Welcome, athlete 💪🧬\nI'm SAVY, your personal Meal Engineer.\nTo calculate your perfect macros, tell me: are you training for weight loss, muscle gain, or general performance?`;
+  } else {
+    greeting = isAr
+      ? `أهلاً بيك في SAVY ⚡💼\nأنا SAVY، شيف الذكاء الاصطناعي الخاص بك.\nهنا باش نصمم ليك وجبة تعطيك الطاقة الصحيحة في الوقت الصحيح — بلا خمول بعد الغداء.\nشنو اسمك ؟`
+      : `Welcome to SAVY ⚡💼\nI'm Chef SAVY, your AI Meal Engineer.\nHere to fuel your day with the right energy — zero afternoon crash guaranteed.\nWhat's your name?`;
+  }
+
+  addBotMsg(greeting, p==="glow");
+  chatHistory.push({ role:"assistant", content: greeting });
+}
+
+/* ═══════════════════════════════════════════
+   MESSAGE RENDERERS
+═══════════════════════════════════════════ */
+function addBotMsg(text, isGlow=false) {
+  const msgs = document.getElementById("chat-msgs");
+  const div  = document.createElement("div");
+  div.className = isGlow ? "msg-bot msg-glow" : "msg-bot";
+  div.innerHTML = `
+    <div class="msg-avatar">
+      <svg width="16" height="16" viewBox="0 0 80 80" fill="none">
+        <ellipse cx="40" cy="21" rx="13" ry="5" fill="white" opacity=".9"/>
+        <rect x="27" y="16" width="26" height="14" rx="4" fill="white" opacity=".9"/>
+        <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="white"/>
+        <rect x="26" y="28" width="28" height="20" rx="9" fill="white"/>
+        <circle cx="34" cy="37" r="3.2" fill="#008060"/>
+        <circle cx="46" cy="37" r="3.2" fill="#008060"/>
+      </svg>
+    </div>
+    <div class="msg-bubble">${text.replace(/\n/g,"<br>")}</div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function addUserMsg(text) {
+  const msgs = document.getElementById("chat-msgs");
+  const div  = document.createElement("div");
+  div.className = "msg-user";
+  div.innerHTML = `<div class="msg-bubble">${text}</div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function showTyping() {
+  const msgs = document.getElementById("chat-msgs");
+  const div  = document.createElement("div");
+  div.id = "typing-indicator";
+  div.className = "msg-bot";
+  div.innerHTML = `
+    <div class="msg-avatar">
+      <svg width="16" height="16" viewBox="0 0 80 80" fill="none">
+        <ellipse cx="40" cy="21" rx="13" ry="5" fill="white" opacity=".9"/>
+        <rect x="27" y="16" width="26" height="14" rx="4" fill="white" opacity=".9"/>
+        <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="white"/>
+        <rect x="26" y="28" width="28" height="20" rx="9" fill="white"/>
+        <circle cx="34" cy="37" r="3.2" fill="#008060"/>
+        <circle cx="46" cy="37" r="3.2" fill="#008060"/>
+      </svg>
+    </div>
+    <div class="msg-bubble">
+      <div class="typing-dots"><span></span><span></span><span></span></div>
+    </div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+function hideTyping() {
+  const el = document.getElementById("typing-indicator");
+  if(el) el.remove();
+}
+
+function setQuickChips(chips) {
+  const el = document.getElementById("quick-chips");
+  const isGlow = persona==="glow";
+  el.innerHTML = chips.map(c=>`
+    <button class="q-chip${isGlow?" pink":""}" onclick="chatSendText('${c}')">${c}</button>`).join("");
+}
+
+/* ═══════════════════════════════════════════
+   CHAT SEND
+═══════════════════════════════════════════ */
+async function chatSend() {
+  const inp  = document.getElementById("chat-inp");
+  const text = inp.value.trim();
+  if(!text || leadDone) return;
+  inp.value = "";
+  document.getElementById("quick-chips").innerHTML = "";
+  chatSendText(text);
+}
+
+async function chatSendText(text) {
+  if(leadDone) return;
+  addUserMsg(text);
+  chatHistory.push({ role:"user", content:text });
+  document.getElementById("chat-send-btn").disabled = true;
+  showTyping();
+
+  const isAr  = lang==="ar";
+  const p     = persona || "pro";
+  const isGlow= p==="glow";
+  const msgCount = chatHistory.filter(m=>m.role==="user").length;
+
+  // Build system prompt
+  const systemPrompt = buildSystemPrompt(p, isAr);
+
   try {
-    // Use hidden form + iframe to bypass CORS with Google Apps Script
+    const res  = await fetch(GROQ_API_URL, {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({ messages: chatHistory, lang, persona:p, systemPrompt })
+    });
+    const data = await res.json();
+    let reply  = (data.reply||"").trim();
+
+    if(!reply) throw new Error("empty");
+
+    // Check if SAVY signals lead collection
+    const triggerLead = reply.includes("SAVY_GET_LEAD") || msgCount >= 4;
+    reply = reply.replace("SAVY_GET_LEAD","").trim();
+
+    hideTyping();
+    chatHistory.push({ role:"assistant", content:reply });
+    addBotMsg(reply, isGlow);
+
+    if(triggerLead && !leadShown) {
+      setTimeout(() => showLeadForm(p), 800);
+    } else {
+      // Suggest quick chips
+      if(p==="glow") {
+        if(msgCount===1) setQuickChips(isAr?["أريد إنقاص الوزن","أريد بشرة مضيئة","وجبة خفيفة وصحية"]:["Perdre du poids","Peau rayonnante","Repas léger & sain"]);
+        else if(msgCount===2) setQuickChips(isAr?["الغداء","العشاء","وجبة خفيفة"]:["Déjeuner","Dîner","Snack"]);
+      } else if(p==="sport") {
+        if(msgCount===1) setQuickChips(isAr?["بناء عضلات","حرق دهون","أداء رياضي"]:["Prise de masse","Perte de graisse","Performance"]);
+        else if(msgCount===2) setQuickChips(["70kg","80kg","90kg","100kg"]);
+      } else {
+        if(msgCount===1) setQuickChips(isAr?["أريد طاقة لليوم","أريد وجبة غداء","وجبة خفيفة"]:["Boost d'énergie","Déjeuner pro","Snack productivité"]);
+        else if(msgCount===2) setQuickChips(isAr?["الغداء","الإفطار","العشاء"]:["Déjeuner","Petit-déjeuner","Dîner"]);
+      }
+    }
+  } catch(e) {
+    hideTyping();
+    // Fallback local response
+    const fallback = getFallbackReply(p, isAr, chatHistory.filter(m=>m.role==="user").length);
+    chatHistory.push({ role:"assistant", content:fallback.text });
+    addBotMsg(fallback.text, isGlow);
+    if(fallback.showLead && !leadShown) setTimeout(()=>showLeadForm(p), 800);
+    if(fallback.chips) setQuickChips(fallback.chips);
+  }
+
+  document.getElementById("chat-send-btn").disabled = false;
+  document.getElementById("chat-inp").focus();
+}
+
+/* ═══════════════════════════════════════════
+   SYSTEM PROMPT BUILDER
+═══════════════════════════════════════════ */
+function buildSystemPrompt(p, isAr) {
+  const personaContext = {
+    pro:   isAr ? "موظف أو طالب يريد طاقة وإنتاجية، لا يريد خمولاً بعد الغداء." : "Office professional who needs energy and productivity, no afternoon crash.",
+    glow:  isAr ? "فتاة تريد الجمال من الداخل، العناية بالذات، وجبات تغذي البشرة والجسم." : "A woman who wants beauty from within, self-care meals, glowing skin and body confidence.",
+    sport: isAr ? "رياضي يريد ماكروز دقيقة، بروتين عالي، وجبات لبناء العضلات أو حرق الدهون." : "Athlete who wants precise macros, high protein, meals for muscle gain or fat loss.",
+  };
+  return isAr
+    ? `أنت "شيف SAVY"، أول شيف شخصي بالذكاء الاصطناعي في المغرب.
+شخصيتك: ذكي، دافئ، محترف، تتحدث بالدارجة المغربية الحديثة ممزوجة بالإنجليزية.
+المستخدم: ${personaContext[p]}
+مهمتك:
+1. اسأله عن اسمه
+2. افهم هدفه الغذائي بسؤال أو سؤالين
+3. قدم له توصية وجبة مناسبة مع الماكروز
+4. اجمع: الاسم، المدينة، والواتساب
+5. عندما تجمع الاسم والمدينة والواتساب، أضف في نهاية ردك: SAVY_GET_LEAD
+الرسالة النهائية: "أنا الآن أصمم وجبتك بكل حب. تفقد واتسابك قريباً! ✨"
+قواعد:
+- جمل قصيرة، مباشرة، ودافئة
+- استخدم الإيموجي بذكاء: 🧬 للتقنية، 🌸 للجمال، 💼 للعمل، 🏋️ للرياضة
+- لا تكتب أكثر من 3 جمل في كل رد`
+    : `You are "Chef SAVY", Morocco's first AI Personal Chef and Meal Engineer.
+Persona: Sophisticated, smart, deeply caring — like a brilliant friend who's also a nutritionist.
+User profile: ${personaContext[p]}
+Language: Urban Moroccan Darija mixed with professional English. Natural, warm, punchy.
+Your mission:
+1. Ask for their name first
+2. Understand their food goal in 1-2 questions
+3. Recommend a specific meal with macros that fits their goal
+4. Collect: Name, City, and WhatsApp number
+5. When you have Name + City + WhatsApp, append SAVY_GET_LEAD at the end of your reply
+Final message: "I'm now engineering your meal with love. Check your WhatsApp soon! ✨"
+Rules:
+- Short, punchy sentences (max 3 per reply)
+- Use emojis strategically: 🧬 for tech, 🌸 for glow, 💼 for work, 🏋️ for gym
+- Never be robotic — always be warm and human`;
+}
+
+/* ═══════════════════════════════════════════
+   FALLBACK REPLIES (when API is unavailable)
+═══════════════════════════════════════════ */
+function getFallbackReply(p, isAr, msgCount) {
+  const flows = {
+    pro: {
+      fr: [
+        { text:"Ahlan! 💼 Je suis Chef SAVY. Avant de t'engineer le repas parfait — comment tu t'appelles?", chips:["Alex","Mohamed","Karim","Youssef"] },
+        { text:"Super! 🧬 Quel est ton objectif principal — boost d'énergie pour les réunions, ou garder la ligne?", chips:["Boost d'énergie ⚡","Garder la ligne 🏃","Les deux!"] },
+        { text:"Parfait! Je te vois un Chermoula Salmon (480kcal, 44g P) — fuel idéal pour une après-midi productive. Dis-moi ta ville pour finaliser?", chips:["Tétouan","M'diq","Martil"] },
+        { text:"Presque! 🧬 Ton repas est presque engineered. Donne-moi ton WhatsApp et je t'envoie ton plan personnalisé.", showLead:true },
+      ],
+      ar: [
+        { text:"أهلاً! 💼 أنا شيف SAVY. قبل ما نصمم ليك وجبتك — شنو اسمك؟", chips:["محمد","يوسف","كريم","أحمد"] },
+        { text:"ممتاز! 🧬 شنو هدفك — طاقة للعمل، أو الحفاظ على الوزن؟", chips:["طاقة للعمل ⚡","الحفاظ على الوزن 🏃","الاثنان!"] },
+        { text:"زوين! أشوف ليك سلمون بالشرمولة (480kcal، 44g بروتين) — وقود مثالي ليوم إنتاجي. شنو مدينتك؟", chips:["تطوان","مديق","مرتيل"] },
+        { text:"تقريباً! 🧬 وجبتك جاهزة. عطيني واتسابك وغادي نبعتلك خطتك الشخصية.", showLead:true },
+      ]
+    },
+    glow: {
+      fr: [
+        { text:"Bienvenue dans le Pink Experience 🌸✨\nJe suis Chef SAVY — ici pour prendre soin de toi de l'intérieur.\nComment tu t'appelles, belle?", chips:[] },
+        { text:"Tu mérites un repas qui t'aime autant que tu t'aimes 💕\nTon objectif: perdre du poids, améliorer ta peau, ou juste manger sainement?", chips:["Perdre du poids","Peau rayonnante 🌸","Manger sainement"] },
+        { text:"J'adore! 🌸 Pour toi, je pense à un Greek Yogurt Bowl (290kcal) avec des super-foods anti-âge. Dis-moi ta ville?", chips:["Tétouan","M'diq","Martil"] },
+        { text:"Parfait ma belle! 💕 Donne-moi ton WhatsApp et ton repas 'Glow' sera engineered avec amour juste pour toi.", showLead:true },
+      ],
+      ar: [
+        { text:"أهلاً بيكِ في تجربة الجمال مع SAVY 🌸✨\nأنا هنا باش نصمم ليكِ وجبة تحب جسمك وتغذي جمالك.\nشنو اسمك؟", chips:[] },
+        { text:"تستاهلي وجبة تحبك بحالك كتحبيها 💕\nهدفك: إنقاص الوزن، بشرة مضيئة، أو الأكل الصحي بشكل عام؟", chips:["إنقاص الوزن","بشرة مضيئة 🌸","الأكل الصحي"] },
+        { text:"رائعة! 🌸 أفكر فيكِ في بول يوغرت يوناني (290kcal) مع superfood مضادة للأكسدة. شنو مدينتك؟", chips:["تطوان","مديق","مرتيل"] },
+        { text:"ممتاز! 💕 عطيني واتسابك وغادي نبعتلك وجبة Glow مصممة بالحب خصيصاً ليكِ.", showLead:true },
+      ]
+    },
+    sport: {
+      fr: [
+        { text:"Welcome, athlete! 💪🧬\nJe suis Chef SAVY — ton Meal Engineer pour la performance.\nObjectif: prise de masse, perte de graisse, ou performance générale?", chips:["Prise de masse 💪","Perte de graisse 🔥","Performance générale"] },
+        { text:"Parfait! Quel est ton poids actuel? (pour calculer tes macros exactes) 🧬", chips:["60-70kg","70-80kg","80-90kg","90kg+"] },
+        { text:"🧬 Macro calculé: 180g P · 250g C · 60g F/jour.\nJe recommande le Chermoula Salmon (480kcal, 44g P) post-training. Ta ville?", chips:["Tétouan","M'diq","Martil"] },
+        { text:"💪 Presque! Ton plan nutrition est prêt. Donne-moi ton WhatsApp pour te l'envoyer.", showLead:true },
+      ],
+      ar: [
+        { text:"أهلاً رياضي! 💪🧬\nأنا شيف SAVY — مهندس وجباتك للأداء الرياضي.\nهدفك: بناء عضلات، حرق دهون، أو أداء عام؟", chips:["بناء عضلات 💪","حرق دهون 🔥","أداء رياضي"] },
+        { text:"ممتاز! شنو وزنك الحالي؟ (باش نحسب ليك الماكروز الدقيقة) 🧬", chips:["60-70kg","70-80kg","80-90kg","90kg+"] },
+        { text:"🧬 ماكروزك: 180g بروتين · 250g كارب · 60g دهون/يوم.\nأنصحك بسلمون الشرمولة (480kcal، 44g بروتين) بعد التمرين. مدينتك؟", chips:["تطوان","مديق","مرتيل"] },
+        { text:"💪 تقريباً! خطة التغذية ديالك جاهزة. عطيني واتسابك باش نبعتهالك.", showLead:true },
+      ]
+    }
+  };
+
+  const flow = flows[p]?.[lang==="ar"?"ar":"fr"] || flows.pro.fr;
+  const idx  = Math.min(msgCount-1, flow.length-1);
+  return flow[Math.max(0,idx)] || flow[flow.length-1];
+}
+
+/* ═══════════════════════════════════════════
+   LEAD FORM
+═══════════════════════════════════════════ */
+function showLeadForm(p) {
+  if(leadShown) return;
+  leadShown = true;
+  const isAr   = lang==="ar";
+  const isGlow = p==="glow";
+
+  // Show a prompt before the form
+  const prompt = isAr
+    ? (isGlow ? "🌸 وجبتك الخاصة جاهزة! أحتاج فقط معلوماتك ليصلك كل شيء:" : "🧬 وجبتك جاهزة للـ engineering! أدخل بياناتك:")
+    : (isGlow ? "🌸 Your Glow meal is almost ready! Just fill in your details:" : "🧬 Your meal is engineered! Just need your details to send it:");
+  addBotMsg(prompt, isGlow);
+
+  setTimeout(() => {
+    document.getElementById("chat-input-area").style.display = "none";
+    document.getElementById("chat-lead-form").style.display  = "block";
+    if(isGlow) {
+      document.getElementById("lead-submit-btn").className = "lead-submit lead-submit-pink";
+      document.getElementById("lead-submit-btn").textContent = "🌸 Send My Glow Plan ✨";
+    }
+    document.getElementById("chat-lead-form").scrollIntoView({behavior:"smooth",block:"center"});
+  }, 600);
+}
+
+/* ═══════════════════════════════════════════
+   SUBMIT LEAD
+═══════════════════════════════════════════ */
+function submitLead() {
+  const name  = (document.getElementById("lead-name").value  || "").trim();
+  const city  = (document.getElementById("lead-city").value  || "").trim();
+  const phone = (document.getElementById("lead-phone").value || "").trim();
+  const isGlow = persona==="glow";
+  const isAr   = lang==="ar";
+
+  const hi = (id)=>{ const el=document.getElementById(id); if(el){el.style.borderColor="#e53935";setTimeout(()=>el.style.borderColor="",1500);} };
+  if(!name)  { hi("lead-name");  return; }
+  if(!city)  { hi("lead-city");  return; }
+  if(!phone) { hi("lead-phone"); return; }
+
+  leadDone = true;
+  document.getElementById("lead-submit-btn").textContent = "⏳ ...";
+  document.getElementById("lead-submit-btn").disabled    = true;
+
+  // Send to Google Sheets
+  saveToSheets({ name, city, phone, persona: persona||"pro", lang,
+    conversation: chatHistory.filter(m=>m.role==="user").map(m=>m.content).join(" | ") });
+
+  setTimeout(() => {
+    document.getElementById("chat-lead-form").style.display = "none";
+    const finalMsg = isAr
+      ? (isGlow
+        ? `شكراً ${name} 🌸✨\nأنا الآن أصمم ليكِ وجبة "Glow" مصممة بالحب الخالص. افحصي واتسابك قريباً! 💕`
+        : `شكراً ${name} 🧬✨\nأنا الآن أصمم وجبتك بكل دقة وحب. افحص واتسابك قريباً! 💪`)
+      : (isGlow
+        ? `Thank you ${name} 🌸✨\nI'm now engineering your Glow meal with all the love you deserve. Check your WhatsApp soon! 💕`
+        : `Thank you ${name} 🧬✨\nI'm now engineering your meal with love. Check your WhatsApp soon! ✨`);
+    addBotMsg(finalMsg, isGlow);
+    document.getElementById("chat-status-txt").textContent = isAr ? "✅ تم! واتسابك قريباً 🇲🇦" : "✅ Done! WhatsApp soon 🇲🇦";
+  }, 1200);
+}
+
+/* ═══════════════════════════════════════════
+   GOOGLE SHEETS
+═══════════════════════════════════════════ */
+function saveToSheets(data) {
+  if(!GOOGLE_SHEET_URL || GOOGLE_SHEET_URL.includes("PASTE")) return;
+  try {
     const iframe = document.createElement("iframe");
-    iframe.name = "savy-hidden-frame";
+    iframe.name  = "savy-sheet-frame";
     iframe.style.display = "none";
     document.body.appendChild(iframe);
-
     const form = document.createElement("form");
     form.method = "POST";
-    form.action = FORMSPREE_URL;
-    form.target = "savy-hidden-frame";
-
-    const fields = {
-      name:         data.name         || "",
-      fullname:     data.fullname     || "",
-      phone:        data.phone        || "",
-      order:        data.order        || "",
-      address:      data.address      || "",
-      payment:      data.payment      || "",
-      conversation: data.conversation || "",
-      lang:         data.lang         || ""
-    };
-
-    Object.entries(fields).forEach(([key, val]) => {
-      const input = document.createElement("input");
-      input.type  = "hidden";
-      input.name  = key;
-      input.value = val;
-      form.appendChild(input);
+    form.action = GOOGLE_SHEET_URL;
+    form.target = "savy-sheet-frame";
+    Object.entries(data).forEach(([k,v])=>{
+      const inp = document.createElement("input");
+      inp.type="hidden"; inp.name=k; inp.value=v||"";
+      form.appendChild(inp);
     });
-
     document.body.appendChild(form);
     form.submit();
-
-    setTimeout(() => {
-      document.body.removeChild(form);
-      document.body.removeChild(iframe);
-    }, 3000);
-
-  } catch(e) {
-    console.warn("Sheets save failed:", e);
-  }
-}
-
-async function sendToMailchimp(email) {
-  // Mailchimp requires JSONP to avoid CORS — we use a hidden iframe trick
-  return new Promise((resolve) => {
-    const url = MAILCHIMP_URL.replace("/post?", "/post-json?") + "&EMAIL=" + encodeURIComponent(email) + "&c=mailchimpCallback";
-
-    window.mailchimpCallback = function(data) {
-      resolve(data);
-      delete window.mailchimpCallback;
-    };
-
-    // Remove old script if exists
-    const old = document.getElementById("mc-script");
-    if (old) old.remove();
-
-    const script = document.createElement("script");
-    script.id  = "mc-script";
-    script.src = url;
-    document.body.appendChild(script);
-
-    // Fallback timeout — show success anyway after 3s
-    setTimeout(() => resolve({ result: "success" }), 3000);
-  });
-}
-
-function showSuccess() {
-  document.getElementById("form-area").style.display  = "none";
-  document.getElementById("success-box").style.display = "block";
-  document.getElementById("form-area-2").style.display  = "none";
-  document.getElementById("success-final").style.display = "block";
-}
-
-async function submitEmail() {
-  const email = document.getElementById("email-hero").value.trim();
-  if (!email.includes("@")) {
-    document.getElementById("email-hero").style.borderColor = "#e53935";
-    setTimeout(() => document.getElementById("email-hero").style.borderColor = "", 1500);
-    return;
-  }
-
-  // Show loading state
-  const btn = document.getElementById("cta-btn");
-  const txt = document.getElementById("cta-text");
-  btn.disabled = true;
-  txt.textContent = "⏳ ...";
-
-  if (MAILCHIMP_URL === "PASTE_YOUR_MAILCHIMP_URL_HERE") {
-    // Demo mode — no Mailchimp URL set yet
-    setTimeout(showSuccess, 600);
-  } else {
-    await sendToMailchimp(email);
-    showSuccess();
-  }
-  btn.disabled = false;
-}
-
-async function submitEmail2() {
-  const email = document.getElementById("email-final").value.trim();
-  if (!email.includes("@")) {
-    document.getElementById("email-final").style.borderColor = "#e53935";
-    setTimeout(() => document.getElementById("email-final").style.borderColor = "", 1500);
-    return;
-  }
-
-  const btn2 = document.getElementById("cta-text-2").parentElement;
-  btn2.disabled = true;
-  document.getElementById("cta-text-2").textContent = "⏳ ...";
-
-  if (MAILCHIMP_URL === "PASTE_YOUR_MAILCHIMP_URL_HERE") {
-    setTimeout(showSuccess, 600);
-  } else {
-    await sendToMailchimp(email);
-    showSuccess();
-  }
-  btn2.disabled = false;
+    setTimeout(()=>{ form.remove(); iframe.remove(); }, 3000);
+  } catch(e) { console.warn("Sheets error:", e); }
 }
 
 /* ═══════════════════════════════════════════
-   INIT
+   HERO PERSONA SELECT
 ═══════════════════════════════════════════ */
-renderBenefits();
+// init the hero persona section  
+renderSteps();
 renderStats();
-document.getElementById("how-sub").textContent = copy[lang].howSub;
-document.getElementById("proof-strip-text").textContent = copy[lang].proofStrip;
-document.getElementById("benefits-cta").textContent = copy[lang].benefitsCta;
 renderCuisineTabs();
 renderDietFilters();
 renderDishes();
 
 // Navbar scroll
 window.addEventListener("scroll",()=>{
-  document.getElementById("navbar").style.boxShadow =
-    window.scrollY>40 ? "0 2px 20px rgba(0,128,96,0.1)" : "none";
+  document.getElementById("navbar").style.boxShadow = window.scrollY>40 ? "0 2px 20px rgba(0,128,96,0.1)" : "none";
 });
-/* ═══════════════════════════════════════════
-   SAVY QUIZ — no API, fully local
-═══════════════════════════════════════════ */
 
-// ── Submit Order ─────────────────────────────────────
-function submitOrder() {
-  const isAr    = lang === "ar";
-  const fullname = (document.getElementById("of-fullname")?.value || "").trim();
-  const phone    = (document.getElementById("of-phone")?.value    || "").trim();
-  const order    = (document.getElementById("of-order")?.value    || "").trim();
-  const address  = (document.getElementById("of-address")?.value  || "").trim();
-  const payment  = (document.getElementById("of-payment")?.value  || "").trim();
-
-  const hi = (id) => { const el = document.getElementById(id); if(el) el.style.borderColor="#e53935"; };
-  if (!fullname) { hi("of-fullname"); return; }
-  if (!phone)    { hi("of-phone");    return; }
-  if (!address)  { hi("of-address");  return; }
-  if (!payment)  { hi("of-payment");  return; }
-
-  const btn = document.getElementById("order-btn-lbl");
-  if (btn) { btn.textContent = isAr ? "جاري الإرسال..." : "Envoi en cours..."; }
-
-  saveToSheets({ name: fullname, fullname, phone, order, address, payment, lang, conversation: order });
-
-  setTimeout(() => {
-    document.getElementById("order-form-box").style.display = "none";
-    document.getElementById("order-success").style.display = "block";
-    const t = document.getElementById("order-success-title");
-    const s = document.getElementById("order-success-sub");
-    if (t) t.textContent = isAr ? `شكراً ${fullname} ! طلبيتك وصلات 🎉` : `Merci ${fullname} ! Commande reçue 🎉`;
-    if (s) s.textContent = isAr ? "غادي نتواصلو معك على WhatsApp 9ريب 🇲🇦" : "Nous vous contactons très bientôt sur WhatsApp 🇲🇦";
-    savvySaveAccount({ fullname, phone, address });
-  }, 800);
-}
-
-// Typing animation keyframe (add dynamically)
-const styleTag = document.createElement("style");
-styleTag.textContent = `@keyframes typingDot { 0%,60%,100%{transform:translateY(0);opacity:.5} 30%{transform:translateY(-6px);opacity:1} }`;
-document.head.appendChild(styleTag);
-
-
-function quizPatchLang(l) {
-  const isAr = l === "ar";
-  const status = document.getElementById("form-status");
-  if (status) status.textContent = "توصيل — تطوان · مديق · مرتيل 🇲🇦";
-  const title = document.getElementById("form-title-main");
-  if (title) title.textContent = isAr ? "🍽️ اطلب دابا" : "🍽️ Commander maintenant";
-  const btn = document.getElementById("order-btn-lbl");
-  if (btn) btn.textContent = isAr ? "تأكيد طلبيتي ✅" : "Confirmer ma commande ✅";
-  const fo = document.getElementById("of-order");
-  if (fo) fo.placeholder = isAr ? "تفاصيل طلبيتك (مثال: 2 وجبات رياضي...)" : "Votre commande (ex: 2 repas sportif...)";
-  const fa = document.getElementById("of-address");
-  if (fa) fa.placeholder = isAr ? "عنوان التوصيل" : "Adresse de livraison";
-}
+// Auto open chat after 8 seconds
+setTimeout(()=>{ if(!chatOpen) { openChat(); } }, 8000);
 
 </script>
 </body>
