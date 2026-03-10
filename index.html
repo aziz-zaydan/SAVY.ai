@@ -775,12 +775,13 @@
       </div>
 
       <!-- 2. SAVY AI CHEF QUIZ -->
-      <div class="su2" style="margin-bottom:24px;max-width:500px;" id="savy-quiz-wrap">
+      <!-- Order Form -->
+      <div class="su2" style="margin-bottom:24px;max-width:480px;" id="savy-order-wrap">
 
-        <!-- Header bar -->
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+        <!-- Title -->
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
           <div style="width:40px;height:40px;border-radius:13px;background:var(--green);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 14px rgba(0,128,96,0.3);">
-            <svg width="24" height="24" viewBox="0 0 80 80" fill="none">
+            <svg width="22" height="22" viewBox="0 0 80 80" fill="none">
               <ellipse cx="40" cy="21" rx="13" ry="5" fill="white" opacity=".9"/>
               <rect x="27" y="16" width="26" height="14" rx="4" fill="white" opacity=".9"/>
               <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="white"/>
@@ -791,91 +792,62 @@
               <text x="40" y="63" text-anchor="middle" font-size="9" font-weight="900" fill="#008060" font-family="system-ui">A</text>
             </svg>
           </div>
-          <div style="flex:1;">
-            <div style="font-family:'Oxanium',sans-serif;font-weight:800;font-size:15px;color:var(--text);">SAVY AI Chef</div>
+          <div>
+            <div id="form-title-main" style="font-family:'Syne',sans-serif;font-weight:800;font-size:15px;color:var(--text);">🍽️ Commander maintenant</div>
             <div style="font-size:11px;color:var(--muted);font-family:'Manrope',sans-serif;display:flex;align-items:center;gap:5px;">
               <span style="width:6px;height:6px;border-radius:50%;background:#4ade80;display:inline-block;animation:pulse 1.5s infinite;"></span>
-              <span id="quiz-status">En ligne · Chef SAVY 🇲🇦</span>
+              <span id="form-status">توصيل — تطوان · مديق · مرتيل 🇲🇦</span>
             </div>
           </div>
-          <button onclick="quizReset()" title="Restart" style="background:var(--greenXL);border:1px solid var(--border);color:var(--green);width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .2s;">↺</button>
         </div>
 
-        <!-- Progress bar -->
-        <div style="height:3px;background:var(--border);border-radius:99px;margin-bottom:10px;overflow:hidden;">
-          <div id="quiz-progress" style="height:100%;background:var(--green);border-radius:99px;width:0%;transition:width .5s ease;"></div>
-        </div>
-
-        <!-- Chat window -->
-        <div id="quiz-msgs" style="background:var(--card);border-radius:18px;border:1.5px solid var(--border);padding:14px;min-height:100px;max-height:240px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;box-shadow:var(--shadow);scroll-behavior:smooth;margin-bottom:10px;"></div>
-
-        <!-- Choice buttons (payment step) -->
-        <div id="quiz-choices" style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:8px;"></div>
-
-        <!-- Gemini text input -->
-        <div id="savy-input-row" style="display:flex;gap:8px;margin-bottom:8px;">
-          <input id="savy-user-inp" type="text"
-            placeholder="اكتب رسالتك هنا..."
-            style="flex:1;padding:11px 14px;border-radius:13px;border:1.5px solid var(--border);font-size:13px;outline:none;font-family:'Manrope',sans-serif;color:var(--text);background:var(--card);transition:border-color .2s;"
-            onfocus="this.style.borderColor='var(--green)'"
-            onblur="this.style.borderColor='var(--border)'"
-            onkeydown="if(event.key==='Enter') savySend()"/>
-          <button id="savy-send-btn" onclick="savySend()"
-            style="padding:11px 16px;border-radius:13px;border:none;background:var(--green);color:#fff;font-size:16px;cursor:pointer;transition:opacity .2s;flex-shrink:0;"
-            onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
-            ➤
-          </button>
-        </div>
-
-        <!-- Lead form (final step) -->
-        <div id="quiz-lead-form" style="display:none;margin-top:4px;">
-
-          <!-- Full name -->
-          <input id="lead-fullname" type="text"
+        <!-- The form -->
+        <div id="order-form-box">
+          <input id="of-fullname" type="text"
             placeholder="الاسم الكامل / Nom complet"
-            style="width:100%;box-sizing:border-box;padding:11px 13px;border-radius:13px;border:1.5px solid var(--border);font-size:13px;outline:none;font-family:'Manrope',sans-serif;color:var(--text);background:var(--card);margin-bottom:8px;"
+            style="width:100%;box-sizing:border-box;padding:12px 14px;border-radius:13px;border:1.5px solid var(--border);font-size:13px;outline:none;font-family:'Manrope',sans-serif;color:var(--text);background:var(--card);margin-bottom:8px;transition:border-color .2s;"
             onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='var(--border)'"/>
 
-          <!-- Phone -->
-          <input id="lead-phone" type="tel"
+          <input id="of-phone" type="tel"
             placeholder="WhatsApp (+212 6XX XXX XXX)"
-            style="width:100%;box-sizing:border-box;padding:11px 13px;border-radius:13px;border:1.5px solid var(--border);font-size:13px;outline:none;font-family:'Manrope',sans-serif;color:var(--text);background:var(--card);margin-bottom:8px;"
+            style="width:100%;box-sizing:border-box;padding:12px 14px;border-radius:13px;border:1.5px solid var(--border);font-size:13px;outline:none;font-family:'Manrope',sans-serif;color:var(--text);background:var(--card);margin-bottom:8px;transition:border-color .2s;"
             onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='var(--border)'"/>
 
-          <!-- Order summary (auto-filled from conversation) -->
-          <textarea id="lead-order" rows="3"
-            placeholder="تفاصيل الطلبية / Détails de la commande"
-            style="width:100%;box-sizing:border-box;padding:11px 13px;border-radius:13px;border:1.5px solid var(--border);font-size:13px;outline:none;font-family:'Manrope',sans-serif;color:var(--text);background:var(--card);margin-bottom:8px;resize:none;line-height:1.5;"
+          <textarea id="of-order" rows="2"
+            placeholder="تفاصيل طلبيتك / Votre commande (ex: 2 repas sans gluten, sportif...)"
+            style="width:100%;box-sizing:border-box;padding:12px 14px;border-radius:13px;border:1.5px solid var(--border);font-size:13px;outline:none;font-family:'Manrope',sans-serif;color:var(--text);background:var(--card);margin-bottom:8px;resize:none;line-height:1.5;transition:border-color .2s;"
             onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='var(--border)'"></textarea>
 
-          <!-- Address -->
-          <input id="lead-address" type="text"
+          <input id="of-address" type="text"
             placeholder="عنوان التوصيل / Adresse de livraison"
-            style="width:100%;box-sizing:border-box;padding:11px 13px;border-radius:13px;border:1.5px solid var(--border);font-size:13px;outline:none;font-family:'Manrope',sans-serif;color:var(--text);background:var(--card);margin-bottom:8px;"
+            style="width:100%;box-sizing:border-box;padding:12px 14px;border-radius:13px;border:1.5px solid var(--border);font-size:13px;outline:none;font-family:'Manrope',sans-serif;color:var(--text);background:var(--card);margin-bottom:8px;transition:border-color .2s;"
             onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='var(--border)'"/>
 
-          <!-- Payment method -->
-          <select id="lead-payment"
-            style="width:100%;box-sizing:border-box;padding:11px 13px;border-radius:13px;border:1.5px solid var(--border);font-size:13px;outline:none;font-family:'Manrope',sans-serif;color:var(--text);background:var(--card);margin-bottom:10px;cursor:pointer;"
+          <select id="of-payment"
+            style="width:100%;box-sizing:border-box;padding:12px 14px;border-radius:13px;border:1.5px solid var(--border);font-size:13px;outline:none;font-family:'Manrope',sans-serif;color:var(--text);background:var(--card);margin-bottom:12px;cursor:pointer;transition:border-color .2s;"
             onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='var(--border)'">
             <option value="">💳 طريقة الدفع / Mode de paiement</option>
             <option value="card">💳 الدفع بالبطاقة / Payer par carte</option>
             <option value="cash">🚪 الدفع عند التوصيل / Payer à la livraison</option>
           </select>
 
-          <button onclick="quizSubmitLead()"
-            style="width:100%;padding:13px;border-radius:13px;border:none;background:var(--green);color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:'Manrope',sans-serif;box-shadow:0 4px 16px rgba(0,128,96,0.35);transition:all .2s;letter-spacing:.3px;">
-            ✅ <span id="lead-btn-lbl">Confirmer ma commande</span>
+          <button onclick="submitOrder()"
+            style="width:100%;padding:14px;border-radius:13px;border:none;background:var(--green);color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:'Manrope',sans-serif;box-shadow:0 4px 16px rgba(0,128,96,0.35);transition:all .2s;letter-spacing:.3px;"
+            onmouseover="this.style.opacity='.88'" onmouseout="this.style.opacity='1'">
+            🍽️ <span id="order-btn-lbl">Confirmer ma commande</span>
           </button>
-          <p style="font-size:11px;color:var(--muted);font-family:'Manrope',sans-serif;margin-top:6px;text-align:center;">🔒 معلوماتك خاصة — محمية 100%</p>
+          <p style="font-size:11px;color:var(--muted);font-family:'Manrope',sans-serif;margin-top:7px;text-align:center;">🔒 معلوماتك خاصة — محمية 100%</p>
         </div>
-          <p style="font-size:11px;color:var(--muted);font-family:'Manrope',sans-serif;margin-top:6px;text-align:center;">🔒 Vos données sont privées — jamais partagées</p>
+
+        <!-- Success state -->
+        <div id="order-success" style="display:none;padding:20px;text-align:center;">
+          <div style="font-size:40px;margin-bottom:10px;">✅</div>
+          <div id="order-success-title" style="font-family:'Syne',sans-serif;font-weight:800;font-size:18px;color:var(--green);margin-bottom:8px;">شكراً ! طلبيتك وصلات 🎉</div>
+          <div id="order-success-sub" style="font-size:13px;color:var(--muted);font-family:'Manrope',sans-serif;line-height:1.6;">غادي نتواصلو معك على WhatsApp 9ريب 🇲🇦</div>
         </div>
       </div>
 
-      <!-- 3. H1 Title -->
-
-      <!-- Social proof -->
+            <!-- Social proof -->
       <div class="proof su4">
         <div class="avatars">
           <div class="av" style="background:linear-gradient(135deg,#008060,#00A878);">Y</div>
@@ -1710,347 +1682,56 @@ window.addEventListener("scroll",()=>{
    SAVY QUIZ — no API, fully local
 ═══════════════════════════════════════════ */
 
-/* ═══════════════════════════════════════════
-   SAVY AI CHEF — Gemini Powered Conversation
-═══════════════════════════════════════════ */
-
-// ── Conversation history for Gemini ──────────────────
-let geminiHistory = [];
-let savyWaitingForInfo = false;
-let savySubmitted = false;
-
-// ── Message renderers ─────────────────────────────────
-function quizBot(text) {
-  const msgs = document.getElementById("quiz-msgs");
-
-  const typing = document.createElement("div");
-  typing.id = "savy-typing";
-  typing.style.cssText = "display:flex;align-items:center;gap:6px;";
-  typing.innerHTML = `
-    <div style="width:26px;height:26px;border-radius:9px;background:var(--green);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-      <svg width="14" height="14" viewBox="0 0 80 80" fill="none">
-        <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="white"/>
-        <rect x="26" y="28" width="28" height="20" rx="9" fill="white"/>
-        <circle cx="34" cy="37" r="3" fill="#008060"/>
-        <circle cx="46" cy="37" r="3" fill="#008060"/>
-      </svg>
-    </div>
-    <div style="padding:9px 13px;background:var(--greenXL);border-radius:12px 12px 12px 4px;display:flex;gap:4px;align-items:center;">
-      <span style="width:5px;height:5px;border-radius:50%;background:var(--green);animation:typingDot .9s 0s infinite;display:inline-block;"></span>
-      <span style="width:5px;height:5px;border-radius:50%;background:var(--green);animation:typingDot .9s .2s infinite;display:inline-block;"></span>
-      <span style="width:5px;height:5px;border-radius:50%;background:var(--green);animation:typingDot .9s .4s infinite;display:inline-block;"></span>
-    </div>`;
-  msgs.appendChild(typing);
-  msgs.scrollTop = msgs.scrollHeight;
-
-  return new Promise(resolve => {
-    setTimeout(() => {
-      typing.remove();
-      const div = document.createElement("div");
-      div.style.cssText = "display:flex;align-items:flex-end;gap:6px;animation:slideUp .3s ease;";
-      div.innerHTML = `
-        <div style="width:26px;height:26px;border-radius:9px;background:var(--green);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-bottom:2px;">
-          <svg width="14" height="14" viewBox="0 0 80 80" fill="none">
-            <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="white"/>
-            <rect x="26" y="28" width="28" height="20" rx="9" fill="white"/>
-            <circle cx="34" cy="37" r="3" fill="#008060"/>
-            <circle cx="46" cy="37" r="3" fill="#008060"/>
-          </svg>
-        </div>
-        <div style="max-width:85%;padding:10px 14px;background:var(--greenXL);border-radius:12px 12px 12px 4px;font-size:13px;color:var(--text);font-family:'Manrope',sans-serif;line-height:1.7;">${text}</div>`;
-      msgs.appendChild(div);
-      msgs.scrollTop = msgs.scrollHeight;
-      resolve();
-    }, 800);
-  });
-}
-
-function quizUser(text) {
-  const msgs = document.getElementById("quiz-msgs");
-  const div = document.createElement("div");
-  div.style.cssText = "display:flex;justify-content:flex-end;animation:slideUp .3s ease;";
-  div.innerHTML = `<div style="max-width:80%;padding:10px 14px;background:var(--green);border-radius:12px 12px 4px 12px;font-size:13px;color:#fff;font-family:'Manrope',sans-serif;line-height:1.5;">${text}</div>`;
-  msgs.appendChild(div);
-  msgs.scrollTop = msgs.scrollHeight;
-}
-
-// ── Send message to Gemini (via Netlify function) ─────
-async function savySend() {
-  if (savyWaitingForInfo || savySubmitted) return;
-
-  const inp  = document.getElementById("savy-user-inp");
-  const text = (inp?.value || "").trim();
-  if (!text) return;
-  inp.value = "";
-
-  quizUser(text);
-  geminiHistory.push({ role: "user", parts: [{ text }] });
-
-  const btn  = document.getElementById("savy-send-btn");
-  if (btn) btn.disabled = true;
-
-  const isAr = lang === "ar";
-
-  try {
-    const res  = await fetch("/.netlify/functions/gemini", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ messages: geminiHistory, lang })
-    });
-    const data  = await res.json();
-    console.log("Gemini response:", JSON.stringify(data).slice(0, 500));
-    let reply   = (data?.reply || "").trim();
-
-    if (!reply) {
-      const errMsg = data?.error || "empty reply";
-      console.error("Gemini empty:", errMsg);
-      throw new Error(errMsg);
-    }
-
-    if (reply.includes("SAVY_COLLECT_INFO")) {
-      reply = reply.replace("SAVY_COLLECT_INFO", "").trim();
-      await quizBot(reply);
-      savyWaitingForInfo = true;
-      document.getElementById("savy-input-row").style.display = "none";
-      showLeadForm();
-    } else {
-      geminiHistory.push({ role: "model", parts: [{ text: reply }] });
-      await quizBot(reply);
-    }
-  } catch(e) {
-    console.error("Gemini error:", e);
-    await quizBot(`⚠️ Error: ${e.message}`);
-  }
-
-  if (btn) btn.disabled = false;
-  document.getElementById("savy-user-inp")?.focus();
-}
-
-// ── Show lead form ────────────────────────────────────
-function showLeadForm() {
-  const isAr = lang === "ar";
-  setTimeout(() => {
-    quizBot(isAr
-      ? "زوين ! 🧬 دابا نحتاج منك بعض المعلومات باش نكملو الطلبية ديالك ✨"
-      : "Parfait ! 🧬 J'ai besoin de quelques infos pour finaliser votre commande ✨");
-    setTimeout(() => {
-      const btn = document.getElementById("lead-btn-lbl");
-      if (btn) btn.textContent = isAr ? "✅ تأكيد طلبيتي" : "✅ Confirmer ma commande";
-
-      // Auto-fill order from conversation
-      const orderEl = document.getElementById("lead-order");
-      if (orderEl && geminiHistory.length) {
-        const convo = geminiHistory
-          .filter(m => m.role === "user")
-          .map(m => m.parts[0].text)
-          .join(" | ");
-        orderEl.value = convo;
-      }
-
-      document.getElementById("quiz-lead-form").style.display = "block";
-      const account = savvyLoadAccount();
-      if (account) savvyPreFillForm(account);
-      document.getElementById("quiz-progress").style.width = "85%";
-    }, 900);
-  }, 400);
-}
-
-// ── localStorage account ──────────────────────────────
-function savvySaveAccount(data) {
-  try { localStorage.setItem("savy-account", JSON.stringify(data)); } catch(e) {}
-}
-function savvyLoadAccount() {
-  try { const d = localStorage.getItem("savy-account"); return d ? JSON.parse(d) : null; } catch(e) { return null; }
-}
-function savvyPreFillForm(a) {
-  const s = (id, v) => { const el = document.getElementById(id); if (el && v) el.value = v; };
-  s("lead-fullname", a.fullname);
-  s("lead-phone",    a.phone);
-  s("lead-address",  a.address);
-}
-
-// ── Lead form submit ──────────────────────────────────
-function quizSubmitLead() {
-  const isAr     = lang === "ar";
-  const fullname = (document.getElementById("lead-fullname")?.value || "").trim();
-  const phone    = (document.getElementById("lead-phone")?.value    || "").trim();
-  const order    = (document.getElementById("lead-order")?.value    || "").trim();
-  const address  = (document.getElementById("lead-address")?.value  || "").trim();
-  const payment  = (document.getElementById("lead-payment")?.value  || "").trim();
+// ── Submit Order ─────────────────────────────────────
+function submitOrder() {
+  const isAr    = lang === "ar";
+  const fullname = (document.getElementById("of-fullname")?.value || "").trim();
+  const phone    = (document.getElementById("of-phone")?.value    || "").trim();
+  const order    = (document.getElementById("of-order")?.value    || "").trim();
+  const address  = (document.getElementById("of-address")?.value  || "").trim();
+  const payment  = (document.getElementById("of-payment")?.value  || "").trim();
 
   const hi = (id) => { const el = document.getElementById(id); if(el) el.style.borderColor="#e53935"; };
-  if (!fullname) { hi("lead-fullname"); return; }
-  if (!phone)    { hi("lead-phone");    return; }
-  if (!address)  { hi("lead-address");  return; }
-  if (!payment)  { hi("lead-payment");  return; }
+  if (!fullname) { hi("of-fullname"); return; }
+  if (!phone)    { hi("of-phone");    return; }
+  if (!address)  { hi("of-address");  return; }
+  if (!payment)  { hi("of-payment");  return; }
 
-  document.getElementById("quiz-lead-form").style.display = "none";
-  quizUser(`${fullname} — ${phone}`);
-  document.getElementById("quiz-progress").style.width = "94%";
+  const btn = document.getElementById("order-btn-lbl");
+  if (btn) { btn.textContent = isAr ? "جاري الإرسال..." : "Envoi en cours..."; }
 
-  const payLabel = payment === "card"
-    ? (isAr ? "💳 بطاقة" : "💳 Carte")
-    : (isAr ? "🚪 عند التوصيل" : "🚪 À la livraison");
-
-  const rows = [
-    [isAr?"الاسم الكامل":"Nom complet", fullname],
-    [isAr?"WhatsApp":"WhatsApp",         phone],
-    [isAr?"الطلبية":"Commande",          order || "—"],
-    [isAr?"العنوان":"Adresse",           address],
-    [isAr?"الدفع":"Paiement",            payLabel],
-  ];
-
-  const msgs = document.getElementById("quiz-msgs");
-  quizBot(isAr ? "هاهو ملخص طلبيتك 🧬✅" : "Récapitulatif de votre commande 🧬✅");
+  saveToSheets({ name: fullname, fullname, phone, order, address, payment, lang, conversation: order });
 
   setTimeout(() => {
-    const card = document.createElement("div");
-    card.style.cssText = "animation:popIn .4s ease;";
-    card.innerHTML = `
-      <div style="border:2px solid var(--green);border-radius:16px;overflow:hidden;background:var(--card);">
-        <div style="background:var(--green);padding:10px 15px;">
-          <div style="font-family:'Oxanium',sans-serif;font-weight:800;font-size:13px;color:#fff;">
-            🧬 ${isAr ? "ملخص الطلبية" : "Récapitulatif SAVY"}
-          </div>
-        </div>
-        <div style="padding:12px 15px;display:flex;flex-direction:column;gap:8px;">
-          ${rows.map(([k,v])=>`
-            <div style="display:flex;justify-content:space-between;gap:8px;font-family:'Manrope',sans-serif;font-size:12px;">
-              <span style="color:var(--muted);flex-shrink:0;">${k}</span>
-              <span style="color:var(--text);font-weight:600;text-align:right;max-width:65%;">${v}</span>
-            </div>`).join("")}
-        </div>
-        <div style="padding:10px 15px;border-top:1px solid var(--border);display:flex;gap:8px;">
-          <button onclick="quizConfirmOrder('${fullname}','${phone}','${encodeURIComponent(order)}','${address}','${payment}')"
-            style="flex:1;padding:11px;border-radius:12px;border:none;background:var(--green);color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:'Manrope',sans-serif;box-shadow:0 4px 14px rgba(0,128,96,0.3);">
-            ✅ ${isAr ? "تأكيد الطلبية" : "Confirmer"}
-          </button>
-          <button onclick="quizEditOrder()"
-            style="padding:11px 14px;border-radius:12px;border:1.5px solid var(--border);background:var(--card);color:var(--text);font-size:13px;cursor:pointer;">
-            ✏️
-          </button>
-        </div>
-      </div>`;
-    msgs.appendChild(card);
-    msgs.scrollTop = msgs.scrollHeight;
-  }, 900);
+    document.getElementById("order-form-box").style.display = "none";
+    document.getElementById("order-success").style.display = "block";
+    const t = document.getElementById("order-success-title");
+    const s = document.getElementById("order-success-sub");
+    if (t) t.textContent = isAr ? `شكراً ${fullname} ! طلبيتك وصلات 🎉` : `Merci ${fullname} ! Commande reçue 🎉`;
+    if (s) s.textContent = isAr ? "غادي نتواصلو معك على WhatsApp 9ريب 🇲🇦" : "Nous vous contactons très bientôt sur WhatsApp 🇲🇦";
+    savvySaveAccount({ fullname, phone, address });
+  }, 800);
 }
-
-function quizEditOrder() {
-  const msgs = document.getElementById("quiz-msgs");
-  if (msgs.lastChild) msgs.removeChild(msgs.lastChild);
-  document.getElementById("quiz-lead-form").style.display = "block";
-  document.getElementById("quiz-progress").style.width = "85%";
-}
-
-function quizConfirmOrder(fullname, phone, order, address, payment) {
-  const isAr = lang === "ar";
-  const msgs = document.getElementById("quiz-msgs");
-  if (msgs.lastChild) msgs.removeChild(msgs.lastChild);
-  quizUser(isAr ? "✅ مؤكد !" : "✅ Confirmé !");
-  savySubmitted = true;
-  savvySaveAccount({ fullname, phone, address });
-  saveToSheets({
-    name: fullname, fullname, phone,
-    order: decodeURIComponent(order),
-    address, payment,
-    conversation: geminiHistory.filter(m=>m.role==="user").map(m=>m.parts[0].text).join(" | "),
-    lang
-  });
-  document.getElementById("quiz-progress").style.width = "100%";
-  document.getElementById("quiz-status").textContent = isAr ? "✅ شكراً — SAVY 🇲🇦" : "✅ Merci — SAVY 🇲🇦";
-  setTimeout(() => {
-    quizBot(isAr
-      ? `Ahlan <strong>${fullname}</strong> ! 🧬✨<br>طلبيتك engineered بالحب ديال SAVY — كنتسناو نوصلوك أحسن وجبة تستاهلها. 🍽️🇲🇦<br><strong>غادي نتواصلو معك 9ريب على WhatsApp !</strong>`
-      : `Ahlan <strong>${fullname}</strong> ! 🧬✨<br>Votre repas est engineered avec soin — on a hâte de vous régaler. 🍽️🇲🇦<br><strong>On vous contacte très bientôt sur WhatsApp !</strong>`);
-  }, 600);
-}
-
-// ── Init ──────────────────────────────────────────────
-function quizInit() {
-  const isAr    = lang === "ar";
-  const account = savvyLoadAccount();
-  geminiHistory = [];
-  savyWaitingForInfo = false;
-  savySubmitted = false;
-
-  document.getElementById("quiz-progress").style.width = "5%";
-  quizStarted = true;
-
-  if (account?.fullname) {
-    const nickname = account.fullname.split(" ")[0];
-    // Seed history: user introduces themselves, model greets back
-    geminiHistory.push({ role: "user",  parts: [{ text: `مرحبا، اسمي ${nickname} وأنا زبون قديم.` }] });
-    const greet = isAr
-      ? `أهلاً <strong>${nickname}</strong> ! 👋😊 شحال من وقت ماشفناكش — علاش جيتي اليوم ؟`
-      : `Bonjour <strong>${nickname}</strong> ! 👋😊 Ça faisait un moment — qu'est-ce qui vous ferait plaisir aujourd'hui ?`;
-    geminiHistory.push({ role: "model", parts: [{ text: greet.replace(/<[^>]+>/g,"") }] });
-    quizBot(greet);
-  } else {
-    // New visitor — Gemini starts fresh, seed with a system-start user message
-    geminiHistory.push({ role: "user",  parts: [{ text: "مرحبا" }] });
-    const greet = isAr
-      ? `مرحباً بيك فـ <strong>SAVY</strong> ! 👋🍽️<br>أنا الشيف ديال الـ AI — هنا باش نساعدك تطلب أحسن وجبة تناسبك.<br>SAVY منصة توصيل الأكل الصحي لتطوان، مديق ومرتيل. 🇲🇦<br><br><strong>شنو هو اسمك ؟</strong>`
-      : `Bienvenue sur <strong>SAVY</strong> ! 👋🍽️<br>Je suis votre Chef IA — ici pour vous trouver le repas parfait.<br>SAVY livre des repas sains à Tétouan, M'diq et Martil. 🇲🇦<br><br><strong>Comment vous appelez-vous ?</strong>`;
-    geminiHistory.push({ role: "model", parts: [{ text: greet.replace(/<[^>]+>/g,"") }] });
-    quizBot(greet);
-  }
-
-  setTimeout(() => document.getElementById("savy-user-inp")?.focus(), 1200);
-}
-
-function quizReset() {
-  geminiHistory = [];
-  savyWaitingForInfo = false;
-  savySubmitted = false;
-  document.getElementById("quiz-msgs").innerHTML = "";
-  document.getElementById("quiz-choices").innerHTML = "";
-  document.getElementById("quiz-lead-form").style.display = "none";
-  document.getElementById("savy-input-row").style.display = "flex";
-  document.getElementById("quiz-progress").style.width = "0%";
-  const fields = ["lead-fullname","lead-phone","lead-address"];
-  fields.forEach(id => { const el=document.getElementById(id); if(el) el.value=""; });
-  const sel = document.getElementById("lead-meals"); if(sel) sel.value="";
-  setTimeout(quizInit, 300);
-}
-
-let quizStarted = false;
-function quizPatchLang(l) {
-  const status = document.getElementById("quiz-status");
-  if (status && !status.textContent.includes("✅"))
-    status.textContent = "En ligne · Chef SAVY 🇲🇦";
-  if (quizStarted) quizReset(); // only reset if already running
-}
-
-window.addEventListener("DOMContentLoaded", () => {
-  // Animate member count 215 → 793 (runs after setLang builds the elements)
-  setTimeout(() => {
-    const proofEl = document.getElementById("live-count-proof");
-    const chipEl  = document.getElementById("live-count-chip");
-    if (proofEl) animateCount(proofEl, 215, 793, 1200000);
-    if (chipEl)  { chipEl.textContent = "215"; animateCount(chipEl, 215, 793, 1200000); }
-  }, 100);
-  // Apply theme
-  const btn = document.getElementById("theme-btn");
-  if (darkMode) {
-    document.documentElement.setAttribute("data-theme", "dark");
-    if (btn) btn.textContent = "☀️";
-  } else {
-    document.documentElement.removeAttribute("data-theme");
-    if (btn) btn.textContent = "🌙";
-  }
-
-  // Apply Arabic by default
-  setLang(lang);
-
-  // Start quiz
-  setTimeout(quizInit, 400);
-});
 
 // Typing animation keyframe (add dynamically)
 const styleTag = document.createElement("style");
 styleTag.textContent = `@keyframes typingDot { 0%,60%,100%{transform:translateY(0);opacity:.5} 30%{transform:translateY(-6px);opacity:1} }`;
 document.head.appendChild(styleTag);
+
+
+function quizPatchLang(l) {
+  const isAr = l === "ar";
+  const status = document.getElementById("form-status");
+  if (status) status.textContent = "توصيل — تطوان · مديق · مرتيل 🇲🇦";
+  const title = document.getElementById("form-title-main");
+  if (title) title.textContent = isAr ? "🍽️ اطلب دابا" : "🍽️ Commander maintenant";
+  const btn = document.getElementById("order-btn-lbl");
+  if (btn) btn.textContent = isAr ? "تأكيد طلبيتي ✅" : "Confirmer ma commande ✅";
+  const fo = document.getElementById("of-order");
+  if (fo) fo.placeholder = isAr ? "تفاصيل طلبيتك (مثال: 2 وجبات رياضي...)" : "Votre commande (ex: 2 repas sportif...)";
+  const fa = document.getElementById("of-address");
+  if (fa) fa.placeholder = isAr ? "عنوان التوصيل" : "Adresse de livraison";
+}
 
 </script>
 </body>
