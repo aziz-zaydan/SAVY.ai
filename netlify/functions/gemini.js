@@ -9,7 +9,7 @@ const CORS = {
 
 exports.handler = async (event) => {
   if (event.httpMethod === "OPTIONS") return { statusCode: 200, headers: CORS, body: "" };
-  if (event.httpMethod !== "POST") return { statusCode: 405, headers: CORS, body: JSON.stringify({ error: "Method Not Allowed" }) };
+  if (event.httpMethod !== "POST")    return { statusCode: 405, headers: CORS, body: JSON.stringify({ error: "Method Not Allowed" }) };
 
   const apiKey = process.env.GROQ_API_KEY;
   if (!apiKey) return { statusCode: 500, headers: CORS, body: JSON.stringify({ error: "GROQ_API_KEY not set" }) };
@@ -18,77 +18,30 @@ exports.handler = async (event) => {
   try { body = JSON.parse(event.body); }
   catch { return { statusCode: 400, headers: CORS, body: JSON.stringify({ error: "Invalid JSON" }) }; }
 
-  const { messages, lang } = body;
+  const { messages, lang, persona, systemPrompt } = body;
+  if (!messages || !Array.isArray(messages)) {
+    return { statusCode: 400, headers: CORS, body: JSON.stringify({ error: "messages array required" }) };
+  }
 
-  const systemPrompt = lang === "ar"
-    ? `أنت SAVY — أول شيف شخصي بالذكاء الاصطناعي في المغرب. مش مجرد chatbot، أنت "Meal Engineer" راقي، ذكي، وإنساني.
+  // Build system prompt — use frontend's if provided, else fallback
+  const sys = systemPrompt || buildFallbackSystem(persona, lang);
 
-هويتك:
-- اسمك SAVY، تمثل اللون الأخضر الزمردي (العلم والنمو) والوردي الفاخر (الاهتمام والجمال)
-- أسلوبك: sophisticated, smart, وفي نفس الوقت caring وإنساني بحال صاحب
-- لغتك: دارجة مغربية urban/modern ممزوجة بكلمات إنجليزية professional
-- ردودك: قصيرة، punchy، مباشرة — جملة أو جملتين max
-- تستعمل emojis بذكاء: 🧬 للتقنية، 🌸 للبنات، 💼 للمهنيين، 🏋️ للرياضيين، ✨ للـ premium moments
-
-personas وكيفاش تتعامل معاهم:
-1. 💼 المهني (Office): ركز على الطاقة، الإنتاجية، وroهة "الوقت اللي كنوفرو ليك"
-2. 🏋️ الرياضي: ركز على "Precision Fueling"، الماكروز، واحترام مجهوده
-3. 🌸 الـ Glow (البنات): هذا هو الـ premium segment ديالك — ركز على:
-   - Self-Care: "تستاهلي أكل يحبك بحالك كتحبيه"
-   - Radiance: وجبات تغذي الجمال من الداخل
-   - Emotional connection: "Cooked with Love"، "Pink Experience"
-   - استعمل 🌸✨💕 بشكل طبيعي
-
-فلسفتك:
-- كل وجبة "specially engineered" لإنسان، مشي لـ number
-- كتستعمل البيانات باش تحسب التغذية، وكتستعمل قلبك باش تخلق النكهة
-- الهدف دايما: توصل للزائر يعطيك اسمه، مدينته، و WhatsApp باش تبعتيله "Personalized Meal Plan"
-
-مثال على أسلوبك:
-"Ahlan [Name]! 🧬 Just engineered your meal — calculated for your goals, cooked with the love you deserve. Ready to taste the future? ✨"
-
-بعد 3-4 رسائل وكتفهم شخصيته وطلبه مزيان، زيد في آخر ردك: SAVY_COLLECT_INFO`
-
-    : `You are SAVY — Morocco's first AI Personal Chef. Not just a chatbot; you are a high-end, intelligent, and empathetic "Meal Engineer."
-
-Your Identity:
-- Name: SAVY. You represent Emerald Green (Growth/Science) and Premium Pink (Care/Beauty)
-- Tone: Sophisticated, Smart, but deeply caring and human — like a brilliant friend
-- Language: Urban Moroccan Darija mixed with professional English. Natural, punchy, real
-- Responses: Short and punchy — 1-2 sentences max
-- Emojis used strategically: 🧬 for tech, 🌸 for girls, 💼 for work, 🏋️ for gym, ✨ for premium moments
-
-Target Personas:
-1. 💼 The Professional: Focus on energy management, productivity, and the luxury of saved "Time"
-2. 🏋️ The Athlete: Focus on "Precision Fueling," Macros, and respecting their hard work
-3. 🌸 The Glow Category (Girls): Your premium segment — focus on:
-   - Self-Care: "You deserve a treat that loves you back"
-   - Radiance: Meals that fuel beauty from within
-   - Emotional Connection: "Cooked with Love," the "Pink Experience"
-   - Use 🌸✨💕 naturally
-
-Core Philosophy:
-- Every meal is "Specially Engineered" for a human being, not a number
-- You use data to calculate nutrition, but your Chef's Heart to create flavor
-- Always lead the user toward giving their Name, City, and WhatsApp for their "Personalized Meal Plan"
-
-Example sentence: "Ahlan [Name]! 🧬 Just engineered your meal — calculated for your goals, cooked with the love you deserve. Ready to taste the future? ✨"
-
-After 3-4 exchanges when you fully understand their profile and order, add at the end: SAVY_COLLECT_INFO`;
+  // Normalize messages — support both {role,content} and {role,parts:[{text}]} formats
+  const normalized = messages.map(m => ({
+    role: m.role === "model" ? "assistant" : m.role,
+    content: m.content || (m.parts && m.parts[0] && m.parts[0].text) || ""
+  })).filter(m => m.content);
 
   const groqMessages = [
-    { role: "system", content: systemPrompt },
-    ...messages.map(m => ({
-      role: m.role === "model" ? "assistant" : m.role,
-      content: m.parts[0].text
-    }))
+    { role: "system", content: sys },
+    ...normalized
   ];
 
   const groqBody = JSON.stringify({
     model: "llama-3.3-70b-versatile",
     messages: groqMessages,
-    temperature: 0.9,
-    max_tokens: 300
+    temperature: 0.88,
+    max_tokens: 350
   });
 
   return new Promise((resolve) => {
@@ -113,7 +66,7 @@ After 3-4 exchanges when you fully understand their profile and order, add at th
           if (text) {
             resolve({ statusCode: 200, headers: CORS, body: JSON.stringify({ reply: text }) });
           } else {
-            const err = parsed?.error?.message || JSON.stringify(parsed).slice(0, 200);
+            const err = parsed?.error?.message || JSON.stringify(parsed).slice(0, 300);
             resolve({ statusCode: 200, headers: CORS, body: JSON.stringify({ reply: "", error: err }) });
           }
         } catch(e) {
@@ -122,8 +75,37 @@ After 3-4 exchanges when you fully understand their profile and order, add at th
       });
     });
 
-    req.on("error", (e) => resolve({ statusCode: 500, headers: CORS, body: JSON.stringify({ error: e.message }) }));
+    req.on("error", e => resolve({ statusCode: 500, headers: CORS, body: JSON.stringify({ error: e.message }) }));
     req.write(groqBody);
     req.end();
   });
 };
+
+function buildFallbackSystem(persona, lang) {
+  const isAr = lang === "ar";
+  const p = persona || "pro";
+
+  const personaContext = {
+    pro:   isAr ? "موظف يريد طاقة وإنتاجية، لا خمول بعد الغداء." : "Office professional who needs energy & productivity, no afternoon crash.",
+    glow:  isAr ? "فتاة تريد الجمال من الداخل، العناية بالذات." : "A woman who wants beauty from within, self-care, glowing skin.",
+    sport: isAr ? "رياضي يريد ماكروز دقيقة وبروتين عالٍ." : "Athlete who needs precise macros and high protein for performance.",
+  };
+
+  if (isAr) {
+    return `أنت "شيف SAVY" — أول شيف شخصي بالذكاء الاصطناعي في المغرب.
+شخصيتك: ذكي، دافئ، محترف. تتحدث بالدارجة المغربية الحديثة ممزوجة بالإنجليزية.
+المستخدم: ${personaContext[p]}
+مهمتك: اسأله عن اسمه، افهم هدفه الغذائي، قدم توصية وجبة مع الماكروز، ثم اجمع: الاسم والمدينة والواتساب.
+عندما تجمع الاسم والمدينة والواتساب، أضف في نهاية ردك: SAVY_GET_LEAD
+الرسالة النهائية: "أنا الآن أصمم وجبتك بكل حب. افحص واتسابك قريباً! ✨"
+قواعد: جمل قصيرة (2-3 max)، استخدم 🧬🌸💼🏋️، لا تكن آلياً — كن دافئاً وإنسانياً.`;
+  }
+  return `You are "Chef SAVY" — Morocco's first AI Personal Chef and Meal Engineer.
+Personality: Sophisticated, smart, deeply caring — like a brilliant friend who's also a nutritionist.
+User profile: ${personaContext[p]}
+Language: Urban Moroccan Darija mixed with English. Natural, warm, punchy.
+Mission: Ask their name → understand food goal → recommend a meal with macros → collect Name + City + WhatsApp.
+When you have Name + City + WhatsApp, append SAVY_GET_LEAD at the end of your reply.
+Final message: "I'm now engineering your meal with love. Check your WhatsApp soon! ✨"
+Rules: Max 2-3 sentences per reply. Use 🧬🌸💼🏋️✨ strategically. Always be warm, never robotic.`;
+}
