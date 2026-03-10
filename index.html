@@ -1326,11 +1326,13 @@ function quizUser(text) {
   msgs.scrollTop = msgs.scrollHeight;
 }
 
-// ── Send message to Gemini (via Netlify function) ─────
+// ── Send message to Gemini (direct) ──────────────────
+const _GK = "AIzaSyDeT8uNUL8X-bqw40wZvGGRZq8cC7Cdt0c";
+
 async function savySend() {
   if (savyWaitingForInfo || savySubmitted) return;
 
-  const inp = document.getElementById("savy-user-inp");
+  const inp  = document.getElementById("savy-user-inp");
   const text = (inp?.value || "").trim();
   if (!text) return;
   inp.value = "";
@@ -1338,24 +1340,31 @@ async function savySend() {
   quizUser(text);
   geminiHistory.push({ role: "user", parts: [{ text }] });
 
-  const btn = document.getElementById("savy-send-btn");
+  const btn  = document.getElementById("savy-send-btn");
   if (btn) btn.disabled = true;
 
   const isAr = lang === "ar";
+  const sys  = isAr
+    ? `أنت "شيف SAVY"، مساعد ذكي وودود لمنصة توصيل الأكل الصحي SAVY في تطوان، مديق ومرتيل بالمغرب. مهمتك: رحب بالزائر، افهم هل هو موظف/طالب أو رياضي، اسأله عن نوع الأكل المفضل، وإذا رياضي احسب له الماكروز. بعد 3-4 رسائل وعندما تفهم طلبه تماماً أضف في آخر ردك: SAVY_COLLECT_INFO — تحدث بالدارجة المغربية، قصير وودود، جملة أو جملتين فقط.`
+    : `Tu es "Chef SAVY", l'assistant IA de SAVY — livraison repas sains à Tétouan, M'diq et Martil. Comprends le profil (employé/étudiant/sportif), les préférences alimentaires, calcule les macros si sportif. Après 3-4 échanges quand tu comprends bien la commande, ajoute à la fin: SAVY_COLLECT_INFO — réponds en 1-2 phrases max, ton chaleureux.`;
 
   try {
-    const res  = await fetch("/.netlify/functions/gemini", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ messages: geminiHistory, lang })
-    });
-    const data = await res.json();
-    let reply = (data.reply || "").trim();
+    const res  = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${_GK}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          system_instruction: { parts: [{ text: sys }] },
+          contents: geminiHistory,
+          generationConfig: { temperature: 0.85, maxOutputTokens: 300 }
+        })
+      }
+    );
+    const data  = await res.json();
+    let reply   = (data?.candidates?.[0]?.content?.parts?.[0]?.text || "").trim();
 
-    if (!reply) {
-      // Show debug info if available
-      reply = isAr ? "عذراً، ما فهمتش — جرب مرة أخرى 🙏" : "Désolé, je n'ai pas compris — réessayez 🙏";
-    }
+    if (!reply) throw new Error("empty");
 
     if (reply.includes("SAVY_COLLECT_INFO")) {
       reply = reply.replace("SAVY_COLLECT_INFO", "").trim();
@@ -1370,7 +1379,7 @@ async function savySend() {
   } catch(e) {
     await quizBot(isAr
       ? "عذراً، كاين مشكل تقني صغير. حاول مرة أخرى 🙏"
-      : "Désolé, petit problème technique. Réessayez 🙏");
+      : "Désolé, petit problème. Réessayez 🙏");
   }
 
   if (btn) btn.disabled = false;
@@ -1537,24 +1546,27 @@ function quizInit() {
   savySubmitted = false;
 
   document.getElementById("quiz-progress").style.width = "5%";
+  quizStarted = true;
 
-  let firstMsg;
   if (account?.fullname) {
     const nickname = account.fullname.split(" ")[0];
-    firstMsg = isAr
+    // Seed history: user introduces themselves, model greets back
+    geminiHistory.push({ role: "user",  parts: [{ text: `مرحبا، اسمي ${nickname} وأنا زبون قديم.` }] });
+    const greet = isAr
       ? `أهلاً <strong>${nickname}</strong> ! 👋😊 شحال من وقت ماشفناكش — علاش جيتي اليوم ؟`
       : `Bonjour <strong>${nickname}</strong> ! 👋😊 Ça faisait un moment — qu'est-ce qui vous ferait plaisir aujourd'hui ?`;
-    // Seed Gemini with context
-    geminiHistory.push({ role: "user",  parts: [{ text: `My name is ${nickname}. I'm a returning customer.` }] });
-    geminiHistory.push({ role: "model", parts: [{ text: firstMsg.replace(/<[^>]+>/g,"") }] });
+    geminiHistory.push({ role: "model", parts: [{ text: greet.replace(/<[^>]+>/g,"") }] });
+    quizBot(greet);
   } else {
-    firstMsg = isAr
+    // New visitor — Gemini starts fresh, seed with a system-start user message
+    geminiHistory.push({ role: "user",  parts: [{ text: "مرحبا" }] });
+    const greet = isAr
       ? `مرحباً بيك فـ <strong>SAVY</strong> ! 👋🍽️<br>أنا الشيف ديال الـ AI — هنا باش نساعدك تطلب أحسن وجبة تناسبك.<br>SAVY منصة توصيل الأكل الصحي لتطوان، مديق ومرتيل. 🇲🇦<br><br><strong>شنو هو اسمك ؟</strong>`
       : `Bienvenue sur <strong>SAVY</strong> ! 👋🍽️<br>Je suis votre Chef IA — ici pour vous trouver le repas parfait.<br>SAVY livre des repas sains à Tétouan, M'diq et Martil. 🇲🇦<br><br><strong>Comment vous appelez-vous ?</strong>`;
-    geminiHistory.push({ role: "model", parts: [{ text: firstMsg.replace(/<[^>]+>/g,"") }] });
+    geminiHistory.push({ role: "model", parts: [{ text: greet.replace(/<[^>]+>/g,"") }] });
+    quizBot(greet);
   }
 
-  quizBot(firstMsg);
   setTimeout(() => document.getElementById("savy-user-inp")?.focus(), 1200);
 }
 
@@ -1573,11 +1585,12 @@ function quizReset() {
   setTimeout(quizInit, 300);
 }
 
+let quizStarted = false;
 function quizPatchLang(l) {
   const status = document.getElementById("quiz-status");
   if (status && !status.textContent.includes("✅"))
     status.textContent = "En ligne · Chef SAVY 🇲🇦";
-  quizReset();
+  if (quizStarted) quizReset(); // only reset if already running
 }
 
 window.addEventListener("DOMContentLoaded", () => {
