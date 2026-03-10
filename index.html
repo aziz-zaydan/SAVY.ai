@@ -485,8 +485,23 @@
         <!-- Chat window -->
         <div id="quiz-msgs" style="background:var(--card);border-radius:18px;border:1.5px solid var(--border);padding:14px;min-height:100px;max-height:240px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;box-shadow:var(--shadow);scroll-behavior:smooth;margin-bottom:10px;"></div>
 
-        <!-- Choice buttons -->
+        <!-- Choice buttons (payment step) -->
         <div id="quiz-choices" style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:8px;"></div>
+
+        <!-- Gemini text input -->
+        <div id="savy-input-row" style="display:flex;gap:8px;margin-bottom:8px;">
+          <input id="savy-user-inp" type="text"
+            placeholder="اكتب رسالتك هنا..."
+            style="flex:1;padding:11px 14px;border-radius:13px;border:1.5px solid var(--border);font-size:13px;outline:none;font-family:'DM Sans',sans-serif;color:var(--text);background:var(--card);transition:border-color .2s;"
+            onfocus="this.style.borderColor='var(--green)'"
+            onblur="this.style.borderColor='var(--border)'"
+            onkeydown="if(event.key==='Enter') savySend()"/>
+          <button id="savy-send-btn" onclick="savySend()"
+            style="padding:11px 16px;border-radius:13px;border:none;background:var(--green);color:#fff;font-size:16px;cursor:pointer;transition:opacity .2s;flex-shrink:0;"
+            onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+            ➤
+          </button>
+        </div>
 
         <!-- Lead form (final step) -->
         <div id="quiz-lead-form" style="display:none;margin-top:4px;">
@@ -1098,7 +1113,7 @@ const MAILCHIMP_URL = "PASTE_YOUR_MAILCHIMP_URL_HERE";
    2. Create a new form → copy your URL
    3. Paste it below (looks like: https://formspree.io/f/xxxxxxxx)
 ═══════════════════════════════════════════ */
-const FORMSPREE_URL = "https://script.google.com/macros/s/AKfycbyCbGLNBAS81H7dZM8Dx6DLFb5EKXEozST8QD9GKX17-hMz9ouVLSne6ke88ruIDGhKdw/exec";
+const FORMSPREE_URL = "https://script.google.com/macros/s/AKfycbze50a82fqgJodjNmIZLpis7TuVfveQ9c_x1aHXVEsDwEiiT0bqHhQlKCiL1LfZbO3-Gg/exec";
 
 async function saveToSheets(data) {
   if (!FORMSPREE_URL || FORMSPREE_URL === "PASTE_YOUR_FORMSPREE_URL_HERE") return;
@@ -1248,65 +1263,58 @@ window.addEventListener("scroll",()=>{
 ═══════════════════════════════════════════ */
 
 /* ═══════════════════════════════════════════
-   SAVY AI CHEF — Branching Conversation Engine
+   SAVY AI CHEF — Gemini Powered Conversation
 ═══════════════════════════════════════════ */
 
-// ── Macro calculator for sportives ────────────────────
-function calcMacros(goal) {
-  const plans = {
-    lose:    { cal:1600, p:130, c:140, f:45, label:"Perte de poids",   meals:["🥗 Salade Poulet Grillé & Quinoa","🐟 Branzino & Légumes Vapeur","🥙 Wrap Thon & Avocat"] },
-    gain:    { cal:2800, p:200, c:300, f:70, label:"Prise de masse",   meals:["🍗 Poulet Rôti, Riz & Œufs","🥩 Steak, Patate Douce & Brocoli","🌯 Burrito Bœuf & Haricots Noirs"] },
-    healthy: { cal:2000, p:150, c:220, f:55, label:"Équilibre & Santé",meals:["🫕 Tajine Poulet & Légumes","🥘 Bowl Méditerranéen","🍣 Poke Bowl Saumon & Edamame"] },
-  };
-  return plans[goal] || plans.healthy;
-}
-
-// ── State ─────────────────────────────────────────────
-let qStep      = 0;
-let qVisitorName = "";
-let qProfile   = "";   // employee | student | sportive
-let qDelivery  = "";   // yes | no
-let qFoodType  = "";   // sandwich | burger | salad | fullmeal
-let qFullMeal  = [];   // starter / main / dessert selections
-let qSportGoal = "";   // lose | gain | healthy
-const TOTAL_STEPS = 6;
-
-function qProgress(pct) {
-  const bar = document.getElementById("quiz-progress");
-  if (bar) bar.style.width = pct + "%";
-}
+// ── Conversation history for Gemini ──────────────────
+let geminiHistory = [];
+let savyWaitingForInfo = false;
+let savySubmitted = false;
 
 // ── Message renderers ─────────────────────────────────
-function quizBot(text, delay) {
-  delay = delay || 0;
+function quizBot(text) {
   const msgs = document.getElementById("quiz-msgs");
-  setTimeout(() => {
-    const typing = document.createElement("div");
-    typing.style.cssText = "display:flex;align-items:center;gap:6px;";
-    typing.innerHTML = `
-      <div style="width:24px;height:24px;border-radius:8px;background:var(--green);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-        <svg width="13" height="13" viewBox="0 0 80 80" fill="none"><ellipse cx="40" cy="13" rx="9.5" ry="8" fill="white"/><rect x="26" y="28" width="28" height="20" rx="9" fill="white"/><circle cx="34" cy="37" r="3" fill="#008060"/><circle cx="46" cy="37" r="3" fill="#008060"/></svg>
-      </div>
-      <div style="padding:8px 12px;background:var(--greenXL);border-radius:12px 12px 12px 4px;display:flex;gap:3px;align-items:center;">
-        <span style="width:5px;height:5px;border-radius:50%;background:var(--green);animation:typingDot .9s 0s infinite;display:inline-block;"></span>
-        <span style="width:5px;height:5px;border-radius:50%;background:var(--green);animation:typingDot .9s .2s infinite;display:inline-block;"></span>
-        <span style="width:5px;height:5px;border-radius:50%;background:var(--green);animation:typingDot .9s .4s infinite;display:inline-block;"></span>
-      </div>`;
-    msgs.appendChild(typing);
-    msgs.scrollTop = msgs.scrollHeight;
+
+  const typing = document.createElement("div");
+  typing.id = "savy-typing";
+  typing.style.cssText = "display:flex;align-items:center;gap:6px;";
+  typing.innerHTML = `
+    <div style="width:26px;height:26px;border-radius:9px;background:var(--green);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+      <svg width="14" height="14" viewBox="0 0 80 80" fill="none">
+        <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="white"/>
+        <rect x="26" y="28" width="28" height="20" rx="9" fill="white"/>
+        <circle cx="34" cy="37" r="3" fill="#008060"/>
+        <circle cx="46" cy="37" r="3" fill="#008060"/>
+      </svg>
+    </div>
+    <div style="padding:9px 13px;background:var(--greenXL);border-radius:12px 12px 12px 4px;display:flex;gap:4px;align-items:center;">
+      <span style="width:5px;height:5px;border-radius:50%;background:var(--green);animation:typingDot .9s 0s infinite;display:inline-block;"></span>
+      <span style="width:5px;height:5px;border-radius:50%;background:var(--green);animation:typingDot .9s .2s infinite;display:inline-block;"></span>
+      <span style="width:5px;height:5px;border-radius:50%;background:var(--green);animation:typingDot .9s .4s infinite;display:inline-block;"></span>
+    </div>`;
+  msgs.appendChild(typing);
+  msgs.scrollTop = msgs.scrollHeight;
+
+  return new Promise(resolve => {
     setTimeout(() => {
       typing.remove();
       const div = document.createElement("div");
       div.style.cssText = "display:flex;align-items:flex-end;gap:6px;animation:slideUp .3s ease;";
       div.innerHTML = `
-        <div style="width:24px;height:24px;border-radius:8px;background:var(--green);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-bottom:2px;">
-          <svg width="13" height="13" viewBox="0 0 80 80" fill="none"><ellipse cx="40" cy="13" rx="9.5" ry="8" fill="white"/><rect x="26" y="28" width="28" height="20" rx="9" fill="white"/><circle cx="34" cy="37" r="3" fill="#008060"/><circle cx="46" cy="37" r="3" fill="#008060"/></svg>
+        <div style="width:26px;height:26px;border-radius:9px;background:var(--green);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-bottom:2px;">
+          <svg width="14" height="14" viewBox="0 0 80 80" fill="none">
+            <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="white"/>
+            <rect x="26" y="28" width="28" height="20" rx="9" fill="white"/>
+            <circle cx="34" cy="37" r="3" fill="#008060"/>
+            <circle cx="46" cy="37" r="3" fill="#008060"/>
+          </svg>
         </div>
         <div style="max-width:85%;padding:10px 14px;background:var(--greenXL);border-radius:12px 12px 12px 4px;font-size:13px;color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.7;">${text}</div>`;
       msgs.appendChild(div);
       msgs.scrollTop = msgs.scrollHeight;
-    }, 750);
-  }, delay);
+      resolve();
+    }, 800);
+  });
 }
 
 function quizUser(text) {
@@ -1318,379 +1326,106 @@ function quizUser(text) {
   msgs.scrollTop = msgs.scrollHeight;
 }
 
-function quizShowChoices(choices) {
-  const box = document.getElementById("quiz-choices");
-  box.innerHTML = choices.map(ch => `
-    <button onclick="quizPick('${ch.val}','${ch.label.replace(/'/g,"&#39;")}')"
-      style="padding:9px 15px;border-radius:99px;border:1.5px solid var(--border);background:var(--card);
-      font-size:12px;font-family:'DM Sans',sans-serif;color:var(--text);cursor:pointer;transition:all .2s;"
-      onmouseover="this.style.background='var(--green)';this.style.color='#fff';this.style.borderColor='var(--green)'"
-      onmouseout="this.style.background='var(--card)';this.style.color='var(--text)';this.style.borderColor='var(--border)'">
-      ${ch.emoji || ""} ${ch.label}
-    </button>`).join("");
-}
+// ── Send message to Gemini (via Netlify function) ─────
+async function savySend() {
+  if (savyWaitingForInfo || savySubmitted) return;
 
-function quizClearChoices() {
-  document.getElementById("quiz-choices").innerHTML = "";
-}
+  const inp = document.getElementById("savy-user-inp");
+  const text = (inp?.value || "").trim();
+  if (!text) return;
+  inp.value = "";
 
-// ── Name input helpers ────────────────────────────────
-function quizShowNameInput(placeholder, callback) {
-  const box = document.getElementById("quiz-choices");
-  box.innerHTML = `
-    <div style="display:flex;flex-direction:column;gap:6px;width:100%;">
-      <div style="display:flex;gap:8px;">
-        <input id="q-name-inp" type="text" placeholder="${placeholder}"
-          style="flex:1;padding:11px 14px;border-radius:13px;border:1.5px solid var(--border);font-size:13px;outline:none;font-family:'DM Sans',sans-serif;color:var(--text);background:var(--card);"
-          onfocus="this.style.borderColor='var(--green)'"
-          onblur="this.style.borderColor='var(--border)'"
-          onkeydown="if(event.key==='Enter') window._nameCallback()"/>
-        <button onclick="window._nameCallback()"
-          style="padding:11px 16px;border-radius:13px;border:none;background:var(--green);color:#fff;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;">
-          →
-        </button>
-      </div>
-      <span id="q-name-err" style="font-size:11px;color:#e53935;font-family:'DM Sans',sans-serif;display:none;padding:0 4px;">
-        ${lang==="ar" ? "⚠️ الاسم يجب أن يكون 4 أحرف على الأقل" : "⚠️ Le prénom doit contenir au moins 4 lettres"}
-      </span>
-    </div>`;
-  window._nameCallback = () => {
-    const val = (document.getElementById("q-name-inp")?.value || "").trim();
-    const err = document.getElementById("q-name-err");
-    if (val.length < 4) {
-      if (err) err.style.display = "block";
-      document.getElementById("q-name-inp").style.borderColor = "#e53935";
-      return;
+  quizUser(text);
+  geminiHistory.push({ role: "user", parts: [{ text }] });
+
+  const btn = document.getElementById("savy-send-btn");
+  if (btn) btn.disabled = true;
+
+  const isAr = lang === "ar";
+
+  try {
+    const res  = await fetch("/.netlify/functions/gemini", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ messages: geminiHistory, lang })
+    });
+    const data = await res.json();
+    let reply  = data.reply || "...";
+
+    if (reply.includes("SAVY_COLLECT_INFO")) {
+      reply = reply.replace("SAVY_COLLECT_INFO", "").trim();
+      await quizBot(reply);
+      savyWaitingForInfo = true;
+      document.getElementById("savy-input-row").style.display = "none";
+      showLeadForm();
+    } else {
+      geminiHistory.push({ role: "model", parts: [{ text: reply }] });
+      await quizBot(reply);
     }
-    quizClearChoices();
-    callback(val);
-  };
-  setTimeout(() => document.getElementById("q-name-inp")?.focus(), 100);
+  } catch(e) {
+    await quizBot(isAr
+      ? "عذراً، كاين مشكل تقني صغير. حاول مرة أخرى 🙏"
+      : "Désolé, petit problème technique. Réessayez 🙏");
+  }
+
+  if (btn) btn.disabled = false;
+  document.getElementById("savy-user-inp")?.focus();
 }
 
-// ── localStorage account helpers ──────────────────────
+// ── Show lead form ────────────────────────────────────
+function showLeadForm() {
+  const isAr = lang === "ar";
+  setTimeout(() => {
+    quizBot(isAr
+      ? "ممتاز ! دابا نحتاج منك بعض المعلومات لنكملو الطلبية ديالك 📋"
+      : "Parfait ! J'ai juste besoin de quelques informations pour finaliser votre commande 📋");
+    setTimeout(() => {
+      const btn = document.getElementById("lead-btn-lbl");
+      if (btn) btn.textContent = isAr ? "✅ تأكيد طلبيتي" : "✅ Confirmer ma commande";
+      document.getElementById("quiz-lead-form").style.display = "block";
+      const account = savvyLoadAccount();
+      if (account) savvyPreFillForm(account);
+      document.getElementById("quiz-progress").style.width = "85%";
+    }, 900);
+  }, 400);
+}
+
+// ── localStorage account ──────────────────────────────
 function savvySaveAccount(data) {
   try { localStorage.setItem("savy-account", JSON.stringify(data)); } catch(e) {}
 }
 function savvyLoadAccount() {
   try { const d = localStorage.getItem("savy-account"); return d ? JSON.parse(d) : null; } catch(e) { return null; }
 }
-function savvyPreFillForm(account) {
-  const set = (id, val) => { const el = document.getElementById(id); if (el && val) el.value = val; };
-  set("lead-fullname", account.fullname);
-  set("lead-phone",    account.phone);
-  set("lead-address",  account.address);
-  if (account.meals) {
-    const sel = document.getElementById("lead-meals");
-    if (sel) sel.value = account.meals;
-  }
+function savvyPreFillForm(a) {
+  const s = (id, v) => { const el = document.getElementById(id); if (el && v) el.value = v; };
+  s("lead-fullname", a.fullname); s("lead-phone", a.phone);
+  s("lead-address", a.address);
+  if (a.meals) { const sel = document.getElementById("lead-meals"); if (sel) sel.value = a.meals; }
 }
 
-// ══════════════════════════════════════════════════════
-//  CONVERSATION STEPS
-// ══════════════════════════════════════════════════════
-
-// Step 1 — Welcome + ask name (with returning visitor detection)
-function quizInit() {
-  const isAr    = lang === "ar";
-  const account = savvyLoadAccount();
-  qProgress(5);
-
-  if (account && account.fullname) {
-    // ── Returning visitor — greet naturally, skip the info talk ──
-    const nickname = account.fullname.split(" ")[0];
-    qVisitorName = nickname;
-    quizBot(isAr
-      ? `أهلاً <strong>${nickname}</strong> ! 👋😊<br>شحال من وقت ماشفناكش — <strong>علاش جيتي اليوم ؟</strong>`
-      : `Bonjour <strong>${nickname}</strong> ! 👋😊<br>Ça faisait un moment — <strong>qu'est-ce qui vous ferait plaisir aujourd'hui ?</strong>`);
-    setTimeout(() => quizAskProfile(), 1000);
-
-  } else {
-    // ── New visitor ────────────────────────────────────
-    quizBot(isAr
-      ? `مرحباً بيك فـ <strong>SAVY</strong> ! 👋🍽️<br><br>أنا الشيف ديال الـ AI — غادي نساعدك تلقى الوجبة المثالية اللي تناسب حياتك وأهدافك. SAVY هي منصة توصيل الأكل الصحي لتطوان، مديق ومرتيل — بإشراف شيف حقيقي ومكونات طازجة كل يوم. 🇲🇦<br><br><strong>شنو هو اسمك ؟</strong>`
-      : `Bienvenue sur <strong>SAVY</strong> ! 👋🍽️<br><br>Je suis votre Chef IA personnel. SAVY est la plateforme de livraison de repas sains à Tétouan, M'diq et Martil — supervisée par un vrai chef, avec des ingrédients frais chaque jour. 🇲🇦<br><br>Pour commencer, <strong>comment vous appelez-vous ?</strong>`);
-    setTimeout(() => {
-      quizShowNameInput(
-        isAr ? "اكتب اسمك (4 أحرف على الأقل)..." : "Votre prénom (min. 4 lettres)...",
-        (name) => {
-          qVisitorName = name;
-          quizUser(name);
-          qProgress(15);
-          setTimeout(quizAskProfile, 900);
-        }
-      );
-    }, 1200);
-  }
-}
-
-function quizReturningYes() {
-  const isAr    = lang === "ar";
-  const account = savvyLoadAccount();
-  quizClearChoices();
-  quizUser(isAr ? "✅ نعم، نفس المعلومات" : "✅ Oui, mes infos enregistrées");
-  qProgress(15);
-  // Show mini account card
-  setTimeout(() => {
-    const msgs = document.getElementById("quiz-msgs");
-    const card = document.createElement("div");
-    card.innerHTML = `
-      <div style="border:1.5px solid var(--green);border-radius:14px;padding:11px 14px;background:var(--greenXL);font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text);">
-        <div style="font-weight:700;color:var(--green);margin-bottom:6px;">👤 ${isAr?"حسابك":"Votre compte"}</div>
-        <div style="display:flex;flex-direction:column;gap:4px;">
-          <span>📛 ${account.fullname}</span>
-          <span>📱 ${account.phone}</span>
-          <span>📍 ${account.address}</span>
-        </div>
-      </div>`;
-    msgs.appendChild(card);
-    msgs.scrollTop = msgs.scrollHeight;
-    setTimeout(quizAskProfile, 900);
-  }, 700);
-}
-
-function quizReturningNo() {
-  const isAr = lang === "ar";
-  quizClearChoices();
-  quizUser(isAr ? "✏️ بغيت نبدل" : "✏️ Je modifie mes infos");
-  // Clear saved account
-  try { localStorage.removeItem("savy-account"); } catch(e) {}
-  quizBot(isAr ? `<strong>شنو هو اسمك ؟</strong>` : `<strong>Comment vous appelez-vous ?</strong>`);
-  setTimeout(() => {
-    quizShowNameInput(
-      isAr ? "اكتب اسمك (4 أحرف على الأقل)..." : "Votre prénom (min. 4 lettres)...",
-      (name) => {
-        qVisitorName = name;
-        quizUser(name);
-        qProgress(15);
-        setTimeout(quizAskProfile, 900);
-      }
-    );
-  }, 900);
-}
-
-// Step 2 — Profile
-function quizAskProfile() {
-  const isAr = lang === "ar";
-  quizBot(isAr
-    ? `أهلاً <strong>${qVisitorName}</strong> ! 😊<br>خبرني شوية على حياتك — <strong>شنو هو وصفك ؟</strong>`
-    : `Enchanté <strong>${qVisitorName}</strong> ! 😊<br>Pour mieux vous servir — <strong>qui êtes-vous ?</strong>`);
-  setTimeout(() => quizShowChoices([
-    { val:"employee", label: isAr ? "موظف 💼"   : "Employé(e) 💼",   emoji:"" },
-    { val:"student",  label: isAr ? "طالب 🎓"   : "Étudiant(e) 🎓",  emoji:"" },
-    { val:"sportive", label: isAr ? "رياضي 🏋️" : "Sportif(ve) 🏋️", emoji:"" },
-  ]), 900);
-}
-
-function quizPick(val, label) {
-  quizClearChoices();
-  quizUser(label);
-
-  if (!qProfile && (val === "employee" || val === "student")) {
-    qProfile = val;
-    qProgress(30);
-    setTimeout(quizAskDelivery, 900);
-
-  } else if (!qProfile && val === "sportive") {
-    qProfile = val;
-    qProgress(30);
-    setTimeout(quizAskSportGoal, 900);
-
-  } else if (qProfile !== "sportive" && !qDelivery) {
-    qDelivery = val; // yes | no
-    qProgress(45);
-    setTimeout(quizAskFoodType, 900);
-
-  } else if (qProfile !== "sportive" && !qFoodType && val !== "fullmeal") {
-    qFoodType = val;
-    qProgress(60);
-    setTimeout(quizShowLeadForm, 900);
-
-  } else if (qProfile !== "sportive" && !qFoodType && val === "fullmeal") {
-    qFoodType = val;
-    qProgress(55);
-    setTimeout(quizAskFullMeal, 900);
-
-  } else if (qProfile !== "sportive" && qFoodType === "fullmeal" && qFullMeal.length < 3) {
-    qFullMeal.push(val);
-    if (qFullMeal.length < 3) {
-      qProgress(55 + qFullMeal.length * 5);
-      setTimeout(() => quizAskFullMealNext(qFullMeal.length), 900);
-    } else {
-      qProgress(70);
-      setTimeout(quizShowLeadForm, 900);
-    }
-
-  } else if (qProfile === "sportive" && !qSportGoal) {
-    qSportGoal = val;
-    qProgress(60);
-    setTimeout(quizShowSportPlan, 900);
-  }
-}
-
-// ── BRANCH A: Employee / Student ──────────────────────
-
-function quizAskDelivery() {
-  const isAr = lang === "ar";
-  const place = qProfile === "employee"
-    ? (isAr ? "مكتبك" : "votre bureau")
-    : (isAr ? "مدرستك" : "votre école");
-  quizBot(isAr
-    ? `هل تبغي نوصلوا ليك الأكل ل${place} ؟ 🏢`
-    : `Souhaitez-vous une livraison à ${place} ? 🏢`);
-  setTimeout(() => quizShowChoices([
-    { val:"yes", label: isAr ? "نعم، التوصيل ✅" : "Oui, livraison ✅", emoji:"" },
-    { val:"no",  label: isAr ? "لا، سجمعها بنفسي" : "Non, je récupère", emoji:"" },
-  ]), 900);
-}
-
-function quizAskFoodType() {
-  const isAr = lang === "ar";
-  quizBot(isAr
-    ? `ممتاز ! <strong>${qVisitorName}</strong>، شنو النوع ديال الأكل اللي كتفضل ؟ 🍽️`
-    : `Super ! <strong>${qVisitorName}</strong>, quel type de repas vous attire le plus ? 🍽️`);
-  setTimeout(() => quizShowChoices([
-    { val:"sandwich", label: isAr ? "ساندويش 🥪"           : "Sandwich 🥪",           emoji:"" },
-    { val:"burger",   label: isAr ? "برغر 🍔"              : "Burger 🍔",             emoji:"" },
-    { val:"salad",    label: isAr ? "سلطة صحية 🥗"         : "Salade fraîche 🥗",     emoji:"" },
-    { val:"fullmeal", label: isAr ? "وجبة كاملة 🍽️"       : "Repas complet 🍽️",      emoji:"" },
-  ]), 900);
-}
-
-const fullMealCourses = ["starter","main","dessert"];
-const fullMealQuestions = {
-  fr: [
-    { q:"Parfait ! Pour votre <strong>entrée</strong>, qu'est-ce qui vous tente ?", choices:[
-      {val:"salad-v",  label:"🥗 Salade verte"},{val:"soup",   label:"🍵 Soupe du jour"},
-      {val:"bruschetta",label:"🥖 Bruschetta"},{val:"hummus", label:"🧆 Houmous & pita"},
-    ]},
-    { q:"Et en <strong>plat principal</strong> ?", choices:[
-      {val:"chicken",  label:"🍗 Poulet grillé"},{val:"fish",   label:"🐟 Poisson du jour"},
-      {val:"pasta",    label:"🍝 Pâtes maison"},{val:"tajine",  label:"🫕 Tajine marocain"},
-    ]},
-    { q:"Et pour finir, votre <strong>dessert</strong> ?", choices:[
-      {val:"fruit",    label:"🍓 Salade de fruits"},{val:"yogurt", label:"🍦 Yaourt glacé"},
-      {val:"cake",     label:"🍰 Gâteau du jour"},{val:"chebakia",label:"🍯 Chebakia"},
-    ]},
-  ],
-  ar: [
-    { q:"مزيان ! للـ<strong>مقبلات</strong> شنو كيعجبك ؟", choices:[
-      {val:"salad-v",  label:"🥗 سلطة خضراء"},{val:"soup",    label:"🍵 شوربة اليوم"},
-      {val:"bruschetta",label:"🥖 برشتا"},{val:"hummus",   label:"🧆 حمص وخبز"},
-    ]},
-    { q:"والـ<strong>الطبق الرئيسي</strong> ؟", choices:[
-      {val:"chicken",  label:"🍗 دجاج مشوي"},{val:"fish",    label:"🐟 سمك اليوم"},
-      {val:"pasta",    label:"🍝 باستا بيتية"},{val:"tajine",  label:"🫕 طاجين مغربي"},
-    ]},
-    { q:"وأخيرًا الـ<strong>حلوى</strong> ؟", choices:[
-      {val:"fruit",    label:"🍓 سلطة فواكه"},{val:"yogurt",  label:"🍦 يوغورت بارد"},
-      {val:"cake",     label:"🍰 كعكة اليوم"},{val:"chebakia",label:"🍯 شباكية"},
-    ]},
-  ]
-};
-
-function quizAskFullMeal() {
-  const isAr = lang === "ar";
-  const q = (isAr ? fullMealQuestions.ar : fullMealQuestions.fr)[0];
-  quizBot(q.q);
-  setTimeout(() => quizShowChoices(q.choices), 900);
-}
-
-function quizAskFullMealNext(idx) {
-  const isAr = lang === "ar";
-  const q = (isAr ? fullMealQuestions.ar : fullMealQuestions.fr)[idx];
-  quizBot(q.q);
-  setTimeout(() => quizShowChoices(q.choices), 900);
-}
-
-// ── BRANCH B: Sportive ────────────────────────────────
-
-function quizAskSportGoal() {
-  const isAr = lang === "ar";
-  quizBot(isAr
-    ? `رائع <strong>${qVisitorName}</strong> ! 💪 شنو هو هدفك الرياضي ؟`
-    : `Excellent <strong>${qVisitorName}</strong> ! 💪 Quel est votre objectif sportif ?`);
-  setTimeout(() => quizShowChoices([
-    { val:"lose",    label: isAr ? "تخسير الوزن 📉"    : "Perdre du poids 📉",    emoji:"" },
-    { val:"gain",    label: isAr ? "زيادة الكتلة 💪"   : "Prendre de la masse 💪", emoji:"" },
-    { val:"healthy", label: isAr ? "البقاء بصحة جيدة ✅": "Rester en forme ✅",    emoji:"" },
-  ]), 900);
-}
-
-function quizShowSportPlan() {
-  const isAr = lang === "ar";
-  const plan = calcMacros(qSportGoal);
-  const msgs = document.getElementById("quiz-msgs");
-
-  quizBot(isAr
-    ? `شكراً <strong>${qVisitorName}</strong> ! هاهو البرنامج الغذائي المصمم خصيصاً ليك 🧬`
-    : `Voici votre plan nutritionnel sur-mesure <strong>${qVisitorName}</strong> 🧬`);
-
-  setTimeout(() => {
-    const card = document.createElement("div");
-    card.style.cssText = "animation:popIn .5s ease;";
-    card.innerHTML = `
-      <div style="border:2px solid var(--green);border-radius:16px;overflow:hidden;background:var(--card);">
-        <div style="background:var(--green);padding:11px 15px;">
-          <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:13px;color:#fff;">🧬 ${isAr ? "معادلتك الغذائية" : "Votre Équation Nutritionnelle"} — ${plan.label}</div>
-        </div>
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);padding:12px 14px;gap:0;border-bottom:1px solid var(--border);">
-          ${[["🔥",plan.cal,"kcal"],["💪",plan.p+"g",isAr?"بروتين":"Protéine"],["🌾",plan.c+"g",isAr?"كارب":"Glucides"],["🫙",plan.f+"g",isAr?"دهون":"Lipides"]].map(([e,v,l])=>`
-          <div style="text-align:center;padding:5px;${l!=(isAr?"بروتين":"Protéine")&&l!="kcal"?"border-left:1px solid var(--border);":""}">
-            <div style="font-size:11px;margin-bottom:2px;">${e}</div>
-            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:14px;color:var(--green);">${v}</div>
-            <div style="font-size:10px;color:var(--muted);font-family:'DM Sans',sans-serif;">${l}</div>
-          </div>`).join("")}
-        </div>
-        <div style="padding:11px 14px;">
-          <div style="font-size:11px;color:var(--muted);font-family:'DM Sans',sans-serif;margin-bottom:6px;font-weight:600;">${isAr?"🍽️ وجبات مقترحة :":"🍽️ Repas proposés :"}</div>
-          ${plan.meals.map(m=>`<div style="font-size:12px;color:var(--text);font-family:'DM Sans',sans-serif;padding:3px 0;">${m}</div>`).join("")}
-        </div>
-      </div>`;
-    msgs.appendChild(card);
-    msgs.scrollTop = msgs.scrollHeight;
-    setTimeout(quizShowLeadForm, 1200);
-  }, 1000);
-}
-
-// ── Lead form trigger ─────────────────────────────────
-function quizShowLeadForm() {
-  const isAr = lang === "ar";
-  quizBot(isAr
-    ? `ممتاز ! دابا نحتاج منك بعض المعلومات الشخصية لنكملو الطلبية ديالك 📋`
-    : `Parfait ! Pour finaliser votre commande, j'ai juste besoin de quelques informations 📋`);
-  setTimeout(() => {
-    const btn = document.getElementById("lead-btn-lbl");
-    if (btn) btn.textContent = isAr ? "✅ تأكيد طلبيتي" : "✅ Confirmer ma commande";
-    document.getElementById("quiz-lead-form").style.display = "block";
-    const account = savvyLoadAccount();
-    if (account) savvyPreFillForm(account);
-    qProgress(85);
-  }, 900);
-}
-
-// ── Submit ────────────────────────────────────────────
+// ── Lead form submit ──────────────────────────────────
 function quizSubmitLead() {
-  const isAr   = lang === "ar";
+  const isAr     = lang === "ar";
   const fullname = (document.getElementById("lead-fullname")?.value || "").trim();
   const phone    = (document.getElementById("lead-phone")?.value    || "").trim();
   const address  = (document.getElementById("lead-address")?.value  || "").trim();
   const meals    = (document.getElementById("lead-meals")?.value    || "").trim();
 
-  const highlight = (id) => { const el = document.getElementById(id); if(el) el.style.borderColor="#e53935"; };
-  if (!fullname) { highlight("lead-fullname"); return; }
-  if (!phone)    { highlight("lead-phone");    return; }
-  if (!address)  { highlight("lead-address");  return; }
-  if (!meals)    { highlight("lead-meals");    return; }
+  const hi = (id) => { const el = document.getElementById(id); if(el) el.style.borderColor="#e53935"; };
+  if (!fullname) { hi("lead-fullname"); return; }
+  if (!phone)    { hi("lead-phone");    return; }
+  if (!address)  { hi("lead-address");  return; }
+  if (!meals)    { hi("lead-meals");    return; }
 
   document.getElementById("quiz-lead-form").style.display = "none";
   quizUser(`${fullname} — ${address}`);
-  qProgress(88);
+  document.getElementById("quiz-progress").style.width = "88%";
 
-  // Ask payment method
+  // Payment step
   quizBot(isAr
-    ? `شكراً <strong>${fullname}</strong> ! 💳<br><strong>كيفاش بغيتي تخلص ؟</strong>`
-    : `Parfait <strong>${fullname}</strong> ! 💳<br><strong>Comment souhaitez-vous payer ?</strong>`);
+    ? `شكراً <strong>${fullname}</strong> ! 💳 <strong>كيفاش بغيتي تخلص ؟</strong>`
+    : `Parfait <strong>${fullname}</strong> ! 💳 <strong>Comment souhaitez-vous payer ?</strong>`);
 
   setTimeout(() => {
     const box = document.getElementById("quiz-choices");
@@ -1699,7 +1434,7 @@ function quizSubmitLead() {
         style="flex:1;min-width:140px;padding:12px 16px;border-radius:13px;border:1.5px solid var(--border);background:var(--card);font-size:13px;font-family:'DM Sans',sans-serif;color:var(--text);cursor:pointer;transition:all .2s;text-align:center;"
         onmouseover="this.style.background='var(--green)';this.style.color='#fff';this.style.borderColor='var(--green)'"
         onmouseout="this.style.background='var(--card)';this.style.color='var(--text)';this.style.borderColor='var(--border)'">
-        💳 ${isAr ? "الدفع الآن بالبطاقة" : "Payer maintenant par carte"}
+        💳 ${isAr ? "الدفع الآن بالبطاقة" : "Payer par carte"}
       </button>
       <button onclick="quizPickPayment('cash','${fullname}','${phone}','${address}','${meals}')"
         style="flex:1;min-width:140px;padding:12px 16px;border-radius:13px;border:1.5px solid var(--border);background:var(--card);font-size:13px;font-family:'DM Sans',sans-serif;color:var(--text);cursor:pointer;transition:all .2s;text-align:center;"
@@ -1713,64 +1448,45 @@ function quizSubmitLead() {
 function quizPickPayment(method, fullname, phone, address, meals) {
   const isAr = lang === "ar";
   document.getElementById("quiz-choices").innerHTML = "";
-
   const methodLabel = method === "card"
-    ? (isAr ? "💳 الدفع بالبطاقة" : "💳 Paiement par carte")
-    : (isAr ? "🚪 الدفع عند التوصيل" : "🚪 Paiement à la livraison");
-
+    ? (isAr ? "💳 الدفع بالبطاقة" : "💳 Carte")
+    : (isAr ? "🚪 الدفع عند التوصيل" : "🚪 À la livraison");
   quizUser(methodLabel);
-  qProgress(94);
+  document.getElementById("quiz-progress").style.width = "94%";
 
+  // Summary card
   setTimeout(() => {
-    const profileLabel = {
-      employee: isAr ? "موظف 💼" : "Employé(e) 💼",
-      student:  isAr ? "طالب 🎓" : "Étudiant(e) 🎓",
-      sportive: isAr ? "رياضي 🏋️" : "Sportif(ve) 🏋️",
-    }[qProfile] || qProfile;
-
-    const foodLabel = qFoodType === "fullmeal"
-      ? (isAr ? "وجبة كاملة 🍽️" : "Repas complet 🍽️") + (qFullMeal.length ? ` (${qFullMeal.join(", ")})` : "")
-      : qFoodType || qSportGoal;
-
     const rows = [
-      [isAr?"الاسم الكامل":"Nom complet",  fullname],
-      [isAr?"الهاتف":"Téléphone",           phone],
-      [isAr?"العنوان":"Adresse",            address],
-      [isAr?"عدد الوجبات":"Nbre de repas", meals],
-      [isAr?"الملف الشخصي":"Profil",       profileLabel],
-      [isAr?"الطلب":"Commande",            foodLabel],
-      [isAr?"طريقة الدفع":"Paiement",      methodLabel],
-    ].filter(([,v]) => v);
-
+      [isAr?"الاسم الكامل":"Nom complet", fullname],
+      [isAr?"الهاتف":"Téléphone",          phone],
+      [isAr?"العنوان":"Adresse",           address],
+      [isAr?"عدد الوجبات":"Repas",        meals],
+      [isAr?"طريقة الدفع":"Paiement",     methodLabel],
+    ];
     const msgs = document.getElementById("quiz-msgs");
-    quizBot(isAr
-      ? `هاهو ملخص طلبيتك — تفضل تأكد ✅`
-      : `Voici le récapitulatif de votre commande ✅`);
-
+    quizBot(isAr ? "هاهو ملخص طلبيتك ✅" : "Récapitulatif de votre commande ✅");
     setTimeout(() => {
       const card = document.createElement("div");
       card.style.cssText = "animation:popIn .4s ease;";
       card.innerHTML = `
         <div style="border:2px solid var(--green);border-radius:16px;overflow:hidden;background:var(--card);">
           <div style="background:var(--green);padding:10px 15px;">
-            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:13px;color:#fff;">
-              📋 ${isAr ? "ملخص الطلبية" : "Récapitulatif de commande"}
-            </div>
+            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:13px;color:#fff;">📋 ${isAr?"ملخص الطلبية":"Récapitulatif"}</div>
           </div>
           <div style="padding:12px 15px;display:flex;flex-direction:column;gap:8px;">
-            ${rows.map(([k,v]) => `
-              <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;font-family:'DM Sans',sans-serif;font-size:12px;">
-                <span style="color:var(--muted);flex-shrink:0;">${k}</span>
-                <span style="color:var(--text);font-weight:600;text-align:right;">${v}</span>
+            ${rows.map(([k,v])=>`
+              <div style="display:flex;justify-content:space-between;gap:8px;font-family:'DM Sans',sans-serif;font-size:12px;">
+                <span style="color:var(--muted);">${k}</span>
+                <span style="color:var(--text);font-weight:600;">${v}</span>
               </div>`).join("")}
           </div>
           <div style="padding:10px 15px;border-top:1px solid var(--border);display:flex;gap:8px;">
             <button onclick="quizConfirmOrder('${fullname}','${phone}','${address}','${meals}','${method}')"
-              style="flex:1;padding:11px;border-radius:12px;border:none;background:var(--green);color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;box-shadow:0 4px 14px rgba(0,128,96,0.3);">
-              ✅ ${isAr ? "تأكيد الطلبية" : "Confirmer la commande"}
+              style="flex:1;padding:11px;border-radius:12px;border:none;background:var(--green);color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;">
+              ✅ ${isAr?"تأكيد الطلبية":"Confirmer la commande"}
             </button>
             <button onclick="quizEditOrder()"
-              style="padding:11px 14px;border-radius:12px;border:1.5px solid var(--border);background:var(--card);color:var(--text);font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;">
+              style="padding:11px 14px;border-radius:12px;border:1.5px solid var(--border);background:var(--card);color:var(--text);font-size:13px;cursor:pointer;">
               ✏️
             </button>
           </div>
@@ -1783,10 +1499,9 @@ function quizPickPayment(method, fullname, phone, address, meals) {
 
 function quizEditOrder() {
   const msgs = document.getElementById("quiz-msgs");
-  // Remove last card
   if (msgs.lastChild) msgs.removeChild(msgs.lastChild);
   document.getElementById("quiz-lead-form").style.display = "block";
-  qProgress(85);
+  document.getElementById("quiz-progress").style.width = "85%";
 }
 
 function quizConfirmOrder(fullname, phone, address, meals, payment) {
@@ -1794,40 +1509,62 @@ function quizConfirmOrder(fullname, phone, address, meals, payment) {
   const msgs = document.getElementById("quiz-msgs");
   if (msgs.lastChild) msgs.removeChild(msgs.lastChild);
   quizUser(isAr ? "✅ مؤكد !" : "✅ Confirmé !");
-
-  // Save to localStorage account
+  savySubmitted = true;
   savvySaveAccount({ fullname, phone, address, meals });
-
-  saveToSheets({
-    name: qVisitorName, fullname, phone, address, meals, payment,
-    profile:   qProfile,
-    delivery:  qDelivery,
-    foodtype:  qFoodType,
-    fullmeal:  qFullMeal.join(" + "),
-    sportgoal: qSportGoal,
-    lang
-  });
-
-  qProgress(100);
+  saveToSheets({ name: fullname, fullname, phone, address, meals, payment,
+    conversation: geminiHistory.filter(m=>m.role==="user").map(m=>m.parts[0].text).join(" | "),
+    lang });
+  document.getElementById("quiz-progress").style.width = "100%";
   document.getElementById("quiz-status").textContent = isAr ? "✅ شكراً — SAVY 🇲🇦" : "✅ Merci — SAVY 🇲🇦";
-
   setTimeout(() => {
     quizBot(isAr
-      ? `شكراً جزيلاً <strong>${fullname}</strong> على الثقة اللي كديتيها لـ SAVY وفريقنا ! 🙏❤️<br><br>نتمنولك تجربة رائعة معنا — كنكونو دايما هنا باش نخدمو ليك أحسن وجبة بكل محبة واحتراف. 🍽️🇲🇦<br><br><strong>غادي نوصلك 9ريب !</strong>`
-      : `Un grand merci <strong>${fullname}</strong> pour la confiance que vous accordez à SAVY et à notre équipe ! 🙏❤️<br><br>Nous espérons sincèrement que vous apprécierez cette expérience avec nous. 🍽️🇲🇦<br><br><strong>Nous vous contactons très bientôt !</strong>`);
+      ? `شكراً جزيلاً <strong>${fullname}</strong> على الثقة اللي كديتيها لـ SAVY وفريقنا ! 🙏❤️<br><br>نتمنولك تجربة رائعة — كنكونو دايما هنا باش نخدمو ليك أحسن وجبة. 🍽️🇲🇦<br><strong>غادي نوصلك 9ريب !</strong>`
+      : `Un grand merci <strong>${fullname}</strong> pour votre confiance ! 🙏❤️<br><br>Nous avons hâte de vous régaler. 🍽️🇲🇦<br><strong>Nous vous contactons très bientôt !</strong>`);
   }, 600);
 }
 
-// ── Reset ─────────────────────────────────────────────
+// ── Init ──────────────────────────────────────────────
+function quizInit() {
+  const isAr    = lang === "ar";
+  const account = savvyLoadAccount();
+  geminiHistory = [];
+  savyWaitingForInfo = false;
+  savySubmitted = false;
+
+  document.getElementById("quiz-progress").style.width = "5%";
+
+  let firstMsg;
+  if (account?.fullname) {
+    const nickname = account.fullname.split(" ")[0];
+    firstMsg = isAr
+      ? `أهلاً <strong>${nickname}</strong> ! 👋😊 شحال من وقت ماشفناكش — علاش جيتي اليوم ؟`
+      : `Bonjour <strong>${nickname}</strong> ! 👋😊 Ça faisait un moment — qu'est-ce qui vous ferait plaisir aujourd'hui ?`;
+    // Seed Gemini with context
+    geminiHistory.push({ role: "user",  parts: [{ text: `My name is ${nickname}. I'm a returning customer.` }] });
+    geminiHistory.push({ role: "model", parts: [{ text: firstMsg.replace(/<[^>]+>/g,"") }] });
+  } else {
+    firstMsg = isAr
+      ? `مرحباً بيك فـ <strong>SAVY</strong> ! 👋🍽️<br>أنا الشيف ديال الـ AI — هنا باش نساعدك تطلب أحسن وجبة تناسبك.<br>SAVY منصة توصيل الأكل الصحي لتطوان، مديق ومرتيل. 🇲🇦<br><br><strong>شنو هو اسمك ؟</strong>`
+      : `Bienvenue sur <strong>SAVY</strong> ! 👋🍽️<br>Je suis votre Chef IA — ici pour vous trouver le repas parfait.<br>SAVY livre des repas sains à Tétouan, M'diq et Martil. 🇲🇦<br><br><strong>Comment vous appelez-vous ?</strong>`;
+    geminiHistory.push({ role: "model", parts: [{ text: firstMsg.replace(/<[^>]+>/g,"") }] });
+  }
+
+  quizBot(firstMsg);
+  setTimeout(() => document.getElementById("savy-user-inp")?.focus(), 1200);
+}
+
 function quizReset() {
-  qStep=0; qVisitorName=""; qProfile=""; qDelivery=""; qFoodType=""; qFullMeal=[]; qSportGoal="";
+  geminiHistory = [];
+  savyWaitingForInfo = false;
+  savySubmitted = false;
   document.getElementById("quiz-msgs").innerHTML = "";
   document.getElementById("quiz-choices").innerHTML = "";
   document.getElementById("quiz-lead-form").style.display = "none";
+  document.getElementById("savy-input-row").style.display = "flex";
+  document.getElementById("quiz-progress").style.width = "0%";
   const fields = ["lead-fullname","lead-phone","lead-address"];
   fields.forEach(id => { const el=document.getElementById(id); if(el) el.value=""; });
   const sel = document.getElementById("lead-meals"); if(sel) sel.value="";
-  qProgress(0);
   setTimeout(quizInit, 300);
 }
 
