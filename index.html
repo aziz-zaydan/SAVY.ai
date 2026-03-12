@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SAVY – Meal Engineer | الشيف الذكي</title>
+  <meta name="description" content="SAVY – Morocco's first AI Personal Chef. Specially Engineered meals, delivered in 45 min. Tétouan · M'diq · Martil."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Syne:wght@700;800;900&family=DM+Sans:wght@400;500;600;700&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg:       #EEF7F3;
+      --card:     #FFFFFF;
+      --mint:     #DFF0E9;
+      --green:    #008060;
+      --greenL:   #00A878;
+      --greenXL:  #E6F5EF;
+      --text:     #0D1F18;
+      --sub:      #4A7A66;
+      --muted:    #8FBFAA;
+      --border:   #D4EDE3;
+      --pink:     #E91E8C;
+      --pinkL:    #FF4DB8;
+      --pinkXL:   #FFF0F9;
+      --pinkBorder:#FFB3E0;
+      --orange:   #F4A330;
+      --orangeBg: #FFF3E0;
+      --shadow:   0 2px 16px rgba(0,128,96,0.08);
+      --shadowH:  0 8px 32px rgba(0,128,96,0.15);
+      --glow:     0 0 0 3px rgba(0,128,96,0.15);
+      --navbar-bg: rgba(238,247,243,0.97);
+    }
+
+    /* ── DARK THEME ── */
+    [data-theme="dark"] {
+      --bg:       #050E09;
+      --card:     #0C1A0F;
+      --mint:     #0D2016;
+      --green:    #00A878;
+      --greenL:   #00C98F;
+      --greenXL:  #0A2016;
+      --text:     #E8F5F0;
+      --sub:      #7BBFA6;
+      --muted:    #3D7A62;
+      --border:   #153024;
+      --pinkXL:   #1A0510;
+      --orangeBg: #1A0F00;
+      --shadow:   0 2px 16px rgba(0,0,0,0.4);
+      --shadowH:  0 8px 32px rgba(0,168,120,0.2);
+      --navbar-bg: rgba(5,14,9,0.97);
+    }
+    [data-theme="dark"] #navbar      { background:var(--navbar-bg); }
+    [data-theme="dark"] .lang-wrap   { background:var(--card); }
+    [data-theme="dark"] #hero        { background:radial-gradient(ellipse 80% 60% at 70% 50%, rgba(0,168,120,0.1) 0%, transparent 70%), var(--bg); }
+    [data-theme="dark"] #how         { background:var(--card); }
+    [data-theme="dark"] #menu        { background:var(--card); }
+    [data-theme="dark"] #final       { background:linear-gradient(135deg, #0A2016, var(--bg)); }
+    [data-theme="dark"] footer       { background:var(--card); }
+    [data-theme="dark"] .step-card   { background:var(--card); }
+    [data-theme="dark"] .stat-card   { background:var(--card); }
+    [data-theme="dark"] .dish-card   { background:var(--card); }
+    [data-theme="dark"] .chip        { background:var(--card); }
+    [data-theme="dark"] .persona-card{ background:var(--mint); border-color:var(--border); }
+    [data-theme="dark"] .email-inp   { background:var(--card); border-color:var(--border); color:var(--text); }
+    [data-theme="dark"] .search-inp  { background:var(--card); border-color:var(--border); color:var(--text); }
+    [data-theme="dark"] .social-btn  { background:var(--card); }
+    [data-theme="dark"] #chat-window { background:var(--card); border-color:var(--border); }
+    [data-theme="dark"] #chat-msgs   { background:var(--bg); }
+    [data-theme="dark"] .msg-bot .msg-bubble { background:var(--card); border-color:var(--border); }
+    [data-theme="dark"] .chat-input-area { background:var(--card); border-color:var(--border); }
+    [data-theme="dark"] .chat-inp    { background:var(--bg); border-color:var(--border); color:var(--text); }
+    [data-theme="dark"] .persona-select { background:var(--mint); border-color:var(--border); }
+    [data-theme="dark"] .p-btn       { background:var(--card); border-color:var(--border); }
+    [data-theme="dark"] .q-chip      { background:var(--card); border-color:var(--border); color:var(--text); }
+    [data-theme="dark"] #chat-lead-form { background:var(--card); border-color:var(--border); }
+    [data-theme="dark"] .lead-inp    { background:var(--bg); border-color:var(--border); color:var(--text); }
+    [data-theme="dark"] #persona-highlight { background:var(--card) !important; }
+    [data-theme="dark"] .tag-cuisine { background:var(--mint); color:var(--muted); }
+    [data-theme="dark"] #banner      { background:var(--green); }
+
+    /* ═══════════════════════════════════════════
+       WHATSAPP FLOATING BUTTON
+    ═══════════════════════════════════════════ */
+    /* ═══════════════════════════════════════════
+       FAB GROUP — SAVY + WhatsApp side by side
+    ═══════════════════════════════════════════ */
+    #fab-group {
+      position:fixed; bottom:22px; right:20px; z-index:999;
+      display:flex; flex-direction:row; gap:12px; align-items:flex-end;
+    }
+    [dir="rtl"] #fab-group { right:auto; left:20px; flex-direction:row-reverse; }
+
+    .fab-item {
+      display:flex; flex-direction:column; align-items:center; gap:5px;
+    }
+    .fab-btn {
+      width:44px; height:44px; border-radius:50%;
+      border:none; cursor:pointer;
+      display:flex; align-items:center; justify-content:center;
+      transition:transform .25s, box-shadow .25s;
+    }
+    .fab-btn:hover { transform:scale(1.1); }
+
+    /* SAVY button */
+    #fab-savy {
+      background:var(--green);
+      box-shadow:0 6px 24px rgba(0,128,96,0.4);
+      animation:chatBounce 3s ease-in-out infinite;
+    }
+    #fab-savy[data-persona="employee"] { background:#1E40AF; box-shadow:0 6px 24px rgba(30,64,175,0.4); }
+    #fab-savy[data-persona="sportif"]  { background:#D97706; box-shadow:0 6px 24px rgba(217,119,6,0.4); }
+    #fab-savy[data-persona="famille"]  { background:#0D9488; box-shadow:0 6px 24px rgba(13,148,136,0.4); }
+    #fab-savy[data-persona="couple"]   { background:#be185d; box-shadow:0 6px 24px rgba(190,24,93,0.4); }
+    #fab-savy:hover { box-shadow:0 10px 32px rgba(0,128,96,0.5); }
+
+    .fab-savy-badge {
+      position:absolute; top:-4px; right:-4px;
+      width:17px; height:17px; background:var(--pink);
+      border-radius:50%; border:2px solid #fff;
+      font-size:8px; font-weight:900; color:#fff;
+      display:flex; align-items:center; justify-content:center;
+      font-family:'Syne',sans-serif; pointer-events:none;
+    }
+    .fab-item-wrap { position:relative; }
+
+    /* WhatsApp button */
+    #fab-wa {
+      background:linear-gradient(135deg,#25D366,#128C7E);
+      box-shadow:0 6px 24px rgba(37,211,102,0.4);
+      animation:waPulse 2.5s ease-in-out infinite;
+    }
+    #fab-wa:hover { box-shadow:0 10px 32px rgba(37,211,102,0.55); }
+
+    @keyframes waPulse {
+      0%,100%{box-shadow:0 4px 20px rgba(37,211,102,.4)}
+      50%{box-shadow:0 4px 28px rgba(37,211,102,.65), 0 0 0 7px rgba(37,211,102,.1)}
+    }
+
+    /* Labels under each button */
+    .fab-label {
+      font-size:10px; font-weight:700; color:var(--sub);
+      font-family:'DM Sans',sans-serif; white-space:nowrap;
+      letter-spacing:.02em;
+    }
+
+    /* ═══════════════════════════════════════════
+       ORDER TRACKING MODAL
+    ═══════════════════════════════════════════ */
+    #track-modal-overlay {
+      position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:1000;
+      display:none; align-items:center; justify-content:center;
+      backdrop-filter:blur(6px); animation:fadeIn .2s ease;
+    }
+    #track-modal-overlay.open { display:flex; }
+    #track-modal {
+      background:var(--card); border-radius:24px; width:min(480px,94vw);
+      padding:28px; border:1px solid var(--border); box-shadow:0 24px 64px rgba(0,0,0,.18);
+      animation:popIn .3s ease both; position:relative; max-height:90vh; overflow-y:auto;
+    }
+    .track-close {
+      position:absolute; top:16px; right:16px;
+      background:var(--mint); border:none; border-radius:50%; width:32px; height:32px;
+      cursor:pointer; font-size:14px; color:var(--sub); display:flex; align-items:center; justify-content:center;
+    }
+    .track-header { text-align:center; margin-bottom:28px; }
+    .track-header h3 { font-family:'Syne',sans-serif; font-weight:900; font-size:20px; color:var(--text); }
+    .track-header p  { color:var(--sub); font-size:13px; margin-top:4px; }
+    .track-id { display:inline-block; background:var(--greenXL); border:1px solid var(--border);
+      border-radius:99px; padding:4px 14px; font-size:12px; font-weight:700; color:var(--green); margin-bottom:12px; }
+    .track-steps { display:flex; flex-direction:column; gap:0; }
+    .track-step {
+      display:flex; align-items:flex-start; gap:16px; padding:14px 0;
+      border-left:2px solid var(--border); margin-left:20px; padding-left:20px;
+      position:relative; transition:all .3s;
+    }
+    .track-step:last-child { border-left-color:transparent; }
+    .track-step-dot {
+      position:absolute; left:-10px; top:18px;
+      width:20px; height:20px; border-radius:50%; border:2px solid var(--border);
+      background:var(--card); display:flex; align-items:center; justify-content:center;
+      font-size:9px; transition:all .4s;
+    }
+    .track-step.done   .track-step-dot { background:var(--green); border-color:var(--green); color:#fff; }
+    .track-step.active .track-step-dot { background:var(--green); border-color:var(--green); animation:pulse 1.3s infinite; }
+    .track-step.done   { border-left-color:var(--green); }
+    .track-step.active { border-left-color:var(--greenL); }
+    .track-step-icon { font-size:26px; flex-shrink:0; margin-top:2px; }
+    .track-step-info h4 { font-weight:700; font-size:14px; color:var(--text); }
+    .track-step-info p  { font-size:12px; color:var(--sub); margin-top:2px; line-height:1.5; }
+    .track-step-time { font-size:11px; color:var(--muted); margin-top:4px; font-weight:600; }
+    .track-eta {
+      background:linear-gradient(135deg,var(--green),var(--greenL));
+      border-radius:16px; padding:16px 20px; color:#fff; text-align:center; margin-top:20px;
+    }
+    .track-eta-mins { font-family:'Syne',sans-serif; font-size:36px; font-weight:900; line-height:1; }
+    .track-eta-label{ font-size:12px; opacity:.85; margin-top:4px; }
+    .track-demo-bar {
+      background:var(--mint); border-radius:99px; height:6px; margin-top:20px; overflow:hidden;
+    }
+    .track-demo-fill {
+      height:100%; border-radius:99px; background:linear-gradient(90deg,var(--green),var(--greenL));
+      transition:width 1.2s cubic-bezier(.4,0,.2,1);
+    }
+    [data-theme="dark"] #track-modal { background:var(--card); }
+
+    /* ═══════════════════════════════════════════
+       LOYALTY / REWARDS SECTION
+    ═══════════════════════════════════════════ */
+    #loyalty {
+      padding:72px clamp(16px,4vw,56px);
+      background:var(--bg);
+    }
+    [data-theme="dark"] #loyalty { background:var(--bg); }
+    .loyalty-inner { max-width:1100px; margin:0 auto; }
+    .loyalty-hero {
+      text-align:center; margin-bottom:48px;
+    }
+    .loyalty-eyebrow {
+      display:inline-flex; align-items:center; gap:6px;
+      background:var(--orangeBg); border:1px solid rgba(244,163,48,.3);
+      border-radius:99px; padding:5px 14px; font-size:12px; font-weight:700;
+      color:var(--orange); margin-bottom:14px; letter-spacing:.04em;
+    }
+    .loyalty-title { font-family:'Cormorant Garamond',serif; font-size:clamp(32px,4.5vw,52px);
+      font-weight:700; color:var(--text); line-height:1.1; margin-bottom:12px; }
+    .loyalty-sub { color:var(--sub); font-size:15px; max-width:520px; margin:0 auto; line-height:1.8; }
+    .loyalty-tiers { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:40px; }
+    @media(max-width:768px){ .loyalty-tiers { grid-template-columns:repeat(2,1fr); } }
+    @media(max-width:480px){ .loyalty-tiers { grid-template-columns:1fr; } }
+    .tier-card {
+      border-radius:20px; padding:22px 18px; text-align:center; position:relative; overflow:hidden;
+      border:2px solid transparent; transition:all .3s; cursor:default;
+    }
+    .tier-card:hover { transform:translateY(-4px); }
+    .tier-card--bronze  { background:linear-gradient(135deg,#FFF8F0,#FFF0E0); border-color:#CD7F32; }
+    .tier-card--silver  { background:linear-gradient(135deg,#F5F5F5,#E8E8E8); border-color:#A8A9AD; }
+    .tier-card--gold    { background:linear-gradient(135deg,#FFFDE7,#FFF8C4); border-color:#FFD700; }
+    .tier-card--plat    { background:linear-gradient(135deg,#E8F5FF,#D4EEFF); border-color:#4FC3F7; }
+    [data-theme="dark"] .tier-card--bronze { background:linear-gradient(135deg,#1A1000,#2A1800); }
+    [data-theme="dark"] .tier-card--silver { background:linear-gradient(135deg,#0D0D0D,#1A1A1A); }
+    [data-theme="dark"] .tier-card--gold   { background:linear-gradient(135deg,#1A1500,#2A2200); }
+    [data-theme="dark"] .tier-card--plat   { background:linear-gradient(135deg,#001020,#001A30); }
+    .tier-badge { font-size:36px; margin-bottom:10px; display:block; }
+    .tier-name  { font-family:'Syne',sans-serif; font-weight:900; font-size:16px; margin-bottom:4px; }
+    .tier-card--bronze .tier-name  { color:#CD7F32; }
+    .tier-card--silver .tier-name  { color:#717171; }
+    .tier-card--gold   .tier-name  { color:#B8860B; }
+    .tier-card--plat   .tier-name  { color:#0288D1; }
+    .tier-orders { font-size:12px; color:var(--sub); margin-bottom:12px; }
+    .tier-perks  { font-size:11.5px; color:var(--sub); line-height:1.9; text-align:left; }
+    .tier-perks li { list-style:none; padding-left:0; }
+    .tier-perks li::before { content:"✓ "; color:var(--green); font-weight:700; }
+    .loyalty-points-card {
+      background:linear-gradient(135deg,var(--green) 0%,var(--greenL) 100%);
+      border-radius:24px; padding:28px 32px;
+      display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:20px;
+      color:#fff;
+    }
+    .lpc-left h3 { font-family:'Syne',sans-serif; font-weight:900; font-size:22px; margin-bottom:4px; }
+    .lpc-left p  { opacity:.85; font-size:13px; line-height:1.7; }
+    .lpc-points  { text-align:center; }
+    .lpc-pts-val { font-family:'Syne',sans-serif; font-size:52px; font-weight:900; line-height:1; }
+    .lpc-pts-lbl { font-size:12px; opacity:.8; margin-top:4px; }
+    .lpc-progress { margin-top:16px; }
+    .lpc-progress-bar { background:rgba(255,255,255,.25); border-radius:99px; height:8px; overflow:hidden; }
+    .lpc-progress-fill{ height:100%; border-radius:99px; background:#fff; transition:width 1s ease; }
+    .lpc-progress-txt { font-size:11px; opacity:.8; margin-top:6px; }
+    .earn-ways {
+      display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:28px;
+    }
+    @media(max-width:640px){ .earn-ways { grid-template-columns:1fr; } }
+    .earn-card {
+      background:var(--card); border:1px solid var(--border); border-radius:16px;
+      padding:18px; text-align:center; transition:all .25s;
+    }
+    .earn-card:hover { box-shadow:var(--shadowH); transform:translateY(-2px); }
+    .earn-icon { font-size:28px; margin-bottom:8px; }
+    .earn-pts  { font-family:'Syne',sans-serif; font-weight:900; font-size:18px; color:var(--green); }
+    .earn-desc { font-size:12px; color:var(--sub); margin-top:4px; line-height:1.5; }
+
+    /* ═══════════════════════════════════════════
+       NUTRITIONAL CALCULATOR SECTION
+    ═══════════════════════════════════════════ */
+    #nutri-calc {
+      padding:72px clamp(16px,4vw,56px);
+      background:var(--card);
+    }
+    .nutri-inner { max-width:900px; margin:0 auto; }
+    .nutri-grid  { display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start; }
+    @media(max-width:680px){ .nutri-grid { grid-template-columns:1fr; } }
+    .nutri-row  { margin-bottom:16px; }
+    .nutri-label{ font-size:13px; font-weight:600; color:var(--text); margin-bottom:6px; display:block; }
+    .nutri-input, .nutri-select {
+      width:100%; padding:11px 14px; border:1.5px solid var(--border);
+      border-radius:12px; font-family:'DM Sans',sans-serif; font-size:14px;
+      color:var(--text); background:var(--bg); outline:none;
+      transition:border-color .2s;
+    }
+    .nutri-input:focus, .nutri-select:focus { border-color:var(--green); }
+    [data-theme="dark"] .nutri-input,
+    [data-theme="dark"] .nutri-select { background:var(--bg); border-color:var(--border); color:var(--text); }
+    .nutri-toggle { display:flex; gap:8px; }
+    .nutri-tog-btn {
+      flex:1; padding:10px; border:1.5px solid var(--border); border-radius:10px;
+      background:var(--bg); color:var(--sub); font-size:13px; font-weight:600;
+      cursor:pointer; transition:all .2s; font-family:'DM Sans',sans-serif;
+    }
+    .nutri-tog-btn.active { background:var(--green); border-color:var(--green); color:#fff; }
+    .nutri-calc-btn {
+      width:100%; padding:14px; border-radius:14px; border:none;
+      background:linear-gradient(135deg,var(--green),var(--greenL));
+      color:#fff; font-size:15px; font-weight:700; cursor:pointer;
+      font-family:'DM Sans',sans-serif; margin-top:8px;
+      box-shadow:0 6px 20px rgba(0,128,96,.25); transition:all .25s;
+    }
+    .nutri-calc-btn:hover { transform:translateY(-2px); box-shadow:0 10px 28px rgba(0,168,120,.35); }
+    .nutri-results { display:none; }
+    .nutri-results.show { display:block; animation:slideUp .4s ease both; }
+    .nutri-result-card {
+      background:linear-gradient(135deg,var(--green),var(--greenL));
+      border-radius:20px; padding:24px; color:#fff; margin-bottom:20px; text-align:center;
+    }
+    .nutri-kcal-val { font-family:'Syne',sans-serif; font-size:52px; font-weight:900; line-height:1; }
+    .nutri-kcal-lbl { opacity:.85; font-size:13px; margin-top:4px; }
+    .nutri-macros-row { display:flex; gap:12px; margin-top:16px; }
+    .nutri-macro {
+      flex:1; background:rgba(255,255,255,.18); border-radius:12px; padding:12px 8px; text-align:center;
+    }
+    .nutri-macro-val { font-family:'Syne',sans-serif; font-size:22px; font-weight:900; }
+    .nutri-macro-lbl { font-size:11px; opacity:.8; margin-top:2px; }
+    .nutri-dishes-label { font-size:13px; font-weight:700; color:var(--text); margin-bottom:10px; }
+    .nutri-dish-chips { display:flex; flex-wrap:wrap; gap:8px; }
+    .nutri-dish-chip {
+      background:var(--greenXL); border:1px solid var(--border);
+      border-radius:99px; padding:6px 14px; font-size:12px; font-weight:600;
+      color:var(--green); cursor:pointer; transition:all .2s;
+    }
+    .nutri-dish-chip:hover { background:var(--green); color:#fff; }
+
+    /* ═══════════════════════════════════════════
+       ENHANCED CHAT
+    ═══════════════════════════════════════════ */
+    /* Scroll-to-bottom button */
+    #chat-scroll-btn {
+      position:absolute; bottom:76px; right:12px; z-index:10;
+      width:30px; height:30px; border-radius:50%; background:var(--green);
+      border:none; color:#fff; cursor:pointer; font-size:14px;
+      box-shadow:0 2px 10px rgba(0,128,96,.3); display:none; align-items:center; justify-content:center;
+      transition:all .2s;
+    }
+    #chat-scroll-btn.visible { display:flex; }
+
+    /* Chat action buttons in header */
+    .chat-header-actions { display:flex; align-items:center; gap:6px; }
+    .chat-action-btn {
+      background:transparent; border:none; cursor:pointer; font-size:15px;
+      padding:4px 6px; border-radius:8px; color:var(--sub); transition:background .2s;
+    }
+    .chat-action-btn:hover { background:var(--mint); }
+
+    /* Message timestamps */
+    .msg-time { font-size:9.5px; color:var(--muted); margin-top:4px; text-align:right; }
+    .msg-bot .msg-time { text-align:left; }
+
+    /* Message reactions */
+    .msg-reactions {
+      display:flex; gap:4px; margin-top:5px; flex-wrap:wrap;
+    }
+    .msg-react-btn {
+      background:var(--mint); border:1px solid var(--border); border-radius:99px;
+      padding:3px 8px; font-size:12px; cursor:pointer; transition:all .2s;
+      display:inline-flex; align-items:center; gap:3px;
+    }
+    .msg-react-btn:hover { background:var(--greenXL); transform:scale(1.1); }
+    .msg-react-btn.selected { background:var(--green); color:#fff; border-color:var(--green); }
+
+    /* Voice input button */
+    .chat-voice-btn {
+      width:36px; height:36px; border-radius:50%; border:1.5px solid var(--border);
+      background:var(--bg); col
