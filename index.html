@@ -60,7 +60,7 @@
     [data-theme="dark"] .stat-card   { background:var(--card); }
     [data-theme="dark"] .dish-card   { background:var(--card); }
     [data-theme="dark"] .chip        { background:var(--card); }
-    [data-theme="dark"] .persona-card{ background:var(--card); }
+    [data-theme="dark"] .persona-card{ background:var(--mint); border-color:var(--border); }
     [data-theme="dark"] .email-inp   { background:var(--card); border-color:var(--border); color:var(--text); }
     [data-theme="dark"] .search-inp  { background:var(--card); border-color:var(--border); color:var(--text); }
     [data-theme="dark"] .social-btn  { background:var(--card); }
@@ -80,8 +80,11 @@
     *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
     html { scroll-behavior:smooth; }
     body { font-family:'DM Sans',system-ui,sans-serif; background:var(--bg); color:var(--text); overflow-x:hidden; }
-    ::-webkit-scrollbar { width:4px; }
-    ::-webkit-scrollbar-thumb { background:var(--mint); border-radius:4px; }
+    ::-webkit-scrollbar { width:6px; }
+    ::-webkit-scrollbar-track { background:transparent; }
+    ::-webkit-scrollbar-thumb { background:var(--green); border-radius:6px; }
+    ::-webkit-scrollbar-thumb:hover { background:var(--greenL); }
+    * { scrollbar-width:thin; scrollbar-color:var(--green) transparent; }
 
     /* ── ANIMATIONS ── */
     @keyframes float   { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
@@ -204,7 +207,7 @@
     [dir="rtl"] .avatars .av:not(:first-child) { margin-right:-10px; }
     .proof-text { font-size:13px; font-weight:600; color:var(--text); }
     .proof-text em { color:var(--green); font-style:normal; }
-    .proof-stars { font-size:11px; color:var(--muted); margin-top:2px; }
+    .proof-stars { font-size:13px; color:#F59E0B; margin-top:2px; letter-spacing:2px; }
     /* hero right */
     .hero-right { display:flex; flex-direction:column; align-items:center; gap:18px; }
     .robot-float { animation:float 3.5s ease-in-out infinite; filter:drop-shadow(0 16px 40px rgba(0,128,96,.2)); }
@@ -219,14 +222,28 @@
     .persona-cards { display:flex; gap:10px; flex-wrap:wrap; }
     .persona-card {
       flex:1; min-width:130px; padding:14px 12px; border-radius:18px;
-      border:2px solid var(--border); background:#fff; cursor:pointer;
-      transition:all .22s; text-align:center; position:relative; overflow:hidden;
+      border:2px solid var(--border); background:var(--greenXL); cursor:pointer;
+      transition:all .25s; text-align:center; position:relative; overflow:hidden;
     }
-    .persona-card:hover { transform:translateY(-3px); box-shadow:var(--shadowH); }
-    .persona-card.active-employee { border-color:var(--green);  background:var(--greenXL); }
-    .persona-card.active-sportif  { border-color:#F59E0B; background:#FFFBEB; }
-    .persona-card.active-famille  { border-color:#6366F1; background:#EEF2FF; }
-    .persona-card.active-couple   { border-color:var(--pink);   background:var(--pinkXL); }
+    .persona-card:hover { transform:translateY(-3px); box-shadow:var(--shadowH); border-color:var(--green); }
+    /* Active — full solid color fill */
+    .persona-card.active-employee { border-color:#1E40AF;        background:#1E40AF;        }
+    .persona-card.active-sportif  { border-color:#D97706;        background:#D97706;        }
+    .persona-card.active-famille  { border-color:#0D9488;        background:#0D9488;        }
+    .persona-card.active-couple   { border-color:var(--pink);    background:var(--pink);    }
+    /* White text + emoji shadow when active */
+    .persona-card.active-employee .persona-label,
+    .persona-card.active-sportif  .persona-label,
+    .persona-card.active-famille  .persona-label,
+    .persona-card.active-couple   .persona-label { color:#fff; }
+    .persona-card.active-employee .persona-desc,
+    .persona-card.active-sportif  .persona-desc,
+    .persona-card.active-famille  .persona-desc,
+    .persona-card.active-couple   .persona-desc  { color:rgba(255,255,255,0.8); }
+    .persona-card.active-employee .persona-emoji,
+    .persona-card.active-sportif  .persona-emoji,
+    .persona-card.active-famille  .persona-emoji,
+    .persona-card.active-couple   .persona-emoji { filter:drop-shadow(0 2px 6px rgba(0,0,0,0.25)); }
     .persona-emoji { font-size:26px; margin-bottom:6px; }
     .persona-label { font-family:'Syne',sans-serif; font-weight:800; font-size:12px; color:var(--text); }
     .persona-desc  { font-size:10px; color:var(--muted); margin-top:3px; line-height:1.4; }
@@ -243,6 +260,99 @@
     .step-num  { width:24px; height:24px; border-radius:50%; background:var(--green); display:flex; align-items:center; justify-content:center; color:#fff; font-size:11px; font-weight:900; margin-bottom:10px; }
     .step-title { font-family:'Syne',sans-serif; font-weight:800; font-size:15px; color:var(--text); margin-bottom:8px; }
     .step-desc  { font-size:13px; color:var(--sub); line-height:1.7; }
+
+    /* ── WHAT WE DO ─────────────────────────────────────── */
+    #what-we-do {
+      padding: 90px clamp(16px,4vw,56px);
+      max-width: 1160px;
+      margin: 0 auto;
+    }
+    .wwd-eyebrow {
+      display: inline-block;
+      font-family: 'Syne', sans-serif;
+      font-size: 11px; font-weight: 800; letter-spacing: 2.5px;
+      text-transform: uppercase; color: var(--green);
+      background: var(--greenXL); padding: 5px 14px;
+      border-radius: 20px; margin-bottom: 16px;
+    }
+    .wwd-sub {
+      max-width: 620px; margin: 16px auto 0;
+      font-size: 15.5px; color: var(--muted); line-height: 1.7;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .wwd-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-top: 52px;
+    }
+    @media(max-width:900px){ .wwd-grid{ grid-template-columns:repeat(2,1fr); } }
+    @media(max-width:540px){ .wwd-grid{ grid-template-columns:1fr; } }
+    .wwd-card {
+      border-radius: 22px; padding: 30px 24px;
+      position: relative; overflow: hidden;
+      transition: transform .25s, box-shadow .25s;
+    }
+    .wwd-card:hover { transform: translateY(-6px); box-shadow: 0 20px 48px rgba(0,0,0,0.10); }
+    .wwd-card--wide { grid-column: span 2; }
+    @media(max-width:540px){ .wwd-card--wide{ grid-column:span 1; } }
+    .wwd-card--green  { background:var(--greenXL);  border:1.5px solid rgba(0,128,96,0.18); }
+    .wwd-card--amber  { background:#FFFBEB;          border:1.5px solid rgba(245,158,11,0.22); }
+    .wwd-card--indigo { background:#F0FDFA;          border:1.5px solid rgba(13,148,136,0.22); }
+    .wwd-card--pink   { background:var(--pinkXL);   border:1.5px solid rgba(233,30,140,0.18); }
+    .wwd-card--teal   { background:linear-gradient(135deg,var(--greenXL) 0%,#F0FDFA 100%); border:1.5px solid rgba(0,128,96,0.12); }
+    [data-theme="dark"] .wwd-card { background:var(--card) !important; border-color:var(--border) !important; }
+    .wwd-icon { font-size:36px; margin-bottom:14px; display:block; line-height:1; }
+    .wwd-card-title { font-family:'Syne',sans-serif; font-weight:800; font-size:15.5px; color:var(--text); margin-bottom:9px; line-height:1.35; }
+    .wwd-card-desc  { font-family:'DM Sans',sans-serif; font-size:13px; color:var(--muted); line-height:1.65; }
+    .wwd-tag {
+      display:inline-block; margin-top:16px;
+      font-family:'Syne',sans-serif; font-size:10px; font-weight:700; letter-spacing:1px; text-transform:uppercase;
+      padding:4px 10px; border-radius:12px; background:rgba(0,0,0,0.06); color:var(--text);
+    }
+
+    /* ── DELIVERY BADGE ── */
+    .delivery-badge {
+      display:inline-flex; align-items:center; gap:8px;
+      margin-top:16px; padding:8px 18px;
+      background:linear-gradient(135deg,var(--greenXL),#ECFDF5);
+      border:1.5px solid rgba(0,128,96,0.25); border-radius:30px;
+      font-family:'Syne',sans-serif; font-size:12px; font-weight:700;
+      color:var(--green); letter-spacing:.3px;
+    }
+    .delivery-icon { font-size:16px; }
+    [data-theme="dark"] .delivery-badge { background:rgba(0,128,96,0.12); border-color:rgba(0,128,96,0.3); }
+
+    /* ── PERSONA MENU TABS ── */
+    .persona-tabs-label {
+      font-family:'Syne',sans-serif; font-size:11px; font-weight:700;
+      letter-spacing:1.5px; text-transform:uppercase; color:var(--muted);
+      margin:20px 0 8px; text-align:center;
+    }
+    .persona-menu-row { margin-bottom:4px; }
+    .persona-menu-row .pill.p-employee.active { background:#1E40AF; color:#fff; border-color:#1E40AF; }
+    .persona-menu-row .pill.p-sportif.active  { background:#D97706; color:#fff; border-color:#D97706; }
+    .persona-menu-row .pill.p-famille.active  { background:#0D9488; color:#fff; border-color:#0D9488; }
+    .persona-menu-row .pill.p-couple.active   { background:#be185d; color:#fff; border-color:#be185d; }
+    .persona-menu-row .pill.active            { background:var(--green); color:#fff; border-color:var(--green); }
+
+    /* ── GOLD STARS ── */
+    .dish-star { color:#F59E0B; font-weight:700; font-size:12px; }
+
+    /* ── MACRO BADGE (sportif only) ── */
+    .macro-bar {
+      display:flex; gap:6px; margin-top:5px; flex-wrap:wrap;
+    }
+    .macro-chip {
+      font-family:'Syne',sans-serif; font-size:10px; font-weight:800;
+      padding:2px 8px; border-radius:10px; letter-spacing:.3px;
+    }
+    .macro-p { background:#DCFCE7; color:#15803D; }
+    .macro-c { background:#FEF9C3; color:#A16207; }
+    .macro-f { background:#FEE2E2; color:#B91C1C; }
+    [data-theme="dark"] .macro-p { background:rgba(21,128,61,0.2); color:#4ADE80; }
+    [data-theme="dark"] .macro-c { background:rgba(161,98,7,0.2); color:#FCD34D; }
+    [data-theme="dark"] .macro-f { background:rgba(185,28,28,0.2); color:#FCA5A5; }
 
     /* ── STATS ── */
     #stats { padding:52px clamp(16px,4vw,56px); background:var(--bg); }
@@ -302,7 +412,67 @@
     .social-btn .s-lbl    { font-size:10px; color:var(--muted); line-height:1; }
     .social-btn .s-handle { font-size:13px; font-weight:700; color:var(--green); margin-top:2px; }
 
-    /* ── FOOTER ── */
+    /* ══ PERSONA CHAT THEMES ══════════════════════════════════
+       Applied to #chat-window via data-persona attribute
+    ══════════════════════════════════════════════════════════ */
+
+    /* Employee → Bleu Marine */
+    #chat-window[data-persona="employee"] .chat-header,
+    #chat-window:not([data-persona]) .chat-header {
+      background: linear-gradient(135deg, #1E40AF 0%, #2563EB 100%);
+    }
+    #chat-window[data-persona="employee"] .msg-user .msg-bubble { background:#1E40AF; }
+    #chat-window[data-persona="employee"] .msg-avatar            { background:#1E40AF; }
+    #chat-window[data-persona="employee"] .chat-send             { background:#1E40AF; }
+    #chat-window[data-persona="employee"] .chat-send:hover       { background:#1e3a8a; }
+    #chat-window[data-persona="employee"] .chat-inp:focus        { border-color:#1E40AF; }
+    #chat-window[data-persona="employee"] #chat-fab-inner        { background:#1E40AF; }
+
+    /* Sportif → Amber Yellow */
+    #chat-window[data-persona="sportif"] .chat-header {
+      background: linear-gradient(135deg, #D97706 0%, #F59E0B 100%);
+    }
+    #chat-window[data-persona="sportif"] .msg-user .msg-bubble { background:#D97706; color:#fff; }
+    #chat-window[data-persona="sportif"] .msg-avatar            { background:#D97706; }
+    #chat-window[data-persona="sportif"] .chat-send             { background:#D97706; }
+    #chat-window[data-persona="sportif"] .chat-send:hover       { background:#b45309; }
+    #chat-window[data-persona="sportif"] .chat-inp:focus        { border-color:#F59E0B; }
+    #chat-window[data-persona="sportif"] .chat-status-dot       { background:#FCD34D; }
+
+    /* Famille → Indigo Purple */
+    #chat-window[data-persona="famille"] .chat-header {
+      background: linear-gradient(135deg, #0D9488 0%, #14B8A6 100%);
+    }
+    #chat-window[data-persona="famille"] .msg-user .msg-bubble { background:#0D9488; color:#fff; }
+    #chat-window[data-persona="famille"] .msg-avatar            { background:#0D9488; }
+    #chat-window[data-persona="famille"] .chat-send             { background:#0D9488; }
+    #chat-window[data-persona="famille"] .chat-send:hover       { background:#0F766E; }
+    #chat-window[data-persona="famille"] .chat-inp:focus        { border-color:#14B8A6; }
+    #chat-window[data-persona="famille"] .chat-status-dot       { background:#5EEAD4; }
+
+    /* Couple → Hot Pink */
+    #chat-window[data-persona="couple"] .chat-header {
+      background: linear-gradient(135deg, #be185d 0%, #E91E8C 100%);
+    }
+    #chat-window[data-persona="couple"] .msg-user .msg-bubble { background:#be185d; color:#fff; }
+    #chat-window[data-persona="couple"] .msg-avatar            { background:#be185d; }
+    #chat-window[data-persona="couple"] .chat-send             { background:#be185d; }
+    #chat-window[data-persona="couple"] .chat-send:hover       { background:#9d174d; }
+    #chat-window[data-persona="couple"] .chat-inp:focus        { border-color:#E91E8C; }
+    #chat-window[data-persona="couple"] .chat-status-dot       { background:#f9a8d4; }
+
+    /* FAB button also follows persona color */
+    #chat-fab { transition: background .4s ease, box-shadow .4s ease; }
+    #chat-fab[data-persona="employee"] { background:#1E40AF; box-shadow:0 8px 28px rgba(30,64,175,0.45); }
+    #chat-fab[data-persona="sportif"]  { background:#D97706; box-shadow:0 8px 28px rgba(217,119,6,0.45); }
+    #chat-fab[data-persona="famille"]  { background:#0D9488; box-shadow:0 8px 28px rgba(13,148,136,0.45); }
+    #chat-fab[data-persona="couple"]   { background:#be185d; box-shadow:0 8px 28px rgba(190,24,93,0.45); }
+
+    /* Persona card pulse on select */
+    @keyframes cardPop { 0%{transform:scale(1)} 40%{transform:scale(1.08)} 100%{transform:scale(1)} }
+    .persona-card.just-selected { animation:cardPop .35s ease; }
+
+
     footer { padding:26px clamp(16px,4vw,56px); border-top:1px solid var(--border); background:#fff; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px; }
     .footer-logo { display:flex; align-items:center; gap:10px; }
     .footer-logo span { font-family:'Syne',sans-serif; font-weight:900; font-size:17px; color:var(--text); }
@@ -399,7 +569,14 @@
       font-size:12.5px; outline:none; color:var(--text); background:var(--bg);
       font-family:'DM Sans',sans-serif; transition:border-color .2s;
     }
-    .chat-inp:focus { border-color:var(--green); background:#fff; }
+    .chat-inp:focus { border-color:var(--green); background:var(--green); color:#fff; }
+    .chat-inp:focus::placeholder { color:rgba(255,255,255,0.7); }
+
+    /* Input box color follows persona */
+    #chat-window[data-persona="employee"] .chat-inp:focus { border-color:#1E40AF; background:#1E40AF; }
+    #chat-window[data-persona="sportif"]  .chat-inp:focus { border-color:#D97706; background:#D97706; }
+    #chat-window[data-persona="famille"]  .chat-inp:focus { border-color:#0D9488; background:#0D9488; }
+    #chat-window[data-persona="couple"]   .chat-inp:focus { border-color:#be185d; background:#be185d; }
     .chat-inp::placeholder { color:var(--muted); }
     .chat-send {
       width:34px; height:34px; border-radius:10px; border:none;
@@ -473,19 +650,19 @@
   <a class="nav-logo" href="#">
     <svg width="38" height="38" viewBox="0 0 80 80" fill="none">
       <rect width="80" height="80" rx="20" fill="#008060"/>
-      <ellipse cx="40" cy="21" rx="13" ry="5" fill="white" opacity=".9"/>
-      <rect x="27" y="16" width="26" height="14" rx="4" fill="white" opacity=".9"/>
-      <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="white"/>
-      <rect x="26" y="28" width="28" height="20" rx="9" fill="white"/>
+      <ellipse cx="40" cy="21" rx="13" ry="5" fill="#a7f3d0" opacity=".9"/>
+      <rect x="27" y="16" width="26" height="14" rx="4" fill="#a7f3d0" opacity=".9"/>
+      <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="#a7f3d0"/>
+      <rect x="26" y="28" width="28" height="20" rx="9" fill="#a7f3d0"/>
       <circle cx="34" cy="37" r="3.2" fill="#008060"/>
       <circle cx="46" cy="37" r="3.2" fill="#008060"/>
-      <circle cx="35" cy="36" r="1.1" fill="white" opacity=".6"/>
-      <circle cx="47" cy="36" r="1.1" fill="white" opacity=".6"/>
-      <rect x="28" y="50" width="24" height="18" rx="5" fill="white"/>
+      <circle cx="35" cy="36" r="1.1" fill="#a7f3d0" opacity=".6"/>
+      <circle cx="47" cy="36" r="1.1" fill="#a7f3d0" opacity=".6"/>
+      <rect x="28" y="50" width="24" height="18" rx="5" fill="#a7f3d0"/>
       <text x="40" y="63" text-anchor="middle" font-size="9" font-weight="900" fill="#008060" font-family="system-ui">AI</text>
-      <circle cx="19" cy="58" r="5" fill="white" opacity=".9"/>
+      <circle cx="19" cy="58" r="5" fill="#a7f3d0" opacity=".9"/>
       <line x1="24" y1="56" x2="28" y2="55" stroke="white" stroke-width="3" stroke-linecap="round"/>
-      <circle cx="61" cy="58" r="5" fill="white" opacity=".9"/>
+      <circle cx="61" cy="58" r="5" fill="#a7f3d0" opacity=".9"/>
       <line x1="56" y1="56" x2="52" y2="55" stroke="white" stroke-width="3" stroke-linecap="round"/>
     </svg>
     <span>SAVY</span>
@@ -591,7 +768,7 @@
           <div class="av" style="background:linear-gradient(135deg,#00A878,#4DB6AC);">M</div>
         </div>
         <div>
-          <div class="proof-text fb"><em id="live-count">793+</em> <span id="proof-txt">personnes inscrites</span></div>
+          <div class="proof-text fb"><em id="live-count">125+</em> <span id="proof-txt">personnes inscrites</span></div>
           <div class="proof-stars">⭐⭐⭐⭐⭐</div>
         </div>
       </div>
@@ -602,19 +779,19 @@
       <div class="robot-float">
         <svg width="190" height="190" viewBox="0 0 80 80" fill="none">
           <rect width="80" height="80" rx="20" fill="#008060"/>
-          <ellipse cx="40" cy="21" rx="13" ry="5" fill="white" opacity=".9"/>
-          <rect x="27" y="16" width="26" height="14" rx="4" fill="white" opacity=".9"/>
-          <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="white"/>
-          <rect x="26" y="28" width="28" height="20" rx="9" fill="white"/>
+          <ellipse cx="40" cy="21" rx="13" ry="5" fill="#a7f3d0" opacity=".9"/>
+          <rect x="27" y="16" width="26" height="14" rx="4" fill="#a7f3d0" opacity=".9"/>
+          <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="#a7f3d0"/>
+          <rect x="26" y="28" width="28" height="20" rx="9" fill="#a7f3d0"/>
           <circle cx="34" cy="37" r="3.2" fill="#008060"/>
           <circle cx="46" cy="37" r="3.2" fill="#008060"/>
-          <circle cx="35" cy="36" r="1.2" fill="white" opacity=".6"/>
-          <circle cx="47" cy="36" r="1.2" fill="white" opacity=".6"/>
-          <rect x="28" y="50" width="24" height="18" rx="5" fill="white"/>
+          <circle cx="35" cy="36" r="1.2" fill="#a7f3d0" opacity=".6"/>
+          <circle cx="47" cy="36" r="1.2" fill="#a7f3d0" opacity=".6"/>
+          <rect x="28" y="50" width="24" height="18" rx="5" fill="#a7f3d0"/>
           <text x="40" y="63" text-anchor="middle" font-size="8" font-weight="900" fill="#008060" font-family="system-ui">SAVY</text>
-          <circle cx="19" cy="58" r="5" fill="white" opacity=".9"/>
+          <circle cx="19" cy="58" r="5" fill="#a7f3d0" opacity=".9"/>
           <line x1="24" y1="56" x2="28" y2="55" stroke="white" stroke-width="3" stroke-linecap="round"/>
-          <circle cx="61" cy="58" r="5" fill="white" opacity=".9"/>
+          <circle cx="61" cy="58" r="5" fill="#a7f3d0" opacity=".9"/>
           <line x1="56" y1="56" x2="52" y2="55" stroke="white" stroke-width="3" stroke-linecap="round"/>
         </svg>
       </div>
@@ -628,11 +805,60 @@
         </button>
       </div>
       <div class="stat-chips">
-        <div class="chip"><div style="font-size:16px">👥</div><div class="chip-val" id="chip-count">793+</div><div class="chip-lbl" id="chip-inscrits">Inscrits</div></div>
+        <div class="chip"><div style="font-size:16px">👥</div><div class="chip-val" id="chip-count">125+</div><div class="chip-lbl" id="chip-inscrits">Inscrits</div></div>
         <div class="chip"><div style="font-size:16px">⚡</div><div class="chip-val">45min</div><div class="chip-lbl" id="chip-livraison">Livraison</div></div>
         <div class="chip"><div style="font-size:16px">⭐</div><div class="chip-val">4.9★</div><div class="chip-lbl" id="chip-note">Note</div></div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ══ WHAT WE PROVIDE ══════════════════════════════════ -->
+<section id="what-we-do">
+  <div class="section-header">
+    <span class="wwd-eyebrow" id="wwd-eyebrow">Ce que nous faisons</span>
+    <h2 class="section-title fh" id="wwd-title">Un chef IA pour chaque aspect de votre vie</h2>
+    <div class="title-bar"></div>
+    <p class="wwd-sub" id="wwd-sub">SAVY ne se contente pas de livrer de la nourriture. Nous analysons vos besoins, calculons vos nutriments et cuisinons avec des ingrédients locaux — tout ça en 45 minutes.</p>
+  </div>
+
+  <div class="wwd-grid">
+
+    <div class="wwd-card wwd-card--green">
+      <div class="wwd-icon">🧬</div>
+      <h3 class="wwd-card-title" id="wwd-c1-title">Nutrition personnalisée par IA</h3>
+      <p class="wwd-card-desc" id="wwd-c1-desc">Notre intelligence artificielle analyse votre profil — employé, sportif, famille ou couple — et calcule chaque gramme de protéine, glucide et lipide pour atteindre vos objectifs.</p>
+      <div class="wwd-tag">🤖 Powered by AI</div>
+    </div>
+
+    <div class="wwd-card wwd-card--amber">
+      <div class="wwd-icon">👨‍🍳</div>
+      <h3 class="wwd-card-title" id="wwd-c2-title">Cuisiné à la commande</h3>
+      <p class="wwd-card-desc" id="wwd-c2-desc">Rien n'est préparé à l'avance. Chaque plat est cuisiné au moment de votre commande, avec des ingrédients frais du marché local de Tétouan.</p>
+      <div class="wwd-tag">🌿 100% Frais</div>
+    </div>
+
+    <div class="wwd-card wwd-card--indigo">
+      <div class="wwd-icon">🛵</div>
+      <h3 class="wwd-card-title" id="wwd-c3-title">Livraison en 45 minutes</h3>
+      <p class="wwd-card-desc" id="wwd-c3-desc">Tétouan, M'diq, Martil — votre repas arrive chaud, frais et emballé avec soin. Garanti. Toujours à l'heure.</p>
+      <div class="wwd-tag">⏱ Garanti 45 min</div>
+    </div>
+
+    <div class="wwd-card wwd-card--pink">
+      <div class="wwd-icon">🍽️</div>
+      <h3 class="wwd-card-title" id="wwd-c4-title">16 plats, 4 cuisines du monde</h3>
+      <p class="wwd-card-desc" id="wwd-c4-desc">Marocain, Asiatique, Méditerranéen, Fusion — une carte internationale pensée pour votre santé, avec les saveurs que vous aimez.</p>
+      <div class="wwd-tag">🌍 4 Cuisines</div>
+    </div>
+
+    <div class="wwd-card wwd-card--teal wwd-card--wide">
+      <div class="wwd-icon">💬</div>
+      <h3 class="wwd-card-title" id="wwd-c5-title">Un vrai chef qui vous parle</h3>
+      <p class="wwd-card-desc" id="wwd-c5-desc">Posez toutes vos questions — allergènes, calories, portions, ingrédients. Chef SAVY répond en Darija et en français, comme un ami qui s'y connaît vraiment en nutrition.</p>
+      <div class="wwd-tag">💚 Darija · Français · عربي</div>
+    </div>
+
   </div>
 </section>
 
@@ -657,6 +883,11 @@
       <h2 class="section-title fh" id="menu-title">Notre Menu</h2>
       <p style="color:var(--sub);font-size:14px;margin-top:6px;" id="menu-sub">Des saveurs du monde, optimisées par l'IA pour vos objectifs</p>
       <div class="title-bar" style="margin-top:10px;"></div>
+      <!-- Local Delivery Badge -->
+      <div class="delivery-badge" id="delivery-badge">
+        <span class="delivery-icon">🛵</span>
+        <span id="delivery-text">Livraison locale · Tétouan · Martil · M'diq · 45 min · Cash ou Carte</span>
+      </div>
     </div>
     <div class="search-wrap">
       <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8FBFAA" stroke-width="2" stroke-linecap="round">
@@ -664,6 +895,9 @@
       </svg>
       <input class="search-inp" id="search" placeholder="Rechercher des plats..." oninput="renderDishes()"/>
     </div>
+    <!-- Persona Tabs -->
+    <div class="persona-tabs-label" id="persona-tabs-label">Je cherche pour :</div>
+    <div class="filter-row persona-menu-row" id="persona-menu-tabs"></div>
     <div class="filter-row" id="cuisine-tabs"></div>
     <div class="filter-row" id="diet-filters"></div>
     <div class="cart-bar" id="cart-bar" style="display:none;">
@@ -680,17 +914,17 @@
     <div style="animation:float 3.5s ease-in-out infinite;display:inline-block;margin-bottom:24px;filter:drop-shadow(0 8px 24px rgba(0,128,96,.2));">
       <svg width="90" height="90" viewBox="0 0 80 80" fill="none">
         <rect width="80" height="80" rx="20" fill="#008060"/>
-        <ellipse cx="40" cy="21" rx="13" ry="5" fill="white" opacity=".9"/>
-        <rect x="27" y="16" width="26" height="14" rx="4" fill="white" opacity=".9"/>
-        <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="white"/>
-        <rect x="26" y="28" width="28" height="20" rx="9" fill="white"/>
+        <ellipse cx="40" cy="21" rx="13" ry="5" fill="#a7f3d0" opacity=".9"/>
+        <rect x="27" y="16" width="26" height="14" rx="4" fill="#a7f3d0" opacity=".9"/>
+        <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="#a7f3d0"/>
+        <rect x="26" y="28" width="28" height="20" rx="9" fill="#a7f3d0"/>
         <circle cx="34" cy="37" r="3.2" fill="#008060"/>
         <circle cx="46" cy="37" r="3.2" fill="#008060"/>
-        <rect x="28" y="50" width="24" height="18" rx="5" fill="white"/>
+        <rect x="28" y="50" width="24" height="18" rx="5" fill="#a7f3d0"/>
         <text x="40" y="63" text-anchor="middle" font-size="8" font-weight="900" fill="#008060" font-family="system-ui">SAVY</text>
-        <circle cx="19" cy="58" r="5" fill="white" opacity=".9"/>
+        <circle cx="19" cy="58" r="5" fill="#a7f3d0" opacity=".9"/>
         <line x1="24" y1="56" x2="28" y2="55" stroke="white" stroke-width="3" stroke-linecap="round"/>
-        <circle cx="61" cy="58" r="5" fill="white" opacity=".9"/>
+        <circle cx="61" cy="58" r="5" fill="#a7f3d0" opacity=".9"/>
         <line x1="56" y1="56" x2="52" y2="55" stroke="white" stroke-width="3" stroke-linecap="round"/>
       </svg>
     </div>
@@ -718,7 +952,7 @@
 <!-- ══ FOOTER ══════════════════════════════════════════════ -->
 <footer>
   <div class="footer-logo">
-    <svg width="30" height="30" viewBox="0 0 80 80" fill="none"><rect width="80" height="80" rx="20" fill="#008060"/><ellipse cx="40" cy="21" rx="13" ry="5" fill="white" opacity=".9"/><rect x="27" y="16" width="26" height="14" rx="4" fill="white" opacity=".9"/><ellipse cx="40" cy="13" rx="9.5" ry="8" fill="white"/><rect x="26" y="28" width="28" height="20" rx="9" fill="white"/><circle cx="34" cy="37" r="3.2" fill="#008060"/><circle cx="46" cy="37" r="3.2" fill="#008060"/><rect x="28" y="50" width="24" height="18" rx="5" fill="white"/><text x="40" y="63" text-anchor="middle" font-size="9" font-weight="900" fill="#008060" font-family="system-ui">A</text></svg>
+    <svg width="30" height="30" viewBox="0 0 80 80" fill="none"><rect width="80" height="80" rx="20" fill="#008060"/><ellipse cx="40" cy="21" rx="13" ry="5" fill="#a7f3d0" opacity=".9"/><rect x="27" y="16" width="26" height="14" rx="4" fill="#a7f3d0" opacity=".9"/><ellipse cx="40" cy="13" rx="9.5" ry="8" fill="#a7f3d0"/><rect x="26" y="28" width="28" height="20" rx="9" fill="#a7f3d0"/><circle cx="34" cy="37" r="3.2" fill="#008060"/><circle cx="46" cy="37" r="3.2" fill="#008060"/><rect x="28" y="50" width="24" height="18" rx="5" fill="#a7f3d0"/><text x="40" y="63" text-anchor="middle" font-size="9" font-weight="900" fill="#008060" font-family="system-ui">A</text></svg>
     <span>SAVY</span>
     <span style="color:var(--muted);font-size:12px;" id="footer-loc">· 🇲🇦 Maroc</span>
   </div>
@@ -733,13 +967,13 @@
 <!-- ══ FLOATING CHAT BUTTON ════════════════════════════════ -->
 <button id="chat-fab" onclick="openChat()" aria-label="Chat with SAVY">
   <svg width="28" height="28" viewBox="0 0 80 80" fill="none">
-    <ellipse cx="40" cy="21" rx="13" ry="5" fill="white" opacity=".9"/>
-    <rect x="27" y="16" width="26" height="14" rx="4" fill="white" opacity=".9"/>
-    <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="white"/>
-    <rect x="26" y="28" width="28" height="20" rx="9" fill="white"/>
+    <ellipse cx="40" cy="21" rx="13" ry="5" fill="#a7f3d0" opacity=".9"/>
+    <rect x="27" y="16" width="26" height="14" rx="4" fill="#a7f3d0" opacity=".9"/>
+    <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="#a7f3d0"/>
+    <rect x="26" y="28" width="28" height="20" rx="9" fill="#a7f3d0"/>
     <circle cx="34" cy="37" r="3.2" fill="#008060"/>
     <circle cx="46" cy="37" r="3.2" fill="#008060"/>
-    <rect x="28" y="50" width="24" height="18" rx="5" fill="white"/>
+    <rect x="28" y="50" width="24" height="18" rx="5" fill="#a7f3d0"/>
     <text x="40" y="63" text-anchor="middle" font-size="9" font-weight="900" fill="#008060" font-family="system-ui">AI</text>
   </svg>
   <div class="fab-badge">1</div>
@@ -752,13 +986,13 @@
   <div class="chat-header">
     <div class="chat-header-avatar">
       <svg width="26" height="26" viewBox="0 0 80 80" fill="none">
-        <ellipse cx="40" cy="21" rx="13" ry="5" fill="white" opacity=".9"/>
-        <rect x="27" y="16" width="26" height="14" rx="4" fill="white" opacity=".9"/>
-        <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="white"/>
-        <rect x="26" y="28" width="28" height="20" rx="9" fill="white"/>
+        <ellipse cx="40" cy="21" rx="13" ry="5" fill="#a7f3d0" opacity=".9"/>
+        <rect x="27" y="16" width="26" height="14" rx="4" fill="#a7f3d0" opacity=".9"/>
+        <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="#a7f3d0"/>
+        <rect x="26" y="28" width="28" height="20" rx="9" fill="#a7f3d0"/>
         <circle cx="34" cy="37" r="3.2" fill="#008060"/>
         <circle cx="46" cy="37" r="3.2" fill="#008060"/>
-        <rect x="28" y="50" width="24" height="18" rx="5" fill="white"/>
+        <rect x="28" y="50" width="24" height="18" rx="5" fill="#a7f3d0"/>
       </svg>
     </div>
     <div class="chat-header-info">
@@ -806,22 +1040,22 @@ const GOOGLE_SHEET_URL   = "https://script.google.com/macros/s/AKfycbze50a82fqgJ
    DATA
 ═══════════════════════════════════════════ */
 const dishes = [
-  {id:1,  e:"🍆",name:"Zaalouk Bowl",        ar:"طاجين الزعلوك",  cal:340,p:12,c:44,t:20,r:4.8,tag:"Vegan",        badge:"",            cuis:"🇲🇦",f:"vegan"},
-  {id:2,  e:"🫘",name:"Bissara Soup",         ar:"بيصارة",          cal:260,p:14,c:38,t:15,r:4.7,tag:"Vegan",        badge:"Best Seller", cuis:"🇲🇦",f:"vegan"},
-  {id:3,  e:"🐟",name:"Chermoula Salmon",    ar:"سمك بالشرمولة",  cal:480,p:44,c:22,t:25,r:4.9,tag:"High Protein",  badge:"Chef's Pick", cuis:"🇲🇦",f:"high-protein"},
-  {id:4,  e:"🍗",name:"Poulet M'Charmel",    ar:"دجاج معمر",       cal:420,p:38,c:28,t:30,r:4.8,tag:"High Protein",  badge:"",            cuis:"🇲🇦",f:"high-protein"},
-  {id:5,  e:"🥗",name:"Quinoa Poke Bowl",    ar:"بوكي بول كينوا", cal:410,p:22,c:52,t:15,r:4.9,tag:"Vegan",        badge:"Trending",    cuis:"🌏",f:"vegan"},
-  {id:6,  e:"🍜",name:"Miso Ramen Léger",    ar:"رامن ميسو",       cal:360,p:18,c:42,t:20,r:4.7,tag:"Low Carb",     badge:"",            cuis:"🌏",f:"low-carb"},
-  {id:7,  e:"🥟",name:"Gyoza Poulet",        ar:"جيوزا دجاج",      cal:310,p:26,c:32,t:20,r:4.6,tag:"High Protein",  badge:"New",         cuis:"🌏",f:"high-protein"},
-  {id:8,  e:"🍱",name:"Buddha Bowl Thaï",    ar:"بوذا بول",        cal:390,p:20,c:50,t:18,r:4.8,tag:"Vegan",        badge:"",            cuis:"🌏",f:"vegan"},
-  {id:9,  e:"🥙",name:"Wrap Falafel",        ar:"راب فلافل",       cal:370,p:16,c:48,t:15,r:4.7,tag:"Vegan",        badge:"Best Seller", cuis:"🌊",f:"vegan"},
-  {id:10, e:"🐠",name:"Branzino Grillé",     ar:"سمك مشوي",        cal:460,p:42,c:18,t:25,r:4.9,tag:"High Protein",  badge:"Chef's Pick", cuis:"🌊",f:"high-protein"},
-  {id:11, e:"🥗",name:"Salade Niçoise",      ar:"سلطة نيسواز",     cal:340,p:28,c:22,t:10,r:4.6,tag:"Low Carb",     badge:"",            cuis:"🌊",f:"low-carb"},
-  {id:12, e:"🫙",name:"Greek Yogurt Bowl",   ar:"يوغرت يوناني",    cal:290,p:18,c:34,t:5, r:4.8,tag:"Gluten-Free",  badge:"",            cuis:"🌊",f:"gluten-free"},
-  {id:13, e:"🌯",name:"Burrito Bowl",        ar:"بوريتو بول",      cal:440,p:36,c:48,t:20,r:4.7,tag:"High Protein",  badge:"Trending",    cuis:"🌎",f:"high-protein"},
-  {id:14, e:"🫐",name:"Açaí Power Bowl",     ar:"بول أساي",        cal:300,p:12,c:44,t:10,r:4.8,tag:"Vegan",        badge:"",            cuis:"🌎",f:"vegan"},
-  {id:15, e:"🥑",name:"Avocado Toast Boost", ar:"توست أفوكادو",    cal:350,p:14,c:38,t:8, r:4.6,tag:"Vegan",        badge:"",            cuis:"🌎",f:"vegan"},
-  {id:16, e:"🥩",name:"Smash Burger Léger",  ar:"برغر صحي",        cal:490,p:40,c:36,t:25,r:4.7,tag:"High Protein",  badge:"New",         cuis:"🌎",f:"high-protein"},
+  {id:1,  e:"🍆",name:"Zaalouk Bowl",        ar:"طاجين الزعلوك",  cal:340,p:12,c:44,f_g:8, t:20,r:4.8,tag:"Vegan",        badge:"",            cuis:"🇲🇦",f:"vegan",        personas:["employee","famille"]},
+  {id:2,  e:"🫘",name:"Bissara Soup",         ar:"بيصارة",          cal:260,p:14,c:38,f_g:6, t:15,r:4.7,tag:"Vegan",        badge:"Best Seller", cuis:"🇲🇦",f:"vegan",        personas:["employee","famille"]},
+  {id:3,  e:"🐟",name:"Chermoula Salmon",    ar:"سمك بالشرمولة",  cal:480,p:44,c:22,f_g:18,t:25,r:4.9,tag:"High Protein",  badge:"Chef's Pick", cuis:"🇲🇦",f:"high-protein", personas:["sportif","couple"]},
+  {id:4,  e:"🍗",name:"Poulet M'Charmel",    ar:"دجاج معمر",       cal:420,p:38,c:28,f_g:14,t:30,r:4.8,tag:"High Protein",  badge:"",            cuis:"🇲🇦",f:"high-protein", personas:["sportif","famille","employee"]},
+  {id:5,  e:"🥗",name:"Quinoa Poke Bowl",    ar:"بوكي بول كينوا", cal:410,p:22,c:52,f_g:10,t:15,r:4.9,tag:"Vegan",        badge:"Trending",    cuis:"🌏",f:"vegan",        personas:["famille","employee"]},
+  {id:6,  e:"🍜",name:"Miso Ramen Léger",    ar:"رامن ميسو",       cal:360,p:18,c:42,f_g:8, t:20,r:4.7,tag:"Low Carb",     badge:"",            cuis:"🌏",f:"low-carb",     personas:["employee","famille"]},
+  {id:7,  e:"🥟",name:"Gyoza Poulet",        ar:"جيوزا دجاج",      cal:310,p:26,c:32,f_g:10,t:20,r:4.6,tag:"High Protein",  badge:"New",         cuis:"🌏",f:"high-protein", personas:["sportif"]},
+  {id:8,  e:"🍱",name:"Buddha Bowl Thaï",    ar:"بوذا بول",        cal:390,p:20,c:50,f_g:12,t:18,r:4.8,tag:"Vegan",        badge:"",            cuis:"🌏",f:"vegan",        personas:["famille","couple"]},
+  {id:9,  e:"🥙",name:"Wrap Falafel",        ar:"راب فلافل",       cal:370,p:16,c:48,f_g:9, t:15,r:4.7,tag:"Vegan",        badge:"Best Seller", cuis:"🌊",f:"vegan",        personas:["famille"]},
+  {id:10, e:"🐠",name:"Branzino Grillé",     ar:"سمك مشوي",        cal:460,p:42,c:18,f_g:16,t:25,r:4.9,tag:"High Protein",  badge:"Chef's Pick", cuis:"🌊",f:"high-protein", personas:["sportif","couple"]},
+  {id:11, e:"🥗",name:"Salade Niçoise",      ar:"سلطة نيسواز",     cal:340,p:28,c:22,f_g:14,t:10,r:4.6,tag:"Low Carb",     badge:"",            cuis:"🌊",f:"low-carb",     personas:["employee","couple"]},
+  {id:12, e:"🫙",name:"Greek Yogurt Bowl",   ar:"يوغرت يوناني",    cal:290,p:18,c:34,f_g:6, t:5, r:4.8,tag:"Gluten-Free",  badge:"",            cuis:"🌊",f:"gluten-free",  personas:["employee","couple"]},
+  {id:13, e:"🌯",name:"Burrito Bowl",        ar:"بوريتو بول",      cal:440,p:36,c:48,f_g:12,t:20,r:4.7,tag:"High Protein",  badge:"Trending",    cuis:"🌎",f:"high-protein", personas:["sportif"]},
+  {id:14, e:"🫐",name:"Açaí Power Bowl",     ar:"بول أساي",        cal:300,p:12,c:44,f_g:8, t:10,r:4.8,tag:"Vegan",        badge:"",            cuis:"🌎",f:"vegan",        personas:["couple"]},
+  {id:15, e:"🥑",name:"Avocado Toast Boost", ar:"توست أفوكادو",    cal:350,p:14,c:38,f_g:16,t:8, r:4.6,tag:"Vegan",        badge:"",            cuis:"🌎",f:"vegan",        personas:["employee","couple"]},
+  {id:16, e:"🥩",name:"Smash Burger Léger",  ar:"برغر صحي",        cal:490,p:40,c:36,f_g:18,t:25,r:4.7,tag:"High Protein",  badge:"New",         cuis:"🌎",f:"high-protein", personas:["sportif","famille"]},
 ];
 const cuisineTabs  = [
   {id:"all",flag:"🌍",fr:"Tout",           ar:"الكل"},
@@ -829,6 +1063,13 @@ const cuisineTabs  = [
   {id:"🌏", flag:"🌏",fr:"Asiatique",      ar:"آسيوي"},
   {id:"🌊", flag:"🌊",fr:"Méditerranéen",  ar:"متوسطي"},
   {id:"🌎", flag:"🌎",fr:"Américain",      ar:"أمريكي"},
+];
+const personaTabs = [
+  {id:"all",     icon:"🌍", fr:"Tous",        ar:"الكل"},
+  {id:"employee",icon:"💼", fr:"Employé(e)",  ar:"موظف/ة"},
+  {id:"sportif", icon:"🏋️", fr:"Sportif(ve)", ar:"رياضي/ة"},
+  {id:"famille", icon:"👨‍👩‍👧", fr:"Famille",     ar:"عائلة"},
+  {id:"couple",  icon:"💑", fr:"Couple",      ar:"زوجان"},
 ];
 const dietFilters = ["All","Vegan","High Protein","Low Carb","Gluten-Free"];
 const filterMap   = {"All":"all","Vegan":"vegan","High Protein":"high-protein","Low Carb":"low-carb","Gluten-Free":"gluten-free"};
@@ -838,6 +1079,7 @@ const filterMap   = {"All":"all","Vegan":"vegan","High Protein":"high-protein","
 ═══════════════════════════════════════════ */
 let lang        = "fr";
 let activeCuis  = "all";
+let activePersonaMenu = "all";
 let activeDiet  = "All";
 let cart        = [];
 let persona     = null;        // 'employee' | 'sportif' | 'famille' | 'couple' | null
@@ -869,7 +1111,7 @@ const copy = {
       {icon:"👨‍🍳",t:"Chef cuisine avec amour",  d:"Ingrédients locaux frais, préparés à la commande pour vous."},
       {icon:"🛵",t:"Livré en 45 min",           d:"Chez vous, chaud et frais. Garanti. Toujours."},
     ],
-    stats:[{v:"45 min",l:"Livraison"},{v:"793+",l:"Inscrits"},{v:"4.9 ★",l:"Satisfaction"},{v:"100%",l:"Frais"}],
+    stats:[{v:"45 min",l:"Livraison"},{v:"125+",l:"Inscrits"},{v:"4.9 ★",l:"Satisfaction"},{v:"100%",l:"Frais"}],
     menuTitle:"Notre Menu", menuSub:"Des saveurs du monde, optimisées par l'IA pour vos objectifs",
     search:"Rechercher des plats...",
     cartMsg:(n)=>`${n} plat${n>1?"s":""} sélectionné${n>1?"s":""}`,
@@ -891,6 +1133,16 @@ const copy = {
     leadPlaceholderPhone:"WhatsApp (+212 6XX XXX XXX)",
     leadSubmit:"🧬 Engineer My Meal Now ✨",
     chatInputPh:"Message SAVY...",
+    wwdEyebrow:"Ce que nous faisons",
+    wwdTitle:"Un chef IA pour chaque aspect de votre vie",
+    wwdSub:"SAVY ne se contente pas de livrer de la nourriture. Nous analysons vos besoins, calculons vos nutriments et cuisinons avec des ingrédients locaux — tout ça en 45 minutes.",
+    wwdCards:[
+      {icon:"🧬", title:"Nutrition personnalisée par IA",    desc:"Notre IA analyse votre profil et calcule chaque gramme de protéine, glucide et lipide pour atteindre vos objectifs précis.", tag:"🤖 Powered by AI"},
+      {icon:"👨‍🍳", title:"Cuisiné à la commande",            desc:"Rien n'est préparé à l'avance. Chaque plat est cuisiné au moment de votre commande, avec des ingrédients frais du marché de Tétouan.", tag:"🌿 100% Frais"},
+      {icon:"🛵", title:"Livraison en 45 minutes",           desc:"Tétouan, M'diq, Martil — votre repas arrive chaud, frais et emballé avec soin. Garanti. Toujours à l'heure.", tag:"⏱ Garanti 45 min"},
+      {icon:"🍽️", title:"16 plats, 4 cuisines du monde",    desc:"Marocain, Asiatique, Méditerranéen, Fusion — une carte internationale pensée pour votre santé, avec les saveurs que vous aimez.", tag:"🌍 4 Cuisines"},
+      {icon:"💬", title:"Un vrai chef qui vous parle",       desc:"Posez toutes vos questions — allergènes, calories, portions. Chef SAVY répond en Darija et français, comme un expert en nutrition à votre service.", tag:"💚 Darija · Français · عربي"},
+    ],
   },
   ar:{
     city:"🇲🇦 تطوان · مديق · مرتيل",
@@ -911,7 +1163,7 @@ const copy = {
       {icon:"👨‍🍳",t:"الشيف يطبخ بحب",     d:"مكونات محلية طازجة، محضرة لك عند الطلب."},
       {icon:"🛵",t:"توصيل في 45 دقيقة",    d:"لبابك، ساخن وطازج. مضمون دائماً."},
     ],
-    stats:[{v:"45 دق",l:"التوصيل"},{v:"+793",l:"مشترك"},{v:"4.9 ★",l:"الرضا"},{v:"100%",l:"طازج"}],
+    stats:[{v:"45 دق",l:"التوصيل"},{v:"+125",l:"مشترك"},{v:"4.9 ★",l:"الرضا"},{v:"100%",l:"طازج"}],
     menuTitle:"قائمتنا", menuSub:"نكهات عالمية محسّنة بالذكاء الاصطناعي لأهدافك",
     search:"ابحث عن الأطباق...",
     cartMsg:(n)=>`${n} طبق مختار`,
@@ -933,6 +1185,16 @@ const copy = {
     leadPlaceholderPhone:"WhatsApp (+212 6XX XXX XXX)",
     leadSubmit:"🧬 صمّم وجبتي الآن ✨",
     chatInputPh:"راسل SAVY...",
+    wwdEyebrow:"ما الذي نقدمه",
+    wwdTitle:"شيف ذكاء اصطناعي لكل جانب من حياتكم",
+    wwdSub:"SAVY لا يكتفي بتوصيل الطعام. نحن نحلل احتياجاتكم، نحسب مغذياتكم، ونطبخ بمكونات محلية طازجة — كل ذلك في 45 دقيقة.",
+    wwdCards:[
+      {icon:"🧬", title:"تغذية شخصية بالذكاء الاصطناعي",    desc:"يحلل ذكاؤنا الاصطناعي ملفكم الشخصي ويحسب كل غرام بروتين وكربوهيدرات ودهون لتحقيق أهدافكم بدقة.", tag:"🤖 مدعوم بالذكاء الاصطناعي"},
+      {icon:"👨‍🍳", title:"مطبوخ عند الطلب",                   desc:"لا شيء يُحضَّر مسبقاً. كل طبق يُطبخ لحظة استلام طلبكم، بمكونات طازجة من سوق تطوان المحلي.", tag:"🌿 100% طازج"},
+      {icon:"🛵", title:"توصيل في 45 دقيقة",                 desc:"تطوان · المضيق · مرتيل — وجبتكم تصل ساخنة وطازجة ومعبأة بعناية. مضمون دائماً. في الوقت دائماً.", tag:"⏱ مضمون 45 دقيقة"},
+      {icon:"🍽️", title:"16 طبقاً من 4 مطابخ عالمية",        desc:"مغربي، آسيوي، متوسطي، فيوجن — قائمة دولية مصممة لصحتكم بالنكهات التي تعشقونها.", tag:"🌍 4 مطابخ"},
+      {icon:"💬", title:"شيف حقيقي يتحدث معكم",              desc:"اسألوا كل أسئلتكم — مكونات، سعرات، حصص، حساسيات. Chef SAVY يجيب بالدارجة والعربية والفرنسية كخبير تغذية في خدمتكم.", tag:"💚 دارجة · عربية · Français"},
+    ],
   }
 };
 
@@ -960,6 +1222,7 @@ function toggleTheme() {
 
 // Apply on load
 applyTheme();
+applyChatTheme("employee");
 
 /* ═══════════════════════════════════════════
    LANGUAGE
@@ -968,89 +1231,107 @@ function setLang(l) {
   lang = l;
   document.documentElement.lang = l;
   document.body.dir = l==="ar" ? "rtl" : "ltr";
-  const t = copy[l];
+  const t  = copy[l];
   const isAr = l==="ar";
   const ff = isAr ? "font-family:'Tajawal',sans-serif;" : "font-family:'Cormorant Garamond',serif;font-weight:700;";
-  const fb = isAr ? "font-family:'Tajawal',sans-serif;" : "";
+
+  // Safe helpers — never throw if element missing
+  const $t  = (id, val) => { const el=document.getElementById(id); if(el) el.textContent = val; };
+  const $h  = (id, val) => { const el=document.getElementById(id); if(el) el.innerHTML   = val; };
+  const $p  = (id, val) => { const el=document.getElementById(id); if(el) el.placeholder = val; };
+  const $cs = (id, css) => { const el=document.getElementById(id); if(el) el.style.cssText = css; };
 
   document.querySelectorAll(".lang-btn").forEach((b,i)=>b.classList.toggle("active",(i===0&&l==="fr")||(i===1&&l==="ar")));
-  document.getElementById("nl-menu").textContent  = t.navMenu;
-  document.getElementById("nl-how").textContent   = t.navHow;
-  document.getElementById("nl-about").textContent = t.navAbout;
-  document.getElementById("nav-cta").textContent  = t.navCta;
 
-  document.getElementById("hero-city").textContent = t.city;
-  document.getElementById("hero-tagline").textContent = t.tagline;
-  document.getElementById("hero-h1").innerHTML = t.h1;
-  document.getElementById("hero-h1").style.cssText = ff+"font-size:clamp(38px,5.5vw,68px);font-weight:900;line-height:1.08;color:var(--text);margin-bottom:16px;";
-  document.getElementById("hero-sub").textContent = t.sub;
-  document.getElementById("persona-label").textContent       = t.personaLabel;
-  document.getElementById("pc-employee-lbl").textContent     = t.pcEmployeeLbl;
-  document.getElementById("pc-employee-desc").textContent    = t.pcEmployeeDesc;
-  document.getElementById("pc-sportif-lbl").textContent      = t.pcSportifLbl;
-  document.getElementById("pc-sportif-desc").textContent     = t.pcSportifDesc;
-  document.getElementById("pc-famille-lbl").textContent      = t.pcFamilleLbl;
-  document.getElementById("pc-famille-desc").textContent     = t.pcFamilleDesc;
-  document.getElementById("pc-couple-lbl").textContent       = t.pcCoupleLbl;
-  document.getElementById("pc-couple-desc").textContent      = t.pcCoupleDesc;
-  document.getElementById("proof-txt").textContent     = t.proof;
-  document.getElementById("chip-inscrits").textContent  = t.chips[0];
-  document.getElementById("chip-livraison").textContent = t.chips[1];
-  document.getElementById("chip-note").textContent      = t.chips[2];
+  $t("nl-menu",  t.navMenu);  $t("nl-how", t.navHow);
+  $t("nl-about", t.navAbout); $t("nav-cta", t.navCta);
 
-  document.getElementById("how-title").textContent = t.how;
-  document.getElementById("how-title").style.cssText = ff;
-  renderSteps();
-  renderStats();
+  $t("hero-city",    t.city);
+  $t("hero-tagline", t.tagline);
+  $h("hero-h1",      t.h1);
+  $cs("hero-h1", ff+"font-size:clamp(38px,5.5vw,68px);font-weight:900;line-height:1.08;color:var(--text);margin-bottom:16px;");
+  $t("hero-sub", t.sub);
 
-  document.getElementById("menu-title").textContent = t.menuTitle;
-  document.getElementById("menu-title").style.cssText = ff;
-  document.getElementById("menu-sub").textContent   = t.menuSub;
-  document.getElementById("search").placeholder     = t.search;
-  document.getElementById("order-btn").textContent  = t.order;
+  $t("persona-label",       t.personaLabel);
+  $t("pc-employee-lbl",     t.pcEmployeeLbl);  $t("pc-employee-desc", t.pcEmployeeDesc);
+  $t("pc-sportif-lbl",      t.pcSportifLbl);   $t("pc-sportif-desc",  t.pcSportifDesc);
+  $t("pc-famille-lbl",      t.pcFamilleLbl);   $t("pc-famille-desc",  t.pcFamilleDesc);
+  $t("pc-couple-lbl",       t.pcCoupleLbl);    $t("pc-couple-desc",   t.pcCoupleDesc);
+
+  $t("proof-txt",     t.proof);
+  $t("chip-inscrits", t.chips[0]);  $t("chip-livraison", t.chips[1]);  $t("chip-note", t.chips[2]);
+
+  $t("how-title", t.how);  $cs("how-title", ff);
+  renderWWD();
+  renderPersonaMenuTabs(); renderSteps(); renderStats();
+
+  $t("menu-title", t.menuTitle);  $cs("menu-title", ff);
+  $t("menu-sub",   t.menuSub);
+  $p("search",     t.search);
+  $t("order-btn",  t.order);
   renderCuisineTabs(); renderDietFilters(); renderDishes();
 
-  document.getElementById("final-title").textContent   = t.finalTitle;
-  document.getElementById("final-cta-txt").textContent = t.finalCta;
-  document.getElementById("final-sub").textContent     = t.finalSub;
-  document.getElementById("final-note").textContent    = t.finalNote;
-  document.getElementById("footer-copy").textContent   = t.footerCopy;
-  document.getElementById("fl-1").textContent = t.fl[0];
-  document.getElementById("fl-2").textContent = t.fl[1];
-  document.getElementById("fl-3").textContent = t.fl[2];
+  $t("final-title",   t.finalTitle);  $t("final-cta-txt", t.finalCta);
+  $t("final-sub",     t.finalSub);    $t("final-note",    t.finalNote);
+  $t("footer-copy",   t.footerCopy);
+  $t("fl-1", t.fl[0]);  $t("fl-2", t.fl[1]);  $t("fl-3", t.fl[2]);
+  $t("banner-link",   t.bannerLink);
 
-  document.getElementById("chat-status-txt").textContent    = t.chatStatus;
-  document.getElementById("persona-row-label").textContent  = t.personaRowLabel;
-  document.getElementById("banner-link").textContent        = t.bannerLink;
-  document.getElementById("cpb-employee-lbl").textContent   = t.cpbEmployee;
-  document.getElementById("cpb-sportif-lbl").textContent    = t.cpbSportif;
-  document.getElementById("cpb-famille-lbl").textContent    = t.cpbFamille;
-  document.getElementById("cpb-couple-lbl").textContent     = t.cpbCouple;
-  document.getElementById("lead-name").placeholder          = t.leadPlaceholderName;
-  document.getElementById("lead-city").placeholder          = t.leadPlaceholderCity;
-  document.getElementById("lead-phone").placeholder         = t.leadPlaceholderPhone;
-  document.getElementById("lead-submit-btn").textContent    = t.leadSubmit;
-  document.getElementById("chat-inp").placeholder           = t.chatInputPh;
-  document.getElementById("banner-link").textContent        = t.bannerLink;
+  $t("chat-status-txt",   t.chatStatus);
+  $t("persona-row-label", t.personaRowLabel);
+  $t("cpb-employee-lbl",  t.cpbEmployee);  $t("cpb-sportif-lbl", t.cpbSportif);
+  $t("cpb-famille-lbl",   t.cpbFamille);   $t("cpb-couple-lbl",  t.cpbCouple);
+  $t("lead-submit-btn",   t.leadSubmit);
+  $p("lead-name",  t.leadPlaceholderName);
+  $p("lead-city",  t.leadPlaceholderCity);
+  $p("lead-phone", t.leadPlaceholderPhone);
+  $p("chat-inp",   t.chatInputPh);
 
-  // ── Sync chat language: reset and re-greet in new language ──
+  // ── Sync chat to new language ──
   const chatMsgs = document.getElementById("chat-msgs");
-  chatHistory = [];
-  chatMsgs.innerHTML = "";
-  leadShown = false; leadDone = false;
-  document.getElementById("chat-lead-form").style.display = "none";
-  document.getElementById("chat-input-area").style.display = "block";
-  // Set chat RTL/LTR
-  const chatWin = document.getElementById("chat-window");
-  chatWin.dir = l === "ar" ? "rtl" : "ltr";
-  document.getElementById("chat-msgs").dir = l === "ar" ? "rtl" : "ltr";
-  // Re-greet only if chat was already open/used
-  if (chatOpen || chatHistory.length > 0) initChat();
+  if (chatMsgs) {
+    chatHistory = [];
+    chatMsgs.innerHTML = "";
+    leadShown = false; leadDone = false;
+    const leadForm  = document.getElementById("chat-lead-form");
+    const inputArea = document.getElementById("chat-input-area");
+    const chatWin   = document.getElementById("chat-window");
+    if (leadForm)  leadForm.style.display  = "none";
+    if (inputArea) inputArea.style.display = "block";
+    if (chatWin)   chatWin.dir   = l === "ar" ? "rtl" : "ltr";
+    chatMsgs.dir = l === "ar" ? "rtl" : "ltr";
+    if (chatOpen) initChat();
+  }
 }
 
 /* ═══════════════════════════════════════════
    STEPS / STATS
 ═══════════════════════════════════════════ */
+function renderWWD() {
+  const t = copy[lang]; const isAr = lang === "ar";
+  const $t = (id, val) => { const el = document.getElementById(id); if(el) el.textContent = val; };
+  $t("wwd-eyebrow", t.wwdEyebrow);
+  $t("wwd-title",   t.wwdTitle);
+  $t("wwd-sub",     t.wwdSub);
+
+  const colors = ["--green","amber","indigo","--pink","teal"];
+  const cls    = ["green","amber","indigo","pink","teal"];
+  const wide   = [false, false, false, false, true];
+  const grid   = document.querySelector(".wwd-grid");
+  if (!grid) return;
+  grid.innerHTML = t.wwdCards.map((c,i) => `
+    <div class="wwd-card wwd-card--${cls[i]}${wide[i]?" wwd-card--wide":""}">
+      <span class="wwd-icon">${c.icon}</span>
+      <h3 class="wwd-card-title" style="text-align:${isAr?"right":"left"}">${c.title}</h3>
+      <p  class="wwd-card-desc"  style="text-align:${isAr?"right":"left"}">${c.desc}</p>
+      <span class="wwd-tag">${c.tag}</span>
+    </div>`).join("");
+  if (isAr) {
+    const ey = document.getElementById("wwd-eyebrow");
+    if (ey) ey.style.letterSpacing = "0";
+  }
+}
+
 function renderSteps(){
   const t=copy[lang]; const isAr=lang==="ar";
   document.getElementById("steps-grid").innerHTML = t.steps.map((s,i)=>`
@@ -1063,16 +1344,101 @@ function renderSteps(){
 }
 function renderStats(){
   const t=copy[lang]; const isAr=lang==="ar";
-  document.getElementById("stats-grid").innerHTML = t.stats.map(s=>`
+  document.getElementById("stats-grid").innerHTML = t.stats.map((s,i)=>`
     <div class="stat-card">
-      <div class="stat-val fh">${s.v}</div>
+      <div class="stat-val fh" ${i===1?'id="stat-inscrits"':''}>${i===1 ? (isAr?"+125":"125+") : s.v}</div>
       <div class="stat-lbl ${isAr?"far":"fb"}">${s.l}</div>
     </div>`).join("");
+  // Restart counter if already running
+  startInscritCounter();
+}
+
+/* ═══════════════════════════════════════════
+   INSCRITS LIVE COUNTER  125 → 873
+   • +1 every 3 seconds
+   • every 10 s: drops 3 one by one (−1 per 400ms), then resumes
+   • reaches 873 → resets to 125 and loops
+═══════════════════════════════════════════ */
+let _counterVal   = 125;
+let _counterTimer = null;
+let _dropTimer    = null;
+let _dropping     = false;
+const COUNTER_TARGET = 873;
+const COUNTER_START  = 125;
+
+function _updateCounterEl(n) {
+  const el  = document.getElementById("stat-inscrits");
+  const lc  = document.getElementById("live-count");
+  const cc  = document.getElementById("chip-count");
+  const isAr = lang === "ar";
+  const txt = isAr ? "+" + n : n + "+";
+  if (el) el.textContent = txt;
+  if (lc) lc.textContent = txt;
+  if (cc) cc.textContent = txt;
+}
+
+function startInscritCounter() {
+  if (_counterTimer) clearInterval(_counterTimer);
+  if (_dropTimer)    clearInterval(_dropTimer);
+  _dropping  = false;
+  _counterVal = COUNTER_START;
+  _updateCounterEl(_counterVal);
+
+  // Tick up +1 every 3 seconds
+  _counterTimer = setInterval(() => {
+    if (_dropping) return; // pause during drop
+    if (_counterVal < COUNTER_TARGET) {
+      _counterVal++;
+      _updateCounterEl(_counterVal);
+    } else {
+      // Reached 873 → reset to 125 and loop
+      _counterVal = COUNTER_START;
+      _updateCounterEl(_counterVal);
+    }
+  }, 3000);
+
+  // Every 10 seconds: drop 3 then resume
+  _dropTimer = setInterval(() => {
+    if (_dropping) return;
+    _dropping = true;
+    let drops = 0;
+    const dropInterval = setInterval(() => {
+      if (drops < 3) {
+        if (_counterVal > COUNTER_START) {
+          _counterVal--;
+          _updateCounterEl(_counterVal);
+        }
+        drops++;
+      } else {
+        clearInterval(dropInterval);
+        _dropping = false; // resume upward tick
+      }
+    }, 400);
+  }, 15000);
 }
 
 /* ═══════════════════════════════════════════
    MENU
 ═══════════════════════════════════════════ */
+function renderPersonaMenuTabs(){
+  const isAr = lang==="ar";
+  const el = document.getElementById("persona-menu-tabs");
+  if (!el) return;
+  el.innerHTML = personaTabs.map(t=>{
+    const cls = t.id !== "all" ? `p-${t.id}` : "";
+    return `<button class="pill ${cls} ${activePersonaMenu===t.id?"active":""}" onclick="setPersonaMenu('${t.id}')">${t.icon} ${isAr?t.ar:t.fr}</button>`;
+  }).join("");
+  // label
+  const lbl = document.getElementById("persona-tabs-label");
+  if (lbl) lbl.textContent = isAr ? "أبحث لـ :" : "Je cherche pour :";
+  // delivery badge
+  const db = document.getElementById("delivery-text");
+  if (db) db.textContent = isAr
+    ? "توصيل محلي · تطوان · مرتيل · المضيق · 45 دقيقة · كاش أو كارت"
+    : "Livraison locale · Tétouan · Martil · M'diq · 45 min · Cash ou Carte";
+}
+function setPersonaMenu(id){ activePersonaMenu=id; renderPersonaMenuTabs(); renderDishes(); }
+
 function renderCuisineTabs(){
   const isAr=lang==="ar";
   document.getElementById("cuisine-tabs").innerHTML = cuisineTabs.map(c=>`
@@ -1089,11 +1455,13 @@ function setDiet(f){ activeDiet=f; renderDietFilters(); renderDishes(); }
 function renderDishes(){
   const t=copy[lang]; const isAr=lang==="ar";
   const q=document.getElementById("search").value.toLowerCase();
+  const isSportifView = activePersonaMenu==="sportif";
   const filtered=dishes.filter(d=>{
     const ms=d.name.toLowerCase().includes(q)||d.ar.includes(q);
     const mf=activeDiet==="All"||d.f===filterMap[activeDiet];
     const mc=activeCuis==="all"||d.cuis===activeCuis;
-    return ms&&mf&&mc;
+    const mp=activePersonaMenu==="all"||(d.personas&&d.personas.includes(activePersonaMenu));
+    return ms&&mf&&mc&&mp;
   });
   const cb=document.getElementById("cart-bar");
   if(cart.length>0){ cb.style.display="flex"; document.getElementById("cart-txt").textContent=t.cartMsg(cart.length); }
@@ -1116,8 +1484,13 @@ function renderDishes(){
           <span class="tag-cuisine">${d.cuis}</span>
         </div>
         <div class="dish-macros">
-          <span>🔥 ${d.cal}kcal</span><span>💪 ${d.p}g P</span><span>🌾 ${d.c}g C</span>
-          <span class="meta">⏱ ${d.t}m · ⭐ ${d.r}</span>
+          <span>🔥 ${d.cal}kcal</span>
+          ${isSportifView
+            ? `<span class="macro-chip macro-p">P ${d.p}g</span><span class="macro-chip macro-c">C ${d.c}g</span><span class="macro-chip macro-f">F ${d.f_g}g</span>`
+            : `<span>💪 ${d.p}g P</span>`
+          }
+          <span class="dish-star">★ ${d.r}</span>
+          <span class="meta">⏱ ${d.t}m</span>
         </div>
       </div>
       <button class="add-btn ${cart.includes(d.id)?"added":""}" onclick="toggleCart(${d.id})">
@@ -1128,21 +1501,37 @@ function renderDishes(){
 function toggleCart(id){ cart=cart.includes(id)?cart.filter(x=>x!==id):[...cart,id]; renderDishes(); }
 
 /* ═══════════════════════════════════════════
+   CHAT THEME — synced to persona
+═══════════════════════════════════════════ */
+function applyChatTheme(p) {
+  const win = document.getElementById("chat-window");
+  const fab = document.getElementById("chat-fab");
+  if (win) win.setAttribute("data-persona", p || "employee");
+  if (fab) fab.setAttribute("data-persona", p || "employee");
+}
+
+/* ═══════════════════════════════════════════
    PERSONA SELECTION (hero)
 ═══════════════════════════════════════════ */
 function selectPersona(p) {
+  const prevPersona = persona;
   persona = p;
   ["employee","sportif","famille","couple"].forEach(x=>{
     const el=document.getElementById("pc-"+x);
-    if(el){ el.className="persona-card"; if(x===p) el.classList.add("active-"+x); }
+    if(el){ el.className="persona-card"; if(x===p){ el.classList.add("active-"+x, "just-selected"); setTimeout(()=>el.classList.remove("just-selected"),400); } }
   });
+  applyChatTheme(p);
+  // Sync menu persona tab to match selected hero card
+  activePersonaMenu = p;
+  renderPersonaMenuTabs();
+  renderDishes();
   const hl  = document.getElementById("persona-highlight");
   const pbt = document.getElementById("ph-btn");
   const isAr = lang==="ar";
   const configs = {
     employee:{ border:"var(--green)", bg:"var(--greenXL)", icon:"💼", title: isAr?"وجبة المكتب":"Repas Énergie", desc: isAr?"طاقة للعمل بدون خمول. مطبوخ بكل حب.":"Énergie soutenue toute la journée. Zéro fatigue post-déjeuner.", btnBg:"var(--green)", btnColor:"#fff", btnShadow:"rgba(0,128,96,0.35)", btnTxt: isAr?"اطلب وجبتي الآن 💼":"Commander mon repas 💼" },
     sportif: { border:"#F59E0B", bg:"#FFFBEB",            icon:"🏋️", title: isAr?"التغذية الرياضية":"Performance & Macros", desc: isAr?"ماكروز محسوبة بدقة لأهدافك الرياضية. 💪":"Macros calculés pour vos objectifs de performance. 💪", btnBg:"linear-gradient(135deg,#F59E0B,#FCD34D)", btnColor:"#78350F", btnShadow:"rgba(245,158,11,0.35)", btnTxt: isAr?"اطلب وجبة الرياضي 🏋️":"Commande Sport 🏋️" },
-    famille: { border:"#6366F1", bg:"#EEF2FF",            icon:"👨‍👩‍👧", title: isAr?"وجبة العائلة":"Menu Famille", desc: isAr?"أطباق للجميع — الكبير والصغير. طازج ومتوازن.":"Des plats pour tous — frais, équilibrés, généreux.", btnBg:"#6366F1", btnColor:"#fff", btnShadow:"rgba(99,102,241,0.35)", btnTxt: isAr?"اطلب وجبة العائلة 👨‍👩‍👧":"Commander le Menu Famille 👨‍👩‍👧" },
+    famille: { border:"#14B8A6", bg:"#F0FDFA",            icon:"👨‍👩‍👧", title: isAr?"وجبة العائلة":"Menu Famille", desc: isAr?"أطباق للجميع — الكبير والصغير. طازج ومتوازن.":"Des plats pour tous — frais, équilibrés, généreux.", btnBg:"#14B8A6", btnColor:"#fff", btnShadow:"rgba(13,148,136,0.35)", btnTxt: isAr?"اطلب وجبة العائلة 👨‍👩‍👧":"Commander le Menu Famille 👨‍👩‍👧" },
     couple:  { border:"var(--pink)", bg:"var(--pinkXL)",  icon:"💑", title: isAr?"تجربة الزوجين":"Dîner en Amoureux", desc: isAr?"عشاء خاص مطبوخ بكل حب. لأن كل لحظة تستحق. 💕":"Un dîner élégant pour deux, préparé avec tout l'amour du monde. 💕", btnBg:"linear-gradient(135deg,var(--pink),var(--pinkL))", btnColor:"#fff", btnShadow:"rgba(233,30,140,0.35)", btnTxt: isAr?"اطلب عشاء الزوجين 💑":"Réserver mon Dîner 💑" },
   };
   const c = configs[p] || configs.employee;
@@ -1155,7 +1544,46 @@ function selectPersona(p) {
   pbt.style.color      = c.btnColor;
   pbt.style.boxShadow  = `0 4px 14px ${c.btnShadow}`;
   pbt.textContent      = c.btnTxt;
-  openChat();
+
+  // ── If persona changed mid-conversation, reset and re-greet ──
+  if (prevPersona && prevPersona !== p && chatHistory.length > 0) {
+    resetChatForPersona(p);
+  } else {
+    openChat();
+  }
+}
+
+function resetChatForPersona(p) {
+  chatOpen = true;
+  document.getElementById("chat-window").classList.add("open");
+  document.getElementById("chat-fab").style.display = "none";
+
+  // Clear state
+  chatHistory = [];
+  leadShown   = false;
+  leadDone    = false;
+  document.getElementById("chat-msgs").innerHTML  = "";
+  document.getElementById("chat-lead-form").style.display  = "none";
+  document.getElementById("chat-input-area").style.display = "block";
+
+  // Brief transition indicator then new greeting
+  const isAr = lang === "ar";
+  const labels = {
+    employee: { fr:"💼 Mode Employé(e)", ar:"💼 وضع الموظف" },
+    sportif:  { fr:"🏋️ Mode Sportif(ve)", ar:"🏋️ وضع الرياضي" },
+    famille:  { fr:"👨‍👩‍👧 Mode Famille",     ar:"👨‍👩‍👧 وضع العائلة" },
+    couple:   { fr:"💑 Mode Couple",        ar:"💑 وضع الزوجين" },
+  };
+  const lbl = (labels[p] || labels.employee)[isAr ? "ar" : "fr"];
+
+  // Show a smooth mode-switch pill
+  const msgs = document.getElementById("chat-msgs");
+  const pill = document.createElement("div");
+  pill.style.cssText = "text-align:center;margin:6px 0;";
+  pill.innerHTML = `<span style="display:inline-block;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700;background:var(--border);color:var(--muted);font-family:'Syne',sans-serif;">${lbl}</span>`;
+  msgs.appendChild(pill);
+
+  setTimeout(() => initChat(), 300);
 }
 
 /* ═══════════════════════════════════════════
@@ -1178,6 +1606,7 @@ function closeChat() {
 ═══════════════════════════════════════════ */
 function chatSetPersona(p) {
   persona = p;
+  applyChatTheme(p);
   ["employee","sportif","famille","couple"].forEach(x=>{
     const el=document.getElementById("cpb-"+x);
     if(el){ el.className="p-btn"; if(x===p) el.classList.add("sel-"+x); }
@@ -1195,16 +1624,53 @@ function chatSetPersona(p) {
 ═══════════════════════════════════════════ */
 function initChat() {
   const isAr = lang === "ar";
-  const greetings = isAr ? [
-    "مرحباً بكم في SAVY 🍽️ — أنا شيفكم الذكي. كيف يمكنني مساعدتكم اليوم؟",
-    "أهلاً وسهلاً! 🧬 أنا Chef SAVY، هنا لأصمم لكم وجبتكم المثالية. ماذا تريدون؟",
-    "مرحباً! أنا Chef SAVY 🌿 — شيفكم الشخصي بالذكاء الاصطناعي. بماذا أخدمكم؟",
-  ] : [
-    "Marhba bik chez SAVY 🍽️ — Je suis votre chef personnel, à votre service. Comment puis-je vous aider aujourd'hui ?",
-    "Ahlan ! Bienvenue chez SAVY 🧬 — votre chef cuisinier IA. Qu'est-ce que je peux préparer pour vous ?",
-    "Bonjour et bienvenue ! 🌿 Ana Chef SAVY — hna bash nkhedmek b ahsan wajba. Chno bghiti lyom ?",
-  ];
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+  const p = persona || "employee";
+
+  const greetings = {
+    employee: {
+      fr: [
+        "Bonjour ! 💼 Je suis Chef SAVY, votre chef IA personnel.\nVous avez une journée chargée devant vous — laissez-moi vous préparer un repas qui vous garde concentré(e) et plein(e) d'énergie sans coup de fatigue. Qu'est-ce qui vous ferait plaisir aujourd'hui ?",
+        "Marhba bik ! 💼 Ana Chef SAVY — hna bash nkhedmek.\nLe bon repas au bon moment, c'est la clé d'une journée productive. Dites-moi : vous cherchez un déjeuner léger ou une vraie recharge d'énergie ?",
+      ],
+      ar: [
+        "مرحباً ! 💼 أنا Chef SAVY، شيفكم الذكي الشخصي.\nيوم عمل طويل أمامكم — دعوني أحضّر لكم وجبة تمنحكم الطاقة والتركيز طوال اليوم بدون خمول. ماذا تفضلون اليوم ؟",
+        "أهلاً وسهلاً ! 💼 أنا هنا خصيصاً لأصمم وجبتكم المثالية.\nالأكل الصحيح في الوقت الصحيح هو سر الإنتاجية — هل تريدون غداءً خفيفاً أم وجبة طاقة كاملة ؟",
+      ]
+    },
+    sportif: {
+      fr: [
+        "Welcome, champion ! 🏋️ Je suis Chef SAVY, votre ingénieur nutritionnel IA.\nChaque gramme compte quand on parle de performance. Dites-moi : vous êtes en phase de prise de masse, de sèche, ou de récupération ?",
+        "Ahlan, atlète ! 🏋️ Ana Chef SAVY — hna bash nحسب ليك les macros parfaits.\nVotre corps mérite le meilleur carburant. Quel est votre objectif du moment ?",
+      ],
+      ar: [
+        "أهلاً بطل ! 🏋️ أنا Chef SAVY — مهندس التغذية الرياضية بالذكاء الاصطناعي.\nكل غرام بروتين له أهمية في رحلتك. هل أنتم في مرحلة بناء العضلات، حرق الدهون، أم الاسترداد بعد التمرين ؟",
+        "مرحباً رياضي ! 🏋️ أنا هنا لأحسب لكم الماكروز المثالية.\nالتغذية الصحيحة = نتائج أسرع. أخبروني بهدفكم الرياضي الحالي ؟",
+      ]
+    },
+    famille: {
+      fr: [
+        "Bienvenue en famille chez SAVY ! 👨‍👩‍👧 Je suis Chef SAVY, votre chef familial IA.\nChaque membre de votre famille mérite une assiette qui lui convient — les petits comme les grands. Combien êtes-vous à table aujourd'hui ?",
+        "Marhba bikom ! 👨‍👩‍👧 Ana Chef SAVY — hna bash nserviw l3a2ila kolha.\nDes repas frais, généreux et équilibrés pour tout le monde. Dites-moi, vous commandez pour combien de personnes ?",
+      ],
+      ar: [
+        "أهلاً بعائلتكم الكريمة ! 👨‍👩‍👧 أنا Chef SAVY — شيفكم العائلي الذكي.\nكل فرد في العائلة يستحق طبقاً يناسبه — الكبار والصغار. لكم جميعاً وجبات طازجة ومتوازنة. لكم جميعاً. كم شخصاً تطلبون لهم اليوم ؟",
+        "مرحباً ! 👨‍👩‍👧 أنا هنا لأجعل وجبة عائلتكم لحظة استثنائية.\nوجبات متنوعة تناسب الجميع، محضرة بكل حب. من أي أطباقنا تودّون البدء ؟",
+      ]
+    },
+    couple: {
+      fr: [
+        "Bonsoir et bienvenue ! 💑 Je suis Chef SAVY, votre chef romantique IA.\nUn dîner exceptionnel mérite une attention particulière. Ce soir, je suis là pour transformer votre repas en une vraie expérience. Quel genre d'ambiance vous plaît — léger et raffiné, ou généreux et chaleureux ?",
+        "Bienvenue chez SAVY 💑 — votre table pour deux vous attend.\nUn bon dîner, c'est une histoire d'amour à part entière. Dites-moi vos envies et je vous compose le menu parfait pour ce soir.",
+      ],
+      ar: [
+        "مساء الخير والرومانسية ! 💑 أنا Chef SAVY — شيفكم الخاص لهذه الليلة.\nعشاء استثنائي يستحق اهتماماً خاصاً. أخبروني ماذا تفضلون — خفيف وأنيق، أم دافئ وسخي ؟",
+        "أهلاً بكم ! 💑 طاولتكم لاثنين بانتظاركم في SAVY.\nعشاء جميل = لحظة لا تُنسى. أخبروني برغباتكم وسأختار لكم أفضل ما في قائمتنا الليلة.",
+      ]
+    }
+  };
+
+  const pool = (greetings[p] || greetings.employee)[isAr ? "ar" : "fr"];
+  const greeting = pool[Math.floor(Math.random() * pool.length)];
   addBotMsg(greeting);
   chatHistory.push({ role:"assistant", content: greeting });
 }
@@ -1219,10 +1685,10 @@ function addBotMsg(text, isGlow=false) {
   div.innerHTML = `
     <div class="msg-avatar">
       <svg width="16" height="16" viewBox="0 0 80 80" fill="none">
-        <ellipse cx="40" cy="21" rx="13" ry="5" fill="white" opacity=".9"/>
-        <rect x="27" y="16" width="26" height="14" rx="4" fill="white" opacity=".9"/>
-        <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="white"/>
-        <rect x="26" y="28" width="28" height="20" rx="9" fill="white"/>
+        <ellipse cx="40" cy="21" rx="13" ry="5" fill="#a7f3d0" opacity=".9"/>
+        <rect x="27" y="16" width="26" height="14" rx="4" fill="#a7f3d0" opacity=".9"/>
+        <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="#a7f3d0"/>
+        <rect x="26" y="28" width="28" height="20" rx="9" fill="#a7f3d0"/>
         <circle cx="34" cy="37" r="3.2" fill="#008060"/>
         <circle cx="46" cy="37" r="3.2" fill="#008060"/>
       </svg>
@@ -1249,10 +1715,10 @@ function showTyping() {
   div.innerHTML = `
     <div class="msg-avatar">
       <svg width="16" height="16" viewBox="0 0 80 80" fill="none">
-        <ellipse cx="40" cy="21" rx="13" ry="5" fill="white" opacity=".9"/>
-        <rect x="27" y="16" width="26" height="14" rx="4" fill="white" opacity=".9"/>
-        <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="white"/>
-        <rect x="26" y="28" width="28" height="20" rx="9" fill="white"/>
+        <ellipse cx="40" cy="21" rx="13" ry="5" fill="#a7f3d0" opacity=".9"/>
+        <rect x="27" y="16" width="26" height="14" rx="4" fill="#a7f3d0" opacity=".9"/>
+        <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="#a7f3d0"/>
+        <rect x="26" y="28" width="28" height="20" rx="9" fill="#a7f3d0"/>
         <circle cx="34" cy="37" r="3.2" fill="#008060"/>
         <circle cx="46" cy="37" r="3.2" fill="#008060"/>
       </svg>
@@ -1339,80 +1805,134 @@ async function chatSendText(text) {
 }
 
 /* ═══════════════════════════════════════════
-   SYSTEM PROMPT BUILDER
+   SYSTEM PROMPT BUILDER — per persona
 ═══════════════════════════════════════════ */
 function buildSystemPrompt(p, isAr) {
-  const personaCtx = {
-    employee: isAr ? "موظف أو موظفة يريد وجبة تعطيه طاقة مستدامة طول اليوم بدون خمول بعد الغداء." : "Un(e) employé(e) qui cherche un repas équilibré pour rester concentré(e) et énergique toute la journée, sans coup de fatigue.",
-    sportif:  isAr ? "رياضي يريد وجبة عالية البروتين مع ماكروز دقيقة لأهداف رياضية محددة." : "Un(e) sportif(ve) qui veut des macros précis pour optimiser ses performances ou sa récupération.",
-    famille:  isAr ? "عائلة تريد وجبات متنوعة ومتوازنة تناسب الكبير والصغير." : "Une famille qui cherche des plats frais, généreux et équilibrés pour tous les âges.",
-    couple:   isAr ? "زوجان يريدان تجربة عشاء خاص ورومانسي في المنزل." : "Un couple qui souhaite un dîner élégant et romantique à domicile.",
+
+  const MENU = `🇲🇦 Marocain: Zaalouk Bowl 340kcal · Bissara Soup 260kcal · Chermoula Salmon 480kcal (44g P)⭐ · Poulet M'Charmel 420kcal
+🌏 Asiatique: Quinoa Poke Bowl 410kcal · Miso Ramen 360kcal · Gyoza Poulet 310kcal · Buddha Bowl 390kcal
+🌊 Méditerranéen: Branzino Grillé 460kcal (42g P)⭐ · Wrap Falafel 370kcal · Salade Niçoise 340kcal · Greek Yogurt Bowl 290kcal
+🌎 Fusion: Burrito Bowl 440kcal · Açaï Power Bowl 300kcal · Avocado Toast 350kcal · Smash Burger Léger 490kcal
+⏱ Livraison 45 min · Tétouan · M'diq · Martil · 💳 Cash ou Carte`;
+
+  const LANG_RULE = `LANGUE — RÈGLE ABSOLUE:
+Détecte la langue du visiteur dès son premier message et garde cette langue tout au long:
+• Darija marocaine (salam, bghit, 3afak, wach, chno, wakha, nta, daba, bzaf, mzyan...) → réponds en Darija authentique chaleureuse. Ex: "wakha hadak", "3afak sir l...", "machi mochkil", "daba ndir lik", "bghiti chi 7aja?"
+• Français → français naturel avec quelques mots Darija
+• Arabe → arabe simple mêlé de Darija
+• JAMAIS en anglais`;
+
+  const FLEX_RULE = `FLEXIBILITÉ — RÈGLE LA PLUS IMPORTANTE:
+Tu es un ami serviable, PAS un formulaire. Suis TOUJOURS ce que le visiteur veut:
+• S'il refuse de répondre à une question → ACCEPTE immédiatement sans insister. Ex: "wakha, machi mochkil !" puis réponds à ce qu'il demande vraiment.
+• S'il demande le menu → DONNE le menu IMMÉDIATEMENT, complet, sans poser d'autres questions d'abord.
+• S'il change de sujet → suis-le naturellement.
+• S'il pose une question sur un plat (ingrédients, allergènes, calories, goût, prix) → réponds directement et complètement.
+• S'il veut juste regarder sans commander → c'est normal, sois chaleureux et disponible.
+• Ne répète JAMAIS une question déjà refusée.
+• Priorité absolue: ce que le visiteur VEUT, pas ce que tu voulais demander.`;
+
+  const personas = {
+
+    employee: `Tu es Chef SAVY 💼, chef IA pour professionnels actifs.
+${LANG_RULE}
+${FLEX_RULE}
+CONTEXTE CLIENT: Employé(e) qui veut manger sain rapidement. Suggère des plats légers et énergisants (260-420kcal) quand c'est pertinent. Top picks: Bissara 260kcal, Zaalouk 340kcal, Niçoise 340kcal, Greek Yogurt 290kcal, Chermoula Salmon 480kcal.
+MENU COMPLET: ${MENU}
+Quand le client confirme sa commande → demande prénom+ville+WhatsApp → ajoute SAVY_GET_LEAD. Max 3 phrases par réponse.`,
+
+    sportif: `Tu es Chef SAVY 🏋️, ingénieur nutrition sportive IA.
+${LANG_RULE}
+${FLEX_RULE}
+CONTEXTE CLIENT: Sportif(ve) intéressé(e) par la nutrition. Propose des infos sur les macros (P/C/F) et les plats high-protein UNIQUEMENT si le visiteur le demande ou semble intéressé. Ne force pas les questions sur le poids ou l'objectif — s'il veut juste voir le menu, montre-le. Top picks protéines: Chermoula Salmon 44gP · Branzino 42gP · Poulet M'Charmel 38gP.
+Macros dispo sur demande: prise masse→2g prot/kg/j · sèche→1.8g/kg · perf→1.6g/kg.
+MENU COMPLET: ${MENU}
+Quand le client confirme → demande prénom+ville+WhatsApp → ajoute SAVY_GET_LEAD. Max 3 phrases par réponse.`,
+
+    famille: `Tu es Chef SAVY 👨‍👩‍👧, chef IA repas familiaux.
+${LANG_RULE}
+${FLEX_RULE}
+CONTEXTE CLIENT: Famille cherchant des plats pour tout le monde. Propose variété marocain+international. Top picks: Poulet M'Charmel, Zaalouk, Falafel Wrap, Buddha Bowl, Poke Bowl. Mentionne que les plats conviennent aux enfants quand c'est pertinent.
+MENU COMPLET: ${MENU}
+Quand la famille confirme → demande prénom+ville+WhatsApp → ajoute SAVY_GET_LEAD. Max 3 phrases par réponse.`,
+
+    couple: `Tu es Chef SAVY 💑, chef romantique IA.
+${LANG_RULE}
+${FLEX_RULE}
+CONTEXTE CLIENT: Couple cherchant un beau dîner. Propose des suggestions élégantes et harmonieuses. Top picks: Chermoula Salmon⭐, Branzino⭐, Niçoise, Greek Yogurt en dessert. Sois poétique et chaleureux mais sans forcer.
+MENU COMPLET: ${MENU}
+Quand le couple confirme → demande prénom+ville+WhatsApp → ajoute SAVY_GET_LEAD. Max 3 phrases par réponse.`
   };
 
-  const menuAr = `قائمة SAVY:
-🇲🇦 زعلوك بول 340kcal · بيصارة 260kcal · سمك بالشرمولة 480kcal 44g بروتين ⭐ · دجاج معمر 420kcal
-🌏 بوكي بول كينوا 410kcal · رامن ميسو 360kcal · بوذا بول 390kcal · جيوزا 310kcal
-🌊 برانزينو مشوي 460kcal 42g بروتين ⭐ · راب فلافل 370kcal · سلطة نيسواز 340kcal · يوغرت يوناني 290kcal
-🌎 بوريتو بول 440kcal · أساي بول 300kcal · توست أفوكادو 350kcal · برغر خفيف 490kcal
-التوصيل 45 دقيقة — تطوان · المضيق · مرتيل · الدفع: بطاقة أو نقداً`;
-
-  const menuFr = `Menu SAVY:
-🇲🇦 Zaalouk Bowl 340kcal · Bissara Soup 260kcal · Chermoula Salmon 480kcal 44g P ⭐ · Poulet M'Charmel 420kcal
-🌏 Quinoa Poke Bowl 410kcal · Miso Ramen 360kcal · Buddha Bowl 390kcal · Gyoza 310kcal
-🌊 Branzino Grillé 460kcal 42g P ⭐ · Wrap Falafel 370kcal · Salade Niçoise 340kcal · Greek Yogurt Bowl 290kcal
-🌎 Burrito Bowl 440kcal · Açaï Bowl 300kcal · Avocado Toast 350kcal · Smash Burger Léger 490kcal
-Livraison 45 min — Tétouan · M'diq · Martil · Paiement: carte ou espèces`;
-
-  if (isAr) return `أنت Chef SAVY 🍽️ — أول شيف ذكاء اصطناعي في المغرب، مقره تطوان.
-
-اللغة والأسلوب: الدارجة المغربية المهذبة ممزوجة بالعربية الفصيحة. دافئ، راقٍ، مهني. لا إنجليزية أبداً.
-أمثلة: "بكل سرور، أقترح لكم...", "بالتأكيد...", "مرحباً، كيف نخدمكم؟"
-
-ملف العميل: ${personaCtx[p] || personaCtx.employee}
-
-دورك: أجب على كل أسئلة العميل (التغذية، المكونات، الحساسيات، التوصيل، الأسعار) بصبر. اقترح الأطباق المناسبة وارافقه حتى يكمل طلبه بشكل طبيعي. تحدث كإنسان لا كاستمارة.
-
-اطلب الاسم + المدينة + الواتساب فقط عند تأكيد الطلب. ثم أضف SAVY_GET_LEAD في نهاية ردك.
-
-${menuAr}
-
-قواعد: 2-3 جمل فقط · بدون قوائم مرقمة · دارجة + عربية فقط · إيموجي باعتدال 🍽️ 🧬 🌿 💚`;
-
-  return `Vous êtes Chef SAVY 🍽️ — le premier chef cuisinier IA du Maroc, basé à Tétouan.
-
-Langue & Ton: Darija marocaine polie mélangée avec du français élégant. Chaleureux, courtois, professionnel. Jamais en anglais.
-Exemples: "Avec plaisir, permettez-moi de vous suggérer...", "Bien sûr, hadchi lli bghiti...", "Marhba bik, kif nkhedmek ?"
-
-Profil du client: ${personaCtx[p] || personaCtx.employee}
-
-Votre rôle: Répondez à TOUTES les questions (nutrition, allergènes, ingrédients, livraison, prix) avec patience. Proposez les plats adaptés. Accompagnez jusqu'à la commande sans forcer. Parlez naturellement, pas comme un quiz.
-
-Demandez prénom + ville + WhatsApp seulement quand le client confirme sa commande. Puis ajoutez SAVY_GET_LEAD à la fin.
-
-${menuFr}
-
-Règles: 2-3 phrases max · Pas de listes numérotées · Darija + français uniquement · Emojis: 🍽️ 🧬 🌿 💚`;
+  return personas[p] || personas.employee;
 }
 
 /* ═══════════════════════════════════════════
-   FALLBACK REPLIES (when API unavailable)
+   FALLBACK REPLIES — per persona (Darija / FR / AR)
 ═══════════════════════════════════════════ */
 function getFallbackReply(p, isAr, msgCount) {
+  // isAr = page lang; but chat lang is auto-detected from visitor message
+  // Fallback uses Darija by default (most common), FR as secondary
   const flows = {
-    fr: [
-      { text:"Avec plaisir ! 🍽️ Puis-je vous demander quel est votre objectif nutritionnel aujourd'hui — énergie, minceur, performance sportive, ou simplement un repas sain et savoureux ?", chips:[] },
-      { text:"Je comprends parfaitement. Je vous recommande notre Chermoula Salmon ⭐ — 480kcal, 44g de protéines, préparé avec des épices marocaines fraîches du marché. Avez-vous des allergies ou restrictions alimentaires ?", chips:[] },
-      { text:"Très bien noté. Notre livraison est garantie en 45 minutes à Tétouan, M'diq et Martil. Y a-t-il d'autres questions avant de finaliser votre commande ?", chips:[] },
-      { text:"Parfait ! Pour préparer votre commande personnalisée, pourriez-vous me donner votre prénom, votre ville et votre numéro WhatsApp ?", showLead:true },
+    employee: [
+      { text: isAr
+          ? "مرحباً ! 💼 واش كتاكل فالبيرو ولا عندك استراحة ديال الغدا ؟"
+          : "Bonjour ! 💼 Vous mangez au bureau ou vous avez une vraie pause déjeuner ?", chips:[] },
+      { text: isAr
+          ? "مزيان ! باش تبقا صاحي العصر، ننصحك ببيصارة (260kcal) أو نيسواز (340kcal) — خفيفين ومليانين بروتين. عندك أي حساسية للأكل ؟"
+          : "Parfait. Pour rester alerte l'après-midi, notre Bissara (260kcal) ou la Niçoise (340kcal) sont idéales — légères et riches en protéines. Des allergies ?", chips:[] },
+      { text: isAr
+          ? "خيار مزيان ! التوصيل مضمون في 45 دقيقة. نكملو الطلب ؟"
+          : "Excellent choix ! Livraison en 45 min garantie. On finalise ?", chips:[] },
+      { text: isAr
+          ? "رائع ! اسمك ومدينتك ورقم WhatsApp باش نحضرو ليك الطلب ؟"
+          : "Super ! Votre prénom, ville et WhatsApp pour préparer votre commande ?", showLead:true },
     ],
-    ar: [
-      { text:"بكل سرور ! 🍽️ هل يمكنني أن أسألكم عن هدفكم الغذائي اليوم — الطاقة، الرشاقة، الأداء الرياضي، أم فقط وجبة صحية ولذيذة ؟", chips:[] },
-      { text:"أفهمكم تماماً. أنصح بشدة بسمك الشرمولة لدينا ⭐ — 480 كيلوكالوري، 44 غرام بروتين، محضر بتوابل مغربية طازجة. هل لديكم حساسية أو قيود غذائية ؟", chips:[] },
-      { text:"ممتاز. توصيلنا مضمون في 45 دقيقة إلى تطوان والمضيق ومرتيل. هل لديكم أسئلة أخرى قبل إتمام الطلب ؟", chips:[] },
-      { text:"رائع ! لتحضير طلبكم الشخصي، هل يمكنكم إعطائي اسمكم ومدينتكم ورقم WhatsApp الخاص بكم ؟", showLead:true },
-    ]
+    sportif: [
+      { text: isAr
+          ? "سلام بطل ! 🏋️ شنو هو هدفك دابا: بناء العضلات، حرق الدهون، ولا تحسين الأداء ؟"
+          : "Bienvenue champion ! 🏋️ Objectif du moment : prise de masse, sèche, ou performance ?", chips:[] },
+      { text: isAr
+          ? "مزيان ! وشحال كيلو تقريباً ؟ حتى نحسب ليك البروتين اللي محتاجو كل نهار بالضبط."
+          : "Top ! Et votre poids approximatif ? Je calcule vos besoins protéiques précis selon votre objectif.", chips:[] },
+      { text: isAr
+          ? "شرمولة ديالنا هي الأحسن ليك: 480kcal و44g بروتين — بطلة التعافي. نطلبوها ؟"
+          : "Le Chermoula Salmon est parfait pour vous — 480kcal, 44g de protéines, champion de la récup. On commande ?", chips:[] },
+      { text: isAr
+          ? "خطتك الغذائية تبدأ دابا ! اسمك ومدينتك ورقم WhatsApp ؟"
+          : "Votre plan nutrition commence ! Prénom, ville et WhatsApp ?", showLead:true },
+    ],
+    famille: [
+      { text: isAr
+          ? "مرحبا بالعيلة ! 👨‍👩‍👧 شحال ناس غاتطلبو، وكاين درارييس معاكم ؟"
+          : "Bienvenue en famille ! 👨‍👩‍👧 Vous commandez pour combien de personnes, avec des enfants ?", chips:[] },
+      { text: isAr
+          ? "رائع ! للعيلة ننصح عادة بدجاج معمر والفلافل — كيعجبو لكبير والصغير. عندكم أي تفضيلات ديال الأكل ؟"
+          : "Super ! Pour les familles je recommande le Poulet M'Charmel et le Falafel Wrap — appréciés par tous. Des préférences alimentaires ?", chips:[] },
+      { text: isAr
+          ? "مزيان ! التوصيل في 45 دقيقة لتطوان والمضيق ومرتيل. نأكدو ؟"
+          : "Parfait ! Livraison en 45 min à Tétouan, M'diq et Martil. On confirme ?", chips:[] },
+      { text: isAr
+          ? "اسمك ومدينتك ورقم WhatsApp باش نوصلو ليكم ؟"
+          : "Votre prénom, ville et WhatsApp pour la commande familiale ?", showLead:true },
+    ],
+    couple: [
+      { text: isAr
+          ? "مساء النور ! 💑 الليلة — جو خفيف وراقي، ولا عشاء دافئ وكبير ؟"
+          : "Bonsoir ! 💑 Ce soir — ambiance légère et raffinée, ou dîner généreux et chaleureux ?", chips:[] },
+      { text: isAr
+          ? "رائع. نقترح عليكم: شرمولة⭐ كطبق رئيسي + يوغرت يوناني كحلى — أنيق ومتوازن. كيعجبكم ؟"
+          : "Magnifique. Je compose : Chermoula Salmon⭐ + Greek Yogurt en dessert — élégant et parfaitement équilibré. Ça vous convient ?", chips:[] },
+      { text: isAr
+          ? "طاولتكم لاثنين تكون جاهزة في 45 دقيقة. نأكدو هاد العشاء الجميل ؟"
+          : "Votre table pour deux sera prête en 45 min. On confirme ce beau dîner ?", chips:[] },
+      { text: isAr
+          ? "بكل سرور ! اسمك ومدينتك ورقم WhatsApp للعشاء الرومانسي ؟"
+          : "Avec grand plaisir ! Prénom, ville et WhatsApp pour votre dîner romantique ?", showLead:true },
+    ],
   };
-  const flow = isAr ? flows.ar : flows.fr;
+
+  const flow = flows[p] || flows.employee;
   const idx  = Math.min(msgCount - 1, flow.length - 1);
   return flow[Math.max(0, idx)];
 }
@@ -1652,1544 +2172,8 @@ function saveToSheets(data) {
 })();
 
 
-renderStats();
-renderCuisineTabs();
-renderDietFilters();
-renderDishes();
-
-// Navbar scroll
-window.addEventListener("scroll",()=>{
-  document.getElementById("navbar").style.boxShadow = window.scrollY>40 ? "0 2px 20px rgba(0,128,96,0.1)" : "none";
-});
-
-// Auto open chat after 8 seconds
-setTimeout(()=>{ if(!chatOpen) { openChat(); } }, 8000);
-
-</script>
-</body>
-</html>      --card:     #0C1A0F;
-      --mint:     #0D2016;
-      --green:    #00A878;
-      --greenL:   #00C98F;
-      --greenXL:  #0A2016;
-      --text:     #E8F5F0;
-      --sub:      #7BBFA6;
-      --muted:    #3D7A62;
-      --border:   #153024;
-      --pinkXL:   #1A0510;
-      --orangeBg: #1A0F00;
-      --shadow:   0 2px 16px rgba(0,0,0,0.4);
-      --shadowH:  0 8px 32px rgba(0,168,120,0.2);
-      --navbar-bg: rgba(5,14,9,0.97);
-    }
-    [data-theme="dark"] #navbar      { background:var(--navbar-bg); }
-    [data-theme="dark"] .lang-wrap   { background:var(--card); }
-    [data-theme="dark"] #hero        { background:radial-gradient(ellipse 80% 60% at 70% 50%, rgba(0,168,120,0.1) 0%, transparent 70%), var(--bg); }
-    [data-theme="dark"] #how         { background:var(--card); }
-    [data-theme="dark"] #menu        { background:var(--card); }
-    [data-theme="dark"] #final       { background:linear-gradient(135deg, #0A2016, var(--bg)); }
-    [data-theme="dark"] footer       { background:var(--card); }
-    [data-theme="dark"] .step-card   { background:var(--card); }
-    [data-theme="dark"] .stat-card   { background:var(--card); }
-    [data-theme="dark"] .dish-card   { background:var(--card); }
-    [data-theme="dark"] .chip        { background:var(--card); }
-    [data-theme="dark"] .persona-card{ background:var(--card); }
-    [data-theme="dark"] .email-inp   { background:var(--card); border-color:var(--border); color:var(--text); }
-    [data-theme="dark"] .search-inp  { background:var(--card); border-color:var(--border); color:var(--text); }
-    [data-theme="dark"] .social-btn  { background:var(--card); }
-    [data-theme="dark"] #chat-window { background:var(--card); border-color:var(--border); }
-    [data-theme="dark"] #chat-msgs   { background:var(--bg); }
-    [data-theme="dark"] .msg-bot .msg-bubble { background:var(--card); border-color:var(--border); }
-    [data-theme="dark"] .chat-input-area { background:var(--card); border-color:var(--border); }
-    [data-theme="dark"] .chat-inp    { background:var(--bg); border-color:var(--border); color:var(--text); }
-    [data-theme="dark"] .persona-select { background:var(--mint); border-color:var(--border); }
-    [data-theme="dark"] .p-btn       { background:var(--card); border-color:var(--border); }
-    [data-theme="dark"] .q-chip      { background:var(--card); border-color:var(--border); color:var(--text); }
-    [data-theme="dark"] #chat-lead-form { background:var(--card); border-color:var(--border); }
-    [data-theme="dark"] .lead-inp    { background:var(--bg); border-color:var(--border); color:var(--text); }
-    [data-theme="dark"] #persona-highlight { background:var(--card) !important; }
-    [data-theme="dark"] .tag-cuisine { background:var(--mint); color:var(--muted); }
-    [data-theme="dark"] #banner      { background:var(--green); }
-    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
-    html { scroll-behavior:smooth; }
-    body { font-family:'DM Sans',system-ui,sans-serif; background:var(--bg); color:var(--text); overflow-x:hidden; }
-    ::-webkit-scrollbar { width:4px; }
-    ::-webkit-scrollbar-thumb { background:var(--mint); border-radius:4px; }
-
-    /* ── ANIMATIONS ── */
-    @keyframes float   { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
-    @keyframes pulse   { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.85)} }
-    @keyframes slideUp { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
-    @keyframes popIn   { from{opacity:0;transform:scale(.88)} to{opacity:1;transform:scale(1)} }
-    @keyframes fadeIn  { from{opacity:0} to{opacity:1} }
-    @keyframes chatBounce { 0%,100%{transform:scale(1)} 50%{transform:scale(1.12)} }
-    @keyframes typingDot { 0%,60%,100%{transform:translateY(0);opacity:.4} 30%{transform:translateY(-5px);opacity:1} }
-    @keyframes shimmer { 0%{background-position:-200% 0} 100%{background-position:200% 0} }
-    .su  { animation:slideUp .55s ease both; }
-    .su2 { animation:slideUp .55s .1s ease both; }
-    .su3 { animation:slideUp .55s .2s ease both; }
-    .su4 { animation:slideUp .55s .3s ease both; }
-    .su5 { animation:slideUp .55s .4s ease both; }
-
-    /* ── FONTS ── */
-    .fh { font-family:'Cormorant Garamond',serif; letter-spacing:0.01em; }
-    .far{ font-family:'Tajawal',sans-serif; }
-    .fb { font-family:'DM Sans',sans-serif; }
-    .fsyne { font-family:'Syne',sans-serif; }
-
-    /* ── NAVBAR ── */
-    #navbar {
-      position:sticky; top:0; z-index:200;
-      background:var(--navbar-bg); backdrop-filter:blur(16px);
-      border-bottom:1px solid var(--border);
-      padding:0 clamp(16px,4vw,56px); height:66px;
-      display:flex; align-items:center; justify-content:space-between;
-      transition:box-shadow .3s;
-    }
-    .nav-logo { display:flex; align-items:center; gap:10px; text-decoration:none; }
-    .nav-logo span { font-family:'Syne',sans-serif; font-weight:900; font-size:20px; color:var(--text); }
-    .nav-links { display:flex; gap:24px; }
-    .nav-link { color:var(--sub); font-size:13px; font-weight:600; background:none; border:none; cursor:pointer; transition:color .2s; text-decoration:none; }
-    .nav-link:hover { color:var(--green); }
-    .lang-wrap { display:flex; gap:3px; background:#fff; border-radius:99px; padding:3px; border:1px solid var(--border); }
-    .lang-btn { padding:5px 11px; border-radius:99px; border:none; cursor:pointer; font-size:12px; font-weight:700; transition:all .2s; background:transparent; color:var(--sub); font-family:'DM Sans',sans-serif; }
-    .lang-btn.active { background:var(--green); color:#fff; }
-    .btn-cta {
-      background:var(--green); color:#fff; border:none; cursor:pointer;
-      border-radius:14px; padding:14px 26px; font-size:14px; font-weight:700;
-      display:inline-flex; align-items:center; gap:8px;
-      box-shadow:0 6px 24px rgba(0,128,96,0.2); transition:all .25s;
-      font-family:'DM Sans',sans-serif; text-decoration:none;
-    }
-    .btn-cta:hover { background:var(--greenL); transform:translateY(-2px); box-shadow:0 10px 32px rgba(0,168,120,.3); }
-    .btn-cta-sm { padding:8px 16px; font-size:12px; border-radius:10px; }
-
-    /* ── ANNOUNCEMENT BANNER ── */
-    #banner {
-      background:var(--green); color:#fff; text-align:center;
-      padding:8px 16px; font-size:12px; font-weight:600;
-      font-family:'DM Sans',sans-serif; letter-spacing:.02em;
-    }
-    #banner a { color:#fff; text-decoration:underline; margin-left:8px; cursor:pointer; }
-
-    /* ── HERO ── */
-    #hero {
-      padding:64px clamp(16px,4vw,56px) 72px;
-      background:var(--bg);
-      position:relative; overflow:hidden;
-    }
-
-    /* Web3 canvas layer */
-    #hero-canvas {
-      position:absolute; inset:0; width:100%; height:100%;
-      pointer-events:none; z-index:0; opacity:.85;
-    }
-    [data-theme="dark"] #hero-canvas { opacity:.6; }
-
-    /* Floating food emojis */
-    .food-float {
-      position:absolute; font-size:clamp(18px,2.5vw,28px);
-      pointer-events:none; z-index:0; user-select:none;
-      animation:foodDrift linear infinite;
-      filter:drop-shadow(0 4px 12px rgba(0,128,96,0.25));
-    }
-    @keyframes foodDrift {
-      0%   { transform:translateY(0px)   rotate(0deg)   scale(1); opacity:0; }
-      8%   { opacity:.7; }
-      92%  { opacity:.7; }
-      100% { transform:translateY(-110vh) rotate(360deg) scale(.7); opacity:0; }
-    }
-
-    /* Hex grid overlay */
-    .hex-grid {
-      position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden; opacity:.18;
-    }
-    [data-theme="dark"] .hex-grid { opacity:.12; }
-    .hex-grid svg { width:100%; height:100%; }
-
-    /* Glowing orbs */
-    .orb {
-      position:absolute; border-radius:50%; pointer-events:none; z-index:0;
-      filter:blur(60px); animation:orbPulse ease-in-out infinite;
-    }
-    @keyframes orbPulse { 0%,100%{transform:scale(1);opacity:.5} 50%{transform:scale(1.2);opacity:.8} }
-
-    .dot-grid { display:none; } /* replaced by canvas */
-    .hero-inner {
-      max-width:1100px; margin:0 auto; position:relative; z-index:2;
-      display:grid; grid-template-columns:1.15fr 1fr; gap:56px; align-items:center;
-    }
-    .city-badge {
-      display:inline-flex; align-items:center; gap:8px;
-      padding:6px 14px; border-radius:99px;
-      background:var(--greenXL); border:1px solid var(--border); margin-bottom:16px;
-    }
-    .city-dot { width:7px; height:7px; border-radius:50%; background:var(--green); display:inline-block; animation:pulse 1.5s infinite; }
-    .city-badge span.label { color:var(--green); font-size:12px; font-weight:700; }
-    h1.hero-title { font-size:clamp(38px,5.5vw,68px); font-weight:700; line-height:1.08; color:var(--text); margin-bottom:16px; }
-    h1.hero-title .accent { color:var(--green); }
-    .hero-sub { font-size:15px; line-height:1.85; color:var(--sub); max-width:480px; margin-bottom:28px; }
-    /* social proof */
-    .proof { display:flex; align-items:center; gap:14px; margin-top:24px; }
-    .avatars { display:flex; }
-    .av { width:30px; height:30px; border-radius:50%; border:2.5px solid var(--bg); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff; }
-    [dir="ltr"] .avatars .av:not(:first-child) { margin-left:-10px; }
-    [dir="rtl"] .avatars .av:not(:first-child) { margin-right:-10px; }
-    .proof-text { font-size:13px; font-weight:600; color:var(--text); }
-    .proof-text em { color:var(--green); font-style:normal; }
-    .proof-stars { font-size:11px; color:var(--muted); margin-top:2px; }
-    /* hero right */
-    .hero-right { display:flex; flex-direction:column; align-items:center; gap:18px; }
-    .robot-float { animation:float 3.5s ease-in-out infinite; filter:drop-shadow(0 16px 40px rgba(0,128,96,.2)); }
-    .stat-chips { display:flex; gap:10px; }
-    .chip { padding:12px 14px; border-radius:16px; text-align:center; background:#fff; border:1px solid var(--border); box-shadow:var(--shadow); }
-    .chip-val { font-family:'Syne',sans-serif; color:var(--green); font-weight:800; font-size:14px; margin-top:3px; }
-    .chip-lbl { color:var(--muted); font-size:10px; margin-top:1px; }
-
-    /* ── PERSONA CARDS ── */
-    .persona-intro { margin-bottom:20px; }
-    .persona-intro p { font-size:13px; color:var(--muted); margin-bottom:12px; font-weight:600; }
-    .persona-cards { display:flex; gap:10px; flex-wrap:wrap; }
-    .persona-card {
-      flex:1; min-width:130px; padding:14px 12px; border-radius:18px;
-      border:2px solid var(--border); background:#fff; cursor:pointer;
-      transition:all .22s; text-align:center; position:relative; overflow:hidden;
-    }
-    .persona-card:hover { transform:translateY(-3px); box-shadow:var(--shadowH); }
-    .persona-card.active-employee { border-color:var(--green);  background:var(--greenXL); }
-    .persona-card.active-sportif  { border-color:#F59E0B; background:#FFFBEB; }
-    .persona-card.active-famille  { border-color:#6366F1; background:#EEF2FF; }
-    .persona-card.active-couple   { border-color:var(--pink);   background:var(--pinkXL); }
-    .persona-emoji { font-size:26px; margin-bottom:6px; }
-    .persona-label { font-family:'Syne',sans-serif; font-weight:800; font-size:12px; color:var(--text); }
-    .persona-desc  { font-size:10px; color:var(--muted); margin-top:3px; line-height:1.4; }
-
-    /* ── STEPS / HOW ── */
-    #how { padding:72px clamp(16px,4vw,56px); background:#fff; border-top:1px solid var(--border); }
-    .section-header { text-align:center; margin-bottom:48px; }
-    .section-title { font-family:'Cormorant Garamond',serif; font-size:clamp(30px,4.5vw,48px); font-weight:700; color:var(--text); margin-bottom:10px; }
-    .title-bar { width:48px; height:4px; background:var(--green); border-radius:99px; margin:0 auto; }
-    .steps-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; max-width:1100px; margin:0 auto; }
-    .step-card { background:#fff; border-radius:20px; padding:24px 20px; box-shadow:var(--shadow); border:1px solid var(--border); transition:all .2s; }
-    .step-card:hover { box-shadow:var(--shadowH); transform:translateY(-3px); }
-    .step-icon { width:50px; height:50px; border-radius:16px; background:var(--greenXL); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:24px; margin-bottom:14px; }
-    .step-num  { width:24px; height:24px; border-radius:50%; background:var(--green); display:flex; align-items:center; justify-content:center; color:#fff; font-size:11px; font-weight:900; margin-bottom:10px; }
-    .step-title { font-family:'Syne',sans-serif; font-weight:800; font-size:15px; color:var(--text); margin-bottom:8px; }
-    .step-desc  { font-size:13px; color:var(--sub); line-height:1.7; }
-
-    /* ── STATS ── */
-    #stats { padding:52px clamp(16px,4vw,56px); background:var(--bg); }
-    .stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; max-width:1100px; margin:0 auto; }
-    .stat-card { background:#fff; border-radius:20px; padding:24px 16px; text-align:center; box-shadow:var(--shadow); border:1px solid var(--border); }
-    .stat-val { font-family:'Syne',sans-serif; font-size:clamp(22px,3.5vw,34px); font-weight:900; color:var(--green); margin-bottom:6px; }
-    .stat-lbl { font-size:13px; color:var(--muted); }
-
-    /* ── MENU ── */
-    #menu { padding:72px clamp(16px,4vw,56px) 80px; background:#fff; border-top:1px solid var(--border); }
-    .menu-inner { max-width:780px; margin:0 auto; }
-    .search-wrap { position:relative; margin-bottom:18px; }
-    .search-icon { position:absolute; left:14px; top:50%; transform:translateY(-50%); pointer-events:none; }
-    .search-inp {
-      width:100%; padding:14px 18px 14px 44px; border-radius:16px;
-      border:1.5px solid var(--border); background:#fff;
-      font-size:14px; outline:none; color:var(--text);
-      transition:border-color .2s; box-shadow:var(--shadow);
-      font-family:'DM Sans',sans-serif;
-    }
-    .search-inp:focus { border-color:var(--green); }
-    .search-inp::placeholder { color:var(--muted); }
-    .filter-row { display:flex; gap:8px; overflow-x:auto; padding-bottom:4px; margin-bottom:14px; }
-    .filter-row::-webkit-scrollbar { height:0; }
-    .pill { padding:8px 16px; border-radius:99px; border:none; cursor:pointer; font-weight:700; font-size:12px; white-space:nowrap; flex-shrink:0; transition:all .2s; font-family:'DM Sans',sans-serif; background:var(--mint); color:var(--green); }
-    .pill.active { background:var(--green); color:#fff; }
-    .cart-bar { display:flex; align-items:center; justify-content:space-between; padding:12px 18px; border-radius:14px; background:var(--green); margin-bottom:16px; animation:popIn .3s ease; }
-    .cart-bar span { color:#fff; font-size:13px; font-weight:600; }
-    .cart-bar button { background:#fff; color:var(--green); border:none; border-radius:10px; padding:7px 16px; font-size:12px; font-weight:700; cursor:pointer; font-family:'DM Sans',sans-serif; }
-    .dishes { display:flex; flex-direction:column; gap:14px; }
-    .dish-card { background:#fff; border-radius:20px; padding:16px 18px; box-shadow:var(--shadow); border:1px solid var(--border); display:flex; align-items:center; gap:14px; transition:all .22s; animation:slideUp .4s ease both; }
-    .dish-card:hover { box-shadow:var(--shadowH); transform:translateY(-2px); }
-    .dish-emoji { width:72px; height:72px; border-radius:16px; flex-shrink:0; background:var(--mint); display:flex; align-items:center; justify-content:center; font-size:36px; }
-    .dish-info { flex:1; min-width:0; }
-    .dish-name { font-family:'Syne',sans-serif; font-weight:800; font-size:15px; color:var(--text); margin-bottom:6px; }
-    .dish-name-ar { font-family:'Tajawal',sans-serif; font-weight:700; }
-    .dish-name-sub { font-size:10px; color:var(--muted); margin-top:1px; font-family:'DM Sans',sans-serif; }
-    .dish-tags { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px; }
-    .tag-veg  { padding:3px 10px; border-radius:99px; font-size:11px; font-weight:700; background:var(--greenXL); color:var(--green); }
-    .tag-badge{ padding:3px 10px; border-radius:99px; font-size:11px; font-weight:700; background:var(--orangeBg); color:var(--orange); }
-    .tag-cuisine{ padding:3px 8px; border-radius:99px; font-size:10px; font-weight:600; background:#F5F5F5; color:#888; }
-    .dish-macros { display:flex; align-items:center; gap:10px; flex-wrap:wrap; font-size:12px; color:var(--sub); }
-    .dish-macros .meta { margin-left:auto; color:var(--muted); }
-    .add-btn { width:36px; height:36px; border-radius:50%; border:none; background:var(--mint); color:var(--green); font-size:20px; cursor:pointer; flex-shrink:0; display:flex; align-items:center; justify-content:center; transition:all .2s; }
-    .add-btn.added { background:var(--green); color:#fff; font-size:16px; box-shadow:0 4px 12px rgba(0,128,96,.25); }
-    .empty-state { text-align:center; padding:48px 0; color:var(--muted); }
-    .empty-state .big { font-size:40px; margin-bottom:10px; }
-
-    /* ── FINAL CTA ── */
-    #final { padding:80px clamp(16px,4vw,56px); background:linear-gradient(135deg, var(--greenXL), var(--bg)); border-top:1px solid var(--border); text-align:center; }
-    .final-inner { max-width:560px; margin:0 auto; }
-    .final-title { font-family:'Syne',sans-serif; font-size:clamp(28px,4.5vw,44px); font-weight:900; color:var(--text); margin-bottom:12px; }
-    .final-sub { font-size:15px; color:var(--sub); line-height:1.8; margin-bottom:32px; }
-    .social-links { display:flex; gap:10px; justify-content:center; margin-top:32px; flex-wrap:wrap; }
-    .social-btn { padding:11px 18px; border-radius:14px; background:#fff; border:1px solid var(--border); display:flex; align-items:center; gap:9px; cursor:pointer; transition:all .2s; text-decoration:none; box-shadow:var(--shadow); }
-    .social-btn:hover { border-color:var(--green); box-shadow:var(--shadowH); }
-    .social-btn .s-lbl    { font-size:10px; color:var(--muted); line-height:1; }
-    .social-btn .s-handle { font-size:13px; font-weight:700; color:var(--green); margin-top:2px; }
-
-    /* ── FOOTER ── */
-    footer { padding:26px clamp(16px,4vw,56px); border-top:1px solid var(--border); background:#fff; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px; }
-    .footer-logo { display:flex; align-items:center; gap:10px; }
-    .footer-logo span { font-family:'Syne',sans-serif; font-weight:900; font-size:17px; color:var(--text); }
-    footer p { font-size:11px; color:var(--muted); }
-    .footer-links { display:flex; gap:18px; }
-
-    /* ══════════════════════════════════════
-       FLOATING CHATBOT
-    ══════════════════════════════════════ */
-    #chat-fab {
-      position:fixed; bottom:24px; right:24px; z-index:999;
-      width:60px; height:60px; border-radius:50%;
-      background:var(--green); border:none; cursor:pointer;
-      box-shadow:0 8px 32px rgba(0,128,96,0.4);
-      display:flex; align-items:center; justify-content:center;
-      transition:all .3s; animation:chatBounce 3s ease-in-out infinite;
-    }
-    #chat-fab:hover { transform:scale(1.1); box-shadow:0 12px 40px rgba(0,128,96,0.5); }
-    #chat-fab .fab-badge {
-      position:absolute; top:-4px; right:-4px;
-      width:18px; height:18px; background:var(--pink);
-      border-radius:50%; border:2px solid #fff;
-      font-size:9px; font-weight:900; color:#fff;
-      display:flex; align-items:center; justify-content:center;
-      font-family:'Syne',sans-serif;
-    }
-
-    /* ── CHAT FAB smaller ── */
-    #chat-fab {
-      width:52px; height:52px;
-    }
-
-    /* ── CHAT WINDOW ── */
-    #chat-window {
-      position:fixed; bottom:84px; right:20px; z-index:998;
-      width:300px; max-height:440px;
-      background:#fff; border-radius:18px;
-      box-shadow:0 12px 40px rgba(0,0,0,0.14);
-      border:1px solid var(--border);
-      display:none; flex-direction:column;
-      overflow:hidden; animation:popIn .25s ease;
-    }
-    #chat-window.open { display:flex; }
-
-    /* Chat header */
-    .chat-header {
-      background:linear-gradient(135deg, var(--green) 0%, var(--greenL) 100%);
-      padding:10px 13px; display:flex; align-items:center; gap:9px;
-      flex-shrink:0;
-    }
-    .chat-header-avatar {
-      width:32px; height:32px; border-radius:10px;
-      background:rgba(255,255,255,0.2);
-      display:flex; align-items:center; justify-content:center; flex-shrink:0;
-    }
-    .chat-header-info { flex:1; }
-    .chat-header-name  { font-family:'Syne',sans-serif; font-weight:800; font-size:13px; color:#fff; }
-    .chat-header-status{ font-size:10px; color:rgba(255,255,255,0.8); display:flex; align-items:center; gap:4px; margin-top:1px; }
-    .chat-status-dot   { width:5px; height:5px; border-radius:50%; background:#4ade80; animation:pulse 1.5s infinite; flex-shrink:0; }
-    .chat-close { background:rgba(255,255,255,0.15); border:none; color:#fff; width:26px; height:26px; border-radius:50%; cursor:pointer; font-size:13px; display:flex; align-items:center; justify-content:center; transition:background .2s; }
-    .chat-close:hover { background:rgba(255,255,255,0.3); }
-
-    /* Chat messages */
-    #chat-msgs {
-      flex:1; overflow-y:auto; padding:10px 11px;
-      display:flex; flex-direction:column; gap:7px;
-      scroll-behavior:smooth; background:var(--bg);
-    }
-    #chat-msgs::-webkit-scrollbar { width:2px; }
-    #chat-msgs::-webkit-scrollbar-thumb { background:var(--mint); }
-
-    .msg-bot, .msg-user { display:flex; align-items:flex-end; gap:6px; animation:popIn .25s ease; }
-    .msg-user { flex-direction:row-reverse; }
-    .msg-avatar { width:24px; height:24px; border-radius:8px; background:var(--green); flex-shrink:0; display:flex; align-items:center; justify-content:center; }
-    .msg-bubble {
-      max-width:80%; padding:8px 11px; border-radius:13px;
-      font-size:12.5px; line-height:1.5; font-family:'DM Sans',sans-serif;
-    }
-    .msg-bot  .msg-bubble { background:#fff; color:var(--text); border-radius:13px 13px 13px 3px; border:1px solid var(--border); box-shadow:0 1px 4px rgba(0,0,0,0.04); }
-    .msg-user .msg-bubble { background:var(--green); color:#fff; border-radius:13px 13px 3px 13px; }
-    .msg-glow .msg-bubble { background:linear-gradient(135deg, var(--pink), var(--pinkL)) !important; color:#fff !important; }
-
-    /* Typing indicator */
-    .typing-dots { display:flex; gap:3px; align-items:center; padding:2px 0; }
-    .typing-dots span { width:6px; height:6px; border-radius:50%; background:var(--muted); animation:typingDot 1.2s infinite; }
-    .typing-dots span:nth-child(2) { animation-delay:.2s; }
-    .typing-dots span:nth-child(3) { animation-delay:.4s; }
-
-    /* Chat input */
-    .chat-input-area { padding:9px 10px; border-top:1px solid var(--border); background:#fff; flex-shrink:0; }
-    .chat-input-row { display:flex; gap:6px; }
-    .chat-inp {
-      flex:1; padding:9px 11px; border-radius:11px; border:1.5px solid var(--border);
-      font-size:12.5px; outline:none; color:var(--text); background:var(--bg);
-      font-family:'DM Sans',sans-serif; transition:border-color .2s;
-    }
-    .chat-inp:focus { border-color:var(--green); background:#fff; }
-    .chat-inp::placeholder { color:var(--muted); }
-    .chat-send {
-      width:34px; height:34px; border-radius:10px; border:none;
-      background:var(--green); color:#fff; cursor:pointer; font-size:13px;
-      display:flex; align-items:center; justify-content:center; flex-shrink:0;
-      transition:all .2s;
-    }
-    .chat-send:hover { background:var(--greenL); }
-    .chat-send:disabled { opacity:.5; cursor:not-allowed; }
-
-    /* Quick reply chips */
-    .quick-chips { display:flex; gap:5px; flex-wrap:wrap; margin-top:6px; }
-    .q-chip {
-      padding:5px 10px; border-radius:99px; border:1px solid var(--border);
-      background:#fff; font-size:11px; font-weight:600; cursor:pointer;
-      color:var(--text); font-family:'DM Sans',sans-serif; transition:all .2s; white-space:nowrap;
-    }
-    .q-chip:hover { border-color:var(--green); color:var(--green); background:var(--greenXL); }
-    .q-chip.pink  { border-color:var(--pink); color:var(--pink); background:var(--pinkXL); }
-    .q-chip.pink:hover { background:var(--pink); color:#fff; }
-
-    /* Lead form inside chat */
-    #chat-lead-form { padding:10px 11px; border-top:1px solid var(--border); background:#fff; flex-shrink:0; display:none; }
-    .lead-inp {
-      width:100%; padding:9px 11px; border-radius:10px; border:1.5px solid var(--border);
-      font-size:12px; outline:none; color:var(--text); background:var(--bg);
-      font-family:'DM Sans',sans-serif; margin-bottom:6px; transition:border-color .2s;
-    }
-    .lead-inp:focus { border-color:var(--green); background:#fff; }
-    .lead-inp::placeholder { color:var(--muted); }
-    .lead-submit {
-      width:100%; padding:10px; border-radius:10px; border:none;
-      background:var(--green); color:#fff; font-size:12px; font-weight:700;
-      cursor:pointer; font-family:'DM Sans',sans-serif;
-      box-shadow:0 3px 12px rgba(0,128,96,0.3); transition:all .2s;
-    }
-    .lead-submit:hover { background:var(--greenL); }
-    .lead-submit-pink {
-      background:linear-gradient(135deg, var(--pink), var(--pinkL));
-      box-shadow:0 3px 12px rgba(233,30,140,0.3);
-    }
-    .lead-submit-pink:hover { opacity:.9; }
-
-    /* ── RTL overrides ── */
-    [dir="rtl"] .search-icon    { left:auto; right:14px; }
-    [dir="rtl"] .search-inp     { padding-left:18px; padding-right:44px; }
-    [dir="rtl"] .dish-macros .meta { margin-left:0; margin-right:auto; }
-    [dir="rtl"] #chat-window    { right:auto; left:24px; }
-    [dir="rtl"] #chat-fab       { right:auto; left:24px; }
-
-    /* ── RESPONSIVE ── */
-    @media(max-width:760px){
-      .hero-inner   { grid-template-columns:1fr; }
-      .hero-right   { display:none; }
-      .stats-grid   { grid-template-columns:repeat(2,1fr); }
-      .nav-links    { display:none; }
-      #chat-window  { width:calc(100vw - 32px); right:16px; bottom:88px; }
-    }
-  </style>
-</head>
-<body>
-
-<!-- ══ BANNER ══════════════════════════════════════════ -->
-<div id="banner">
-  🍽️ SAVY livre à Tétouan · M'diq · Martil · لا يوجد حد أدنى للطلب
-  <a onclick="openChat()" id="banner-link">Commander maintenant →</a>
-</div>
-
-<!-- ══ NAVBAR ══════════════════════════════════════════ -->
-<nav id="navbar">
-  <a class="nav-logo" href="#">
-    <svg width="38" height="38" viewBox="0 0 80 80" fill="none">
-      <rect width="80" height="80" rx="20" fill="#008060"/>
-      <ellipse cx="40" cy="21" rx="13" ry="5" fill="white" opacity=".9"/>
-      <rect x="27" y="16" width="26" height="14" rx="4" fill="white" opacity=".9"/>
-      <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="white"/>
-      <rect x="26" y="28" width="28" height="20" rx="9" fill="white"/>
-      <circle cx="34" cy="37" r="3.2" fill="#008060"/>
-      <circle cx="46" cy="37" r="3.2" fill="#008060"/>
-      <circle cx="35" cy="36" r="1.1" fill="white" opacity=".6"/>
-      <circle cx="47" cy="36" r="1.1" fill="white" opacity=".6"/>
-      <rect x="28" y="50" width="24" height="18" rx="5" fill="white"/>
-      <text x="40" y="63" text-anchor="middle" font-size="9" font-weight="900" fill="#008060" font-family="system-ui">AI</text>
-      <circle cx="19" cy="58" r="5" fill="white" opacity=".9"/>
-      <line x1="24" y1="56" x2="28" y2="55" stroke="white" stroke-width="3" stroke-linecap="round"/>
-      <circle cx="61" cy="58" r="5" fill="white" opacity=".9"/>
-      <line x1="56" y1="56" x2="52" y2="55" stroke="white" stroke-width="3" stroke-linecap="round"/>
-    </svg>
-    <span>SAVY</span>
-  </a>
-  <div class="nav-links">
-    <a href="#menu"  class="nav-link" id="nl-menu">Menu</a>
-    <a href="#how"   class="nav-link" id="nl-how">Comment ça marche</a>
-    <a href="#final" class="nav-link" id="nl-about">À propos</a>
-  </div>
-  <div style="display:flex;gap:8px;align-items:center;">
-    <div class="lang-wrap">
-      <button class="lang-btn active" onclick="setLang('fr')">🇫🇷 FR</button>
-      <button class="lang-btn"        onclick="setLang('ar')">🇲🇦 AR</button>
-    </div>
-    <button id="theme-btn" onclick="toggleTheme()"
-      style="width:36px;height:36px;border-radius:50%;border:1.5px solid var(--border);background:var(--card);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;"
-      onmouseover="this.style.borderColor='var(--green)'" onmouseout="this.style.borderColor='var(--border)'">
-      🌙
-    </button>
-    <button class="btn-cta btn-cta-sm" onclick="openChat()">
-      <span id="nav-cta">Commander</span>
-    </button>
-  </div>
-</nav>
-
-<!-- ══ HERO ════════════════════════════════════════════ -->
-<section id="hero">
-
-  <!-- Web3 particle canvas -->
-  <canvas id="hero-canvas"></canvas>
-
-  <!-- Glowing orbs -->
-  <div class="orb" style="width:480px;height:480px;top:-120px;right:-80px;background:radial-gradient(circle,rgba(0,168,120,0.22),transparent 70%);animation-duration:7s;"></div>
-  <div class="orb" style="width:320px;height:320px;bottom:-60px;left:5%;background:radial-gradient(circle,rgba(0,128,96,0.15),transparent 70%);animation-duration:9s;animation-delay:2s;"></div>
-  <div class="orb" style="width:200px;height:200px;top:40%;left:40%;background:radial-gradient(circle,rgba(233,30,140,0.08),transparent 70%);animation-duration:6s;animation-delay:1s;"></div>
-
-  <!-- Hex grid SVG -->
-  <div class="hex-grid">
-    <svg viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <pattern id="hex" x="0" y="0" width="60" height="52" patternUnits="userSpaceOnUse">
-          <polygon points="30,2 58,17 58,47 30,62 2,47 2,17" fill="none" stroke="#008060" stroke-width="0.8"/>
-        </pattern>
-      </defs>
-      <rect width="1200" height="600" fill="url(#hex)"/>
-    </svg>
-  </div>
-
-  <!-- Floating food emojis (injected by JS) -->
-  <div id="food-floats"></div>
-
-  <div class="hero-inner">
-    <!-- Left -->
-    <div>
-      <div class="city-badge su">
-        <span class="city-dot"></span>
-        <span class="label" id="hero-city">🇲🇦 Tétouan · M'diq · Martil</span>
-      </div>
-      <p class="su" id="hero-tagline" style="color:var(--muted);font-size:12px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px;font-weight:700;">
-        Morocco's First AI Personal Chef
-      </p>
-      <h1 class="hero-title fh su2" id="hero-h1">
-        Engineered for you.<br>
-        <span class="accent">Cooked with love.</span>
-      </h1>
-      <p class="hero-sub fb su3" id="hero-sub">
-        SAVY is your personal Meal Engineer — combining AI precision with a Chef's heart to create meals that fuel your goals, your glow, and your grind.
-      </p>
-
-      <!-- Persona selector -->
-      <div class="persona-intro su4">
-        <p id="persona-label">🍽️ Pour qui commandez-vous ?</p>
-        <div class="persona-cards" id="persona-cards">
-          <div class="persona-card" onclick="selectPersona('employee')" id="pc-employee">
-            <div class="persona-emoji">💼</div>
-            <div class="persona-label" id="pc-employee-lbl">Employé(e)</div>
-            <div class="persona-desc" id="pc-employee-desc">Énergie & productivité</div>
-          </div>
-          <div class="persona-card" onclick="selectPersona('sportif')" id="pc-sportif">
-            <div class="persona-emoji">🏋️</div>
-            <div class="persona-label" id="pc-sportif-lbl">Sportif(ve)</div>
-            <div class="persona-desc" id="pc-sportif-desc">Performance & macros</div>
-          </div>
-          <div class="persona-card" onclick="selectPersona('famille')" id="pc-famille">
-            <div class="persona-emoji">👨‍👩‍👧</div>
-            <div class="persona-label" id="pc-famille-lbl">Famille</div>
-            <div class="persona-desc" id="pc-famille-desc">Repas pour tous</div>
-          </div>
-          <div class="persona-card" onclick="selectPersona('couple')" id="pc-couple">
-            <div class="persona-emoji">💑</div>
-            <div class="persona-label" id="pc-couple-lbl">Couple</div>
-            <div class="persona-desc" id="pc-couple-desc">Dîner romantique</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Social proof -->
-      <div class="proof su5">
-        <div class="avatars">
-          <div class="av" style="background:linear-gradient(135deg,#008060,#00A878);">Y</div>
-          <div class="av" style="background:linear-gradient(135deg,#E91E8C,#FF4DB8);">K</div>
-          <div class="av" style="background:linear-gradient(135deg,#F59E0B,#FCD34D);">N</div>
-          <div class="av" style="background:linear-gradient(135deg,#00A878,#4DB6AC);">M</div>
-        </div>
-        <div>
-          <div class="proof-text fb"><em id="live-count">793+</em> <span id="proof-txt">personnes inscrites</span></div>
-          <div class="proof-stars">⭐⭐⭐⭐⭐</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Right -->
-    <div class="hero-right">
-      <div class="robot-float">
-        <svg width="190" height="190" viewBox="0 0 80 80" fill="none">
-          <rect width="80" height="80" rx="20" fill="#008060"/>
-          <ellipse cx="40" cy="21" rx="13" ry="5" fill="white" opacity=".9"/>
-          <rect x="27" y="16" width="26" height="14" rx="4" fill="white" opacity=".9"/>
-          <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="white"/>
-          <rect x="26" y="28" width="28" height="20" rx="9" fill="white"/>
-          <circle cx="34" cy="37" r="3.2" fill="#008060"/>
-          <circle cx="46" cy="37" r="3.2" fill="#008060"/>
-          <circle cx="35" cy="36" r="1.2" fill="white" opacity=".6"/>
-          <circle cx="47" cy="36" r="1.2" fill="white" opacity=".6"/>
-          <rect x="28" y="50" width="24" height="18" rx="5" fill="white"/>
-          <text x="40" y="63" text-anchor="middle" font-size="8" font-weight="900" fill="#008060" font-family="system-ui">SAVY</text>
-          <circle cx="19" cy="58" r="5" fill="white" opacity=".9"/>
-          <line x1="24" y1="56" x2="28" y2="55" stroke="white" stroke-width="3" stroke-linecap="round"/>
-          <circle cx="61" cy="58" r="5" fill="white" opacity=".9"/>
-          <line x1="56" y1="56" x2="52" y2="55" stroke="white" stroke-width="3" stroke-linecap="round"/>
-        </svg>
-      </div>
-      <!-- Persona highlight card -->
-      <div id="persona-highlight" style="background:#fff;border-radius:20px;padding:18px 20px;border:2px solid var(--border);max-width:240px;width:100%;box-shadow:var(--shadow);transition:all .3s;">
-        <div id="ph-icon" style="font-size:28px;margin-bottom:8px;">🧬</div>
-        <div id="ph-title" style="font-family:'Syne',sans-serif;font-weight:800;font-size:14px;color:var(--text);margin-bottom:4px;">Specially Engineered</div>
-        <div id="ph-desc"  style="font-size:12px;color:var(--muted);line-height:1.6;">Every meal is calculated for your exact goals. Not a template — your meal.</div>
-        <button onclick="openChat()" id="ph-btn" style="margin-top:14px;width:100%;padding:11px;border-radius:12px;border:none;background:var(--green);color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;box-shadow:0 4px 14px rgba(0,128,96,0.3);transition:all .2s;">
-          🧬 Engineer My Meal
-        </button>
-      </div>
-      <div class="stat-chips">
-        <div class="chip"><div style="font-size:16px">👥</div><div class="chip-val" id="chip-count">793+</div><div class="chip-lbl" id="chip-inscrits">Inscrits</div></div>
-        <div class="chip"><div style="font-size:16px">⚡</div><div class="chip-val">45min</div><div class="chip-lbl" id="chip-livraison">Livraison</div></div>
-        <div class="chip"><div style="font-size:16px">⭐</div><div class="chip-val">4.9★</div><div class="chip-lbl" id="chip-note">Note</div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══ HOW IT WORKS ══════════════════════════════════════ -->
-<section id="how">
-  <div class="section-header">
-    <h2 class="section-title fh" id="how-title">Comment ça marche</h2>
-    <div class="title-bar"></div>
-  </div>
-  <div class="steps-grid" id="steps-grid"></div>
-</section>
-
-<!-- ══ STATS ══════════════════════════════════════════════ -->
-<section id="stats">
-  <div class="stats-grid" id="stats-grid"></div>
-</section>
-
-<!-- ══ MENU ═══════════════════════════════════════════════ -->
-<section id="menu">
-  <div class="menu-inner">
-    <div class="section-header">
-      <h2 class="section-title fh" id="menu-title">Notre Menu</h2>
-      <p style="color:var(--sub);font-size:14px;margin-top:6px;" id="menu-sub">Des saveurs du monde, optimisées par l'IA pour vos objectifs</p>
-      <div class="title-bar" style="margin-top:10px;"></div>
-    </div>
-    <div class="search-wrap">
-      <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8FBFAA" stroke-width="2" stroke-linecap="round">
-        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-      </svg>
-      <input class="search-inp" id="search" placeholder="Rechercher des plats..." oninput="renderDishes()"/>
-    </div>
-    <div class="filter-row" id="cuisine-tabs"></div>
-    <div class="filter-row" id="diet-filters"></div>
-    <div class="cart-bar" id="cart-bar" style="display:none;">
-      <span id="cart-txt">0 plat sélectionné</span>
-      <button onclick="openChat()" id="order-btn">Commander maintenant</button>
-    </div>
-    <div class="dishes" id="dishes-list"></div>
-  </div>
-</section>
-
-<!-- ══ FINAL CTA ═══════════════════════════════════════════ -->
-<section id="final">
-  <div class="final-inner">
-    <div style="animation:float 3.5s ease-in-out infinite;display:inline-block;margin-bottom:24px;filter:drop-shadow(0 8px 24px rgba(0,128,96,.2));">
-      <svg width="90" height="90" viewBox="0 0 80 80" fill="none">
-        <rect width="80" height="80" rx="20" fill="#008060"/>
-        <ellipse cx="40" cy="21" rx="13" ry="5" fill="white" opacity=".9"/>
-        <rect x="27" y="16" width="26" height="14" rx="4" fill="white" opacity=".9"/>
-        <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="white"/>
-        <rect x="26" y="28" width="28" height="20" rx="9" fill="white"/>
-        <circle cx="34" cy="37" r="3.2" fill="#008060"/>
-        <circle cx="46" cy="37" r="3.2" fill="#008060"/>
-        <rect x="28" y="50" width="24" height="18" rx="5" fill="white"/>
-        <text x="40" y="63" text-anchor="middle" font-size="8" font-weight="900" fill="#008060" font-family="system-ui">SAVY</text>
-        <circle cx="19" cy="58" r="5" fill="white" opacity=".9"/>
-        <line x1="24" y1="56" x2="28" y2="55" stroke="white" stroke-width="3" stroke-linecap="round"/>
-        <circle cx="61" cy="58" r="5" fill="white" opacity=".9"/>
-        <line x1="56" y1="56" x2="52" y2="55" stroke="white" stroke-width="3" stroke-linecap="round"/>
-      </svg>
-    </div>
-    <h2 class="final-title" id="final-title">Rejoindre SAVY aujourd'hui</h2>
-    <p style="font-size:15px;color:var(--sub);line-height:1.8;margin-bottom:32px;" id="final-sub">
-      Parlez à votre Chef IA personnel. Votre repas, engineered pour vous, livré en 45 min. 🧬
-    </p>
-    <button class="btn-cta" onclick="openChat()" style="font-size:15px;padding:16px 32px;border-radius:16px;">
-      🧬 <span id="final-cta-txt">Engineer My Meal — Free</span>
-    </button>
-    <p style="font-size:12px;color:var(--muted);margin-top:12px;" id="final-note">🔒 Aucun spam · Juste votre repas parfait</p>
-    <div class="social-links">
-      <a class="social-btn" href="https://www.instagram.com/savy.mar?igsh=MWdzNjNkeWZ0NW93Zw==" target="_blank" rel="noopener">
-        <span style="font-size:18px">📸</span>
-        <div><div class="s-lbl">Instagram</div><div class="s-handle">@savy.mar</div></div>
-      </a>
-      <a class="social-btn" href="https://www.tiktok.com/@savy.ma?_r=1&_t=ZS-94R6uvkwfhN" target="_blank" rel="noopener">
-        <span style="font-size:18px">🎵</span>
-        <div><div class="s-lbl">TikTok</div><div class="s-handle">@savy.ma</div></div>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- ══ FOOTER ══════════════════════════════════════════════ -->
-<footer>
-  <div class="footer-logo">
-    <svg width="30" height="30" viewBox="0 0 80 80" fill="none"><rect width="80" height="80" rx="20" fill="#008060"/><ellipse cx="40" cy="21" rx="13" ry="5" fill="white" opacity=".9"/><rect x="27" y="16" width="26" height="14" rx="4" fill="white" opacity=".9"/><ellipse cx="40" cy="13" rx="9.5" ry="8" fill="white"/><rect x="26" y="28" width="28" height="20" rx="9" fill="white"/><circle cx="34" cy="37" r="3.2" fill="#008060"/><circle cx="46" cy="37" r="3.2" fill="#008060"/><rect x="28" y="50" width="24" height="18" rx="5" fill="white"/><text x="40" y="63" text-anchor="middle" font-size="9" font-weight="900" fill="#008060" font-family="system-ui">A</text></svg>
-    <span>SAVY</span>
-    <span style="color:var(--muted);font-size:12px;" id="footer-loc">· 🇲🇦 Maroc</span>
-  </div>
-  <p id="footer-copy">© 2025 SAVY · Morocco's First AI Personal Chef</p>
-  <div class="footer-links">
-    <a href="#" class="nav-link" style="font-size:11px;" id="fl-1">Confidentialité</a>
-    <a href="#" class="nav-link" style="font-size:11px;" id="fl-2">Conditions</a>
-    <a href="#" class="nav-link" style="font-size:11px;" id="fl-3">Contact</a>
-  </div>
-</footer>
-
-<!-- ══ FLOATING CHAT BUTTON ════════════════════════════════ -->
-<button id="chat-fab" onclick="openChat()" aria-label="Chat with SAVY">
-  <svg width="28" height="28" viewBox="0 0 80 80" fill="none">
-    <ellipse cx="40" cy="21" rx="13" ry="5" fill="white" opacity=".9"/>
-    <rect x="27" y="16" width="26" height="14" rx="4" fill="white" opacity=".9"/>
-    <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="white"/>
-    <rect x="26" y="28" width="28" height="20" rx="9" fill="white"/>
-    <circle cx="34" cy="37" r="3.2" fill="#008060"/>
-    <circle cx="46" cy="37" r="3.2" fill="#008060"/>
-    <rect x="28" y="50" width="24" height="18" rx="5" fill="white"/>
-    <text x="40" y="63" text-anchor="middle" font-size="9" font-weight="900" fill="#008060" font-family="system-ui">AI</text>
-  </svg>
-  <div class="fab-badge">1</div>
-</button>
-
-<!-- ══ CHAT WINDOW ══════════════════════════════════════════ -->
-<div id="chat-window">
-
-  <!-- Header -->
-  <div class="chat-header">
-    <div class="chat-header-avatar">
-      <svg width="26" height="26" viewBox="0 0 80 80" fill="none">
-        <ellipse cx="40" cy="21" rx="13" ry="5" fill="white" opacity=".9"/>
-        <rect x="27" y="16" width="26" height="14" rx="4" fill="white" opacity=".9"/>
-        <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="white"/>
-        <rect x="26" y="28" width="28" height="20" rx="9" fill="white"/>
-        <circle cx="34" cy="37" r="3.2" fill="#008060"/>
-        <circle cx="46" cy="37" r="3.2" fill="#008060"/>
-        <rect x="28" y="50" width="24" height="18" rx="5" fill="white"/>
-      </svg>
-    </div>
-    <div class="chat-header-info">
-      <div class="chat-header-name">SAVY AI Chef 🧬</div>
-      <div class="chat-header-status">
-        <span class="chat-status-dot"></span>
-        <span id="chat-status-txt">Online · Meal Engineer</span>
-      </div>
-    </div>
-    <button class="chat-close" onclick="closeChat()">✕</button>
-  </div>
-
-  <!-- Messages -->
-  <div id="chat-msgs"></div>
-
-  <!-- Lead form -->
-  <div id="chat-lead-form">
-    <input class="lead-inp" id="lead-name"  type="text" placeholder="Your full name / اسمك الكامل"/>
-    <input class="lead-inp" id="lead-city"  type="text" placeholder="Your city / مدينتك (ex: Tétouan)"/>
-    <input class="lead-inp" id="lead-phone" type="tel"  placeholder="WhatsApp (+212 6XX XXX XXX)"/>
-    <button class="lead-submit" id="lead-submit-btn" onclick="submitLead()">
-      🧬 Engineer My Meal Now ✨
-    </button>
-    <p style="font-size:11px;color:var(--muted);text-align:center;margin-top:7px;">🔒 Your info is private · never shared</p>
-  </div>
-
-  <!-- Input area -->
-  <div class="chat-input-area" id="chat-input-area">
-    <div class="chat-input-row">
-      <input class="chat-inp" id="chat-inp" placeholder="Message SAVY..." onkeydown="if(event.key==='Enter')chatSend()"/>
-      <button class="chat-send" id="chat-send-btn" onclick="chatSend()">➤</button>
-    </div>
-    <div class="quick-chips" id="quick-chips"></div>
-  </div>
-</div>
-
-<script>
-/* ═══════════════════════════════════════════
-   CONFIG — Replace these two values
-═══════════════════════════════════════════ */
-const GROQ_API_URL       = "/.netlify/functions/gemini"; // Netlify function proxy
-const GOOGLE_SHEET_URL   = "https://script.google.com/macros/s/AKfycbze50a82fqgJodjNmIZLpis7TuVfveQ9c_x1aHXVEsDwEiiT0bqHhQlKCiL1LfZbO3-Gg/exec";
-
-/* ═══════════════════════════════════════════
-   DATA
-═══════════════════════════════════════════ */
-const dishes = [
-  {id:1,  e:"🍆",name:"Zaalouk Bowl",        ar:"طاجين الزعلوك",  cal:340,p:12,c:44,t:20,r:4.8,tag:"Vegan",        badge:"",            cuis:"🇲🇦",f:"vegan"},
-  {id:2,  e:"🫘",name:"Bissara Soup",         ar:"بيصارة",          cal:260,p:14,c:38,t:15,r:4.7,tag:"Vegan",        badge:"Best Seller", cuis:"🇲🇦",f:"vegan"},
-  {id:3,  e:"🐟",name:"Chermoula Salmon",    ar:"سمك بالشرمولة",  cal:480,p:44,c:22,t:25,r:4.9,tag:"High Protein",  badge:"Chef's Pick", cuis:"🇲🇦",f:"high-protein"},
-  {id:4,  e:"🍗",name:"Poulet M'Charmel",    ar:"دجاج معمر",       cal:420,p:38,c:28,t:30,r:4.8,tag:"High Protein",  badge:"",            cuis:"🇲🇦",f:"high-protein"},
-  {id:5,  e:"🥗",name:"Quinoa Poke Bowl",    ar:"بوكي بول كينوا", cal:410,p:22,c:52,t:15,r:4.9,tag:"Vegan",        badge:"Trending",    cuis:"🌏",f:"vegan"},
-  {id:6,  e:"🍜",name:"Miso Ramen Léger",    ar:"رامن ميسو",       cal:360,p:18,c:42,t:20,r:4.7,tag:"Low Carb",     badge:"",            cuis:"🌏",f:"low-carb"},
-  {id:7,  e:"🥟",name:"Gyoza Poulet",        ar:"جيوزا دجاج",      cal:310,p:26,c:32,t:20,r:4.6,tag:"High Protein",  badge:"New",         cuis:"🌏",f:"high-protein"},
-  {id:8,  e:"🍱",name:"Buddha Bowl Thaï",    ar:"بوذا بول",        cal:390,p:20,c:50,t:18,r:4.8,tag:"Vegan",        badge:"",            cuis:"🌏",f:"vegan"},
-  {id:9,  e:"🥙",name:"Wrap Falafel",        ar:"راب فلافل",       cal:370,p:16,c:48,t:15,r:4.7,tag:"Vegan",        badge:"Best Seller", cuis:"🌊",f:"vegan"},
-  {id:10, e:"🐠",name:"Branzino Grillé",     ar:"سمك مشوي",        cal:460,p:42,c:18,t:25,r:4.9,tag:"High Protein",  badge:"Chef's Pick", cuis:"🌊",f:"high-protein"},
-  {id:11, e:"🥗",name:"Salade Niçoise",      ar:"سلطة نيسواز",     cal:340,p:28,c:22,t:10,r:4.6,tag:"Low Carb",     badge:"",            cuis:"🌊",f:"low-carb"},
-  {id:12, e:"🫙",name:"Greek Yogurt Bowl",   ar:"يوغرت يوناني",    cal:290,p:18,c:34,t:5, r:4.8,tag:"Gluten-Free",  badge:"",            cuis:"🌊",f:"gluten-free"},
-  {id:13, e:"🌯",name:"Burrito Bowl",        ar:"بوريتو بول",      cal:440,p:36,c:48,t:20,r:4.7,tag:"High Protein",  badge:"Trending",    cuis:"🌎",f:"high-protein"},
-  {id:14, e:"🫐",name:"Açaí Power Bowl",     ar:"بول أساي",        cal:300,p:12,c:44,t:10,r:4.8,tag:"Vegan",        badge:"",            cuis:"🌎",f:"vegan"},
-  {id:15, e:"🥑",name:"Avocado Toast Boost", ar:"توست أفوكادو",    cal:350,p:14,c:38,t:8, r:4.6,tag:"Vegan",        badge:"",            cuis:"🌎",f:"vegan"},
-  {id:16, e:"🥩",name:"Smash Burger Léger",  ar:"برغر صحي",        cal:490,p:40,c:36,t:25,r:4.7,tag:"High Protein",  badge:"New",         cuis:"🌎",f:"high-protein"},
-];
-const cuisineTabs  = [
-  {id:"all",flag:"🌍",fr:"Tout",           ar:"الكل"},
-  {id:"🇲🇦",flag:"🇲🇦",fr:"Marocain",       ar:"مغربي"},
-  {id:"🌏", flag:"🌏",fr:"Asiatique",      ar:"آسيوي"},
-  {id:"🌊", flag:"🌊",fr:"Méditerranéen",  ar:"متوسطي"},
-  {id:"🌎", flag:"🌎",fr:"Américain",      ar:"أمريكي"},
-];
-const dietFilters = ["All","Vegan","High Protein","Low Carb","Gluten-Free"];
-const filterMap   = {"All":"all","Vegan":"vegan","High Protein":"high-protein","Low Carb":"low-carb","Gluten-Free":"gluten-free"};
-
-/* ═══════════════════════════════════════════
-   STATE
-═══════════════════════════════════════════ */
-let lang        = "fr";
-let activeCuis  = "all";
-let activeDiet  = "All";
-let cart        = [];
-let persona     = null;        // 'employee' | 'sportif' | 'famille' | 'couple' | null
-let chatHistory = [];          // Groq conversation history
-let chatOpen    = false;
-let leadShown   = false;
-let leadDone    = false;
-
-/* ═══════════════════════════════════════════
-   COPY
-═══════════════════════════════════════════ */
-const copy = {
-  fr:{
-    city:"🇲🇦 Tétouan · M'diq · Martil",
-    tagline:"Morocco's First AI Personal Chef",
-    h1:'Engineered for you.<br><span class="accent">Cooked with love.</span>',
-    sub:"SAVY est votre Meal Engineer personnel — combinant la précision de l'IA avec le cœur d'un Chef pour créer des repas qui nourrissent vos objectifs, votre éclat et votre grind.",
-    personaLabel:"🍽️ Pour qui commandez-vous ?",
-    pcEmployeeLbl:"Employé(e)", pcEmployeeDesc:"Énergie & productivité",
-    pcSportifLbl:"Sportif(ve)", pcSportifDesc:"Performance & macros",
-    pcFamilleLbl:"Famille",     pcFamilleDesc:"Repas pour tous",
-    pcCoupleLbl:"Couple",       pcCoupleDesc:"Dîner romantique",
-    proof:"personnes inscrites",
-    navMenu:"Menu", navHow:"Comment ça marche", navAbout:"À propos", navCta:"Commander",
-    how:"Comment ça marche",
-    steps:[
-      {icon:"🍽️",t:"Choisissez votre profil",   d:"Employé, sportif, famille ou couple — SAVY adapte votre repas à vos besoins."},
-      {icon:"🤖",t:"L'IA engineer votre meal",  d:"Chaque gramme de protéine et glucide calculé pour VOS objectifs."},
-      {icon:"👨‍🍳",t:"Chef cuisine avec amour",  d:"Ingrédients locaux frais, préparés à la commande pour vous."},
-      {icon:"🛵",t:"Livré en 45 min",           d:"Chez vous, chaud et frais. Garanti. Toujours."},
-    ],
-    stats:[{v:"45 min",l:"Livraison"},{v:"793+",l:"Inscrits"},{v:"4.9 ★",l:"Satisfaction"},{v:"100%",l:"Frais"}],
-    menuTitle:"Notre Menu", menuSub:"Des saveurs du monde, optimisées par l'IA pour vos objectifs",
-    search:"Rechercher des plats...",
-    cartMsg:(n)=>`${n} plat${n>1?"s":""} sélectionné${n>1?"s":""}`,
-    order:"Commander maintenant",
-    noResult:"Aucun plat trouvé.",
-    finalTitle:"Rejoindre SAVY aujourd'hui",
-    finalSub:"Parlez à votre Chef IA personnel. Votre repas, engineered pour vous. 🧬",
-    finalCta:"Engineer My Meal — Free",
-    finalNote:"🔒 Aucun spam · Juste votre repas parfait",
-    footerCopy:"© 2025 SAVY · Morocco's First AI Personal Chef",
-    fl:["Confidentialité","Conditions","Contact"],
-    chips:["Inscrits","Livraison","Note"],
-    bannerLink:"Commander maintenant →",
-    chatStatus:"En ligne · Meal Engineer",
-    personaRowLabel:"Je commande pour...",
-    cpbEmployee:"Employé(e)", cpbSportif:"Sportif(ve)", cpbFamille:"Famille", cpbCouple:"Couple",
-    leadPlaceholderName:"Votre nom complet",
-    leadPlaceholderCity:"Votre ville (ex: Tétouan)",
-    leadPlaceholderPhone:"WhatsApp (+212 6XX XXX XXX)",
-    leadSubmit:"🧬 Engineer My Meal Now ✨",
-    chatInputPh:"Message SAVY...",
-  },
-  ar:{
-    city:"🇲🇦 تطوان · مديق · مرتيل",
-    tagline:"أول شيف شخصي بالذكاء الاصطناعي في المغرب",
-    h1:'مصمم لك خصيصاً.<br><span class="accent">مطبوخ بكل حب.</span>',
-    sub:"SAVY هو مهندس وجباتك الشخصي — يجمع بين دقة الذكاء الاصطناعي وقلب الشيف لخلق وجبات تغذي أهدافك وجمالك وأداءك.",
-    personaLabel:"🍽️ لمن تطلب اليوم؟",
-    pcEmployeeLbl:"موظف/ة", pcEmployeeDesc:"الطاقة والإنتاجية",
-    pcSportifLbl:"رياضي/ة", pcSportifDesc:"الأداء والماكروز",
-    pcFamilleLbl:"عائلة",    pcFamilleDesc:"وجبات للجميع",
-    pcCoupleLbl:"زوجان",    pcCoupleDesc:"عشاء رومانسي",
-    proof:"شخص انضم",
-    navMenu:"القائمة", navHow:"كيف يعمل", navAbout:"حولنا", navCta:"اطلب الآن",
-    how:"كيف يعمل",
-    steps:[
-      {icon:"🍽️",t:"اختر ملفك الشخصي",         d:"موظف، رياضي، عائلة أو زوجان — SAVY يكيّف وجبتك حسب احتياجاتك."},
-      {icon:"🤖",t:"الذكاء يصمم وجبتك",    d:"كل غرام من البروتين والكربوهيدرات محسوب لأهدافك أنت."},
-      {icon:"👨‍🍳",t:"الشيف يطبخ بحب",     d:"مكونات محلية طازجة، محضرة لك عند الطلب."},
-      {icon:"🛵",t:"توصيل في 45 دقيقة",    d:"لبابك، ساخن وطازج. مضمون دائماً."},
-    ],
-    stats:[{v:"45 دق",l:"التوصيل"},{v:"+793",l:"مشترك"},{v:"4.9 ★",l:"الرضا"},{v:"100%",l:"طازج"}],
-    menuTitle:"قائمتنا", menuSub:"نكهات عالمية محسّنة بالذكاء الاصطناعي لأهدافك",
-    search:"ابحث عن الأطباق...",
-    cartMsg:(n)=>`${n} طبق مختار`,
-    order:"اطلب الآن",
-    noResult:"لم يتم العثور على أطباق.",
-    finalTitle:"انضم إلى SAVY اليوم",
-    finalSub:"تحدث مع شيفك الذكي. وجبتك، مصممة لك. 🧬",
-    finalCta:"صمّم وجبتي — مجاناً",
-    finalNote:"🔒 لا إزعاج · فقط وجبتك المثالية",
-    footerCopy:"© 2025 SAVY · أول شيف ذكاء اصطناعي في المغرب",
-    fl:["الخصوصية","الشروط","تواصل"],
-    chips:["مشترك","توصيل","تقييم"],
-    bannerLink:"اطلب الآن →",
-    chatStatus:"متاح · مهندس الوجبات",
-    personaRowLabel:"أطلب لـ...",
-    cpbEmployee:"موظف/ة", cpbSportif:"رياضي/ة", cpbFamille:"عائلة", cpbCouple:"زوجان",
-    leadPlaceholderName:"اسمك الكامل",
-    leadPlaceholderCity:"مدينتك (مثال: تطوان)",
-    leadPlaceholderPhone:"WhatsApp (+212 6XX XXX XXX)",
-    leadSubmit:"🧬 صمّم وجبتي الآن ✨",
-    chatInputPh:"راسل SAVY...",
-  }
-};
-
-/* ═══════════════════════════════════════════
-   THEME
-═══════════════════════════════════════════ */
-let darkMode = localStorage.getItem("savy-theme") === "dark";
-
-function applyTheme() {
-  const btn = document.getElementById("theme-btn");
-  if(darkMode) {
-    document.documentElement.setAttribute("data-theme","dark");
-    if(btn) btn.textContent = "☀️";
-  } else {
-    document.documentElement.removeAttribute("data-theme");
-    if(btn) btn.textContent = "🌙";
-  }
-  localStorage.setItem("savy-theme", darkMode ? "dark" : "light");
-}
-
-function toggleTheme() {
-  darkMode = !darkMode;
-  applyTheme();
-}
-
-// Apply on load
-applyTheme();
-
-/* ═══════════════════════════════════════════
-   LANGUAGE
-═══════════════════════════════════════════ */
-function setLang(l) {
-  lang = l;
-  document.documentElement.lang = l;
-  document.body.dir = l==="ar" ? "rtl" : "ltr";
-  const t = copy[l];
-  const isAr = l==="ar";
-  const ff = isAr ? "font-family:'Tajawal',sans-serif;" : "font-family:'Cormorant Garamond',serif;font-weight:700;";
-  const fb = isAr ? "font-family:'Tajawal',sans-serif;" : "";
-
-  document.querySelectorAll(".lang-btn").forEach((b,i)=>b.classList.toggle("active",(i===0&&l==="fr")||(i===1&&l==="ar")));
-  document.getElementById("nl-menu").textContent  = t.navMenu;
-  document.getElementById("nl-how").textContent   = t.navHow;
-  document.getElementById("nl-about").textContent = t.navAbout;
-  document.getElementById("nav-cta").textContent  = t.navCta;
-
-  document.getElementById("hero-city").textContent = t.city;
-  document.getElementById("hero-tagline").textContent = t.tagline;
-  document.getElementById("hero-h1").innerHTML = t.h1;
-  document.getElementById("hero-h1").style.cssText = ff+"font-size:clamp(38px,5.5vw,68px);font-weight:900;line-height:1.08;color:var(--text);margin-bottom:16px;";
-  document.getElementById("hero-sub").textContent = t.sub;
-  document.getElementById("persona-label").textContent       = t.personaLabel;
-  document.getElementById("pc-employee-lbl").textContent     = t.pcEmployeeLbl;
-  document.getElementById("pc-employee-desc").textContent    = t.pcEmployeeDesc;
-  document.getElementById("pc-sportif-lbl").textContent      = t.pcSportifLbl;
-  document.getElementById("pc-sportif-desc").textContent     = t.pcSportifDesc;
-  document.getElementById("pc-famille-lbl").textContent      = t.pcFamilleLbl;
-  document.getElementById("pc-famille-desc").textContent     = t.pcFamilleDesc;
-  document.getElementById("pc-couple-lbl").textContent       = t.pcCoupleLbl;
-  document.getElementById("pc-couple-desc").textContent      = t.pcCoupleDesc;
-  document.getElementById("proof-txt").textContent     = t.proof;
-  document.getElementById("chip-inscrits").textContent  = t.chips[0];
-  document.getElementById("chip-livraison").textContent = t.chips[1];
-  document.getElementById("chip-note").textContent      = t.chips[2];
-
-  document.getElementById("how-title").textContent = t.how;
-  document.getElementById("how-title").style.cssText = ff;
-  renderSteps();
-  renderStats();
-
-  document.getElementById("menu-title").textContent = t.menuTitle;
-  document.getElementById("menu-title").style.cssText = ff;
-  document.getElementById("menu-sub").textContent   = t.menuSub;
-  document.getElementById("search").placeholder     = t.search;
-  document.getElementById("order-btn").textContent  = t.order;
-  renderCuisineTabs(); renderDietFilters(); renderDishes();
-
-  document.getElementById("final-title").textContent   = t.finalTitle;
-  document.getElementById("final-cta-txt").textContent = t.finalCta;
-  document.getElementById("final-sub").textContent     = t.finalSub;
-  document.getElementById("final-note").textContent    = t.finalNote;
-  document.getElementById("footer-copy").textContent   = t.footerCopy;
-  document.getElementById("fl-1").textContent = t.fl[0];
-  document.getElementById("fl-2").textContent = t.fl[1];
-  document.getElementById("fl-3").textContent = t.fl[2];
-
-  document.getElementById("chat-status-txt").textContent    = t.chatStatus;
-  document.getElementById("persona-row-label").textContent  = t.personaRowLabel;
-  document.getElementById("banner-link").textContent        = t.bannerLink;
-  document.getElementById("cpb-employee-lbl").textContent   = t.cpbEmployee;
-  document.getElementById("cpb-sportif-lbl").textContent    = t.cpbSportif;
-  document.getElementById("cpb-famille-lbl").textContent    = t.cpbFamille;
-  document.getElementById("cpb-couple-lbl").textContent     = t.cpbCouple;
-  document.getElementById("lead-name").placeholder          = t.leadPlaceholderName;
-  document.getElementById("lead-city").placeholder          = t.leadPlaceholderCity;
-  document.getElementById("lead-phone").placeholder         = t.leadPlaceholderPhone;
-  document.getElementById("lead-submit-btn").textContent    = t.leadSubmit;
-  document.getElementById("chat-inp").placeholder           = t.chatInputPh;
-  document.getElementById("banner-link").textContent        = t.bannerLink;
-}
-
-/* ═══════════════════════════════════════════
-   STEPS / STATS
-═══════════════════════════════════════════ */
-function renderSteps(){
-  const t=copy[lang]; const isAr=lang==="ar";
-  document.getElementById("steps-grid").innerHTML = t.steps.map((s,i)=>`
-    <div class="step-card" style="animation:slideUp .5s ${i*.1}s ease both">
-      <div class="step-icon">${s.icon}</div>
-      <div class="step-num">${i+1}</div>
-      <div class="step-title ${isAr?"far":"fsyne"}" style="text-align:${isAr?"right":"left"}">${s.t}</div>
-      <div class="step-desc  ${isAr?"far":"fb"}"    style="text-align:${isAr?"right":"left"}">${s.d}</div>
-    </div>`).join("");
-}
-function renderStats(){
-  const t=copy[lang]; const isAr=lang==="ar";
-  document.getElementById("stats-grid").innerHTML = t.stats.map(s=>`
-    <div class="stat-card">
-      <div class="stat-val fh">${s.v}</div>
-      <div class="stat-lbl ${isAr?"far":"fb"}">${s.l}</div>
-    </div>`).join("");
-}
-
-/* ═══════════════════════════════════════════
-   MENU
-═══════════════════════════════════════════ */
-function renderCuisineTabs(){
-  const isAr=lang==="ar";
-  document.getElementById("cuisine-tabs").innerHTML = cuisineTabs.map(c=>`
-    <button class="pill ${activeCuis===c.id?"active":""}" onclick="setCuisine('${c.id}')">
-      ${c.flag} ${isAr?c.ar:c.fr}
-    </button>`).join("");
-}
-function setCuisine(id){ activeCuis=id; renderCuisineTabs(); renderDishes(); }
-function renderDietFilters(){
-  document.getElementById("diet-filters").innerHTML = dietFilters.map(f=>`
-    <button class="pill ${activeDiet===f?"active":""}" onclick="setDiet('${f}')">${f}</button>`).join("");
-}
-function setDiet(f){ activeDiet=f; renderDietFilters(); renderDishes(); }
-function renderDishes(){
-  const t=copy[lang]; const isAr=lang==="ar";
-  const q=document.getElementById("search").value.toLowerCase();
-  const filtered=dishes.filter(d=>{
-    const ms=d.name.toLowerCase().includes(q)||d.ar.includes(q);
-    const mf=activeDiet==="All"||d.f===filterMap[activeDiet];
-    const mc=activeCuis==="all"||d.cuis===activeCuis;
-    return ms&&mf&&mc;
-  });
-  const cb=document.getElementById("cart-bar");
-  if(cart.length>0){ cb.style.display="flex"; document.getElementById("cart-txt").textContent=t.cartMsg(cart.length); }
-  else { cb.style.display="none"; }
-  if(!filtered.length){
-    document.getElementById("dishes-list").innerHTML=`<div class="empty-state"><div class="big">🔍</div><p>${t.noResult}</p></div>`;
-    return;
-  }
-  document.getElementById("dishes-list").innerHTML=filtered.map((d,i)=>`
-    <div class="dish-card" style="animation-delay:${i*.04}s">
-      <div class="dish-emoji">${d.e}</div>
-      <div class="dish-info">
-        <div class="${isAr?"dish-name dish-name-ar":"dish-name"}" style="text-align:${isAr?"right":"left"}">
-          ${isAr?d.ar:d.name}
-          ${isAr?`<div class="dish-name-sub">${d.name}</div>`:""}
-        </div>
-        <div class="dish-tags" style="justify-content:${isAr?"flex-end":"flex-start"}">
-          <span class="tag-veg">${d.tag}</span>
-          ${d.badge?`<span class="tag-badge">${d.badge}</span>`:""}
-          <span class="tag-cuisine">${d.cuis}</span>
-        </div>
-        <div class="dish-macros">
-          <span>🔥 ${d.cal}kcal</span><span>💪 ${d.p}g P</span><span>🌾 ${d.c}g C</span>
-          <span class="meta">⏱ ${d.t}m · ⭐ ${d.r}</span>
-        </div>
-      </div>
-      <button class="add-btn ${cart.includes(d.id)?"added":""}" onclick="toggleCart(${d.id})">
-        ${cart.includes(d.id)?"✓":"+"}
-      </button>
-    </div>`).join("");
-}
-function toggleCart(id){ cart=cart.includes(id)?cart.filter(x=>x!==id):[...cart,id]; renderDishes(); }
-
-/* ═══════════════════════════════════════════
-   PERSONA SELECTION (hero)
-═══════════════════════════════════════════ */
-function selectPersona(p) {
-  persona = p;
-  ["employee","sportif","famille","couple"].forEach(x=>{
-    const el=document.getElementById("pc-"+x);
-    if(el){ el.className="persona-card"; if(x===p) el.classList.add("active-"+x); }
-  });
-  const hl  = document.getElementById("persona-highlight");
-  const pbt = document.getElementById("ph-btn");
-  const isAr = lang==="ar";
-  const configs = {
-    employee:{ border:"var(--green)", bg:"var(--greenXL)", icon:"💼", title: isAr?"وجبة المكتب":"Repas Énergie", desc: isAr?"طاقة للعمل بدون خمول. مطبوخ بكل حب.":"Énergie soutenue toute la journée. Zéro fatigue post-déjeuner.", btnBg:"var(--green)", btnColor:"#fff", btnShadow:"rgba(0,128,96,0.35)", btnTxt: isAr?"اطلب وجبتي الآن 💼":"Commander mon repas 💼" },
-    sportif: { border:"#F59E0B", bg:"#FFFBEB",            icon:"🏋️", title: isAr?"التغذية الرياضية":"Performance & Macros", desc: isAr?"ماكروز محسوبة بدقة لأهدافك الرياضية. 💪":"Macros calculés pour vos objectifs de performance. 💪", btnBg:"linear-gradient(135deg,#F59E0B,#FCD34D)", btnColor:"#78350F", btnShadow:"rgba(245,158,11,0.35)", btnTxt: isAr?"اطلب وجبة الرياضي 🏋️":"Commande Sport 🏋️" },
-    famille: { border:"#6366F1", bg:"#EEF2FF",            icon:"👨‍👩‍👧", title: isAr?"وجبة العائلة":"Menu Famille", desc: isAr?"أطباق للجميع — الكبير والصغير. طازج ومتوازن.":"Des plats pour tous — frais, équilibrés, généreux.", btnBg:"#6366F1", btnColor:"#fff", btnShadow:"rgba(99,102,241,0.35)", btnTxt: isAr?"اطلب وجبة العائلة 👨‍👩‍👧":"Commander le Menu Famille 👨‍👩‍👧" },
-    couple:  { border:"var(--pink)", bg:"var(--pinkXL)",  icon:"💑", title: isAr?"تجربة الزوجين":"Dîner en Amoureux", desc: isAr?"عشاء خاص مطبوخ بكل حب. لأن كل لحظة تستحق. 💕":"Un dîner élégant pour deux, préparé avec tout l'amour du monde. 💕", btnBg:"linear-gradient(135deg,var(--pink),var(--pinkL))", btnColor:"#fff", btnShadow:"rgba(233,30,140,0.35)", btnTxt: isAr?"اطلب عشاء الزوجين 💑":"Réserver mon Dîner 💑" },
-  };
-  const c = configs[p] || configs.employee;
-  hl.style.borderColor = c.border;
-  hl.style.background  = c.bg;
-  document.getElementById("ph-icon").textContent  = c.icon;
-  document.getElementById("ph-title").textContent = c.title;
-  document.getElementById("ph-desc").textContent  = c.desc;
-  pbt.style.background = c.btnBg;
-  pbt.style.color      = c.btnColor;
-  pbt.style.boxShadow  = `0 4px 14px ${c.btnShadow}`;
-  pbt.textContent      = c.btnTxt;
-  openChat();
-}
-
-/* ═══════════════════════════════════════════
-   CHAT OPEN / CLOSE
-═══════════════════════════════════════════ */
-function openChat() {
-  chatOpen = true;
-  document.getElementById("chat-window").classList.add("open");
-  document.getElementById("chat-fab").style.display = "none";
-  if(chatHistory.length === 0) initChat();
-}
-function closeChat() {
-  chatOpen = false;
-  document.getElementById("chat-window").classList.remove("open");
-  document.getElementById("chat-fab").style.display = "flex";
-}
-
-/* ═══════════════════════════════════════════
-   CHAT PERSONA (inside chat window)
-═══════════════════════════════════════════ */
-function chatSetPersona(p) {
-  persona = p;
-  ["employee","sportif","famille","couple"].forEach(x=>{
-    const el=document.getElementById("cpb-"+x);
-    if(el){ el.className="p-btn"; if(x===p) el.classList.add("sel-"+x); }
-  });
-  chatHistory = [];
-  document.getElementById("chat-msgs").innerHTML = "";
-  leadShown = false; leadDone = false;
-  document.getElementById("chat-lead-form").style.display = "none";
-  document.getElementById("chat-input-area").style.display = "block";
-  initChat();
-}
-
-/* ═══════════════════════════════════════════
-   CHAT INIT
-═══════════════════════════════════════════ */
-function initChat() {
-  const greetings = [
-    "Marhba bik chez SAVY 🍽️ — Je suis votre chef personnel, à votre service. Comment puis-je vous aider aujourd'hui ?",
-    "Ahlan wa sahlan ! Bienvenue chez SAVY 🧬 — votre chef cuisinier IA. Qu'est-ce que je peux préparer pour vous ce soir ?",
-    "Bonjour et bienvenue ! 🌿 Ana Chef SAVY, hna bash nkhedmek b ahsan wajba. Chno bghiti lyom ?",
-  ];
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
-  addBotMsg(greeting);
-  chatHistory.push({ role:"assistant", content: greeting });
-}
-
-/* ═══════════════════════════════════════════
-   MESSAGE RENDERERS
-═══════════════════════════════════════════ */
-function addBotMsg(text, isGlow=false) {
-  const msgs = document.getElementById("chat-msgs");
-  const div  = document.createElement("div");
-  div.className = isGlow ? "msg-bot msg-glow" : "msg-bot";
-  div.innerHTML = `
-    <div class="msg-avatar">
-      <svg width="16" height="16" viewBox="0 0 80 80" fill="none">
-        <ellipse cx="40" cy="21" rx="13" ry="5" fill="white" opacity=".9"/>
-        <rect x="27" y="16" width="26" height="14" rx="4" fill="white" opacity=".9"/>
-        <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="white"/>
-        <rect x="26" y="28" width="28" height="20" rx="9" fill="white"/>
-        <circle cx="34" cy="37" r="3.2" fill="#008060"/>
-        <circle cx="46" cy="37" r="3.2" fill="#008060"/>
-      </svg>
-    </div>
-    <div class="msg-bubble">${text.replace(/\n/g,"<br>")}</div>`;
-  msgs.appendChild(div);
-  msgs.scrollTop = msgs.scrollHeight;
-}
-
-function addUserMsg(text) {
-  const msgs = document.getElementById("chat-msgs");
-  const div  = document.createElement("div");
-  div.className = "msg-user";
-  div.innerHTML = `<div class="msg-bubble">${text}</div>`;
-  msgs.appendChild(div);
-  msgs.scrollTop = msgs.scrollHeight;
-}
-
-function showTyping() {
-  const msgs = document.getElementById("chat-msgs");
-  const div  = document.createElement("div");
-  div.id = "typing-indicator";
-  div.className = "msg-bot";
-  div.innerHTML = `
-    <div class="msg-avatar">
-      <svg width="16" height="16" viewBox="0 0 80 80" fill="none">
-        <ellipse cx="40" cy="21" rx="13" ry="5" fill="white" opacity=".9"/>
-        <rect x="27" y="16" width="26" height="14" rx="4" fill="white" opacity=".9"/>
-        <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="white"/>
-        <rect x="26" y="28" width="28" height="20" rx="9" fill="white"/>
-        <circle cx="34" cy="37" r="3.2" fill="#008060"/>
-        <circle cx="46" cy="37" r="3.2" fill="#008060"/>
-      </svg>
-    </div>
-    <div class="msg-bubble">
-      <div class="typing-dots"><span></span><span></span><span></span></div>
-    </div>`;
-  msgs.appendChild(div);
-  msgs.scrollTop = msgs.scrollHeight;
-}
-function hideTyping() {
-  const el = document.getElementById("typing-indicator");
-  if(el) el.remove();
-}
-
-function setQuickChips(chips) {
-  const el = document.getElementById("quick-chips");
-  const isCouple = persona==="couple";
-  el.innerHTML = chips.map(c=>`
-    <button class="q-chip${isCouple?" pink":""}" onclick="chatSendText('${c}')">${c}</button>`).join("");
-}
-
-/* ═══════════════════════════════════════════
-   CHAT SEND
-═══════════════════════════════════════════ */
-async function chatSend() {
-  const inp  = document.getElementById("chat-inp");
-  const text = inp.value.trim();
-  if(!text || leadDone) return;
-  inp.value = "";
-  document.getElementById("quick-chips").innerHTML = "";
-  chatSendText(text);
-}
-
-async function chatSendText(text) {
-  if(leadDone) return;
-  addUserMsg(text);
-  chatHistory.push({ role:"user", content:text });
-  document.getElementById("chat-send-btn").disabled = true;
-  showTyping();
-
-  const isAr  = lang==="ar";
-  const p     = persona || "pro";
-  const isCouple= p==="couple";
-  const msgCount = chatHistory.filter(m=>m.role==="user").length;
-
-  // Build system prompt
-  const systemPrompt = buildSystemPrompt(p, isAr);
-
-  try {
-    const res  = await fetch(GROQ_API_URL, {
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({ messages: chatHistory, lang, persona:p, systemPrompt })
-    });
-    const data = await res.json();
-    let reply  = (data.reply||"").trim();
-
-    if(!reply) throw new Error("empty");
-
-    // Only show lead form when SAVY explicitly signals it
-    const triggerLead = reply.includes("SAVY_GET_LEAD");
-    reply = reply.replace("SAVY_GET_LEAD","").trim();
-
-    hideTyping();
-    chatHistory.push({ role:"assistant", content:reply });
-    addBotMsg(reply, isCouple);
-
-    if(triggerLead && !leadShown) {
-      setTimeout(() => showLeadForm(p), 800);
-    }
-  } catch(e) {
-    hideTyping();
-    // Fallback local response
-    const fallback = getFallbackReply(p, isAr, chatHistory.filter(m=>m.role==="user").length);
-    chatHistory.push({ role:"assistant", content:fallback.text });
-    addBotMsg(fallback.text, isCouple);
-    if(fallback.showLead && !leadShown) setTimeout(()=>showLeadForm(p), 800);
-    if(fallback.chips) setQuickChips(fallback.chips);
-  }
-
-  document.getElementById("chat-send-btn").disabled = false;
-  document.getElementById("chat-inp").focus();
-}
-
-/* ═══════════════════════════════════════════
-   SYSTEM PROMPT BUILDER
-═══════════════════════════════════════════ */
-function buildSystemPrompt(p, isAr) {
-  const personaCtx = {
-    employee: isAr ? "موظف أو موظفة يريد وجبة تعطيه طاقة مستدامة طول اليوم بدون خمول بعد الغداء." : "Un(e) employé(e) qui cherche un repas équilibré pour rester concentré(e) et énergique toute la journée, sans coup de fatigue après le déjeuner.",
-    sportif:  isAr ? "رياضي يريد وجبة عالية البروتين مع ماكروز دقيقة لأهداف رياضية محددة." : "Un(e) sportif(ve) qui veut des macros précis — protéines, glucides, lipides — pour optimiser ses performances ou sa récupération.",
-    famille:  isAr ? "عائلة تريد وجبات متنوعة ومتوازنة تناسب الكبير والصغير." : "Une famille qui cherche des plats frais, généreux et équilibrés qui conviennent à tous les âges.",
-    couple:   isAr ? "زوجان يريدان تجربة عشاء خاص ورومانسي في المنزل." : "Un couple qui souhaite vivre une expérience de dîner élégante et romantique à domicile.",
-  };
-  return `Vous êtes Chef SAVY 🍽️ — le premier chef cuisinier IA du Maroc, basé à Tétouan.
-
-LANGUE & TON :
-Darija marocaine polie mélangée avec du français élégant. Chaleureux, courtois, professionnel.
-Exemples : "Avec plaisir, permettez-moi de vous suggérer...", "Bien sûr, hadchi lli bghiti...", "Je vous recommande...", "Marhba bik, kif nkhedmek ?"
-
-PROFIL DU CLIENT : ${personaCtx[p] || personaCtx.employee}
-
-VOTRE RÔLE :
-Répondre à TOUTES les questions du client (nutrition, allergènes, ingrédients, portions, livraison, prix) avec patience et précision. Proposer les plats adaptés. Accompagner jusqu'à la commande sans jamais forcer.
-Demandez prénom + ville + WhatsApp seulement quand le client confirme clairement sa commande. Puis ajoutez SAVY_GET_LEAD à la fin.
-
-MENU SAVY :
-🇲🇦 Zaalouk Bowl 340kcal · Bissara Soup 260kcal · Chermoula Salmon 480kcal 44g P · Poulet M'Charmel 420kcal
-🌏 Quinoa Poke Bowl 410kcal · Miso Ramen 360kcal · Buddha Bowl 390kcal · Gyoza 310kcal
-🌊 Branzino Grillé 460kcal 42g P · Wrap Falafel 370kcal · Salade Niçoise 340kcal · Greek Yogurt Bowl 290kcal
-🌎 Burrito Bowl 440kcal · Açaï Bowl 300kcal · Avocado Toast 350kcal · Smash Burger Léger 490kcal
-Livraison 45 min · Tétouan · M'diq · Martil · Paiement: carte ou espèces
-
-RÈGLES : Max 3 phrases par réponse · Darija + français uniquement · Emojis : 🍽️ 🧬 🌿 💚`;
-}
-
-/* ═══════════════════════════════════════════
-   FALLBACK REPLIES (when API unavailable)
-═══════════════════════════════════════════ */
-function getFallbackReply(p, isAr, msgCount) {
-  const flow = [
-    { text:"Bien sûr, avec plaisir ! 🍽️ Puis-je vous demander quel est votre objectif — minceur, énergie pour le travail, ou performance sportive ?", chips:["Minceur 🌿","Énergie 💚","Sport 💪","Je veux juste manger sainement"] },
-    { text:"Parfait, je comprends. Dans ce cas, je vous recommande notre Chermoula Salmon 🐟 — 480kcal, 44g de protéines, préparé avec des épices marocaines fraîches. Avez-vous des restrictions alimentaires ?", chips:["Aucune allergie","Végétarien","Sans gluten","Sans lactose"] },
-    { text:"Très bien. Notre livraison est en 45 minutes à Tétouan, M'diq et Martil 🚴 — Souhaitez-vous passer votre commande maintenant ?", chips:["Oui, je commande ✅","J'ai encore des questions"] },
-    { text:"Avec plaisir ! 🧬 Pour finaliser votre commande, pourriez-vous me donner votre prénom, votre ville et votre numéro WhatsApp ?", showLead:true },
-  ];
-  const idx = Math.min(msgCount - 1, flow.length - 1);
-  return flow[Math.max(0, idx)];
-}
-
-/* ═══════════════════════════════════════════
-   LEAD FORM
-═══════════════════════════════════════════ */
-function showLeadForm(p) {
-  if(leadShown) return;
-  leadShown = true;
-  const isAr   = lang==="ar";
-  const isCouple = p==="couple";
-
-  // Show a prompt before the form
-  const prompt = "Parfait ! 🧬 Pour finaliser votre commande, veuillez compléter vos informations ci-dessous :";
-  addBotMsg(prompt, isCouple);
-
-  setTimeout(() => {
-    document.getElementById("chat-input-area").style.display = "none";
-    document.getElementById("chat-lead-form").style.display  = "block";
-    if(isCouple) {
-      document.getElementById("lead-submit-btn").className = "lead-submit lead-submit-pink";
-      document.getElementById("lead-submit-btn").textContent = "🌸 Send My Glow Plan ✨";
-    }
-    document.getElementById("chat-lead-form").scrollIntoView({behavior:"smooth",block:"center"});
-  }, 600);
-}
-
-/* ═══════════════════════════════════════════
-   SUBMIT LEAD
-═══════════════════════════════════════════ */
-function submitLead() {
-  const name  = (document.getElementById("lead-name").value  || "").trim();
-  const city  = (document.getElementById("lead-city").value  || "").trim();
-  const phone = (document.getElementById("lead-phone").value || "").trim();
-  const isCouple = persona==="couple";
-  const isAr   = lang==="ar";
-
-  const hi = (id)=>{ const el=document.getElementById(id); if(el){el.style.borderColor="#e53935";setTimeout(()=>el.style.borderColor="",1500);} };
-  if(!name)  { hi("lead-name");  return; }
-  if(!city)  { hi("lead-city");  return; }
-  if(!phone) { hi("lead-phone"); return; }
-
-  leadDone = true;
-  document.getElementById("lead-submit-btn").textContent = "⏳ ...";
-  document.getElementById("lead-submit-btn").disabled    = true;
-
-  // Send to Google Sheets
-  saveToSheets({ name, city, phone, persona: persona||"employee", lang,
-    conversation: chatHistory.filter(m=>m.role==="user").map(m=>m.content).join(" | ") });
-
-  setTimeout(() => {
-    document.getElementById("chat-lead-form").style.display = "none";
-    const finalMsg = `Merci beaucoup, ${name} ! 🍽️\nVotre commande est entre les mains de notre chef — préparée avec soin et livrée dans 45 minutes. Vous recevrez une confirmation sur votre WhatsApp. 💚`;
-    addBotMsg(finalMsg);
-    document.getElementById("chat-status-txt").textContent = "✅ Wajba f tariq — 45 min ⏱️";
-  }, 1200);
-}
-
-/* ═══════════════════════════════════════════
-   GOOGLE SHEETS
-═══════════════════════════════════════════ */
-function saveToSheets(data) {
-  if(!GOOGLE_SHEET_URL || GOOGLE_SHEET_URL.includes("PASTE")) return;
-  try {
-    const iframe = document.createElement("iframe");
-    iframe.name  = "savy-sheet-frame";
-    iframe.style.display = "none";
-    document.body.appendChild(iframe);
-    const form = document.createElement("form");
-    form.method = "POST";
-    form.action = GOOGLE_SHEET_URL;
-    form.target = "savy-sheet-frame";
-    Object.entries(data).forEach(([k,v])=>{
-      const inp = document.createElement("input");
-      inp.type="hidden"; inp.name=k; inp.value=v||"";
-      form.appendChild(inp);
-    });
-    document.body.appendChild(form);
-    form.submit();
-    setTimeout(()=>{ form.remove(); iframe.remove(); }, 3000);
-  } catch(e) { console.warn("Sheets error:", e); }
-}
-
-/* ═══════════════════════════════════════════
-   WEB3 FOOD BACKGROUND
-═══════════════════════════════════════════ */
-(function initWeb3BG() {
-  /* ── 1. Particle canvas ── */
-  const canvas = document.getElementById("hero-canvas");
-  if (!canvas) return;
-  const ctx = canvas.getContext("2d");
-
-  let W, H, particles = [];
-
-  function resize() {
-    const hero = document.getElementById("hero");
-    W = canvas.width  = hero.offsetWidth;
-    H = canvas.height = hero.offsetHeight;
-  }
-
-  function mkParticle() {
-    return {
-      x: Math.random() * W,
-      y: Math.random() * H,
-      r: Math.random() * 1.8 + 0.4,
-      vx: (Math.random() - 0.5) * 0.35,
-      vy: (Math.random() - 0.5) * 0.35,
-      alpha: Math.random() * 0.5 + 0.15,
-      color: Math.random() > 0.75 ? "0,168,120" : "0,128,96",
-    };
-  }
-
-  function initParticles() {
-    particles = [];
-    const count = Math.min(Math.floor(W * H / 7000), 140);
-    for (let i = 0; i < count; i++) particles.push(mkParticle());
-  }
-
-  function drawLine(a, b) {
-    const dx = a.x - b.x, dy = a.y - b.y;
-    const dist = Math.sqrt(dx*dx + dy*dy);
-    if (dist > 130) return;
-    const alpha = (1 - dist / 130) * 0.18;
-    ctx.strokeStyle = `rgba(0,168,120,${alpha})`;
-    ctx.lineWidth = 0.7;
-    ctx.beginPath();
-    ctx.moveTo(a.x, a.y);
-    ctx.lineTo(b.x, b.y);
-    ctx.stroke();
-  }
-
-  function tick() {
-    ctx.clearRect(0, 0, W, H);
-
-    // Draw connections
-    for (let i = 0; i < particles.length; i++) {
-      for (let j = i + 1; j < particles.length; j++) {
-        drawLine(particles[i], particles[j]);
-      }
-    }
-
-    // Draw + move particles
-    particles.forEach(p => {
-      p.x += p.vx; p.y += p.vy;
-      if (p.x < 0 || p.x > W) p.vx *= -1;
-      if (p.y < 0 || p.y > H) p.vy *= -1;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${p.color},${p.alpha})`;
-      ctx.fill();
-    });
-
-    // Occasional glowing node
-    particles.forEach((p, i) => {
-      if (i % 12 === 0) {
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r * 2.5, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(0,200,140,0.12)`;
-        ctx.fill();
-      }
-    });
-
-    requestAnimationFrame(tick);
-  }
-
-  resize();
-  initParticles();
-  tick();
-  window.addEventListener("resize", () => { resize(); initParticles(); });
-
-  /* ── 2. Floating food emojis ── */
-  const foods = ["🍋","🥑","🐟","🫘","🥗","🍅","🧄","🫚","🥦","🍠","🫙","🌿","🍋‍🟩","🐠","🥩","🌶️","🧅","🫐","🥕"];
-  const container = document.getElementById("food-floats");
-  if (!container) return;
-
-  function spawnFood() {
-    const el = document.createElement("div");
-    el.className = "food-float";
-    el.textContent = foods[Math.floor(Math.random() * foods.length)];
-    const size = 18 + Math.random() * 16;
-    const dur  = 14 + Math.random() * 18;
-    const delay = Math.random() * -20;
-    const left = Math.random() * 98;
-    el.style.cssText = `left:${left}%;bottom:-60px;font-size:${size}px;animation-duration:${dur}s;animation-delay:${delay}s;opacity:0;`;
-    container.appendChild(el);
-    setTimeout(() => el.remove(), (dur + Math.abs(delay)) * 1000 + 1000);
-  }
-
-  // Initial batch
-  for (let i = 0; i < 18; i++) spawnFood();
-  // Keep spawning
-  setInterval(spawnFood, 2200);
-})();
-
-
+renderWWD();
+renderPersonaMenuTabs();
 renderStats();
 renderCuisineTabs();
 renderDietFilters();
