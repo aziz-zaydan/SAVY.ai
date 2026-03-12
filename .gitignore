@@ -1,0 +1,12 @@
+# Dependencies
+node_modules/
+.netlify/
+
+# Environment — NEVER commit your API key
+.env
+.env.local
+.env.*
+
+# OS
+.DS_Store
+Thumbs.db
