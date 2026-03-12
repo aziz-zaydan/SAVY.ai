@@ -1,89 +1,72 @@
-# 🤖 SAVY — Smart Healthy Food Delivery | توصيل الطعام الصحي بالذكاء الاصطناعي
+# SAVY — Landing Page
 
-**SAVY** is an AI-powered healthy food delivery app launching in Casablanca, Morocco.
-
-🌐 **Live site:** [savy-maroc.netlify.app](https://savy-maroc.netlify.app)
-
----
-
-## 🚀 What's Inside
-
-A single-file landing page (`index.html`) with:
-
-- 🇫🇷 / 🇲🇦 Bilingual — French & Arabic (full RTL support)
-- 📧 Mailchimp waitlist form integration
-- 🍽️ Interactive menu — 16 dishes across 4 cuisines
-- 🔍 Live search + diet filters + cuisine tabs
-- 🛒 Add to cart with order bar
-- 📱 Fully mobile responsive
-- ✅ Zero dependencies — pure HTML, CSS, JavaScript
+AI-powered Moroccan meal delivery landing page.  
+Built with vanilla HTML/CSS/JS + Netlify Functions + Groq API (llama-3.3-70b-versatile).
 
 ---
 
-## 📁 Structure
+## 📁 Repo structure
 
 ```
 savy/
-├── index.html      ← The entire website (one file)
-└── README.md       ← This file
+├── index.html                  ← Full single-page frontend
+├── netlify.toml                ← Netlify build & function config
+├── .gitignore
+└── netlify/
+    └── functions/
+        └── gemini.js           ← Serverless function → Groq API
 ```
 
 ---
 
-## ⚙️ Setup — Connect Mailchimp
+## 🚀 Deploy to Netlify (from GitHub)
 
-Open `index.html` in any text editor and find this line:
-
-```js
-const MAILCHIMP_URL = "PASTE_YOUR_MAILCHIMP_URL_HERE";
+### 1. Push to GitHub
+```bash
+git init
+git add .
+git commit -m "initial deploy"
+git remote add origin https://github.com/YOUR_USERNAME/savy.git
+git push -u origin main
 ```
 
-Replace it with your Mailchimp form action URL:
+### 2. Connect to Netlify
+1. Go to [app.netlify.com](https://app.netlify.com) → **Add new site** → **Import from Git**
+2. Choose your GitHub repo
+3. Build settings are auto-detected from `netlify.toml` — leave as-is
+4. Click **Deploy site**
 
-```js
-const MAILCHIMP_URL = "https://yourapp.us1.list-manage.com/subscribe/post?u=xxx&id=yyy";
-```
+### 3. Add environment variable ⚠️ required
+Without this the chat will not work.
 
-**How to get your Mailchimp URL:**
-1. Log in to Mailchimp
-2. Go to **Audience → Signup Forms → Embedded Forms**
-3. Copy the URL from the `action="..."` attribute
+1. Netlify dashboard → your site → **Site configuration** → **Environment variables**
+2. Add:
+   - Key: `GROQ_API_KEY`
+   - Value: your key from [console.groq.com/keys](https://console.groq.com/keys)
+3. **Deploys** → **Trigger deploy** → **Deploy site**
 
----
-
-## 🌍 Deploy
-
-### Netlify (Recommended)
-1. Go to [netlify.com/drop](https://netlify.com/drop)
-2. Drag and drop `index.html`
-3. Live instantly ✅
-
-### GitHub Pages
-1. Push this repo to GitHub
-2. Go to **Settings → Pages**
-3. Set source to `main` branch → `/root`
-4. Your site is live at `https://yourusername.github.io/savy`
-
-### Vercel
-1. Import this GitHub repo into Vercel
-2. No configuration needed
-3. Deploy ✅
+### 4. Add your custom domain (optional)
+Netlify dashboard → **Domain management** → **Add custom domain** → follow DNS instructions.
 
 ---
 
-## 🇲🇦 Brand
-
-- **Primary color:** `#008060` (Emerald Green)
-- **Font:** Syne (headings) + DM Sans (body) + Tajawal (Arabic)
-- **Concept:** Modern, clean, tech-forward — matches the SAVY app UI
-
----
-
-## 📬 Contact
-
-Instagram: [@savy.mar](https://www.instagram.com/savy.mar?igsh=MWdzNjNkeWZ0NW93Zw==)  
-TikTok: [@savy.ma](https://www.tiktok.com/@savy.ma?_r=1&_t=ZS-94R6uvkwfhN)
+## 🔑 Getting a Groq API key (free)
+1. Go to [console.groq.com](https://console.groq.com)
+2. Sign up / log in
+3. **API Keys** → **Create API Key**
+4. Copy and paste into Netlify environment variables
 
 ---
 
-*Built with ❤️ for Morocco 🇲🇦*
+## 🤖 AI Chat personas
+| Icon | Persona | Focus |
+|------|---------|-------|
+| 💼 | Employé(e) | Quick healthy lunch, energy for the afternoon |
+| 🏋️ | Sportif(ve) | Macros, protein, performance goals |
+| 👨‍👩‍👧 | Famille | Family-size orders, kids-friendly dishes |
+| 💑 | Couple | Romantic dinner for two, elegant menu |
+
+---
+
+## 📍 Delivery zones
+Tétouan · M'diq · Martil
