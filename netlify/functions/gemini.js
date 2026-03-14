@@ -284,13 +284,18 @@ exports.handler = async (event) => {
   try { body = JSON.parse(event.body); }
   catch { return { statusCode: 400, headers, body: JSON.stringify({ error: "Invalid JSON body" }) }; }
 
-  const { messages, persona = "employee" } = body;
+  const { messages, persona = "employee", scheduledTime } = body;
   if (!messages || !Array.isArray(messages)) {
     return { statusCode: 400, headers, body: JSON.stringify({ error: "messages array required" }) };
   }
 
   const validPersonas = ["employee", "sportif", "famille", "couple"];
   const safePersona   = validPersonas.includes(persona) ? persona : "employee";
+
+  // Build schedule context string injected at end of system prompt
+  const scheduleNote = scheduledTime
+    ? `\n\nINFO LIVRAISON — le client a programmé sa livraison pour : ${scheduledTime}. Mentionne-le naturellement dans la conversation si pertinent.`
+    : `\n\nINFO LIVRAISON — le client souhaite une livraison dès que possible (45 min).`;
 
   const normalized = messages
     .slice(-MAX_TURNS)
@@ -305,7 +310,7 @@ exports.handler = async (event) => {
     result = await callGroq(apiKey, {
       model:       "llama-3.3-70b-versatile",
       messages:    [
-        { role: "system", content: buildSystemPrompt(safePersona) },
+        { role: "system", content: buildSystemPrompt(safePersona) + scheduleNote },
         ...normalized,
       ],
       temperature: 0.8,
