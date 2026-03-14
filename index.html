@@ -265,15 +265,30 @@
     /* ── ORDER MODAL ── */
     #order-modal-overlay {
       position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:1000;
-      display:none; align-items:center; justify-content:center;
+      display:none; align-items:flex-end; justify-content:center;
       backdrop-filter:blur(6px);
     }
     #order-modal-overlay.open { display:flex; }
+    @media(min-width:600px){
+      #order-modal-overlay { align-items:center; }
+    }
     #order-modal {
-      background:var(--card); border-radius:24px; width:min(420px,94vw);
-      padding:28px; border:1px solid var(--border);
-      box-shadow:0 24px 64px rgba(0,0,0,.18);
-      animation:popIn .3s ease both; position:relative;
+      background:var(--card); border-radius:24px 24px 0 0; width:min(420px,100vw);
+      padding:24px 24px 32px; border:1px solid var(--border);
+      box-shadow:0 -8px 40px rgba(0,0,0,.18);
+      animation:slideUpModal .3s ease both; position:relative;
+      max-height:92dvh; overflow-y:auto;
+    }
+    @media(min-width:600px){
+      #order-modal {
+        border-radius:24px; width:min(420px,94vw);
+        padding:28px; box-shadow:0 24px 64px rgba(0,0,0,.18);
+        animation:popIn .3s ease both;
+      }
+    }
+    @keyframes slideUpModal {
+      from { transform:translateY(100%); opacity:0; }
+      to   { transform:translateY(0);    opacity:1; }
     }
 
     /* ── ORDER TRACKING MODAL
@@ -1874,7 +1889,7 @@
     <div id="om-loyalty-badge" style="display:none;border-radius:14px;padding:11px 14px;margin-bottom:12px;font-size:13px;"></div>
     <!-- Personal info form -->
     <input class="lead-inp" id="om-name"  type="text" placeholder="Nom complet / Full name"/>
-    <input class="lead-inp" id="om-city"  type="text" placeholder="Ville / City (ex: Tétouan)"/>
+    <input class="lead-inp" id="om-city"  type="text" placeholder="Adresse (ex: Rue Ibn Batouta, Tétouan)"/>
     <input class="lead-inp" id="om-phone" type="tel"  placeholder="WhatsApp (+212 6XX XXX XXX)" oninput="debounceLoyaltyLookup(this.value)"/>
     <button class="lead-submit" id="om-submit-btn" onclick="submitOrder()" style="margin-top:6px;">
       🛵 Commander maintenant
@@ -1972,7 +1987,7 @@
   <!-- Lead form -->
   <div id="chat-lead-form">
     <input class="lead-inp" id="lead-name"  type="text" placeholder="Your full name / اسمك الكامل"/>
-    <input class="lead-inp" id="lead-city"  type="text" placeholder="Your city / مدينتك (ex: Tétouan)"/>
+    <input class="lead-inp" id="lead-city"  type="text" placeholder="Adresse / عنوانك (ex: Rue Ibn Batouta, Tétouan)"/>
     <input class="lead-inp" id="lead-phone" type="tel"  placeholder="WhatsApp (+212 6XX XXX XXX)"/>
     <button class="lead-submit" id="lead-submit-btn" onclick="submitLead()">
       🧬 Engineer My Meal Now ✨
@@ -2112,7 +2127,7 @@ const copy = {
     personaRowLabel:"I'm ordering for...",
     cpbEmployee:"Employee", cpbSportif:"Athlete", cpbFamille:"Family", cpbCouple:"Couple",
     leadPlaceholderName:"Your full name",
-    leadPlaceholderCity:"Your city (e.g. Tétouan)",
+    leadPlaceholderCity:"Your address (e.g. Rue Ibn Batouta, Tétouan)",
     leadPlaceholderPhone:"WhatsApp (+212 6XX XXX XXX)",
     leadSubmit:"🧬 Engineer My Meal Now ✨",
     chatInputPh:"Message SAVY...",
@@ -2207,7 +2222,7 @@ const copy = {
     personaRowLabel:"Je commande pour...",
     cpbEmployee:"Employé(e)", cpbSportif:"Sportif(ve)", cpbFamille:"Famille", cpbCouple:"Couple",
     leadPlaceholderName:"Votre nom complet",
-    leadPlaceholderCity:"Votre ville (ex: Tétouan)",
+    leadPlaceholderCity:"Votre adresse (ex: Rue Ibn Batouta, Tétouan)",
     leadPlaceholderPhone:"WhatsApp (+212 6XX XXX XXX)",
     leadSubmit:"🧬 Engineer My Meal Now ✨",
     chatInputPh:"Message SAVY...",
@@ -2302,7 +2317,7 @@ const copy = {
     personaRowLabel:"أطلب لـ...",
     cpbEmployee:"موظف/ة", cpbSportif:"رياضي/ة", cpbFamille:"عائلة", cpbCouple:"زوجان",
     leadPlaceholderName:"اسمك الكامل",
-    leadPlaceholderCity:"مدينتك (مثال: تطوان)",
+    leadPlaceholderCity:"عنوانك (مثال: شارع ابن بطوطة، تطوان)",
     leadPlaceholderPhone:"WhatsApp (+212 6XX XXX XXX)",
     leadSubmit:"🧬 صمّم وجبتي الآن ✨",
     chatInputPh:"راسل SAVY...",
@@ -3388,7 +3403,7 @@ function openOrderModal() {
 
   // Localise placeholders
   document.getElementById("om-name").placeholder  = t.leadPlaceholderName  || "Nom complet";
-  document.getElementById("om-city").placeholder  = t.leadPlaceholderCity  || "Ville";
+  document.getElementById("om-city").placeholder  = t.leadPlaceholderCity  || "Adresse";
   document.getElementById("om-phone").placeholder = t.leadPlaceholderPhone || "WhatsApp";
 
   // Cart summary
@@ -3422,6 +3437,14 @@ function openOrderModal() {
 
   const overlay = document.getElementById("order-modal-overlay");
   if(overlay) overlay.classList.add("open");
+
+  // Scroll active input into view when keyboard opens (mobile)
+  ["om-name","om-city","om-phone"].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.addEventListener("focus", function() {
+      setTimeout(() => this.scrollIntoView({behavior:"smooth", block:"center"}), 300);
+    }, {once:false});
+  });
 }
 
 function closeOrderModal(e) {
@@ -3655,7 +3678,7 @@ function submitOrder() {
       ? `مرحباً SAVY! أريد الطلب:\nالاسم: ${name}\nالمدينة: ${city}\nالأطباق: ${items||"قائمة المنيو"}${discountLine}`
       : (lang==="en"
         ? `Hi SAVY! I'd like to order:\nName: ${name}\nCity: ${city}\nDishes: ${items||"see menu"}${discountLine}`
-        : `Salam SAVY! Je voudrais commander:\nNom: ${name}\nVille: ${city}\nPlats: ${items||"voir le menu"}${discountLine}`);
+        : `Salam SAVY! Je voudrais commander:\nNom: ${name}\nAdresse: ${city}\nPlats: ${items||"voir le menu"}${discountLine}`);
     window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
 
     // Reset
@@ -3705,7 +3728,7 @@ Votre commande est entre les mains de notre chef — préparée avec soin et liv
     addBotMsg(finalMsg, isCouple);
     const cst = document.getElementById("chat-status-txt");
     if(cst) cst.textContent = isAr ? "✅ طلبك في الطريق — 45 دق ⏱️" : "✅ Commande en route — 45 min ⏱️";
-    const waMsg = encodeURIComponent(`Salam SAVY ! Juste rempli le formulaire. Nom: ${name} · Ville: ${city} · Je veux commander 🍽️`);
+    const waMsg = encodeURIComponent(`Salam SAVY ! Juste rempli le formulaire. Nom: ${name} · Adresse: ${city} · Je veux commander 🍽️`);
     window.open(`https://wa.me/${WA_NUMBER}?text=${waMsg}`, "_blank");
     animateLoyaltyPoints(10);
   }, 1200);
