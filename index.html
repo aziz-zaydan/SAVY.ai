@@ -565,6 +565,113 @@
     /* ── STATS ── */
     #stats { padding:52px clamp(16px,4vw,56px); background:var(--bg); }
 
+    /* ── NUTRITION CALCULATOR ── */
+    #nutri-calc {
+      padding:72px clamp(16px,4vw,56px);
+      background:var(--card);
+    }
+    .nutri-inner { max-width:900px; margin:0 auto; }
+    .nutri-grid  { display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start; }
+    @media(max-width:680px){ .nutri-grid { grid-template-columns:1fr; } }
+    .nutri-row  { margin-bottom:16px; }
+    .nutri-label{ font-size:13px; font-weight:600; color:var(--text); margin-bottom:6px; display:block; }
+    .nutri-input, .nutri-select {
+      width:100%; padding:11px 14px; border:1.5px solid var(--border);
+      border-radius:12px; font-family:'DM Sans',sans-serif; font-size:14px;
+      color:var(--text); background:var(--bg); outline:none;
+      transition:border-color .2s;
+    }
+    .nutri-input:focus, .nutri-select:focus { border-color:var(--green); }
+    [data-theme="dark"] .nutri-input,
+    [data-theme="dark"] .nutri-select { background:var(--bg); border-color:var(--border); color:var(--text); }
+    .nutri-toggle { display:flex; gap:8px; }
+    .nutri-tog-btn {
+      flex:1; padding:10px; border:1.5px solid var(--border); border-radius:10px;
+      background:var(--bg); color:var(--sub); font-size:13px; font-weight:600;
+      cursor:pointer; transition:background .3s,border-color .3s,color .3s; font-family:'DM Sans',sans-serif;
+    }
+    .nutri-tog-btn.active { background:var(--green); border-color:var(--green); color:#fff; }
+    .nutri-calc-btn {
+      width:100%; padding:14px; border-radius:14px; border:none;
+      background:linear-gradient(135deg,var(--green),var(--greenL));
+      color:#fff; font-size:15px; font-weight:700; cursor:pointer;
+      font-family:'DM Sans',sans-serif; margin-top:8px;
+      box-shadow:0 6px 20px rgba(0,128,96,.25); transition:all .25s;
+    }
+    .nutri-calc-btn:hover { transform:translateY(-2px); box-shadow:0 10px 28px rgba(0,168,120,.35); }
+    #nutri-calc {
+      transition: background .5s ease;
+      background: linear-gradient(160deg, var(--greenXL) 0%, var(--bg) 60%);
+    }
+    #nutri-calc.female-mode {
+      background: linear-gradient(160deg, var(--pinkXL) 0%, var(--bg) 60%);
+    }
+    #nutri-calc.female-mode .nutri-calc-btn  { background: linear-gradient(135deg, var(--pink), var(--pinkL)); }
+    #nutri-calc.female-mode .nutri-eyebrow-wrap { background:var(--pinkXL); color:var(--pink); border-color:var(--pinkBorder); }
+    #nutri-calc.female-mode .nutri-tog-btn.active { background:var(--pink) !important; border-color:var(--pink) !important; color:#fff !important; box-shadow:0 2px 10px rgba(233,30,140,0.35); }
+    #nutri-calc.female-mode .nutri-kcal-val { color: var(--pink); }
+    #nutri-calc.female-mode .macro-bar-fill  { background: linear-gradient(90deg, var(--pink), var(--pinkL)); }
+    #nutri-calc.female-mode .nutri-dish-chip { background: var(--pinkXL); border-color: var(--pinkBorder); color: var(--pink); }
+    #nutri-calc.female-mode .title-bar       { background: linear-gradient(90deg, var(--pink), var(--pinkL)); }
+    .nutri-results { display:none; }
+    .nutri-results.show { display:block; animation:slideUp .4s ease both; }
+    .nutri-result-card {
+      background:linear-gradient(135deg,var(--green),var(--greenL));
+      border-radius:20px; padding:24px; color:#fff; margin-bottom:20px; text-align:center;
+    }
+    .nutri-kcal-val { font-family:'Syne',sans-serif; font-size:52px; font-weight:900; line-height:1; }
+    .nutri-kcal-lbl { font-size:13px; opacity:.85; margin-top:4px; margin-bottom:16px; }
+    .nutri-macros-row { display:flex; gap:12px; justify-content:center; }
+    .nutri-macro { background:rgba(255,255,255,.2); border-radius:14px; padding:12px 16px; flex:1; }
+    .nutri-macro-val { font-family:'Syne',sans-serif; font-size:22px; font-weight:900; }
+    .nutri-macro-lbl { font-size:11px; opacity:.85; margin-top:2px; }
+    .nutri-dishes-label { font-size:13px; font-weight:700; color:var(--text); margin-bottom:10px; }
+    .nutri-dish-chips { display:flex; flex-wrap:wrap; gap:8px; }
+    .nutri-dish-chip {
+      padding:6px 14px; border-radius:99px; font-size:12px; font-weight:700;
+      background:var(--greenXL); border:1px solid rgba(0,128,96,.2); color:var(--green);
+      cursor:pointer; transition:all .2s;
+    }
+    .nutri-dish-chip:hover { background:var(--green); color:#fff; }
+
+    /* ── LOYALTY ── */
+    #loyalty {
+      padding: 56px clamp(16px,4vw,56px) 64px;
+      background: var(--bg);
+    }
+    .loyalty-inner { max-width:900px; margin:0 auto; }
+    .loy-header { text-align:center; margin-bottom:36px; }
+    .loy-eyebrow-pill {
+      display:inline-block; background:var(--greenXL); color:var(--green);
+      border:1px solid rgba(0,128,96,.2); border-radius:99px;
+      padding:5px 16px; font-size:12px; font-weight:700;
+      letter-spacing:.04em; margin-bottom:12px;
+      font-family:'DM Sans',sans-serif;
+    }
+    .loy-heading {
+      font-family:'Syne',sans-serif; font-size:clamp(22px,3.5vw,36px);
+      font-weight:900; color:var(--text); margin:0;
+    }
+    .loy-cards {
+      display:grid; grid-template-columns:repeat(4,1fr); gap:16px;
+    }
+    .loy-card {
+      border-radius:20px; padding:24px 16px; text-align:center;
+      border:1px solid var(--border);
+      display:flex; flex-direction:column; align-items:center; gap:8px;
+      transition:transform .2s, box-shadow .2s;
+    }
+    .loy-card:hover { transform:translateY(-4px); box-shadow:var(--shadowH); }
+    .loy-badge  { font-size:28px; }
+    .loy-card-name { font-family:'Syne',sans-serif; font-weight:800; font-size:15px; color:var(--text); }
+    .loy-card-ord  { font-size:12px; color:var(--muted); font-weight:600; }
+    .loy-card-pts  { font-size:12px; font-weight:700; color:var(--green); }
+    .loy-bronze { background:linear-gradient(160deg,#FFF7ED,var(--bg)); border-color:rgba(194,120,48,.25); }
+    .loy-silver { background:linear-gradient(160deg,#F3F4F6,var(--bg)); border-color:rgba(107,114,128,.25); }
+    .loy-gold   { background:linear-gradient(160deg,#FEFCE8,var(--bg)); border-color:rgba(202,138,4,.3); }
+    .loy-plat   { background:linear-gradient(160deg,#EFF6FF,var(--bg)); border-color:rgba(59,130,246,.25); }
+    @media(max-width:640px){ .loy-cards { grid-template-columns:repeat(2,1fr); } }
+
     /* ── MENU ── */
     #menu { padding:72px clamp(16px,4vw,56px) 80px; background:#fff; border-top:1px solid var(--border); }
     .menu-inner { max-width:780px; margin:0 auto; }
@@ -1098,9 +1205,9 @@
   <div class="nutri-inner">
     <div class="section-header">
       <span class="wwd-eyebrow" id="nutri-eyebrow" style="background:var(--greenXL);color:var(--green);border-color:rgba(0,128,96,.2);">🧮 Calculateur Nutritionnel</span>
-      <h2 class="section-title fh" id="nutri-title" style="font-size:clamp(18px,3vw,26px);">Vos besoins caloriques en 30 secondes</h2>
+      <h2 class="section-title fh" id="nutri-title">Vos besoins caloriques en 30 secondes</h2>
       <div class="title-bar"></div>
-      <p id="nutri-sub" style="color:var(--sub);font-size:13px;max-width:480px;margin:8px auto 0;line-height:1.7;">
+      <p id="nutri-sub" style="color:var(--sub);font-size:14px;max-width:520px;margin:12px auto 0;line-height:1.8;">
         Entrez vos données et découvrez exactement quels plats SAVY correspondent à vos objectifs.
       </p>
     </div>
@@ -2510,7 +2617,15 @@ function renderDishes(){
       </div>
     </div>`).join("");
 }
-function toggleCart(id){ cart=cart.includes(id)?cart.filter(x=>x!==id):[...cart,id]; renderDishes(); }
+function toggleCart(id){
+  const wasEmpty = cart.length === 0;
+  cart = cart.includes(id) ? cart.filter(x=>x!==id) : [...cart,id];
+  renderDishes();
+  // Open order modal automatically when first dish is added
+  if(wasEmpty && cart.length === 1) {
+    setTimeout(() => openOrderModal(), 300);
+  }
+}
 
 function menuSlide(dir) {
   const el = document.getElementById("dishes-list");
