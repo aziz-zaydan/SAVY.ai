@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Syne:wght@700;800;900&family=DM+Sans:wght@400;500;600;700&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet"/>
   <style>
     :root {
+      overflow-x:hidden;
       --bg:       #EEF7F3;
       --card:     #FFFFFF;
       --mint:     #DFF0E9;
@@ -1197,6 +1198,282 @@
     @media(max-width:400px){
       .persona-cards{ grid-template-columns:1fr 1fr; }
       h1.hero-title { font-size:26px; }
+    }
+
+    /* ╔══════════════════════════════════════════════════════════╗
+       ║  DEFINITIVE MOBILE STYLESHEET — overrides everything    ║
+       ║  Written mobile-first, covers all phones                ║
+       ╚══════════════════════════════════════════════════════════╝ */
+
+    /* ── Prevent horizontal overflow on ALL phones ── */
+    html, body {
+      overflow-x: hidden;
+      max-width: 100vw;
+    }
+    * { box-sizing: border-box; }
+
+    /* ══════════════════════════════════════════════════════════
+       ≤ 768px  Tablet / large phone
+    ══════════════════════════════════════════════════════════ */
+    @media screen and (max-width:768px) {
+      html, body { overflow-x:hidden; }
+
+      /* Nav */
+      .nav-links   { display:none !important; }
+      #navbar      { top:28px; }
+
+      /* Hero */
+      .hero-inner  { grid-template-columns:1fr !important; gap:20px !important; }
+      .hero-right  { display:none !important; }
+
+      /* Grids → single column */
+      .wwd-grid          { grid-template-columns:1fr !important; }
+      .wwd-card--wide    { grid-column:span 1 !important; }
+      .nutri-grid        { grid-template-columns:1fr !important; gap:20px !important; }
+      .loy-cards         { grid-template-columns:repeat(2,1fr) !important; }
+
+      /* Reviews */
+      .rev-summary { flex-direction:column !important; gap:12px !important; }
+      .rev-card    { flex:0 0 min(300px,88vw) !important; width:min(300px,88vw) !important; }
+
+      /* Chat */
+      #chat-window { width:calc(100vw - 24px) !important; right:12px !important; left:12px !important; }
+    }
+
+    /* ══════════════════════════════════════════════════════════
+       ≤ 480px  Standard phone
+    ══════════════════════════════════════════════════════════ */
+    @media screen and (max-width:480px) {
+      html, body  { overflow-x:hidden; font-size:15px; }
+      body        { padding-bottom:env(safe-area-inset-bottom,0px); }
+
+      /* ── Urgency strip ── */
+      #urgency-strip { font-size:10px !important; padding:6px 10px !important; }
+      #urgency-slots, #urgency-sep { display:none !important; }
+
+      /* ── Navbar ── */
+      #navbar            { padding:0 12px !important; height:52px !important; top:28px !important; }
+      .nav-logo span     { font-size:16px !important; }
+      .nav-links         { display:none !important; }
+      .lang-btn          { font-size:8px !important; padding:2px 5px !important; }
+      .btn-cta           { padding:8px 12px !important; font-size:12px !important; border-radius:10px !important; }
+
+      /* ── Section spacing ── */
+      section, #what-we-do, #how, #loyalty, #order-track-section,
+      #reviews, #stats, #final, #faq, #nutri-calc, #menu {
+        padding-left:14px !important;
+        padding-right:14px !important;
+        padding-top:20px !important;
+        padding-bottom:24px !important;
+      }
+      footer { padding:16px 14px !important; flex-direction:column !important; align-items:flex-start !important; gap:10px !important; }
+
+      /* ── Section titles ── */
+      .section-title { font-size:clamp(20px,5.5vw,26px) !important; }
+      .loy-heading   { font-size:clamp(18px,5vw,24px)   !important; }
+
+      /* ── Hero ── */
+      #hero                  { padding:22px 14px 30px !important; }
+      .hero-inner            { grid-template-columns:1fr !important; gap:14px !important; }
+      .hero-right            { display:none !important; }
+      h1.hero-title          { font-size:clamp(24px,7vw,34px) !important; line-height:1.1 !important; margin-bottom:10px !important; }
+      .hero-sub              { font-size:13px !important; line-height:1.65 !important; max-width:100% !important; }
+      .city-badge            { padding:4px 10px !important; margin-bottom:10px !important; }
+      .city-badge span.label { font-size:11px !important; }
+      .stat-chips            { gap:6px !important; flex-wrap:wrap !important; }
+      .chip                  { padding:7px 9px !important; border-radius:11px !important; }
+      .chip-val              { font-size:12px !important; }
+      .chip-lbl              { font-size:9px !important; }
+      .proof                 { margin-top:12px !important; gap:7px !important; flex-wrap:wrap !important; }
+      .av                    { width:24px !important; height:24px !important; font-size:9px !important; }
+      .proof-text            { font-size:12px !important; }
+      .delivery-badge        { font-size:11px !important; padding:5px 11px !important; margin-top:10px !important; }
+      #persona-highlight     { max-width:100% !important; padding:12px 10px !important; border-radius:14px !important; }
+      .pkg-slideshow         { max-width:100% !important; border-radius:12px !important; }
+
+      /* ── Persona cards ── */
+      .persona-cards { display:grid !important; grid-template-columns:1fr 1fr !important; gap:7px !important; }
+      .persona-card  { min-width:unset !important; padding:9px 6px !important; border-radius:11px !important; border-width:1.5px !important; }
+      .persona-emoji { font-size:17px !important; margin-bottom:2px !important; }
+      .persona-label { font-size:10px !important; }
+      .persona-desc  { font-size:8px !important; line-height:1.3 !important; }
+
+      /* ── How it works ── */
+      .steps-grid  { grid-template-columns:1fr 1fr !important; gap:8px !important; }
+      .step-card   { padding:10px 8px !important; border-radius:11px !important; }
+      .step-icon   { font-size:20px !important; }
+      .step-title  { font-size:11px !important; }
+      .step-desc   { font-size:10px !important; line-height:1.45 !important; }
+
+      /* ── WWD ── */
+      .wwd-boxes        { grid-template-columns:1fr 1fr !important; gap:8px !important; }
+      .wwd-box          { padding:9px 7px !important; border-radius:11px !important; }
+      .wwd-box-icon     { font-size:19px !important; }
+      .wwd-box-name     { font-size:10px !important; }
+      .wwd-box-tag      { font-size:8px !important; }
+      .wwd-grid         { grid-template-columns:1fr !important; gap:9px !important; }
+      .wwd-card         { padding:13px 12px !important; border-radius:13px !important; }
+      .wwd-card--wide   { grid-column:span 1 !important; }
+      .wwd-icon         { font-size:24px !important; }
+      .wwd-card-title   { font-size:13px !important; }
+      .wwd-card-desc    { font-size:12px !important; line-height:1.55 !important; }
+      .wwd-tag          { font-size:9px !important; }
+
+      /* ── Menu ── */
+      #menu              { padding:18px 14px 24px !important; }
+      .menu-inner        { padding:0 !important; }
+      #menu-title        { font-size:clamp(19px,5.5vw,26px) !important; }
+      .search-inp        { padding:10px 12px 10px 36px !important; font-size:13px !important; border-radius:12px !important; }
+      .search-icon       { left:11px !important; }
+      .filter-row        { gap:5px !important; flex-wrap:wrap !important; padding-bottom:2px !important; }
+      .pill              { font-size:10px !important; padding:5px 9px !important; }
+      .persona-tabs-label{ font-size:10px !important; margin:12px 0 6px !important; }
+      .cart-bar          { padding:9px 11px !important; border-radius:11px !important; flex-wrap:wrap !important; gap:5px !important; }
+      #cart-txt          { font-size:11px !important; }
+      #cart-total        { font-size:13px !important; }
+      #order-btn         { font-size:11px !important; padding:7px 13px !important; }
+      .menu-arrow        { display:none !important; }
+      /* Dish cards */
+      .dish-card         { flex:0 0 80vw !important; min-width:80vw !important; padding:11px 10px !important; border-radius:14px !important; }
+      .dish-emoji        { width:54px !important; height:54px !important; font-size:27px !important; border-radius:11px !important; }
+      .dish-name         { font-size:13px !important; }
+      .dish-name-sub     { font-size:9px !important; }
+      .dish-price        { font-size:11px !important; padding:2px 7px !important; }
+      .add-btn           { width:28px !important; height:28px !important; font-size:14px !important; }
+      .macro-chip        { font-size:9px !important; padding:1px 5px !important; }
+      .tag-cuisine       { font-size:9px !important; padding:2px 6px !important; }
+
+      /* ── Order modal (bottom sheet) ── */
+      #order-modal-overlay { align-items:flex-end !important; padding:0 !important; }
+      #order-modal         { border-radius:20px 20px 0 0 !important; width:100% !important; max-width:100% !important;
+                             padding:18px 15px max(26px,env(safe-area-inset-bottom,26px)) !important; }
+      #order-modal::before { margin-bottom:12px !important; }
+      #om-title            { font-size:16px !important; }
+      #om-sub              { font-size:11px !important; }
+      #om-cart-summary     { padding:9px 10px !important; font-size:12px !important; border-radius:11px !important; }
+      #om-loyalty-badge    { padding:9px 10px !important; font-size:12px !important; border-radius:11px !important; }
+      .lead-inp            { padding:11px 12px !important; font-size:13px !important; margin-bottom:8px !important; border-radius:11px !important; }
+      .lead-submit         { padding:13px !important; font-size:14px !important; border-radius:12px !important; }
+      #om-trust            { font-size:10px !important; gap:7px !important; }
+      .sched-btn           { font-size:11px !important; padding:8px 6px !important; }
+      .sched-select        { padding:9px 10px !important; font-size:12px !important; border-radius:9px !important; }
+
+      /* ── Reviews ── */
+      #reviews           { padding:18px 14px 22px !important; }
+      .reviews-inner     { max-width:100% !important; padding:0 !important; }
+      .rev-summary       { flex-direction:column !important; gap:9px !important; padding:12px !important; border-radius:13px !important; margin-bottom:20px !important; }
+      .rev-big-score     { font-size:36px !important; }
+      .rev-stars-big     { font-size:15px !important; }
+      .rev-count-lbl     { font-size:11px !important; }
+      .rev-bars          { min-width:0 !important; width:100% !important; }
+      .rev-track-wrap    { margin:0 -14px !important; padding:0 14px !important; }
+      .rev-card          { flex:0 0 84vw !important; width:84vw !important; padding:13px 11px !important; border-radius:14px !important; }
+      .rev-text          { font-size:12px !important; line-height:1.55 !important; }
+      .rev-name          { font-size:12px !important; }
+
+      /* ── Loyalty ── */
+      .loy-header    { margin-bottom:16px !important; }
+      .loy-cards     { grid-template-columns:repeat(2,1fr) !important; gap:8px !important; }
+      .loy-card      { padding:13px 9px !important; border-radius:13px !important; gap:4px !important; }
+      .loy-badge     { font-size:20px !important; }
+      .loy-card-name { font-size:11px !important; }
+      .loy-card-ord  { font-size:10px !important; }
+      .loy-card-pts  { font-size:10px !important; }
+
+      /* ── Order tracking ── */
+      .ots-inner     { padding:0 !important; }
+      .ots-body      { grid-template-columns:1fr !important; gap:10px !important; }
+      .ots-eta-card  { padding:13px 15px !important; border-radius:14px !important; }
+      .ots-eta-num   { font-size:30px !important; }
+      .ots-step-title{ font-size:12px !important; }
+      .ots-step-desc { font-size:11px !important; }
+
+      /* ── Nutrition calculator ── */
+      #nutri-calc         { padding:18px 14px 22px !important; }
+      .nutri-inner        { max-width:100% !important; padding:0 !important; }
+      #nutri-title        { font-size:clamp(17px,5vw,22px) !important; margin-bottom:4px !important; }
+      #nutri-sub          { font-size:12px !important; line-height:1.55 !important; margin:5px auto 0 !important; max-width:100% !important; }
+      .nutri-grid         { grid-template-columns:1fr !important; gap:12px !important; }
+      .nutri-row          { margin-bottom:8px !important; }
+      .nutri-label        { font-size:11px !important; margin-bottom:3px !important; }
+      .nutri-input,
+      .nutri-select       { padding:9px 10px !important; font-size:13px !important; border-radius:9px !important; }
+      .nutri-row-pair     { display:grid !important; grid-template-columns:1fr 1fr !important; gap:7px !important; }
+      .nutri-tog-btn      { padding:8px 3px !important; font-size:11px !important; border-radius:7px !important; }
+      .nutri-calc-btn     { padding:11px !important; font-size:13px !important; border-radius:10px !important; margin-top:4px !important; }
+      .nutri-result-card  { padding:13px 11px !important; border-radius:13px !important; margin-bottom:11px !important; }
+      .nutri-kcal-val     { font-size:32px !important; }
+      .nutri-kcal-lbl     { font-size:11px !important; margin-bottom:9px !important; }
+      .nutri-macros-row   { gap:6px !important; }
+      .nutri-macro        { padding:7px !important; border-radius:9px !important; }
+      .nutri-macro-val    { font-size:15px !important; }
+      .nutri-macro-lbl    { font-size:9px !important; }
+      .nutri-dishes-label { font-size:12px !important; margin-bottom:6px !important; }
+      .nutri-dish-chip    { font-size:10px !important; padding:4px 8px !important; }
+      #nc-disclaimer      { font-size:11px !important; padding:8px 10px !important; border-radius:9px !important; line-height:1.55 !important; margin-top:10px !important; }
+
+      /* ── FAQ ── */
+      .faq-inner  { max-width:100% !important; }
+      .faq-q      { padding:11px 12px !important; }
+      .faq-q-txt  { font-size:12px !important; }
+      .faq-icon   { font-size:15px !important; }
+      .faq-body   { font-size:12px !important; padding:0 13px !important; }
+      .faq-item.open .faq-body { padding:0 13px 13px !important; }
+
+      /* ── Final CTA ── */
+      #final         { padding:20px 14px 28px !important; }
+      .final-inner   { max-width:100% !important; padding:0 !important; }
+      .final-title   { font-size:clamp(16px,5vw,21px) !important; }
+      .final-sub     { font-size:13px !important; line-height:1.65 !important; margin-bottom:18px !important; }
+      .email-inp     { font-size:13px !important; padding:11px 13px !important; }
+      .social-links  { gap:7px !important; }
+      .social-btn    { padding:9px 11px !important; border-radius:11px !important; }
+      .s-handle      { font-size:11px !important; }
+
+      /* ── Chat window ── */
+      #chat-window   { width:calc(100vw - 16px) !important; right:8px !important; left:8px !important;
+                       bottom:80px !important; max-height:66dvh !important; border-radius:15px !important; }
+      .msg-bubble    { font-size:12px !important; padding:7px 10px !important; }
+      .chat-inp      { font-size:13px !important; }
+      .chat-header   { padding:9px 11px !important; }
+
+      /* ── FABs ── */
+      #fab-main-wrap { bottom:12px !important; right:8px !important; }
+      #fab-main      { width:48px !important; height:48px !important; }
+      #wa-sticky     { bottom:14px !important; left:8px !important; padding:8px 11px !important; font-size:11px !important; }
+      #wa-sticky svg { width:15px !important; height:15px !important; }
+    }
+
+    /* ══════════════════════════════════════════════════════════
+       ≤ 390px  Small phone  (iPhone SE · mini · Galaxy A)
+    ══════════════════════════════════════════════════════════ */
+    @media screen and (max-width:390px) {
+      h1.hero-title  { font-size:clamp(21px,6.5vw,28px) !important; }
+      .hero-sub      { font-size:12px !important; }
+      .btn-cta       { font-size:11px !important; padding:7px 10px !important; }
+      .persona-card  { padding:7px 4px !important; border-radius:9px !important; }
+      .persona-emoji { font-size:15px !important; }
+      .persona-label { font-size:9px !important; }
+      .persona-desc  { display:none !important; }
+      .chip          { padding:6px 8px !important; }
+      .chip-val      { font-size:11px !important; }
+      .dish-card     { flex:0 0 83vw !important; min-width:83vw !important; }
+      .dish-emoji    { width:48px !important; height:48px !important; font-size:24px !important; }
+      .step-card     { padding:8px 6px !important; }
+      .step-title    { font-size:10px !important; }
+      .step-desc     { font-size:9px !important; }
+      .nutri-tog-btn { font-size:10px !important; padding:6px 2px !important; }
+      .nutri-input,
+      .nutri-select  { font-size:12px !important; padding:8px 8px !important; }
+      .nutri-kcal-val{ font-size:28px !important; }
+      .nutri-macro-val{ font-size:14px !important; }
+      .loy-card      { padding:10px 7px !important; }
+      .loy-badge     { font-size:18px !important; }
+      .loy-card-name { font-size:10px !important; }
+      .rev-card      { flex:0 0 87vw !important; width:87vw !important; }
+      #order-modal   { padding:15px 12px max(20px,env(safe-area-inset-bottom,20px)) !important; }
+      .lead-inp      { padding:10px 10px !important; font-size:12px !important; }
+      .lead-submit   { padding:11px !important; font-size:13px !important; }
     }
   </style>
 </head>
