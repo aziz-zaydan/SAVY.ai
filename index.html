@@ -133,6 +133,37 @@
     @media(max-width:480px){ #wa-sticky-lbl { display:none; } #wa-sticky { padding:10px; } }
 
     /* ── EXIT INTENT POPUP ───────────────────────────────── */
+    /* ── DISH MODAL OVERLAY ── */
+    #dish-modal-overlay {
+      position:fixed; inset:0; background:rgba(0,0,0,.55);
+      z-index:1050; display:none; align-items:center; justify-content:center;
+      backdrop-filter:blur(6px); padding:16px;
+    }
+    #dish-modal-overlay.open { display:flex; }
+    #dish-modal {
+      background:var(--card); border-radius:20px;
+      width:min(460px,94vw); max-height:88vh; overflow-y:auto;
+      box-shadow:0 24px 64px rgba(0,0,0,.22);
+      animation:popIn .3s cubic-bezier(.34,1.56,.64,1) both;
+      position:relative;
+    }
+
+    /* ── ORDER MODAL OVERLAY ── */
+    #order-modal-overlay {
+      position:fixed; inset:0; background:rgba(0,0,0,.55);
+      z-index:1050; display:none; align-items:center; justify-content:center;
+      backdrop-filter:blur(6px); padding:16px;
+    }
+    #order-modal-overlay.open { display:flex; }
+    #order-modal {
+      background:var(--card); border-radius:24px;
+      width:min(420px,94vw); max-height:92vh; overflow-y:auto;
+      padding:28px 24px; position:relative;
+      box-shadow:0 24px 64px rgba(0,0,0,.22);
+      animation:popIn .35s cubic-bezier(.34,1.56,.64,1) both;
+    }
+
+    /* ── EXIT OVERLAY ── */
     #exit-overlay {
       position:fixed; inset:0; background:rgba(0,0,0,.55);
       z-index:1100; display:none; align-items:center; justify-content:center;
@@ -452,75 +483,205 @@
     .wwd-box-name { font-family:'Syne',sans-serif; font-weight:800; font-size:12px; color:var(--text); margin-bottom:5px; line-height:1.3; }
     .wwd-box-tag  { font-size:9px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.5px; }
 
-    /* ── MOBILE OVERHAUL ≤480px ─────────────────────────── */
+    /* ── ORDER SCHEDULING ─────────────────────────────────── */
+    .sched-wrap  { margin-bottom:14px; }
+    .sched-label { font-size:12px; font-weight:700; color:var(--sub); margin-bottom:8px; display:block; }
+    .sched-toggle { display:flex; gap:6px; }
+    .sched-btn {
+      flex:1; padding:9px 10px; border:1.5px solid var(--border);
+      border-radius:11px; background:var(--bg); color:var(--sub);
+      font-size:12px; font-weight:700; cursor:pointer;
+      transition:all .25s; font-family:'DM Sans',sans-serif;
+      display:flex; align-items:center; justify-content:center; gap:5px;
+    }
+    .sched-btn.active { background:var(--green); border-color:var(--green); color:#fff; }
+    .sched-time-row { margin-top:9px; display:none; }
+    .sched-time-row.visible { display:block; animation:slideUp .25s ease both; }
+    .sched-select {
+      width:100%; padding:10px 14px; border:1.5px solid var(--border);
+      border-radius:11px; font-size:13px; color:var(--text); background:var(--bg);
+      font-family:'DM Sans',sans-serif; outline:none; cursor:pointer;
+      transition:border-color .2s;
+    }
+    .sched-select:focus { border-color:var(--green); }
+    [data-theme="dark"] .sched-btn   { background:var(--card); border-color:var(--border); }
+    [data-theme="dark"] .sched-select{ background:var(--card); border-color:var(--border); color:var(--text); }
+    /* Cart bar scheduled-time pill */
+    .cart-sched-pill {
+      display:inline-flex; align-items:center; gap:4px;
+      background:rgba(255,255,255,0.22); border-radius:20px;
+      padding:2px 8px; font-size:10px; font-weight:700; color:#fff;
+      letter-spacing:.01em;
+    }
+
+    /* ══════════════════════════════════════════════════════════
+       MOBILE OVERHAUL  ≤480px
+    ══════════════════════════════════════════════════════════ */
     @media(max-width:480px){
-      /* Global spacing */
+
+      /* ── Global spacing ── */
       #what-we-do, #how, #loyalty, #order-track-section,
-      #reviews, #stats, #final, #faq, #nutri-calc, #menu { padding:18px 14px 22px; }
-      #banner { font-size:10px; padding:6px 12px; }
+      #reviews, #stats, #final, #faq, #nutri-calc, #menu { padding:20px 14px 24px; }
+      #banner { font-size:10px; padding:6px 10px; }
 
-      /* Navbar */
-      nav#navbar { padding:10px 14px; }
-      .nav-logo   { font-size:18px !important; }
-      .nav-links  { display:none; }
-      .lang-btn   { font-size:8px; padding:2px 5px; }
-      .nav-track-btn { font-size:9px; padding:4px 9px; }
+      /* ── Navbar ── */
+      nav#navbar    { padding:0 14px; height:56px; }
+      .nav-logo span{ font-size:17px !important; }
+      .nav-links    { display:none; }
+      .lang-btn     { font-size:8px; padding:2px 5px; }
+      .nav-track-btn{ font-size:9px; padding:4px 9px; }
 
-      /* Hero */
-      #hero         { padding:36px 14px 44px; }
-      .hero-inner   { grid-template-columns:1fr; gap:20px; }
-      .hero-right   { display:none; }
-      h1.hero-title { font-size:clamp(28px,8vw,40px); }
-      .hero-sub     { font-size:13px; }
-      .hero-chips   { gap:6px; flex-wrap:wrap; }
-      .chip         { font-size:10px; padding:5px 10px; }
-      .persona-cards{ grid-template-columns:1fr 1fr; gap:8px; }
-      .persona-card { min-width:unset; padding:14px 10px; }
-      .p-card-icon  { font-size:28px; }
-      .p-card-lbl   { font-size:12px; }
-      .p-card-desc  { font-size:10px; }
+      /* ── Hero ── */
+      #hero          { padding:28px 14px 36px; }
+      .hero-inner    { grid-template-columns:1fr; gap:18px; }
+      .hero-right    { display:none; }
+      h1.hero-title  { font-size:clamp(26px,7.5vw,38px); }
+      .hero-sub      { font-size:13px; line-height:1.7; }
+      .hero-chips    { gap:6px; flex-wrap:wrap; }
+      .city-badge    { padding:5px 10px; }
+      .chip          { padding:8px 10px; border-radius:12px; }
+      .chip-val      { font-size:12px; }
+      .chip-lbl      { font-size:9px; }
+      /* Persona cards — 2×2 grid */
+      .persona-cards { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+      .persona-card  { min-width:unset; padding:10px 8px; border-radius:12px; }
+      .persona-emoji { font-size:18px; }
+      .persona-label { font-size:10px; }
+      .persona-desc  { font-size:8px; }
+      /* Social proof */
+      .proof         { gap:8px; flex-wrap:wrap; }
+      /* Packaging slideshow */
+      .pkg-slideshow { max-width:100%; border-radius:14px; }
+      /* Persona highlight */
+      #persona-highlight { padding:14px 12px !important; border-radius:14px !important; }
 
-      /* Menu section */
-      .menu-inner   { padding:0; }
-      .filter-row   { gap:5px; flex-wrap:wrap; }
-      .pill         { font-size:10px; padding:5px 10px; }
-      .cuisine-tabs { gap:5px; }
-      .cart-bar     { padding:10px 12px; border-radius:12px; }
-      #cart-txt     { font-size:11px; }
-      #cart-total   { font-size:14px; }
-      #order-btn    { font-size:11px; padding:6px 12px; }
+      /* ── How it works ── */
+      .steps-grid  { grid-template-columns:1fr 1fr; gap:8px; }
+      .step-card   { padding:12px 10px; border-radius:12px; }
+      .step-icon   { font-size:22px; }
+      .step-num    { font-size:10px; }
+      .step-title  { font-size:12px; }
+      .step-desc   { font-size:10px; line-height:1.5; }
 
+      /* ── Stats ── */
+      .stats-grid  { gap:8px; }
+      .stat-card   { padding:14px 10px; border-radius:14px; }
+      .stat-val    { font-size:22px; }
+      .stat-lbl    { font-size:10px; }
+
+      /* ── What we do ── */
+      .wwd-boxes           { grid-template-columns:1fr 1fr; gap:8px; }
+      .wwd-box             { padding:10px 8px; border-radius:12px; }
+      .wwd-box-icon        { font-size:20px; }
+      .wwd-box-name        { font-size:10px; }
+      .wwd-box-tag         { font-size:8px; }
+      .wwd-grid            { grid-template-columns:1fr !important; gap:10px; }
+      .wwd-card            { padding:16px 14px !important; border-radius:16px !important; }
+      .wwd-card--wide      { grid-column:span 1 !important; }
+
+      /* ── Menu section ── */
+      .menu-inner  { padding:0; }
+      #menu-title  { font-size:clamp(22px,6vw,30px) !important; }
+      .search-inp  { padding:11px 14px 11px 40px; font-size:13px; }
+      .filter-row  { gap:5px; flex-wrap:wrap; }
+      .pill        { font-size:10px; padding:5px 10px; }
+      .cart-bar    { padding:10px 12px; border-radius:12px; }
+      #cart-txt    { font-size:11px; }
+      #cart-total  { font-size:14px; }
+      #order-btn   { font-size:11px; padding:6px 12px; }
       /* Dish cards */
-      .dish-card    { flex:0 0 76vw; min-width:76vw; padding:14px 12px; }
+      .dish-card   { flex:0 0 78vw; min-width:78vw; padding:12px 11px; border-radius:16px; }
+      .dish-emoji  { width:56px; height:56px; font-size:28px; border-radius:12px; }
+      .dish-name   { font-size:13px; }
+      .dish-price  { font-size:11px; padding:2px 7px; }
+      .add-btn     { width:28px !important; height:28px !important; font-size:15px !important; }
+      .macro-chip  { font-size:9px; padding:1px 6px; }
 
-      /* Loyalty */
-      .loy-cards    { grid-template-columns:repeat(2,1fr); }
-      .loy-card     { padding:12px 8px; }
-      .loy-badge    { font-size:18px; }
-      .loy-card-name{ font-size:11px; }
+      /* ── Order modal ── */
+      #order-modal          { padding:20px 16px 28px; border-radius:20px 20px 0 0; }
+      #order-modal h3       { font-size:16px; }
+      #om-cart-summary      { padding:10px 12px; font-size:12px; }
+      .lead-inp             { padding:11px 12px; font-size:13px; margin-bottom:10px; }
+      .lead-submit          { padding:13px; font-size:14px; }
+      .sched-btn            { font-size:11px; padding:8px 8px; }
 
-      /* How it works */
-      .steps-grid   { grid-template-columns:1fr 1fr; gap:8px; }
-      .step-card    { padding:12px 10px; }
+      /* ── Reviews ── */
+      .rev-summary   { flex-direction:column; gap:10px; padding:14px; border-radius:14px; }
+      .rev-big-score { font-size:40px; }
+      .rev-card      { flex:0 0 84vw; min-width:84vw; padding:16px 14px; border-radius:16px; }
+      .rev-text      { font-size:12px; }
 
-      /* OTS */
-      .ots-body     { grid-template-columns:1fr; gap:12px; }
-      .ots-eta-card { padding:14px 18px; }
-      .ots-eta-num  { font-size:32px; }
+      /* ── Loyalty ── */
+      .loy-cards     { grid-template-columns:repeat(2,1fr); gap:10px; }
+      .loy-card      { padding:14px 10px; border-radius:16px; }
+      .loy-badge     { font-size:22px; }
+      .loy-card-name { font-size:11px; }
+      .loy-card-ord  { font-size:10px; }
+      .loy-card-pts  { font-size:10px; }
+      .loy-header    { margin-bottom:20px; }
 
-      /* Reviews */
-      .rev-summary  { flex-direction:column; gap:10px; padding:14px; }
-      .rev-card     { flex:0 0 86vw; min-width:86vw; }
+      /* ── Order tracking ── */
+      .ots-body      { grid-template-columns:1fr; gap:12px; }
+      .ots-eta-card  { padding:14px 18px; }
+      .ots-eta-num   { font-size:34px; }
+      .ots-step-title{ font-size:12px; }
 
-      /* Stats */
+      /* ── FAQ ── */
+      .faq-q         { padding:13px 14px; }
+      .faq-q-txt     { font-size:13px; }
+      .faq-body      { font-size:12px; }
 
-      /* Nutri calc */
-      .nutri-grid   { grid-template-columns:1fr; gap:20px; }
-      .nutri-toggle { flex-wrap:wrap; }
+      /* ── Final CTA ── */
+      #final         { padding:24px 14px 32px; }
+      .final-title   { font-size:clamp(18px,5vw,24px); }
+      .final-sub     { font-size:13px; }
+      .email-inp     { padding:12px 14px; font-size:13px; }
+      .social-links  { gap:8px; }
+      .social-btn    { padding:9px 12px; }
 
-      /* FABs */
-      #fab-main-wrap  { bottom:14px; right:10px; }
-      #fab-main       { width:48px; height:48px; }
+      /* ── Section titles ── */
+      .section-title { font-size:clamp(22px,6vw,32px) !important; }
+
+      /* ── FABs ── */
+      #fab-main-wrap { bottom:14px; right:10px; }
+      #fab-main      { width:48px; height:48px; }
+      #wa-sticky     { bottom:18px; padding:9px 12px; }
+
+      /* ═══════════════════════════════════════════
+         NUTRITION CALCULATOR — compact mobile
+      ═══════════════════════════════════════════ */
+      #nutri-calc            { padding:18px 14px 22px; }
+      .nutri-inner           { max-width:100%; }
+      /* Header shrink */
+      #nutri-title           { font-size:clamp(18px,5vw,24px) !important; margin-bottom:6px; }
+      #nutri-sub             { font-size:12px !important; margin-top:6px !important; line-height:1.6 !important; }
+      /* Single column form */
+      .nutri-grid            { grid-template-columns:1fr; gap:16px; }
+      /* 2-column grid for compact number fields on mobile */
+      .nutri-row             { margin-bottom:10px; }
+      .nutri-label           { font-size:11px; margin-bottom:4px; }
+      .nutri-input,
+      .nutri-select          { padding:9px 10px; font-size:13px; border-radius:10px; }
+      /* Pack age + weight side by side, height alone below */
+      .nutri-form            { display:block; }
+      .nutri-row-pair        { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+      /* Gender & goal toggle buttons */
+      .nutri-tog-btn         { padding:8px 6px; font-size:11px; border-radius:8px; }
+      /* Calculate button */
+      .nutri-calc-btn        { padding:11px; font-size:13px; border-radius:12px; margin-top:4px; }
+      /* Result card */
+      .nutri-result-card     { padding:16px 12px; border-radius:16px; margin-bottom:14px; }
+      .nutri-kcal-val        { font-size:36px; }
+      .nutri-kcal-lbl        { font-size:11px; margin-bottom:12px; }
+      .nutri-macros-row      { gap:8px; }
+      .nutri-macro           { padding:8px 10px; border-radius:10px; }
+      .nutri-macro-val       { font-size:17px; }
+      .nutri-macro-lbl       { font-size:9px; }
+      /* Dish chips */
+      .nutri-dishes-label    { font-size:12px; margin-bottom:8px; }
+      .nutri-dish-chip       { font-size:11px; padding:5px 10px; }
+      /* Disclaimer */
+      #nc-disclaimer         { font-size:11px; padding:10px 12px; border-radius:10px; margin-top:12px; }
     }
 
     /* ── DELIVERY BADGE ── */
@@ -567,7 +728,7 @@
 
     /* ── NUTRITION CALCULATOR ── */
     #nutri-calc {
-      padding:72px clamp(16px,4vw,56px);
+      padding:48px clamp(16px,4vw,56px);
       background:var(--card);
     }
     .nutri-inner { max-width:900px; margin:0 auto; }
@@ -1222,27 +1383,31 @@
             <button class="nutri-tog-btn"        id="nc-female" onclick="ncSetGender('female')">👩 <span id="nc-female-lbl">Femme</span></button>
           </div>
         </div>
-        <div class="nutri-row">
-          <label class="nutri-label" id="nc-lbl-age">Âge (ans)</label>
-          <input class="nutri-input" id="nc-age" type="number" value="28" min="16" max="80" placeholder="28"/>
+        <div class="nutri-row-pair">
+          <div class="nutri-row">
+            <label class="nutri-label" id="nc-lbl-age">Âge (ans)</label>
+            <input class="nutri-input" id="nc-age" type="number" value="28" min="16" max="80" placeholder="28"/>
+          </div>
+          <div class="nutri-row">
+            <label class="nutri-label" id="nc-lbl-weight">Poids (kg)</label>
+            <input class="nutri-input" id="nc-weight" type="number" value="70" min="40" max="200" placeholder="70"/>
+          </div>
         </div>
-        <div class="nutri-row">
-          <label class="nutri-label" id="nc-lbl-weight">Poids (kg)</label>
-          <input class="nutri-input" id="nc-weight" type="number" value="70" min="40" max="200" placeholder="70"/>
-        </div>
-        <div class="nutri-row">
-          <label class="nutri-label" id="nc-lbl-height">Taille (cm)</label>
-          <input class="nutri-input" id="nc-height" type="number" value="170" min="140" max="220" placeholder="170"/>
-        </div>
-        <div class="nutri-row">
-          <label class="nutri-label" id="nc-lbl-activity">Niveau d'activité</label>
-          <select class="nutri-select" id="nc-activity">
-            <option value="1.2"   id="nc-act-1">🛋 Sédentaire (peu ou pas d'exercice)</option>
-            <option value="1.375" id="nc-act-2">🚶 Légèrement actif (1-3j/semaine)</option>
-            <option value="1.55"  id="nc-act-3" selected>🏃 Modérément actif (3-5j/semaine)</option>
-            <option value="1.725" id="nc-act-4">🏋️ Très actif (6-7j/semaine)</option>
-            <option value="1.9"   id="nc-act-5">⚡ Extrêmement actif (2x/jour)</option>
-          </select>
+        <div class="nutri-row-pair">
+          <div class="nutri-row">
+            <label class="nutri-label" id="nc-lbl-height">Taille (cm)</label>
+            <input class="nutri-input" id="nc-height" type="number" value="170" min="140" max="220" placeholder="170"/>
+          </div>
+          <div class="nutri-row">
+            <label class="nutri-label" id="nc-lbl-activity">Niveau d'activité</label>
+            <select class="nutri-select" id="nc-activity">
+              <option value="1.2"   id="nc-act-1">🛋 Sédentaire</option>
+              <option value="1.375" id="nc-act-2">🚶 Léger</option>
+              <option value="1.55"  id="nc-act-3" selected>🏃 Modéré</option>
+              <option value="1.725" id="nc-act-4">🏋️ Actif</option>
+              <option value="1.9"   id="nc-act-5">⚡ Très actif</option>
+            </select>
+          </div>
         </div>
         <div class="nutri-row">
           <label class="nutri-label" id="nc-lbl-goal">Objectif</label>
@@ -1303,6 +1468,7 @@
       <div style="display:flex;flex-direction:column;gap:2px;">
         <span id="cart-txt">0 plat sélectionné</span>
         <span id="cart-total" style="color:#fff;font-size:16px;font-weight:900;font-family:'Syne',sans-serif;letter-spacing:.02em;"></span>
+        <div id="cart-sched-display"></div>
       </div>
       <button onclick="openOrderModal()" id="order-btn">Commander maintenant</button>
     </div>
@@ -1635,6 +1801,19 @@
     <input class="lead-inp" id="om-name"  type="text" placeholder="Nom complet / Full name"/>
     <input class="lead-inp" id="om-city"  type="text" placeholder="Adresse (ex: Rue Ibn Batouta, Tétouan)"/>
     <input class="lead-inp" id="om-phone" type="tel"  placeholder="WhatsApp (+212 6XX XXX XXX)" oninput="debounceLoyaltyLookup(this.value)"/>
+    <!-- ── Scheduling ── -->
+    <div class="sched-wrap">
+      <span class="sched-label" id="sched-label">⏰ Livraison souhaitée :</span>
+      <div class="sched-toggle">
+        <button class="sched-btn active" id="sched-asap"  onclick="setScheduleMode('asap')">⚡ ASAP (45 min)</button>
+        <button class="sched-btn"        id="sched-later" onclick="setScheduleMode('later')">📅 Programmer</button>
+      </div>
+      <div class="sched-time-row" id="sched-time-row">
+        <select class="sched-select" id="sched-time-select" onchange="onScheduleTimeChange(this.value)">
+          <option value="">-- Choisir un créneau --</option>
+        </select>
+      </div>
+    </div>
     <!-- Social proof before submit -->
     <div id="om-trust" style="display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin:10px 0 4px;font-size:11px;color:var(--muted);">
       <span>⭐⭐⭐⭐⭐ <strong style="color:var(--text);">4.9</strong></span>
@@ -2197,28 +2376,24 @@ let revPerPage = window.innerWidth < 769 ? 1 : window.innerWidth < 1025 ? 2 : 3;
 /* ═══════════════════════════════════════════
    URGENCY STRIP — persisted live counter
 ═══════════════════════════════════════════ */
+const URGENCY_START = 17;
 const URGENCY_MAX   = 25;
 const URGENCY_KEY   = "savy_order_count";
-const URGENCY_TS_KEY= "savy_order_ts";
 
 function getUrgencyCount() {
-  // Reset to starting number each new day
-  const today = new Date().toDateString();
-  const saved = localStorage.getItem(URGENCY_KEY);
-  const savedDay = localStorage.getItem(URGENCY_TS_KEY);
-  if(savedDay !== today) {
-    // New day → start fresh from a random seed between 8-13
-    const startCount = 8 + Math.floor(Math.random() * 6);
-    localStorage.setItem(URGENCY_KEY, startCount);
-    localStorage.setItem(URGENCY_TS_KEY, today);
-    return startCount;
+  const saved = parseInt(localStorage.getItem(URGENCY_KEY));
+  // If no saved value yet, start at 17
+  if (isNaN(saved)) {
+    localStorage.setItem(URGENCY_KEY, URGENCY_START);
+    return URGENCY_START;
   }
-  return Math.min(parseInt(saved) || 8, URGENCY_MAX);
+  // Never go below start or above max
+  return Math.min(Math.max(saved, URGENCY_START), URGENCY_MAX);
 }
 
 function tickUrgencyCount() {
   const current = getUrgencyCount();
-  if(current < URGENCY_MAX) {
+  if (current < URGENCY_MAX) {
     localStorage.setItem(URGENCY_KEY, current + 1);
   }
   renderUrgencyStrip();
@@ -2258,8 +2433,8 @@ function updateUrgencyStrip(l) {
   renderUrgencyStrip();
 }
 
-// Tick every 7 seconds
-setInterval(tickUrgencyCount, 7000);
+// Tick every 9 seconds, stop at 25
+setInterval(tickUrgencyCount, 9000);
 
 function setLang(l) {
   lang = l;
@@ -2577,6 +2752,7 @@ function renderDishes(){
     const total = cart.reduce((sum,id)=>{ const d=dishes.find(x=>x.id===id); return sum+(d?d.price:0); },0);
     const totalEl = document.getElementById("cart-total");
     if(totalEl) totalEl.textContent = total+" MAD";
+    updateCartSchedDisplay();
   }
   else { cb.style.display="none"; }
   if(!filtered.length){
@@ -2618,13 +2794,8 @@ function renderDishes(){
     </div>`).join("");
 }
 function toggleCart(id){
-  const wasEmpty = cart.length === 0;
   cart = cart.includes(id) ? cart.filter(x=>x!==id) : [...cart,id];
   renderDishes();
-  // Open order modal automatically when first dish is added
-  if(wasEmpty && cart.length === 1) {
-    setTimeout(() => openOrderModal(), 300);
-  }
 }
 
 function menuSlide(dir) {
@@ -3111,7 +3282,7 @@ async function chatSendText(text) {
     const res  = await fetch(GROQ_API_URL, {
       method:"POST",
       headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({ messages: chatHistory, lang, persona:p })
+      body:JSON.stringify({ messages: chatHistory, lang, persona:p, scheduledTime: scheduledTime||null })
     });
     const data = await res.json();
     let reply  = (data.reply||"").trim();
@@ -3277,6 +3448,16 @@ function openOrderModal() {
     const el = document.getElementById(id); if(el){ el.value=""; el.style.borderColor=""; }
   });
   _loyaltyOrderCount = 0;
+
+  // ── Reset & localise scheduling widget ──
+  const schedLabel = document.getElementById("sched-label");
+  const asapBtn    = document.getElementById("sched-asap");
+  const laterBtn   = document.getElementById("sched-later");
+  if (schedLabel) schedLabel.textContent = isAr ? "⏰ موعد التوصيل المطلوب :" : (lang==="en" ? "⏰ Desired delivery time:" : "⏰ Livraison souhaitée :");
+  if (asapBtn)    asapBtn.innerHTML  = isAr ? "⚡ الأسرع (45 دق)" : (lang==="en" ? "⚡ ASAP (45 min)" : "⚡ ASAP (45 min)");
+  if (laterBtn)   laterBtn.innerHTML = isAr ? "📅 جدولة"         : (lang==="en" ? "📅 Schedule"      : "📅 Programmer");
+  setScheduleMode("asap");
+  updateCartSchedDisplay();
   const loyaltyBadge = document.getElementById("om-loyalty-badge");
   if(loyaltyBadge) loyaltyBadge.style.display = "none";
   updateCartSummary();
@@ -3500,6 +3681,7 @@ function submitOrder() {
   // Save to Google Sheets
   saveToSheets({ name, city, phone, persona: persona || "general", lang,
     conversation: items, loyalty_tier: tier.id, order_total: total,
+    scheduled_time: scheduledTime || "ASAP",
     ...(ncCalcUsed === "yes" ? {
       nutri_used:    "yes",
       nutri_gender:  _nc.gender,
@@ -3515,18 +3697,21 @@ function submitOrder() {
     } : { nutri_used: "no" })
   });
 
-  // Open WhatsApp with order + loyalty details
+  // Open WhatsApp with order + loyalty + schedule details
   setTimeout(() => {
+    const schedLine = scheduledTime
+      ? (isAr ? `\n⏰ وقت التوصيل: ${scheduledTime}` : (lang==="en" ? `\n⏰ Delivery time: ${scheduledTime}` : `\n⏰ Livraison prévue : ${scheduledTime}`))
+      : (isAr ? "\n⏰ أسرع وقت — 45 دقيقة" : (lang==="en" ? "\n⏰ ASAP — 45 min delivery" : "\n⏰ Dès que possible — 45 min"));
     const discountLine = tier.discount > 0
       ? (isAr ? `\n💎 مستوى الولاء: ${tierLabel} (خصم ${Math.round(tier.discount*100)}%)\n💰 المجموع بعد الخصم: ${total} MAD`
                : (lang==="en" ? `\n💎 Loyalty tier: ${tierLabel} (${Math.round(tier.discount*100)}% off)\n💰 Total after discount: ${total} MAD`
                               : `\n💎 Niveau fidélité: ${tierLabel} (${Math.round(tier.discount*100)}% de réduction)\n💰 Total après réduction: ${total} MAD`))
       : `\n💰 ${isAr?"المجموع":"Total"}: ${total} MAD`;
     const msg = isAr
-      ? `مرحباً SAVY! أريد الطلب:\nالاسم: ${name}\nالمدينة: ${city}\nالأطباق: ${items||"قائمة المنيو"}${discountLine}`
+      ? `مرحباً SAVY! أريد الطلب:\nالاسم: ${name}\nالمدينة: ${city}\nالأطباق: ${items||"قائمة المنيو"}${schedLine}${discountLine}`
       : (lang==="en"
-        ? `Hi SAVY! I'd like to order:\nName: ${name}\nCity: ${city}\nDishes: ${items||"see menu"}${discountLine}`
-        : `Salam SAVY! Je voudrais commander:\nNom: ${name}\nAdresse: ${city}\nPlats: ${items||"voir le menu"}${discountLine}`);
+        ? `Hi SAVY! I'd like to order:\nName: ${name}\nCity: ${city}\nDishes: ${items||"see menu"}${schedLine}${discountLine}`
+        : `Salam SAVY! Je voudrais commander:\nNom: ${name}\nAdresse: ${city}\nPlats: ${items||"voir le menu"}${schedLine}${discountLine}`);
     window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
 
     // Reset
@@ -3992,7 +4177,92 @@ function calcNutri() {
 /* ═══════════════════════════════════════════
    ENHANCED CHAT FEATURES
 ═══════════════════════════════════════════ */
-// Reset chat
+/* ═══════════════════════════════════════════
+   ORDER SCHEDULING
+═══════════════════════════════════════════ */
+let scheduledTime = null; // null = ASAP, string = "DD/MM/YYYY HH:MM"
+
+function generateTimeSlots() {
+  const slots = [];
+  const now   = new Date();
+  // Need at least 60-min prep buffer from current time
+  const bufferMins = now.getHours() * 60 + now.getMinutes() + 60;
+  const START_H = 11, END_H = 22;
+  const isAr = lang === "ar" || false;
+
+  for (let day = 0; day <= 1; day++) {
+    const date = new Date(now);
+    date.setDate(date.getDate() + day);
+    const isToday = day === 0;
+    const dayLabel = isToday
+      ? (isAr ? "اليوم"  : (lang === "en" ? "Today"    : "Aujourd'hui"))
+      : (isAr ? "غداً"   : (lang === "en" ? "Tomorrow" : "Demain"));
+    const dateStr = date.toLocaleDateString("fr-FR"); // DD/MM/YYYY
+
+    for (let h = START_H; h <= END_H; h++) {
+      for (let m = 0; m < 60; m += 30) {
+        if (isToday && h * 60 + m < bufferMins) continue;
+        const hStr = String(h).padStart(2, "0");
+        const mStr = String(m).padStart(2, "0");
+        slots.push({
+          value: `${dateStr} à ${hStr}:${mStr}`,
+          label: `${dayLabel}  ·  ${hStr}:${mStr}`
+        });
+      }
+    }
+  }
+  return slots;
+}
+
+function setScheduleMode(mode) {
+  const isAr     = lang === "ar" || false;
+  const asapBtn  = document.getElementById("sched-asap");
+  const laterBtn = document.getElementById("sched-later");
+  const timeRow  = document.getElementById("sched-time-row");
+  if (!asapBtn || !laterBtn || !timeRow) return;
+
+  if (mode === "asap") {
+    asapBtn.classList.add("active");
+    laterBtn.classList.remove("active");
+    timeRow.classList.remove("visible");
+    scheduledTime = null;
+  } else {
+    laterBtn.classList.add("active");
+    asapBtn.classList.remove("active");
+    timeRow.classList.add("visible");
+    // Populate slots only once (or refresh)
+    const sel = document.getElementById("sched-time-select");
+    if (sel) {
+      const ph = isAr ? "-- اختر وقتاً --" : (lang === "en" ? "-- Choose a time slot --" : "-- Choisir un créneau --");
+      const slots = generateTimeSlots();
+      sel.innerHTML = `<option value="">${ph}</option>` +
+        slots.map(s => `<option value="${s.value}">${s.label}</option>`).join("");
+      // Pre-select first available slot
+      if (slots.length) { sel.value = slots[0].value; scheduledTime = slots[0].value; }
+      else scheduledTime = null;
+    }
+  }
+  updateCartSchedDisplay();
+}
+
+function onScheduleTimeChange(val) {
+  scheduledTime = val || null;
+  updateCartSchedDisplay();
+}
+
+function updateCartSchedDisplay() {
+  const el  = document.getElementById("cart-sched-display");
+  if (!el) return;
+  const isAr = lang === "ar" || false;
+  const icon = scheduledTime ? "📅" : "⚡";
+  const text = scheduledTime
+    ? scheduledTime
+    : (isAr ? "الأسرع — 45 دق" : (lang === "en" ? "ASAP — 45 min" : "ASAP — 45 min"));
+  el.innerHTML = `<span class="cart-sched-pill">${icon} ${text}</span>`;
+  el.style.display = "block";
+}
+
+// Reset Chat
 function resetChat() {
   chatHistory = [];
   leadShown = false; leadDone = false; userMsgCount = 0;
