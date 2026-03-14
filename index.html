@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
   <title>SAVY – Meal Engineer | الشيف الذكي</title>
   <meta name="description" content="SAVY – Morocco's first AI Personal Chef. Specially Engineered meals, delivered in 45 min. Tétouan · M'diq · Martil."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -151,16 +151,29 @@
     /* ── ORDER MODAL OVERLAY ── */
     #order-modal-overlay {
       position:fixed; inset:0; background:rgba(0,0,0,.55);
-      z-index:1050; display:none; align-items:center; justify-content:center;
-      backdrop-filter:blur(6px); padding:16px;
+      z-index:1050; display:none; align-items:flex-end; justify-content:center;
+      backdrop-filter:blur(6px);
     }
     #order-modal-overlay.open { display:flex; }
     #order-modal {
-      background:var(--card); border-radius:24px;
-      width:min(420px,94vw); max-height:92vh; overflow-y:auto;
-      padding:28px 24px; position:relative;
-      box-shadow:0 24px 64px rgba(0,0,0,.22);
-      animation:popIn .35s cubic-bezier(.34,1.56,.64,1) both;
+      background:var(--card);
+      border-radius:24px 24px 0 0;
+      width:100%; max-width:480px;
+      max-height:92dvh; overflow-y:auto;
+      padding:28px 24px 36px;
+      position:relative;
+      box-shadow:0 -8px 40px rgba(0,0,0,.2);
+      animation:slideUpSheet .32s cubic-bezier(.34,1.2,.64,1) both;
+    }
+    @keyframes slideUpSheet {
+      from { transform:translateY(100%); opacity:0; }
+      to   { transform:translateY(0);    opacity:1; }
+    }
+    /* drag handle */
+    #order-modal::before {
+      content:''; display:block;
+      width:40px; height:4px; border-radius:99px;
+      background:var(--border); margin:-12px auto 18px;
     }
 
     /* ── EXIT OVERLAY ── */
@@ -515,173 +528,234 @@
     }
 
     /* ══════════════════════════════════════════════════════════
-       MOBILE OVERHAUL  ≤480px
+       RESPONSIVE — tablet & large phone  ≤768px
+    ══════════════════════════════════════════════════════════ */
+    @media(max-width:768px){
+      .hero-inner    { grid-template-columns:1fr; gap:24px; }
+      .hero-right    { display:none; }
+      .nav-links     { display:none; }
+      .section-title { font-size:clamp(24px,6vw,36px); }
+      .nutri-grid    { grid-template-columns:1fr; gap:24px; }
+      .loy-cards     { grid-template-columns:repeat(2,1fr); }
+      .rev-summary   { flex-direction:column; gap:12px; padding:16px; }
+      .steps-grid    { grid-template-columns:repeat(2,1fr); gap:10px; }
+      .wwd-grid      { grid-template-columns:1fr !important; }
+      .wwd-card--wide{ grid-column:span 1 !important; }
+      #chat-window   { width:calc(100vw - 24px); right:12px; left:12px; }
+    }
+
+    /* ══════════════════════════════════════════════════════════
+       PHONE  ≤480px
     ══════════════════════════════════════════════════════════ */
     @media(max-width:480px){
 
+      *, *::before, *::after { -webkit-tap-highlight-color:transparent; }
+      body { padding-bottom:env(safe-area-inset-bottom,0px); }
+
       /* ── Global spacing ── */
       #what-we-do, #how, #loyalty, #order-track-section,
-      #reviews, #stats, #final, #faq, #nutri-calc, #menu { padding:20px 14px 24px; }
-      #banner { font-size:10px; padding:6px 10px; }
+      #reviews, #stats, #final, #faq, #nutri-calc, #menu,
+      footer { padding:20px 14px 24px; }
+
+      /* ── Urgency ── */
+      #urgency-strip  { font-size:10px; padding:6px 10px; }
+      #urgency-slots, #urgency-sep { display:none; }
 
       /* ── Navbar ── */
-      nav#navbar    { padding:0 14px; height:56px; }
-      .nav-logo span{ font-size:17px !important; }
-      .nav-links    { display:none; }
-      .lang-btn     { font-size:8px; padding:2px 5px; }
-      .nav-track-btn{ font-size:9px; padding:4px 9px; }
+      nav#navbar     { padding:0 12px; height:52px; top:28px; }
+      .nav-logo span { font-size:16px !important; }
+      .nav-links     { display:none; }
+      .lang-btn      { font-size:8px; padding:2px 5px; }
+      .nav-track-btn { font-size:9px; padding:4px 8px; }
+      .btn-cta       { padding:9px 14px; font-size:12px; }
 
       /* ── Hero ── */
-      #hero          { padding:28px 14px 36px; }
-      .hero-inner    { grid-template-columns:1fr; gap:18px; }
+      #hero          { padding:24px 14px 32px; }
+      .hero-inner    { grid-template-columns:1fr; gap:16px; }
       .hero-right    { display:none; }
-      h1.hero-title  { font-size:clamp(26px,7.5vw,38px); }
-      .hero-sub      { font-size:13px; line-height:1.7; }
-      .hero-chips    { gap:6px; flex-wrap:wrap; }
-      .city-badge    { padding:5px 10px; }
+      h1.hero-title  { font-size:clamp(24px,7.5vw,36px); line-height:1.1; margin-bottom:10px; }
+      .hero-sub      { font-size:13px; line-height:1.65; margin-bottom:14px; }
+      .city-badge    { padding:4px 10px; margin-bottom:10px; }
+      .city-badge span.label { font-size:11px; }
+      .stat-chips    { gap:7px; flex-wrap:wrap; }
       .chip          { padding:8px 10px; border-radius:12px; }
       .chip-val      { font-size:12px; }
       .chip-lbl      { font-size:9px; }
-      /* Persona cards — 2×2 grid */
+      .persona-intro p { font-size:10px; }
       .persona-cards { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
-      .persona-card  { min-width:unset; padding:10px 8px; border-radius:12px; }
-      .persona-emoji { font-size:18px; }
+      .persona-card  { min-width:unset; padding:10px 6px; border-radius:12px; border-width:1.5px; }
+      .persona-emoji { font-size:18px; margin-bottom:2px; }
       .persona-label { font-size:10px; }
-      .persona-desc  { font-size:8px; }
-      /* Social proof */
-      .proof         { gap:8px; flex-wrap:wrap; }
-      /* Packaging slideshow */
-      .pkg-slideshow { max-width:100%; border-radius:14px; }
-      /* Persona highlight */
+      .persona-desc  { font-size:8px; line-height:1.3; }
+      .proof         { margin-top:14px; gap:8px; flex-wrap:wrap; }
+      .av            { width:24px; height:24px; font-size:9px; }
+      .proof-text    { font-size:12px; }
+      .pkg-slideshow { max-width:100%; border-radius:12px; }
+      .delivery-badge{ font-size:11px; padding:6px 12px; margin-top:10px; }
       #persona-highlight { padding:14px 12px !important; border-radius:14px !important; }
 
       /* ── How it works ── */
-      .steps-grid  { grid-template-columns:1fr 1fr; gap:8px; }
-      .step-card   { padding:12px 10px; border-radius:12px; }
-      .step-icon   { font-size:22px; }
-      .step-num    { font-size:10px; }
-      .step-title  { font-size:12px; }
-      .step-desc   { font-size:10px; line-height:1.5; }
+      .steps-grid    { grid-template-columns:1fr 1fr; gap:8px; }
+      .step-card     { padding:11px 9px; border-radius:12px; }
+      .step-icon     { font-size:20px; }
+      .step-title    { font-size:11px; margin-bottom:3px; }
+      .step-desc     { font-size:10px; line-height:1.5; }
 
       /* ── Stats ── */
-      .stats-grid  { gap:8px; }
-      .stat-card   { padding:14px 10px; border-radius:14px; }
-      .stat-val    { font-size:22px; }
-      .stat-lbl    { font-size:10px; }
+      #stats         { padding:20px 14px; }
+      .stat-card     { padding:12px 8px; border-radius:14px; }
+      .stat-val      { font-size:20px; }
+      .stat-lbl      { font-size:9px; }
 
       /* ── What we do ── */
-      .wwd-boxes           { grid-template-columns:1fr 1fr; gap:8px; }
-      .wwd-box             { padding:10px 8px; border-radius:12px; }
-      .wwd-box-icon        { font-size:20px; }
-      .wwd-box-name        { font-size:10px; }
-      .wwd-box-tag         { font-size:8px; }
-      .wwd-grid            { grid-template-columns:1fr !important; gap:10px; }
-      .wwd-card            { padding:16px 14px !important; border-radius:16px !important; }
-      .wwd-card--wide      { grid-column:span 1 !important; }
+      .wwd-boxes     { grid-template-columns:1fr 1fr; gap:8px; }
+      .wwd-box       { padding:10px 8px; border-radius:12px; }
+      .wwd-box-icon  { font-size:20px; }
+      .wwd-box-name  { font-size:10px; }
+      .wwd-grid      { grid-template-columns:1fr !important; gap:10px; }
+      .wwd-card      { padding:14px 12px !important; border-radius:14px !important; }
+      .wwd-card--wide{ grid-column:span 1 !important; }
+      .wwd-icon      { font-size:26px !important; }
+      .wwd-card-title{ font-size:14px !important; }
+      .wwd-card-desc { font-size:12px !important; line-height:1.6 !important; }
+      .wwd-tag       { font-size:10px !important; }
 
-      /* ── Menu section ── */
-      .menu-inner  { padding:0; }
-      #menu-title  { font-size:clamp(22px,6vw,30px) !important; }
-      .search-inp  { padding:11px 14px 11px 40px; font-size:13px; }
-      .filter-row  { gap:5px; flex-wrap:wrap; }
-      .pill        { font-size:10px; padding:5px 10px; }
-      .cart-bar    { padding:10px 12px; border-radius:12px; }
-      #cart-txt    { font-size:11px; }
-      #cart-total  { font-size:14px; }
-      #order-btn   { font-size:11px; padding:6px 12px; }
-      /* Dish cards */
-      .dish-card   { flex:0 0 78vw; min-width:78vw; padding:12px 11px; border-radius:16px; }
-      .dish-emoji  { width:56px; height:56px; font-size:28px; border-radius:12px; }
-      .dish-name   { font-size:13px; }
-      .dish-price  { font-size:11px; padding:2px 7px; }
-      .add-btn     { width:28px !important; height:28px !important; font-size:15px !important; }
-      .macro-chip  { font-size:9px; padding:1px 6px; }
+      /* ── Menu ── */
+      #menu          { padding:20px 14px 28px; }
+      .menu-inner    { padding:0; }
+      #menu-title    { font-size:clamp(20px,6vw,28px) !important; }
+      .search-inp    { padding:10px 14px 10px 38px; font-size:13px; border-radius:12px; }
+      .search-icon   { left:12px; }
+      .filter-row    { gap:5px; flex-wrap:wrap; padding-bottom:2px; }
+      .pill          { font-size:10px; padding:5px 10px; }
+      .persona-tabs-label { font-size:10px; margin:14px 0 6px; }
+      .cart-bar      { padding:10px 12px; border-radius:12px; flex-wrap:wrap; gap:6px; }
+      #cart-txt      { font-size:11px; }
+      #cart-total    { font-size:14px; }
+      #order-btn     { font-size:11px; padding:7px 14px; }
+      .dish-card     { flex:0 0 80vw; min-width:80vw; padding:12px 11px; border-radius:15px; }
+      .dish-emoji    { width:56px; height:56px; font-size:28px; border-radius:12px; }
+      .dish-name     { font-size:13px; }
+      .dish-price    { font-size:11px; padding:2px 7px; }
+      .add-btn       { width:28px !important; height:28px !important; font-size:14px !important; }
+      .macro-chip    { font-size:9px; padding:1px 6px; }
+      .menu-arrow    { display:none; }
 
-      /* ── Order modal ── */
-      #order-modal          { padding:20px 16px 28px; border-radius:20px 20px 0 0; }
-      #order-modal h3       { font-size:16px; }
-      #om-cart-summary      { padding:10px 12px; font-size:12px; }
-      .lead-inp             { padding:11px 12px; font-size:13px; margin-bottom:10px; }
-      .lead-submit          { padding:13px; font-size:14px; }
-      .sched-btn            { font-size:11px; padding:8px 8px; }
+      /* ── Order modal (bottom sheet) ── */
+      #order-modal              { padding:20px 16px max(28px,env(safe-area-inset-bottom,28px)); }
+      #order-modal::before      { margin-bottom:14px; }
+      #order-modal h3           { font-size:16px; }
+      #om-sub                   { font-size:11px; }
+      #om-cart-summary          { padding:10px 11px; font-size:12px; border-radius:12px; }
+      .lead-inp                 { padding:11px 12px; font-size:13px; margin-bottom:9px; border-radius:12px; }
+      .lead-submit              { padding:13px; font-size:14px; border-radius:13px; }
+      #om-trust                 { font-size:10px; gap:8px; }
+      .sched-btn                { font-size:11px; padding:8px 6px; }
+      .sched-select             { padding:9px 10px; font-size:12px; border-radius:10px; }
 
       /* ── Reviews ── */
-      .rev-summary   { flex-direction:column; gap:10px; padding:14px; border-radius:14px; }
-      .rev-big-score { font-size:40px; }
-      .rev-card      { flex:0 0 84vw; min-width:84vw; padding:16px 14px; border-radius:16px; }
-      .rev-text      { font-size:12px; }
+      .rev-summary   { flex-direction:column; gap:10px; padding:12px; border-radius:14px; }
+      .rev-big-score { font-size:38px; }
+      .rev-stars-big { font-size:16px; }
+      .rev-card      { flex:0 0 84vw; min-width:84vw; padding:14px 12px; border-radius:15px; }
+      .rev-text      { font-size:12px; line-height:1.6; }
 
       /* ── Loyalty ── */
-      .loy-cards     { grid-template-columns:repeat(2,1fr); gap:10px; }
-      .loy-card      { padding:14px 10px; border-radius:16px; }
+      .loy-header    { margin-bottom:18px; }
+      .loy-cards     { grid-template-columns:repeat(2,1fr); gap:9px; }
+      .loy-card      { padding:14px 10px; border-radius:14px; gap:5px; }
       .loy-badge     { font-size:22px; }
       .loy-card-name { font-size:11px; }
       .loy-card-ord  { font-size:10px; }
       .loy-card-pts  { font-size:10px; }
-      .loy-header    { margin-bottom:20px; }
 
       /* ── Order tracking ── */
-      .ots-body      { grid-template-columns:1fr; gap:12px; }
-      .ots-eta-card  { padding:14px 18px; }
-      .ots-eta-num   { font-size:34px; }
+      .ots-body      { grid-template-columns:1fr; gap:10px; }
+      .ots-eta-card  { padding:14px 16px; border-radius:16px; }
+      .ots-eta-num   { font-size:32px; }
       .ots-step-title{ font-size:12px; }
+      .ots-step-desc { font-size:11px; }
+
+      /* ── Nutrition calculator ── */
+      #nutri-calc           { padding:20px 14px 24px; }
+      .nutri-inner          { max-width:100%; }
+      #nutri-title          { font-size:clamp(18px,5.5vw,24px) !important; }
+      #nutri-sub            { font-size:12px !important; line-height:1.6 !important; margin-top:6px !important; }
+      .nutri-grid           { grid-template-columns:1fr; gap:14px; }
+      .nutri-row            { margin-bottom:9px; }
+      .nutri-label          { font-size:11px; margin-bottom:3px; }
+      .nutri-input,
+      .nutri-select         { padding:9px 10px; font-size:13px; border-radius:10px; }
+      .nutri-row-pair       { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+      .nutri-tog-btn        { padding:8px 4px; font-size:11px; border-radius:8px; }
+      .nutri-calc-btn       { padding:11px; font-size:13px; border-radius:11px; margin-top:4px; }
+      .nutri-result-card    { padding:14px 12px; border-radius:14px; margin-bottom:12px; }
+      .nutri-kcal-val       { font-size:34px; }
+      .nutri-kcal-lbl       { font-size:11px; margin-bottom:10px; }
+      .nutri-macros-row     { gap:7px; }
+      .nutri-macro          { padding:8px 8px; border-radius:10px; }
+      .nutri-macro-val      { font-size:16px; }
+      .nutri-macro-lbl      { font-size:9px; }
+      .nutri-dishes-label   { font-size:12px; margin-bottom:7px; }
+      .nutri-dish-chip      { font-size:10px; padding:4px 9px; }
+      #nc-disclaimer        { font-size:11px; padding:9px 11px; border-radius:10px; line-height:1.6; }
 
       /* ── FAQ ── */
-      .faq-q         { padding:13px 14px; }
-      .faq-q-txt     { font-size:13px; }
-      .faq-body      { font-size:12px; }
+      .faq-q         { padding:12px 13px; }
+      .faq-q-txt     { font-size:12px; }
+      .faq-icon      { font-size:16px; }
+      .faq-body      { font-size:12px; padding:0 14px; }
+      .faq-item.open .faq-body { padding:0 14px 14px; }
 
       /* ── Final CTA ── */
-      #final         { padding:24px 14px 32px; }
-      .final-title   { font-size:clamp(18px,5vw,24px); }
-      .final-sub     { font-size:13px; }
-      .email-inp     { padding:12px 14px; font-size:13px; }
+      #final         { padding:22px 14px 30px; }
+      .final-title   { font-size:clamp(17px,5vw,22px); }
+      .final-sub     { font-size:13px; line-height:1.7; margin-bottom:20px; }
       .social-links  { gap:8px; }
-      .social-btn    { padding:9px 12px; }
+      .social-btn    { padding:9px 12px; border-radius:12px; }
+
+      /* ── Footer ── */
+      footer         { padding:16px 14px; flex-direction:column; align-items:flex-start; gap:10px; }
+      .footer-links  { gap:14px; flex-wrap:wrap; }
+
+      /* ── Chat window ── */
+      #chat-window   { width:calc(100vw - 20px); right:10px; left:10px; bottom:82px; max-height:68dvh; border-radius:16px; }
+      .msg-bubble    { font-size:12px; padding:7px 10px; }
+      .chat-inp      { font-size:13px; }
 
       /* ── Section titles ── */
-      .section-title { font-size:clamp(22px,6vw,32px) !important; }
+      .section-title { font-size:clamp(20px,5.5vw,28px) !important; }
 
       /* ── FABs ── */
       #fab-main-wrap { bottom:14px; right:10px; }
       #fab-main      { width:48px; height:48px; }
-      #wa-sticky     { bottom:18px; padding:9px 12px; }
+      #wa-sticky     { bottom:16px; left:10px; padding:9px 12px; font-size:11px; }
+    }
 
-      /* ═══════════════════════════════════════════
-         NUTRITION CALCULATOR — compact mobile
-      ═══════════════════════════════════════════ */
-      #nutri-calc            { padding:18px 14px 22px; }
-      .nutri-inner           { max-width:100%; }
-      /* Header shrink */
-      #nutri-title           { font-size:clamp(18px,5vw,24px) !important; margin-bottom:6px; }
-      #nutri-sub             { font-size:12px !important; margin-top:6px !important; line-height:1.6 !important; }
-      /* Single column form */
-      .nutri-grid            { grid-template-columns:1fr; gap:16px; }
-      /* 2-column grid for compact number fields on mobile */
-      .nutri-row             { margin-bottom:10px; }
-      .nutri-label           { font-size:11px; margin-bottom:4px; }
+    /* ══════════════════════════════════════════════════════════
+       SMALL PHONE  ≤390px  (iPhone SE · iPhone mini)
+    ══════════════════════════════════════════════════════════ */
+    @media(max-width:390px){
+      h1.hero-title  { font-size:clamp(22px,7vw,30px); }
+      .hero-sub      { font-size:12px; }
+      .persona-card  { padding:8px 5px; border-radius:10px; }
+      .persona-label { font-size:9px; }
+      .persona-emoji { font-size:16px; }
+      .chip          { padding:6px 8px; }
+      .chip-val      { font-size:11px; }
+      .dish-card     { flex:0 0 82vw; min-width:82vw; }
+      .step-card     { padding:9px 7px; }
+      .step-title    { font-size:10px; }
+      .step-desc     { font-size:9px; }
+      .nutri-tog-btn { font-size:10px; padding:7px 3px; }
       .nutri-input,
-      .nutri-select          { padding:9px 10px; font-size:13px; border-radius:10px; }
-      /* Pack age + weight side by side, height alone below */
-      .nutri-form            { display:block; }
-      .nutri-row-pair        { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
-      /* Gender & goal toggle buttons */
-      .nutri-tog-btn         { padding:8px 6px; font-size:11px; border-radius:8px; }
-      /* Calculate button */
-      .nutri-calc-btn        { padding:11px; font-size:13px; border-radius:12px; margin-top:4px; }
-      /* Result card */
-      .nutri-result-card     { padding:16px 12px; border-radius:16px; margin-bottom:14px; }
-      .nutri-kcal-val        { font-size:36px; }
-      .nutri-kcal-lbl        { font-size:11px; margin-bottom:12px; }
-      .nutri-macros-row      { gap:8px; }
-      .nutri-macro           { padding:8px 10px; border-radius:10px; }
-      .nutri-macro-val       { font-size:17px; }
-      .nutri-macro-lbl       { font-size:9px; }
-      /* Dish chips */
-      .nutri-dishes-label    { font-size:12px; margin-bottom:8px; }
-      .nutri-dish-chip       { font-size:11px; padding:5px 10px; }
-      /* Disclaimer */
-      #nc-disclaimer         { font-size:11px; padding:10px 12px; border-radius:10px; margin-top:12px; }
+      .nutri-select  { font-size:12px; padding:8px 9px; }
+      .loy-card      { padding:11px 8px; }
+      .loy-badge     { font-size:20px; }
+      .rev-card      { flex:0 0 86vw; min-width:86vw; }
+      #order-modal   { padding:16px 13px max(22px,env(safe-area-inset-bottom,22px)); }
+      .lead-inp      { padding:10px 11px; font-size:12px; }
+      .lead-submit   { padding:12px; font-size:13px; }
     }
 
     /* ── DELIVERY BADGE ── */
@@ -1119,37 +1193,10 @@
     [dir="rtl"] #chat-window    { right:auto; left:20px; }
 
     /* ── RESPONSIVE / PHONE-FIRST ── */
-    @media(max-width:760px){
-      /* Hero */
-      .hero-inner   { grid-template-columns:1fr; gap:28px; }
-      .hero-right   { display:none; }
-      #hero         { padding:48px 18px 56px; }
-      h1.hero-title { font-size:clamp(30px,9vw,46px); }
-      .hero-sub     { font-size:14px; }
-
-      /* Persona cards — 2 columns on phone */
-      .persona-cards{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-      .persona-card { min-width:unset; }
-
-      /* Stats */
-
-      /* Nav */
-      .nav-links    { display:none; }
-
-      /* Chat */
-      #chat-window  { width:calc(100vw - 24px); right:12px; left:12px; bottom:96px; height:72vh; }
-
-      /* Sections */
-      #how, #menu, #loyalty, #nutri, #final { padding:48px 18px; }
-      .section-title { font-size:clamp(26px,7vw,38px); }
-
-      /* Dish cards */
-      .dish-card    { padding:14px 12px; }
-    }
-
+    /* 760px handled in consolidated block below */
     @media(max-width:400px){
       .persona-cards{ grid-template-columns:1fr 1fr; }
-      h1.hero-title { font-size:28px; }
+      h1.hero-title { font-size:26px; }
     }
   </style>
 </head>
