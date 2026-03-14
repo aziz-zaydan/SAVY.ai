@@ -87,39 +87,7 @@
     /* ── COMBINED SPEED-DIAL FAB ── */
     #fab-main-wrap {
       position:fixed; bottom:22px; right:16px; z-index:999;
-      display:flex; flex-direction:column; align-items:flex-end; gap:10px;
     }
-    .fab-options {
-      display:flex; flex-direction:column; align-items:flex-end; gap:8px;
-      transition:all .3s cubic-bezier(.4,0,.2,1);
-      opacity:0; pointer-events:none; transform:translateY(12px);
-    }
-    .fab-options.open {
-      opacity:1; pointer-events:all; transform:translateY(0);
-    }
-    .fab-option {
-      display:flex; align-items:center; gap:8px; flex-direction:row-reverse;
-      cursor:pointer;
-    }
-    .fab-option-btn {
-      width:48px; height:48px; border-radius:50%; border:none; cursor:pointer;
-      display:flex; align-items:center; justify-content:center;
-      transition:transform .2s, box-shadow .2s;
-    }
-    .fab-option-btn:hover { transform:scale(1.1); }
-    .fab-option-lbl {
-      background:var(--card); color:var(--text); font-size:11px; font-weight:700;
-      padding:4px 10px; border-radius:99px; border:1px solid var(--border);
-      box-shadow:var(--shadow); white-space:nowrap; font-family:'DM Sans',sans-serif;
-    }
-    .fab-opt-wa  { background:linear-gradient(135deg,#25D366,#128C7E); box-shadow:0 6px 24px rgba(37,211,102,0.4); }
-    .fab-opt-wa:hover  { box-shadow:0 10px 32px rgba(37,211,102,0.55); }
-    .fab-opt-savy { background:linear-gradient(135deg,#008060,#00a87a); box-shadow:0 6px 24px rgba(0,128,96,0.4); animation:savyPulse 2.5s ease-in-out infinite; }
-    .fab-opt-savy:hover { box-shadow:0 10px 32px rgba(0,128,96,0.55); }
-    #fab-savy[data-persona="employee"] { background:linear-gradient(135deg,#1E40AF,#2563eb); box-shadow:0 6px 24px rgba(30,64,175,0.4); }
-    #fab-savy[data-persona="sportif"]  { background:linear-gradient(135deg,#D97706,#f59e0b); box-shadow:0 6px 24px rgba(217,119,6,0.4); }
-    #fab-savy[data-persona="famille"]  { background:linear-gradient(135deg,#0D9488,#14b8a6); box-shadow:0 6px 24px rgba(13,148,136,0.4); }
-    #fab-savy[data-persona="couple"]   { background:linear-gradient(135deg,#be185d,#ec4899); box-shadow:0 6px 24px rgba(190,24,93,0.4); }
     #fab-main {
       width:58px; height:58px; border-radius:50%; border:none; cursor:pointer;
       background:linear-gradient(135deg,#008060,#00a87a);
@@ -129,17 +97,14 @@
       animation:savyPulse 2.5s ease-in-out infinite;
       position:relative;
     }
-    #fab-main:hover { transform:scale(1.08); }
-    #fab-main .fab-main-x {
-      display:none; font-size:14px; color:#fff; font-weight:700;
+    #fab-main:hover { transform:scale(1.08); box-shadow:0 12px 36px rgba(0,128,96,0.65); }
+    @keyframes savyPulse {
+      0%,100%{box-shadow:0 8px 32px rgba(0,128,96,.5)}
+      50%{box-shadow:0 8px 40px rgba(0,128,96,.75), 0 0 0 8px rgba(0,128,96,.1)}
     }
-    #fab-main.open .fab-main-icon { display:none; }
-    #fab-main.open .fab-main-x    { display:flex; }
-    #fab-main.open { animation:none; background:var(--card); box-shadow:0 4px 16px rgba(0,0,0,.12); }
-    #fab-main.open svg path, #fab-main.open svg circle { fill:var(--text) !important; }
     .fab-savy-badge {
       position:absolute; top:-3px; right:-3px;
-      width:16px; height:16px; background:var(--pink);
+      width:17px; height:17px; background:var(--pink);
       border-radius:50%; border:2px solid var(--card);
       font-size:8px; font-weight:900; color:#fff;
       display:flex; align-items:center; justify-content:center;
@@ -147,439 +112,45 @@
     }
     #fab-group { display:none; }
 
-    .fab-item {
-      display:flex; flex-direction:column; align-items:center; gap:5px;
-    }
-    .fab-btn {
-      width:44px; height:44px; border-radius:50%;
-      border:none; cursor:pointer;
-      display:flex; align-items:center; justify-content:center;
-      transition:transform .25s, box-shadow .25s;
-    }
-    .fab-btn:hover { transform:scale(1.1); }
-
-    /* SAVY button — mirrors WhatsApp style */
-    #fab-savy {
-      background:linear-gradient(135deg,#008060,#00a87a);
-      box-shadow:0 6px 24px rgba(0,128,96,0.4);
-      animation:savyPulse 2.5s ease-in-out infinite;
-    }
-    #fab-savy[data-persona="employee"] { background:linear-gradient(135deg,#1E40AF,#2563eb); box-shadow:0 6px 24px rgba(30,64,175,0.4); }
-    #fab-savy[data-persona="sportif"]  { background:linear-gradient(135deg,#D97706,#f59e0b); box-shadow:0 6px 24px rgba(217,119,6,0.4); }
-    #fab-savy[data-persona="famille"]  { background:linear-gradient(135deg,#0D9488,#14b8a6); box-shadow:0 6px 24px rgba(13,148,136,0.4); }
-    #fab-savy[data-persona="couple"]   { background:linear-gradient(135deg,#be185d,#ec4899); box-shadow:0 6px 24px rgba(190,24,93,0.4); }
-    #fab-savy:hover { transform:scale(1.1); box-shadow:0 10px 32px rgba(0,128,96,0.55); }
-    @keyframes savyPulse {
-      0%,100%{box-shadow:0 4px 20px rgba(0,128,96,.4)}
-      50%{box-shadow:0 4px 28px rgba(0,128,96,.65), 0 0 0 7px rgba(0,128,96,.1)}
-    }
-
-    .fab-savy-badge {
-      position:absolute; top:-4px; right:-4px;
-      width:17px; height:17px; background:var(--pink);
-      border-radius:50%; border:2px solid #fff;
-      font-size:8px; font-weight:900; color:#fff;
-      display:flex; align-items:center; justify-content:center;
-      font-family:'Syne',sans-serif; pointer-events:none;
-    }
-    .fab-item-wrap { position:relative; }
-
-    /* WhatsApp button */
-    #fab-wa {
+    /* ── STICKY WHATSAPP PILL ────────────────────────────── */
+    #wa-sticky {
+      position:fixed; left:16px; bottom:28px; z-index:998;
       background:linear-gradient(135deg,#25D366,#128C7E);
-      box-shadow:0 6px 24px rgba(37,211,102,0.4);
-      animation:waPulse 2.5s ease-in-out infinite;
+      color:#fff; border-radius:99px;
+      display:flex; align-items:center; gap:8px;
+      padding:10px 16px 10px 12px;
+      font-size:12px; font-weight:700; font-family:'DM Sans',sans-serif;
+      box-shadow:0 6px 24px rgba(37,211,102,0.45);
+      cursor:pointer; transition:transform .2s, box-shadow .2s;
+      white-space:nowrap;
+      animation:waPulse 3s ease-in-out infinite;
     }
-    #fab-wa:hover { box-shadow:0 10px 32px rgba(37,211,102,0.55); }
-
+    #wa-sticky:hover { transform:translateY(-3px) scale(1.03); box-shadow:0 10px 32px rgba(37,211,102,0.6); }
     @keyframes waPulse {
-      0%,100%{box-shadow:0 4px 20px rgba(37,211,102,.4)}
-      50%{box-shadow:0 4px 28px rgba(37,211,102,.65), 0 0 0 7px rgba(37,211,102,.1)}
+      0%,100% { box-shadow:0 6px 24px rgba(37,211,102,0.45); }
+      50%      { box-shadow:0 6px 32px rgba(37,211,102,0.7); }
     }
+    @media(max-width:480px){ #wa-sticky-lbl { display:none; } #wa-sticky { padding:10px; } }
 
-    /* Labels under each button */
-    .fab-label {
-      font-size:10px; font-weight:700; color:var(--sub);
-      font-family:'DM Sans',sans-serif; white-space:nowrap;
-      letter-spacing:.02em;
-    }
-
-    /* ── DISH DETAIL MODAL ───────────────────────────────── */
-    #dish-modal-overlay {
-      position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:1001;
-      display:none; align-items:center; justify-content:center;
-      backdrop-filter:blur(6px); padding:16px;
-    }
-    #dish-modal-overlay.open { display:flex; }
-    #dish-modal {
-      background:var(--card); border-radius:24px; width:min(500px,100%);
-      max-height:88vh; overflow-y:auto;
-      border:1px solid var(--border); box-shadow:0 32px 80px rgba(0,0,0,.22);
-      animation:popIn .3s ease both; position:relative; padding:24px;
-    }
-    .dm-header { display:flex; align-items:flex-start; gap:14px; margin-bottom:20px; }
-    .dm-emoji  { font-size:52px; line-height:1; flex-shrink:0; }
-    .dm-header-info { flex:1; min-width:0; }
-    .dm-name  { font-family:'Syne',sans-serif; font-size:17px; font-weight:900; color:var(--text); line-height:1.3; }
-    .dm-ar    { font-size:13px; color:var(--muted); margin-top:2px; direction:rtl; text-align:right; }
-    .dm-meta  { display:flex; align-items:center; gap:8px; margin-top:6px; flex-wrap:wrap; }
-    .dm-star  { font-size:12px; color:#F59E0B; font-weight:700; }
-    .dm-time  { font-size:12px; color:var(--muted); font-weight:600; }
-    .dm-price-wrap { display:flex; flex-direction:column; align-items:flex-end; gap:8px; flex-shrink:0; }
-    .dm-price { font-family:'Syne',sans-serif; font-size:20px; font-weight:900; color:var(--green); }
-    .dm-add-btn {
-      padding:8px 16px; border-radius:99px; border:none; cursor:pointer;
-      font-size:12px; font-weight:800; font-family:'DM Sans',sans-serif;
-      background:var(--green); color:#fff; transition:all .2s;
-    }
-    .dm-add-btn.added { background:var(--greenXL); color:var(--green); }
-    .dm-add-btn:hover { opacity:.88; }
-    .dm-macros-row {
-      display:grid; grid-template-columns:repeat(6,1fr); gap:8px; margin-bottom:20px;
-    }
-    @media(max-width:480px){ .dm-macros-row { grid-template-columns:repeat(3,1fr); } }
-    .dm-macro-card {
-      border-radius:14px; padding:10px 6px; text-align:center;
-    }
-    .dm-kcal   { background:#FFF7ED; }  [data-theme="dark"] .dm-kcal   { background:rgba(249,115,22,.12); }
-    .dm-prot   { background:#F0FFF4; }  [data-theme="dark"] .dm-prot   { background:rgba(0,128,96,.12); }
-    .dm-carb   { background:#EFF6FF; }  [data-theme="dark"] .dm-carb   { background:rgba(59,130,246,.12); }
-    .dm-fat    { background:#FFF5F5; }  [data-theme="dark"] .dm-fat    { background:rgba(239,68,68,.12); }
-    .dm-fiber  { background:#F5F3FF; }  [data-theme="dark"] .dm-fiber  { background:rgba(139,92,246,.12); }
-    .dm-sodium { background:#FFFBEB; }  [data-theme="dark"] .dm-sodium { background:rgba(245,158,11,.12); }
-    .dm-macro-val { font-family:'Syne',sans-serif; font-size:15px; font-weight:900; color:var(--text); }
-    .dm-macro-lbl { font-size:10px; color:var(--muted); font-weight:700; margin-top:2px; }
-    .dm-section { margin-bottom:16px; }
-    .dm-section-title { font-family:'Syne',sans-serif; font-size:13px; font-weight:800; color:var(--text); margin-bottom:8px; }
-    .dm-ing-text { font-size:13px; color:var(--sub); line-height:1.8; margin:0; }
-    .dm-allergens { display:flex; flex-wrap:wrap; gap:6px; }
-    .dm-al-tag {
-      display:inline-flex; align-items:center; gap:4px;
-      background:#FFF5F5; color:#DC2626; border:1px solid #FECACA;
-      border-radius:99px; padding:4px 10px; font-size:11px; font-weight:700;
-    }
-    [data-theme="dark"] .dm-al-tag { background:rgba(220,38,38,.12); border-color:rgba(220,38,38,.3); }
-    .dm-al-clean { background:var(--greenXL); color:var(--green); border-color:var(--border); }
-    .dm-tags-row { display:flex; flex-wrap:wrap; gap:6px; padding-top:12px; border-top:1px solid var(--border); }
-
-    /* ── ORDER MODAL ── */
-    #order-modal-overlay {
-      position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:1000;
-      display:none; align-items:flex-end; justify-content:center;
+    /* ── EXIT INTENT POPUP ───────────────────────────────── */
+    #exit-overlay {
+      position:fixed; inset:0; background:rgba(0,0,0,.55);
+      z-index:1100; display:none; align-items:center; justify-content:center;
       backdrop-filter:blur(6px);
     }
-    #order-modal-overlay.open { display:flex; }
-    @media(min-width:600px){
-      #order-modal-overlay { align-items:center; }
+    #exit-overlay.open { display:flex; }
+    #exit-modal {
+      background:var(--card); border-radius:24px; width:min(380px,92vw);
+      padding:32px 28px; text-align:center; position:relative;
+      box-shadow:0 24px 64px rgba(0,0,0,.2);
+      animation:popIn .35s cubic-bezier(.34,1.56,.64,1) both;
     }
-    #order-modal {
-      background:var(--card); border-radius:24px 24px 0 0; width:min(420px,100vw);
-      padding:24px 24px 32px; border:1px solid var(--border);
-      box-shadow:0 -8px 40px rgba(0,0,0,.18);
-      animation:slideUpModal .3s ease both; position:relative;
-      max-height:92dvh; overflow-y:auto;
-    }
-    @media(min-width:600px){
-      #order-modal {
-        border-radius:24px; width:min(420px,94vw);
-        padding:28px; box-shadow:0 24px 64px rgba(0,0,0,.18);
-        animation:popIn .3s ease both;
-      }
-    }
-    @keyframes slideUpModal {
-      from { transform:translateY(100%); opacity:0; }
-      to   { transform:translateY(0);    opacity:1; }
+    #exit-close {
+      position:absolute; top:14px; right:16px;
+      background:none; border:none; font-size:16px; color:var(--muted);
+      cursor:pointer; line-height:1;
     }
 
-    /* ── ORDER TRACKING MODAL
-    ═══════════════════════════════════════════ */
-    ═══════════════════════════════════════════ */
-
-    /* ═══════════════════════════════════════════
-       LOYALTY — COMPACT STRIP (like persona icons)
-    ═══════════════════════════════════════════ */
-    #loyalty {
-      padding: 18px clamp(16px,4vw,56px) 24px;
-      background: var(--bg);
-    }
-    .loyalty-inner { max-width:1100px; margin:0 auto; }
-    .loy-header {
-      display:flex; align-items:center; gap:10px;
-      margin-bottom:12px; flex-wrap:wrap;
-    }
-    .loy-eyebrow-pill {
-      display:inline-flex; align-items:center;
-      background:var(--orangeBg); border:1px solid rgba(244,163,48,.3);
-      border-radius:99px; padding:4px 12px; font-size:11px; font-weight:700;
-      color:var(--orange); white-space:nowrap;
-    }
-    .loy-heading {
-      font-family:'Syne',sans-serif; font-size:15px; font-weight:800;
-      color:var(--text); margin:0;
-    }
-    .loy-cards {
-      display:grid; grid-template-columns:repeat(4,1fr); gap:10px;
-    }
-    @media(max-width:600px){ .loy-cards { grid-template-columns:repeat(2,1fr); } }
-    .loy-card {
-      border-radius:16px; padding:14px 10px; text-align:center;
-      border:2px solid transparent; transition:transform .2s; cursor:default;
-    }
-    .loy-card:hover { transform:translateY(-3px); }
-    .loy-bronze { background:linear-gradient(135deg,#FFF8F0,#FFF0E0); border-color:#CD7F32; }
-    .loy-silver { background:linear-gradient(135deg,#F5F5F5,#E8E8E8); border-color:#A8A9AD; }
-    .loy-gold   { background:linear-gradient(135deg,#FFFDE7,#FFF8C4); border-color:#FFD700; }
-    .loy-plat   { background:linear-gradient(135deg,#E8F5FF,#D4EEFF); border-color:#4FC3F7; }
-    [data-theme="dark"] .loy-bronze { background:linear-gradient(135deg,#1A1000,#2A1800); }
-    [data-theme="dark"] .loy-silver { background:linear-gradient(135deg,#0D0D0D,#1A1A1A); }
-    [data-theme="dark"] .loy-gold   { background:linear-gradient(135deg,#1A1500,#2A2200); }
-    [data-theme="dark"] .loy-plat   { background:linear-gradient(135deg,#001020,#001A30); }
-    .loy-badge    { font-size:22px; display:block; margin-bottom:4px; }
-    .loy-card-name{ font-weight:800; font-size:13px; color:var(--text); }
-    .loy-card-ord { font-size:10px; color:var(--muted); margin-top:2px; }
-    .loy-card-pts { font-size:11px; font-weight:700; color:var(--green); margin-top:4px; }
-
-    /* ═══════════════════════════════════════════
-       NUTRITIONAL CALCULATOR SECTION
-    ═══════════════════════════════════════════ */
-    #nutri-calc {
-      padding:40px clamp(12px,3vw,40px);
-      background:var(--card);
-    }
-    /* ── ORDER TRACKING SECTION ──────────────────────────── */
-    #order-track-section {
-      padding:20px clamp(16px,4vw,56px) 24px;
-      background:var(--bg); border-top:1px solid var(--border);
-    }
-    .ots-inner { max-width:1100px; margin:0 auto; }
-    .ots-header {
-      display:flex; align-items:center; gap:10px; margin-bottom:14px; flex-wrap:wrap;
-    }
-    .ots-order-id {
-      font-family:'Syne',sans-serif; color:var(--green); font-size:15px;
-    }
-    .ots-body {
-      display:grid; grid-template-columns:1fr auto; gap:20px; align-items:center;
-    }
-    @media(max-width:600px){ .ots-body { grid-template-columns:1fr; } }
-    .ots-steps { display:flex; flex-direction:column; gap:0; }
-    .ots-step {
-      display:flex; align-items:center; gap:12px; padding:8px 0 8px 14px;
-      border-left:2px solid var(--border); margin-left:10px; position:relative;
-    }
-    .ots-step:last-child { border-left-color:transparent; }
-    .ots-dot {
-      position:absolute; left:-10px;
-      width:20px; height:20px; border-radius:50%;
-      background:var(--card); border:2px solid var(--border);
-      display:flex; align-items:center; justify-content:center;
-      font-size:9px; flex-shrink:0;
-    }
-    .ots-done .ots-dot  { background:var(--green); border-color:var(--green); color:#fff; font-size:10px; }
-    .ots-active .ots-dot { background:var(--green); border-color:var(--green); font-size:13px; animation:pulse 1.3s infinite; }
-    .ots-done   { border-left-color:var(--green); }
-    .ots-active { border-left-color:var(--greenL); }
-    .ots-step-content { display:flex; align-items:baseline; gap:8px; }
-    .ots-step-title { font-size:12px; font-weight:700; color:var(--text); }
-    .ots-active .ots-step-title { color:var(--green); }
-    .ots-step:not(.ots-done):not(.ots-active) .ots-step-title { color:var(--muted); }
-    .ots-step-time { font-size:10px; color:var(--muted); }
-    .ots-eta-card {
-      background:linear-gradient(135deg,var(--green),var(--greenL));
-      border-radius:18px; padding:18px 22px; color:#fff; text-align:center;
-      min-width:130px;
-    }
-    .ots-eta-num { font-family:'Syne',sans-serif; font-size:40px; font-weight:900; line-height:1; }
-    .ots-eta-lbl { font-size:11px; opacity:.85; margin-top:2px; margin-bottom:10px; }
-    .ots-progress {
-      background:rgba(255,255,255,.25); border-radius:99px; height:5px; margin-bottom:12px; overflow:hidden;
-    }
-    .ots-progress-fill {
-      height:100%; background:#fff; border-radius:99px;
-      transition:width 1.2s cubic-bezier(.4,0,.2,1);
-    }
-    .ots-cta-txt { font-size:10px; opacity:.8; margin-bottom:6px; }
-    .ots-cta-btn {
-      background:#fff; color:var(--green); border:none; border-radius:99px;
-      padding:6px 14px; font-size:11px; font-weight:800;
-      cursor:pointer; font-family:'Syne',sans-serif;
-    }
-    .nutri-inner { max-width:780px; margin:0 auto; }
-    .nutri-grid  { display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start; }
-    @media(max-width:680px){ .nutri-grid { grid-template-columns:1fr; } }
-    .nutri-row  { margin-bottom:10px; }
-    .nutri-label{ font-size:12px; font-weight:600; color:var(--text); margin-bottom:4px; display:block; }
-    .nutri-input, .nutri-select {
-      width:100%; padding:8px 12px; border:1.5px solid var(--border);
-      border-radius:10px; font-family:'DM Sans',sans-serif; font-size:13px;
-      color:var(--text); background:var(--bg); outline:none;
-      transition:border-color .2s;
-    }
-    .nutri-input:focus, .nutri-select:focus { border-color:var(--green); }
-    [data-theme="dark"] .nutri-input,
-    [data-theme="dark"] .nutri-select { background:var(--bg); border-color:var(--border); color:var(--text); }
-    .nutri-toggle { display:flex; gap:6px; }
-    .nutri-tog-btn {
-      flex:1; padding:7px; border:1.5px solid var(--border); border-radius:8px;
-      background:var(--bg); color:var(--sub); font-size:12px; font-weight:600;
-      cursor:pointer; transition:all .2s; font-family:'DM Sans',sans-serif;
-    }
-    .nutri-tog-btn.active { background:var(--green); border-color:var(--green); color:#fff; transition:background .3s,border-color .3s; }
-    .nutri-tog-btn { transition:background .3s,border-color .3s,color .3s; }
-    .nutri-calc-btn {
-      width:100%; padding:11px; border-radius:12px; border:none;
-      background:linear-gradient(135deg,var(--green),var(--greenL));
-      color:#fff; font-size:13px; font-weight:700; cursor:pointer;
-      font-family:'DM Sans',sans-serif; margin-top:6px;
-      box-shadow:0 4px 14px rgba(0,128,96,.25); transition:all .25s;
-    }
-    .nutri-calc-btn:hover { transform:translateY(-2px); box-shadow:0 8px 22px rgba(0,168,120,.35); }
-    #nutri-calc {
-      transition: background .5s ease;
-      background: linear-gradient(160deg, var(--greenXL) 0%, var(--bg) 60%);
-    }
-    #nutri-calc.female-mode {
-      background: linear-gradient(160deg, var(--pinkXL) 0%, var(--bg) 60%);
-    }
-    #nutri-calc.female-mode .nutri-calc-btn  { background: linear-gradient(135deg, var(--pink), var(--pinkL)); }
-    #nutri-calc.female-mode .nutri-eyebrow-wrap { background:var(--pinkXL); color:var(--pink); border-color:var(--pinkBorder); }
-    #nutri-calc.female-mode .nutri-tog-btn.active { background:var(--pink) !important; border-color:var(--pink) !important; color:#fff !important; box-shadow:0 2px 10px rgba(233,30,140,0.35); }
-    #nutri-calc.female-mode .nutri-kcal-val { color: var(--pink); }
-    #nutri-calc.female-mode .macro-bar-fill  { background: linear-gradient(90deg, var(--pink), var(--pinkL)); }
-    #nutri-calc.female-mode .nutri-dish-chip { background: var(--pinkXL); border-color: var(--pinkBorder); color: var(--pink); }
-    #nutri-calc.female-mode .title-bar       { background: linear-gradient(90deg, var(--pink), var(--pinkL)); }
-    .nutri-results { display:none; }
-    .nutri-results.show { display:block; animation:slideUp .4s ease both; }
-    .nutri-result-card {
-      background:linear-gradient(135deg,var(--green),var(--greenL));
-      border-radius:20px; padding:24px; color:#fff; margin-bottom:20px; text-align:center;
-    }
-    .nutri-kcal-val { font-family:'Syne',sans-serif; font-size:52px; font-weight:900; line-height:1; }
-    .nutri-kcal-lbl { opacity:.85; font-size:13px; margin-top:4px; }
-    .nutri-macros-row { display:flex; gap:12px; margin-top:16px; }
-    .nutri-macro {
-      flex:1; background:rgba(255,255,255,.18); border-radius:12px; padding:12px 8px; text-align:center;
-    }
-    .nutri-macro-val { font-family:'Syne',sans-serif; font-size:22px; font-weight:900; }
-    .nutri-macro-lbl { font-size:11px; opacity:.8; margin-top:2px; }
-    .nutri-dishes-label { font-size:13px; font-weight:700; color:var(--text); margin-bottom:10px; }
-    .nutri-dish-chips { display:flex; flex-wrap:wrap; gap:8px; }
-    .nutri-dish-chip {
-      background:var(--greenXL); border:1px solid var(--border);
-      border-radius:99px; padding:6px 14px; font-size:12px; font-weight:600;
-      color:var(--green); cursor:pointer; transition:all .2s;
-    }
-    .nutri-dish-chip:hover { background:var(--green); color:#fff; }
-
-    /* ═══════════════════════════════════════════
-       ENHANCED CHAT
-    ═══════════════════════════════════════════ */
-    /* Scroll-to-bottom button */
-    #chat-scroll-btn {
-      position:absolute; bottom:76px; right:12px; z-index:10;
-      width:30px; height:30px; border-radius:50%; background:var(--green);
-      border:none; color:#fff; cursor:pointer; font-size:14px;
-      box-shadow:0 2px 10px rgba(0,128,96,.3); display:none; align-items:center; justify-content:center;
-      transition:all .2s;
-    }
-    #chat-scroll-btn.visible { display:flex; }
-
-    /* Chat action buttons in header */
-    .chat-header-actions { display:flex; align-items:center; gap:6px; }
-    .chat-action-btn {
-      background:transparent; border:none; cursor:pointer; font-size:15px;
-      padding:4px 6px; border-radius:8px; color:var(--sub); transition:background .2s;
-    }
-    .chat-action-btn:hover { background:var(--mint); }
-
-    /* Message timestamps */
-    .msg-time { font-size:9.5px; color:var(--muted); margin-top:4px; text-align:right; }
-    .msg-bot .msg-time { text-align:left; }
-
-    /* Message reactions */
-    .msg-reactions {
-      display:flex; gap:4px; margin-top:5px; flex-wrap:wrap;
-    }
-    .msg-react-btn {
-      background:var(--mint); border:1px solid var(--border); border-radius:99px;
-      padding:3px 8px; font-size:12px; cursor:pointer; transition:all .2s;
-      display:inline-flex; align-items:center; gap:3px;
-    }
-    .msg-react-btn:hover { background:var(--greenXL); transform:scale(1.1); }
-    .msg-react-btn.selected { background:var(--green); color:#fff; border-color:var(--green); }
-
-    /* Voice input button */
-    .chat-voice-btn {
-      width:36px; height:36px; border-radius:50%; border:1.5px solid var(--border);
-      background:var(--bg); color:var(--sub); cursor:pointer; font-size:15px;
-      display:flex; align-items:center; justify-content:center; transition:all .2s; flex-shrink:0;
-    }
-    .chat-voice-btn.recording { background:var(--pink); border-color:var(--pink); color:#fff; animation:pulse 1s infinite; }
-    .chat-voice-btn:hover { border-color:var(--green); color:var(--green); }
-
-    /* Enhanced quick chips */
-    .q-chips-scroll { display:flex; gap:7px; overflow-x:auto; padding:8px 12px 4px;
-      scrollbar-width:none; flex-wrap:nowrap; }
-    .q-chips-scroll::-webkit-scrollbar { display:none; }
-    .q-chip-enhanced {
-      white-space:nowrap; flex-shrink:0;
-      background:var(--card); border:1.5px solid var(--border);
-      border-radius:99px; padding:7px 14px; font-size:12.5px; font-weight:600;
-      color:var(--text); cursor:pointer; transition:all .2s;
-      display:inline-flex; align-items:center; gap:5px;
-    }
-    .q-chip-enhanced:hover { background:var(--green); border-color:var(--green); color:#fff; transform:translateY(-1px); }
-
-    /* Chat online indicator pulse */
-    .chat-status-dot { 
-      animation:pulse 2s infinite;
-    }
-
-    /* Navbar track order button */
-    .nav-track-btn { display:flex; align-items:center; gap:5px; padding:5px 12px; border-radius:99px; border:1px solid var(--orange); background:var(--orangeBg); color:var(--orange); font-size:10px; font-weight:700; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all .2s; }
-    .nav-track-btn:hover { background:var(--orange); color:#fff; }
-    .nav-track-dot { width:5px; height:5px; border-radius:50%; background:var(--orange); animation:pulse 1.5s infinite; flex-shrink:0; }
-    .lang-btn { padding:2px 6px; border-radius:99px; border:none; cursor:pointer; font-size:9px; font-weight:700; transition:all .2s; background:transparent; color:var(--sub); font-family:'DM Sans',sans-serif; }
-    .lang-wrap { display:flex; gap:1px; background:#fff; border-radius:99px; padding:2px; border:1px solid var(--border); }
-    .lang-dd-btn {
-      display:block; width:100%; padding:6px 10px; background:none; border:none;
-      cursor:pointer; font-size:11px; font-weight:700; font-family:'DM Sans',sans-serif;
-      color:var(--text); text-align:left; border-radius:8px; transition:background .15s;
-    }
-    .lang-dd-btn:hover { background:var(--mint); }
-
-
-    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
-    html { scroll-behavior:smooth; }
-    body { font-family:'DM Sans',system-ui,sans-serif; background:var(--bg); color:var(--text); overflow-x:hidden; }
-    ::-webkit-scrollbar { width:6px; }
-    ::-webkit-scrollbar-track { background:var(--bg); }
-    ::-webkit-scrollbar-thumb { background:var(--green); border-radius:6px; }
-    ::-webkit-scrollbar-thumb:hover { background:var(--greenL); }
-    * { scrollbar-width:thin; scrollbar-color:var(--green) var(--bg); }
-
-    /* ── ANIMATIONS ── */
-    @keyframes float   { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
-    @keyframes pulse   { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.85)} }
-    @keyframes slideUp { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
-    @keyframes popIn   { from{opacity:0;transform:scale(.88)} to{opacity:1;transform:scale(1)} }
-    @keyframes fadeIn  { from{opacity:0} to{opacity:1} }
-    @keyframes chatBounce { 0%,100%{transform:scale(1)} 50%{transform:scale(1.12)} }
-    @keyframes typingDot { 0%,60%,100%{transform:translateY(0);opacity:.4} 30%{transform:translateY(-5px);opacity:1} }
-    @keyframes shimmer { 0%{background-position:-200% 0} 100%{background-position:200% 0} }
-    .su  { animation:slideUp .55s ease both; }
-    .su2 { animation:slideUp .55s .1s ease both; }
-    .su3 { animation:slideUp .55s .2s ease both; }
-    .su4 { animation:slideUp .55s .3s ease both; }
-    .su5 { animation:slideUp .55s .4s ease both; }
-
-    /* ── FONTS ── */
-    .fh { font-family:'Cormorant Garamond',serif; letter-spacing:0.01em; }
-    .far{ font-family:'Tajawal',sans-serif; }
-    .fb { font-family:'DM Sans',sans-serif; }
-    .fsyne { font-family:'Syne',sans-serif; }
-
-    /* ── NAVBAR ── */
     /* ── URGENCY STRIP ───────────────────────────────────── */
     #urgency-strip {
       background: linear-gradient(90deg, #005c45, #008060, #005c45);
@@ -805,15 +376,29 @@
     .rev-bar-track { flex:1; height:8px; background:var(--border); border-radius:99px; overflow:hidden; }
     .rev-bar-fill  { height:100%; background:linear-gradient(90deg,#F59E0B,#FBBF24); border-radius:99px; transition:width 1s ease; }
 
-    /* Carousel */
-    .rev-track-wrap { overflow:hidden; border-radius:20px; }
-    .rev-track { display:flex; gap:16px; transition:transform .5s cubic-bezier(.4,0,.2,1); padding:4px 2px 8px; }
+    /* Carousel — infinite marquee */
+    .rev-track-wrap {
+      overflow:hidden;
+      -webkit-mask: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+      mask: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+    }
+    .rev-track {
+      display:flex; gap:16px; padding:4px 2px 12px;
+      width:max-content;
+      animation: revScroll 45s linear infinite;
+    }
+    .rev-track:hover { animation-play-state: paused; }
+    @keyframes revScroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
     .rev-card {
-      flex:0 0 calc(33.33% - 12px); min-width:280px;
+      flex:0 0 300px; width:300px;
       background:#fff; border:1px solid var(--border); border-radius:20px;
-      padding:24px; box-shadow:var(--shadow);
+      padding:22px; box-shadow:var(--shadow);
       display:flex; flex-direction:column; gap:12px;
       transition:transform .2s,box-shadow .2s;
+      user-select:none;
     }
     [data-theme="dark"] .rev-card { background:var(--card); }
     .rev-card:hover { transform:translateY(-3px); box-shadow:var(--shadowH); }
@@ -833,18 +418,11 @@
     .rev-verified { font-size:11px; color:var(--muted); display:flex; align-items:center; gap:4px; }
     .rev-verified::before { content:'✓'; color:var(--green); font-weight:900; }
 
-    /* Dots */
-    .rev-dots { display:flex; justify-content:center; gap:8px; margin-top:20px; }
-    .rev-dot { width:8px; height:8px; border-radius:50%; background:var(--border); border:none; cursor:pointer; transition:all .2s; padding:0; }
-    .rev-dot.active { background:var(--green); width:22px; border-radius:99px; }
-
+    /* Dots — hidden, marquee has no pages */
+    .rev-dots { display:none; }
     @media(max-width:768px){
-      .rev-card { flex:0 0 calc(100% - 4px); min-width:unset; }
       .rev-summary { gap:16px; padding:18px; }
       .rev-big-score { font-size:44px; }
-    }
-    @media(min-width:769px) and (max-width:1024px){
-      .rev-card { flex:0 0 calc(50% - 8px); }
     }
 
 
@@ -1118,50 +696,23 @@
        Applied to #chat-window via data-persona attribute
     ══════════════════════════════════════════════════════════ */
 
-    /* Employee → Bleu Marine */
+    /* All personas → SAVY Green */
+    #chat-window .chat-header,
     #chat-window[data-persona="employee"] .chat-header,
-    #chat-window:not([data-persona]) .chat-header {
-      background: linear-gradient(135deg, #1E40AF 0%, #2563EB 100%);
+    #chat-window[data-persona="sportif"]  .chat-header,
+    #chat-window[data-persona="famille"]  .chat-header,
+    #chat-window[data-persona="couple"]   .chat-header,
+    #chat-window:not([data-persona])      .chat-header {
+      background: linear-gradient(135deg, #008060 0%, #00a87a 100%);
     }
-    #chat-window[data-persona="employee"] .msg-user .msg-bubble { background:#1E40AF; }
-    #chat-window[data-persona="employee"] .msg-avatar            { background:#1E40AF; }
-    #chat-window[data-persona="employee"] .chat-send             { background:#1E40AF; }
-    #chat-window[data-persona="employee"] .chat-send:hover       { background:#1e3a8a; }
-    #chat-window[data-persona="employee"] .chat-inp:focus        { border-color:#1E40AF; }
-    #chat-window[data-persona="employee"] #chat-fab-inner        { background:#1E40AF; }
-
-    /* Sportif → Amber Yellow */
-    #chat-window[data-persona="sportif"] .chat-header {
-      background: linear-gradient(135deg, #D97706 0%, #F59E0B 100%);
-    }
-    #chat-window[data-persona="sportif"] .msg-user .msg-bubble { background:#D97706; color:#fff; }
-    #chat-window[data-persona="sportif"] .msg-avatar            { background:#D97706; }
-    #chat-window[data-persona="sportif"] .chat-send             { background:#D97706; }
-    #chat-window[data-persona="sportif"] .chat-send:hover       { background:#b45309; }
-    #chat-window[data-persona="sportif"] .chat-inp:focus        { border-color:#F59E0B; }
-    #chat-window[data-persona="sportif"] .chat-status-dot       { background:#FCD34D; }
-
-    /* Famille → Indigo Purple */
-    #chat-window[data-persona="famille"] .chat-header {
-      background: linear-gradient(135deg, #0D9488 0%, #14B8A6 100%);
-    }
-    #chat-window[data-persona="famille"] .msg-user .msg-bubble { background:#0D9488; color:#fff; }
-    #chat-window[data-persona="famille"] .msg-avatar            { background:#0D9488; }
-    #chat-window[data-persona="famille"] .chat-send             { background:#0D9488; }
-    #chat-window[data-persona="famille"] .chat-send:hover       { background:#0F766E; }
-    #chat-window[data-persona="famille"] .chat-inp:focus        { border-color:#14B8A6; }
-    #chat-window[data-persona="famille"] .chat-status-dot       { background:#5EEAD4; }
-
-    /* Couple → Hot Pink */
-    #chat-window[data-persona="couple"] .chat-header {
-      background: linear-gradient(135deg, #be185d 0%, #E91E8C 100%);
-    }
-    #chat-window[data-persona="couple"] .msg-user .msg-bubble { background:#be185d; color:#fff; }
-    #chat-window[data-persona="couple"] .msg-avatar            { background:#be185d; }
-    #chat-window[data-persona="couple"] .chat-send             { background:#be185d; }
-    #chat-window[data-persona="couple"] .chat-send:hover       { background:#9d174d; }
-    #chat-window[data-persona="couple"] .chat-inp:focus        { border-color:#E91E8C; }
-    #chat-window[data-persona="couple"] .chat-status-dot       { background:#f9a8d4; }
+    /* User bubbles, avatars, send btn — all green */
+    #chat-window .msg-user .msg-bubble { background:var(--green); }
+    #chat-window .msg-avatar            { background:var(--green); }
+    #chat-window .chat-send             { background:var(--green); }
+    #chat-window .chat-send:hover       { background:#006e52; }
+    #chat-window .chat-inp:focus        { border-color:var(--green); }
+    #chat-window .chat-status-dot       { background:#a7f3d0; }
+    #chat-window #chat-fab-inner        { background:var(--green); }
 
     /* FAB button also follows persona color */
     #chat-fab { transition: background .4s ease, box-shadow .4s ease; }
@@ -1353,22 +904,40 @@
   <!-- Center: SAVY logo -->
   <div style="display:flex;justify-content:center;align-items:center;">
     <a href="#" style="display:flex;align-items:center;gap:8px;text-decoration:none;">
-      <svg width="36" height="36" viewBox="0 0 80 80" fill="none">
-        <rect width="80" height="80" rx="20" fill="#008060"/>
-        <ellipse cx="40" cy="21" rx="13" ry="5" fill="#a7f3d0" opacity=".9"/>
-        <rect x="27" y="16" width="26" height="14" rx="4" fill="#a7f3d0" opacity=".9"/>
-        <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="#a7f3d0"/>
-        <rect x="26" y="28" width="28" height="20" rx="9" fill="#a7f3d0"/>
-        <circle cx="34" cy="37" r="3.2" fill="#008060"/>
-        <circle cx="46" cy="37" r="3.2" fill="#008060"/>
-        <rect x="28" y="50" width="24" height="18" rx="5" fill="#a7f3d0"/>
-        <text x="40" y="63" text-anchor="middle" font-size="9" font-weight="900" fill="#008060" font-family="system-ui">SAVY</text>
-        <circle cx="19" cy="58" r="5" fill="#a7f3d0" opacity=".9"/>
-        <line x1="24" y1="56" x2="28" y2="55" stroke="white" stroke-width="3" stroke-linecap="round"/>
-        <circle cx="61" cy="58" r="5" fill="#a7f3d0" opacity=".9"/>
-        <line x1="56" y1="56" x2="52" y2="55" stroke="white" stroke-width="3" stroke-linecap="round"/>
+      <svg width="42" height="42" viewBox="0 0 80 80" fill="none">
+        <!-- Body rounded green card -->
+        <rect width="80" height="80" rx="22" fill="#008060"/>
+        <!-- Antenna -->
+        <rect x="38" y="4" width="4" height="10" rx="2" fill="#a7f3d0"/>
+        <circle cx="40" cy="4" r="4" fill="#a7f3d0"/>
+        <!-- Head -->
+        <rect x="22" y="14" width="36" height="26" rx="10" fill="#a7f3d0"/>
+        <!-- Eyes — happy crescent shape using two overlapping circles -->
+        <circle cx="32" cy="25" r="5" fill="#008060"/>
+        <circle cx="32" cy="22" r="5" fill="#a7f3d0"/>
+        <circle cx="48" cy="25" r="5" fill="#008060"/>
+        <circle cx="48" cy="22" r="5" fill="#a7f3d0"/>
+        <!-- Big smile -->
+        <path d="M31 32 Q40 40 49 32" stroke="#008060" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+        <!-- Rosy cheeks -->
+        <circle cx="26" cy="33" r="4" fill="#f9a8d4" opacity=".5"/>
+        <circle cx="54" cy="33" r="4" fill="#f9a8d4" opacity=".5"/>
+        <!-- Body -->
+        <rect x="24" y="42" width="32" height="22" rx="8" fill="#a7f3d0"/>
+        <!-- Heart on chest -->
+        <path d="M37 50 C37 47.5 40 46 40 48.5 C40 46 43 47.5 43 50 C43 53 40 55 40 55 C40 55 37 53 37 50Z" fill="#008060" opacity=".6"/>
+        <!-- Legs -->
+        <circle cx="30" cy="67" r="5" fill="#a7f3d0" opacity=".9"/>
+        <circle cx="50" cy="67" r="5" fill="#a7f3d0" opacity=".9"/>
+        <!-- Arms -->
+        <rect x="13" y="44" width="11" height="6" rx="3" fill="#a7f3d0" opacity=".85"/>
+        <rect x="56" y="44" width="11" height="6" rx="3" fill="#a7f3d0" opacity=".85"/>
+        <!-- Sparkle left -->
+        <circle cx="13" cy="18" r="2" fill="#fbbf24" opacity=".8"/>
+        <!-- Sparkle right -->
+        <circle cx="67" cy="22" r="1.5" fill="#fbbf24" opacity=".7"/>
+        <circle cx="70" cy="14" r="1" fill="#fff" opacity=".6"/>
       </svg>
-      <span style="font-family:'Syne',sans-serif;font-weight:900;font-size:18px;color:var(--text);">SAVY</span>
     </a>
   </div>
   <div class="nav-links" style="display:none;">
@@ -1959,6 +1528,14 @@
     <input class="lead-inp" id="om-name"  type="text" placeholder="Nom complet / Full name"/>
     <input class="lead-inp" id="om-city"  type="text" placeholder="Adresse (ex: Rue Ibn Batouta, Tétouan)"/>
     <input class="lead-inp" id="om-phone" type="tel"  placeholder="WhatsApp (+212 6XX XXX XXX)" oninput="debounceLoyaltyLookup(this.value)"/>
+    <!-- Social proof before submit -->
+    <div id="om-trust" style="display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin:10px 0 4px;font-size:11px;color:var(--muted);">
+      <span>⭐⭐⭐⭐⭐ <strong style="color:var(--text);">4.9</strong></span>
+      <span>·</span>
+      <span id="om-trust-orders">125+ commandes</span>
+      <span>·</span>
+      <span id="om-trust-delivery">🛵 45 min garanties</span>
+    </div>
     <button class="lead-submit" id="om-submit-btn" onclick="submitOrder()" style="margin-top:6px;">
       🛵 Commander maintenant
     </button>
@@ -1967,48 +1544,64 @@
 </div>
 
 
+<!-- ══ STICKY WHATSAPP PILL (left) ══════════════════════════ -->
+<div id="wa-sticky" onclick="openWhatsApp()" title="Commander sur WhatsApp">
+  <svg width="18" height="18" viewBox="0 0 32 32" fill="none">
+    <path d="M16 2C8.268 2 2 8.268 2 16c0 2.484.668 4.81 1.836 6.818L2 30l7.384-1.812A13.94 13.94 0 0016 30c7.732 0 14-6.268 14-14S23.732 2 16 2z" fill="#fff"/>
+    <path d="M22.498 19.533c-.305-.152-1.8-.888-2.079-.99-.278-.102-.481-.152-.683.152s-.783.99-.96 1.193c-.177.202-.354.228-.659.076-.305-.152-1.288-.475-2.453-1.513-.907-.808-1.518-1.806-1.697-2.111-.177-.304-.019-.469.133-.62.137-.136.305-.355.457-.532.152-.178.203-.305.304-.508.103-.203.051-.38-.025-.532-.077-.152-.684-1.648-.937-2.258-.246-.593-.497-.513-.683-.522l-.583-.01c-.203 0-.532.076-.81.38s-1.063 1.04-1.063 2.534 1.089 2.94 1.24 3.143c.152.203 2.143 3.272 5.191 4.586.726.314 1.293.5 1.735.641.729.23 1.392.198 1.916.12.584-.087 1.8-.735 2.054-1.446.254-.71.254-1.32.178-1.447-.077-.127-.278-.203-.583-.355z" fill="#25D366"/>
+  </svg>
+  <span id="wa-sticky-lbl">Commander sur WhatsApp</span>
+</div>
+
+<!-- ══ EXIT INTENT POPUP ═════════════════════════════════════ -->
+<div id="exit-overlay">
+  <div id="exit-modal">
+    <button id="exit-close" onclick="closeExitPopup()">✕</button>
+    <div style="font-size:36px;margin-bottom:8px;">🛵</div>
+    <h3 id="exit-title" style="font-family:'Syne',sans-serif;font-size:18px;font-weight:900;color:var(--text);margin-bottom:6px;">Avant de partir...</h3>
+    <p id="exit-sub" style="font-size:13px;color:var(--sub);line-height:1.6;margin-bottom:16px;">Reçois le menu complet + nos offres du jour directement sur ton WhatsApp 📲</p>
+    <button id="exit-wa-btn" onclick="openWhatsApp();closeExitPopup();" style="
+      width:100%;padding:13px;border-radius:14px;border:none;
+      background:linear-gradient(135deg,#25D366,#128C7E);
+      color:#fff;font-size:14px;font-weight:700;
+      cursor:pointer;font-family:'DM Sans',sans-serif;
+      display:flex;align-items:center;justify-content:center;gap:8px;
+    ">
+      <svg width="18" height="18" viewBox="0 0 32 32" fill="none"><path d="M16 2C8.268 2 2 8.268 2 16c0 2.484.668 4.81 1.836 6.818L2 30l7.384-1.812A13.94 13.94 0 0016 30c7.732 0 14-6.268 14-14S23.732 2 16 2z" fill="#fff" opacity=".9"/><path d="M22.498 19.533c-.305-.152-1.8-.888-2.079-.99-.278-.102-.481-.152-.683.152s-.783.99-.96 1.193c-.177.202-.354.228-.659.076-.305-.152-1.288-.475-2.453-1.513-.907-.808-1.518-1.806-1.697-2.111-.177-.304-.019-.469.133-.62.137-.136.305-.355.457-.532.152-.178.203-.305.304-.508.103-.203.051-.38-.025-.532-.077-.152-.684-1.648-.937-2.258-.246-.593-.497-.513-.683-.522l-.583-.01c-.203 0-.532.076-.81.38s-1.063 1.04-1.063 2.534 1.089 2.94 1.24 3.143c.152.203 2.143 3.272 5.191 4.586.726.314 1.293.5 1.735.641.729.23 1.392.198 1.916.12.584-.087 1.8-.735 2.054-1.446.254-.71.254-1.32.178-1.447-.077-.127-.278-.203-.583-.355z" fill="#25D366"/></svg>
+      <span id="exit-wa-lbl">Envoyer le menu sur WhatsApp</span>
+    </button>
+    <button onclick="closeExitPopup()" style="margin-top:10px;background:none;border:none;color:var(--muted);font-size:12px;cursor:pointer;width:100%;" id="exit-dismiss">Non merci, je pars sans mon repas 😅</button>
+  </div>
+</div>
+
 <!-- ══ COMBINED SPEED-DIAL FAB ══════════════════════════════ -->
 <div id="fab-main-wrap">
-  <!-- Options (slide up on open) -->
-  <div class="fab-options" id="fab-options">
-    <!-- WhatsApp -->
-    <div class="fab-option">
-      <button class="fab-option-btn fab-opt-wa" onclick="openWhatsApp()" aria-label="WhatsApp">
-        <svg width="18" height="18" viewBox="0 0 32 32" fill="none">
-          <path d="M16 2C8.268 2 2 8.268 2 16c0 2.484.668 4.81 1.836 6.818L2 30l7.384-1.812A13.94 13.94 0 0016 30c7.732 0 14-6.268 14-14S23.732 2 16 2z" fill="#fff"/>
-          <path d="M22.498 19.533c-.305-.152-1.8-.888-2.079-.99-.278-.102-.481-.152-.683.152s-.783.99-.96 1.193c-.177.202-.354.228-.659.076-.305-.152-1.288-.475-2.453-1.513-.907-.808-1.518-1.806-1.697-2.111-.177-.304-.019-.469.133-.62.137-.136.305-.355.457-.532.152-.178.203-.305.304-.508.103-.203.051-.38-.025-.532-.077-.152-.684-1.648-.937-2.258-.246-.593-.497-.513-.683-.522l-.583-.01c-.203 0-.532.076-.81.38s-1.063 1.04-1.063 2.534 1.089 2.94 1.24 3.143c.152.203 2.143 3.272 5.191 4.586.726.314 1.293.5 1.735.641.729.23 1.392.198 1.916.12.584-.087 1.8-.735 2.054-1.446.254-.71.254-1.32.178-1.447-.077-.127-.278-.203-.583-.355z" fill="#25D366"/>
-        </svg>
-      </button>
-      <span class="fab-option-lbl" id="fab-wa-lbl">WhatsApp</span>
-    </div>
-    <!-- SAVY Chat -->
-    <div class="fab-option">
-      <button class="fab-option-btn fab-opt-savy" id="fab-savy" onclick="openChat();toggleFabMenu()" aria-label="Chat SAVY">
-        <svg width="18" height="18" viewBox="0 0 32 32" fill="none">
-          <circle cx="16" cy="16" r="14" fill="#fff"/>
-          <path d="M16 7C10.477 7 6 11.03 6 16c0 1.9.6 3.66 1.63 5.12L6 26l5.13-1.6A10.3 10.3 0 0016 25c5.523 0 10-4.03 10-9s-4.477-9-10-9z" fill="#008060"/>
-          <circle cx="11.5" cy="16" r="1.4" fill="#fff"/>
-          <circle cx="16"   cy="16" r="1.4" fill="#fff"/>
-          <circle cx="20.5" cy="16" r="1.4" fill="#fff"/>
-        </svg>
-        <div class="fab-savy-badge" id="fab-savy-badge">1</div>
-      </button>
-      <span class="fab-option-lbl" id="fab-savy-lbl">Chef SAVY</span>
-    </div>
-  </div>
-
-  <!-- Main trigger button -->
-  <button id="fab-main" onclick="toggleFabMenu()" aria-label="Contact">
-    <span class="fab-main-icon">
-      <svg width="30" height="30" viewBox="0 0 32 32" fill="none">
-        <circle cx="16" cy="16" r="14" fill="#fff" opacity=".9"/>
-        <path d="M16 7C10.477 7 6 11.03 6 16c0 1.9.6 3.66 1.63 5.12L6 26l5.13-1.6A10.3 10.3 0 0016 25c5.523 0 10-4.03 10-9s-4.477-9-10-9z" fill="#008060"/>
-        <circle cx="11.5" cy="16" r="1.4" fill="#fff"/>
-        <circle cx="16"   cy="16" r="1.4" fill="#fff"/>
-        <circle cx="20.5" cy="16" r="1.4" fill="#fff"/>
-      </svg>
-    </span>
-    <span class="fab-main-x">✕</span>
+  <button id="fab-main" onclick="openChat()" aria-label="Chat SAVY">
+    <svg width="34" height="34" viewBox="0 0 80 80" fill="none">
+      <!-- Antenna -->
+      <rect x="38" y="3" width="4" height="9" rx="2" fill="#a7f3d0"/>
+      <circle cx="40" cy="3" r="3.5" fill="#a7f3d0"/>
+      <!-- Head -->
+      <rect x="22" y="12" width="36" height="26" rx="10" fill="#a7f3d0"/>
+      <!-- Happy eyes -->
+      <circle cx="32" cy="23" r="5" fill="#008060"/>
+      <circle cx="32" cy="20" r="5" fill="#a7f3d0"/>
+      <circle cx="48" cy="23" r="5" fill="#008060"/>
+      <circle cx="48" cy="20" r="5" fill="#a7f3d0"/>
+      <!-- Smile -->
+      <path d="M31 30 Q40 38 49 30" stroke="#008060" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+      <!-- Cheeks -->
+      <circle cx="26" cy="31" r="3.5" fill="#f9a8d4" opacity=".5"/>
+      <circle cx="54" cy="31" r="3.5" fill="#f9a8d4" opacity=".5"/>
+      <!-- Body -->
+      <rect x="24" y="40" width="32" height="22" rx="8" fill="#a7f3d0"/>
+      <!-- Arms -->
+      <rect x="13" y="42" width="11" height="6" rx="3" fill="#a7f3d0" opacity=".85"/>
+      <rect x="56" y="42" width="11" height="6" rx="3" fill="#a7f3d0" opacity=".85"/>
+      <!-- Legs -->
+      <circle cx="30" cy="66" r="5" fill="#a7f3d0" opacity=".9"/>
+      <circle cx="50" cy="66" r="5" fill="#a7f3d0" opacity=".9"/>
+    </svg>
     <div class="fab-savy-badge" id="fab-main-badge">1</div>
   </button>
 </div>
@@ -2494,10 +2087,40 @@ let revPerPage = window.innerWidth < 769 ? 1 : window.innerWidth < 1025 ? 2 : 3;
 /* ═══════════════════════════════════════════
    URGENCY STRIP — dynamic count + i18n
 ═══════════════════════════════════════════ */
-function updateUrgencyStrip(l) {
-  const hour = new Date().getHours();
-  // Random-ish order count seeded on the hour so it feels live but stable
-  const orderCount = 8 + (hour % 7) + Math.floor(Math.random() * 5);
+/* ═══════════════════════════════════════════
+   URGENCY STRIP — persisted live counter
+═══════════════════════════════════════════ */
+const URGENCY_MAX   = 25;
+const URGENCY_KEY   = "savy_order_count";
+const URGENCY_TS_KEY= "savy_order_ts";
+
+function getUrgencyCount() {
+  // Reset to starting number each new day
+  const today = new Date().toDateString();
+  const saved = localStorage.getItem(URGENCY_KEY);
+  const savedDay = localStorage.getItem(URGENCY_TS_KEY);
+  if(savedDay !== today) {
+    // New day → start fresh from a random seed between 8-13
+    const startCount = 8 + Math.floor(Math.random() * 6);
+    localStorage.setItem(URGENCY_KEY, startCount);
+    localStorage.setItem(URGENCY_TS_KEY, today);
+    return startCount;
+  }
+  return Math.min(parseInt(saved) || 8, URGENCY_MAX);
+}
+
+function tickUrgencyCount() {
+  const current = getUrgencyCount();
+  if(current < URGENCY_MAX) {
+    localStorage.setItem(URGENCY_KEY, current + 1);
+  }
+  renderUrgencyStrip();
+}
+
+function renderUrgencyStrip() {
+  const l = lang || "ar";
+  const count = getUrgencyCount();
+  const hour  = new Date().getHours();
   const slots      = Math.max(1, 5 - (hour % 4));
   const cities     = ["Tétouan","M'diq","Martil"];
   const city       = cities[hour % 3];
@@ -2505,15 +2128,15 @@ function updateUrgencyStrip(l) {
 
   const msgs = {
     fr: {
-      orders: `🔥 ${orderCount} personnes ont commandé aujourd'hui à ${city}`,
+      orders: `🔥 ${count} personnes ont commandé aujourd'hui à ${city}`,
       slots:  `Dernière livraison à ${closingHour}h — <strong>${slots} créneaux restants</strong>`
     },
     en: {
-      orders: `🔥 ${orderCount} people ordered today in ${city}`,
+      orders: `🔥 ${count} people ordered today in ${city}`,
       slots:  `Last delivery at ${closingHour}:00 — <strong>${slots} slots left</strong>`
     },
     ar: {
-      orders: `🔥 ${orderCount} شخصاً طلبوا اليوم في ${city === "Tétouan" ? "تطوان" : city}`,
+      orders: `🔥 ${count} شخصاً طلبوا اليوم في ${city === "Tétouan" ? "تطوان" : city}`,
       slots:  `آخر توصيل الساعة ${closingHour} — <strong>${slots} مقاعد متبقية</strong>`
     }
   };
@@ -2523,6 +2146,13 @@ function updateUrgencyStrip(l) {
   if(txt)  txt.textContent = m.orders;
   if(slot) slot.innerHTML  = m.slots;
 }
+
+function updateUrgencyStrip(l) {
+  renderUrgencyStrip();
+}
+
+// Tick every 7 seconds
+setInterval(tickUrgencyCount, 7000);
 
 function setLang(l) {
   lang = l;
@@ -2589,11 +2219,20 @@ function setLang(l) {
   if($el("reviews-nudge-txt")) $el("reviews-nudge-txt").textContent = revTxt;
   if($el("reviews-nudge-sub")) $el("reviews-nudge-sub").textContent = revSub;
 
-  // FAB labels
-  const waLbl   = isAr ? "واتساب" : "WhatsApp";
-  const savyLbl = isAr ? "شيف SAVY" : "Chef SAVY";
-  $t("fab-wa-lbl",   waLbl);
-  $t("fab-savy-lbl", savyLbl);
+  // Trust bar inside order modal
+  if($el("om-trust-orders"))   $el("om-trust-orders").textContent   = isAr ? "+125 طلب" : (l==="en" ? "125+ orders" : "125+ commandes");
+  if($el("om-trust-delivery")) $el("om-trust-delivery").textContent = isAr ? "🛵 45 دقيقة مضمونة" : (l==="en" ? "🛵 45 min guaranteed" : "🛵 45 min garanties");
+
+  // Sticky WA pill
+  if($el("wa-sticky-lbl")) $el("wa-sticky-lbl").textContent = isAr ? "اطلب عبر واتساب" : (l==="en" ? "Order on WhatsApp" : "Commander sur WhatsApp");
+
+  // Exit popup
+  if($el("exit-title"))   $el("exit-title").textContent   = isAr ? "قبل المغادرة..." : (l==="en" ? "Before you go..." : "Avant de partir...");
+  if($el("exit-sub"))     $el("exit-sub").textContent     = isAr ? "احصل على قائمة الطعام الكاملة وعروض اليوم مباشرة على واتساب 📲" : (l==="en" ? "Get the full menu + today's deals straight to your WhatsApp 📲" : "Reçois le menu complet + nos offres du jour directement sur ton WhatsApp 📲");
+  if($el("exit-wa-lbl"))  $el("exit-wa-lbl").textContent  = isAr ? "أرسل القائمة على واتساب" : (l==="en" ? "Send menu to WhatsApp" : "Envoyer le menu sur WhatsApp");
+  if($el("exit-dismiss")) $el("exit-dismiss").textContent = isAr ? "لا شكراً، سأغادر بدون وجبتي 😅" : (l==="en" ? "No thanks, leaving empty-handed 😅" : "Non merci, je pars sans mon repas 😅");
+
+  // FAB label removed (single icon button now)
 
   // ── Delivery text ──
   $t("delivery-text", t.deliveryText);
@@ -3075,11 +2714,6 @@ function openChat() {
   chatOpen = true;
   const cw = document.getElementById("chat-window");
   if(cw) cw.classList.add("open");
-  // close the speed-dial menu
-  const fabOpts = document.getElementById("fab-options");
-  if(fabOpts) fabOpts.classList.remove("open");
-  const fabMain = document.getElementById("fab-main");
-  if(fabMain) fabMain.classList.remove("open");
   if(chatHistory.length === 0) initChat();
 }
 function closeChat() {
@@ -3087,25 +2721,6 @@ function closeChat() {
   const cw = document.getElementById("chat-window");
   if(cw) cw.classList.remove("open");
 }
-
-function toggleFabMenu() {
-  const opts = document.getElementById("fab-options");
-  const main = document.getElementById("fab-main");
-  if(!opts || !main) return;
-  const isOpen = opts.classList.contains("open");
-  opts.classList.toggle("open", !isOpen);
-  main.classList.toggle("open", !isOpen);
-}
-// Close speed-dial when clicking outside
-document.addEventListener("click", function(e) {
-  const wrap = document.getElementById("fab-main-wrap");
-  if(wrap && !wrap.contains(e.target)) {
-    const opts = document.getElementById("fab-options");
-    const main = document.getElementById("fab-main");
-    if(opts) opts.classList.remove("open");
-    if(main) main.classList.remove("open");
-  }
-});
 
 /* ═══════════════════════════════════════════
    CHAT PERSONA (inside chat window)
@@ -3997,10 +3612,10 @@ renderDishes();
 function renderReviews() {
   const isAr = lang === "ar" || false;
   const track = document.getElementById("rev-track");
-  const dotsEl = document.getElementById("rev-dots");
-  if(!track || !dotsEl) return;
+  if(!track) return;
 
-  track.innerHTML = reviews.map(r => {
+  // Build one set of cards
+  const cards = reviews.map(r => {
     const txt = r[lang] || r.fr;
     return `<div class="rev-card">
       <div class="rev-card-top">
@@ -4019,34 +3634,49 @@ function renderReviews() {
     </div>`;
   }).join("");
 
-  revPerPage = window.innerWidth < 769 ? 1 : window.innerWidth < 1025 ? 2 : 3;
-  const pages = Math.ceil(reviews.length / revPerPage);
-  dotsEl.innerHTML = Array.from({length:pages},(_,i)=>
-    `<button class="rev-dot${i===0?" active":""}" onclick="goRevPage(${i})"></button>`
-  ).join("");
-  if(isAr){ track.style.direction="rtl"; } else { track.style.direction="ltr"; }
-  goRevPage(0);
-}
+  // Duplicate for seamless infinite loop
+  track.innerHTML = cards + cards;
 
-function goRevPage(page) {
-  revIdx = page;
-  const track = document.getElementById("rev-track");
-  if(!track) return;
-  const cardW = track.querySelector(".rev-card")?.offsetWidth || 280;
-  const gap = 16;
-  track.style.transform = `translateX(-${page * revPerPage * (cardW + gap)}px)`;
-  document.querySelectorAll(".rev-dot").forEach((d,i) => d.classList.toggle("active", i===page));
+  // Speed: 45s for full loop; pause on hover is CSS
+  track.style.animationDuration = "45s";
 }
-
-// Auto-advance every 5s
-setInterval(() => {
-  const pages = Math.ceil(reviews.length / revPerPage);
-  goRevPage((revIdx + 1) % pages);
-}, 5000);
 
 window.addEventListener("resize", () => { renderReviews(); });
 
 setLang('ar');
+
+/* ═══════════════════════════════════════════
+   EXIT INTENT
+═══════════════════════════════════════════ */
+let exitShown = false;
+
+function showExitPopup() {
+  if(exitShown) return;
+  // Don't show if order was already submitted
+  if(document.getElementById("order-track-section")?.style.display !== "none" &&
+     document.getElementById("order-track-section")?.style.display !== "") return;
+  exitShown = true;
+  document.getElementById("exit-overlay").classList.add("open");
+}
+
+function closeExitPopup() {
+  document.getElementById("exit-overlay").classList.remove("open");
+}
+
+// Desktop: mouse leaves toward top of page
+document.addEventListener("mouseleave", e => {
+  if(e.clientY < 60) showExitPopup();
+});
+
+// Mobile: page hidden (app switch / tab change)
+document.addEventListener("visibilitychange", () => {
+  if(document.hidden) showExitPopup();
+});
+
+// Close on overlay click
+document.getElementById("exit-overlay").addEventListener("click", function(e) {
+  if(e.target === this) closeExitPopup();
+});
 
 
 /* ═══════════════════════════════════════════
