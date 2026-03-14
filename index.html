@@ -580,8 +580,32 @@
     .fsyne { font-family:'Syne',sans-serif; }
 
     /* ── NAVBAR ── */
+    /* ── URGENCY STRIP ───────────────────────────────────── */
+    #urgency-strip {
+      background: linear-gradient(90deg, #005c45, #008060, #005c45);
+      background-size: 200% 100%;
+      animation: urgencySlide 6s linear infinite;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      text-align: center;
+      padding: 7px 16px;
+      letter-spacing: .01em;
+      position: sticky;
+      top: 0;
+      z-index: 201;
+    }
+    @keyframes urgencySlide {
+      0%   { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+    #urgency-inner { display:flex; align-items:center; justify-content:center; gap:8px; flex-wrap:wrap; }
+    #urgency-strip strong { font-weight:900; color:#a7f3d0; }
+    #urgency-sep { opacity:.5; }
+    @media(max-width:500px){ #urgency-slots { display:none; } #urgency-sep { display:none; } }
+
     #navbar {
-      position:sticky; top:0; z-index:200;
+      position:sticky; top:36px; z-index:200;
       background:var(--navbar-bg); backdrop-filter:blur(16px);
       border-bottom:1px solid var(--border);
       padding:0 clamp(16px,4vw,56px); height:66px;
@@ -1312,6 +1336,16 @@
 </head>
 <body>
 
+<!-- ══ URGENCY STRIP ════════════════════════════════════ -->
+<div id="urgency-strip">
+  <div id="urgency-inner">
+    <span id="urgency-fire">🔥</span>
+    <span id="urgency-txt">12 personnes ont commandé aujourd'hui à Tétouan</span>
+    <span id="urgency-sep">·</span>
+    <span id="urgency-slots">Dernière livraison à 21h — <strong>3 créneaux restants</strong></span>
+  </div>
+</div>
+
 <!-- ══ BANNER ══════════════════════════════════════════ -->
 
 <!-- ══ NAVBAR ══════════════════════════════════════════ -->
@@ -1605,6 +1639,23 @@
 </section>
 
 <!-- ══ CUSTOMER REVIEWS ═════════════════════════════════════ -->
+<!-- ══ CUSTOMER REVIEWS ═════════════════════════════════════ -->
+<div id="menu-cta-nudge" style="text-align:center;padding:18px 16px 6px;background:var(--bg);">
+  <button onclick="openOrderModal()" style="
+    background:linear-gradient(135deg,var(--green),var(--greenL));
+    color:#fff;border:none;border-radius:99px;
+    padding:12px 28px;font-size:13px;font-weight:700;
+    cursor:pointer;font-family:'DM Sans',sans-serif;
+    box-shadow:0 6px 20px rgba(0,128,96,.25);
+    display:inline-flex;align-items:center;gap:8px;
+    transition:transform .2s,box-shadow .2s;
+  " onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 10px 28px rgba(0,168,120,.35)'"
+     onmouseout="this.style.transform='';this.style.boxShadow='0 6px 20px rgba(0,128,96,.25)'">
+    🛵 <span id="menu-nudge-txt">Commander maintenant</span>
+  </button>
+  <p style="font-size:11px;color:var(--muted);margin-top:8px;" id="menu-nudge-sub">⭐ 4.9 · 125+ clients · Livraison 45 min</p>
+</div>
+
 <section id="reviews">
   <div class="reviews-inner">
     <div style="text-align:center;margin-bottom:40px;">
@@ -1635,6 +1686,23 @@
     <div class="rev-dots" id="rev-dots"></div>
   </div>
 </section>
+
+<!-- Reviews → Order CTA nudge -->
+<div id="reviews-cta-nudge" style="text-align:center;padding:20px 16px 8px;background:var(--bg);">
+  <p style="font-size:13px;color:var(--sub);margin-bottom:12px;line-height:1.6;" id="reviews-nudge-quote">
+    💬 <em>"Zéro fatigue post-déjeuner, je reste concentré toute l'après-midi."</em> — Karim A., Martil
+  </p>
+  <button onclick="openOrderModal()" style="
+    background:var(--text);color:var(--card);border:none;border-radius:99px;
+    padding:12px 28px;font-size:13px;font-weight:700;
+    cursor:pointer;font-family:'DM Sans',sans-serif;
+    display:inline-flex;align-items:center;gap:8px;
+    transition:opacity .2s;
+  " onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+    🛵 <span id="reviews-nudge-txt">Je veux le même résultat</span>
+  </button>
+  <p style="font-size:11px;color:var(--muted);margin-top:8px;" id="reviews-nudge-sub">Livraison en 45 min · Tétouan · M'diq · Martil</p>
+</div>
 
 <!-- ══ LOYALTY / REWARDS ═══════════════════════════════════════ -->
 <section id="loyalty">
@@ -2072,18 +2140,20 @@ let persona     = null;        // 'employee' | 'sportif' | 'famille' | 'couple' 
 
 // Chat state — grouped to reduce global scope pollution
 const ChatState = {
-  history:    [],   // Groq conversation history
-  open:       false,
-  leadShown:  false,
-  leadDone:   false,
+  history:       [],   // Groq conversation history
+  open:          false,
+  leadShown:     false,
+  leadDone:      false,
+  userMsgCount:  0,    // how many messages visitor has sent
 };
 
 // Convenience aliases so the rest of the code keeps working without a rewrite
 Object.defineProperties(window, {
-  chatHistory: { get(){ return ChatState.history;   }, set(v){ ChatState.history   = v; }, configurable:true },
-  chatOpen:    { get(){ return ChatState.open;       }, set(v){ ChatState.open      = v; }, configurable:true },
-  leadShown:   { get(){ return ChatState.leadShown;  }, set(v){ ChatState.leadShown  = v; }, configurable:true },
-  leadDone:    { get(){ return ChatState.leadDone;   }, set(v){ ChatState.leadDone   = v; }, configurable:true },
+  chatHistory:    { get(){ return ChatState.history;       }, set(v){ ChatState.history      = v; }, configurable:true },
+  chatOpen:       { get(){ return ChatState.open;           }, set(v){ ChatState.open         = v; }, configurable:true },
+  leadShown:      { get(){ return ChatState.leadShown;      }, set(v){ ChatState.leadShown    = v; }, configurable:true },
+  leadDone:       { get(){ return ChatState.leadDone;       }, set(v){ ChatState.leadDone     = v; }, configurable:true },
+  userMsgCount:   { get(){ return ChatState.userMsgCount;   }, set(v){ ChatState.userMsgCount = v; }, configurable:true },
 });
 
 /* ═══════════════════════════════════════════
@@ -2421,6 +2491,39 @@ applyChatTheme("employee");
 let revIdx = 0;
 let revPerPage = window.innerWidth < 769 ? 1 : window.innerWidth < 1025 ? 2 : 3;
 
+/* ═══════════════════════════════════════════
+   URGENCY STRIP — dynamic count + i18n
+═══════════════════════════════════════════ */
+function updateUrgencyStrip(l) {
+  const hour = new Date().getHours();
+  // Random-ish order count seeded on the hour so it feels live but stable
+  const orderCount = 8 + (hour % 7) + Math.floor(Math.random() * 5);
+  const slots      = Math.max(1, 5 - (hour % 4));
+  const cities     = ["Tétouan","M'diq","Martil"];
+  const city       = cities[hour % 3];
+  const closingHour = hour < 13 ? 14 : 21;
+
+  const msgs = {
+    fr: {
+      orders: `🔥 ${orderCount} personnes ont commandé aujourd'hui à ${city}`,
+      slots:  `Dernière livraison à ${closingHour}h — <strong>${slots} créneaux restants</strong>`
+    },
+    en: {
+      orders: `🔥 ${orderCount} people ordered today in ${city}`,
+      slots:  `Last delivery at ${closingHour}:00 — <strong>${slots} slots left</strong>`
+    },
+    ar: {
+      orders: `🔥 ${orderCount} شخصاً طلبوا اليوم في ${city === "Tétouan" ? "تطوان" : city}`,
+      slots:  `آخر توصيل الساعة ${closingHour} — <strong>${slots} مقاعد متبقية</strong>`
+    }
+  };
+  const m = msgs[l] || msgs.fr;
+  const txt  = document.getElementById("urgency-txt");
+  const slot = document.getElementById("urgency-slots");
+  if(txt)  txt.textContent = m.orders;
+  if(slot) slot.innerHTML  = m.slots;
+}
+
 function setLang(l) {
   lang = l;
   document.documentElement.lang = l;
@@ -2457,6 +2560,8 @@ function setLang(l) {
 
   $t("how-title", t.how);  $cs("how-title", ff);
 
+  // Urgency strip
+  updateUrgencyStrip(l);
 
   renderWWD();
   renderSteps();
@@ -2472,6 +2577,17 @@ function setLang(l) {
   $t("footer-copy",   t.footerCopy);
   $t("fl-1", t.fl[0]);  $t("fl-2", t.fl[1]);  $t("fl-3", t.fl[2]);
   $t("banner-link",   t.bannerLink);
+
+  // CTA nudges
+  const nudgeTxt = isAr ? "اطلب الآن 🛵" : (l==="en" ? "Order now 🛵" : "Commander maintenant 🛵");
+  const nudgeSub = isAr ? "⭐ 4.9 · +125 عميل · توصيل 45 دقيقة" : (l==="en" ? "⭐ 4.9 · 125+ clients · 45 min delivery" : "⭐ 4.9 · 125+ clients · Livraison 45 min");
+  const revTxt   = isAr ? "🛵 أريد نفس النتيجة" : (l==="en" ? "🛵 I want the same result" : "🛵 Je veux le même résultat");
+  const revSub   = isAr ? "توصيل في 45 دقيقة · تطوان · مضيق · مرتيل" : (l==="en" ? "Delivery in 45 min · Tétouan · M'diq · Martil" : "Livraison en 45 min · Tétouan · M'diq · Martil");
+  const $el = id => document.getElementById(id);
+  if($el("menu-nudge-txt"))    $el("menu-nudge-txt").textContent    = nudgeTxt;
+  if($el("menu-nudge-sub"))    $el("menu-nudge-sub").textContent    = nudgeSub;
+  if($el("reviews-nudge-txt")) $el("reviews-nudge-txt").textContent = revTxt;
+  if($el("reviews-nudge-sub")) $el("reviews-nudge-sub").textContent = revSub;
 
   // FAB labels
   const waLbl   = isAr ? "واتساب" : "WhatsApp";
@@ -2544,7 +2660,7 @@ function setLang(l) {
   if (chatMsgs) {
     chatHistory = [];
     chatMsgs.innerHTML = "";
-    leadShown = false; leadDone = false;
+    leadShown = false; leadDone = false; userMsgCount = 0;
     const leadForm  = document.getElementById("chat-lead-form");
     const inputArea = document.getElementById("chat-input-area");
     const chatWin   = document.getElementById("chat-window");
@@ -2924,6 +3040,7 @@ function resetChatForPersona(p) {
   chatHistory = [];
   leadShown   = false;
   leadDone    = false;
+  userMsgCount = 0;
   const _msgs = document.getElementById("chat-msgs");
   const _lf   = document.getElementById("chat-lead-form");
   const _ia   = document.getElementById("chat-input-area");
@@ -3002,7 +3119,7 @@ function chatSetPersona(p) {
   });
   chatHistory = [];
   document.getElementById("chat-msgs").innerHTML = "";
-  leadShown = false; leadDone = false;
+  leadShown = false; leadDone = false; userMsgCount = 0;
   const rlf=document.getElementById("chat-lead-form"); if(rlf) rlf.style.display="none";
   const ria=document.getElementById("chat-input-area"); if(ria) ria.style.display="block";
   initChat();
@@ -3251,6 +3368,7 @@ async function chatSend() {
 async function chatSendText(text) {
   if(leadDone) return;
   addUserMsg(text);
+  userMsgCount++;
   chatHistory.push({ role:"user", content:text });
   document.getElementById("chat-send-btn").disabled = true;
   showTyping();
@@ -3270,8 +3388,8 @@ async function chatSendText(text) {
 
     if(!reply) throw new Error("empty");
 
-    // Only show lead form when SAVY explicitly signals it
-    const triggerLead = reply.includes("SAVY_GET_LEAD");
+    // Show lead form when AI signals OR after visitor has sent 2+ messages
+    const triggerLead = reply.includes("SAVY_GET_LEAD") || userMsgCount >= 2;
     reply = reply.replace("SAVY_GET_LEAD","").trim();
 
     hideTyping();
@@ -4132,7 +4250,7 @@ function calcNutri() {
 // Reset chat
 function resetChat() {
   chatHistory = [];
-  leadShown = false; leadDone = false;
+  leadShown = false; leadDone = false; userMsgCount = 0;
   const msgs = document.getElementById("chat-msgs");
   if(msgs) msgs.innerHTML = "";
   const lf = document.getElementById("chat-lead-form");
