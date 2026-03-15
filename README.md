@@ -45,7 +45,17 @@ Without this the chat will not work.
    - Value: your key from [console.groq.com/keys](https://console.groq.com/keys)
 3. **Deploys** → **Trigger deploy** → **Deploy site**
 
-### 4. Add your custom domain (optional)
+### 4. Update allowed CORS origins ⚠️ important
+After your Netlify URL is assigned (e.g. `https://savy-xyz.netlify.app`), open `netlify/functions/gemini.js` and update `ALLOWED_ORIGINS`:
+
+```js
+const ALLOWED_ORIGINS = [
+  "https://savy-xyz.netlify.app",  // ← your real Netlify URL
+  "https://www.yourdomain.com",    // ← your custom domain (if any)
+];
+```
+
+### 5. Add your custom domain (optional)
 Netlify dashboard → **Domain management** → **Add custom domain** → follow DNS instructions.
 
 ---
@@ -68,5 +78,33 @@ Netlify dashboard → **Domain management** → **Add custom domain** → follow
 
 ---
 
-## 📍 Delivery zones
-Tétouan · M'diq · Martil
+## 📍 Delivery zones & hours
+- **Zones:** Tétouan · M'diq · Martil
+- **Hours:** Orders accepted until **21h00** for same-day delivery
+- **Delay:** 45 minutes maximum
+
+---
+
+## 🧩 How the AI chat works
+1. Visitor picks a persona (employee / sportif / famille / couple)
+2. Frontend sends a `[SYSTEM_OPEN:persona]` seed message to the Netlify function
+3. The function builds a persona-specific system prompt and calls Groq
+4. Groq returns a personalized greeting in the visitor's language (auto-detected)
+5. Conversation continues; when the visitor confirms an order, the AI appends `SAVY_GET_LEAD` (hidden token) which triggers the lead capture form in the frontend
+6. Lead data is sent to Google Sheets via Apps Script
+
+---
+
+## ⚙️ Environment variables
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `GROQ_API_KEY` | ✅ Yes | From [console.groq.com](https://console.groq.com/keys) |
+
+---
+
+## 🔒 Security notes
+- API key is server-side only — never exposed to the browser
+- CORS is restricted to your Netlify domain (update `ALLOWED_ORIGINS` in `gemini.js`)
+- Message content is truncated to 2000 chars max per turn
+- Conversation history is capped at 20 turns to prevent prompt injection via long histories
+- `netlify.toml` sets security headers on all routes
