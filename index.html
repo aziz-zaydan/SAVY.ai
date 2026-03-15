@@ -5027,7 +5027,7 @@ function submitOrder() {
     renderDishes();
     animateLoyaltyPoints(10);
     // Show live tracking
-    showOrderTracking(name);
+    showOrderTracking(name, orderId);
   }, 800);
 }
 
@@ -5320,10 +5320,22 @@ let _otsStep  = 1;
 const OTS_ETA   = [28, 22, 12, 5];
 const OTS_FILLS = [35, 55, 78, 100];
 
-function showOrderTracking(customerName) {
+function showOrderTracking(customerName, orderId) {
   const section = document.getElementById("order-track-section");
   if(!section) return;
   section.style.display = "";  // reveal section
+
+  // Update order ID display with real order ID
+  const orderIdEl = section.querySelector(".ots-order-id");
+  if(orderIdEl && orderId) orderIdEl.textContent = "#" + orderId;
+
+  // Also update the h2 title
+  const titleEl = document.getElementById("ots-title");
+  if(titleEl && orderId){
+    const t = copy[lang] || copy.fr;
+    titleEl.innerHTML = (lang==="ar" ? "طلب " : (lang==="en" ? "Order " : "Commande ")) +
+      "<span class='ots-order-id'>#" + orderId + "</span>";
+  }
 
   // Show the navbar tracking button
   const navBtn = document.getElementById("nav-track-btn");
@@ -5945,58 +5957,49 @@ function renderLoyaltyCheckerResult(count, phone) {
   </div>
 </div>
 
+
 <script>
 (function(){
-  var _timer = null;
+  var ov, mod, lastKbH = -1;
 
   function fix(){
-    var vp = window.visualViewport;
-    if(!vp) return;
-    var kbH = Math.max(0, window.innerHeight - vp.height);
+    if(!ov) ov  = document.getElementById('order-modal-overlay');
+    if(!mod) mod = document.getElementById('order-modal');
+    if(!ov || !mod || !ov.classList.contains('open')) return;
 
-    var overlay = document.getElementById('order-modal-overlay');
-    var modal   = document.getElementById('order-modal');
-    if(overlay && overlay.classList.contains('open') && modal){
-      overlay.style.paddingBottom = kbH > 50 ? kbH+'px' : '0px';
-      modal.style.maxHeight       = kbH > 50 ? (vp.height - 24)+'px' : '';
-      if(kbH > 50){
-        var el = document.activeElement;
-        if(el && el.closest('#order-modal')){
-          el.scrollIntoView({block:'center',behavior:'smooth'});
-        }
-      }
-    }
+    var vp  = window.visualViewport;
+    var kbH = vp ? Math.round(window.innerHeight - vp.height) : 0;
 
-    var form = document.querySelector('.chat-lead-form');
-    if(form){
-      form.style.marginBottom = kbH > 50 ? kbH+'px' : '';
+    // Only update DOM if value actually changed — prevents vibration loop
+    if(kbH === lastKbH) return;
+    lastKbH = kbH;
+
+    if(kbH > 80){
+      ov.style.paddingBottom = kbH + 'px';
+      mod.style.maxHeight    = (vp.height - 20) + 'px';
+    } else {
+      ov.style.paddingBottom = '';
+      mod.style.maxHeight    = '';
     }
   }
 
-  // Debounce — only fire once keyboard stops moving
-  function debouncedFix(){
-    clearTimeout(_timer);
-    _timer = setTimeout(fix, 120);
-  }
+  // Reset cache when modal opens/closes
+  function resetCache(){ lastKbH = -1; ov = null; mod = null; }
 
   if(window.visualViewport){
-    // Only resize — NOT scroll (scroll causes vibration)
-    window.visualViewport.addEventListener('resize', debouncedFix);
+    window.visualViewport.addEventListener('resize', fix);
   }
 
-  document.addEventListener('focusin', function(e){
-    if(!e.target.closest('#order-modal,.chat-lead-form')) return;
-    clearTimeout(_timer);
-    _timer = setTimeout(fix, 400);
-  }, true);
-
-  document.addEventListener('focusout', function(e){
-    if(!e.target.closest('#order-modal,.chat-lead-form')) return;
-    clearTimeout(_timer);
-    _timer = setTimeout(function(){
-      if(!document.activeElement || !document.activeElement.closest('#order-modal,.chat-lead-form')) fix();
-    }, 200);
-  }, true);
+  // Watch modal open state
+  var observer = new MutationObserver(function(muts){
+    muts.forEach(function(m){
+      if(m.target.id === 'order-modal-overlay') { resetCache(); fix(); }
+    });
+  });
+  document.addEventListener('DOMContentLoaded', function(){
+    var el = document.getElementById('order-modal-overlay');
+    if(el) observer.observe(el, { attributes:true, attributeFilter:['class','style'] });
+  });
 })();
 </script>
 </body>
