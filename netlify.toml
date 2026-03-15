@@ -38,3 +38,8 @@
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
     Content-Type = "application/manifest+json; charset=utf-8"
+
+[[headers]]
+  for = "/netlify/functions/whatsapp"
+  [headers.values]
+    Cache-Control = "no-store"
