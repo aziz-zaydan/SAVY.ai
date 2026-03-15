@@ -154,23 +154,21 @@
       position:fixed; inset:0; background:rgba(0,0,0,.55);
       z-index:1050; display:none; align-items:flex-end; justify-content:center;
       backdrop-filter:blur(6px);
-      overflow:hidden;
-    }
-    /* Keyboard-aware: push modal up when keyboard opens on mobile */
-    @supports (height: 100dvh) {
-      #order-modal-overlay.open { align-items: flex-end; }
+      overflow:visible;
+      transition: transform .25s ease;
     }
     #order-modal-overlay.open { display:flex; }
     #order-modal {
       background:var(--card);
       border-radius:24px 24px 0 0;
       width:100%; max-width:480px;
-      max-height:92dvh; overflow-y:auto;
+      max-height:85dvh; overflow-y:auto;
       padding:28px 24px 36px;
       position:relative;
       box-shadow:0 -8px 40px rgba(0,0,0,.2);
       animation:slideUpSheet .32s cubic-bezier(.34,1.2,.64,1) both;
-      will-change:margin-bottom;
+      scroll-behavior:smooth;
+      -webkit-overflow-scrolling:touch;
     }
     @keyframes slideUpSheet {
       from { transform:translateY(100%); opacity:0; }
@@ -5949,64 +5947,88 @@ function renderLoyaltyCheckerResult(count, phone) {
 </div>
 
 <script>
-// ── Keyboard-aware popup scroll ────────────────────────────────
+// ── Keyboard-aware popup — moves overlay above keyboard ──────────
 (function(){
-  const inputSel = '.lead-inp, #order-modal input, #order-modal textarea, .chat-inp, .chat-lead-form input, .nutri-input, .nutri-select';
+  const inputSel = '.lead-inp, #order-modal input, #order-modal textarea, .chat-inp, .chat-lead-form input';
 
-  function shiftModal(kbH) {
-    const modal = document.getElementById('order-modal');
-    if(!modal) return;
+  function updateModalPosition() {
     const overlay = document.getElementById('order-modal-overlay');
-    if(!overlay || !overlay.classList.contains('open')) return;
-    modal.style.transition = 'transform .25s ease, margin-bottom .25s ease';
+    const modal   = document.getElementById('order-modal');
+    if(!overlay || !modal || !overlay.classList.contains('open')) return;
+
+    const vp     = window.visualViewport;
+    const kbH    = vp ? Math.max(0, window.innerHeight - vp.height) : 0;
+    const offsetY = vp ? (window.innerHeight - vp.height - vp.offsetTop) : 0;
+
     if(kbH > 80) {
-      modal.style.marginBottom = kbH + 'px';
-      // After shifting, scroll active input into view inside modal
-      setTimeout(() => {
-        const active = document.activeElement;
-        if(active && active.matches(inputSel)) {
-          const rect   = active.getBoundingClientRect();
-          const vpH    = window.visualViewport ? window.visualViewport.height : window.innerHeight;
-          if(rect.bottom > vpH - 20) {
-            modal.scrollTop += (rect.bottom - vpH + 60);
+      // Lift the overlay so the modal sits just above the keyboard
+      overlay.style.transform  = 'translateY(-' + kbH + 'px)';
+      overlay.style.transition = 'transform .22s ease';
+      // Also ensure active input is visible inside the modal
+      const active = document.activeElement;
+      if(active && active.matches(inputSel)){
+        setTimeout(() => {
+          const rect = active.getBoundingClientRect();
+          const vpBottom = vp ? vp.height : window.innerHeight;
+          if(rect.bottom > vpBottom - 16){
+            modal.scrollTop += rect.bottom - vpBottom + 80;
+          } else if(rect.top < 60){
+            modal.scrollTop -= 60 - rect.top;
           }
-        }
-      }, 260);
+        }, 240);
+      }
     } else {
-      modal.style.marginBottom = '';
+      overlay.style.transform  = '';
+      overlay.style.transition = 'transform .22s ease';
     }
   }
 
-  function shiftLeadForm(kbH) {
+  // Listen on visualViewport resize (keyboard open/close)
+  if(window.visualViewport){
+    window.visualViewport.addEventListener('resize', updateModalPosition);
+    window.visualViewport.addEventListener('scroll', updateModalPosition);
+  }
+
+  // On input focus — trigger position update after keyboard animates
+  document.addEventListener('focusin', function(e){
+    if(!e.target.matches(inputSel)) return;
+    setTimeout(updateModalPosition, 350);
+    setTimeout(updateModalPosition, 700); // double fire for slow keyboards
+  }, true);
+
+  // On blur — reset after short delay (keyboard may reopen for next input)
+  document.addEventListener('focusout', function(e){
+    if(!e.target.matches(inputSel)) return;
+    setTimeout(() => {
+      const active = document.activeElement;
+      if(!active || !active.matches(inputSel)){
+        const overlay = document.getElementById('order-modal-overlay');
+        if(overlay) { overlay.style.transform = ''; overlay.style.transition = 'transform .22s ease'; }
+        const form = document.querySelector('.chat-lead-form');
+        if(form) { form.style.transform = ''; }
+      }
+    }, 200);
+  }, true);
+
+  // Chat lead form — same treatment
+  function updateLeadForm() {
     const form = document.querySelector('.chat-lead-form');
     if(!form) return;
-    form.style.transition = 'margin-bottom .25s ease';
-    form.style.marginBottom = kbH > 80 ? kbH + 'px' : '';
-    if(kbH > 80) {
-      setTimeout(() => {
-        const active = document.activeElement;
-        if(active && active.matches(inputSel)) active.scrollIntoView({ behavior:'smooth', block:'center' });
-      }, 260);
+    const vp  = window.visualViewport;
+    const kbH = vp ? Math.max(0, window.innerHeight - vp.height) : 0;
+    form.style.transition = 'transform .22s ease';
+    form.style.transform  = kbH > 80 ? 'translateY(-' + kbH + 'px)' : '';
+    if(kbH > 80){
+      const active = document.activeElement;
+      if(active && active.matches(inputSel)){
+        setTimeout(() => active.scrollIntoView({ behavior:'smooth', block:'center' }), 240);
+      }
     }
   }
-
-  if(window.visualViewport) {
-    window.visualViewport.addEventListener('resize', () => {
-      const kbH = Math.max(0, window.innerHeight - window.visualViewport.height);
-      shiftModal(kbH);
-      shiftLeadForm(kbH);
-    });
-    window.visualViewport.addEventListener('scroll', () => {
-      const kbH = Math.max(0, window.innerHeight - window.visualViewport.height);
-      shiftModal(kbH);
-    });
+  if(window.visualViewport){
+    window.visualViewport.addEventListener('resize', updateLeadForm);
   }
 
-  // Fallback: scroll input into view on focus
-  document.addEventListener('focusin', (e) => {
-    if(!e.target.matches(inputSel)) return;
-    setTimeout(() => e.target.scrollIntoView({ behavior:'smooth', block:'center' }), 380);
-  }, true);
 })();
 </script>
 </body>
