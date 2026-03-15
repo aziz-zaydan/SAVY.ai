@@ -3631,8 +3631,8 @@ function updateUrgencyStrip(l) {
   renderUrgencyStrip();
 }
 
-// Tick every 9 seconds, stop at 25
-setInterval(tickUrgencyCount, 9000);
+// Tick every 13 seconds, stop at 31
+setInterval(tickUrgencyCount, 13000);
 
 function setLang(l) {
   lang = l;
@@ -5316,14 +5316,19 @@ function animateLoyaltyPoints(add) {
    INLINE ORDER TRACKING (post-submit)
 ═══════════════════════════════════════════ */
 let _otsTimer = null;
-let _otsStep  = 1;
-const OTS_ETA   = [28, 22, 12, 5];
+let _otsStep     = 1;
+let _otsOrderTime = "";  // real time when order was submitted
+const OTS_ETA   = [25, 18, 10, 5];
 const OTS_FILLS = [35, 55, 78, 100];
 
 function showOrderTracking(customerName, orderId) {
   const section = document.getElementById("order-track-section");
   if(!section) return;
   section.style.display = "";  // reveal section
+
+  // Capture real submission time (HH:MM)
+  const now = new Date();
+  _otsOrderTime = now.getHours().toString().padStart(2,"0") + ":" + now.getMinutes().toString().padStart(2,"0");
 
   // Update order ID display with real order ID
   const orderIdEl = section.querySelector(".ots-order-id");
@@ -5332,7 +5337,6 @@ function showOrderTracking(customerName, orderId) {
   // Also update the h2 title
   const titleEl = document.getElementById("ots-title");
   if(titleEl && orderId){
-    const t = copy[lang] || copy.fr;
     titleEl.innerHTML = (lang==="ar" ? "طلب " : (lang==="en" ? "Order " : "Commande ")) +
       "<span class='ots-order-id'>#" + orderId + "</span>";
   }
@@ -5363,6 +5367,12 @@ function showOrderTracking(customerName, orderId) {
   }, 8000);
 }
 
+function addMins(timeStr, mins) {
+  const parts = timeStr.split(":");
+  const d = new Date();
+  d.setHours(parseInt(parts[0]), parseInt(parts[1]) + mins);
+  return d.getHours().toString().padStart(2,"0") + ":" + d.getMinutes().toString().padStart(2,"0");
+}
 function _otsRender() {
   const isAr = lang === "ar" || false;
   const t = copy[lang] || copy.fr;
@@ -5379,6 +5389,12 @@ function _otsRender() {
     if(i < _otsStep) {
       s.classList.add("ots-done");
       if(dotEl) dotEl.textContent = "✓";
+      // Show real order time on step 0, estimated times for others
+      if(timeEl) {
+        if(i === 0 && _otsOrderTime) timeEl.textContent = _otsOrderTime;
+        else if(i === 1 && _otsStep > 1) timeEl.textContent = _otsOrderTime ? addMins(_otsOrderTime, 12) : "";
+        else if(i === 2 && _otsStep > 2) timeEl.textContent = _otsOrderTime ? addMins(_otsOrderTime, 5) : "";
+      }
     } else if(i === _otsStep) {
       s.classList.add("ots-active");
       if(dotEl) dotEl.textContent = ["","👨‍🍳","📦","🛵"][i] || "●";
