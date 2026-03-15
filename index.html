@@ -5947,88 +5947,86 @@ function renderLoyaltyCheckerResult(count, phone) {
 </div>
 
 <script>
-// ── Keyboard-aware popup — moves overlay above keyboard ──────────
+// ── Keyboard-aware popup ─────────────────────────────────────────
+// Logic: when keyboard opens, the visible area shrinks.
+// We clamp the modal so it fits exactly in the visible area above keyboard.
 (function(){
-  const inputSel = '.lead-inp, #order-modal input, #order-modal textarea, .chat-inp, .chat-lead-form input';
+  const inputSel = '.lead-inp, #order-modal input, #order-modal textarea, .chat-lead-form input';
 
-  function updateModalPosition() {
+  function adjustModal() {
     const overlay = document.getElementById('order-modal-overlay');
     const modal   = document.getElementById('order-modal');
     if(!overlay || !modal || !overlay.classList.contains('open')) return;
 
-    const vp     = window.visualViewport;
-    const kbH    = vp ? Math.max(0, window.innerHeight - vp.height) : 0;
-    const offsetY = vp ? (window.innerHeight - vp.height - vp.offsetTop) : 0;
+    const vp      = window.visualViewport;
+    if(!vp) return;
+
+    const kbH     = Math.max(0, window.innerHeight - vp.height); // keyboard height
+    const visibleH = vp.height;  // visible screen height above keyboard
 
     if(kbH > 80) {
-      // Lift the overlay so the modal sits just above the keyboard
+      // Limit modal height to fit in visible area with breathing room
+      const maxH = visibleH - 20;
+      modal.style.maxHeight    = maxH + 'px';
+      modal.style.overflowY    = 'auto';
+      // Move overlay up by keyboard height so modal bottom aligns with keyboard top
       overlay.style.transform  = 'translateY(-' + kbH + 'px)';
-      overlay.style.transition = 'transform .22s ease';
-      // Also ensure active input is visible inside the modal
+      overlay.style.transition = 'transform .2s ease';
+
+      // Scroll active input into center of modal
       const active = document.activeElement;
       if(active && active.matches(inputSel)){
         setTimeout(() => {
-          const rect = active.getBoundingClientRect();
-          const vpBottom = vp ? vp.height : window.innerHeight;
-          if(rect.bottom > vpBottom - 16){
-            modal.scrollTop += rect.bottom - vpBottom + 80;
-          } else if(rect.top < 60){
-            modal.scrollTop -= 60 - rect.top;
-          }
-        }, 240);
+          active.scrollIntoView({ behavior:'smooth', block:'center' });
+        }, 250);
       }
     } else {
+      // Keyboard closed — restore original state
+      modal.style.maxHeight    = '';
       overlay.style.transform  = '';
-      overlay.style.transition = 'transform .22s ease';
+      overlay.style.transition = 'transform .2s ease';
     }
   }
 
-  // Listen on visualViewport resize (keyboard open/close)
   if(window.visualViewport){
-    window.visualViewport.addEventListener('resize', updateModalPosition);
-    window.visualViewport.addEventListener('scroll', updateModalPosition);
+    window.visualViewport.addEventListener('resize', adjustModal);
   }
 
-  // On input focus — trigger position update after keyboard animates
   document.addEventListener('focusin', function(e){
     if(!e.target.matches(inputSel)) return;
-    setTimeout(updateModalPosition, 350);
-    setTimeout(updateModalPosition, 700); // double fire for slow keyboards
+    setTimeout(adjustModal, 300);
+    setTimeout(adjustModal, 650);
   }, true);
 
-  // On blur — reset after short delay (keyboard may reopen for next input)
   document.addEventListener('focusout', function(e){
     if(!e.target.matches(inputSel)) return;
     setTimeout(() => {
-      const active = document.activeElement;
-      if(!active || !active.matches(inputSel)){
-        const overlay = document.getElementById('order-modal-overlay');
-        if(overlay) { overlay.style.transform = ''; overlay.style.transition = 'transform .22s ease'; }
-        const form = document.querySelector('.chat-lead-form');
-        if(form) { form.style.transform = ''; }
-      }
-    }, 200);
+      const a = document.activeElement;
+      if(!a || !a.matches(inputSel)) adjustModal();
+    }, 150);
   }, true);
 
-  // Chat lead form — same treatment
-  function updateLeadForm() {
+  // Same for chat lead form
+  function adjustLeadForm() {
     const form = document.querySelector('.chat-lead-form');
     if(!form) return;
     const vp  = window.visualViewport;
-    const kbH = vp ? Math.max(0, window.innerHeight - vp.height) : 0;
-    form.style.transition = 'transform .22s ease';
-    form.style.transform  = kbH > 80 ? 'translateY(-' + kbH + 'px)' : '';
+    if(!vp) return;
+    const kbH = Math.max(0, window.innerHeight - vp.height);
+    form.style.transition = 'transform .2s ease';
     if(kbH > 80){
+      form.style.transform = 'translateY(-' + kbH + 'px)';
       const active = document.activeElement;
-      if(active && active.matches(inputSel)){
-        setTimeout(() => active.scrollIntoView({ behavior:'smooth', block:'center' }), 240);
-      }
+      if(active && active.matches(inputSel))
+        setTimeout(() => active.scrollIntoView({ behavior:'smooth', block:'center' }), 250);
+    } else {
+      form.style.transform = '';
     }
   }
-  if(window.visualViewport){
-    window.visualViewport.addEventListener('resize', updateLeadForm);
-  }
 
+  if(window.visualViewport){
+    window.visualViewport.addEventListener('resize', adjustLeadForm);
+  }
 })();
 </script>
 </body>
