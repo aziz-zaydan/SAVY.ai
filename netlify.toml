@@ -7,7 +7,6 @@
 
 [functions]
   node_bundler = "esbuild"
-  timeout = 20
 
 [[headers]]
   for = "/*"
