@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
   <title>SAVY – Meal Engineer | الشيف الذكي</title>
   <meta name="description" content="SAVY – Morocco's first AI Personal Chef. Specially Engineered meals, delivered in 45 min. Tétouan · M'diq · Martil."/>
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.json"/>
+  <meta name="theme-color" content="#089929"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+  <meta name="apple-mobile-web-app-title" content="SAVY"/>
+  <link rel="apple-touch-icon" href="/images/icon-192.png"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Syne:wght@700;800;900&family=DM+Sans:wght@400;500;600;700&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet"/>
   <style>
@@ -2383,6 +2391,43 @@
     @media(max-width:600px){
       .ots-body { grid-template-columns: 1fr; }
       .ots-eta-num { font-size: 52px; }
+    }
+
+    /* ── PWA Install Prompt ── */
+    #pwa-install-bar {
+      position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%);
+      z-index: 999;
+      background: var(--green);
+      color: #fff;
+      border-radius: 16px;
+      padding: 12px 20px;
+      display: none;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 8px 32px rgba(9,184,48,.4);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      max-width: calc(100vw - 32px);
+      animation: slideUpBar .4s cubic-bezier(.34,1.56,.64,1) both;
+    }
+    #pwa-install-bar.show { display: flex; }
+    @keyframes slideUpBar {
+      from { opacity:0; transform: translateX(-50%) translateY(20px); }
+      to   { opacity:1; transform: translateX(-50%) translateY(0); }
+    }
+    #pwa-install-bar button {
+      background: #fff; color: var(--green);
+      border: none; border-radius: 10px;
+      padding: 8px 16px; font-size: 13px; font-weight: 900;
+      cursor: pointer; white-space: nowrap;
+      font-family: 'Syne', sans-serif;
+    }
+    #pwa-install-close {
+      background: transparent !important;
+      color: rgba(255,255,255,.7) !important;
+      padding: 4px 8px !important;
+      font-size: 16px !important;
     }
 </style>
 </head>
@@ -6018,5 +6063,84 @@ function renderLoyaltyCheckerResult(count, phone) {
   });
 })();
 </script>
+
+<!-- PWA Install Prompt -->
+<div id="pwa-install-bar">
+  <span>📲</span>
+  <span id="pwa-install-txt">ثبّت تطبيق SAVY على هاتفك</span>
+  <button id="pwa-install-btn">تثبيت</button>
+  <button id="pwa-install-close" onclick="dismissInstall()">✕</button>
+</div>
+
+<script>
+// ── Register Service Worker ──────────────────────────────────
+if("serviceWorker" in navigator && location.protocol === "https:") {
+  window.addEventListener("load", function() {
+    setTimeout(function() {
+      try {
+        navigator.serviceWorker.register("/sw.js")
+          .then(function() {}) // silent success
+          .catch(function() {}); // silent fail — app works without it
+      } catch(e) {} // silent catch
+    }, 2000);
+  });
+}
+
+// ── PWA Install Prompt ───────────────────────────────────────
+let _deferredPrompt = null;
+const _installBar    = document.getElementById("pwa-install-bar");
+const _installBtn    = document.getElementById("pwa-install-btn");
+const _installTxt    = document.getElementById("pwa-install-txt");
+
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  _deferredPrompt = e;
+
+  // Don't show if dismissed before
+  if(localStorage.getItem("savy_pwa_dismissed")) return;
+
+  // Show after 8 seconds
+  setTimeout(() => {
+    if(_deferredPrompt && _installBar) {
+      // Localize text
+      const l = typeof lang !== "undefined" ? lang : "ar";
+      if(_installTxt) {
+        _installTxt.textContent = l === "ar"
+          ? "ثبّت تطبيق SAVY على هاتفك"
+          : (l === "en" ? "Install SAVY App on your phone" : "Installer l'app SAVY");
+      }
+      if(_installBtn) {
+        _installBtn.textContent = l === "ar" ? "تثبيت" : (l === "en" ? "Install" : "Installer");
+      }
+      _installBar.classList.add("show");
+    }
+  }, 8000);
+});
+
+if(_installBtn) {
+  _installBtn.addEventListener("click", async () => {
+    if(!_deferredPrompt) return;
+    _deferredPrompt.prompt();
+    const { outcome } = await _deferredPrompt.userChoice;
+    if(outcome === "accepted") {
+      console.log("SAVY PWA installed ✓");
+    }
+    _deferredPrompt = null;
+    _installBar.classList.remove("show");
+  });
+}
+
+function dismissInstall() {
+  if(_installBar) _installBar.classList.remove("show");
+  localStorage.setItem("savy_pwa_dismissed", "1");
+}
+
+// Hide install bar if already installed
+window.addEventListener("appinstalled", () => {
+  if(_installBar) _installBar.classList.remove("show");
+  _deferredPrompt = null;
+});
+</script>
+
 </body>
 </html>
