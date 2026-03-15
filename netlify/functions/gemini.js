@@ -4,48 +4,57 @@ const https = require("https");
 const MAX_TURNS       = 20;
 const MAX_CONTENT_LEN = 2000;
 
+// Allowed origins — update with your Netlify domain after deploy
+const ALLOWED_ORIGINS = [
+  "https://savy.netlify.app",   // replace with your actual Netlify URL
+  "http://localhost:8888",      // local Netlify CLI dev
+  "http://localhost:3000",
+];
+
 function corsHeaders(origin) {
+  const allowed = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
   return {
-    "Access-Control-Allow-Origin":  origin || "*",
+    "Access-Control-Allow-Origin":  allowed,
     "Access-Control-Allow-Headers": "Content-Type",
     "Access-Control-Allow-Methods": "POST, OPTIONS",
     "Content-Type": "application/json",
   };
 }
 
-// ─── Menu (shared across all personas) ─────────────────────────────────────
+// ─── Menu — single source of truth (prices match index.html) ───────────────
 const MENU = `
-MENU SAVY — disponible maintenant à Tétouan · M'diq · Martil (livraison 45 min, Cash ou Carte):
+MENU SAVY — disponible maintenant à Tétouan · M'diq · Martil
+Livraison 45 min max · Commande avant 21h · Cash ou Carte:
 
 🇲🇦 ENTRÉES & SALADES
-• Salad Russe Light     — 280kcal | 8gP  | Vegetarian
-• Salad César Poulet    — 390kcal | 32gP | High Protein
-• Salad de Pâte Fit     — 340kcal | 12gP | Vegan Option
-• Salade Poulet Grillé  — 310kcal | 28gP | Low Carb
+• Salad Russe Light     — 39 MAD  | 280kcal | 8gP  | Végétarien
+• Salad César Poulet    — 49 MAD  | 390kcal | 32gP | High Protein
+• Salad de Pâte Fit     — 42 MAD  | 340kcal | 12gP | Option Vegan
+• Salade Poulet Grillé  — 45 MAD  | 310kcal | 28gP | Low Carb
 
 🍟 FINGER FOOD (Air-Fried)
-• Mini Burger Gourmet   — 240kcal | 14gP | Portion Control
-• Chicken Nuggets Maison— 290kcal | 24gP | High Protein
-• Croquette au Four     — 210kcal | 6gP  | Vegetarian
+• Mini Burger Gourmet   — 35 MAD  | 240kcal | 14gP | Portion Control
+• Chicken Nuggets Maison— 38 MAD  | 290kcal | 24gP | High Protein
+• Croquette au Four     — 32 MAD  | 210kcal | 6gP  | Végétarien
 
 🍝 PLATS PRINCIPAUX
-• Pasta aux Crevettes   — 420kcal | 26gP | Mediterranean
-• Pasta aux Légumes     — 360kcal | 10gP | Vegan
-• Blanc Poulet Légumes  — 320kcal | 35gP | Keto Friendly
-• Blanc Poulet Pasta    — 450kcal | 38gP | Muscle Gain
+• Pasta aux Crevettes   — 62 MAD  | 420kcal | 26gP | Méditerranéen
+• Pasta aux Légumes     — 52 MAD  | 360kcal | 10gP | Vegan
+• Blanc Poulet Légumes  — 58 MAD  | 320kcal | 35gP | Keto Friendly
+• Blanc Poulet Pasta    — 65 MAD  | 450kcal | 38gP | Muscle Gain
 
 🌯 SANDWICHES & FUSION
-• Club Sandwich Complet — 410kcal | 22gP | Balanced
-• Quesadilla Massala    — 380kcal | 24gP | Spicy Fusion
-• Burger Viande Hachée  — 460kcal | 34gP | High Protein
-• Tacos Mixed SAVY      — 490kcal | 30gP | Cheat Meal Light
+• Club Sandwich Complet — 48 MAD  | 410kcal | 22gP | Équilibré
+• Quesadilla Massala    — 52 MAD  | 380kcal | 24gP | Spicy Fusion
+• Burger Viande Hachée  — 58 MAD  | 460kcal | 34gP | High Protein
+• Tacos Mixed SAVY      — 55 MAD  | 490kcal | 30gP | Cheat Meal Light
 
 🍰 DESSERTS SMART
-• Flan Caramel Léger    — 180kcal | 5gP  | Low Fat
-• Cheesecake Creamy     — 260kcal | 8gP  | Vegetarian
-• Tiramisu Healthy      — 240kcal | 7gP  | Low Sugar`;
+• Flan Caramel Léger    — 28 MAD  | 180kcal | 5gP  | Low Fat
+• Cheesecake Creamy     — 32 MAD  | 260kcal | 8gP  | Végétarien
+• Tiramisu Healthy      — 30 MAD  | 240kcal | 7gP  | Low Sugar`;
 
-// ─── Shared conversation rules (same for all personas) ─────────────────────
+// ─── Shared rules (identical across all personas) ──────────────────────────
 const LANG_RULE = `
 LANGUE — RÈGLE ABSOLUE:
 Détecte la langue dès le premier message et garde-la tout au long:
@@ -61,10 +70,12 @@ RÈGLES DE CONVERSATION — absolues:
 2. RÉPONDS D'ABORD à ce que le visiteur dit/demande, PUIS pose une question si pertinent.
 3. UNE seule question par message, jamais plusieurs d'affilée.
 4. Si le visiteur ignore une question → passe à autre chose, n'insiste pas.
-5. Si le visiteur demande le menu → donne-le IMMÉDIATEMENT et complètement.
+5. Si le visiteur demande le menu → donne-le IMMÉDIATEMENT et complètement avec les prix.
 6. Si le visiteur pose une question sur un plat → réponds directement (ingrédients, calories, goût, prix, délai).
 7. Garde tes messages courts : 2-3 phrases maximum. Direct, chaleureux, vivant.
-8. Souviens-toi de tout ce que le visiteur t'a dit dans cette conversation pour personnaliser tes suggestions.`;
+8. Souviens-toi de tout ce que le visiteur t'a dit dans cette conversation pour personnaliser tes suggestions.
+9. Si on te demande le délai de livraison → toujours répondre "45 minutes maximum".
+10. Si on te demande les zones de livraison → Tétouan, M'diq et Martil uniquement.`;
 
 const LEAD_RULE = `
 COMMANDE — DÉCLENCHEMENT DU FORMULAIRE:
@@ -97,8 +108,8 @@ CE QUE TU VIS APPRENDRE NATURELLEMENT au fil de la conversation (pas en quiz, pa
 Ces infos t'aident à suggérer le bon plat — mais si le visiteur ne répond pas, propose quand même.
 
 PLATS PHARES pour employé(e) :
-← Rapides & légers : Salad Russe Light 280kcal, Salade Poulet Grillé 310kcal, Blanc Poulet Légumes 320kcal
-← Énergie durable : Salad César Poulet 390kcal 32gP, Club Sandwich Complet 410kcal, Pasta aux Crevettes 420kcal
+← Rapides & légers : Salad Russe Light (39 MAD / 280kcal), Salade Poulet Grillé (45 MAD / 310kcal), Blanc Poulet Légumes (58 MAD / 320kcal)
+← Énergie durable : Salad César Poulet (49 MAD / 390kcal / 32gP), Club Sandwich Complet (48 MAD / 410kcal), Pasta aux Crevettes (62 MAD / 420kcal)
 
 OUVERTURE [SYSTEM_OPEN:employee] :
 Quand le message contient [SYSTEM_OPEN:employee], génère un accueil COURT (2 phrases max) qui :
@@ -130,9 +141,9 @@ CE QUE TU VIS APPRENDRE NATURELLEMENT :
 Ces infos t'aident à calculer et suggérer — mais si le visiteur ne répond pas, propose les plats high-protein directement.
 
 PLATS PHARES pour sportif(ve) :
-⭐ High Protein : Blanc Poulet Pasta 450kcal 38gP, Blanc Poulet Légumes 320kcal 35gP, Burger Viande Hachée 460kcal 34gP, Salad César Poulet 390kcal 32gP
-💪 Muscle Gain : Blanc Poulet Pasta 450kcal (38gP — meilleur ratio), Chicken Nuggets Maison 290kcal 24gP
-🌱 Keto / Low Carb : Blanc Poulet Légumes 320kcal, Salade Poulet Grillé 310kcal
+⭐ High Protein : Blanc Poulet Pasta (65 MAD / 450kcal / 38gP), Blanc Poulet Légumes (58 MAD / 320kcal / 35gP), Burger Viande Hachée (58 MAD / 460kcal / 34gP), Salad César Poulet (49 MAD / 390kcal / 32gP)
+💪 Muscle Gain : Blanc Poulet Pasta (65 MAD — meilleur ratio), Chicken Nuggets Maison (38 MAD / 290kcal / 24gP)
+🌱 Keto / Low Carb : Blanc Poulet Légumes (58 MAD / 320kcal), Salade Poulet Grillé (45 MAD / 310kcal)
 
 Calcul rapide si demandé : prise de masse → 2g prot/kg/j | sèche → 1.8g/kg | maintien → 1.6g/kg
 
@@ -167,14 +178,14 @@ CE QUE TU VIS APPRENDRE NATURELLEMENT :
 Ces infos t'aident à composer le bon menu familial — mais si le visiteur ne répond pas, propose des combos familiaux directement.
 
 PLATS PHARES pour familles :
-👨‍👩‍👧 Tout le monde adore : Club Sandwich Complet 410kcal, Pasta aux Crevettes 420kcal, Tacos Mixed SAVY 490kcal
-🧒 Pour les enfants : Chicken Nuggets Maison 290kcal, Mini Burger Gourmet 240kcal, Croquette au Four 210kcal
-🌱 Pour végétariens dans la famille : Pasta aux Légumes 360kcal, Salad de Pâte Fit 340kcal, Croquette au Four 210kcal
-🍰 Desserts pour finir en beauté : Flan Caramel Léger 180kcal, Tiramisu Healthy 240kcal, Cheesecake Creamy 260kcal
+👨‍👩‍👧 Tout le monde adore : Club Sandwich Complet (48 MAD), Pasta aux Crevettes (62 MAD), Tacos Mixed SAVY (55 MAD)
+🧒 Pour les enfants : Chicken Nuggets Maison (38 MAD), Mini Burger Gourmet (35 MAD), Croquette au Four (32 MAD)
+🌱 Pour végétariens : Pasta aux Légumes (52 MAD), Salad de Pâte Fit (42 MAD), Croquette au Four (32 MAD)
+🍰 Desserts : Flan Caramel Léger (28 MAD), Tiramisu Healthy (30 MAD), Cheesecake Creamy (32 MAD)
 
-COMBOS FAMILIAUX suggérés :
-• Famille 4 pers : Club Sandwich ×2 + Pasta aux Crevettes + Pasta aux Légumes
-• Avec enfants : Chicken Nuggets ×2 + Blanc Poulet Légumes + Salad César + Flan ×2
+COMBOS FAMILIAUX suggérés (avec prix) :
+• Famille 4 pers ~220 MAD : Club Sandwich ×2 (96) + Pasta Crevettes (62) + Pasta Légumes (52) + Flan ×2 (56)
+• Avec enfants ~190 MAD : Nuggets ×2 (76) + Blanc Poulet Légumes (58) + Salad César (49) + Flan ×2 (56)
 
 OUVERTURE [SYSTEM_OPEN:famille] :
 Quand le message contient [SYSTEM_OPEN:famille], génère un accueil COURT (2 phrases max) qui :
@@ -206,10 +217,10 @@ CE QUE TU VIS APPRENDRE NATURELLEMENT :
 Ces infos t'aident à composer LE menu parfait — mais si le visiteur ne répond pas, propose directement un menu duo élégant.
 
 PLATS PHARES pour dîner en amoureux :
-⭐ Plats signature : Pasta aux Crevettes 420kcal (élégant, méditerranéen), Blanc Poulet Légumes 320kcal (léger et raffiné), Quesadilla Massala 380kcal (fusion audacieux)
-🥗 Entrée partagée : Salad César Poulet 390kcal, Salade Poulet Grillé 310kcal
-🍰 Desserts en amoureux : Tiramisu Healthy 240kcal ⭐, Cheesecake Creamy 260kcal, Flan Caramel Léger 180kcal
-💕 Menu duo recommandé : Salad César (entrée partagée) + Pasta aux Crevettes + Blanc Poulet Légumes + Tiramisu (dessert partagé)
+⭐ Plats signature : Pasta aux Crevettes (62 MAD — élégant, méditerranéen), Blanc Poulet Légumes (58 MAD — léger et raffiné), Quesadilla Massala (52 MAD — fusion audacieux)
+🥗 Entrée partagée : Salad César Poulet (49 MAD), Salade Poulet Grillé (45 MAD)
+🍰 Desserts en amoureux : Tiramisu Healthy (30 MAD ⭐), Cheesecake Creamy (32 MAD), Flan Caramel Léger (28 MAD)
+💕 Menu duo ~250 MAD : Salad César (49 — entrée partagée) + Pasta Crevettes (62) + Blanc Poulet Légumes (58) + Tiramisu (30 — dessert partagé) × 2
 
 STYLE DE LANGAGE pour ce persona :
 Sois poétique, chaleureux, mais pas excessif. Des mots qui évoquent : saveurs, ambiance, moments, soirée… sans être cucul.
@@ -225,11 +236,11 @@ ${CONVO_RULES}
 ${MENU}
 ${LEAD_RULE}`;
 
-  // Default fallback — should never be reached
+  // Default fallback
   return buildSystemPrompt("employee");
 }
 
-// ─── Groq API call via https.request (Node 14/16/18+ compatible) ────────────
+// ─── Groq API call ──────────────────────────────────────────────────────────
 function callGroq(apiKey, payload) {
   return new Promise((resolve, reject) => {
     const body    = JSON.stringify(payload);
@@ -276,7 +287,7 @@ exports.handler = async (event) => {
 
   const apiKey = process.env.GROQ_API_KEY;
   if (!apiKey) {
-    console.error("❌ GROQ_API_KEY environment variable is not set in Netlify.");
+    console.error("❌ GROQ_API_KEY not set in Netlify environment variables.");
     return { statusCode: 500, headers, body: JSON.stringify({ error: "Server configuration error — API key missing" }) };
   }
 
@@ -284,18 +295,16 @@ exports.handler = async (event) => {
   try { body = JSON.parse(event.body); }
   catch { return { statusCode: 400, headers, body: JSON.stringify({ error: "Invalid JSON body" }) }; }
 
-  const { messages, persona = "employee", scheduledTime } = body;
+  const { messages, persona = "employee" } = body;
+  // Note: `lang` and `scheduledTime` are sent by the frontend but handled
+  // client-side only — the AI detects language from message content via LANG_RULE.
+
   if (!messages || !Array.isArray(messages)) {
     return { statusCode: 400, headers, body: JSON.stringify({ error: "messages array required" }) };
   }
 
   const validPersonas = ["employee", "sportif", "famille", "couple"];
   const safePersona   = validPersonas.includes(persona) ? persona : "employee";
-
-  // Build schedule context string injected at end of system prompt
-  const scheduleNote = scheduledTime
-    ? `\n\nINFO LIVRAISON — le client a programmé sa livraison pour : ${scheduledTime}. Mentionne-le naturellement dans la conversation si pertinent.`
-    : `\n\nINFO LIVRAISON — le client souhaite une livraison dès que possible (45 min).`;
 
   const normalized = messages
     .slice(-MAX_TURNS)
@@ -310,7 +319,7 @@ exports.handler = async (event) => {
     result = await callGroq(apiKey, {
       model:       "llama-3.3-70b-versatile",
       messages:    [
-        { role: "system", content: buildSystemPrompt(safePersona) + scheduleNote },
+        { role: "system", content: buildSystemPrompt(safePersona) },
         ...normalized,
       ],
       temperature: 0.8,
