@@ -4,6 +4,8 @@
 
 [functions]
   node_bundler = "esbuild"
+  node_version = "18"
+  timeout = 20
 
 [[headers]]
   for = "/*"
@@ -11,3 +13,14 @@
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/netlify/functions/*"
+  [headers.values]
+    Cache-Control = "no-store"
