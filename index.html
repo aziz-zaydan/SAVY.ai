@@ -151,11 +151,11 @@
 
     /* ── ORDER MODAL OVERLAY ── */
     #order-modal-overlay {
-      position:fixed; inset:0; background:rgba(0,0,0,.55);
+      position:fixed;
+      top:0; left:0; right:0; bottom:0;
+      background:rgba(0,0,0,.55);
       z-index:1050; display:none; align-items:flex-end; justify-content:center;
       backdrop-filter:blur(6px);
-      overflow:visible;
-      transition: transform .25s ease;
     }
     #order-modal-overlay.open { display:flex; }
     #order-modal {
@@ -167,7 +167,6 @@
       position:relative;
       box-shadow:0 -8px 40px rgba(0,0,0,.2);
       animation:slideUpSheet .32s cubic-bezier(.34,1.2,.64,1) both;
-      scroll-behavior:smooth;
       -webkit-overflow-scrolling:touch;
     }
     @keyframes slideUpSheet {
@@ -5947,86 +5946,76 @@ function renderLoyaltyCheckerResult(count, phone) {
 </div>
 
 <script>
-// ── Keyboard-aware popup ─────────────────────────────────────────
-// Logic: when keyboard opens, the visible area shrinks.
-// We clamp the modal so it fits exactly in the visible area above keyboard.
+// ── Order modal keyboard fix ─────────────────────────────────────
 (function(){
-  const inputSel = '.lead-inp, #order-modal input, #order-modal textarea, .chat-lead-form input';
+  const SEL = '#order-modal input, #order-modal textarea, .chat-lead-form input';
 
-  function adjustModal() {
+  function onVPChange(){
+    const vp = window.visualViewport;
+    if(!vp) return;
+
+    // ── Order modal ──
     const overlay = document.getElementById('order-modal-overlay');
     const modal   = document.getElementById('order-modal');
-    if(!overlay || !modal || !overlay.classList.contains('open')) return;
+    if(overlay && overlay.classList.contains('open') && modal){
+      const kbTop = vp.offsetTop + vp.height; // where keyboard starts
+      const kbH   = window.innerHeight - kbTop; // keyboard height
 
-    const vp      = window.visualViewport;
-    if(!vp) return;
-
-    const kbH     = Math.max(0, window.innerHeight - vp.height); // keyboard height
-    const visibleH = vp.height;  // visible screen height above keyboard
-
-    if(kbH > 80) {
-      // Limit modal height to fit in visible area with breathing room
-      const maxH = visibleH - 20;
-      modal.style.maxHeight    = maxH + 'px';
-      modal.style.overflowY    = 'auto';
-      // Move overlay up by keyboard height so modal bottom aligns with keyboard top
-      overlay.style.transform  = 'translateY(-' + kbH + 'px)';
-      overlay.style.transition = 'transform .2s ease';
-
-      // Scroll active input into center of modal
-      const active = document.activeElement;
-      if(active && active.matches(inputSel)){
-        setTimeout(() => {
-          active.scrollIntoView({ behavior:'smooth', block:'center' });
-        }, 250);
+      if(kbH > 50){
+        // Position overlay so it sits between screen top and keyboard top
+        overlay.style.bottom     = kbH + 'px';
+        overlay.style.transition = 'bottom .2s ease';
+        // Limit modal height to the visible area
+        modal.style.maxHeight    = (vp.height - 16) + 'px';
+        modal.style.transition   = 'max-height .2s ease';
+        // Scroll tapped input into view inside modal
+        const el = document.activeElement;
+        if(el && el.closest('#order-modal')){
+          setTimeout(() => el.scrollIntoView({behavior:'smooth', block:'center'}), 220);
+        }
+      } else {
+        overlay.style.bottom  = '';
+        modal.style.maxHeight = '';
       }
-    } else {
-      // Keyboard closed — restore original state
-      modal.style.maxHeight    = '';
-      overlay.style.transform  = '';
-      overlay.style.transition = 'transform .2s ease';
+    }
+
+    // ── Chat lead form ──
+    const form = document.querySelector('.chat-lead-form');
+    if(form){
+      const kbH = window.innerHeight - vp.offsetTop - vp.height;
+      if(kbH > 50){
+        form.style.marginBottom = kbH + 'px';
+        form.style.transition   = 'margin-bottom .2s ease';
+        const el = document.activeElement;
+        if(el && el.closest('.chat-lead-form')){
+          setTimeout(() => el.scrollIntoView({behavior:'smooth', block:'center'}), 220);
+        }
+      } else {
+        form.style.marginBottom = '';
+      }
     }
   }
 
   if(window.visualViewport){
-    window.visualViewport.addEventListener('resize', adjustModal);
+    window.visualViewport.addEventListener('resize', onVPChange);
+    window.visualViewport.addEventListener('scroll', onVPChange);
   }
 
+  // Also fire on focus with delay for keyboard animation
   document.addEventListener('focusin', function(e){
-    if(!e.target.matches(inputSel)) return;
-    setTimeout(adjustModal, 300);
-    setTimeout(adjustModal, 650);
+    if(!e.target.closest('#order-modal, .chat-lead-form')) return;
+    setTimeout(onVPChange, 300);
+    setTimeout(onVPChange, 600);
   }, true);
 
+  // Reset on blur if no more inputs focused
   document.addEventListener('focusout', function(e){
-    if(!e.target.matches(inputSel)) return;
+    if(!e.target.closest('#order-modal, .chat-lead-form')) return;
     setTimeout(() => {
       const a = document.activeElement;
-      if(!a || !a.matches(inputSel)) adjustModal();
-    }, 150);
+      if(!a || !a.closest('#order-modal, .chat-lead-form')) onVPChange();
+    }, 100);
   }, true);
-
-  // Same for chat lead form
-  function adjustLeadForm() {
-    const form = document.querySelector('.chat-lead-form');
-    if(!form) return;
-    const vp  = window.visualViewport;
-    if(!vp) return;
-    const kbH = Math.max(0, window.innerHeight - vp.height);
-    form.style.transition = 'transform .2s ease';
-    if(kbH > 80){
-      form.style.transform = 'translateY(-' + kbH + 'px)';
-      const active = document.activeElement;
-      if(active && active.matches(inputSel))
-        setTimeout(() => active.scrollIntoView({ behavior:'smooth', block:'center' }), 250);
-    } else {
-      form.style.transform = '';
-    }
-  }
-
-  if(window.visualViewport){
-    window.visualViewport.addEventListener('resize', adjustLeadForm);
-  }
 })();
 </script>
 </body>
