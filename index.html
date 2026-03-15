@@ -5947,13 +5947,13 @@ function renderLoyaltyCheckerResult(count, phone) {
 
 <script>
 (function(){
+  var _timer = null;
+
   function fix(){
     var vp = window.visualViewport;
     if(!vp) return;
-    var kbH = window.innerHeight - vp.height - vp.offsetTop;
-    kbH = Math.max(0, kbH);
+    var kbH = Math.max(0, window.innerHeight - vp.height);
 
-    // Order modal overlay — add padding-bottom = keyboard height
     var overlay = document.getElementById('order-modal-overlay');
     var modal   = document.getElementById('order-modal');
     if(overlay && overlay.classList.contains('open') && modal){
@@ -5962,34 +5962,40 @@ function renderLoyaltyCheckerResult(count, phone) {
       if(kbH > 50){
         var el = document.activeElement;
         if(el && el.closest('#order-modal')){
-          setTimeout(function(){ el.scrollIntoView({block:'center',behavior:'smooth'}); }, 200);
+          el.scrollIntoView({block:'center',behavior:'smooth'});
         }
       }
     }
 
-    // Chat lead form
     var form = document.querySelector('.chat-lead-form');
     if(form){
       form.style.marginBottom = kbH > 50 ? kbH+'px' : '';
     }
   }
 
+  // Debounce — only fire once keyboard stops moving
+  function debouncedFix(){
+    clearTimeout(_timer);
+    _timer = setTimeout(fix, 120);
+  }
+
   if(window.visualViewport){
-    window.visualViewport.addEventListener('resize', fix);
-    window.visualViewport.addEventListener('scroll', fix);
+    // Only resize — NOT scroll (scroll causes vibration)
+    window.visualViewport.addEventListener('resize', debouncedFix);
   }
 
   document.addEventListener('focusin', function(e){
     if(!e.target.closest('#order-modal,.chat-lead-form')) return;
-    setTimeout(fix, 300);
-    setTimeout(fix, 700);
+    clearTimeout(_timer);
+    _timer = setTimeout(fix, 400);
   }, true);
 
   document.addEventListener('focusout', function(e){
     if(!e.target.closest('#order-modal,.chat-lead-form')) return;
-    setTimeout(function(){
+    clearTimeout(_timer);
+    _timer = setTimeout(function(){
       if(!document.activeElement || !document.activeElement.closest('#order-modal,.chat-lead-form')) fix();
-    }, 150);
+    }, 200);
   }, true);
 })();
 </script>
