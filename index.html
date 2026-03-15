@@ -151,11 +151,11 @@
 
     /* ── ORDER MODAL OVERLAY ── */
     #order-modal-overlay {
-      position:fixed;
-      top:0; left:0; right:0; bottom:0;
+      position:fixed; inset:0;
       background:rgba(0,0,0,.55);
       z-index:1050; display:none; align-items:flex-end; justify-content:center;
       backdrop-filter:blur(6px);
+      transition: padding-bottom .2s ease;
     }
     #order-modal-overlay.open { display:flex; }
     #order-modal {
@@ -5946,75 +5946,50 @@ function renderLoyaltyCheckerResult(count, phone) {
 </div>
 
 <script>
-// ── Order modal keyboard fix ─────────────────────────────────────
 (function(){
-  const SEL = '#order-modal input, #order-modal textarea, .chat-lead-form input';
-
-  function onVPChange(){
-    const vp = window.visualViewport;
+  function fix(){
+    var vp = window.visualViewport;
     if(!vp) return;
+    var kbH = window.innerHeight - vp.height - vp.offsetTop;
+    kbH = Math.max(0, kbH);
 
-    // ── Order modal ──
-    const overlay = document.getElementById('order-modal-overlay');
-    const modal   = document.getElementById('order-modal');
+    // Order modal overlay — add padding-bottom = keyboard height
+    var overlay = document.getElementById('order-modal-overlay');
+    var modal   = document.getElementById('order-modal');
     if(overlay && overlay.classList.contains('open') && modal){
-      const kbTop = vp.offsetTop + vp.height; // where keyboard starts
-      const kbH   = window.innerHeight - kbTop; // keyboard height
-
+      overlay.style.paddingBottom = kbH > 50 ? kbH+'px' : '0px';
+      modal.style.maxHeight       = kbH > 50 ? (vp.height - 24)+'px' : '';
       if(kbH > 50){
-        // Position overlay so it sits between screen top and keyboard top
-        overlay.style.bottom     = kbH + 'px';
-        overlay.style.transition = 'bottom .2s ease';
-        // Limit modal height to the visible area
-        modal.style.maxHeight    = (vp.height - 16) + 'px';
-        modal.style.transition   = 'max-height .2s ease';
-        // Scroll tapped input into view inside modal
-        const el = document.activeElement;
+        var el = document.activeElement;
         if(el && el.closest('#order-modal')){
-          setTimeout(() => el.scrollIntoView({behavior:'smooth', block:'center'}), 220);
+          setTimeout(function(){ el.scrollIntoView({block:'center',behavior:'smooth'}); }, 200);
         }
-      } else {
-        overlay.style.bottom  = '';
-        modal.style.maxHeight = '';
       }
     }
 
-    // ── Chat lead form ──
-    const form = document.querySelector('.chat-lead-form');
+    // Chat lead form
+    var form = document.querySelector('.chat-lead-form');
     if(form){
-      const kbH = window.innerHeight - vp.offsetTop - vp.height;
-      if(kbH > 50){
-        form.style.marginBottom = kbH + 'px';
-        form.style.transition   = 'margin-bottom .2s ease';
-        const el = document.activeElement;
-        if(el && el.closest('.chat-lead-form')){
-          setTimeout(() => el.scrollIntoView({behavior:'smooth', block:'center'}), 220);
-        }
-      } else {
-        form.style.marginBottom = '';
-      }
+      form.style.marginBottom = kbH > 50 ? kbH+'px' : '';
     }
   }
 
   if(window.visualViewport){
-    window.visualViewport.addEventListener('resize', onVPChange);
-    window.visualViewport.addEventListener('scroll', onVPChange);
+    window.visualViewport.addEventListener('resize', fix);
+    window.visualViewport.addEventListener('scroll', fix);
   }
 
-  // Also fire on focus with delay for keyboard animation
   document.addEventListener('focusin', function(e){
-    if(!e.target.closest('#order-modal, .chat-lead-form')) return;
-    setTimeout(onVPChange, 300);
-    setTimeout(onVPChange, 600);
+    if(!e.target.closest('#order-modal,.chat-lead-form')) return;
+    setTimeout(fix, 300);
+    setTimeout(fix, 700);
   }, true);
 
-  // Reset on blur if no more inputs focused
   document.addEventListener('focusout', function(e){
-    if(!e.target.closest('#order-modal, .chat-lead-form')) return;
-    setTimeout(() => {
-      const a = document.activeElement;
-      if(!a || !a.closest('#order-modal, .chat-lead-form')) onVPChange();
-    }, 100);
+    if(!e.target.closest('#order-modal,.chat-lead-form')) return;
+    setTimeout(function(){
+      if(!document.activeElement || !document.activeElement.closest('#order-modal,.chat-lead-form')) fix();
+    }, 150);
   }, true);
 })();
 </script>
