@@ -1,8 +1,9 @@
 {
-  "name": "SAVY Admin — Dashboard",
+  "name": "SAVY Admin",
   "short_name": "SAVY Admin",
-  "description": "Tableau de bord admin SAVY — commandes, clients, revenus",
+  "description": "Tableau de bord admin — commandes, clients, revenus",
   "start_url": "/dashboard.html",
+  "scope": "/dashboard.html",
   "display": "standalone",
   "orientation": "any",
   "background_color": "#080F0A",
@@ -10,13 +11,13 @@
   "lang": "fr",
   "icons": [
     {
-      "src": "images/icon-192.png",
+      "src": "images/icon-dash-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "images/icon-512.png",
+      "src": "images/icon-dash-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
@@ -25,13 +26,19 @@
   "shortcuts": [
     {
       "name": "Commandes",
-      "url": "/dashboard.html#orders",
-      "icons": [{ "src": "images/icon-192.png", "sizes": "192x192" }]
-    },
+      "url": "/dashboard.html",
+      "icons": [
+        {
+          "src": "images/icon-dash-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "related_applications": [
     {
-      "name": "Revenus",
-      "url": "/dashboard.html#revenue",
-      "icons": [{ "src": "images/icon-192.png", "sizes": "192x192" }]
+      "platform": "webapp",
+      "url": "https://your-site.netlify.app/manifest.json"
     }
   ]
 }
