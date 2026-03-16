@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SAVY — Admin Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800;900&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg:       #080F0A;
+  --card:     #0D1810;
+  --card2:    #111F14;
+  --green:    #09B830;
+  --greenL:   #2BCE4E;
+  --greenXL:  #0A2A12;
+  --text:     #E8F5EC;
+  --sub:      #6BBF7A;
+  --muted:    #3A6644;
+  --border:   #1A3A22;
+  --gold:     #F4C430;
+  --red:      #FF4D4D;
+  --blue:     #4DA6FF;
+  --purple:   #B87AFF;
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+html,body { background:var(--bg); color:var(--text); font-family:'DM Sans',sans-serif; min-height:100vh; }
+
+/* ── Login Screen ── */
+#login-screen {
+  position:fixed; inset:0; background:var(--bg);
+  display:flex; align-items:center; justify-content:center;
+  z-index:1000; flex-direction:column; gap:24px;
+}
+.login-box {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:24px; padding:48px 40px; width:min(400px,90vw);
+  text-align:center;
+}
+.login-logo { font-family:'Syne',sans-serif; font-size:36px; font-weight:900; color:var(--green); letter-spacing:-1px; margin-bottom:8px; }
+.login-sub { font-size:13px; color:var(--muted); margin-bottom:32px; }
+.login-input {
+  width:100%; background:var(--bg); border:1px solid var(--border);
+  border-radius:12px; padding:14px 16px; font-size:15px; color:var(--text);
+  outline:none; margin-bottom:12px; font-family:'DM Sans',sans-serif;
+  transition:border-color .2s;
+}
+.login-input:focus { border-color:var(--green); }
+.login-btn {
+  width:100%; background:linear-gradient(135deg,var(--green),var(--greenL));
+  color:#fff; border:none; border-radius:12px; padding:14px;
+  font-size:15px; font-weight:800; cursor:pointer;
+  font-family:'Syne',sans-serif; letter-spacing:.03em;
+  transition:opacity .2s;
+}
+.login-btn:hover { opacity:.88; }
+.login-err { color:var(--red); font-size:12px; margin-top:8px; display:none; }
+
+/* ── Layout ── */
+#app { display:none; min-height:100vh; }
+
+/* ── Sidebar ── */
+.sidebar {
+  position:fixed; left:0; top:0; bottom:0; width:220px;
+  background:var(--card); border-right:1px solid var(--border);
+  display:flex; flex-direction:column; padding:24px 0; z-index:100;
+}
+.sidebar-logo {
+  font-family:'Syne',sans-serif; font-weight:900; font-size:22px;
+  color:var(--green); padding:0 24px 24px; letter-spacing:-0.5px;
+  border-bottom:1px solid var(--border);
+}
+.sidebar-logo span { color:var(--sub); font-size:11px; font-weight:500; display:block; letter-spacing:.05em; margin-top:2px; }
+.nav-items { padding:16px 0; flex:1; }
+.nav-item {
+  display:flex; align-items:center; gap:12px;
+  padding:11px 24px; font-size:13px; font-weight:600;
+  color:var(--sub); cursor:pointer; transition:all .15s;
+  border-left:3px solid transparent;
+}
+.nav-item:hover { color:var(--text); background:var(--card2); }
+.nav-item.active { color:var(--green); background:var(--greenXL); border-left-color:var(--green); }
+.nav-item .icon { font-size:16px; }
+.sidebar-footer { padding:16px 24px; border-top:1px solid var(--border); font-size:11px; color:var(--muted); }
+.online-dot { width:6px; height:6px; background:var(--green); border-radius:50%; display:inline-block; margin-right:6px; animation:blink 2s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+/* ── Main content ── */
+.main { margin-left:220px; padding:32px; min-height:100vh; }
+.page { display:none; }
+.page.active { display:block; }
+
+/* ── Top bar ── */
+.topbar {
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:32px;
+}
+.page-title { font-family:'Syne',sans-serif; font-weight:900; font-size:24px; color:var(--text); }
+.page-sub { font-size:13px; color:var(--muted); margin-top:4px; }
+.refresh-btn {
+  background:var(--card2); border:1px solid var(--border);
+  color:var(--sub); border-radius:10px; padding:9px 16px;
+  font-size:12px; font-weight:700; cursor:pointer;
+  transition:all .2s; display:flex; align-items:center; gap:8px;
+}
+.refresh-btn:hover { border-color:var(--green); color:var(--green); }
+
+/* ── Stat cards ── */
+.stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:28px; }
+.stat-card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:16px; padding:20px;
+  position:relative; overflow:hidden;
+}
+.stat-card::before {
+  content:''; position:absolute; top:0; right:0;
+  width:60px; height:60px; border-radius:0 16px 0 60px;
+  opacity:.15;
+}
+.stat-card.green::before { background:var(--green); }
+.stat-card.gold::before  { background:var(--gold); }
+.stat-card.blue::before  { background:var(--blue); }
+.stat-card.purple::before{ background:var(--purple); }
+.stat-icon { font-size:20px; margin-bottom:12px; }
+.stat-val  { font-family:'Syne',sans-serif; font-weight:900; font-size:28px; color:var(--text); }
+.stat-lbl  { font-size:12px; color:var(--muted); margin-top:4px; font-weight:600; }
+.stat-delta{ font-size:11px; margin-top:6px; font-weight:700; }
+.stat-delta.up   { color:var(--green); }
+.stat-delta.flat { color:var(--muted); }
+
+/* ── Section header ── */
+.section-hdr {
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:16px;
+}
+.section-title { font-family:'Syne',sans-serif; font-weight:800; font-size:15px; color:var(--text); }
+
+/* ── Table ── */
+.table-wrap { background:var(--card); border:1px solid var(--border); border-radius:16px; overflow:hidden; }
+table { width:100%; border-collapse:collapse; font-size:13px; }
+thead tr { background:var(--card2); }
+th { padding:12px 16px; text-align:left; font-size:10px; font-weight:800; color:var(--muted); letter-spacing:.1em; text-transform:uppercase; }
+td { padding:13px 16px; border-top:1px solid var(--border); vertical-align:middle; }
+tr:hover td { background:var(--card2); }
+.order-id { font-family:'DM Mono',monospace; font-size:12px; color:var(--green); font-weight:500; }
+.customer-name { font-weight:700; color:var(--text); }
+.customer-phone { font-family:'DM Mono',monospace; font-size:11px; color:var(--sub); }
+.total-val { font-family:'Syne',sans-serif; font-weight:800; color:var(--gold); }
+.persona-badge {
+  display:inline-block; padding:3px 8px; border-radius:6px;
+  font-size:10px; font-weight:700; letter-spacing:.03em;
+}
+.persona-badge.employee { background:rgba(77,166,255,.15); color:var(--blue); }
+.persona-badge.sportif  { background:rgba(9,184,48,.15);  color:var(--green); }
+.persona-badge.famille  { background:rgba(244,196,48,.15); color:var(--gold); }
+.persona-badge.couple   { background:rgba(184,122,255,.15);color:var(--purple); }
+.persona-badge.whatsapp { background:rgba(37,211,102,.15); color:#25D366; }
+.status-badge {
+  display:inline-flex; align-items:center; gap:5px;
+  padding:4px 10px; border-radius:8px; font-size:11px; font-weight:700;
+  cursor:pointer; transition:all .2s;
+}
+.status-badge.new      { background:rgba(9,184,48,.15);  color:var(--green); border:1px solid rgba(9,184,48,.3); }
+.status-badge.prep     { background:rgba(244,196,48,.15); color:var(--gold);  border:1px solid rgba(244,196,48,.3); }
+.status-badge.delivery { background:rgba(77,166,255,.15); color:var(--blue);  border:1px solid rgba(77,166,255,.3); }
+.status-badge.done     { background:rgba(100,100,100,.15);color:var(--muted); border:1px solid var(--border); }
+.tier-badge {
+  display:inline-block; padding:3px 8px; border-radius:6px;
+  font-size:10px; font-weight:800;
+}
+.tier-bronze   { background:rgba(205,127,50,.2);  color:#CD7F32; }
+.tier-silver   { background:rgba(192,192,192,.2);  color:#C0C0C0; }
+.tier-gold     { background:rgba(244,196,48,.2);   color:var(--gold); }
+.tier-platinum { background:rgba(184,122,255,.2);  color:var(--purple); }
+
+/* ── Charts area ── */
+.charts-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:28px; }
+.chart-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:20px; }
+.chart-title { font-family:'Syne',sans-serif; font-weight:800; font-size:13px; color:var(--text); margin-bottom:16px; }
+.bar-chart { display:flex; align-items:flex-end; gap:6px; height:100px; }
+.bar-col { flex:1; display:flex; flex-direction:column; align-items:center; gap:4px; }
+.bar {
+  width:100%; background:linear-gradient(180deg,var(--green),var(--greenL));
+  border-radius:4px 4px 0 0; transition:height .5s ease; min-height:4px;
+}
+.bar-lbl { font-size:9px; color:var(--muted); font-weight:600; }
+.bar-val { font-size:9px; color:var(--sub); font-weight:700; }
+.donut-wrap { display:flex; align-items:center; gap:20px; }
+.donut-legend { display:flex; flex-direction:column; gap:8px; }
+.legend-item { display:flex; align-items:center; gap:8px; font-size:12px; }
+.legend-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+
+/* ── Filter bar ── */
+.filter-bar { display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap; align-items:center; }
+.filter-btn {
+  background:var(--card2); border:1px solid var(--border);
+  color:var(--sub); border-radius:8px; padding:7px 14px;
+  font-size:12px; font-weight:700; cursor:pointer; transition:all .2s;
+}
+.filter-btn.active, .filter-btn:hover { border-color:var(--green); color:var(--green); background:var(--greenXL); }
+.search-input {
+  background:var(--card2); border:1px solid var(--border);
+  color:var(--text); border-radius:8px; padding:7px 14px;
+  font-size:12px; outline:none; transition:border-color .2s;
+  font-family:'DM Sans',sans-serif; width:200px;
+}
+.search-input:focus { border-color:var(--green); }
+
+/* ── Empty state ── */
+.empty-state { text-align:center; padding:48px 24px; color:var(--muted); }
+.empty-state .big { font-size:40px; margin-bottom:12px; }
+.empty-state p { font-size:13px; }
+
+/* ── Config panel ── */
+.config-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:24px; margin-bottom:16px; }
+.config-label { font-size:12px; color:var(--muted); font-weight:700; margin-bottom:8px; text-transform:uppercase; letter-spacing:.06em; }
+.config-input {
+  width:100%; background:var(--bg); border:1px solid var(--border);
+  border-radius:10px; padding:11px 14px; font-size:13px; color:var(--text);
+  outline:none; font-family:'DM Mono',monospace;
+  transition:border-color .2s;
+}
+.config-input:focus { border-color:var(--green); }
+.save-btn {
+  background:linear-gradient(135deg,var(--green),var(--greenL));
+  color:#fff; border:none; border-radius:10px; padding:11px 24px;
+  font-size:13px; font-weight:800; cursor:pointer; margin-top:12px;
+  font-family:'Syne',sans-serif;
+}
+
+/* ── Loading ── */
+.loading { text-align:center; padding:40px; color:var(--muted); font-size:13px; }
+.spinner { display:inline-block; width:20px; height:20px; border:2px solid var(--border); border-top-color:var(--green); border-radius:50%; animation:spin .8s linear infinite; margin-right:8px; vertical-align:middle; }
+@keyframes spin { to { transform:rotate(360deg); } }
+
+/* ── Responsive ── */
+@media(max-width:900px){
+  .sidebar { display:none; }
+  .main { margin-left:0; padding:16px; }
+  .stats-grid { grid-template-columns:1fr 1fr; }
+  .charts-grid { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── Login ── -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">SAVY</div>
+    <div class="login-sub">Admin Dashboard · لوحة التحكم</div>
+    <input class="login-input" id="pwd-input" type="password" placeholder="Mot de passe admin" onkeydown="if(event.key==='Enter')doLogin()"/>
+    <button class="login-btn" onclick="doLogin()">Accéder →</button>
+    <div class="login-err" id="login-err">❌ Mot de passe incorrect</div>
+  </div>
+</div>
+
+<!-- ── App ── -->
+<div id="app">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-logo">SAVY <span>ADMIN PANEL</span></div>
+    <div class="nav-items">
+      <div class="nav-item active" onclick="showPage('overview')"><span class="icon">📊</span> Vue d'ensemble</div>
+      <div class="nav-item" onclick="showPage('orders')"><span class="icon">📦</span> Commandes</div>
+      <div class="nav-item" onclick="showPage('customers')"><span class="icon">👥</span> Clients</div>
+      <div class="nav-item" onclick="showPage('revenue')"><span class="icon">💰</span> Revenus</div>
+      <div class="nav-item" onclick="showPage('settings')"><span class="icon">⚙️</span> Paramètres</div>
+    </div>
+    <div class="sidebar-footer">
+      <span class="online-dot"></span> Système actif
+    </div>
+  </div>
+
+  <!-- Main -->
+  <div class="main">
+
+    <!-- ── Overview ── -->
+    <div class="page active" id="page-overview">
+      <div class="topbar">
+        <div>
+          <div class="page-title">Vue d'ensemble</div>
+          <div class="page-sub" id="last-updated">Chargement...</div>
+        </div>
+        <button class="refresh-btn" onclick="loadData()">🔄 Actualiser</button>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card green">
+          <div class="stat-icon">📦</div>
+          <div class="stat-val" id="stat-total-orders">—</div>
+          <div class="stat-lbl">Total Commandes</div>
+          <div class="stat-delta up" id="stat-today-orders">— aujourd'hui</div>
+        </div>
+        <div class="stat-card gold">
+          <div class="stat-icon">💰</div>
+          <div class="stat-val" id="stat-revenue">—</div>
+          <div class="stat-lbl">Revenu Total (MAD)</div>
+          <div class="stat-delta up" id="stat-today-revenue">— aujourd'hui</div>
+        </div>
+        <div class="stat-card blue">
+          <div class="stat-icon">👥</div>
+          <div class="stat-val" id="stat-customers">—</div>
+          <div class="stat-lbl">Clients Uniques</div>
+          <div class="stat-delta flat" id="stat-returning">— fidèles</div>
+        </div>
+        <div class="stat-card purple">
+          <div class="stat-icon">⭐</div>
+          <div class="stat-val" id="stat-avg-order">—</div>
+          <div class="stat-lbl">Panier Moyen (MAD)</div>
+          <div class="stat-delta flat">par commande</div>
+        </div>
+      </div>
+
+      <!-- Charts -->
+      <div class="charts-grid">
+        <div class="chart-card">
+          <div class="chart-title">📈 Commandes — 7 derniers jours</div>
+          <div class="bar-chart" id="chart-orders"></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">🥧 Commandes par persona</div>
+          <div class="donut-wrap">
+            <canvas id="donut-canvas" width="100" height="100"></canvas>
+            <div class="donut-legend" id="donut-legend"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent orders -->
+      <div class="section-hdr">
+        <div class="section-title">🕐 Commandes récentes</div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th>ID</th><th>Client</th><th>Plats</th><th>Total</th><th>Persona</th><th>Statut</th>
+          </tr></thead>
+          <tbody id="recent-orders-body">
+            <tr><td colspan="6" class="loading"><span class="spinner"></span>Chargement des données...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ── Orders ── -->
+    <div class="page" id="page-orders">
+      <div class="topbar">
+        <div>
+          <div class="page-title">Commandes</div>
+          <div class="page-sub">Toutes les commandes reçues</div>
+        </div>
+        <button class="refresh-btn" onclick="loadData()">🔄 Actualiser</button>
+      </div>
+      <div class="filter-bar">
+        <button class="filter-btn active" onclick="filterOrders('all',this)">Toutes</button>
+        <button class="filter-btn" onclick="filterOrders('new',this)">🟢 Nouvelles</button>
+        <button class="filter-btn" onclick="filterOrders('prep',this)">🟡 En prépa</button>
+        <button class="filter-btn" onclick="filterOrders('delivery',this)">🔵 Livraison</button>
+        <button class="filter-btn" onclick="filterOrders('done',this)">✅ Livrées</button>
+        <input class="search-input" placeholder="🔍 Chercher client..." oninput="searchOrders(this.value)" id="order-search"/>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th>ID</th><th>Date/Heure</th><th>Client</th><th>Adresse</th><th>Téléphone</th><th>Plats</th><th>Total</th><th>Statut</th>
+          </tr></thead>
+          <tbody id="orders-body">
+            <tr><td colspan="8" class="loading"><span class="spinner"></span>Chargement...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ── Customers ── -->
+    <div class="page" id="page-customers">
+      <div class="topbar">
+        <div>
+          <div class="page-title">Clients</div>
+          <div class="page-sub">Base clients + programme fidélité</div>
+        </div>
+        <button class="refresh-btn" onclick="loadData()">🔄 Actualiser</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th>Client</th><th>Téléphone</th><th>Ville</th><th>Commandes</th><th>Total dépensé</th><th>Tier Fidélité</th><th>Dernière commande</th>
+          </tr></thead>
+          <tbody id="customers-body">
+            <tr><td colspan="7" class="loading"><span class="spinner"></span>Chargement...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ── Revenue ── -->
+    <div class="page" id="page-revenue">
+      <div class="topbar">
+        <div>
+          <div class="page-title">Revenus</div>
+          <div class="page-sub">Analyse financière</div>
+        </div>
+        <button class="refresh-btn" onclick="loadData()">🔄 Actualiser</button>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card green">
+          <div class="stat-icon">📅</div>
+          <div class="stat-val" id="rev-today">—</div>
+          <div class="stat-lbl">Aujourd'hui (MAD)</div>
+        </div>
+        <div class="stat-card gold">
+          <div class="stat-icon">📆</div>
+          <div class="stat-val" id="rev-week">—</div>
+          <div class="stat-lbl">Cette semaine (MAD)</div>
+        </div>
+        <div class="stat-card blue">
+          <div class="stat-icon">🗓️</div>
+          <div class="stat-val" id="rev-month">—</div>
+          <div class="stat-lbl">Ce mois (MAD)</div>
+        </div>
+        <div class="stat-card purple">
+          <div class="stat-icon">🏆</div>
+          <div class="stat-val" id="rev-total">—</div>
+          <div class="stat-lbl">Total (MAD)</div>
+        </div>
+      </div>
+      <div class="chart-card" style="margin-bottom:16px;">
+        <div class="chart-title">💰 Revenus — 7 derniers jours</div>
+        <div class="bar-chart" id="chart-revenue"></div>
+      </div>
+      <div class="section-hdr"><div class="section-title">🍽️ Plats les plus commandés</div></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Plat</th><th>Nombre de commandes</th><th>Revenu généré (MAD)</th></tr></thead>
+          <tbody id="top-dishes-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ── Settings ── -->
+    <div class="page" id="page-settings">
+      <div class="topbar">
+        <div>
+          <div class="page-title">Paramètres</div>
+          <div class="page-sub">Configuration du dashboard</div>
+        </div>
+      </div>
+      <div class="config-card">
+        <div class="config-label">🔗 Google Sheets URL (lecture des données)</div>
+        <input class="config-input" id="cfg-sheet-url" placeholder="https://script.google.com/macros/s/..."/>
+        <br/>
+        <div class="config-label" style="margin-top:16px;">🔒 Mot de passe Admin</div>
+        <input class="config-input" id="cfg-password" type="password" placeholder="Nouveau mot de passe"/>
+        <br/>
+        <button class="save-btn" onclick="saveSettings()">💾 Sauvegarder</button>
+      </div>
+      <div class="config-card">
+        <div class="config-label">ℹ️ Instructions</div>
+        <p style="font-size:13px;color:var(--sub);line-height:1.8;">
+          1. Ouvrez votre Google Apps Script<br/>
+          2. Ajoutez une action <code style="color:var(--green)">?action=dashboard</code> pour retourner les données JSON<br/>
+          3. Collez l'URL dans le champ ci-dessus<br/>
+          4. Cliquez Actualiser — les données apparaîtront automatiquement
+        </p>
+      </div>
+    </div>
+
+  </div><!-- end main -->
+</div><!-- end app -->
+
+<script>
+// ── Config ────────────────────────────────────────────────────
+const ADMIN_PASSWORD = localStorage.getItem('savy_admin_pwd') || 'Inchaellah';
+let SHEET_URL = localStorage.getItem('https://script.google.com/macros/s/AKfycbwYrEyVXKZ5OO-WVvkUsyDyBFGuLbFZAf7SMPOZMRKU0SavqIt6fuOK9FIQfou4BHWfJQ/exec') || '';
+let allOrders    = [];
+let orderFilter  = 'all';
+let orderSearch  = '';
+// Store order statuses locally
+let orderStatuses = JSON.parse(localStorage.getItem('savy_order_statuses') || '{}');
+
+// ── Login ─────────────────────────────────────────────────────
+function doLogin() {
+  const pwd = document.getElementById('pwd-input').value;
+  const stored = localStorage.getItem('savy_admin_pwd') || 'savy2025';
+  if (pwd === stored) {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    loadData();
+    // Pre-fill settings
+    document.getElementById('cfg-sheet-url').value = SHEET_URL;
+  } else {
+    document.getElementById('login-err').style.display = 'block';
+  }
+}
+
+// ── Navigation ────────────────────────────────────────────────
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+// ── Load data from Google Sheets ─────────────────────────────
+async function loadData() {
+  if (!SHEET_URL) {
+    showNoSheetMsg();
+    return;
+  }
+  try {
+    const url = SHEET_URL + (SHEET_URL.includes('?') ? '&' : '?') + 'action=dashboard&t=' + Date.now();
+    const res  = await fetch(url);
+    const data = await res.json();
+    allOrders = data.orders || [];
+    renderAll(allOrders);
+    document.getElementById('last-updated').textContent =
+      'Mis à jour: ' + new Date().toLocaleTimeString('fr-FR');
+  } catch(e) {
+    // Fallback: try to parse as sheet rows
+    loadFromSheetDirect();
+  }
+}
+
+async function loadFromSheetDirect() {
+  if (!SHEET_URL) return;
+  try {
+    // Try reading as JSON export
+    const url = SHEET_URL + (SHEET_URL.includes('?') ? '&' : '?') + 'action=getOrders&t=' + Date.now();
+    const res  = await fetch(url);
+    const data = await res.json();
+    if (Array.isArray(data)) {
+      allOrders = data;
+    } else if (data.orders) {
+      allOrders = data.orders;
+    }
+    renderAll(allOrders);
+  } catch(e) {
+    showNoSheetMsg();
+  }
+}
+
+function showNoSheetMsg() {
+  const msg = `<tr><td colspan="8" class="empty-state"><div class="big">⚙️</div><p>Configure l'URL Google Sheets dans <strong>Paramètres</strong></p></td></tr>`;
+  ['recent-orders-body','orders-body','customers-body','top-dishes-body'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.innerHTML = msg;
+  });
+  // Show demo data
+  loadDemoData();
+}
+
+// ── Demo data (shows while Sheet not configured) ──────────────
+function loadDemoData() {
+  const demo = [
+    { order_id:'SAVY-0042', name:'Karim A.', city:'Tétouan, Rue Hassan II', phone:'0625736569', conversation:'Pasta aux Crevettes × 1, Salad César Poulet × 1', order_total:'111', persona:'employee', timestamp: new Date().toISOString() },
+    { order_id:'SAVY-0043', name:'Amina B.', city:'M\'diq, Avenue Med V', phone:'0661234567', conversation:'Blanc Poulet Pasta × 2, Tiramisu Healthy × 1', order_total:'160', persona:'sportif', timestamp: new Date(Date.now()-3600000).toISOString() },
+    { order_id:'SAVY-0044', name:'Said M.', city:'Martil, Rue 2 Mars', phone:'0698765432', conversation:'Club Sandwich × 3, Flan Caramel × 3', order_total:'228', persona:'famille', timestamp: new Date(Date.now()-7200000).toISOString() },
+    { order_id:'SAVY-0045', name:'Fatima Z.', city:'Tétouan, Avenue Masira', phone:'0612345678', conversation:'Pasta aux Crevettes × 1, Cheesecake Creamy × 1', order_total:'94', persona:'couple', timestamp: new Date(Date.now()-10800000).toISOString() },
+    { order_id:'SAVY-0046', name:'Youssef K.', city:'M\'diq', phone:'0634567890', conversation:'Burger Viande Hachée × 1, Chicken Nuggets × 1', order_total:'96', persona:'sportif', timestamp: new Date(Date.now()-86400000).toISOString() },
+  ];
+  allOrders = demo;
+  renderAll(demo);
+  document.getElementById('last-updated').textContent = '⚠️ Données démo — Configure Google Sheets';
+}
+
+// ── Render all sections ───────────────────────────────────────
+function renderAll(orders) {
+  renderStats(orders);
+  renderRecentOrders(orders.slice(0,8));
+  renderOrdersTable(orders);
+  renderCustomers(orders);
+  renderRevenue(orders);
+  renderCharts(orders);
+}
+
+function getStatus(orderId) {
+  return orderStatuses[orderId] || 'new';
+}
+
+function statusBadge(orderId) {
+  const s = getStatus(orderId);
+  const labels = { new:'🟢 Nouvelle', prep:'🟡 En prépa', delivery:'🔵 Livraison', done:'✅ Livrée' };
+  return `<span class="status-badge ${s}" onclick="cycleStatus('${orderId}',this)">${labels[s]||s}</span>`;
+}
+
+function cycleStatus(orderId, el) {
+  const cycle = ['new','prep','delivery','done'];
+  const cur   = getStatus(orderId);
+  const next  = cycle[(cycle.indexOf(cur)+1) % cycle.length];
+  orderStatuses[orderId] = next;
+  localStorage.setItem('savy_order_statuses', JSON.stringify(orderStatuses));
+  const labels = { new:'🟢 Nouvelle', prep:'🟡 En prépa', delivery:'🔵 Livraison', done:'✅ Livrée' };
+  el.textContent = labels[next];
+  el.className = `status-badge ${next}`;
+}
+
+// ── Stats ─────────────────────────────────────────────────────
+function renderStats(orders) {
+  const today = new Date().toDateString();
+  const todayOrders   = orders.filter(o => new Date(o.timestamp).toDateString() === today);
+  const uniquePhones  = new Set(orders.map(o => o.phone)).size;
+  const totalRevenue  = orders.reduce((s,o) => s + (parseFloat(o.order_total)||0), 0);
+  const todayRevenue  = todayOrders.reduce((s,o) => s + (parseFloat(o.order_total)||0), 0);
+  const avgOrder      = orders.length ? (totalRevenue / orders.length).toFixed(0) : 0;
+  const returning     = orders.filter(o => orders.filter(x=>x.phone===o.phone).length > 1);
+  const uniqueReturning = new Set(returning.map(o=>o.phone)).size;
+
+  setText('stat-total-orders', orders.length);
+  setText('stat-revenue', totalRevenue.toFixed(0) + ' MAD');
+  setText('stat-customers', uniquePhones);
+  setText('stat-avg-order', avgOrder + ' MAD');
+  setText('stat-today-orders', todayOrders.length + ' aujourd\'hui');
+  setText('stat-today-revenue', todayRevenue.toFixed(0) + ' MAD aujourd\'hui');
+  setText('stat-returning', uniqueReturning + ' fidèles');
+}
+
+// ── Recent orders ─────────────────────────────────────────────
+function renderRecentOrders(orders) {
+  const tbody = document.getElementById('recent-orders-body');
+  if(!orders.length){ tbody.innerHTML = emptyRow(6,'Aucune commande'); return; }
+  tbody.innerHTML = orders.map(o => `
+    <tr>
+      <td><span class="order-id">${o.order_id||'—'}</span></td>
+      <td><div class="customer-name">${o.name||'—'}</div></td>
+      <td style="max-width:200px;font-size:11px;color:var(--sub)">${(o.conversation||'').slice(0,60)}${(o.conversation||'').length>60?'…':''}</td>
+      <td><span class="total-val">${o.order_total||'—'} MAD</span></td>
+      <td><span class="persona-badge ${o.persona||''}">${personaLabel(o.persona)}</span></td>
+      <td>${statusBadge(o.order_id)}</td>
+    </tr>`).join('');
+}
+
+// ── Orders table ──────────────────────────────────────────────
+function renderOrdersTable(orders) {
+  let filtered = orders;
+  if(orderFilter !== 'all') filtered = orders.filter(o => getStatus(o.order_id) === orderFilter);
+  if(orderSearch) filtered = filtered.filter(o =>
+    (o.name||'').toLowerCase().includes(orderSearch) ||
+    (o.phone||'').includes(orderSearch) ||
+    (o.order_id||'').toLowerCase().includes(orderSearch)
+  );
+  const tbody = document.getElementById('orders-body');
+  if(!filtered.length){ tbody.innerHTML = emptyRow(8,'Aucune commande'); return; }
+  tbody.innerHTML = filtered.map(o => `
+    <tr>
+      <td><span class="order-id">${o.order_id||'—'}</span></td>
+      <td style="font-size:11px;color:var(--sub)">${formatDate(o.timestamp)}</td>
+      <td><div class="customer-name">${o.name||'—'}</div></td>
+      <td style="font-size:11px;color:var(--sub);max-width:120px">${(o.city||'').slice(0,30)}</td>
+      <td><span class="customer-phone">${o.phone||'—'}</span></td>
+      <td style="font-size:11px;color:var(--sub);max-width:180px">${(o.conversation||'').slice(0,50)}${(o.conversation||'').length>50?'…':''}</td>
+      <td><span class="total-val">${o.order_total||'—'} MAD</span></td>
+      <td>${statusBadge(o.order_id)}</td>
+    </tr>`).join('');
+}
+
+// ── Customers ─────────────────────────────────────────────────
+function renderCustomers(orders) {
+  // Group by phone
+  const map = {};
+  orders.forEach(o => {
+    const p = o.phone || 'unknown';
+    if(!map[p]) map[p] = { name:o.name, phone:p, city:o.city, orders:[], lastOrder:o.timestamp };
+    map[p].orders.push(o);
+    if(new Date(o.timestamp) > new Date(map[p].lastOrder)) map[p].lastOrder = o.timestamp;
+  });
+  const customers = Object.values(map).sort((a,b) => b.orders.length - a.orders.length);
+  const tbody = document.getElementById('customers-body');
+  if(!customers.length){ tbody.innerHTML = emptyRow(7,'Aucun client'); return; }
+  tbody.innerHTML = customers.map(c => {
+    const total   = c.orders.reduce((s,o) => s+(parseFloat(o.order_total)||0), 0);
+    const tier    = getLoyaltyTier(c.orders.length);
+    return `<tr>
+      <td><div class="customer-name">${c.name||'—'}</div></td>
+      <td><span class="customer-phone">${c.phone}</span></td>
+      <td style="font-size:12px;color:var(--sub)">${(c.city||'').split(',')[0]}</td>
+      <td style="font-weight:700;color:var(--text)">${c.orders.length}</td>
+      <td><span class="total-val">${total.toFixed(0)} MAD</span></td>
+      <td><span class="tier-badge tier-${tier.id}">${tier.icon} ${tier.label}</span></td>
+      <td style="font-size:11px;color:var(--sub)">${formatDate(c.lastOrder)}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ── Revenue ───────────────────────────────────────────────────
+function renderRevenue(orders) {
+  const now   = new Date();
+  const today = now.toDateString();
+  const weekAgo  = new Date(now - 7*86400000);
+  const monthAgo = new Date(now.getFullYear(), now.getMonth(), 1);
+
+  const sum = arr => arr.reduce((s,o) => s+(parseFloat(o.order_total)||0), 0);
+
+  setText('rev-today', sum(orders.filter(o=>new Date(o.timestamp).toDateString()===today)).toFixed(0));
+  setText('rev-week',  sum(orders.filter(o=>new Date(o.timestamp)>=weekAgo)).toFixed(0));
+  setText('rev-month', sum(orders.filter(o=>new Date(o.timestamp)>=monthAgo)).toFixed(0));
+  setText('rev-total', sum(orders).toFixed(0));
+
+  // Top dishes
+  const dishCount = {};
+  const dishRevenue = {};
+  orders.forEach(o => {
+    const parts = (o.conversation||'').split(',');
+    parts.forEach(p => {
+      const name = p.replace(/×.*$/,'').replace(/\d+/g,'').trim();
+      if(name.length > 3){
+        dishCount[name]   = (dishCount[name]||0)+1;
+        dishRevenue[name] = (dishRevenue[name]||0)+(parseFloat(o.order_total)||0)/parts.length;
+      }
+    });
+  });
+  const topDishes = Object.entries(dishCount).sort((a,b)=>b[1]-a[1]).slice(0,8);
+  const tbody = document.getElementById('top-dishes-body');
+  tbody.innerHTML = topDishes.length
+    ? topDishes.map(([name,count]) => `<tr>
+        <td style="font-weight:600">${name}</td>
+        <td><div style="display:flex;align-items:center;gap:8px">
+          <div style="width:${Math.round(count/topDishes[0][1]*120)}px;height:6px;background:linear-gradient(90deg,var(--green),var(--greenL));border-radius:3px"></div>
+          <span style="font-weight:700;color:var(--text)">${count}</span>
+        </div></td>
+        <td><span class="total-val">${(dishRevenue[name]||0).toFixed(0)} MAD</span></td>
+      </tr>`).join('')
+    : emptyRow(3,'Aucune donnée');
+}
+
+// ── Charts ────────────────────────────────────────────────────
+function renderCharts(orders) {
+  // 7-day bar charts
+  const days = [];
+  for(let i=6;i>=0;i--){
+    const d = new Date(); d.setDate(d.getDate()-i);
+    const label = ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'][d.getDay()];
+    const dayStr = d.toDateString();
+    const dayOrders   = orders.filter(o=>new Date(o.timestamp).toDateString()===dayStr);
+    const dayRevenue  = dayOrders.reduce((s,o)=>s+(parseFloat(o.order_total)||0),0);
+    days.push({ label, count:dayOrders.length, revenue:dayRevenue });
+  }
+
+  // Orders chart
+  const maxOrders  = Math.max(...days.map(d=>d.count), 1);
+  document.getElementById('chart-orders').innerHTML = days.map(d => `
+    <div class="bar-col">
+      <div class="bar-val">${d.count||''}</div>
+      <div class="bar" style="height:${Math.round(d.count/maxOrders*80)+4}px"></div>
+      <div class="bar-lbl">${d.label}</div>
+    </div>`).join('');
+
+  // Revenue chart
+  const maxRev = Math.max(...days.map(d=>d.revenue), 1);
+  document.getElementById('chart-revenue').innerHTML = days.map(d => `
+    <div class="bar-col">
+      <div class="bar-val">${d.revenue?d.revenue.toFixed(0):''}</div>
+      <div class="bar" style="height:${Math.round(d.revenue/maxRev*80)+4}px;background:linear-gradient(180deg,var(--gold),#B8860B)"></div>
+      <div class="bar-lbl">${d.label}</div>
+    </div>`).join('');
+
+  // Persona donut
+  const personaCounts = {};
+  orders.forEach(o => {
+    const p = o.persona || 'other';
+    personaCounts[p] = (personaCounts[p]||0)+1;
+  });
+  const colors   = { employee:'#4DA6FF', sportif:'#09B830', famille:'#F4C430', couple:'#B87AFF', whatsapp:'#25D366', general:'#6BBF7A' };
+  const labels   = { employee:'💼 Employé', sportif:'🏋️ Sportif', famille:'👨‍👩‍👧 Famille', couple:'💑 Couple', whatsapp:'📱 WhatsApp', general:'🌐 Général' };
+  const entries  = Object.entries(personaCounts);
+  const total    = entries.reduce((s,[,v])=>s+v,0);
+
+  // Simple canvas donut
+  const canvas = document.getElementById('donut-canvas');
+  const ctx    = canvas.getContext('2d');
+  ctx.clearRect(0,0,100,100);
+  let startAngle = -Math.PI/2;
+  entries.forEach(([p,count]) => {
+    const angle = (count/total)*2*Math.PI;
+    ctx.beginPath();
+    ctx.moveTo(50,50);
+    ctx.arc(50,50,45,startAngle,startAngle+angle);
+    ctx.closePath();
+    ctx.fillStyle = colors[p]||'#6BBF7A';
+    ctx.fill();
+    startAngle += angle;
+  });
+  // Hole
+  ctx.beginPath();
+  ctx.arc(50,50,28,0,2*Math.PI);
+  ctx.fillStyle = '#0D1810';
+  ctx.fill();
+  // Center text
+  ctx.fillStyle = '#E8F5EC';
+  ctx.font = 'bold 14px Syne,sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText(total, 50, 54);
+
+  document.getElementById('donut-legend').innerHTML = entries.map(([p,count]) => `
+    <div class="legend-item">
+      <div class="legend-dot" style="background:${colors[p]||'#6BBF7A'}"></div>
+      <span style="color:var(--sub)">${labels[p]||p}</span>
+      <span style="color:var(--text);font-weight:700;margin-left:auto">${count}</span>
+    </div>`).join('');
+}
+
+// ── Filters ───────────────────────────────────────────────────
+function filterOrders(filter, btn) {
+  orderFilter = filter;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderOrdersTable(allOrders);
+}
+function searchOrders(val) {
+  orderSearch = val.toLowerCase();
+  renderOrdersTable(allOrders);
+}
+
+// ── Settings ──────────────────────────────────────────────────
+function saveSettings() {
+  const url = document.getElementById('cfg-sheet-url').value.trim();
+  const pwd = document.getElementById('cfg-password').value.trim();
+  if(url) { SHEET_URL = url; localStorage.setItem('savy_sheet_url', url); }
+  if(pwd) { localStorage.setItem('savy_admin_pwd', pwd); }
+  alert('✅ Paramètres sauvegardés! Rechargez la page.');
+}
+
+// ── Helpers ───────────────────────────────────────────────────
+function setText(id, val) {
+  const el = document.getElementById(id);
+  if(el) el.textContent = val;
+}
+function emptyRow(cols, msg) {
+  return `<tr><td colspan="${cols}" class="empty-state"><div class="big">📭</div><p>${msg}</p></td></tr>`;
+}
+function formatDate(ts) {
+  if(!ts) return '—';
+  const d = new Date(ts);
+  if(isNaN(d)) return ts;
+  return d.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit'}) + ' ' +
+         d.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+}
+function personaLabel(p) {
+  const m = { employee:'💼 Employé', sportif:'🏋️ Sport', famille:'👨‍👩‍👧 Famille', couple:'💑 Couple', whatsapp:'📱 WA', general:'🌐', '':'—' };
+  return m[p]||p||'—';
+}
+function getLoyaltyTier(count) {
+  if(count>=31) return { id:'platinum', label:'Platine', icon:'💎' };
+  if(count>=16) return { id:'gold',     label:'Gold',    icon:'🥇' };
+  if(count>=6)  return { id:'silver',   label:'Silver',  icon:'🥈' };
+  return               { id:'bronze',   label:'Bronze',  icon:'🥉' };
+}
+
+// ── Auto-refresh every 2 minutes ─────────────────────────────
+setInterval(() => {
+  if(document.getElementById('app').style.display!=='none') loadData();
+}, 120000);
+</script>
+</body>
+</html>
