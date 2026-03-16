@@ -2345,6 +2345,32 @@
     .ots-step-time {
       font-size: 11px; color: var(--muted); margin-top: 2px; font-weight: 600;
     }
+    /* Inactive future steps — dimmed but styled */
+    .ots-step:not(.ots-done):not(.ots-active) .ots-dot {
+      background: var(--bg); border: 2px dashed var(--border);
+      color: var(--muted); opacity: .6;
+    }
+    .ots-step:not(.ots-done):not(.ots-active) .ots-step-title {
+      color: var(--muted); font-weight: 600;
+    }
+    .ots-step:not(.ots-done):not(.ots-active) .ots-step-time {
+      color: var(--border);
+    }
+    /* Active step — highlight row */
+    .ots-step.ots-active {
+      background: linear-gradient(90deg, rgba(9,184,48,.06), transparent);
+      border-radius: 12px; margin: 0 -8px; padding: 12px 8px;
+    }
+    .ots-step.ots-active .ots-step-time {
+      color: var(--green); font-weight: 700;
+    }
+    /* Done step connector line */
+    .ots-step.ots-done .ots-step-title { color: var(--text); }
+    /* Pending connector line — dashed */
+    .ots-step:not(.ots-done):not(:last-child)::after {
+      border-left: 2px dashed var(--border);
+      width: 0; background: none;
+    }
     /* ETA card */
     .ots-eta-card {
       background: var(--bg); border-radius: 20px;
@@ -6021,19 +6047,23 @@ function renderLoyaltyCheckerResult(count, phone) {
 
 <script>
 (function(){
-  var ov, mod, lastKbH = -1;
+  var lastKbH = -1;
+  var updating = false;
 
   function fix(){
-    if(!ov) ov  = document.getElementById('order-modal-overlay');
-    if(!mod) mod = document.getElementById('order-modal');
+    if(updating) return;
+    var ov  = document.getElementById('order-modal-overlay');
+    var mod = document.getElementById('order-modal');
     if(!ov || !mod || !ov.classList.contains('open')) return;
 
     var vp  = window.visualViewport;
-    var kbH = vp ? Math.round(window.innerHeight - vp.height) : 0;
-
-    // Only update DOM if value actually changed — prevents vibration loop
+    if(!vp) return;
+    var kbH = Math.round(window.innerHeight - vp.height);
+    if(kbH < 0) kbH = 0;
     if(kbH === lastKbH) return;
-    lastKbH = kbH;
+
+    updating = true;
+    lastKbH  = kbH;
 
     if(kbH > 80){
       ov.style.paddingBottom = kbH + 'px';
@@ -6042,24 +6072,27 @@ function renderLoyaltyCheckerResult(count, phone) {
       ov.style.paddingBottom = '';
       mod.style.maxHeight    = '';
     }
-  }
 
-  // Reset cache when modal opens/closes
-  function resetCache(){ lastKbH = -1; ov = null; mod = null; }
+    // Release flag after paint — not before
+    requestAnimationFrame(function(){ updating = false; });
+  }
 
   if(window.visualViewport){
     window.visualViewport.addEventListener('resize', fix);
   }
 
-  // Watch modal open state
+  // Reset lastKbH only when modal CLASS changes (open/close) — NOT style
   var observer = new MutationObserver(function(muts){
     muts.forEach(function(m){
-      if(m.target.id === 'order-modal-overlay') { resetCache(); fix(); }
+      if(m.attributeName === 'class'){
+        lastKbH = -1;
+        setTimeout(fix, 50);
+      }
     });
   });
   document.addEventListener('DOMContentLoaded', function(){
     var el = document.getElementById('order-modal-overlay');
-    if(el) observer.observe(el, { attributes:true, attributeFilter:['class','style'] });
+    if(el) observer.observe(el, { attributes:true, attributeFilter:['class'] });
   });
 })();
 </script>
