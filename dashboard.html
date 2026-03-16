@@ -336,6 +336,13 @@ tr:hover td { background:var(--card2); }
     </div>
     <div class="sidebar-footer">
       <span class="online-dot"></span> Système actif
+      <button onclick="logout()" style="
+        margin-top:10px; width:100%; background:transparent;
+        border:1px solid var(--border); border-radius:8px;
+        color:var(--muted); padding:6px 10px; cursor:pointer;
+        font-size:11px; font-weight:700; text-align:left;
+        display:flex; align-items:center; gap:8px;
+      ">🚪 Déconnexion</button>
       <button id="theme-toggle" onclick="toggleDashTheme()" style="
         margin-top:10px; width:100%; background:var(--card2);
         border:1px solid var(--border); border-radius:8px;
@@ -563,9 +570,9 @@ function doLogin() {
   const pwd = document.getElementById('pwd-input').value;
   const stored = localStorage.getItem('savy_admin_pwd') || 'savy2025';
   if (pwd === stored) {
-    document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
-    loadData();
+    // Save session so user stays logged in
+    localStorage.setItem('savy_admin_session', btoa(stored + ':' + Date.now()));
+    showApp();
     // Pre-fill settings
     document.getElementById('cfg-sheet-url').value = SHEET_URL || 'https://script.google.com/macros/s/AKfycby-JMVQrM6eHHJPz9wDFUrW6yvFKnBaoc2VFZa6QvDtEPPO0wZSr8TsXHZvy0q4v5wYUg/exec';
     setTimeout(testConnection, 1500);
@@ -948,6 +955,12 @@ function testConnection() {
     });
 }
 
+// ── Logout ───────────────────────────────────────────────────
+function logout() {
+  localStorage.removeItem('savy_admin_session');
+  location.reload();
+}
+
 // ── Theme toggle ─────────────────────────────────────────────
 function toggleDashTheme() {
   const current = document.documentElement.getAttribute('data-theme') || 'dark';
@@ -985,6 +998,35 @@ function setDashTheme(theme) {
   document.addEventListener('DOMContentLoaded', function(){
     setDashTheme(saved);
   });
+})();
+
+// ── Show app (skip login screen) ─────────────────────────────
+function showApp() {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  loadData();
+  const url = localStorage.getItem('savy_sheet_url') ||
+    'https://script.google.com/macros/s/AKfycby-JMVQrM6eHHJPz9wDFUrW6yvFKnBaoc2VFZa6QvDtEPPO0wZSr8TsXHZvy0q4v5wYUg/exec';
+  const el = document.getElementById('cfg-sheet-url');
+  if(el) el.value = url;
+  setTimeout(testConnection, 1500);
+}
+
+// ── Auto-login: check saved session on every page load ────────
+(function checkSession(){
+  const session = localStorage.getItem('savy_admin_session');
+  if(!session) return; // no session — show login
+  try {
+    const decoded = atob(session);
+    const stored  = localStorage.getItem('savy_admin_pwd') || 'savy2025';
+    // Session is valid if it contains the correct password hash
+    if(decoded.startsWith(stored + ':')) {
+      // Valid session — skip login and go straight to app
+      showApp();
+    }
+  } catch(e) {
+    localStorage.removeItem('savy_admin_session');
+  }
 })();
 
 // ── Auto-refresh every 2 minutes ─────────────────────────────
