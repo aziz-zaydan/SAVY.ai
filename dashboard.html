@@ -22,6 +22,50 @@
   --blue:     #4DA6FF;
   --purple:   #B87AFF;
 }
+
+/* ── LIGHT THEME ── */
+[data-theme="light"] {
+  --bg:       #F5FBF7;
+  --card:     #FFFFFF;
+  --card2:    #EEF7F1;
+  --green:    #089929;
+  --greenL:   #2BCE4E;
+  --greenXL:  #E6F5EF;
+  --text:     #0D1F18;
+  --sub:      #2E6644;
+  --muted:    #8FBFAA;
+  --border:   #D4EDE3;
+  --gold:     #B8860B;
+  --red:      #CC0000;
+  --blue:     #1565C0;
+  --purple:   #6A1B9A;
+}
+[data-theme="light"] html,
+[data-theme="light"] body { background:var(--bg); }
+[data-theme="light"] .sidebar { background:var(--card); border-color:var(--border); }
+[data-theme="light"] .sidebar-logo { color:var(--green); }
+[data-theme="light"] .nav-item { color:var(--sub); }
+[data-theme="light"] .nav-item.active { color:var(--green); background:var(--greenXL); }
+[data-theme="light"] .nav-item:hover { background:var(--card2); color:var(--text); }
+[data-theme="light"] .table-wrap { border-color:var(--border); }
+[data-theme="light"] thead tr { background:var(--card2); }
+[data-theme="light"] td { border-color:var(--border); }
+[data-theme="light"] tr:hover td { background:var(--card2); }
+[data-theme="light"] .stat-card { background:var(--card); border-color:var(--border); box-shadow:0 2px 12px rgba(0,0,0,.06); }
+[data-theme="light"] .chart-card { background:var(--card); border-color:var(--border); }
+[data-theme="light"] .login-box { background:var(--card); border-color:var(--border); box-shadow:0 8px 32px rgba(0,0,0,.08); }
+[data-theme="light"] .login-input { background:var(--bg); border-color:var(--border); color:var(--text); }
+[data-theme="light"] .filter-btn { background:var(--card2); border-color:var(--border); color:var(--sub); }
+[data-theme="light"] .filter-btn.active { background:var(--greenXL); border-color:var(--green); color:var(--green); }
+[data-theme="light"] .search-input { background:var(--card2); border-color:var(--border); color:var(--text); }
+[data-theme="light"] .refresh-btn { background:var(--card2); border-color:var(--border); color:var(--sub); }
+[data-theme="light"] .config-card { background:var(--card); border-color:var(--border); }
+[data-theme="light"] .config-input { background:var(--bg); border-color:var(--border); color:var(--text); }
+[data-theme="light"] .bar { background:linear-gradient(180deg,var(--green),var(--greenL)); }
+[data-theme="light"] .order-id { color:var(--green); }
+[data-theme="light"] .total-val { color:#B8860B; }
+[data-theme="light"] #mobile-nav { background:var(--card); border-color:var(--border); }
+[data-theme="light"] #login-screen { background:var(--bg); }
 * { box-sizing:border-box; margin:0; padding:0; }
 html,body { background:var(--bg); color:var(--text); font-family:'DM Sans',sans-serif; min-height:100vh; }
 
@@ -235,9 +279,25 @@ tr:hover td { background:var(--card2); }
 /* ── Responsive ── */
 @media(max-width:900px){
   .sidebar { display:none; }
-  .main { margin-left:0; padding:16px; }
-  .stats-grid { grid-template-columns:1fr 1fr; }
+  .main { margin-left:0; padding:12px; }
+  .stats-grid { grid-template-columns:1fr 1fr; gap:10px; }
   .charts-grid { grid-template-columns:1fr; }
+  .page-title { font-size:18px; }
+  table { font-size:11px; }
+  th,td { padding:8px 10px; }
+}
+@media(max-width:480px){
+  .stats-grid { grid-template-columns:1fr 1fr; gap:8px; }
+  .stat-val { font-size:20px; }
+  .stat-lbl { font-size:10px; }
+  .main { padding:10px; }
+  .topbar { flex-direction:column; align-items:flex-start; gap:8px; }
+  .filter-bar { gap:6px; }
+  .filter-btn { padding:5px 10px; font-size:11px; }
+  .search-input { width:100%; }
+  /* Hide less important columns on phone */
+  th:nth-child(4), td:nth-child(4),
+  th:nth-child(5), td:nth-child(5) { display:none; }
 }
 </style>
 </head>
@@ -268,6 +328,13 @@ tr:hover td { background:var(--card2); }
     </div>
     <div class="sidebar-footer">
       <span class="online-dot"></span> Système actif
+      <button id="theme-toggle" onclick="toggleDashTheme()" style="
+        margin-top:10px; width:100%; background:var(--card2);
+        border:1px solid var(--border); border-radius:8px;
+        color:var(--sub); padding:7px 10px; cursor:pointer;
+        font-size:12px; font-weight:700; text-align:left;
+        transition:all .2s; display:flex; align-items:center; gap:8px;
+      ">🌙 Mode sombre</button>
     </div>
   </div>
 
@@ -281,7 +348,14 @@ tr:hover td { background:var(--card2); }
           <div class="page-title">Vue d'ensemble</div>
           <div class="page-sub" id="last-updated">Chargement...</div>
         </div>
-        <button class="refresh-btn" onclick="loadData()">🔄 Actualiser</button>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <button id="theme-toggle-top" onclick="toggleDashTheme()" style="
+            background:var(--card2); border:1px solid var(--border);
+            color:var(--sub); border-radius:8px; padding:8px 10px;
+            font-size:14px; cursor:pointer; transition:all .2s;
+          ">🌙</button>
+          <button class="refresh-btn" onclick="loadData()">🔄 Actualiser</button>
+        </div>
       </div>
       <div class="stats-grid">
         <div class="stat-card green">
@@ -453,13 +527,13 @@ tr:hover td { background:var(--card2); }
         <button class="save-btn" onclick="saveSettings()">💾 Sauvegarder</button>
       </div>
       <div class="config-card">
-        <div class="config-label">ℹ️ Instructions</div>
-        <p style="font-size:13px;color:var(--sub);line-height:1.8;">
-          1. Ouvrez votre Google Apps Script<br/>
-          2. Ajoutez une action <code style="color:var(--green)">?action=dashboard</code> pour retourner les données JSON<br/>
-          3. Collez l'URL dans le champ ci-dessus<br/>
-          4. Cliquez Actualiser — les données apparaîtront automatiquement
-        </p>
+        <div class="config-label">ℹ️ Statut connexion</div>
+        <div id="sheet-status" style="font-size:13px;color:var(--sub);line-height:1.8;padding:12px;background:var(--bg);border-radius:10px;border:1px solid var(--border);">
+          ⏳ Vérification...
+        </div>
+        <button class="save-btn" onclick="testConnection()" style="margin-top:8px;background:var(--card2);color:var(--sub);border:1px solid var(--border);">
+          🔌 Tester la connexion
+        </button>
       </div>
     </div>
 
@@ -486,6 +560,7 @@ function doLogin() {
     loadData();
     // Pre-fill settings
     document.getElementById('cfg-sheet-url').value = SHEET_URL || 'https://script.google.com/macros/s/AKfycbziaPm4HAPxDC5QcrjZhFH4ekTunqlMEIJQLUzvu4tCpbkV0utv9WrQVQtfXAGCQfjf0w/exec';
+    setTimeout(testConnection, 1500);
   } else {
     document.getElementById('login-err').style.display = 'block';
   }
@@ -523,7 +598,7 @@ async function loadData() {
 
     // Handle Google's redirect HTML wrapping
     let jsonStr = text;
-    if(text.includes('</body>')) {
+    if(text.indexOf('</body>') > -1) {
       const match = text.match(/(\{[\s\S]*\}|\[[\s\S]*\])/);
       if(match) jsonStr = match[1];
     }
@@ -896,10 +971,123 @@ function getLoyaltyTier(count) {
   return               { id:'bronze',   label:'Bronze',  icon:'🥉' };
 }
 
+// ── Test connection ──────────────────────────────────────────
+async function testConnection() {
+  const el = document.getElementById('sheet-status');
+  if(!el) return;
+  el.innerHTML = '⏳ Test en cours...';
+
+  if(!SHEET_URL){
+    el.innerHTML = '❌ Aucune URL configurée — collez votre URL Google Sheets ci-dessus';
+    return;
+  }
+
+  try {
+    const url = SHEET_URL + '?action=dashboard&t=' + Date.now();
+    const res  = await fetch(url, { redirect:'follow' });
+    const text = await res.text();
+
+    // Try parse JSON
+    let data;
+    try {
+      let jsonStr = text;
+      if(text.includes('<\/body>')){
+        const m = text.match(/(\{[\s\S]*?\})/);
+        if(m) jsonStr = m[1];
+      }
+      data = JSON.parse(jsonStr);
+    } catch(e) {
+      el.innerHTML = '⚠️ URL valide mais réponse invalide — avez-vous redéployé le script après ajout de <code>doGet</code> ?';
+      return;
+    }
+
+    if(data.orders !== undefined){
+      const count = data.orders.length;
+      el.innerHTML = count > 0
+        ? "✅ Connecté — <strong>" + count + " commandes</strong> trouvées. Allez sur Vue d'ensemble → Actualiser."
+        : "✅ Connecté — aucune commande encore. Passez une commande test sur le site pour vérifier.";
+      el.style.color = 'var(--green)';
+      // Auto load data
+      if(count > 0){ allOrders = data.orders; renderAll(allOrders); }
+    } else {
+      el.innerHTML = '⚠️ Connecté mais le script ne retourne pas <code>orders</code> — vérifiez que Code.gs est bien collé et redéployé en nouvelle version.';
+    }
+  } catch(e) {
+    el.innerHTML = '❌ Erreur réseau: ' + e.message + '<br/>Vérifiez que le script est déployé avec accès <strong>"Anyone"</strong>.';
+  }
+}
+
+// ── Theme toggle ─────────────────────────────────────────────
+function toggleDashTheme() {
+  const current = document.documentElement.getAttribute('data-theme') || 'dark';
+  const next    = current === 'dark' ? 'light' : 'dark';
+  setDashTheme(next);
+  localStorage.setItem('savy_dash_theme', next);
+}
+
+function setDashTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  const isDark = theme === 'dark';
+  const icon   = isDark ? '🌙' : '☀️';
+  const label  = isDark ? 'Mode sombre' : 'Mode clair';
+  const btn1   = document.getElementById('theme-toggle');
+  const btn2   = document.getElementById('theme-toggle-top');
+  if(btn1){ btn1.innerHTML = icon + ' ' + label; }
+  if(btn2){ btn2.textContent = icon; }
+  // Update donut canvas background
+  const canvas = document.getElementById('donut-canvas');
+  if(canvas){
+    const ctx = canvas.getContext('2d');
+    // Redraw hole with correct bg color
+    ctx.beginPath();
+    ctx.arc(50,50,28,0,2*Math.PI);
+    ctx.fillStyle = isDark ? '#0D1810' : '#FFFFFF';
+    ctx.fill();
+  }
+}
+
+// Apply saved theme on load
+(function(){
+  const saved = localStorage.getItem('savy_dash_theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', saved);
+  // Apply after DOM ready
+  document.addEventListener('DOMContentLoaded', function(){
+    setDashTheme(saved);
+  });
+})();
+
 // ── Auto-refresh every 2 minutes ─────────────────────────────
 setInterval(() => {
   if(document.getElementById('app').style.display!=='none') loadData();
 }, 120000);
+</script>
+
+<!-- Mobile bottom nav -->
+<div style="display:none;position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--border);padding:8px 0;z-index:200;" id="mobile-nav">
+  <div style="display:flex;justify-content:space-around;">
+    <div onclick="showPage('overview')" style="text-align:center;cursor:pointer;padding:4px 12px;">
+      <div style="font-size:20px;">📊</div><div style="font-size:9px;color:var(--sub);">Stats</div>
+    </div>
+    <div onclick="showPage('orders')" style="text-align:center;cursor:pointer;padding:4px 12px;">
+      <div style="font-size:20px;">📦</div><div style="font-size:9px;color:var(--sub);">Orders</div>
+    </div>
+    <div onclick="showPage('customers')" style="text-align:center;cursor:pointer;padding:4px 12px;">
+      <div style="font-size:20px;">👥</div><div style="font-size:9px;color:var(--sub);">Clients</div>
+    </div>
+    <div onclick="showPage('revenue')" style="text-align:center;cursor:pointer;padding:4px 12px;">
+      <div style="font-size:20px;">💰</div><div style="font-size:9px;color:var(--sub);">Revenus</div>
+    </div>
+    <div onclick="showPage('settings')" style="text-align:center;cursor:pointer;padding:4px 12px;">
+      <div style="font-size:20px;">⚙️</div><div style="font-size:9px;color:var(--sub);">Config</div>
+    </div>
+  </div>
+</div>
+<script>
+// Show mobile nav on small screens
+if(window.innerWidth <= 900){
+  document.getElementById('mobile-nav').style.display = 'block';
+  document.querySelector('.main').style.paddingBottom = '70px';
+}
 </script>
 </body>
 </html>
