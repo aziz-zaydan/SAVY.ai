@@ -1828,12 +1828,23 @@
     /* Lead form inside chat */
     #chat-lead-form { padding:10px 11px; border-top:1px solid var(--border); background:var(--card); flex-shrink:0; display:none; }
     .lead-inp {
-      width:100%; padding:9px 11px; border-radius:10px; border:1.5px solid var(--border);
-      font-size:12px; outline:none; color:var(--text); background:var(--bg);
-      font-family:'DM Sans',sans-serif; margin-bottom:6px; transition:border-color .2s;
+      width:100%; padding:10px 12px; border-radius:10px; border:1.5px solid var(--border);
+      font-size:13px; outline:none; color:var(--text); background:var(--bg);
+      font-family:'DM Sans',sans-serif; margin-bottom:8px; transition:border-color .2s;
+      display:block;
     }
+    textarea.lead-inp { resize:none; line-height:1.5; }
     .lead-inp:focus { border-color:var(--green); background:#fff; }
     .lead-inp::placeholder { color:var(--muted); }
+    [data-theme="dark"] .lead-inp:focus { background:var(--card); }
+    /* Meal summary card */
+    #lead-meal-summary {
+      animation: slideDown .3s ease both;
+    }
+    @keyframes slideDown {
+      from { opacity:0; transform:translateY(-8px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
     .lead-submit {
       width:100%; padding:10px; border-radius:10px; border:none;
       background:var(--green); color:#fff; font-size:12px; font-weight:700;
@@ -3248,13 +3259,25 @@
 
   <!-- Lead form -->
   <div id="chat-lead-form">
-    <input class="lead-inp" id="lead-name"  type="text" placeholder="Your full name / اسمك الكامل"/>
-    <input class="lead-inp" id="lead-city"  type="text" placeholder="Adresse / عنوانك (ex: Rue Ibn Batouta, Tétouan)"/>
-    <input class="lead-inp" id="lead-phone" type="tel"  placeholder="WhatsApp (+212 6XX XXX XXX)"/>
+    <!-- ── Meal summary ── -->
+    <div id="lead-meal-summary" style="
+      background:var(--greenXL); border:1.5px solid var(--border);
+      border-radius:12px; padding:10px 12px; margin-bottom:10px;
+      font-size:12px; color:var(--text); display:none;
+    ">
+      <div style="font-family:'Outfit',sans-serif;font-weight:800;font-size:11px;color:var(--green);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px;">🧬 Votre commande</div>
+      <div id="lead-meal-items" style="line-height:1.8;color:var(--sub);"></div>
+      <div id="lead-meal-total" style="font-family:'Outfit',sans-serif;font-weight:900;font-size:15px;color:var(--green);margin-top:6px;padding-top:6px;border-top:1px solid var(--border);"></div>
+    </div>
+    <!-- ── Fields ── -->
+    <input class="lead-inp" id="lead-name"  type="text"  placeholder="Nom complet / Full name / الاسم الكامل" autocomplete="name"/>
+    <input class="lead-inp" id="lead-city"  type="text"  placeholder="Adresse · عنوانك (Rue, Ville)" autocomplete="street-address"/>
+    <input class="lead-inp" id="lead-phone" type="tel"   placeholder="WhatsApp (+212 6XX XXX XXX)" autocomplete="tel"/>
+    <textarea class="lead-inp" id="lead-comment" rows="2" placeholder="Commentaire (allergies, instructions spéciales...)" style="resize:none;height:56px;"></textarea>
     <button class="lead-submit" id="lead-submit-btn" onclick="submitLead()">
-      🧬 Engineer My Meal Now ✨
+      🛵 Confirmer ma commande
     </button>
-    <p style="font-size:11px;color:var(--muted);text-align:center;margin-top:7px;">🔒 Your info is private · never shared</p>
+    <p style="font-size:11px;color:var(--muted);text-align:center;margin-top:7px;">🔒 Infos privées · jamais partagées</p>
   </div>
 
   <!-- Input area -->
@@ -4702,15 +4725,68 @@ function getFallbackReply(p, isAr, userMsg) {
 /* ═══════════════════════════════════════════
    LEAD FORM
 ═══════════════════════════════════════════ */
+function buildLeadMealSummary(isAr) {
+  const summaryEl = document.getElementById("lead-meal-summary");
+  const itemsEl   = document.getElementById("lead-meal-items");
+  const totalEl   = document.getElementById("lead-meal-total");
+  if(!summaryEl || !itemsEl || !totalEl) return;
+
+  // Try to get meals from cart first
+  let lines = [];
+  let total = 0;
+
+  if(cart && cart.length > 0) {
+    // Use actual cart items
+    cart.forEach(id => {
+      const d = dishes.find(x => x.id === id);
+      if(d) {
+        lines.push((isAr ? d.ar : d.name) + " — " + d.price + " MAD");
+        total += d.price;
+      }
+    });
+  } else {
+    // Extract from chat history — look for dish names mentioned
+    const history = chatHistory || [];
+    const allText = history.map(m => m.content || "").join(" ");
+    const mentioned = dishes.filter(d =>
+      allText.toLowerCase().includes(d.name.toLowerCase()) ||
+      allText.includes(d.ar)
+    ).slice(0, 4);
+    if(mentioned.length > 0) {
+      mentioned.forEach(d => {
+        lines.push((isAr ? d.ar : d.name) + " — " + d.price + " MAD");
+        total += d.price;
+      });
+    }
+  }
+
+  if(lines.length > 0) {
+    itemsEl.innerHTML = lines.map(l =>
+      "<div style='display:flex;justify-content:space-between;gap:8px;'>" +
+      "<span>• " + l.split(" — ")[0] + "</span>" +
+      "<span style='font-weight:700;color:var(--green)'>" + l.split(" — ")[1] + "</span>" +
+      "</div>"
+    ).join("");
+    const label = isAr ? "المجموع" : (lang==="en" ? "Total" : "Total");
+    totalEl.textContent = label + " : " + total + " MAD";
+    summaryEl.style.display = "block";
+  }
+}
+
 function showLeadForm(p) {
   if(leadShown) return;
   leadShown = true;
-  const isAr   = lang==="ar"||false;
+  const isAr    = lang==="ar"||false;
   const isCouple = p==="couple";
+
+  // Build meal summary from chat history and cart
+  buildLeadMealSummary(isAr);
 
   const prompt = isAr
     ? "ممتاز ! 🧬 لإتمام طلبكم، يرجى ملء المعلومات التالية :"
-    : "Parfait ! 🧬 Pour finaliser votre commande, veuillez compléter vos informations ci-dessous :";
+    : (lang==="en"
+      ? "Perfect! 🧬 To confirm your order, please fill in your details below:"
+      : "Parfait ! 🧬 Pour finaliser votre commande, complétez vos infos ci-dessous :");
   addBotMsg(prompt, isCouple);
 
   setTimeout(() => {
@@ -5149,9 +5225,10 @@ function submitOrder() {
 }
 
 function submitLead() {
-  const name  = (document.getElementById("lead-name").value  || "").trim();
-  const city  = (document.getElementById("lead-city").value  || "").trim();
-  const phone = normalizePhone(document.getElementById("lead-phone").value || "");
+  const name    = (document.getElementById("lead-name").value    || "").trim();
+  const city    = (document.getElementById("lead-city").value    || "").trim();
+  const phone   = normalizePhone(document.getElementById("lead-phone").value || "");
+  const comment = (document.getElementById("lead-comment") ? document.getElementById("lead-comment").value : "").trim();
   const isCouple = persona === "couple";
   const isAr   = lang === "ar" || false;
 
@@ -5172,6 +5249,7 @@ function submitLead() {
   if(sbtn){ sbtn.textContent = isAr ? "⏳ جاري..." : "⏳ ..."; sbtn.disabled = true; }
 
   saveToSheets({ name, city, phone: "'" + phone, persona: persona || "employee", lang,
+    comment: comment || "",
     conversation: chatHistory.filter(m => m.role === "user").map(m => m.content).join(" | ") });
 
   setTimeout(() => {
