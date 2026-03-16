@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover"/>
   <title>SAVY – Meal Engineer | الشيف الذكي</title>
   <meta name="description" content="SAVY – Morocco's first AI Personal Chef. Specially Engineered meals, delivered in 45 min. Tétouan · M'diq · Martil."/>
   <!-- PWA -->
@@ -38,6 +38,15 @@
       --shadowH:  0 8px 32px rgba(9,184,48,0.15);
       --glow:     0 0 0 3px rgba(9,184,48,0.15);
       --navbar-bg: rgba(238,247,243,0.97);
+    }
+
+    /* ── RESPONSIVE: phone-first, adapts to all screens ── */
+    html {
+      overflow-x: hidden;
+    }
+    body {
+      overflow-x: hidden;
+      width: 100%;
     }
 
     /* ── DARK THEME ── */
@@ -235,10 +244,10 @@
     #navbar {
       position:sticky; top:36px; z-index:200;
       background:var(--navbar-bg); backdrop-filter:blur(16px);
-
-      padding:0 clamp(16px,4vw,56px); height:66px;
+      padding:0 clamp(12px,4vw,56px); height:66px;
       display:grid; grid-template-columns:1fr auto 1fr; align-items:center;
       transition:box-shadow .3s;
+      width:100%;
     }
     .nav-logo { display:flex; align-items:center; gap:10px; text-decoration:none; }
     .nav-logo span { font-family:'Syne',sans-serif; font-weight:900; font-size:20px; color:var(--text); }
@@ -3229,7 +3238,7 @@
    CONFIG — Replace these two values
 ═══════════════════════════════════════════ */
 const GROQ_API_URL       = "/.netlify/functions/gemini"; // Netlify function proxy
-const GOOGLE_SHEET_URL   = "https://script.google.com/macros/s/AKfycbx18Wth3fpPBoAafNQsU3nSTrHA_WHrlNsnTUZZWFX4Z6GHmLrRd5jua2I12SAYiaR-4Q/exec";
+const GOOGLE_SHEET_URL   = "https://script.google.com/macros/s/AKfycbziaPm4HAPxDC5QcrjZhFH4ekTunqlMEIJQLUzvu4tCpbkV0utv9WrQVQtfXAGCQfjf0w/exec";
 
 /* ═══════════════════════════════════════════
    DATA
