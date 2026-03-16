@@ -468,7 +468,7 @@ tr:hover td { background:var(--card2); }
 
 <script>
 // ── Config ────────────────────────────────────────────────────
-const ADMIN_PASSWORD = localStorage.getItem('savy_admin_pwd') || 'Inchaellah';
+const ADMIN_PASSWORD = localStorage.getItem('savy_admin_pwd') || 'savy2025';
 let SHEET_URL = localStorage.getItem('savy_sheet_url') || 'https://script.google.com/macros/s/AKfycbziaPm4HAPxDC5QcrjZhFH4ekTunqlMEIJQLUzvu4tCpbkV0utv9WrQVQtfXAGCQfjf0w/exec';
 let allOrders    = [];
 let orderFilter  = 'all';
@@ -502,27 +502,74 @@ function showPage(name) {
 // ── Load data from Google Sheets ─────────────────────────────
 async function loadData() {
   if (!SHEET_URL) { loadDemoData(); return; }
+
+  const statusEl = document.getElementById('last-updated');
+  statusEl.textContent = '⏳ Chargement...';
+
   try {
-    const url = SHEET_URL + '?action=dashboard&t=' + Date.now();
-    const res  = await fetch(url);
+    // Google Apps Script requires redirect following + no-cors won't work
+    // Use script tag trick as fallback for CORS issues
+    const url = SHEET_URL + '?action=dashboard&callback=savyCB&t=' + Date.now();
+
+    // Method 1: Direct fetch with redirect follow
+    const res = await fetch(SHEET_URL + '?action=dashboard&t=' + Date.now(), {
+      method: 'GET',
+      redirect: 'follow',
+    });
+
+    if(!res.ok) throw new Error('HTTP ' + res.status);
+
     const text = await res.text();
-    let data;
-    try { data = JSON.parse(text); } catch(e) { throw new Error('Invalid JSON: ' + text.slice(0,100)); }
-    if(data.orders && Array.isArray(data.orders)){
-      allOrders = data.orders;
-    } else if(Array.isArray(data)){
-      allOrders = data;
-    } else {
-      allOrders = [];
+
+    // Handle Google's redirect HTML wrapping
+    let jsonStr = text;
+    if(text.includes('</body>')) {
+      const match = text.match(/(\{[\s\S]*\}|\[[\s\S]*\])/);
+      if(match) jsonStr = match[1];
     }
-    if(allOrders.length === 0){ loadDemoData(); return; }
-    renderAll(allOrders);
-    document.getElementById('last-updated').textContent =
-      '✅ Mis à jour: ' + new Date().toLocaleTimeString('fr-FR') + ' · ' + allOrders.length + ' commandes';
+
+    const data = JSON.parse(jsonStr);
+
+    if(data.orders && Array.isArray(data.orders) && data.orders.length > 0){
+      allOrders = data.orders;
+      renderAll(allOrders);
+      statusEl.textContent = '✅ ' + new Date().toLocaleTimeString('fr-FR') + ' · ' + allOrders.length + ' commandes';
+    } else {
+      statusEl.textContent = '⚠️ Aucune commande dans le sheet';
+      loadDemoData();
+    }
   } catch(e) {
-    console.warn('Sheet error:', e.message);
-    loadDemoData();
+    console.warn('Sheet fetch error:', e.message);
+    // Method 2: JSONP fallback via script tag
+    loadViaJSONP();
   }
+}
+
+function loadViaJSONP() {
+  const statusEl = document.getElementById('last-updated');
+  statusEl.textContent = '⏳ Chargement (JSONP)...';
+
+  window.savyCB = function(data) {
+    const script = document.getElementById('savy-jsonp');
+    if(script) script.remove();
+    if(data && data.orders && data.orders.length > 0){
+      allOrders = data.orders;
+      renderAll(allOrders);
+      statusEl.textContent = '✅ ' + new Date().toLocaleTimeString('fr-FR') + ' · ' + allOrders.length + ' commandes';
+    } else {
+      statusEl.textContent = '⚠️ Sheet configuré mais vide';
+      loadDemoData();
+    }
+  };
+
+  const script = document.createElement('script');
+  script.id  = 'savy-jsonp';
+  script.src = SHEET_URL + '?action=dashboard&callback=savyCB&t=' + Date.now();
+  script.onerror = () => {
+    statusEl.textContent = '❌ Erreur — Vérifiez que le script est redéployé';
+    loadDemoData();
+  };
+  document.head.appendChild(script);
 }
 
 async function loadFromSheetDirect() {
