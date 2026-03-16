@@ -575,49 +575,12 @@ function showPage(name) {
 }
 
 // ── Load data from Google Sheets ─────────────────────────────
-async function loadData() {
+function loadData() {
   if (!SHEET_URL) { loadDemoData(); return; }
-
   const statusEl = document.getElementById('last-updated');
-  statusEl.textContent = '⏳ Chargement...';
-
-  try {
-    // Google Apps Script requires redirect following + no-cors won't work
-    // Use script tag trick as fallback for CORS issues
-    const url = SHEET_URL + '?action=dashboard&callback=savyCB&t=' + Date.now();
-
-    // Method 1: Direct fetch with redirect follow
-    const res = await fetch(SHEET_URL + '?action=dashboard&t=' + Date.now(), {
-      method: 'GET',
-      redirect: 'follow',
-    });
-
-    if(!res.ok) throw new Error('HTTP ' + res.status);
-
-    const text = await res.text();
-
-    // Handle Google's redirect HTML wrapping
-    let jsonStr = text;
-    if(text.indexOf('</body>') > -1) {
-      const match = text.match(/(\{[\s\S]*\}|\[[\s\S]*\])/);
-      if(match) jsonStr = match[1];
-    }
-
-    const data = JSON.parse(jsonStr);
-
-    if(data.orders && Array.isArray(data.orders) && data.orders.length > 0){
-      allOrders = data.orders;
-      renderAll(allOrders);
-      statusEl.textContent = '✅ ' + new Date().toLocaleTimeString('fr-FR') + ' · ' + allOrders.length + ' commandes';
-    } else {
-      statusEl.textContent = '⚠️ Aucune commande dans le sheet';
-      loadDemoData();
-    }
-  } catch(e) {
-    console.warn('Sheet fetch error:', e.message);
-    // Method 2: JSONP fallback via script tag
-    loadViaJSONP();
-  }
+  if(statusEl) statusEl.textContent = '⏳ Chargement...';
+  // Skip fetch entirely — use JSONP directly (Google Apps Script requires this)
+  loadViaJSONP();
 }
 
 function loadViaJSONP() {
@@ -647,23 +610,7 @@ function loadViaJSONP() {
   document.head.appendChild(script);
 }
 
-async function loadFromSheetDirect() {
-  if (!SHEET_URL) return;
-  try {
-    // Try reading as JSON export
-    const url = SHEET_URL + (SHEET_URL.includes('?') ? '&' : '?') + 'action=getOrders&t=' + Date.now();
-    const res  = await fetch(url);
-    const data = await res.json();
-    if (Array.isArray(data)) {
-      allOrders = data;
-    } else if (data.orders) {
-      allOrders = data.orders;
-    }
-    renderAll(allOrders);
-  } catch(e) {
-    showNoSheetMsg();
-  }
-}
+function loadFromSheetDirect(){ loadViaJSONP(); }
 
 function showNoSheetMsg() {
   const msg = `<tr><td colspan="8" class="empty-state"><div class="big">⚙️</div><p>Configure l'URL Google Sheets dans <strong>Paramètres</strong></p></td></tr>`;
@@ -972,49 +919,34 @@ function getLoyaltyTier(count) {
 }
 
 // ── Test connection ──────────────────────────────────────────
-async function testConnection() {
+function testConnection() {
   const el = document.getElementById('sheet-status');
   if(!el) return;
   el.innerHTML = '⏳ Test en cours...';
+  if(!SHEET_URL){ el.innerHTML = '❌ Aucune URL configurée'; return; }
 
-  if(!SHEET_URL){
-    el.innerHTML = '❌ Aucune URL configurée — collez votre URL Google Sheets ci-dessus';
-    return;
-  }
-
-  try {
-    const url = SHEET_URL + '?action=dashboard&t=' + Date.now();
-    const res  = await fetch(url, { redirect:'follow' });
-    const text = await res.text();
-
-    // Try parse JSON
-    let data;
-    try {
-      let jsonStr = text;
-      if(text.includes('<\/body>')){
-        const m = text.match(/(\{[\s\S]*?\})/);
-        if(m) jsonStr = m[1];
-      }
-      data = JSON.parse(jsonStr);
-    } catch(e) {
-      el.innerHTML = '⚠️ URL valide mais réponse invalide — avez-vous redéployé le script après ajout de <code>doGet</code> ?';
-      return;
-    }
-
-    if(data.orders !== undefined){
+  window._testCB = function(data) {
+    const s = document.getElementById('savy-test-jsonp');
+    if(s) s.remove();
+    if(data && data.orders !== undefined){
       const count = data.orders.length;
-      el.innerHTML = count > 0
-        ? "✅ Connecté — <strong>" + count + " commandes</strong> trouvées. Allez sur Vue d'ensemble → Actualiser."
-        : "✅ Connecté — aucune commande encore. Passez une commande test sur le site pour vérifier.";
       el.style.color = 'var(--green)';
-      // Auto load data
+      el.innerHTML = count > 0
+        ? "✅ Connecté — <strong>" + count + " commandes</strong> trouvées!"
+        : "✅ Connecté — aucune commande encore. Passez une commande test.";
       if(count > 0){ allOrders = data.orders; renderAll(allOrders); }
     } else {
-      el.innerHTML = '⚠️ Connecté mais le script ne retourne pas <code>orders</code> — vérifiez que Code.gs est bien collé et redéployé en nouvelle version.';
+      el.innerHTML = '⚠️ Connecté mais réponse invalide — redéployez le script en nouvelle version.';
     }
-  } catch(e) {
-    el.innerHTML = '❌ Erreur réseau: ' + e.message + '<br/>Vérifiez que le script est déployé avec accès <strong>"Anyone"</strong>.';
-  }
+  };
+
+  const script = document.createElement('script');
+  script.id  = 'savy-test-jsonp';
+  script.src = SHEET_URL + '?action=dashboard&callback=_testCB&t=' + Date.now();
+  script.onerror = function(){
+    el.innerHTML = '❌ Erreur — Vérifiez accès <strong>"Anyone"</strong> dans le déploiement Apps Script.';
+  };
+  document.head.appendChild(script);
 }
 
 // ── Theme toggle ─────────────────────────────────────────────
