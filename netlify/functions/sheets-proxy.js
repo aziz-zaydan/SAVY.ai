@@ -3,7 +3,7 @@ const https = require("https");
 const urlMod = require("url");
 
 const SHEET_URL = process.env.GOOGLE_SHEET_URL ||
-  "https://script.google.com/macros/s/AKfycby-JMVQrM6eHHJPz9wDFUrW6yvFKnBaoc2VFZa6QvDtEPPO0wZSr8TsXHZvy0q4v5wYUg/exec";
+  "https://script.google.com/macros/s/AKfycbyTHkPgiGPgxjTPSXiVy3r1uFGqUX0ZPwMtpdipkN7qA8y8VaDU7HLH1Z-zGpYdLEKYyA/exec";
 
 const CORS = {
   "Content-Type": "application/json",
