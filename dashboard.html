@@ -592,30 +592,28 @@ function loadData() {
 }
 
 function loadViaJSONP() {
+  // Use Netlify proxy — works on all devices including mobile
   const statusEl = document.getElementById('last-updated');
-  statusEl.textContent = '⏳ Chargement (JSONP)...';
+  if(statusEl) statusEl.textContent = '⏳ Chargement...';
 
-  window.savyCB = function(data) {
-    const script = document.getElementById('savy-jsonp');
-    if(script) script.remove();
-    if(data && data.orders && data.orders.length > 0){
-      allOrders = data.orders;
-      renderAll(allOrders);
-      statusEl.textContent = '✅ ' + new Date().toLocaleTimeString('fr-FR') + ' · ' + allOrders.length + ' commandes';
-    } else {
-      statusEl.textContent = '⚠️ Sheet configuré mais vide';
+  fetch('/.netlify/functions/sheets-proxy?action=dashboard&t=' + Date.now())
+    .then(r => r.json())
+    .then(data => {
+      const orders = data.orders || (Array.isArray(data) ? data : []);
+      if(orders.length > 0){
+        allOrders = orders;
+        renderAll(allOrders);
+        if(statusEl) statusEl.textContent = '✅ ' + new Date().toLocaleTimeString('fr-FR') + ' · ' + orders.length + ' commandes';
+      } else {
+        if(statusEl) statusEl.textContent = '⚠️ Aucune commande encore';
+        loadDemoData();
+      }
+    })
+    .catch(err => {
+      console.warn('Proxy error:', err.message);
+      if(statusEl) statusEl.textContent = '❌ Erreur chargement';
       loadDemoData();
-    }
-  };
-
-  const script = document.createElement('script');
-  script.id  = 'savy-jsonp';
-  script.src = SHEET_URL + '?action=dashboard&callback=savyCB&t=' + Date.now();
-  script.onerror = () => {
-    statusEl.textContent = '❌ Erreur — Vérifiez que le script est redéployé';
-    loadDemoData();
-  };
-  document.head.appendChild(script);
+    });
 }
 
 function loadFromSheetDirect(){ loadViaJSONP(); }
@@ -931,30 +929,23 @@ function testConnection() {
   const el = document.getElementById('sheet-status');
   if(!el) return;
   el.innerHTML = '⏳ Test en cours...';
-  if(!SHEET_URL){ el.innerHTML = '❌ Aucune URL configurée'; return; }
 
-  window._testCB = function(data) {
-    const s = document.getElementById('savy-test-jsonp');
-    if(s) s.remove();
-    if(data && data.orders !== undefined){
-      const count = data.orders.length;
+  fetch('/.netlify/functions/sheets-proxy?action=dashboard&t=' + Date.now())
+    .then(r => r.json())
+    .then(data => {
+      const orders = data.orders || [];
       el.style.color = 'var(--green)';
-      el.innerHTML = count > 0
-        ? "✅ Connecté — <strong>" + count + " commandes</strong> trouvées!"
-        : "✅ Connecté — aucune commande encore. Passez une commande test.";
-      if(count > 0){ allOrders = data.orders; renderAll(allOrders); }
-    } else {
-      el.innerHTML = '⚠️ Connecté mais réponse invalide — redéployez le script en nouvelle version.';
-    }
-  };
-
-  const script = document.createElement('script');
-  script.id  = 'savy-test-jsonp';
-  script.src = SHEET_URL + '?action=dashboard&callback=_testCB&t=' + Date.now();
-  script.onerror = function(){
-    el.innerHTML = '❌ Erreur — Vérifiez accès <strong>"Anyone"</strong> dans le déploiement Apps Script.';
-  };
-  document.head.appendChild(script);
+      if(orders.length > 0){
+        el.innerHTML = "✅ Connecté — <strong>" + orders.length + " commandes</strong> trouvées!";
+        allOrders = orders; renderAll(allOrders);
+      } else {
+        el.innerHTML = "✅ Connecté — aucune commande encore. Passez une commande test sur le site.";
+      }
+    })
+    .catch(err => {
+      el.style.color = 'var(--red)';
+      el.innerHTML = '❌ Erreur: ' + err.message;
+    });
 }
 
 // ── Theme toggle ─────────────────────────────────────────────
