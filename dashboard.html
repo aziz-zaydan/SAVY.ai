@@ -4,7 +4,15 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>SAVY — Admin Dashboard</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800;900&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+<!-- PWA -->
+  <link rel="manifest" href="/dashboard-manifest.json"/>
+  <meta name="theme-color" content="#080F0A"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="apple-mobile-web-app-title" content="SAVY Admin"/>
+  <link rel="apple-touch-icon" href="/images/icon-192.png"/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800;900&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
 <style>
 :root {
   --bg:       #080F0A;
@@ -1021,5 +1029,64 @@ if(window.innerWidth <= 900){
   document.querySelector('.main').style.paddingBottom = '70px';
 }
 </script>
+
+<!-- PWA Install Bar -->
+<div id="dash-install-bar" style="
+  display:none; position:fixed; bottom:80px; left:50%; transform:translateX(-50%);
+  background:var(--green); color:#fff; border-radius:14px; padding:10px 16px;
+  align-items:center; gap:10px; z-index:9999;
+  box-shadow:0 8px 32px rgba(9,184,48,.4); font-size:13px; font-weight:700;
+  max-width:calc(100vw - 32px); white-space:nowrap;
+">
+  <span>📲</span>
+  <span>Installer SAVY Admin</span>
+  <button onclick="installDashApp()" style="background:#fff;color:var(--green);border:none;border-radius:8px;padding:6px 14px;font-size:12px;font-weight:900;cursor:pointer;">Installer</button>
+  <button onclick="dismissDashInstall()" style="background:transparent;color:rgba(255,255,255,.7);border:none;font-size:16px;cursor:pointer;">✕</button>
+</div>
+
+<script>
+// ── Register Dashboard Service Worker ────────────────────────
+if("serviceWorker" in navigator && location.protocol === "https:") {
+  window.addEventListener("load", function(){
+    setTimeout(function(){
+      try {
+        navigator.serviceWorker.register("/sw-dashboard.js")
+          .then(function(){})
+          .catch(function(){});
+      } catch(e) {}
+    }, 2000);
+  });
+}
+
+// ── Install Prompt ────────────────────────────────────────────
+let _dashPrompt = null;
+window.addEventListener("beforeinstallprompt", function(e){
+  e.preventDefault();
+  _dashPrompt = e;
+  if(localStorage.getItem("savy_dash_pwa_dismissed")) return;
+  setTimeout(function(){
+    const bar = document.getElementById("dash-install-bar");
+    if(bar && _dashPrompt) bar.style.display = "flex";
+  }, 5000);
+});
+
+function installDashApp(){
+  if(!_dashPrompt) return;
+  _dashPrompt.prompt();
+  _dashPrompt.userChoice.then(function(){ 
+    _dashPrompt = null;
+    document.getElementById("dash-install-bar").style.display = "none";
+  });
+}
+function dismissDashInstall(){
+  document.getElementById("dash-install-bar").style.display = "none";
+  localStorage.setItem("savy_dash_pwa_dismissed","1");
+}
+window.addEventListener("appinstalled", function(){
+  const bar = document.getElementById("dash-install-bar");
+  if(bar) bar.style.display = "none";
+});
+</script>
+
 </body>
 </html>
