@@ -543,7 +543,7 @@ tr:hover td { background:var(--card2); }
 <script>
 // ── Config ────────────────────────────────────────────────────
 const ADMIN_PASSWORD = localStorage.getItem('savy_admin_pwd') || 'savy2025';
-let SHEET_URL = localStorage.getItem('savy_sheet_url') || 'https://script.google.com/macros/s/AKfycbziaPm4HAPxDC5QcrjZhFH4ekTunqlMEIJQLUzvu4tCpbkV0utv9WrQVQtfXAGCQfjf0w/exec';
+let SHEET_URL = localStorage.getItem('savy_sheet_url') || 'https://script.google.com/macros/s/AKfycby-JMVQrM6eHHJPz9wDFUrW6yvFKnBaoc2VFZa6QvDtEPPO0wZSr8TsXHZvy0q4v5wYUg/exec';
 let allOrders    = [];
 let orderFilter  = 'all';
 let orderSearch  = '';
@@ -559,7 +559,7 @@ function doLogin() {
     document.getElementById('app').style.display = 'block';
     loadData();
     // Pre-fill settings
-    document.getElementById('cfg-sheet-url').value = SHEET_URL || 'https://script.google.com/macros/s/AKfycbziaPm4HAPxDC5QcrjZhFH4ekTunqlMEIJQLUzvu4tCpbkV0utv9WrQVQtfXAGCQfjf0w/exec';
+    document.getElementById('cfg-sheet-url').value = SHEET_URL || 'https://script.google.com/macros/s/AKfycby-JMVQrM6eHHJPz9wDFUrW6yvFKnBaoc2VFZa6QvDtEPPO0wZSr8TsXHZvy0q4v5wYUg/exec';
     setTimeout(testConnection, 1500);
   } else {
     document.getElementById('login-err').style.display = 'block';
