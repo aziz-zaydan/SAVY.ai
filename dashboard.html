@@ -468,8 +468,8 @@ tr:hover td { background:var(--card2); }
 
 <script>
 // ── Config ────────────────────────────────────────────────────
-const ADMIN_PASSWORD = localStorage.getItem('savy_admin_pwd') || 'Inchaellah';
-let SHEET_URL = localStorage.getItem('https://script.google.com/macros/s/AKfycbwYrEyVXKZ5OO-WVvkUsyDyBFGuLbFZAf7SMPOZMRKU0SavqIt6fuOK9FIQfou4BHWfJQ/exec') || '';
+const ADMIN_PASSWORD = localStorage.getItem('savy_admin_pwd') || 'savy2025';
+let SHEET_URL = localStorage.getItem('savy_sheet_url') || 'https://script.google.com/macros/s/AKfycbx18Wth3fpPBoAafNQsU3nSTrHA_WHrlNsnTUZZWFX4Z6GHmLrRd5jua2I12SAYiaR-4Q/exec';
 let allOrders    = [];
 let orderFilter  = 'all';
 let orderSearch  = '';
@@ -485,7 +485,7 @@ function doLogin() {
     document.getElementById('app').style.display = 'block';
     loadData();
     // Pre-fill settings
-    document.getElementById('cfg-sheet-url').value = SHEET_URL;
+    document.getElementById('cfg-sheet-url').value = SHEET_URL || 'https://script.google.com/macros/s/AKfycbx18Wth3fpPBoAafNQsU3nSTrHA_WHrlNsnTUZZWFX4Z6GHmLrRd5jua2I12SAYiaR-4Q/exec';
   } else {
     document.getElementById('login-err').style.display = 'block';
   }
@@ -501,21 +501,27 @@ function showPage(name) {
 
 // ── Load data from Google Sheets ─────────────────────────────
 async function loadData() {
-  if (!SHEET_URL) {
-    showNoSheetMsg();
-    return;
-  }
+  if (!SHEET_URL) { loadDemoData(); return; }
   try {
-    const url = SHEET_URL + (SHEET_URL.includes('?') ? '&' : '?') + 'action=dashboard&t=' + Date.now();
+    const url = SHEET_URL + '?action=dashboard&t=' + Date.now();
     const res  = await fetch(url);
-    const data = await res.json();
-    allOrders = data.orders || [];
+    const text = await res.text();
+    let data;
+    try { data = JSON.parse(text); } catch(e) { throw new Error('Invalid JSON: ' + text.slice(0,100)); }
+    if(data.orders && Array.isArray(data.orders)){
+      allOrders = data.orders;
+    } else if(Array.isArray(data)){
+      allOrders = data;
+    } else {
+      allOrders = [];
+    }
+    if(allOrders.length === 0){ loadDemoData(); return; }
     renderAll(allOrders);
     document.getElementById('last-updated').textContent =
-      'Mis à jour: ' + new Date().toLocaleTimeString('fr-FR');
+      '✅ Mis à jour: ' + new Date().toLocaleTimeString('fr-FR') + ' · ' + allOrders.length + ' commandes';
   } catch(e) {
-    // Fallback: try to parse as sheet rows
-    loadFromSheetDirect();
+    console.warn('Sheet error:', e.message);
+    loadDemoData();
   }
 }
 
