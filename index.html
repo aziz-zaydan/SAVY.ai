@@ -2824,7 +2824,15 @@
         <span id="cart-total" style="color:#fff;font-size:16px;font-weight:900;font-family:'Outfit',sans-serif;letter-spacing:.02em;"></span>
         <div id="cart-sched-display"></div>
       </div>
-      <button onclick="openOrderModal()" id="order-btn">Commander maintenant</button>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <button onclick="clearCart()" id="clear-cart-btn" title="Vider le panier" style="
+          background:rgba(255,255,255,.15); border:1.5px solid rgba(255,255,255,.3);
+          color:#fff; border-radius:10px; padding:8px 12px; cursor:pointer;
+          font-size:12px; font-weight:700; transition:all .2s; white-space:nowrap;
+          font-family:'Outfit',sans-serif;
+        ">✕ Annuler</button>
+        <button onclick="openOrderModal()" id="order-btn">Commander maintenant</button>
+      </div>
     </div>
     <div class="menu-slider-wrap">
       <button class="menu-arrow menu-arrow-prev" id="menu-prev" onclick="menuSlide(-1)">‹</button>
@@ -3380,7 +3388,7 @@ const filterMap   = {"All":"all","Vegan":"vegan","High Protein":"high-protein","
 /* ═══════════════════════════════════════════
    STATE
 ═══════════════════════════════════════════ */
-let lang        = "ar";
+let lang        = "fr"; // default FR — overridden by smart detection below
 let activeCuis  = "all";
 let activePersonaMenu = "all";
 let activeDiet  = "All";
@@ -3813,6 +3821,7 @@ setInterval(tickUrgencyCount, 13000);
 
 function setLang(l) {
   lang = l;
+  try { localStorage.setItem('savy_lang', l); } catch(e){}
   document.documentElement.lang = l;
   document.body.dir = (l==="ar") ? "rtl" : "ltr";
   const t  = copy[l];
@@ -4110,7 +4119,7 @@ function renderDietFilters(){
 }
 function setDiet(f){ activeDiet=f; renderDietFilters(); renderDishes(); }
 function renderDishes(){
-  const t=copy[lang]; const isAr=lang==="ar"||false;
+  const t=copy[lang]||copy['fr']||copy['en']; const isAr=lang==="ar"||false;
   const q=document.getElementById("search").value.toLowerCase();
   const isSportifView = activePersonaMenu==="sportif";
   const filtered=dishes.filter(d=>{
@@ -4174,6 +4183,12 @@ function renderDishes(){
       </div>
     </div>`).join("");
 }
+function clearCart(){
+  cart = [];
+  try { localStorage.removeItem('savy_cart'); } catch(e){}
+  renderDishes();
+}
+
 function toggleCart(id){
   cart = cart.includes(id) ? cart.filter(x=>x!==id) : [...cart,id];
   try { localStorage.setItem("savy_cart", JSON.stringify(cart)); } catch(e){}
@@ -5536,7 +5551,22 @@ function renderReviews() {
 
 window.addEventListener("resize", () => { renderReviews(); });
 
-setLang('ar');
+// Smart language detection — saved preference > browser lang > default FR
+(function(){
+  const saved = localStorage.getItem('savy_lang');
+  if(saved && ['ar','fr','en'].includes(saved)){
+    setLang(saved);
+  } else {
+    const bl = (navigator.language || navigator.userLanguage || 'fr').toLowerCase();
+    if(bl.startsWith('ar')) setLang('ar');
+    else if(bl.startsWith('en')) setLang('en');
+    else setLang('fr');
+  }
+  // Re-render dishes with correct language
+  renderCuisineTabs();
+  renderDietFilters();
+  renderDishes();
+})();
 
 /* ═══════════════════════════════════════════
    EXIT INTENT
