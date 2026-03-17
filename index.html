@@ -4811,8 +4811,8 @@ async function chatSendText(text) {
 
     if(!reply) throw new Error("empty");
 
-    // Show lead form when AI signals OR after visitor has sent 2+ messages
-    const triggerLead = reply.includes("SAVY_GET_LEAD") || userMsgCount >= 2;
+    // Show lead form ONLY when AI explicitly signals with SAVY_GET_LEAD
+    const triggerLead = reply.includes("SAVY_GET_LEAD");
     reply = reply.replace("SAVY_GET_LEAD","").trim();
 
     hideTyping();
