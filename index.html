@@ -39,7 +39,11 @@
   <meta name="apple-mobile-web-app-title" content="SAVY"/>
   <link rel="apple-touch-icon" href="/images/icon-192.png"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@700;800;900&family=Cormorant+Garamond:wght@600;700&family=DM+Sans:wght@400;500;600;700&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com"/>
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com"/>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Outfit:wght@700;800;900&family=DM+Sans:wght@400;500;600;700&family=Tajawal:wght@400;500;700;900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'"/>
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@700;800;900&family=DM+Sans:wght@400;500;600;700&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet"/></noscript>
   <style>
     :root {
       overflow-x:hidden;
@@ -1626,15 +1630,17 @@
     }
     .dishes::-webkit-scrollbar { display:none; }
     .dish-card {
-      flex:0 0 250px; min-width:250px;
+      flex:0 0 185px; min-width:185px;
       scroll-snap-align:start;
-      background:var(--card); border-radius:20px;
-      padding:20px 18px 18px;
+      background:var(--card); border-radius:18px;
+      padding:0 0 14px;
       box-shadow:var(--shadow); border:1px solid var(--border);
-      display:flex; flex-direction:column; gap:10px;
-      transition:all .22s; animation:slideUp .4s ease both;
-      cursor:pointer;
+      display:flex; flex-direction:column; gap:8px;
+      transition:transform .2s, box-shadow .2s;
+      animation:slideUp .4s ease both;
+      cursor:pointer; overflow:hidden;
     }
+    .dish-card:hover { transform:translateY(-3px); box-shadow:var(--shadowH); }
     @media(max-width:480px){ .dish-card { flex:0 0 78vw; min-width:78vw; } }
     .dish-card:hover { box-shadow:var(--shadowH); transform:translateY(-3px); }
     .dish-card-top { display:flex; align-items:flex-start; justify-content:space-between; gap:8px; }
@@ -2569,6 +2575,27 @@
       from { opacity:0; transform:translateX(12px); }
       to   { opacity:1; transform:translateX(0); }
     }
+
+    /* ── Skeleton loader ── */
+    .dish-skeleton {
+      flex: 0 0 160px; min-width: 160px;
+      border-radius: 18px; overflow: hidden;
+      background: var(--card); border: 1px solid var(--border);
+    }
+    .dish-skeleton .sk-img  { height:140px; background:var(--border); }
+    .dish-skeleton .sk-line { height:12px; border-radius:6px; background:var(--border); margin:10px 12px 6px; }
+    .dish-skeleton .sk-line.short { width:60%; }
+    .dish-skeleton .sk-line.xshort { width:40%; }
+    @keyframes skPulse {
+      0%,100% { opacity:1; } 50% { opacity:.45; }
+    }
+    .dish-skeleton .sk-img,
+    .dish-skeleton .sk-line { animation: skPulse 1.4s ease-in-out infinite; }
+    .dish-skeleton:nth-child(2) .sk-img  { animation-delay:.15s; }
+    .dish-skeleton:nth-child(2) .sk-line { animation-delay:.15s; }
+    .dish-skeleton:nth-child(3) .sk-img  { animation-delay:.3s; }
+    .dish-skeleton:nth-child(3) .sk-line { animation-delay:.3s; }
+
 </style>
 </head>
 <body>
@@ -2884,7 +2911,7 @@
     </div>
     <div class="menu-slider-wrap">
       <button class="menu-arrow menu-arrow-prev" id="menu-prev" onclick="menuSlide(-1)">‹</button>
-      <div class="dishes" id="dishes-list"></div>
+      <div class="dishes" id="dishes-list"><div class="dish-skeleton"><div class="sk-img"></div><div class="sk-line"></div><div class="sk-line short"></div><div class="sk-line xshort"></div></div><div class="dish-skeleton"><div class="sk-img"></div><div class="sk-line"></div><div class="sk-line short"></div><div class="sk-line xshort"></div></div><div class="dish-skeleton"><div class="sk-img"></div><div class="sk-line"></div><div class="sk-line short"></div><div class="sk-line xshort"></div></div><div class="dish-skeleton"><div class="sk-img"></div><div class="sk-line"></div><div class="sk-line short"></div><div class="sk-line xshort"></div></div></div>
       <button class="menu-arrow menu-arrow-next" id="menu-next" onclick="menuSlide(1)">›</button>
     </div>
   </div>
@@ -3385,7 +3412,7 @@
     <input class="lead-inp" id="lead-phone" type="tel"   placeholder="WhatsApp (+212 6XX XXX XXX)" autocomplete="tel"/>
     <textarea class="lead-inp" id="lead-comment" rows="2" placeholder="Commentaire (allergies, instructions spéciales...)" style="resize:none;height:56px;"></textarea>
     <button class="lead-submit" id="lead-submit-btn" onclick="submitLead()">
-      🛵 Confirmer ma commande
+      <span id="lead-btn-txt">🛵 Confirmer ma commande</span>
     </button>
     <p style="font-size:11px;color:var(--muted);text-align:center;margin-top:7px;">🔒 Infos privées · jamais partagées</p>
   </div>
@@ -4241,8 +4268,8 @@ function renderDishes(){
   document.getElementById("dishes-list").innerHTML=filtered.map((d,i)=>`
     <div class="dish-card" style="animation-delay:${i*.04}s;padding-top:${d.img?'0':'22px'};overflow:hidden;" onclick="openDishModal(${d.id})">
       ${d.img ? `
-      <div style="position:relative;width:calc(100% + 0px);height:140px;border-radius:16px 16px 0 0;overflow:hidden;margin:-0px -0px 12px -0px;">
-        <img src="${d.img}" alt="${d.name}" loading="lazy" style="width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .35s;display:block;" onload="this.style.opacity=1">
+      <div style="position:relative;width:calc(100% + 0px);height:150px;border-radius:0;overflow:hidden;margin:0 0 8px 0;">
+        <img src="${d.img}" alt="${d.name}" loading="lazy" style="width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .4s;display:block;" onload="this.style.opacity=1">
         <span style="position:absolute;bottom:8px;left:10px;" class="dish-price">${d.price} MAD</span>
         <button class="add-btn ${cart.includes(d.id)?'added':''}" onclick="event.stopPropagation();toggleCart(${d.id})"
           style="position:absolute;top:8px;right:8px;width:32px;height:32px;font-size:17px;">
@@ -4258,16 +4285,16 @@ function renderDishes(){
           </button>
         </div>
       </div>`}
-      <div>
-        <div class="${isAr?"dish-name dish-name-ar":"dish-name"}" style="text-align:${isAr?"right":"left"};font-size:13px;margin-bottom:3px;">
+      <div style="padding:0 12px;">
+        <div class="${isAr?"dish-name dish-name-ar":"dish-name"}" style="text-align:${isAr?"right":"left"};font-size:13px;font-weight:800;margin-bottom:3px;line-height:1.3;">
           ${d.name}${isAr?`<div class="dish-name-sub" style="font-size:11px;">${d.ar}</div>`:""}
         </div>
-        <div class="dish-tags" style="justify-content:${isAr?"flex-end":"flex-start"};gap:4px;flex-wrap:wrap;">
+        <div class="dish-tags" style="justify-content:${isAr?"flex-end":"flex-start"};gap:4px;flex-wrap:wrap;padding:0;">
           <span class="tag-veg" style="font-size:9px;">${d.tag}</span>
           ${d.badge?`<span class="tag-badge" style="font-size:9px;">${d.badge}</span>`:""}  <span style="font-size:9px;background:rgba(9,184,48,.1);color:var(--green);border-radius:6px;padding:2px 5px;font-weight:800;font-family:'Outfit',sans-serif;">🏅 +2pts</span>
         </div>
       </div>
-      <div class="dish-macros" style="margin-top:auto;flex-wrap:wrap;gap:5px;">
+      <div class="dish-macros" style="margin-top:auto;flex-wrap:wrap;gap:4px;padding:0 12px;">
         <span>🔥 ${d.cal}kcal</span>
         ${isSportifView
           ? `<span class="macro-chip macro-p">P ${d.p}g</span><span class="macro-chip macro-c">C ${d.c}g</span><span class="macro-chip macro-f">F ${d.f_g}g</span>`
@@ -5121,56 +5148,59 @@ function closeOrderModal(e) {
    Works on iOS Safari, Chrome Android, Samsung Internet.
 ═══════════════════════════════════════════ */
 (function() {
-  const OVERLAY_ID = "order-modal-overlay";
+  // One-shot: apply once per keyboard open, never in a loop
+  var _applied = false;
+  var _raf     = null;
 
-  function onViewportChange() {
-    const vv  = window.visualViewport;
-    const overlay = document.getElementById(OVERLAY_ID);
-    if (!overlay || !overlay.classList.contains("open")) return;
+  function applyKb() {
+    _raf = null;
+    var vv      = window.visualViewport;
+    var overlay = document.getElementById("order-modal-overlay");
+    var modal   = document.getElementById("order-modal");
+    if (!vv || !overlay || !modal) return;
 
-    if (vv) {
-      // Resize the overlay to exactly the visible area above the keyboard
-      overlay.style.top    = vv.offsetTop  + "px";
-      overlay.style.height = vv.height     + "px";
-      overlay.style.bottom = "auto";
+    var kbH = Math.max(0, Math.round(window.innerHeight - vv.height));
 
-      // Scroll the focused input into view inside the scrollable modal
-      const active = document.activeElement;
-      if (active && active.closest("#order-modal")) {
-        setTimeout(() => active.scrollIntoView({ behavior: "smooth", block: "center" }), 80);
-      }
+    if (kbH > 80 && !_applied) {
+      _applied = true;
+      overlay.style.setProperty("--kb", kbH + "px");
+      modal.style.maxHeight = (vv.height - 16) + "px";
+    } else if (kbH <= 80 && _applied) {
+      _applied = false;
+      overlay.style.setProperty("--kb", "0px");
+      modal.style.maxHeight = "";
     }
   }
 
-  function resetOverlay() {
-    const overlay = document.getElementById(OVERLAY_ID);
-    if (!overlay) return;
-    overlay.style.top    = "";
-    overlay.style.height = "";
-    overlay.style.bottom = "";
+  function scheduleApply() {
+    if (_raf) return; // already scheduled — don't pile up
+    _raf = requestAnimationFrame(applyKb);
   }
 
-  // ── visualViewport: fires whenever keyboard opens / closes / resizes ──
+  // Only listen to resize — NOT scroll (scroll causes vibration)
   if (window.visualViewport) {
-    window.visualViewport.addEventListener("resize", onViewportChange, { passive: true });
-    window.visualViewport.addEventListener("scroll", onViewportChange, { passive: true });
+    window.visualViewport.addEventListener("resize", scheduleApply, { passive: true });
   }
 
-  // ── Also trigger on focus so there's no lag on first tap ──
+  // On input focus: fire twice (once early, once after KB fully open)
   document.addEventListener("focusin", function(e) {
-    const tag = e.target.tagName;
-    if (tag !== "INPUT" && tag !== "TEXTAREA" && tag !== "SELECT") return;
     if (!e.target.closest("#order-modal")) return;
-    setTimeout(onViewportChange, 80);   // slight delay lets the keyboard start opening
-    setTimeout(onViewportChange, 400);  // second pass once keyboard is fully open
+    setTimeout(scheduleApply, 150);
+    setTimeout(scheduleApply, 500);
   });
 
-  // ── Reset when no modal input is focused ──
+  // Reset when user leaves modal inputs
   document.addEventListener("focusout", function(e) {
     if (!e.target.closest("#order-modal")) return;
-    setTimeout(() => {
-      const active = document.activeElement;
-      if (!active || !active.closest("#order-modal")) resetOverlay();
+    setTimeout(function() {
+      var a = document.activeElement;
+      if (!a || !a.closest("#order-modal")) {
+        _applied = false;
+        var ov = document.getElementById("order-modal-overlay");
+        var mo = document.getElementById("order-modal");
+        if (ov) ov.style.setProperty("--kb", "0px");
+        if (mo) mo.style.maxHeight = "";
+      }
     }, 200);
   });
 })();
@@ -5458,6 +5488,10 @@ function submitOrder() {
 }
 
 function submitLead() {
+  const btn = document.getElementById("lead-submit-btn");
+  const btnTxt = document.getElementById("lead-btn-txt");
+  if(btn) { btn.disabled = true; }
+  if(btnTxt) btnTxt.textContent = "⏳ Envoi en cours...";
   const name    = (document.getElementById("lead-name").value    || "").trim();
   const city    = (document.getElementById("lead-city").value    || "").trim();
   const phone   = normalizePhone(document.getElementById("lead-phone").value || "");
@@ -5470,8 +5504,12 @@ function submitLead() {
     if(el){ el.style.borderColor = "#e53935"; setTimeout(() => el.style.borderColor = "", 1500); }
   };
   if(!name)  { showFieldError("lead-name",  "required"); return; }
+  if(name.length < 3) { showFieldError("lead-name", "min 3 chars"); return; }
   if(!city)  { showFieldError("lead-city",  "required"); return; }
   if(!phone) { showFieldError("lead-phone", "required"); return; }
+  const phoneClean = phone.replace(/\s+/g, '');
+  const validPhone = /^(\+212|0212|212|0)[5-7]\d{8}$/.test(phoneClean);
+  if(!validPhone) { showFieldError("lead-phone", lang==="ar" ? "رقم غير صحيح" : "Numéro invalide (+212 6XX)"); return; }
   if(!validatePhone(phone)) { showFieldError("lead-phone", "phone"); return; }
 
   leadDone = true;
