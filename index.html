@@ -3,6 +3,31 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover"/>
+
+  <!-- SEO -->
+  <meta name="description" content="SAVY — Premier Chef IA du Maroc. Repas sains ingéniérisés, livraison 45 min à Tétouan, M'diq & Martil. Dès 39 MAD."/>
+  <meta name="keywords" content="livraison repas Tétouan, nourriture saine Maroc, chef IA, SAVY, livraison M'diq, repas Martil"/>
+  <meta name="robots" content="index, follow"/>
+
+  <!-- Open Graph (WhatsApp, Facebook, LinkedIn) -->
+  <meta property="og:type"        content="website"/>
+  <meta property="og:url"         content="https://savy.netlify.app/"/>
+  <meta property="og:title"       content="SAVY 🤖 — Premier Chef IA du Maroc"/>
+  <meta property="og:description" content="Repas sains ingéniérisés par IA · Livraison 45 min · Tétouan · M'diq · Martil · Dès 39 MAD"/>
+  <meta property="og:image"       content="https://savy.netlify.app/images/slide_1.jpg"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  <meta property="og:locale"      content="fr_MA"/>
+  <meta property="og:site_name"   content="SAVY"/>
+
+  <!-- Twitter / X card -->
+  <meta name="twitter:card"        content="summary_large_image"/>
+  <meta name="twitter:title"       content="SAVY 🤖 — Premier Chef IA du Maroc"/>
+  <meta name="twitter:description" content="Repas sains ingéniérisés · Livraison 45 min · Dès 39 MAD"/>
+  <meta name="twitter:image"       content="https://savy.netlify.app/images/slide_1.jpg"/>
+
+  <!-- WhatsApp / iMessage preview -->
+  <meta property="og:image:alt"   content="SAVY — Repas sains livrés en 45 min à Tétouan"/>
   <title>SAVY – Meal Engineer | الشيف الذكي</title>
   <meta name="description" content="SAVY – Morocco's first AI Personal Chef. Specially Engineered meals, delivered in 45 min. Tétouan · M'diq · Martil."/>
   <!-- PWA -->
@@ -5407,7 +5432,7 @@ function submitOrder() {
       : (lang==="en"
         ? `Hi SAVY! I confirm my order ${orderId} ✅\n━━━━━━━━━━━━━━\nName: ${name}\nCity: ${city}\nDishes: ${items||"see menu"}${schedLine}${discountLine}`
         : `Salam SAVY ! Je confirme ma commande ${orderId} ✅\n━━━━━━━━━━━━━━\nNom: ${name}\nAdresse: ${city}\nPlats: ${items||"voir le menu"}${schedLine}${discountLine}`);
-    window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
+    window.open(`https://wa.me/212708700830?text=${encodeURIComponent(msg)}`, "_blank");
 
     // Reset
     const overlay = document.getElementById("order-modal-overlay");
@@ -5472,7 +5497,7 @@ Votre commande est entre les mains de notre chef — préparée avec soin et liv
     if(cst) cst.textContent = isAr ? "✅ طلبك في الطريق — 45 دق ⏱️" : "✅ Commande en route — 45 min ⏱️";
     const leadId = "SAVY-" + Math.floor(1000 + Math.random() * 9000);
     const waMsg = encodeURIComponent(isAr ? `سلام SAVY! أؤكد طلبي رقم ${leadId} ✅` : `Salam SAVY ! Je confirme ma commande ${leadId} ✅`);
-    window.open(`https://wa.me/${WA_NUMBER}?text=${waMsg}`, "_blank");
+    window.open(`https://wa.me/212708700830?text=${waMsg}`, "_blank");
     animateLoyaltyPoints(10);
   }, 1200);
 }
@@ -5711,14 +5736,14 @@ const WA_NUMBER = "212708700830";
 
 function openWhatsApp() {
   const msg = encodeURIComponent("Salam ! Bghit ncommande mn SAVY 🍽️ — wayla nshof le menu. 3afak ayda liya 🙏");
-  window.open(`https://wa.me/${WA_NUMBER}?text=${msg}`, "_blank");
+  window.open(`https://wa.me/212708700830?text=${msg}`, "_blank");
 }
 
 function openWhatsAppOrder() {
   const dish = chatHistory.find(m => m.role === "user");
   const context = dish ? encodeURIComponent(`Salam SAVY ! J'ai discuté avec votre chef IA et je voudrais commander. Mon choix: ${dish.content}`) 
                        : encodeURIComponent("Salam ! Bghit ncommande mn SAVY 🍽️");
-  window.open(`https://wa.me/${WA_NUMBER}?text=${context}`, "_blank");
+  window.open(`https://wa.me/212708700830?text=${context}`, "_blank");
 }
 
 function animateLoyaltyPoints(add) {
