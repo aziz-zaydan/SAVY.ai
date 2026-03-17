@@ -2171,7 +2171,7 @@
     #dish-modal::-webkit-scrollbar-track { background:transparent; }
 
     /* Close button */
-    #dish-modal .track-close {
+    #dish-modal .savy-close-btn, #dish-modal .track-close {
       position:absolute; top:12px; right:12px; z-index:10;
       width:32px; height:32px; border-radius:50%;
       background:rgba(255,255,255,.25); backdrop-filter:blur(8px);
@@ -2310,7 +2310,7 @@
     [data-theme="dark"] .dm-ing-text { background:var(--mint); color:var(--text); }
     [data-theme="dark"] .dm-tag { background:var(--mint); }
     [data-theme="dark"] .dm-divider { background:linear-gradient(90deg,transparent,var(--border),transparent); }
-    [data-theme="dark"] #dish-modal .track-close { background:rgba(0,0,0,.4); border-color:var(--border); color:var(--text); }
+    [data-theme="dark"] #dish-modal .savy-close-btn, #dish-modal .track-close { background:rgba(0,0,0,.4); border-color:var(--border); color:var(--text); }
 
     /* ══ ORDER TRACKING SECTION ══════════════════════════════ */
     #order-track-section {
@@ -2525,6 +2525,39 @@
       font-weight: 900 !important;
       letter-spacing: 0.02em;
     }
+
+    /* ══ UNIFIED EXIT BUTTON — all popups ══ */
+    .savy-close-btn {
+      position:absolute; top:14px; right:14px; z-index:20;
+      width:38px; height:38px; border-radius:50%;
+      background:rgba(255,255,255,.18);
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+      border:1.5px solid rgba(255,255,255,.35);
+      display:flex; align-items:center; justify-content:center;
+      cursor:pointer; transition:all .2s cubic-bezier(.34,1.56,.64,1);
+      box-shadow:0 4px 16px rgba(0,0,0,.15);
+    }
+    .savy-close-btn:hover {
+      background:rgba(255,255,255,.32);
+      transform:scale(1.1) rotate(90deg);
+      box-shadow:0 6px 20px rgba(0,0,0,.2);
+    }
+    .savy-close-btn:active { transform:scale(0.95); }
+    /* SVG X icon inside */
+    .savy-close-btn svg {
+      width:14px; height:14px; stroke:#fff; stroke-width:2.5;
+      stroke-linecap:round;
+    }
+    /* Dark variant for light-bg modals */
+    .savy-close-btn.dark {
+      background:rgba(8,15,10,.08);
+      border-color:rgba(8,15,10,.15);
+    }
+    .savy-close-btn.dark svg { stroke:#0D1F18; }
+    .savy-close-btn.dark:hover { background:rgba(8,153,41,.12); }
+    .savy-close-btn.dark:hover svg { stroke:var(--green); }
+
 </style>
 </head>
 <body>
@@ -3063,7 +3096,7 @@
 <!-- ══ DISH DETAIL MODAL ═════════════════════════════════════ -->
 <div id="dish-modal-overlay" onclick="closeDishModal(event)">
   <div id="dish-modal">
-    <button class="track-close" onclick="closeDishModal()" style="top:14px;right:14px;">✕</button>
+    <button class="savy-close-btn" onclick="closeDishModal()" title="Retour au menu" aria-label="Fermer"><svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="1" x2="13" y2="13"/><line x1="13" y1="1" x2="1" y2="13"/></svg></button>
 
     <!-- Food photo -->
     <div id="dm-img-wrap"></div>
@@ -3142,7 +3175,7 @@
 <!-- ══ ORDER MODAL ═══════════════════════════════════════════ -->
 <div id="order-modal-overlay" onclick="closeOrderModal(event)">
   <div id="order-modal">
-    <button class="track-close" onclick="closeOrderModal()">✕</button>
+    <button class="savy-close-btn dark" onclick="closeOrderModal()" title="Retour au menu" aria-label="Fermer" style="top:14px;right:14px;"><svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="1" x2="13" y2="13"/><line x1="13" y1="1" x2="1" y2="13"/></svg></button>
     <div style="text-align:center;margin-bottom:18px;">
       <div style="font-size:28px;margin-bottom:4px;">🛵</div>
       <h3 id="om-title" style="font-family:'Outfit',sans-serif;font-size:18px;font-weight:900;color:var(--text);">Finaliser ma commande</h3>
@@ -3197,7 +3230,7 @@
 <!-- ══ EXIT INTENT POPUP ═════════════════════════════════════ -->
 <div id="exit-overlay">
   <div id="exit-modal">
-    <button id="exit-close" onclick="closeExitPopup()">✕</button>
+    <button id="exit-close" onclick="closeExitPopup()" class="savy-close-btn dark" title="Fermer" aria-label="Fermer" style="top:14px;right:14px;"><svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="1" x2="13" y2="13"/><line x1="13" y1="1" x2="1" y2="13"/></svg></button>
     <div style="font-size:36px;margin-bottom:8px;">🛵</div>
     <h3 id="exit-title" style="font-family:'Outfit',sans-serif;font-size:18px;font-weight:900;color:var(--text);margin-bottom:6px;">Avant de partir...</h3>
     <p id="exit-sub" style="font-size:13px;color:var(--sub);line-height:1.6;margin-bottom:16px;">Reçois le menu complet + nos offres du jour directement sur ton WhatsApp 📲</p>
@@ -3263,7 +3296,7 @@
           <path d="M22.498 19.533c-.305-.152-1.8-.888-2.079-.99-.278-.102-.481-.152-.683.152s-.783.99-.96 1.193c-.177.202-.354.228-.659.076-.305-.152-1.288-.475-2.453-1.513-.907-.808-1.518-1.806-1.697-2.111-.177-.304-.019-.469.133-.62.137-.136.305-.355.457-.532.152-.178.203-.305.304-.508.103-.203.051-.38-.025-.532-.077-.152-.684-1.648-.937-2.258-.246-.593-.497-.513-.683-.522l-.583-.01c-.203 0-.532.076-.81.38s-1.063 1.04-1.063 2.534 1.089 2.94 1.24 3.143c.152.203 2.143 3.272 5.191 4.586.726.314 1.293.5 1.735.641.729.23 1.392.198 1.916.12.584-.087 1.8-.735 2.054-1.446.254-.71.254-1.32.178-1.447-.077-.127-.278-.203-.583-.355z" fill="#fff"/>
         </svg>
       </button>
-      <button class="chat-close" onclick="closeChat()">✕</button>
+      <button class="savy-close-btn" onclick="closeChat()" title="Fermer" aria-label="Fermer" style="position:relative;top:0;right:0;width:32px;height:32px;flex-shrink:0;"><svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="1" x2="13" y2="13"/><line x1="13" y1="1" x2="1" y2="13"/></svg></button>
     </div>
   </div>
 
