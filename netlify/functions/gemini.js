@@ -6,8 +6,9 @@ const MAX_CONTENT_LEN = 2000;
 
 // Allowed origins — update with your Netlify domain after deploy
 const ALLOWED_ORIGINS = [
-  "https://savy.netlify.app",   // replace with your actual Netlify URL
-  "http://localhost:8888",      // local Netlify CLI dev
+  "https://savy.netlify.app",
+  "https://www.savy.netlify.app",
+  "http://localhost:8888",
   "http://localhost:3000",
 ];
 
