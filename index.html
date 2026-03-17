@@ -991,7 +991,7 @@
 
     /* ── GOLD STARS ── */
     .dish-star { color:#F59E0B; font-weight:700; font-size:12px; }
-    .dish-price { font-family:'Outfit',sans-serif; font-size:13px; font-weight:900; color:var(--green); background:var(--greenXL); padding:3px 9px; border-radius:20px; white-space:nowrap; }
+    .dish-price { font-family:'Outfit',sans-serif; font-size:14px; font-weight:900; color:#fff; background:var(--green); padding:4px 11px; border-radius:20px; white-space:nowrap; box-shadow:0 2px 8px rgba(9,184,48,.35); letter-spacing:.01em; }
     [data-theme="dark"] .dish-price { background:rgba(9,184,48,.18); }
 
     /* ── MACRO BADGE (sportif only) ── */
@@ -2539,6 +2539,11 @@
       letter-spacing: 0.02em;
     }
 
+
+    @keyframes fadeInRight {
+      from { opacity:0; transform:translateX(12px); }
+      to   { opacity:1; transform:translateX(0); }
+    }
 </style>
 </head>
 <body>
@@ -2621,6 +2626,24 @@
       <p class="hero-sub fb su3" id="hero-sub">
         SAVY is your personal Meal Engineer — combining AI precision with a Chef's heart to create meals that fuel your goals, your glow, and your grind.
       </p>
+      <!-- Value pills -->
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 10px;">
+        <span style="background:var(--green);color:#fff;border-radius:99px;padding:5px 13px;font-size:12px;font-weight:800;font-family:'Outfit',sans-serif;">&#x1F6F5; <span id="v-delivery">Livraison 45 min</span></span>
+        <span style="background:var(--greenXL);color:var(--green);border:1.5px solid var(--border);border-radius:99px;padding:5px 13px;font-size:12px;font-weight:800;font-family:'Outfit',sans-serif;">&#x1F4B0; <span id="v-price">Dès 39 MAD</span></span>
+        <span style="background:var(--greenXL);color:var(--green);border:1.5px solid var(--border);border-radius:99px;padding:5px 13px;font-size:12px;font-weight:800;font-family:'Outfit',sans-serif;">&#x2B50; <span id="v-rating">4.9 · +125 avis</span></span>
+      </div>
+      <!-- Social proof row -->
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+        <div style="display:flex;">
+          <div style="width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#089929,#2BCE4E);border:2px solid #fff;display:flex;align-items:center;justify-content:center;font-size:11px;margin-right:-6px;z-index:3;">&#x1F468;</div>
+          <div style="width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#2BCE4E,#089929);border:2px solid #fff;display:flex;align-items:center;justify-content:center;font-size:11px;margin-right:-6px;z-index:2;">&#x1F469;</div>
+          <div style="width:26px;height:26px;border-radius:50%;background:var(--green);border:2px solid #fff;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;color:#fff;font-family:'Outfit',sans-serif;z-index:1;">+123</div>
+        </div>
+        <div>
+          <div style="font-size:11px;font-weight:800;color:var(--text);font-family:'Outfit',sans-serif;" id="v-social">+125 clients satisfaits cette semaine</div>
+          <div style="font-size:10px;color:var(--muted);">&#x2B50;&#x2B50;&#x2B50;&#x2B50;&#x2B50; Tétouan · M'diq · Martil</div>
+        </div>
+      </div>
 
 
       <!-- Packaging Slideshow -->
@@ -3173,6 +3196,18 @@
     <div style="text-align:center;margin-bottom:18px;">
       <div style="font-size:28px;margin-bottom:4px;">🛵</div>
       <h3 id="om-title" style="font-family:'Outfit',sans-serif;font-size:18px;font-weight:900;color:var(--text);">Finaliser ma commande</h3>
+      <!-- Upsell suggestion -->
+      <div id="om-upsell" style="
+        display:none; background:var(--greenXL); border:1.5px solid var(--border);
+        border-radius:12px; padding:10px 14px; margin:10px 0 0; text-align:left;
+        cursor:pointer; transition:all .2s;
+      " onclick="addUpsell()">
+        <div style="font-size:11px;font-weight:800;color:var(--green);font-family:'Outfit',sans-serif;margin-bottom:4px;">✨ Ajoutez un dessert pour seulement 28 MAD</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-size:12px;color:var(--sub);">🍰 Flan Caramel Léger — 280 kcal</span>
+          <span style="font-size:12px;font-weight:900;color:var(--green);font-family:'Outfit',sans-serif;">+ 28 MAD</span>
+        </div>
+      </div>
       <p id="om-sub" style="font-size:12px;color:var(--muted);margin-top:4px;">Livraison en 45 min · Tétouan · M'diq · Martil</p>
     </div>
     <!-- Cart summary -->
@@ -3244,6 +3279,16 @@
 
 <!-- ══ COMBINED SPEED-DIAL FAB ══════════════════════════════ -->
 <div id="fab-main-wrap">
+  <div id="fab-wa-label" style="
+    position:absolute;right:68px;bottom:14px;
+    background:var(--green);color:#fff;
+    border-radius:99px;padding:7px 14px;
+    font-size:12px;font-weight:800;white-space:nowrap;
+    font-family:'Outfit',sans-serif;
+    box-shadow:0 4px 16px rgba(9,184,48,.4);
+    animation:fadeInRight .5s ease 3s both;
+    pointer-events:none;
+  " id="fab-chat-label">Chat avec Chef SAVY 🤖</div>
   <button id="fab-main" onclick="openChat()" aria-label="Chat SAVY">
     <svg width="32" height="32" viewBox="0 0 80 80" fill="none">
         <ellipse cx="40" cy="21" rx="13" ry="5" fill="#ffffff" opacity=".95"/>
@@ -3824,6 +3869,31 @@ function setLang(l) {
   try { localStorage.setItem('savy_lang', l); } catch(e){}
   document.documentElement.lang = l;
   document.body.dir = (l==="ar") ? "rtl" : "ltr";
+  // Update hero value pills
+  const vDelivery = document.getElementById('v-delivery');
+  const vPrice    = document.getElementById('v-price');
+  const vRating   = document.getElementById('v-rating');
+  const vSocial   = document.getElementById('v-social');
+  const fabLabel  = document.getElementById('fab-chat-label');
+  if(l==='ar'){
+    if(vDelivery) vDelivery.textContent = 'توصيل 45 دقيقة';
+    if(vPrice)    vPrice.textContent    = 'من 39 درهم';
+    if(vRating)   vRating.textContent   = '4.9 · +125 تقييم';
+    if(vSocial)   vSocial.textContent   = '+125 عميل سعيد هذا الأسبوع';
+    if(fabLabel)  fabLabel.textContent  = 'تحدث مع شيف SAVY 🤖';
+  } else if(l==='en'){
+    if(vDelivery) vDelivery.textContent = 'Delivery 45 min';
+    if(vPrice)    vPrice.textContent    = 'From 39 MAD';
+    if(vRating)   vRating.textContent   = '4.9 · +125 reviews';
+    if(vSocial)   vSocial.textContent   = '+125 happy customers this week';
+    if(fabLabel)  fabLabel.textContent  = 'Chat with Chef SAVY 🤖';
+  } else {
+    if(vDelivery) vDelivery.textContent = 'Livraison 45 min';
+    if(vPrice)    vPrice.textContent    = 'Dès 39 MAD';
+    if(vRating)   vRating.textContent   = '4.9 · +125 avis';
+    if(vSocial)   vSocial.textContent   = '+125 clients satisfaits cette semaine';
+    if(fabLabel)  fabLabel.textContent  = 'Chat avec Chef SAVY 🤖';
+  }
   const t  = copy[l];
   const isAr = (l==="ar");
   const ff = isAr ? "font-family:'Tajawal',sans-serif;" : "font-family:'Cormorant Garamond',serif;font-weight:700;";
@@ -4169,7 +4239,7 @@ function renderDishes(){
         </div>
         <div class="dish-tags" style="justify-content:${isAr?"flex-end":"flex-start"};gap:4px;flex-wrap:wrap;">
           <span class="tag-veg" style="font-size:9px;">${d.tag}</span>
-          ${d.badge?`<span class="tag-badge" style="font-size:9px;">${d.badge}</span>`:""}
+          ${d.badge?`<span class="tag-badge" style="font-size:9px;">${d.badge}</span>`:""}  <span style="font-size:9px;background:rgba(9,184,48,.1);color:var(--green);border-radius:6px;padding:2px 5px;font-weight:800;font-family:'Outfit',sans-serif;">🏅 +2pts</span>
         </div>
       </div>
       <div class="dish-macros" style="margin-top:auto;flex-wrap:wrap;gap:5px;">
@@ -4914,7 +4984,30 @@ function showLeadForm(p) {
 /* ═══════════════════════════════════════════
    ORDER MODAL (direct from cart, no chat)
 ═══════════════════════════════════════════ */
+function addUpsell() {
+  // Add Flan Caramel to cart (id=16) if not already in
+  if(!cart.includes(16)) {
+    cart.push(16);
+    try { localStorage.setItem("savy_cart", JSON.stringify(cart)); } catch(e){}
+    renderDishes();
+    document.getElementById("om-upsell").innerHTML =
+      '<div style="font-size:12px;font-weight:800;color:var(--green);font-family:\'Outfit\',sans-serif;">✅ Flan Caramel ajouté à votre commande!</div>';
+    setTimeout(() => { document.getElementById("om-upsell").style.display="none"; }, 2000);
+  }
+}
+
+// Show upsell if cart has meal but no dessert
+function checkUpsell() {
+  const upsell = document.getElementById("om-upsell");
+  if(!upsell) return;
+  const dessertIds = [16, 17, 18];
+  const hasMain    = cart.some(id => !dessertIds.includes(id));
+  const hasDessert = cart.some(id => dessertIds.includes(id));
+  upsell.style.display = (hasMain && !hasDessert && cart.length > 0) ? "block" : "none";
+}
+
 function openOrderModal() {
+  setTimeout(checkUpsell, 100);
   const isAr = lang === "ar" || false;
   const t = copy[lang] || copy.fr;
 
@@ -5325,6 +5418,15 @@ function submitOrder() {
     if(badge) badge.style.display = "none";
     renderDishes();
     animateLoyaltyPoints(10);
+
+    // Show WhatsApp next-step message
+    const confirmMsg = lang === "ar"
+      ? "تأكد طلبك ✅ — ستصلك رسالة WhatsApp خلال دقيقتين 🛵"
+      : (lang === "en"
+        ? "✅ Order confirmed! You’ll get a WhatsApp confirmation in 2 minutes 🛵"
+        : "✅ Commande confirmée! Vous recevrez un WhatsApp de confirmation dans 2 minutes 🛵");
+    addBotMsg(confirmMsg, false);
+
     // Show live tracking
     showOrderTracking(name, orderId);
   }, 800);
