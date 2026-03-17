@@ -3365,7 +3365,12 @@ let lang        = "ar";
 let activeCuis  = "all";
 let activePersonaMenu = "all";
 let activeDiet  = "All";
-let cart        = [];
+let cart        = (function(){
+  try {
+    const saved = localStorage.getItem("savy_cart");
+    return saved ? JSON.parse(saved) : [];
+  } catch(e) { return []; }
+})();
 let persona     = null;        // 'employee' | 'sportif' | 'famille' | 'couple' | null
 
 // Chat state — grouped to reduce global scope pollution
@@ -4152,7 +4157,9 @@ function renderDishes(){
 }
 function toggleCart(id){
   cart = cart.includes(id) ? cart.filter(x=>x!==id) : [...cart,id];
+  try { localStorage.setItem("savy_cart", JSON.stringify(cart)); } catch(e){}
   renderDishes();
+  if(cart.includes(id)) showCartToast();
 }
 
 function menuSlide(dir) {
@@ -4252,15 +4259,67 @@ function dmUpdateBtn() {
 
 function dmToggleCart() {
   if(_dmId===null) return;
-  cart = cart.includes(_dmId) ? cart.filter(x=>x!==_dmId) : [...cart, _dmId];
+  const wasInCart = cart.includes(_dmId);
+  cart = wasInCart ? cart.filter(x=>x!==_dmId) : [...cart, _dmId];
+  // Persist cart in localStorage so page remembers it
+  try { localStorage.setItem("savy_cart", JSON.stringify(cart)); } catch(e){}
   renderDishes();
   dmUpdateBtn();
+  // If just ADDED (not removed) — show toast then close modal back to menu
+  if(!wasInCart) {
+    showCartToast();
+    setTimeout(() => {
+      const overlay = document.getElementById("dish-modal-overlay");
+      if(overlay) overlay.classList.remove("open");
+      // Scroll to menu section
+      setTimeout(() => {
+        const menuSection = document.getElementById("menu");
+        if(menuSection) menuSection.scrollIntoView({ behavior:"smooth", block:"start" });
+      }, 180);
+    }, 900);
+  }
+}
+
+
+function showCartToast() {
+  let toast = document.getElementById("savy-cart-toast");
+  if(!toast) {
+    toast = document.createElement("div");
+    toast.id = "savy-cart-toast";
+    toast.style.cssText = [
+      "position:fixed","bottom:90px","left:50%","transform:translateX(-50%) translateY(20px)",
+      "background:var(--green)","color:#fff","border-radius:99px","padding:10px 20px",
+      "font-size:13px","font-weight:700","z-index:2000","opacity:0",
+      "transition:all .3s cubic-bezier(.34,1.56,.64,1)","pointer-events:none",
+      "white-space:nowrap","box-shadow:0 8px 24px rgba(9,184,48,.4)",
+      "font-family:'Outfit',sans-serif"
+    ].join(";");
+    document.body.appendChild(toast);
+  }
+  const t = copy[lang] || copy.fr;
+  const d = dishes.find(x => x.id === _dmId) || {};
+  const name = lang==="ar" ? (d.ar||"") : (d.name||"");
+  toast.textContent = "✓ " + (name ? name + " " : "") + (lang==="ar" ? "أضيف للسلة" : (lang==="en" ? "added to cart" : "ajouté au panier"));
+  toast.style.opacity = "1";
+  toast.style.transform = "translateX(-50%) translateY(0)";
+  clearTimeout(toast._timer);
+  toast._timer = setTimeout(() => {
+    toast.style.opacity = "0";
+    toast.style.transform = "translateX(-50%) translateY(20px)";
+  }, 2000);
 }
 
 function closeDishModal(e) {
   if(e && e.target !== document.getElementById("dish-modal-overlay")) return;
   const overlay = document.getElementById("dish-modal-overlay");
   if(overlay) overlay.classList.remove("open");
+  // If visitor has items in cart, scroll back to menu section smoothly
+  if(cart && cart.length > 0) {
+    setTimeout(() => {
+      const menuSection = document.getElementById("menu");
+      if(menuSection) menuSection.scrollIntoView({ behavior:"smooth", block:"start" });
+    }, 180);
+  }
 }
 
 /* ═══════════════════════════════════════════
