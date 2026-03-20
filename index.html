@@ -499,15 +499,17 @@
     [data-theme="dark"] .rev-big-score { color: #2BCE4E !important; text-shadow: 0 0 20px rgba(8,153,41,.3); }
     [data-theme="dark"] .rev-card {
       background: linear-gradient(145deg, #081610, #0C1C14, #0E2218) !important;
-      border: 1px solid rgba(8,153,41,.3) !important;
+      border: 1.5px solid rgba(8,153,41,.25) !important;
       box-shadow: 0 4px 20px rgba(0,0,0,.5), 0 1px 0 rgba(8,153,41,.08) inset !important;
-      transition: transform .28s cubic-bezier(.34,1.56,.64,1), box-shadow .28s ease !important;
+      transition: transform .22s cubic-bezier(.34,1.56,.64,1), box-shadow .2s, border-color .2s !important;
     }
     [data-theme="dark"] .rev-card:hover {
-      transform: translateY(-6px) !important;
-      box-shadow: 0 12px 36px rgba(8,153,41,.2), 0 4px 20px rgba(0,0,0,.5) !important;
+      transform: translateY(-5px) scale(1.01) !important;
+      box-shadow: 0 12px 36px rgba(8,153,41,.22), 0 4px 20px rgba(0,0,0,.5) !important;
+      border-color: #2BCE4E !important;
     }
-    [data-theme="dark"] .rev-text::before { color: #2BCE4E !important; }
+    [data-theme="dark"] .rev-card-body .rev-text { color: var(--sub) !important; }
+    [data-theme="dark"] .rev-text::before { background: #2BCE4E !important; }
     [data-theme="dark"] .rev-tag {
       background: rgba(8,153,41,.18) !important;
       color: #4ADE80 !important;
@@ -545,28 +547,58 @@
     }
     .rev-card {
       flex:0 0 300px; width:300px;
-      background:var(--card); border:1px solid var(--border); border-radius:20px;
-      padding:22px; box-shadow:var(--shadow);
-      display:flex; flex-direction:column; gap:12px;
-      transition:transform .2s,box-shadow .2s;
-      user-select:none;
+      background:var(--card); border:1.5px solid var(--border); border-radius:22px;
+      padding:0; box-shadow:0 2px 12px rgba(9,184,48,0.07);
+      display:flex; flex-direction:column;
+      transition:transform .22s cubic-bezier(.34,1.56,.64,1), box-shadow .2s, border-color .2s;
+      user-select:none; overflow:hidden;
     }
     [data-theme="dark"] .rev-card { background:var(--card); }
-    .rev-card:hover { transform:translateY(-3px); box-shadow:var(--shadowH); }
+    .rev-card:hover {
+      transform:translateY(-5px) scale(1.01);
+      box-shadow:0 12px 36px rgba(9,184,48,0.16);
+      border-color:var(--green);
+    }
+
+    /* Colored header strip */
+    .rev-card-header {
+      padding:18px 18px 14px;
+      position:relative; overflow:hidden;
+    }
+    .rev-card-header::after {
+      content:'❝';
+      position:absolute; top:8px; right:14px;
+      font-size:52px; line-height:1; opacity:.12;
+      color:#fff; font-family:Georgia,serif;
+      pointer-events:none;
+    }
     .rev-card-top { display:flex; align-items:center; gap:12px; }
     .rev-avatar {
-      width:44px; height:44px; border-radius:50%;
+      width:50px; height:50px; border-radius:14px;
       display:flex; align-items:center; justify-content:center;
-      font-family:'Outfit',sans-serif; font-size:16px; font-weight:800;
+      font-family:'Outfit',sans-serif; font-size:17px; font-weight:900;
       color:#fff; flex-shrink:0;
+      box-shadow:0 4px 14px rgba(0,0,0,0.2);
+      border:2px solid rgba(255,255,255,0.25);
     }
-    .rev-name { font-family:'Outfit',sans-serif; font-size:14px; font-weight:800; color:var(--text); }
-    .rev-meta { font-size:11px; color:var(--muted); margin-top:2px; }
-    .rev-stars { font-size:14px; color:#F59E0B; letter-spacing:1px; }
-    .rev-text { font-size:12px; color:var(--sub); line-height:1.6; flex:1; font-style:italic; }
-    .rev-text::before { content:'"'; font-size:20px; color:var(--green); font-style:normal; line-height:0; vertical-align:-6px; margin-right:2px; }
-    .rev-tag { display:inline-block; font-size:11px; font-weight:700; padding:3px 10px; border-radius:20px; background:var(--greenXL); color:var(--green); align-self:flex-start; }
-    .rev-verified { font-size:11px; color:var(--muted); display:flex; align-items:center; gap:4px; }
+    .rev-name { font-family:'Outfit',sans-serif; font-size:14px; font-weight:800; color:#fff; }
+    .rev-meta { font-size:11px; color:rgba(255,255,255,0.75); margin-top:2px; }
+    .rev-stars { font-size:14px; color:#FCD34D; letter-spacing:1px; margin-top:6px; }
+
+    /* Card body */
+    .rev-card-body { padding:14px 18px 16px; display:flex; flex-direction:column; gap:12px; flex:1; }
+    .rev-text {
+      font-size:12.5px; color:var(--sub); line-height:1.7; flex:1;
+      font-style:italic; position:relative; padding-left:14px;
+    }
+    .rev-text::before {
+      content:''; position:absolute; left:0; top:4px;
+      width:3px; height:calc(100% - 4px);
+      background:var(--green); border-radius:2px; opacity:.5;
+    }
+    .rev-card-footer { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:6px; }
+    .rev-tag { display:inline-block; font-size:11px; font-weight:700; padding:3px 10px; border-radius:20px; background:var(--greenXL); color:var(--green); }
+    .rev-verified { font-size:10.5px; color:var(--muted); display:flex; align-items:center; gap:4px; }
     .rev-verified::before { content:'✓'; color:var(--green); font-weight:900; }
 
     /* Dots — hidden, marquee has no pages */
@@ -921,8 +953,10 @@
       .rev-summary   { flex-direction:column; gap:10px; padding:12px; border-radius:14px; }
       .rev-big-score { font-size:38px; }
       .rev-stars-big { font-size:16px; }
-      .rev-card      { flex:0 0 84vw; min-width:84vw; padding:14px 12px; border-radius:15px; }
-      .rev-text      { font-size:12px; line-height:1.6; }
+      .rev-card      { flex:0 0 84vw; min-width:84vw; border-radius:18px; }
+      .rev-card-header { padding:15px 15px 12px; }
+      .rev-card-body { padding:12px 15px 14px; }
+      .rev-text      { font-size:12px; line-height:1.65; }
 
       /* ── Loyalty ── */
       .loy-header    { margin-bottom:18px; }
@@ -1174,7 +1208,8 @@
     body.female-mode .dish-card { border-color:#F8BBD9 !important; box-shadow:0 4px 20px rgba(194,24,91,0.08) !important; }
     body.female-mode .step-card { border:1px solid #F8BBD9 !important; }
     body.female-mode .stat-card { border:1px solid rgba(194,24,91,0.15) !important; }
-    body.female-mode .rev-card  { border:1px solid #F8BBD9 !important; box-shadow:0 2px 12px rgba(194,24,91,0.07) !important; }
+    body.female-mode .rev-card  { border:1.5px solid #F8BBD9 !important; box-shadow:0 4px 20px rgba(194,24,91,0.08) !important; }
+    body.female-mode .rev-card:hover { border-color:var(--pink) !important; }
 
     /* ── Active/selected states that use --green ── */
     body.female-mode .chip.active,
@@ -2114,7 +2149,9 @@
       .rev-count-lbl     { font-size:11px !important; }
       .rev-bars          { min-width:0 !important; width:100% !important; }
       .rev-track-wrap    { margin:0 -14px !important; padding:0 14px !important; }
-      .rev-card          { flex:0 0 84vw !important; width:84vw !important; padding:13px 11px !important; border-radius:14px !important; }
+      .rev-card          { flex:0 0 84vw !important; width:84vw !important; border-radius:16px !important; }
+      .rev-card-header   { padding:14px 14px 11px !important; }
+      .rev-card-body     { padding:11px 14px 13px !important; }
       .rev-text          { font-size:12px !important; line-height:1.55 !important; }
       .rev-name          { font-size:12px !important; }
 
@@ -5801,31 +5838,46 @@ function renderReviews() {
   const track = document.getElementById("rev-track");
   if(!track) return;
 
-  // Build one set of cards
+  // Persona header gradient map
+  const personaGrad = {
+    sportif:  "linear-gradient(135deg,#D97706,#F59E0B)",
+    couple:   "linear-gradient(135deg,#be185d,#F472B6)",
+    employee: "linear-gradient(135deg,#1E40AF,#3B82F6)",
+    famille:  "linear-gradient(135deg,#0D9488,#34D399)",
+  };
+  const personaDefault = "linear-gradient(135deg,#089929,#2BCE4E)";
+
   const cards = reviews.map(r => {
-    const txt = r[lang] || r.fr;
-    return `<div class="rev-card">
-      <div class="rev-card-top">
-        <div class="rev-avatar" style="background:${r.color}">${r.avatar}</div>
-        <div>
-          <div class="rev-name">${r.name}</div>
-          <div class="rev-meta">📍 ${r.city}</div>
+    const txt  = r[lang] || r.fr;
+    const grad = personaGrad[r.persona] || personaDefault;
+    const verifiedLbl = isAr ? "عميل موثّق" : (lang==="en" ? "Verified customer" : "Client vérifié");
+    return `
+    <div class="rev-card">
+      <!-- Colored header -->
+      <div class="rev-card-header" style="background:${grad};">
+        <div class="rev-card-top">
+          <div class="rev-avatar" style="background:rgba(0,0,0,0.22);">${r.avatar}</div>
+          <div>
+            <div class="rev-name">${r.name}</div>
+            <div class="rev-meta">📍 ${r.city}</div>
+          </div>
         </div>
-        <div class="rev-stars" style="margin-left:auto">★★★★★</div>
+        <div class="rev-stars">★★★★★</div>
       </div>
-      <p class="rev-text">${txt}</p>
-      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;">
-        <span class="rev-tag">${r.tag}</span>
-        <span class="rev-verified">${isAr ? "عميل موثّق" : (lang==="en" ? "Verified customer" : "Client vérifié")}</span>
+      <!-- Body -->
+      <div class="rev-card-body">
+        <p class="rev-text">${txt}</p>
+        <div class="rev-card-footer">
+          <span class="rev-tag">${r.tag}</span>
+          <span class="rev-verified">${verifiedLbl}</span>
+        </div>
       </div>
     </div>`;
   }).join("");
 
-  // Duplicate for seamless infinite loop
+  // Duplicate for seamless infinite scroll
   track.innerHTML = cards + cards;
-
-  // Speed: 45s for full loop; pause on hover is CSS
-  track.style.animationDuration = "45s";
+  track.style.animationDuration = "50s";
 }
 
 window.addEventListener("resize", () => { renderReviews(); });
