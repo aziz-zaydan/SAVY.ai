@@ -1,24 +1,112 @@
 const https = require("https");
 
 // ─── Config ────────────────────────────────────────────────────
-const VERIFY_TOKEN = process.env.WHATSAPP_VERIFY_TOKEN;
-const WA_TOKEN     = process.env.WHATSAPP_TOKEN;
-const PHONE_ID     = process.env.WHATSAPP_PHONE_ID;
-const GROQ_API_KEY = process.env.GROQ_API_KEY;
-const SHEET_URL    = process.env.GOOGLE_SHEET_URL;
-const MAX_HISTORY  = 12;
-const MAX_CONTENT  = 1500;
-const GROQ_TIMEOUT = 12000;
+const VERIFY_TOKEN  = process.env.WHATSAPP_VERIFY_TOKEN;
+const WA_TOKEN      = process.env.WHATSAPP_TOKEN;
+const PHONE_ID      = process.env.WHATSAPP_PHONE_ID;
+const GROQ_API_KEY  = process.env.GROQ_API_KEY;
+const SHEET_URL     = process.env.GOOGLE_SHEET_URL;
+const REDIS_URL     = process.env.UPSTASH_REDIS_REST_URL;
+const REDIS_TOKEN   = process.env.UPSTASH_REDIS_REST_TOKEN;
 
-// ─── In-memory stores (reset on cold start) ───────────────────
-const conversations   = {};   // phone → [{role, content}]
-const processedMsgIds = new Set(); // dedup — avoid double replies
-const firstContact    = new Set(); // track new users for welcome
+const MAX_HISTORY   = 12;
+const MAX_CONTENT   = 1500;
+const GROQ_TIMEOUT  = 12000;
+const TTL_SECONDS   = 60 * 60 * 24 * 7; // keep conversations 7 days
+
+// ─── In-memory dedup only (ok to reset — just prevents double replies) ──
+const processedMsgIds = new Set();
+
+// ─── Redis helpers via Upstash REST API ───────────────────────
+// No npm install needed — pure HTTPS calls to Upstash REST endpoint
+
+async function redisGet(key) {
+  if (!REDIS_URL || !REDIS_TOKEN) return null;
+  try {
+    const url = `${REDIS_URL}/get/${encodeURIComponent(key)}`;
+    const res = await fetchJSON(url, {
+      method: "GET",
+      headers: { Authorization: `Bearer ${REDIS_TOKEN}` },
+    });
+    return res?.result ?? null;
+  } catch { return null; }
+}
+
+async function redisSet(key, value, ttl = TTL_SECONDS) {
+  if (!REDIS_URL || !REDIS_TOKEN) return;
+  try {
+    const url = `${REDIS_URL}/set/${encodeURIComponent(key)}`;
+    await fetchJSON(url, {
+      method: "POST",
+      headers: {
+        Authorization:  `Bearer ${REDIS_TOKEN}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify([value, "EX", ttl]),
+    });
+  } catch (e) { console.warn("Redis set error:", e.message); }
+}
+
+// ─── Generic HTTPS fetch returning parsed JSON ─────────────────
+function fetchJSON(url, options = {}) {
+  return new Promise((resolve, reject) => {
+    const parsed = new URL(url);
+    const reqOptions = {
+      hostname: parsed.hostname,
+      path:     parsed.pathname + parsed.search,
+      method:   options.method || "GET",
+      headers:  options.headers || {},
+    };
+
+    let body = options.body || null;
+    if (body && typeof body === "string") {
+      reqOptions.headers["Content-Length"] = Buffer.byteLength(body);
+    }
+
+    const req = https.request(reqOptions, (res) => {
+      let data = "";
+      res.on("data", c => data += c);
+      res.on("end", () => {
+        try { resolve(JSON.parse(data)); }
+        catch { resolve(data); }
+      });
+    });
+
+    req.on("error", reject);
+    req.setTimeout(6000, () => { req.destroy(); reject(new Error("Redis timeout")); });
+    if (body) req.write(body);
+    req.end();
+  });
+}
+
+// ─── Conversation memory via Redis ────────────────────────────
+// Key: "savy:conv:{phone}"  Value: JSON array of messages
+
+async function getHistory(phone) {
+  const raw = await redisGet(`savy:conv:${phone}`);
+  if (!raw) return [];
+  try { return JSON.parse(raw); }
+  catch { return []; }
+}
+
+async function saveHistory(phone, messages) {
+  const trimmed = messages.slice(-MAX_HISTORY);
+  await redisSet(`savy:conv:${phone}`, JSON.stringify(trimmed));
+}
+
+async function isFirstContact(phone) {
+  const flag = await redisGet(`savy:first:${phone}`);
+  return flag === null; // null means key doesn't exist = first contact
+}
+
+async function markContacted(phone) {
+  await redisSet(`savy:first:${phone}`, "1", TTL_SECONDS * 52); // keep 1 year
+}
 
 // ─── Menu ─────────────────────────────────────────────────────
 const MENU = `
-MENU SAVY — متوفر الآن في تطوان · مضيق · مارتيل
-التوصيل خلال 45 دقيقة · الطلبات قبل 21h · نقداً أو بطاقة:
+MENU SAVY — disponible a Tetouan · M'diq · Martil
+Livraison 45 min · Commande avant 21h · Cash ou Carte:
 
 ENTREES & SALADES:
 • Salad Russe Light      — 39 MAD  | 280kcal | 8gP
@@ -51,17 +139,19 @@ DESSERTS SMART:
 // ─── System prompt ─────────────────────────────────────────────
 const SYSTEM_PROMPT = `Tu es Chef SAVY 🧬 — le chef IA personnel de SAVY Maroc sur WhatsApp.
 
-IDENTITE: Tu es un ami, pas un bot. Un chef passionné, pas un vendeur.
+IDENTITE: Tu es un ami, pas un bot. Un chef passionne, pas un vendeur.
 
 LANGUE — REGLE ABSOLUE:
-• Darija (salam, bghit, 3afak, wakha, daba, mzyan, kifash, wach, labas...) → reponds en Darija chaleureuse et authentique — c'est ta langue naturelle avec les Marocains
-• Francais → francais naturel avec quelques mots darija bienvenus
+• Darija (salam, bghit, 3afak, wakha, daba, mzyan, kifash, wach, labas...) → reponds en Darija chaleureuse et authentique
+• Francais → francais naturel
 • Arabe standard → arabe simple
 • Anglais → anglais uniquement
 Ne melange JAMAIS deux langues dans un meme message.
 
+MEMOIRE: Tu te souviens de TOUT ce que le client a dit dans cette conversation. Utilise son prenom si tu le connais. Si il a deja commande avant, felicite-le pour sa fidelite.
+
 REGLES DE CONVERSATION:
-1. Reponds D'ABORD a ce que la personne dit — ne commence jamais par le menu
+1. Reponds D'ABORD a ce que la personne dit
 2. Messages courts: 2-4 phrases max + emojis naturels
 3. UNE seule question par message
 4. Si quelqu'un demande le menu → donne-le IMMEDIATEMENT avec les prix
@@ -154,6 +244,7 @@ function callGroq(messages, retries = 2) {
   });
 }
 
+// ─── Send WhatsApp message ─────────────────────────────────────
 function sendWhatsApp(to, text) {
   return new Promise((resolve, reject) => {
     const body = JSON.stringify({
@@ -182,6 +273,7 @@ function sendWhatsApp(to, text) {
   });
 }
 
+// ─── Save to Google Sheets ─────────────────────────────────────
 function saveToSheet(data) {
   if (!SHEET_URL) return Promise.resolve();
   return new Promise((resolve) => {
@@ -204,6 +296,7 @@ function saveToSheet(data) {
   });
 }
 
+// ─── Utilities ─────────────────────────────────────────────────
 function parseOrderBlock(text) {
   return {
     nom:   text.match(/NOM:\s*(.+)/i)?.[1]?.trim()      || "",
@@ -228,7 +321,7 @@ function detectLang(text) {
 // ─── Main handler ──────────────────────────────────────────────
 exports.handler = async (event) => {
 
-  // Webhook verification
+  // Webhook verification (GET from Meta)
   if (event.httpMethod === "GET") {
     const p = event.queryStringParameters || {};
     if (p["hub.mode"] === "subscribe" && p["hub.verify_token"] === VERIFY_TOKEN) {
@@ -248,58 +341,59 @@ exports.handler = async (event) => {
   const msg = payload?.entry?.[0]?.changes?.[0]?.value?.messages?.[0];
   if (!msg) return { statusCode: 200, body: "ok" };
 
-  // Deduplication
+  // Deduplication (in-memory is fine here — prevents same invocation double-reply)
   const msgId = msg.id;
   if (msgId && processedMsgIds.has(msgId)) {
     return { statusCode: 200, body: "ok (dup)" };
   }
   if (msgId) {
     processedMsgIds.add(msgId);
-    if (processedMsgIds.size > 1000) {
+    if (processedMsgIds.size > 500) {
       processedMsgIds.delete(processedMsgIds.values().next().value);
     }
   }
 
   const from = msg.from;
 
-  // Handle non-text messages with friendly reply
+  // Handle non-text messages
   if (msg.type !== "text") {
     const lang = detectLang("");
-    const mediaMsg = "📸 وصلني رسالتك — دابا كنرد غير على الرسائل النصية. اكتب ليا شنو بغيتي! 😊";
-    await sendWhatsApp(from, mediaMsg);
+    await sendWhatsApp(from, "📸 وصلني رسالتك — دابا كنرد غير على الرسائل النصية. اكتب ليا شنو بغيتي! 😊");
     return { statusCode: 200, body: "ok" };
   }
 
   const text = (msg.text?.body || "").trim();
   if (!text) return { statusCode: 200, body: "ok" };
 
-  // First-contact welcome
-  const isNewUser = !conversations[from];
-  if (isNewUser) {
-    conversations[from] = [];
-    if (!firstContact.has(from)) {
-      firstContact.add(from);
-      const welcome = getWelcomeMsg(text);
-      await sendWhatsApp(from, welcome);
-      conversations[from].push({ role: "assistant", content: welcome });
+  // ── Load history from Redis ────────────────────────────────
+  let history = await getHistory(from);
 
-      // If pure greeting → welcome is enough, skip AI call
-      const pureGreeting = /^(salam|bonjour|salut|hello|hi|مرحبا|أهلا|صباح|مساء)[\s!.،]*$/i.test(text);
-      if (pureGreeting) {
-        conversations[from].push({ role: "user", content: text });
-        return { statusCode: 200, body: "ok" };
-      }
+  // ── First contact welcome (checked in Redis — survives cold starts) ──
+  const newUser = await isFirstContact(from);
+  if (newUser) {
+    await markContacted(from);
+    const welcome = getWelcomeMsg(text);
+    await sendWhatsApp(from, welcome);
+
+    // Store welcome in history
+    history.push({ role: "assistant", content: welcome });
+
+    // Pure greeting → welcome is enough
+    const pureGreeting = /^(salam|bonjour|salut|hello|hi|مرحبا|أهلا|صباح|مساء)[\s!.،]*$/i.test(text);
+    if (pureGreeting) {
+      history.push({ role: "user", content: text });
+      await saveHistory(from, history);
+      return { statusCode: 200, body: "ok" };
     }
   }
 
-  // Add user message
-  conversations[from].push({ role: "user", content: text.slice(0, MAX_CONTENT) });
-  const trimmed = conversations[from].slice(-MAX_HISTORY);
+  // Add user message to history
+  history.push({ role: "user", content: text.slice(0, MAX_CONTENT) });
 
-  // Call Groq
+  // ── Call Groq ──────────────────────────────────────────────
   let reply = "";
   try {
-    const result = await callGroq(trimmed);
+    const result = await callGroq(history.slice(-MAX_HISTORY));
     reply = result?.choices?.[0]?.message?.content?.trim() || "";
   } catch (err) {
     console.error("Groq error:", err.message);
@@ -310,17 +404,19 @@ exports.handler = async (event) => {
         ? "عذراً، هناك مشكلة تقنية 🙏 يرجى المحاولة مرة أخرى"
         : "Désolé, petit problème technique 🙏 Réessaie dans quelques instants";
     await sendWhatsApp(from, errMsg);
+    await saveHistory(from, history);
     return { statusCode: 200, body: "ok" };
   }
 
   if (!reply) return { statusCode: 200, body: "ok" };
 
-  // Order collection
+  // ── Order collection ───────────────────────────────────────
   if (reply.includes("SAVY_COLLECT_ORDER")) {
     const { nom, addr, tel, plats, total } = parseOrderBlock(reply);
     const orderId = generateOrderId();
     const lang    = detectLang(text);
 
+    // Save order to Google Sheets (non-blocking)
     saveToSheet({
       source:       "whatsapp",
       name:         nom   || "—",
@@ -339,16 +435,15 @@ exports.handler = async (event) => {
       : `${cleanReply}\n\n✅ Commande enregistrée !\n📦 Ton numéro: *${orderId}*\n🛵 Livraison dans 45 min — tu recevras une confirmation 💚`;
 
     await sendWhatsApp(from, confirm);
-    conversations[from].push({ role: "assistant", content: confirm });
+    history.push({ role: "assistant", content: confirm });
+
   } else {
     await sendWhatsApp(from, reply);
-    conversations[from].push({ role: "assistant", content: reply });
+    history.push({ role: "assistant", content: reply });
   }
 
-  // Trim history
-  if (conversations[from].length > MAX_HISTORY * 2) {
-    conversations[from] = conversations[from].slice(-MAX_HISTORY);
-  }
+  // ── Save updated history to Redis ──────────────────────────
+  await saveHistory(from, history);
 
   return { statusCode: 200, body: "ok" };
 };
