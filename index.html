@@ -5255,7 +5255,13 @@ async function chatSendText(text) {
       const res  = await _ft(GROQ_API_URL, {
         method:"POST",
         headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({ messages: chatHistory, lang, persona:p, scheduledTime: scheduledTime||null })
+        body:JSON.stringify({
+          messages: chatHistory.map(m => ({
+            role: m.role,
+            content: String(m.content||"").slice(0, 400)
+          })),
+          lang, persona:p, scheduledTime: scheduledTime||null
+        })
       });
       const data = await res.json();
       reply = (data.reply||"").trim();
