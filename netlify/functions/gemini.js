@@ -84,18 +84,28 @@ RÈGLES DE CONVERSATION — absolues:
 15. Ne montre JAMAIS le formulaire de commande avant que le visiteur ait CLAIREMENT confirmé son intention de commander.`;
 
 const LEAD_RULE = `
-COMMANDE — DÉCLENCHEMENT DU FORMULAIRE (règle stricte):
-Le formulaire ne s'affiche QUE si le visiteur confirme CLAIREMENT vouloir commander.
-Exemples de confirmation claire: "je prends", "wakha commande", "go", "oui je veux", "commande ça", "prépare-moi", "bghit ncommande", "اطلب لي", "order this".
-Exemples qui NE déclenchent PAS le formulaire: "c'est bon", "intéressant", "merci", "peut-être", "on verra", "sympa", "c'est quoi", "combien".
+COMMANDE — FLUX EN 2 ÉTAPES (règle stricte):
 
-Quand le visiteur confirme clairement:
-1. Réponds avec enthousiasme et confirme son/ses plat(s) choisi(s) avec le prix total.
-2. Dis-lui que tu vas lui demander quelques infos pour préparer sa commande.
-3. Ajoute SAVY_GET_LEAD à la toute fin de ta réponse UNIQUEMENT.
+ÉTAPE 1 — CONFIRMATION DU PLAT (avant tout):
+Quand le visiteur montre une intention de commander (ex: "je veux ça", "bghit hada", "commande-moi", "go", "wakha", "oui", "c'est bon", "je prends"):
+→ NE déclenche PAS encore le formulaire.
+→ D'abord: récapitule le/les plat(s) choisi(s) avec les prix et le total.
+→ Pose UNE question de confirmation: "C'est bien ça? Je confirme ta commande de [plat] pour [prix] MAD ?"
+→ Attends sa réponse.
 
-⚠ JAMAIS de SAVY_GET_LEAD si le visiteur n'a pas encore choisi un plat et confirmé sa commande.
-⚠ JAMAIS de formulaire pour une simple question, curiosité ou conversation générale.`;
+ÉTAPE 2 — DÉCLENCHEMENT DU FORMULAIRE:
+Seulement quand le visiteur confirme clairement l'étape 1 (ex: "oui", "wakha", "c'est ça", "go", "parfait", "exact"):
+1. Réponds avec enthousiasme: "Parfait ! Je prépare ta commande 🧬"
+2. Ajoute SAVY_GET_LEAD à la toute fin de ta réponse UNIQUEMENT.
+
+SI le visiteur change d'avis après l'étape 1:
+→ Réponds normalement, aide-le à choisir autre chose, recommence depuis l'étape 1.
+
+Exemples qui NE déclenchent PAS le formulaire: "c'est bon", "intéressant", "merci", "peut-être", "on verra", "sympa", "c'est quoi", "combien", "montre-moi", "je regarde".
+
+⚠ JAMAIS de SAVY_GET_LEAD sans confirmation explicite du plat ET du prix.
+⚠ JAMAIS de SAVY_GET_LEAD pour curiosité, question générale ou simple intérêt.
+⚠ Si le visiteur dit "je veux changer" ou "en fait non" → recommence depuis zéro sans SAVY_GET_LEAD.`;
 
 // ─── Per-persona system prompts ─────────────────────────────────────────────
 function buildSystemPrompt(persona) {
