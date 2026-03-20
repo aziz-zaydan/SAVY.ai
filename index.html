@@ -4643,6 +4643,7 @@ function applyChatTheme(p) {
    PERSONA SELECTION (hero)
 ═══════════════════════════════════════════ */
 function selectPersona(p) {
+  try { trackEvent('persona_select', { persona: p }); } catch(e){}
   const prevPersona = persona;
   persona = p;
   ["employee","sportif","famille","couple"].forEach(x=>{
@@ -4722,6 +4723,7 @@ function resetChatForPersona(p) {
    CHAT OPEN / CLOSE
 ═══════════════════════════════════════════ */
 function openChat() {
+  try { trackEvent('chat_open', { persona: typeof persona !== 'undefined' ? persona : 'unknown', lang: typeof lang !== 'undefined' ? lang : 'fr' }); } catch(e){}
   chatOpen = true;
   const cw = document.getElementById("chat-window");
   if(cw) cw.classList.add("open");
@@ -5664,6 +5666,7 @@ function submitLead() {
   if(!validatePhone(phone)) { showFieldError("lead-phone", "phone"); return; }
 
   leadDone = true;
+  try { trackEvent('lead_submit', { persona: persona || 'unknown', lang }); } catch(e){}
   // Remember customer for next visit
   localStorage.setItem("savy_customer_name",  name);
   localStorage.setItem("savy_customer_phone", phone);
@@ -5691,11 +5694,60 @@ Votre commande est entre les mains de notre chef — préparée avec soin et liv
   }, 1200);
 }
 
+
+/* ═══════════════════════════════════════════
+   UTM TRACKING — reads URL params, stores in localStorage,
+   passes to Sheets on every lead/order submit
+═══════════════════════════════════════════ */
+(function initUTM() {
+  const params = new URLSearchParams(window.location.search);
+  const utmKeys = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'];
+  utmKeys.forEach(k => {
+    const v = params.get(k);
+    if (v) localStorage.setItem('savy_' + k, v);
+  });
+  // Also store referrer on first visit
+  if (document.referrer && !localStorage.getItem('savy_referrer')) {
+    localStorage.setItem('savy_referrer', document.referrer);
+  }
+  // Store first visit timestamp
+  if (!localStorage.getItem('savy_first_visit')) {
+    localStorage.setItem('savy_first_visit', new Date().toISOString());
+  }
+  // Track page view event
+  const src = localStorage.getItem('savy_utm_source') || 'direct';
+  console.log('[SAVY Analytics] Source:', src);
+})();
+
+function getUTMData() {
+  return {
+    utm_source:   localStorage.getItem('savy_utm_source')   || 'direct',
+    utm_medium:   localStorage.getItem('savy_utm_medium')   || '',
+    utm_campaign: localStorage.getItem('savy_utm_campaign') || '',
+    utm_content:  localStorage.getItem('savy_utm_content')  || '',
+    referrer:     localStorage.getItem('savy_referrer')     || '',
+    first_visit:  localStorage.getItem('savy_first_visit')  || '',
+    page_lang:    typeof lang !== 'undefined' ? lang : 'fr',
+  };
+}
+
+function trackEvent(eventName, data = {}) {
+  // Store locally
+  const events = JSON.parse(localStorage.getItem('savy_events') || '[]');
+  events.push({ event: eventName, ts: Date.now(), ...data });
+  // Keep last 50 events only
+  if (events.length > 50) events.splice(0, events.length - 50);
+  localStorage.setItem('savy_events', JSON.stringify(events));
+  console.log('[SAVY Event]', eventName, data);
+}
+
 /* ═══════════════════════════════════════════
    GOOGLE SHEETS
 ═══════════════════════════════════════════ */
 function saveToSheets(data) {
   if(!GOOGLE_SHEET_URL || GOOGLE_SHEET_URL.includes("PASTE")) return;
+  // Merge UTM attribution data
+  try { Object.assign(data, getUTMData()); } catch(e){}
   try {
     const iframe = document.createElement("iframe");
     iframe.name  = "savy-sheet-frame";
@@ -6720,3 +6772,4 @@ window.addEventListener("appinstalled", () => {
 
 </body>
 </html>
+  
