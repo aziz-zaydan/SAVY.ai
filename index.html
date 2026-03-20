@@ -108,6 +108,19 @@
     [data-theme="dark"] .dish-card   { background:var(--card); }
     [data-theme="dark"] .chip        { background:var(--card); }
     [data-theme="dark"] .persona-card{ background:var(--mint); border-color:var(--border); }
+    /* nutri-calc dark */
+    [data-theme="dark"] #nutri-calc  { background:linear-gradient(160deg,rgba(9,184,48,0.07) 0%, var(--bg) 60%); }
+    [data-theme="dark"] .nutri-tog-btn { background:var(--card); border-color:var(--border); color:var(--sub); }
+    /* cta nudge strips dark */
+    [data-theme="dark"] #menu-cta-nudge    { background:var(--card); }
+    [data-theme="dark"] #reviews-cta-nudge { background:var(--bg); }
+    /* hero CTA secondary button dark */
+    [data-theme="dark"] #hero-cta-secondary { background:var(--card); border-color:var(--border); }
+    /* lead form dark */
+    [data-theme="dark"] .lead-trust-item { color:var(--muted); }
+    [data-theme="dark"] .lead-step-dot   { background:var(--border); }
+    [data-theme="dark"] .lead-step-dot.active { background:var(--green); }
+    [data-theme="dark"] .lead-step-dot.done   { background:var(--green); opacity:.45; }
     [data-theme="dark"] .email-inp   { background:var(--card); border-color:var(--border); color:var(--text); }
     [data-theme="dark"] .search-inp  { background:var(--card); border-color:var(--border); color:var(--text); }
     [data-theme="dark"] .social-btn  { background:var(--card); }
@@ -1630,19 +1643,19 @@
     }
     .dishes::-webkit-scrollbar { display:none; }
     .dish-card {
-      flex:0 0 185px; min-width:185px;
+      flex:0 0 192px; min-width:192px;
       scroll-snap-align:start;
-      background:var(--card); border-radius:18px;
+      background:var(--card); border-radius:20px;
       padding:0 0 14px;
-      box-shadow:var(--shadow); border:1px solid var(--border);
-      display:flex; flex-direction:column; gap:8px;
-      transition:transform .2s, box-shadow .2s;
+      box-shadow:0 2px 12px rgba(9,184,48,0.07); border:1.5px solid var(--border);
+      display:flex; flex-direction:column; gap:6px;
+      transition:transform .22s cubic-bezier(.34,1.56,.64,1), box-shadow .2s;
       animation:slideUp .4s ease both;
       cursor:pointer; overflow:hidden;
     }
-    .dish-card:hover { transform:translateY(-3px); box-shadow:var(--shadowH); }
-    @media(max-width:480px){ .dish-card { flex:0 0 78vw; min-width:78vw; } }
-    .dish-card:hover { box-shadow:var(--shadowH); transform:translateY(-3px); }
+    .dish-card:hover { transform:translateY(-5px) scale(1.01); box-shadow:0 12px 36px rgba(9,184,48,0.16); border-color:var(--green); }
+    @media(max-width:480px){ .dish-card { flex:0 0 76vw; min-width:76vw; } }
+    @media(max-width:360px){ .dish-card { flex:0 0 84vw; min-width:84vw; } }
     .dish-card-top { display:flex; align-items:flex-start; justify-content:space-between; gap:8px; }
     .menu-arrow {
       position:absolute; top:50%; transform:translateY(-50%);
@@ -1668,7 +1681,17 @@
     .tag-cuisine{ padding:3px 8px; border-radius:99px; font-size:10px; font-weight:600; background:#F5F5F5; color:#888; }
     .dish-macros { display:flex; align-items:center; gap:10px; flex-wrap:wrap; font-size:12px; color:var(--sub); }
     .dish-macros .meta { margin-left:auto; color:var(--muted); }
-    .add-btn { width:36px; height:36px; border-radius:50%; border:none; background:var(--mint); color:var(--green); font-size:20px; cursor:pointer; flex-shrink:0; display:flex; align-items:center; justify-content:center; transition:all .2s; }
+    .add-btn {
+      width:34px; height:34px; border-radius:10px; border:none;
+      background:rgba(255,255,255,0.92); color:var(--green);
+      font-size:20px; font-weight:900; cursor:pointer; flex-shrink:0;
+      display:flex; align-items:center; justify-content:center;
+      transition:all .18s cubic-bezier(.34,1.56,.64,1);
+      backdrop-filter:blur(4px);
+    }
+    .add-btn:hover  { transform:scale(1.12); background:#fff; box-shadow:0 4px 14px rgba(9,184,48,.3); }
+    .add-btn.added  { background:var(--green); color:#fff; transform:scale(1.08); }
+    .add-btn.added:hover { background:var(--greenL); }
     .add-btn.added { background:var(--green); color:#fff; font-size:16px; box-shadow:0 4px 12px rgba(9,184,48,.25); }
     .empty-state { text-align:center; padding:48px 0; color:var(--muted); }
     .empty-state .big { font-size:40px; margin-bottom:10px; }
@@ -1858,7 +1881,7 @@
     .q-chip.pink:hover { background:var(--pink); color:#fff; }
 
     /* Lead form inside chat */
-    #chat-lead-form { padding:10px 11px; border-top:1px solid var(--border); background:var(--card); flex-shrink:0; display:none; }
+    #chat-lead-form { padding:12px 13px 10px; border-top:1.5px solid var(--border); background:var(--card); flex-shrink:0; display:none; animation:slideDown .3s ease both; }
     .lead-inp {
       width:100%; padding:10px 12px; border-radius:10px; border:1.5px solid var(--border);
       font-size:13px; outline:none; color:var(--text); background:var(--bg);
@@ -1878,17 +1901,36 @@
       to   { opacity:1; transform:translateY(0); }
     }
     .lead-submit {
-      width:100%; padding:10px; border-radius:10px; border:none;
-      background:var(--green); color:#fff; font-size:12px; font-weight:700;
-      cursor:pointer; font-family:'DM Sans',sans-serif;
-      box-shadow:0 3px 12px rgba(9,184,48,0.3); transition:all .2s;
+      width:100%; padding:13px; border-radius:13px; border:none;
+      background:linear-gradient(135deg,var(--green),var(--greenL)); color:#fff; font-size:14px; font-weight:800;
+      cursor:pointer; font-family:'Outfit',sans-serif; letter-spacing:.01em;
+      box-shadow:0 6px 20px rgba(9,184,48,0.35); transition:all .2s;
+      display:flex; align-items:center; justify-content:center; gap:8px;
     }
-    .lead-submit:hover { background:var(--greenL); }
+    .lead-submit:hover { transform:translateY(-2px); box-shadow:0 10px 28px rgba(9,184,48,0.45); }
+    .lead-submit:active { transform:translateY(0); }
     .lead-submit-pink {
       background:linear-gradient(135deg, var(--pink), var(--pinkL));
-      box-shadow:0 3px 12px rgba(233,30,140,0.3);
+      box-shadow:0 6px 20px rgba(233,30,140,0.35);
     }
-    .lead-submit-pink:hover { opacity:.9; }
+    .lead-submit-pink:hover { box-shadow:0 10px 28px rgba(233,30,140,0.45); }
+    .lead-trust-row {
+      display:flex; align-items:center; justify-content:center; gap:12px;
+      margin-top:9px; flex-wrap:wrap;
+    }
+    .lead-trust-item {
+      display:flex; align-items:center; gap:4px;
+      font-size:10.5px; color:var(--muted); font-family:'DM Sans',sans-serif;
+    }
+    .lead-step-dots {
+      display:flex; align-items:center; justify-content:center; gap:6px;
+      margin-bottom:10px;
+    }
+    .lead-step-dot {
+      width:7px; height:7px; border-radius:50%; background:var(--border); transition:all .3s;
+    }
+    .lead-step-dot.active { background:var(--green); transform:scale(1.3); }
+    .lead-step-dot.done   { background:var(--green); opacity:.5; }
 
     /* ── RTL overrides ── */
     [dir="rtl"] .search-icon    { left:auto; right:14px; }
@@ -2697,6 +2739,43 @@
         </div>
       </div>
 
+      <!-- ── Dual CTA row ── -->
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin:16px 0 6px;">
+        <button onclick="openChat()" id="hero-cta-primary" style="
+          flex:1; min-width:140px;
+          background:linear-gradient(135deg,var(--green),var(--greenL));
+          color:#fff; border:none; border-radius:14px;
+          padding:13px 18px; font-size:13px; font-weight:800;
+          font-family:'Outfit',sans-serif; cursor:pointer;
+          box-shadow:0 6px 22px rgba(9,184,48,0.38);
+          display:flex; align-items:center; justify-content:center; gap:8px;
+          transition:transform .2s,box-shadow .2s;
+          animation:ctaPulse 2.8s ease-in-out infinite;
+        " onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 10px 30px rgba(9,184,48,.5)'"
+           onmouseout="this.style.transform='';this.style.boxShadow='0 6px 22px rgba(9,184,48,0.38)'">
+          🧬 <span id="hero-cta-primary-txt">Chef IA — Commencer</span>
+        </button>
+        <a href="#menu" style="text-decoration:none;">
+          <button id="hero-cta-secondary" style="
+            flex:1; min-width:120px;
+            background:var(--card); color:var(--text);
+            border:1.5px solid var(--border); border-radius:14px;
+            padding:13px 18px; font-size:13px; font-weight:700;
+            font-family:'DM Sans',sans-serif; cursor:pointer;
+            display:flex; align-items:center; justify-content:center; gap:7px;
+            transition:all .2s; white-space:nowrap;
+          " onmouseover="this.style.borderColor='var(--green)';this.style.color='var(--green)'"
+             onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text)'">
+            🍽️ <span id="hero-cta-secondary-txt">Voir le menu</span>
+          </button>
+        </a>
+      </div>
+      <style>
+        @keyframes ctaPulse {
+          0%,100% { box-shadow:0 6px 22px rgba(9,184,48,.38); }
+          50%      { box-shadow:0 6px 32px rgba(9,184,48,.6), 0 0 0 6px rgba(9,184,48,.08); }
+        }
+      </style>
 
       <!-- Packaging Slideshow -->
       <div class="pkg-slideshow su3b">
@@ -3396,6 +3475,12 @@
 
   <!-- Lead form -->
   <div id="chat-lead-form">
+    <!-- ── Step progress dots ── -->
+    <div class="lead-step-dots" id="lead-step-dots">
+      <div class="lead-step-dot done"></div>
+      <div class="lead-step-dot done"></div>
+      <div class="lead-step-dot active"></div>
+    </div>
     <!-- ── Meal summary ── -->
     <div id="lead-meal-summary" style="
       background:var(--greenXL); border:1.5px solid var(--border);
@@ -3407,14 +3492,19 @@
       <div id="lead-meal-total" style="font-family:'Outfit',sans-serif;font-weight:900;font-size:15px;color:var(--green);margin-top:6px;padding-top:6px;border-top:1px solid var(--border);"></div>
     </div>
     <!-- ── Fields ── -->
-    <input class="lead-inp" id="lead-name"  type="text"  placeholder="Nom complet / Full name / الاسم الكامل" autocomplete="name"/>
-    <input class="lead-inp" id="lead-city"  type="text"  placeholder="Adresse · عنوانك (Rue, Ville)" autocomplete="street-address"/>
-    <input class="lead-inp" id="lead-phone" type="tel"   placeholder="WhatsApp (+212 6XX XXX XXX)" autocomplete="tel"/>
-    <textarea class="lead-inp" id="lead-comment" rows="2" placeholder="Commentaire (allergies, instructions spéciales...)" style="resize:none;height:56px;"></textarea>
+    <input class="lead-inp" id="lead-name"  type="text" placeholder="Votre prénom / اسمك" autocomplete="given-name"/>
+    <input class="lead-inp" id="lead-city"  type="text" placeholder="Adresse de livraison · عنوان التوصيل" autocomplete="street-address"/>
+    <input class="lead-inp" id="lead-phone" type="tel"  placeholder="WhatsApp (+212 6XX XXX XXX)" autocomplete="tel"/>
+    <textarea class="lead-inp" id="lead-comment" rows="2" placeholder="Note (allergies, étage, instructions...)" style="resize:none;height:50px;"></textarea>
     <button class="lead-submit" id="lead-submit-btn" onclick="submitLead()">
       <span id="lead-btn-txt">🛵 Confirmer ma commande</span>
     </button>
-    <p style="font-size:11px;color:var(--muted);text-align:center;margin-top:7px;">🔒 Infos privées · jamais partagées</p>
+    <!-- Trust signals -->
+    <div class="lead-trust-row">
+      <span class="lead-trust-item">🔒 Données privées</span>
+      <span class="lead-trust-item">⚡ 45 min garanti</span>
+      <span class="lead-trust-item">✅ 125+ clients</span>
+    </div>
   </div>
 
   <!-- Input area -->
@@ -3959,6 +4049,23 @@ function setLang(l) {
   document.querySelectorAll(".lang-btn").forEach((b,i)=>b.classList.toggle("active",(i===0&&l==="en")||(i===1&&l==="fr")||(i===2&&l==="ar")));
 
   $t("nl-menu",  t.navMenu);  $t("nl-how", t.navHow);
+  // Hero dual CTA
+  const heroPrimTxt = isAr ? "🧬 شيف الذكاء الاصطناعي — ابدأ" : (l==="en" ? "🧬 AI Chef — Start Now" : "🧬 Chef IA — Commencer");
+  const heroSecTxt  = isAr ? "🍽️ عرض القائمة" : (l==="en" ? "🍽️ View menu" : "🍽️ Voir le menu");
+  if(document.getElementById("hero-cta-primary-txt"))   document.getElementById("hero-cta-primary-txt").textContent   = heroPrimTxt;
+  if(document.getElementById("hero-cta-secondary-txt")) document.getElementById("hero-cta-secondary-txt").textContent = heroSecTxt;
+
+  // Lead form trust signals
+  const trustItems = document.querySelectorAll(".lead-trust-item");
+  if(trustItems.length >= 3) {
+    const tr = isAr
+      ? ["🔒 بياناتك خاصة", "⚡ 45 دق مضمونة", "✅ +125 عميل"]
+      : l==="en"
+        ? ["🔒 Data private", "⚡ 45 min guaranteed", "✅ 125+ customers"]
+        : ["🔒 Données privées", "⚡ 45 min garanti", "✅ 125+ clients"];
+    trustItems.forEach((el,i) => { el.textContent = tr[i]; });
+  }
+
   $t("nl-about", t.navAbout); $t("nav-cta", t.navCta);
 
   $t("hero-city",    t.city);
@@ -4266,42 +4373,49 @@ function renderDishes(){
     return;
   }
   document.getElementById("dishes-list").innerHTML=filtered.map((d,i)=>`
-    <div class="dish-card" style="animation-delay:${i*.04}s;padding-top:${d.img?'0':'22px'};overflow:hidden;" onclick="openDishModal(${d.id})">
+    <div class="dish-card" style="animation-delay:${i*.04}s;" onclick="openDishModal(${d.id})">
       ${d.img ? `
-      <div style="position:relative;width:calc(100% + 0px);height:150px;border-radius:0;overflow:hidden;margin:0 0 8px 0;">
-        <img src="${d.img}" alt="${d.name}" loading="lazy" style="width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .4s;display:block;" onload="this.style.opacity=1">
-        <span style="position:absolute;bottom:8px;left:10px;" class="dish-price">${d.price} MAD</span>
-        <button class="add-btn ${cart.includes(d.id)?'added':''}" onclick="event.stopPropagation();toggleCart(${d.id})"
-          style="position:absolute;top:8px;right:8px;width:32px;height:32px;font-size:17px;">
+      <div style="position:relative;width:100%;height:168px;overflow:hidden;border-radius:18px 18px 0 0;">
+        <img src="${d.img}" alt="${d.name}" loading="lazy"
+          style="width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .45s;display:block;"
+          onload="this.style.opacity=1">
+        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.55) 0%,transparent 50%);pointer-events:none;"></div>
+        <span class="dish-price" style="position:absolute;bottom:9px;left:10px;">${d.price} MAD</span>
+        <button class="add-btn ${cart.includes(d.id)?'added':''}"
+          onclick="event.stopPropagation();toggleCart(${d.id})"
+          style="position:absolute;top:9px;right:9px;width:34px;height:34px;font-size:18px;border-radius:10px;box-shadow:0 3px 10px rgba(0,0,0,.22);">
           ${cart.includes(d.id)?'✓':'+'}
         </button>
+        ${d.badge?`<span style="position:absolute;top:9px;left:9px;font-size:9px;padding:3px 7px;border-radius:6px;background:rgba(244,163,48,.9);color:#7a3d00;font-weight:800;font-family:'Outfit',sans-serif;">${d.badge}</span>`:""}
       </div>` : `
-      <div class="dish-card-top">
-        <span class="dish-emoji-wrap" data-emoji="${d.e}" style="font-size:40px;line-height:1;opacity:0;transition:opacity .35s;">${d.e}</span>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;" onclick="event.stopPropagation()">
+      <div class="dish-card-top" style="padding:14px 12px 4px;">
+        <span style="font-size:42px;line-height:1;">${d.e}</span>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;" onclick="event.stopPropagation()">
           <span class="dish-price">${d.price} MAD</span>
-          <button class="add-btn ${cart.includes(d.id)?'added':''}" onclick="toggleCart(${d.id})" style="width:32px;height:32px;font-size:17px;">
+          <button class="add-btn ${cart.includes(d.id)?'added':''}" onclick="toggleCart(${d.id})" style="width:34px;height:34px;font-size:18px;border-radius:10px;">
             ${cart.includes(d.id)?'✓':'+'}
           </button>
         </div>
       </div>`}
-      <div style="padding:0 12px;">
-        <div class="${isAr?"dish-name dish-name-ar":"dish-name"}" style="text-align:${isAr?"right":"left"};font-size:13px;font-weight:800;margin-bottom:3px;line-height:1.3;">
-          ${d.name}${isAr?`<div class="dish-name-sub" style="font-size:11px;">${d.ar}</div>`:""}
+      <div style="padding:8px 12px 2px;">
+        <div class="${isAr?'dish-name dish-name-ar':'dish-name'}"
+          style="font-size:13.5px;font-weight:800;line-height:1.3;margin-bottom:4px;text-align:${isAr?'right':'left'};">
+          ${d.name}
+          ${isAr?`<div style="font-size:10.5px;color:var(--muted);font-weight:500;margin-top:2px;">${d.ar}</div>`:""}
         </div>
-        <div class="dish-tags" style="justify-content:${isAr?"flex-end":"flex-start"};gap:4px;flex-wrap:wrap;padding:0;">
-          <span class="tag-veg" style="font-size:9px;">${d.tag}</span>
-          ${d.badge?`<span class="tag-badge" style="font-size:9px;">${d.badge}</span>`:""}  <span style="font-size:9px;background:rgba(9,184,48,.1);color:var(--green);border-radius:6px;padding:2px 5px;font-weight:800;font-family:'Outfit',sans-serif;">🏅 +2pts</span>
+        <div style="display:flex;align-items:center;gap:4px;flex-wrap:wrap;">
+          <span class="tag-veg" style="font-size:9px;padding:2px 7px;">${d.tag}</span>
+          <span style="font-size:9px;background:rgba(9,184,48,.1);color:var(--green);border-radius:6px;padding:2px 6px;font-weight:800;font-family:'Outfit',sans-serif;">🏅 +2pts</span>
         </div>
       </div>
-      <div class="dish-macros" style="margin-top:auto;flex-wrap:wrap;gap:4px;padding:0 12px;">
-        <span>🔥 ${d.cal}kcal</span>
+      <div class="dish-macros" style="margin-top:auto;padding:6px 12px 0;gap:5px;">
+        <span style="font-size:11px;">🔥 ${d.cal}kcal</span>
         ${isSportifView
           ? `<span class="macro-chip macro-p">P ${d.p}g</span><span class="macro-chip macro-c">C ${d.c}g</span><span class="macro-chip macro-f">F ${d.f_g}g</span>`
-          : `<span>💪 ${d.p}g P</span>`
+          : `<span style="font-size:11px;">💪 ${d.p}g P</span>`
         }
-        <span class="dish-star">★ ${d.r}</span>
-        <span class="meta">⏱ ${d.t}m</span>
+        <span class="dish-star" style="font-size:11px;">★ ${d.r}</span>
+        <span class="meta" style="font-size:10px;">⏱ ${d.t}m</span>
       </div>
     </div>`).join("");
 }
