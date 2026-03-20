@@ -2675,6 +2675,167 @@
     .dish-skeleton:nth-child(3) .sk-img  { animation-delay:.3s; }
     .dish-skeleton:nth-child(3) .sk-line { animation-delay:.3s; }
 
+    /* ═══════════════════════════════════════════
+       PREMIUM CHAT UPGRADES
+    ═══════════════════════════════════════════ */
+
+    /* Typewriter cursor on bot messages */
+    .msg-bubble.typing-cursor::after {
+      content: '▋';
+      display:inline-block;
+      color:var(--green);
+      animation:cursorBlink .6s step-end infinite;
+      margin-left:2px; font-size:.9em;
+    }
+    @keyframes cursorBlink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    /* Richer bot bubble */
+    .msg-bot .msg-bubble {
+      background:linear-gradient(135deg,#fff 0%,#f7fdf9 100%) !important;
+      border:1px solid var(--border) !important;
+      box-shadow:0 2px 12px rgba(9,184,48,0.07) !important;
+    }
+    [data-theme="dark"] .msg-bot .msg-bubble {
+      background:linear-gradient(135deg,#0F2214,#0C1A0F) !important;
+    }
+
+    /* User bubble send ripple */
+    .msg-user .msg-bubble {
+      animation:msgSend .3s cubic-bezier(.34,1.56,.64,1) both;
+    }
+    @keyframes msgSend {
+      from { transform:scale(.92) translateX(6px); opacity:0; }
+      to   { transform:scale(1) translateX(0);     opacity:1; }
+    }
+
+    /* Bot message entrance */
+    .msg-bot {
+      animation:msgArrive .35s cubic-bezier(.34,1.3,.64,1) both;
+    }
+    @keyframes msgArrive {
+      from { transform:translateX(-8px) scale(.96); opacity:0; }
+      to   { transform:translateX(0)    scale(1);   opacity:1; }
+    }
+
+    /* Premium typing indicator */
+    .typing-dots { display:flex; gap:4px; align-items:center; padding:4px 2px; }
+    .typing-dots span {
+      width:7px; height:7px; border-radius:50%;
+      background:var(--green);
+      animation:typingBounce 1.1s ease-in-out infinite;
+    }
+    .typing-dots span:nth-child(1) { animation-delay:0s; }
+    .typing-dots span:nth-child(2) { animation-delay:.18s; }
+    .typing-dots span:nth-child(3) { animation-delay:.36s; }
+    @keyframes typingBounce {
+      0%,60%,100% { transform:translateY(0);   opacity:.4; }
+      30%          { transform:translateY(-5px); opacity:1; }
+    }
+
+    /* Chat input focus glow */
+    .chat-inp:focus {
+      border-color:var(--green) !important;
+      box-shadow:0 0 0 3px rgba(9,184,48,0.12) !important;
+    }
+
+    /* Send button pulse when input has text */
+    .chat-send.ready {
+      background:var(--green) !important;
+      box-shadow:0 4px 14px rgba(9,184,48,0.4) !important;
+      transform:scale(1.05);
+    }
+
+    /* ═══════════════════════════════════════════
+       HERO AMBIENT PARTICLES
+    ═══════════════════════════════════════════ */
+    #hero-particles {
+      position:absolute; inset:0; overflow:hidden;
+      pointer-events:none; z-index:1;
+    }
+    .hero-particle {
+      position:absolute; border-radius:50%;
+      background:rgba(9,184,48,0.12);
+      animation:particleFloat linear infinite;
+    }
+    @keyframes particleFloat {
+      0%   { transform:translateY(100%) scale(0); opacity:0; }
+      10%  { opacity:1; }
+      90%  { opacity:.6; }
+      100% { transform:translateY(-120%) scale(1.2); opacity:0; }
+    }
+
+    /* Hero text entrance stagger */
+    .hero-stagger > * {
+      opacity:0;
+      animation:heroEntrance .7s cubic-bezier(.22,1,.36,1) both;
+    }
+    .hero-stagger > *:nth-child(1) { animation-delay:.1s; }
+    .hero-stagger > *:nth-child(2) { animation-delay:.22s; }
+    .hero-stagger > *:nth-child(3) { animation-delay:.34s; }
+    .hero-stagger > *:nth-child(4) { animation-delay:.46s; }
+    .hero-stagger > *:nth-child(5) { animation-delay:.58s; }
+    .hero-stagger > *:nth-child(6) { animation-delay:.70s; }
+    @keyframes heroEntrance {
+      from { opacity:0; transform:translateY(22px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    /* ═══════════════════════════════════════════
+       MENU PREMIUM UPGRADES
+    ═══════════════════════════════════════════ */
+
+    /* Best-seller spotlight glow */
+    .dish-card.spotlight {
+      border-color:var(--orange) !important;
+      box-shadow:0 4px 24px rgba(244,163,48,0.22) !important;
+    }
+    .dish-card.spotlight::before {
+      content:'⭐ Best-seller';
+      position:absolute; top:-1px; left:50%; transform:translateX(-50%);
+      background:var(--orange); color:#fff;
+      font-size:9px; font-weight:900; font-family:'Outfit',sans-serif;
+      padding:3px 10px; border-radius:0 0 8px 8px;
+      letter-spacing:.05em; text-transform:uppercase;
+      z-index:2; white-space:nowrap;
+    }
+    .dish-card { position:relative; }
+
+    /* Dish card image zoom on hover */
+    .dish-card:hover img {
+      transform:scale(1.06) !important;
+      transition:transform .4s ease !important;
+    }
+    .dish-card img { transition:transform .4s ease; }
+
+    /* Macro chips animated on card hover */
+    .dish-card:hover .macro-chip {
+      transform:translateY(-1px);
+      transition:transform .2s ease;
+    }
+
+    /* ═══════════════════════════════════════════
+       MOBILE TOUCH FEEDBACK
+    ═══════════════════════════════════════════ */
+    @media(max-width:768px) {
+      .dish-card:active   { transform:scale(.97) !important; transition:transform .1s ease !important; }
+      .persona-card:active{ transform:scale(.95) !important; }
+      .btn-cta:active     { transform:scale(.96) !important; }
+      .add-btn:active     { transform:scale(.9)  !important; }
+      .link-btn:active    { transform:scale(.97) !important; }
+      .rev-card:active    { transform:scale(.98) !important; }
+
+      /* Smoother scroll snap on mobile menu */
+      .dishes {
+        scroll-snap-type:x mandatory !important;
+        -webkit-overflow-scrolling:touch !important;
+      }
+
+      /* Bigger touch targets */
+      .chat-send   { min-width:44px; min-height:44px; }
+      .chat-inp    { font-size:16px !important; } /* prevent iOS zoom */
+      .lead-inp    { font-size:16px !important; }
+    }
+
 </style>
 </head>
 <body>
@@ -2739,10 +2900,10 @@
 
 <!-- ══ HERO ════════════════════════════════════════════ -->
 <section id="hero">
-
+    <div id="hero-particles"></div>
     <div class="hero-inner">
     <!-- Left -->
-    <div>
+    <div class="hero-stagger">
       <div class="city-badge su">
         <span class="city-dot"></span>
         <span class="label" id="hero-city">🇲🇦 Tétouan · M'diq · Martil</span>
@@ -4836,35 +4997,43 @@ Invite-les naturellement à te décrire l'ambiance qu'ils souhaitent ce soir —
 
   showTyping();
 
-  try {
-    const res  = await fetch(GROQ_API_URL, {
-      method:  "POST",
-      headers: { "Content-Type": "application/json" },
-      body:    JSON.stringify({
-        messages: [{ role: "user", content: seedText }],
-        lang,
-        persona: p,
-      }),
-    });
-    const data = await res.json();
-    let greeting = (data.reply || "").trim();
+  const _fetchWithTimeout = async (url, opts, ms=20000) => {
+    const ctrl = new AbortController();
+    const tid  = setTimeout(()=>ctrl.abort(), ms);
+    try { return await fetch(url, {...opts, signal: ctrl.signal}); }
+    finally { clearTimeout(tid); }
+  };
 
-    // Strip the lead trigger if Groq somehow fires it on the opening
-    greeting = greeting.replace("SAVY_GET_LEAD", "").trim();
+  let greeting = "";
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      if (attempt === 1) {
+        // Brief pause before retry so it doesn't feel instant
+        await new Promise(r => setTimeout(r, 1200));
+      }
+      const res  = await _fetchWithTimeout(GROQ_API_URL, {
+        method:  "POST",
+        headers: { "Content-Type": "application/json" },
+        body:    JSON.stringify({
+          messages: [{ role: "user", content: seedText }],
+          lang,
+          persona: p,
+        }),
+      });
+      const data = await res.json();
+      greeting = (data.reply || "").trim().replace("SAVY_GET_LEAD", "").trim();
+      if (greeting) break;        // success — exit retry loop
+    } catch (e) {
+      if (attempt === 0) continue; // first fail → retry silently
+    }
+  }
 
-    if (!greeting) throw new Error("empty");
-
-    hideTyping();
+  hideTyping();
+  if (greeting) {
     addBotMsg(greeting, p === "couple");
-    // Seed goes into history as assistant turn so future context is clean
     chatHistory.push({ role: "assistant", content: greeting });
-
-  } catch (e) {
-    // True network / server error — show a minimal static opener
-    hideTyping();
-    const fallback = (false)
-      ? "سلام ! 👋 أنا Chef SAVY — كيفاش نقدر نعاونك دابا ؟"
-      : isAr
+  } else {
+    const fallback = isAr
       ? "سلام ! 👋 أنا Chef SAVY — كيف نقدر نساعدك اليوم ؟"
       : "Bonjour ! 👋 Je suis Chef SAVY — comment puis-je vous aider aujourd'hui ?";
     addBotMsg(fallback, p === "couple");
@@ -4892,13 +5061,9 @@ function addBotMsg(text, isGlow=false) {
     <circle cx="46" cy="37" r="3.2" fill="#089929"/>
   </svg>`;
 
-  // Bubble — safe text insertion with <br> for newlines only
+  // Bubble
   const bubble = document.createElement("div");
-  bubble.className = "msg-bubble";
-  text.split("\n").forEach((line, i, arr) => {
-    bubble.appendChild(document.createTextNode(line));
-    if (i < arr.length - 1) bubble.appendChild(document.createElement("br"));
-  });
+  bubble.className = "msg-bubble typing-cursor";
 
   // Timestamp
   const timeDiv = document.createElement("div");
@@ -4908,6 +5073,7 @@ function addBotMsg(text, isGlow=false) {
   // Reactions
   const reactRow = document.createElement("div");
   reactRow.className = "msg-reactions";
+  reactRow.style.visibility = "hidden";
   ["👍","❤️","🔥"].forEach(emoji => {
     const btn = document.createElement("button");
     btn.className = "msg-react-btn";
@@ -4925,6 +5091,47 @@ function addBotMsg(text, isGlow=false) {
   div.appendChild(rightCol);
   msgs.appendChild(div);
   msgs.scrollTop = msgs.scrollHeight;
+
+  // Typewriter — char by char, skip on long messages
+  const lines  = text.split("\n");
+  const SPEED  = 18;  // ms per char
+  const MAX_TW = 160; // skip typewriter for very long replies
+  if (text.length > MAX_TW) {
+    // Instant render for long text
+    lines.forEach((line, i, arr) => {
+      bubble.appendChild(document.createTextNode(line));
+      if (i < arr.length - 1) bubble.appendChild(document.createElement("br"));
+    });
+    bubble.classList.remove("typing-cursor");
+    reactRow.style.visibility = "visible";
+    return;
+  }
+
+  // Build flat list: chars + BR markers
+  const tokens = [];
+  lines.forEach((line, i) => {
+    for (const ch of line) tokens.push({ type:"char", val:ch });
+    if (i < lines.length - 1) tokens.push({ type:"br" });
+  });
+
+  let idx = 0;
+  function typeNext() {
+    if (idx >= tokens.length) {
+      bubble.classList.remove("typing-cursor");
+      reactRow.style.visibility = "visible";
+      msgs.scrollTop = msgs.scrollHeight;
+      return;
+    }
+    const tok = tokens[idx++];
+    if (tok.type === "br") {
+      bubble.appendChild(document.createElement("br"));
+    } else {
+      bubble.appendChild(document.createTextNode(tok.val));
+    }
+    msgs.scrollTop = msgs.scrollHeight;
+    setTimeout(typeNext, SPEED);
+  }
+  setTimeout(typeNext, 60); // small initial delay feels natural
 }
 
 function addUserMsg(text) {
@@ -5034,30 +5241,41 @@ async function chatSendText(text) {
   const p       = persona || "employee";
   const isCouple = p === "couple";
 
-  try {
-    const res  = await fetch(GROQ_API_URL, {
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({ messages: chatHistory, lang, persona:p, scheduledTime: scheduledTime||null })
-    });
-    const data = await res.json();
-    let reply  = (data.reply||"").trim();
+  const _ft = async (url, opts, ms=20000) => {
+    const ctrl = new AbortController();
+    const tid  = setTimeout(()=>ctrl.abort(), ms);
+    try { return await fetch(url, {...opts, signal: ctrl.signal}); }
+    finally { clearTimeout(tid); }
+  };
 
-    if(!reply) throw new Error("empty");
+  let reply = "";
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      if (attempt === 1) await new Promise(r => setTimeout(r, 1200));
+      const res  = await _ft(GROQ_API_URL, {
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({ messages: chatHistory, lang, persona:p, scheduledTime: scheduledTime||null })
+      });
+      const data = await res.json();
+      reply = (data.reply||"").trim();
+      if (reply) break;
+    } catch(e) {
+      if (attempt === 0) continue;
+    }
+  }
 
-    // Show lead form ONLY when AI explicitly signals with SAVY_GET_LEAD
+  hideTyping();
+
+  if (reply) {
     const triggerLead = reply.includes("SAVY_GET_LEAD");
     reply = reply.replace("SAVY_GET_LEAD","").trim();
-
-    hideTyping();
     chatHistory.push({ role:"assistant", content:reply });
     addBotMsg(reply, isCouple);
-
     if(triggerLead && !leadShown) {
       setTimeout(() => showLeadForm(p), 800);
     }
-  } catch(e) {
-    hideTyping();
+  } else {
     const fallback = getFallbackReply(p, isAr, text);
     chatHistory.push({ role:"assistant", content: fallback.text });
     addBotMsg(fallback.text, isCouple);
@@ -6841,6 +7059,111 @@ window.addEventListener("appinstalled", () => {
   if(_installBar) _installBar.classList.remove("show");
   _deferredPrompt = null;
 });
+
+/* ═══════════════════════════════════════════
+   PREMIUM UX UPGRADES
+═══════════════════════════════════════════ */
+
+// ── 1. Hero ambient particles ────────────────────────────────
+(function initHeroParticles() {
+  const container = document.getElementById("hero-particles");
+  if (!container) return;
+  const COUNT = 14;
+  for (let i = 0; i < COUNT; i++) {
+    const p = document.createElement("div");
+    p.className = "hero-particle";
+    const size = 8 + Math.random() * 20;
+    p.style.cssText = `
+      width:${size}px; height:${size}px;
+      left:${Math.random() * 100}%;
+      animation-duration:${6 + Math.random() * 10}s;
+      animation-delay:${Math.random() * 8}s;
+      opacity:${0.06 + Math.random() * 0.1};
+    `;
+    container.appendChild(p);
+  }
+})();
+
+// ── 2. Send button "ready" pulse when input has text ─────────
+(function initSendPulse() {
+  const inp = document.getElementById("chat-inp");
+  const btn = document.getElementById("chat-send-btn");
+  if (!inp || !btn) return;
+  inp.addEventListener("input", () => {
+    btn.classList.toggle("ready", inp.value.trim().length > 0);
+  });
+})();
+
+// ── 3. Dish card spotlight — mark best-seller ─────────────────
+// Runs after renderDishes — patches the highest-rated dish
+function applySpotlight() {
+  const cards = document.querySelectorAll(".dish-card");
+  if (!cards.length) return;
+  // Remove existing spotlights
+  cards.forEach(c => c.classList.remove("spotlight"));
+  // Mark first visible card that matches id 3 (Blanc Poulet Pasta — highest protein)
+  // Falls back to first card if not visible
+  let target = null;
+  cards.forEach(c => {
+    const onclick = c.getAttribute("onclick") || "";
+    if (onclick.includes("openDishModal(11)") || onclick.includes("openDishModal(3)")) {
+      target = c;
+    }
+  });
+  if (!target) target = cards[0];
+  if (target) target.classList.add("spotlight");
+}
+
+// Hook into renderDishes
+const _origRenderDishes = window.renderDishes;
+if (typeof _origRenderDishes === "function") {
+  window.renderDishes = function() {
+    _origRenderDishes.apply(this, arguments);
+    setTimeout(applySpotlight, 50);
+  };
+}
+
+// ── 4. Smooth section entrance on scroll ─────────────────────
+(function initScrollReveal() {
+  if (!("IntersectionObserver" in window)) return;
+  const targets = document.querySelectorAll(
+    "#nutri-calc, #menu, #reviews, #loyalty, #what-we-do, #how, #faq, #final"
+  );
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.animation = "heroEntrance .6s cubic-bezier(.22,1,.36,1) both";
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.07 });
+  targets.forEach(t => {
+    t.style.opacity = "0";
+    obs.observe(t);
+  });
+})();
+
+// ── 5. Mobile haptic feedback on key taps ────────────────────
+(function initHaptics() {
+  if (!navigator.vibrate) return;
+  document.querySelectorAll(".persona-card, .add-btn, .btn-cta, .lead-submit").forEach(el => {
+    el.addEventListener("touchstart", () => navigator.vibrate(8), { passive:true });
+  });
+  // Re-bind on dish render
+  document.getElementById("dishes-list")?.addEventListener("click", () => {
+    navigator.vibrate(6);
+  }, { passive:true });
+})();
+
+// ── 6. Chat input font-size fix (iOS zoom prevention) ────────
+(function fixIOSZoom() {
+  const inp = document.getElementById("chat-inp");
+  if (inp) inp.style.fontSize = "16px";
+  document.querySelectorAll(".lead-inp, .nutri-input, .search-inp").forEach(el => {
+    el.style.fontSize = "16px";
+  });
+})();
+
 </script>
 
 </body>
