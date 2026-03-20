@@ -275,6 +275,8 @@ function callGroq(apiKey, payload) {
         "Authorization":  `Bearer ${apiKey}`,
         "Content-Length": Buffer.byteLength(body),
       },
+      // Hard timeout: abort before Netlify's 10s limit
+      timeout: 8000,
     };
     const req = https.request(options, (res) => {
       let data = "";
@@ -288,6 +290,9 @@ function callGroq(apiKey, payload) {
           resolve({ ok: false, status: res.statusCode, raw: data });
         }
       });
+    });
+    req.on("timeout", () => {
+      req.destroy(new Error("Groq request timed out after 8s"));
     });
     req.on("error", (err) => reject(err));
     req.write(body);
@@ -345,7 +350,7 @@ exports.handler = async (event) => {
         ...normalized,
       ],
       temperature: 0.8,
-      max_tokens:  350,
+      max_tokens:  250,
     });
   } catch (err) {
     console.error("Groq request error:", err.message);
