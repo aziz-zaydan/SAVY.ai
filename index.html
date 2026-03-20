@@ -3512,11 +3512,24 @@
 
   <!-- Lead form -->
   <div id="chat-lead-form">
-    <!-- ── Step progress dots ── -->
-    <div class="lead-step-dots" id="lead-step-dots">
-      <div class="lead-step-dot done"></div>
-      <div class="lead-step-dot done"></div>
-      <div class="lead-step-dot active"></div>
+    <!-- ── Back button ── -->
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+      <button id="lead-back-btn" onclick="backToChat()" style="
+        display:flex;align-items:center;gap:6px;
+        background:none;border:1.5px solid var(--border);
+        border-radius:10px;padding:6px 12px;cursor:pointer;
+        font-size:12px;font-weight:700;color:var(--sub);
+        font-family:'DM Sans',sans-serif;transition:all .2s;
+      " onmouseover="this.style.borderColor='var(--green)';this.style.color='var(--green)'"
+         onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--sub)'">
+        ← <span id="back-btn-txt">Changer ma commande</span>
+      </button>
+      <!-- Step progress dots -->
+      <div class="lead-step-dots" id="lead-step-dots" style="margin-bottom:0;">
+        <div class="lead-step-dot done"></div>
+        <div class="lead-step-dot done"></div>
+        <div class="lead-step-dot active"></div>
+      </div>
     </div>
     <!-- ── Meal summary ── -->
     <div id="lead-meal-summary" style="
@@ -4727,6 +4740,9 @@ function openChat() {
   chatOpen = true;
   const cw = document.getElementById("chat-window");
   if(cw) cw.classList.add("open");
+  // Always ensure input area is visible when opening
+  const ia = document.getElementById("chat-input-area");
+  if(ia) ia.style.display = "flex";
   if(chatHistory.length === 0) initChat();
 }
 function closeChat() {
@@ -4995,6 +5011,19 @@ async function chatSend() {
 
 async function chatSendText(text) {
   if(leadDone) return;
+
+  // If form is visible and user is typing → treat as "change order" — hide form
+  if(leadShown) {
+    const form = document.getElementById("chat-lead-form");
+    if(form && form.style.display !== "none") {
+      form.style.display = "none";
+      leadShown = false;
+      // Clear meal summary so it rebuilds fresh next time
+      const summaryEl = document.getElementById("lead-meal-summary");
+      if(summaryEl) summaryEl.style.display = "none";
+    }
+  }
+
   addUserMsg(text);
   userMsgCount++;
   chatHistory.push({ role:"user", content:text });
@@ -5160,26 +5189,32 @@ function showLeadForm(p) {
   const isAr    = lang==="ar"||false;
   const isCouple = p==="couple";
 
-  // Build meal summary from chat history and cart
   buildLeadMealSummary(isAr);
 
   const prompt = isAr
     ? "ممتاز ! 🧬 لإتمام طلبكم، يرجى ملء المعلومات التالية :"
     : (lang==="en"
-      ? "Perfect! 🧬 To confirm your order, please fill in your details below:"
+      ? "Perfect! 🧬 To confirm your order, fill in your details below:"
       : "Parfait ! 🧬 Pour finaliser votre commande, complétez vos infos ci-dessous :");
   addBotMsg(prompt, isCouple);
 
   setTimeout(() => {
-    const hideIA=document.getElementById("chat-input-area"); if(hideIA) hideIA.style.display="none";
+    // Keep input area visible — user can still type to change order
     const form = document.getElementById("chat-lead-form");
     form.style.display = "block";
     form.dir = isAr ? "rtl" : "ltr";
+
+    // Localise back button
+    const backTxt = document.getElementById("back-btn-txt");
+    if(backTxt) backTxt.textContent = isAr
+      ? "تغيير طلبي"
+      : (lang==="en" ? "Change my order" : "Changer ma commande");
+
     if(isCouple) {
       document.getElementById("lead-submit-btn").className = "lead-submit lead-submit-pink";
       document.getElementById("lead-submit-btn").textContent = isAr ? "🌸 أرسل طلبي ✨" : "🌸 Envoyer ma commande ✨";
     }
-    form.scrollIntoView({behavior:"smooth",block:"center"});
+    form.scrollIntoView({behavior:"smooth", block:"nearest"});
   }, 600);
 }
 
@@ -6301,6 +6336,42 @@ function updateCartSchedDisplay() {
 }
 
 // Reset Chat
+function backToChat() {
+  const isAr     = lang === "ar" || false;
+  const isCouple = persona === "couple";
+
+  // Hide form, reset state so form can show again after next confirm
+  const form = document.getElementById("chat-lead-form");
+  const ia   = document.getElementById("chat-input-area");
+  if(form) form.style.display = "none";
+  if(ia)   ia.style.display   = "flex";
+
+  // Reset so AI can trigger form again after new confirmation
+  leadShown = false;
+  leadDone  = false;
+
+  // Clear meal summary
+  const summaryEl = document.getElementById("lead-meal-summary");
+  if(summaryEl) summaryEl.style.display = "none";
+
+  // Bot acknowledges the change and prompts
+  const changeMsg = isAr
+    ? "لا مشكلة! 😊 أخبرني ماذا تريد أن تغير — أي طبق آخر يناسبك؟"
+    : (lang === "en"
+      ? "No problem! 😊 Tell me what you'd like to change — which dish would you prefer instead?"
+      : "Pas de problème ! 😊 Dis-moi ce que tu veux changer — quel autre plat te ferait envie ?");
+
+  addBotMsg(changeMsg, isCouple);
+  chatHistory.push({ role: "assistant", content: changeMsg });
+
+  // Focus input
+  setTimeout(() => {
+    const inp = document.getElementById("chat-inp");
+    if(inp) inp.focus();
+    scrollChatToBottom();
+  }, 300);
+}
+
 function resetChat() {
   chatHistory = [];
   leadShown = false; leadDone = false; userMsgCount = 0;
@@ -6308,8 +6379,10 @@ function resetChat() {
   if(msgs) msgs.innerHTML = "";
   const lf = document.getElementById("chat-lead-form");
   const ia = document.getElementById("chat-input-area");
-  if(lf) lf.style.display = "none";
-  if(ia) ia.style.display = "block";
+  if(lf) { lf.style.display = "none"; }
+  if(ia) { ia.style.display = "flex"; }
+  const summaryEl = document.getElementById("lead-meal-summary");
+  if(summaryEl) summaryEl.style.display = "none";
   const qc = document.getElementById("quick-chips");
   if(qc) qc.innerHTML = "";
   initChat();
@@ -6772,4 +6845,3 @@ window.addEventListener("appinstalled", () => {
 
 </body>
 </html>
-  
