@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SAVY 🧬 — Chef IA du Maroc</title>
+  <meta name="description" content="Premier Chef IA du Maroc. Repas sains, livrés en 45 min à Tétouan · M'diq · Martil."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@700;800;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green:  #089929;
+      --greenL: #2BCE4E;
+      --bg:     #EEF7F3;
+      --card:   #fff;
+      --text:   #0D1F18;
+      --sub:    #4A7A66;
+      --muted:  #8FBFAA;
+      --border: #D4EDE3;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: linear-gradient(160deg, #C8EED8 0%, #EEF7F3 40%, #E8F5FF 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 16px 60px;
+    }
+
+    /* ── Avatar + Brand ── */
+    .profile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .avatar-ring {
+      width: 92px; height: 92px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #089929, #2BCE4E, #25D366);
+      padding: 3px;
+      box-shadow: 0 8px 32px rgba(9,184,48,0.35);
+      animation: ringPulse 3s ease-in-out infinite;
+    }
+    @keyframes ringPulse {
+      0%,100% { box-shadow: 0 8px 32px rgba(9,184,48,0.35); }
+      50%      { box-shadow: 0 8px 48px rgba(9,184,48,0.6); }
+    }
+    .avatar-inner {
+      width: 100%; height: 100%;
+      border-radius: 50%;
+      background: #089929;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 42px;
+    }
+
+    .brand-name {
+      font-family: 'Outfit', sans-serif;
+      font-size: 26px; font-weight: 900;
+      color: var(--text); letter-spacing: -.02em;
+    }
+    .brand-name span { color: var(--green); }
+
+    .brand-tag {
+      font-size: 13px; color: var(--sub);
+      text-align: center; line-height: 1.5; max-width: 260px;
+    }
+
+    /* Stats row */
+    .stats-row {
+      display: flex; gap: 24px;
+      margin-bottom: 28px;
+    }
+    .stat { text-align: center; }
+    .stat-val {
+      font-family: 'Outfit', sans-serif;
+      font-size: 18px; font-weight: 900; color: var(--text);
+    }
+    .stat-lbl { font-size: 11px; color: var(--muted); }
+
+    /* ── Link buttons ── */
+    .links { width: 100%; max-width: 400px; display: flex; flex-direction: column; gap: 12px; }
+
+    .link-btn {
+      display: flex; align-items: center; gap: 14px;
+      padding: 16px 20px; border-radius: 18px;
+      text-decoration: none; border: none; cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s;
+      position: relative; overflow: hidden;
+    }
+    .link-btn:hover { transform: translateY(-3px) scale(1.01); }
+    .link-btn:active { transform: scale(.98); }
+
+    .link-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; flex-shrink: 0;
+      background: rgba(255,255,255,0.25);
+    }
+    .link-content { flex: 1; }
+    .link-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 15px; font-weight: 800;
+      color: inherit; display: block;
+    }
+    .link-sub { font-size: 12px; opacity: .8; display: block; margin-top: 1px; }
+    .link-arrow { font-size: 18px; opacity: .7; }
+
+    /* Button variants */
+    .btn-primary {
+      background: linear-gradient(135deg, #089929, #2BCE4E);
+      color: #fff;
+      box-shadow: 0 8px 24px rgba(9,184,48,0.4);
+      animation: ctaGlow 2.5s ease-in-out infinite;
+    }
+    @keyframes ctaGlow {
+      0%,100% { box-shadow: 0 8px 24px rgba(9,184,48,.4); }
+      50%      { box-shadow: 0 8px 36px rgba(9,184,48,.65), 0 0 0 6px rgba(9,184,48,.1); }
+    }
+
+    .btn-whatsapp {
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      color: #fff;
+      box-shadow: 0 6px 20px rgba(37,211,102,0.35);
+    }
+    .btn-whatsapp:hover { box-shadow: 0 10px 28px rgba(37,211,102,0.55); }
+
+    .btn-menu {
+      background: var(--card);
+      color: var(--text);
+      border: 1.5px solid var(--border);
+      box-shadow: 0 4px 16px rgba(9,184,48,0.08);
+    }
+    .btn-menu:hover { border-color: var(--green); box-shadow: 0 8px 24px rgba(9,184,48,0.15); }
+
+    .btn-tiktok {
+      background: linear-gradient(135deg, #010101, #2d2d2d);
+      color: #fff;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+
+    .btn-instagram {
+      background: linear-gradient(135deg, #833AB4, #E1306C, #F77737);
+      color: #fff;
+      box-shadow: 0 6px 20px rgba(225,48,108,0.35);
+    }
+
+    /* Badge on primary button */
+    .badge-new {
+      position: absolute; top: 10px; right: 12px;
+      background: #FF3B30; color: #fff;
+      font-size: 9px; font-weight: 900; font-family: 'Outfit',sans-serif;
+      padding: 2px 7px; border-radius: 99px;
+      letter-spacing: .05em; text-transform: uppercase;
+      animation: badgePop .5s cubic-bezier(.34,1.56,.64,1) both;
+    }
+    @keyframes badgePop {
+      from { transform: scale(0); }
+      to   { transform: scale(1); }
+    }
+
+    /* ── Delivery zone pill ── */
+    .zone-pill {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--card); border: 1.5px solid var(--border);
+      border-radius: 99px; padding: 8px 16px;
+      font-size: 12px; font-weight: 700; color: var(--sub);
+      margin-bottom: 20px;
+      box-shadow: 0 2px 10px rgba(9,184,48,0.08);
+    }
+    .zone-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--green);
+      animation: zonePulse 2s ease-in-out infinite;
+    }
+    @keyframes zonePulse {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50%      { opacity: .5; transform: scale(1.3); }
+    }
+
+    /* ── Footer ── */
+    .footer {
+      margin-top: 36px;
+      font-size: 11px; color: var(--muted);
+      text-align: center; line-height: 1.8;
+    }
+    .footer strong { color: var(--sub); }
+  </style>
+</head>
+<body>
+
+  <!-- Profile -->
+  <div class="profile">
+    <div class="avatar-ring">
+      <div class="avatar-inner">🧬</div>
+    </div>
+    <div class="brand-name">S<span>A</span>VY</div>
+    <div class="brand-tag">
+      Premier Chef IA du Maroc 🇲🇦<br>
+      Repas sains · Livrés en 45 min
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-row">
+    <div class="stat">
+      <div class="stat-val">125+</div>
+      <div class="stat-lbl">Clients</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">4.9★</div>
+      <div class="stat-lbl">Note</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">45min</div>
+      <div class="stat-lbl">Livraison</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">18</div>
+      <div class="stat-lbl">Plats</div>
+    </div>
+  </div>
+
+  <!-- Zone pill -->
+  <div class="zone-pill">
+    <div class="zone-dot"></div>
+    🇲🇦 Tétouan · M'diq · Martil
+  </div>
+
+  <!-- Links -->
+  <div class="links">
+
+    <!-- Primary CTA -->
+    <a class="link-btn btn-primary" href="https://savy.netlify.app/?utm_source=instagram&utm_medium=linkinbio&utm_campaign=launch">
+      <div class="link-icon">🧬</div>
+      <div class="link-content">
+        <span class="link-title">Commander avec Chef IA</span>
+        <span class="link-sub">Parle au chef — reçois en 45 min</span>
+      </div>
+      <span class="link-arrow">›</span>
+      <div class="badge-new">NOUVEAU</div>
+    </a>
+
+    <!-- WhatsApp direct -->
+    <a class="link-btn btn-whatsapp" href="https://wa.me/212708700830?text=Salam%20SAVY%21%20J%27ai%20vu%20votre%20Instagram%20%F0%9F%8D%BD%EF%B8%8F&utm_source=instagram&utm_medium=linkinbio&utm_campaign=wa_direct" target="_blank">
+      <div class="link-icon">💬</div>
+      <div class="link-content">
+        <span class="link-title">Commander sur WhatsApp</span>
+        <span class="link-sub">Réponse en moins de 2 min</span>
+      </div>
+      <span class="link-arrow">›</span>
+    </a>
+
+    <!-- Menu -->
+    <a class="link-btn btn-menu" href="https://savy.netlify.app/?utm_source=instagram&utm_medium=linkinbio&utm_campaign=menu#menu">
+      <div class="link-icon">🍽️</div>
+      <div class="link-content">
+        <span class="link-title">Voir le Menu</span>
+        <span class="link-sub">18 plats · Dès 39 MAD</span>
+      </div>
+      <span class="link-arrow">›</span>
+    </a>
+
+    <!-- Calculateur nutritionnel -->
+    <a class="link-btn btn-menu" href="https://savy.netlify.app/?utm_source=instagram&utm_medium=linkinbio&utm_campaign=nutri#nutri-calc">
+      <div class="link-icon">🧮</div>
+      <div class="link-content">
+        <span class="link-title">Calculateur Nutritionnel</span>
+        <span class="link-sub">Tes besoins caloriques en 30 sec</span>
+      </div>
+      <span class="link-arrow">›</span>
+    </a>
+
+    <!-- TikTok -->
+    <a class="link-btn btn-tiktok" href="https://tiktok.com/@savymaroc" target="_blank">
+      <div class="link-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="white">
+          <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/>
+        </svg>
+      </div>
+      <div class="link-content">
+        <span class="link-title">TikTok @savymaroc</span>
+        <span class="link-sub">Behind the kitchen 🎬</span>
+      </div>
+      <span class="link-arrow">›</span>
+    </a>
+
+    <!-- Instagram -->
+    <a class="link-btn btn-instagram" href="https://instagram.com/savymaroc" target="_blank">
+      <div class="link-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="white">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+        </svg>
+      </div>
+      <div class="link-content">
+        <span class="link-title">Instagram @savymaroc</span>
+        <span class="link-sub">Recettes · Nutrition · Lifestyle</span>
+      </div>
+      <span class="link-arrow">›</span>
+    </a>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <strong>SAVY</strong> — Morocco's First AI Personal Chef<br>
+    🛵 Tétouan · M'diq · Martil · Dès 39 MAD
+  </div>
+
+</body>
+</html>
