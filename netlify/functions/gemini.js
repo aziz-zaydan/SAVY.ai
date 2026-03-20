@@ -1,8 +1,8 @@
 const https = require("https");
 
 // ─── Config ────────────────────────────────────────────────────────────────
-const MAX_TURNS       = 20;
-const MAX_CONTENT_LEN = 2000;
+const MAX_TURNS       = 10;
+const MAX_CONTENT_LEN = 400;
 
 // Allowed origins — update with your Netlify domain after deploy
 const ALLOWED_ORIGINS = [
@@ -276,7 +276,7 @@ function callGroq(apiKey, payload) {
         "Content-Length": Buffer.byteLength(body),
       },
       // Hard timeout: abort before Netlify's 10s limit
-      timeout: 8000,
+      timeout: 9000,
     };
     const req = https.request(options, (res) => {
       let data = "";
@@ -342,6 +342,7 @@ exports.handler = async (event) => {
     .filter(m => m.content && (m.role === "user" || m.role === "assistant"));
 
   let result;
+  const t0 = Date.now();
   try {
     result = await callGroq(apiKey, {
       model:       "llama-3.1-8b-instant",
@@ -352,8 +353,9 @@ exports.handler = async (event) => {
       temperature: 0.8,
       max_tokens:  250,
     });
+    console.log(`Groq OK in ${Date.now()-t0}ms`);
   } catch (err) {
-    console.error("Groq request error:", err.message);
+    console.error(`Groq FAIL in ${Date.now()-t0}ms:`, err.message);
     return { statusCode: 502, headers, body: JSON.stringify({ error: "Service temporarily unavailable. Please try again." }) };
   }
 
