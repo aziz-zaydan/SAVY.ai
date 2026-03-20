@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>SAVY — Launch HQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green:#089929;--greenL:#2BCE4E;--greenXL:#E6F5EF;
+  --bg:#0A1A0E;--card:#0F2214;--border:#1A3D24;
+  --text:#E8F5F0;--sub:#7BBFA6;--muted:#3D7A62;
+  --orange:#F4A330;--red:#EF4444;--yellow:#FBBF24;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:0 0 60px}
+
+/* NAV */
+nav{
+  background:var(--card);border-bottom:1px solid var(--border);
+  padding:14px 24px;display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100;
+}
+.nav-brand{font-family:'Outfit',sans-serif;font-size:20px;font-weight:900;color:var(--text)}
+.nav-brand span{color:var(--green)}
+.nav-tabs{display:flex;gap:4px}
+.tab-btn{
+  padding:8px 16px;border-radius:10px;border:none;cursor:pointer;
+  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;
+  background:transparent;color:var(--sub);transition:all .2s;
+}
+.tab-btn.active{background:var(--green);color:#fff}
+.tab-btn:hover:not(.active){background:var(--border);color:var(--text)}
+
+/* MAIN */
+main{max-width:960px;margin:0 auto;padding:28px 20px}
+.tab-content{display:none}
+.tab-content.active{display:block}
+
+/* CARDS */
+.card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:18px;padding:22px;margin-bottom:16px;
+}
+.card-title{
+  font-family:'Outfit',sans-serif;font-size:16px;font-weight:800;
+  color:var(--text);margin-bottom:14px;display:flex;align-items:center;gap:8px;
+}
+.eyebrow{
+  font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--green);margin-bottom:8px;
+}
+
+/* CHECKLIST */
+.checklist{display:flex;flex-direction:column;gap:10px}
+.check-item{
+  display:flex;align-items:flex-start;gap:12px;padding:14px 16px;
+  border-radius:14px;border:1.5px solid var(--border);
+  background:var(--bg);cursor:pointer;transition:all .2s;
+}
+.check-item:hover{border-color:var(--green)}
+.check-item.done{border-color:var(--green);background:rgba(9,184,48,.06)}
+.check-item.done .check-box{background:var(--green);border-color:var(--green)}
+.check-item.done .check-box::after{content:'✓';color:#fff;font-size:12px;font-weight:900}
+.check-box{
+  width:22px;height:22px;border-radius:6px;border:2px solid var(--border);
+  flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;
+  transition:all .2s;
+}
+.check-text{flex:1}
+.check-label{font-size:14px;font-weight:600;color:var(--text)}
+.check-item.done .check-label{text-decoration:line-through;color:var(--muted)}
+.check-desc{font-size:12px;color:var(--sub);margin-top:3px;line-height:1.5}
+.check-badge{
+  font-size:10px;font-weight:700;padding:2px 8px;border-radius:99px;
+  flex-shrink:0;align-self:flex-start;margin-top:2px;
+}
+.badge-critical{background:rgba(239,68,68,.15);color:#EF4444}
+.badge-important{background:rgba(251,191,36,.12);color:#FBBF24}
+.badge-nice{background:rgba(9,184,48,.12);color:var(--green)}
+
+/* PROGRESS BAR */
+.progress-wrap{margin-bottom:20px}
+.progress-label{display:flex;justify-content:space-between;font-size:12px;color:var(--sub);margin-bottom:8px}
+.progress-bar{height:8px;background:var(--border);border-radius:99px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--green),var(--greenL));border-radius:99px;transition:width .5s ease}
+
+/* CALENDAR */
+.cal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.cal-week{background:var(--bg);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.cal-week-header{
+  background:linear-gradient(135deg,var(--green),var(--greenL));
+  padding:10px 16px;
+  font-family:'Outfit',sans-serif;font-size:13px;font-weight:800;color:#fff;
+}
+.cal-day{padding:12px 16px;border-bottom:1px solid var(--border)}
+.cal-day:last-child{border-bottom:none}
+.cal-day-name{font-size:11px;font-weight:700;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em}
+.cal-post{
+  display:flex;align-items:flex-start;gap:8px;
+  font-size:12px;color:var(--sub);line-height:1.5;
+  padding:6px 8px;border-radius:8px;background:var(--card);margin-bottom:5px;
+}
+.cal-post:last-child{margin-bottom:0}
+.cal-platform{font-size:14px;flex-shrink:0}
+.cal-post-txt{color:var(--text);font-size:12px}
+.cal-post-note{font-size:11px;color:var(--muted);margin-top:2px}
+
+/* BROADCAST */
+.form-group{margin-bottom:16px}
+.form-label{font-size:13px;font-weight:600;color:var(--sub);margin-bottom:6px;display:block}
+.form-input, .form-textarea{
+  width:100%;padding:12px 14px;border-radius:12px;
+  border:1.5px solid var(--border);background:var(--bg);
+  color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;
+  outline:none;transition:border-color .2s;
+}
+.form-input:focus,.form-textarea:focus{border-color:var(--green)}
+.form-textarea{resize:vertical;min-height:120px;line-height:1.6}
+.form-hint{font-size:11px;color:var(--muted);margin-top:5px}
+.btn-send{
+  width:100%;padding:14px;border-radius:14px;border:none;
+  background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;
+  font-family:'Outfit',sans-serif;font-size:15px;font-weight:800;
+  cursor:pointer;transition:all .2s;margin-top:8px;
+  box-shadow:0 6px 20px rgba(37,211,102,0.35);
+  display:flex;align-items:center;justify-content:center;gap:10px;
+}
+.btn-send:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(37,211,102,.5)}
+.btn-send:disabled{opacity:.5;cursor:not-allowed;transform:none}
+
+/* TEMPLATES */
+.template-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+@media(max-width:560px){.template-grid{grid-template-columns:1fr}}
+.template-btn{
+  padding:12px 14px;border-radius:12px;border:1.5px solid var(--border);
+  background:var(--bg);cursor:pointer;text-align:left;
+  font-family:'DM Sans',sans-serif;color:var(--text);transition:all .2s;
+}
+.template-btn:hover{border-color:var(--green);background:rgba(9,184,48,.05)}
+.template-btn-name{font-size:13px;font-weight:700;margin-bottom:3px}
+.template-btn-preview{font-size:11px;color:var(--muted);line-height:1.4}
+
+/* RESULTS */
+#broadcast-results{margin-top:16px;display:none}
+.result-summary{
+  display:flex;gap:12px;margin-bottom:14px;flex-wrap:wrap;
+}
+.result-stat{
+  flex:1;min-width:100px;padding:12px 16px;border-radius:12px;
+  text-align:center;
+}
+.result-stat.success{background:rgba(9,184,48,.12);border:1px solid rgba(9,184,48,.2)}
+.result-stat.fail{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2)}
+.result-stat.total{background:var(--bg);border:1px solid var(--border)}
+.result-stat-val{font-family:'Outfit',sans-serif;font-size:24px;font-weight:900}
+.success .result-stat-val{color:var(--green)}
+.fail .result-stat-val{color:#EF4444}
+.result-stat-lbl{font-size:11px;color:var(--muted)}
+.result-list{max-height:200px;overflow-y:auto;display:flex;flex-direction:column;gap:6px}
+.result-item{
+  display:flex;align-items:center;gap:8px;padding:8px 12px;
+  border-radius:8px;font-size:12px;
+}
+.result-item.sent{background:rgba(9,184,48,.08);color:var(--green)}
+.result-item.failed{background:rgba(239,68,68,.08);color:#EF4444}
+
+/* UTM BUILDER */
+.utm-output{
+  padding:14px;border-radius:12px;background:var(--bg);
+  border:1.5px solid var(--border);font-family:monospace;
+  font-size:12px;color:var(--greenL);word-break:break-all;
+  margin-top:12px;line-height:1.7;
+}
+.copy-btn{
+  padding:8px 16px;border-radius:8px;border:1px solid var(--border);
+  background:var(--card);color:var(--sub);font-size:12px;
+  cursor:pointer;transition:all .2s;margin-top:8px;
+}
+.copy-btn:hover{border-color:var(--green);color:var(--green)}
+.copy-btn.copied{background:var(--green);color:#fff;border-color:var(--green)}
+
+/* Misc */
+.info-box{
+  padding:12px 16px;border-radius:12px;background:rgba(9,184,48,.08);
+  border:1px solid rgba(9,184,48,.2);font-size:12px;color:var(--sub);
+  line-height:1.6;margin-bottom:16px;
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">S<span>A</span>VY <span style="font-size:13px;color:var(--sub);font-weight:600;">Launch HQ</span></div>
+  <div class="nav-tabs">
+    <button class="tab-btn active" onclick="showTab('checklist')">✅ Checklist</button>
+    <button class="tab-btn" onclick="showTab('calendar')">📅 Calendar</button>
+    <button class="tab-btn" onclick="showTab('broadcast')">📣 Broadcast</button>
+    <button class="tab-btn" onclick="showTab('utm')">🔗 UTM Links</button>
+  </div>
+</nav>
+
+<main>
+
+<!-- ══ CHECKLIST ══════════════════════════════════════════════ -->
+<div class="tab-content active" id="tab-checklist">
+
+  <div class="eyebrow">Pre-Launch Checklist</div>
+  <h2 style="font-family:'Outfit',sans-serif;font-size:24px;font-weight:900;margin-bottom:20px">
+    Launch Readiness
+  </h2>
+
+  <div class="progress-wrap">
+    <div class="progress-label">
+      <span id="progress-label-txt">0 / 18 completed</span>
+      <span id="progress-pct">0%</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+  </div>
+
+  <!-- TECHNICAL -->
+  <div class="card">
+    <div class="card-title">🔧 Technical</div>
+    <div class="checklist">
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-text">
+          <div class="check-label">Netlify deployment working</div>
+          <div class="check-desc">Site live at your Netlify URL — all pages load without errors</div>
+        </div>
+        <div class="check-badge badge-critical">Critical</div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-text">
+          <div class="check-label">Custom domain connected (savy.ma or similar)</div>
+          <div class="check-desc">DNS pointing to Netlify, SSL cert active</div>
+        </div>
+        <div class="check-badge badge-important">Important</div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-text">
+          <div class="check-label">All env variables set in Netlify</div>
+          <div class="check-desc">GROQ_API_KEY, WHATSAPP_TOKEN, WHATSAPP_PHONE_ID, GOOGLE_SHEET_URL, UPSTASH_*</div>
+        </div>
+        <div class="check-badge badge-critical">Critical</div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-text">
+          <div class="check-label">WhatsApp real number connected to Meta</div>
+          <div class="check-desc">Not test number — your real Moroccan business number (+212...)</div>
+        </div>
+        <div class="check-badge badge-critical">Critical</div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-text">
+          <div class="check-label">Upstash Redis connected (bot memory)</div>
+          <div class="check-desc">Test: send a message, wait 10 min, reply — bot should still remember</div>
+        </div>
+        <div class="check-badge badge-important">Important</div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-text">
+          <div class="check-label">Google Sheets receiving orders</div>
+          <div class="check-desc">Place a test order — verify row appears in sheet within 30 seconds</div>
+        </div>
+        <div class="check-badge badge-critical">Critical</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="card">
+    <div class="card-title">📸 Content & Design</div>
+    <div class="checklist">
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-text">
+          <div class="check-label">Real food photos for all 18 dishes</div>
+          <div class="check-desc">Professional or high-quality phone photos — biggest conversion lever</div>
+        </div>
+        <div class="check-badge badge-critical">Critical</div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-text">
+          <div class="check-label">Instagram account created @savymaroc</div>
+          <div class="check-desc">Business account, bio filled, profile photo set</div>
+        </div>
+        <div class="check-badge badge-important">Important</div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-text">
+          <div class="check-label">Link-in-bio page deployed</div>
+          <div class="check-desc">linkinbio.html live — Instagram bio links to it</div>
+        </div>
+        <div class="check-badge badge-important">Important</div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-text">
+          <div class="check-label">TikTok account created @savymaroc</div>
+          <div class="check-desc">Business account, bio linked to SAVY page</div>
+        </div>
+        <div class="check-badge badge-nice">Nice to have</div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-text">
+          <div class="check-label">Google My Business listing created</div>
+          <div class="check-desc">Free — shows in "livraison Tétouan" Google searches. Add photos + menu</div>
+        </div>
+        <div class="check-badge badge-important">Important</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OPERATIONS -->
+  <div class="card">
+    <div class="card-title">🛵 Operations</div>
+    <div class="checklist">
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-text">
+          <div class="check-label">Full order flow tested end-to-end</div>
+          <div class="check-desc">Select dish → order modal → WhatsApp → confirm → sheets row appears → you receive notification</div>
+        </div>
+        <div class="check-badge badge-critical">Critical</div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-text">
+          <div class="check-label">WhatsApp bot tested with real conversation</div>
+          <div class="check-desc">Test Darija, French, Arabic — all should respond correctly</div>
+        </div>
+        <div class="check-badge badge-critical">Critical</div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-text">
+          <div class="check-label">Delivery zones confirmed with team</div>
+          <div class="check-desc">Tétouan, M'diq, Martil — know which neighborhoods are in/out of range</div>
+        </div>
+        <div class="check-badge badge-important">Important</div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-text">
+          <div class="check-label">Payment flow clear (cash / card)</div>
+          <div class="check-desc">Driver knows how to handle both — no friction on delivery</div>
+        </div>
+        <div class="check-badge badge-important">Important</div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-text">
+          <div class="check-label">Launch broadcast list ready (50+ numbers)</div>
+          <div class="check-desc">Collect WhatsApp numbers from friends, family, colleagues before launch day</div>
+        </div>
+        <div class="check-badge badge-important">Important</div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-text">
+          <div class="check-label">Dashboard monitored on launch day</div>
+          <div class="check-desc">Keep dashboard.html open — watch orders come in real time</div>
+        </div>
+        <div class="check-badge badge-nice">Nice to have</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CALENDAR ════════════════════════════════════════════════ -->
+<div class="tab-content" id="tab-calendar">
+
+  <div class="eyebrow">Content Strategy</div>
+  <h2 style="font-family:'Outfit',sans-serif;font-size:24px;font-weight:900;margin-bottom:8px">4-Week Launch Calendar</h2>
+  <p style="color:var(--sub);font-size:14px;margin-bottom:24px">Post daily the first 2 weeks. Quality over quantity after that.</p>
+
+  <div class="info-box">
+    📌 Best posting times Morocco: <strong>12h–13h</strong> (lunch break) and <strong>19h–21h</strong> (dinner planning).<br>
+    Wednesday and Friday get highest engagement for food content.
+  </div>
+
+  <div class="cal-grid">
+
+    <!-- WEEK 1 -->
+    <div class="cal-week">
+      <div class="cal-week-header">Week 1 — Launch Week 🚀</div>
+      <div class="cal-day">
+        <div class="cal-day-name">Monday — Launch Day</div>
+        <div class="cal-post"><div class="cal-platform">📸</div><div><div class="cal-post-txt"><strong>Instagram:</strong> "SAVY est là 🧬" — Hero shot of your best dish with logo overlay</div><div class="cal-post-note">Caption: "Premier Chef IA du Maroc arrive à Tétouan 🇲🇦 Link in bio"</div></div></div>
+        <div class="cal-post"><div class="cal-platform">💬</div><div><div class="cal-post-txt"><strong>Broadcast:</strong> Send launch message to all collected numbers</div><div class="cal-post-note">Use template: "Launch Day" in Broadcast tab</div></div></div>
+      </div>
+      <div class="cal-day">
+        <div class="cal-day-name">Tuesday</div>
+        <div class="cal-post"><div class="cal-platform">🎬</div><div><div class="cal-post-txt"><strong>TikTok/Reels:</strong> "What I eat to stay focused at work" — show Salad César + Blanc Poulet</div><div class="cal-post-note">Target: employees, 12h post time</div></div></div>
+      </div>
+      <div class="cal-day">
+        <div class="cal-day-name">Wednesday</div>
+        <div class="cal-post"><div class="cal-platform">📸</div><div><div class="cal-post-txt"><strong>Instagram:</strong> Nutrition breakdown post — "Blanc Poulet Pasta: 38g protéines 💪"</div><div class="cal-post-note">Target: sportifs. Tag calories clearly</div></div></div>
+      </div>
+      <div class="cal-day">
+        <div class="cal-day-name">Thursday</div>
+        <div class="cal-post"><div class="cal-platform">🎬</div><div><div class="cal-post-txt"><strong>TikTok:</strong> "I let an AI plan my lunch for a week" — show the chat conversation with SAVY</div><div class="cal-post-note">Film your phone screen + reactions</div></div></div>
+      </div>
+      <div class="cal-day">
+        <div class="cal-day-name">Friday</div>
+        <div class="cal-post"><div class="cal-platform">📸</div><div><div class="cal-post-txt"><strong>Instagram:</strong> "Dîner en amoureux ce weekend? 💑" — Pasta Crevettes + Tiramisu flat lay</div><div class="cal-post-note">Target: couples. Post 18h</div></div></div>
+        <div class="cal-post"><div class="cal-platform">💬</div><div><div class="cal-post-txt"><strong>Broadcast:</strong> Weekend promo blast</div><div class="cal-post-note">Use template: "Weekend Promo"</div></div></div>
+      </div>
+    </div>
+
+    <!-- WEEK 2 -->
+    <div class="cal-week">
+      <div class="cal-week-header">Week 2 — Social Proof 🌟</div>
+      <div class="cal-day">
+        <div class="cal-day-name">Monday</div>
+        <div class="cal-post"><div class="cal-platform">📸</div><div><div class="cal-post-txt"><strong>Instagram:</strong> First customer review screenshot (ask 5 customers this week for review)</div><div class="cal-post-note">Always get permission before posting</div></div></div>
+      </div>
+      <div class="cal-day">
+        <div class="cal-day-name">Wednesday</div>
+        <div class="cal-post"><div class="cal-platform">🎬</div><div><div class="cal-post-txt"><strong>TikTok/Reels:</strong> "Rating every dish on our menu" — try each one on camera</div><div class="cal-post-note">High engagement format</div></div></div>
+      </div>
+      <div class="cal-day">
+        <div class="cal-day-name">Thursday</div>
+        <div class="cal-post"><div class="cal-platform">📸</div><div><div class="cal-post-txt"><strong>Instagram:</strong> Behind the scenes — show food prep, packaging, delivery</div><div class="cal-post-note">Authenticity builds trust</div></div></div>
+      </div>
+      <div class="cal-day">
+        <div class="cal-day-name">Friday</div>
+        <div class="cal-post"><div class="cal-platform">💬</div><div><div class="cal-post-txt"><strong>Broadcast:</strong> "2 semaines et 50 commandes plus tard... 🎉"</div><div class="cal-post-note">Social proof blast with real numbers</div></div></div>
+      </div>
+    </div>
+
+    <!-- WEEK 3 -->
+    <div class="cal-week">
+      <div class="cal-week-header">Week 3 — Education 🧠</div>
+      <div class="cal-day">
+        <div class="cal-day-name">Monday</div>
+        <div class="cal-post"><div class="cal-platform">📸</div><div><div class="cal-post-txt"><strong>Carousel:</strong> "Comment perdre du poids sans avoir faim" — feature SAVY's low-cal dishes</div></div></div>
+      </div>
+      <div class="cal-day">
+        <div class="cal-day-name">Wednesday</div>
+        <div class="cal-post"><div class="cal-platform">🎬</div><div><div class="cal-post-txt"><strong>TikTok:</strong> "The AI that plans my meals" — demo the chat bot live</div></div></div>
+      </div>
+      <div class="cal-day">
+        <div class="cal-day-name">Friday</div>
+        <div class="cal-post"><div class="cal-platform">📸</div><div><div class="cal-post-txt"><strong>Instagram:</strong> Loyalty program explainer — "Bronze → Platine 💎"</div></div></div>
+        <div class="cal-post"><div class="cal-platform">💬</div><div><div class="cal-post-txt"><strong>Broadcast:</strong> Weekly promo</div></div></div>
+      </div>
+    </div>
+
+    <!-- WEEK 4 -->
+    <div class="cal-week">
+      <div class="cal-week-header">Week 4 — Scaling 📈</div>
+      <div class="cal-day">
+        <div class="cal-day-name">Monday</div>
+        <div class="cal-post"><div class="cal-platform">📸</div><div><div class="cal-post-txt"><strong>Instagram:</strong> "1 mois de SAVY — les chiffres 📊" — post your real stats</div></div></div>
+      </div>
+      <div class="cal-day">
+        <div class="cal-day-name">Wednesday</div>
+        <div class="cal-post"><div class="cal-platform">🎬</div><div><div class="cal-post-txt"><strong>TikTok:</strong> Customer testimonial video — film a real customer reaction</div></div></div>
+      </div>
+      <div class="cal-day">
+        <div class="cal-day-name">Friday</div>
+        <div class="cal-post"><div class="cal-platform">💬</div><div><div class="cal-post-txt"><strong>Broadcast:</strong> Month 2 teaser — new dishes? New city? Build anticipation</div></div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ BROADCAST ═══════════════════════════════════════════════ -->
+<div class="tab-content" id="tab-broadcast">
+
+  <div class="eyebrow">WhatsApp Broadcast</div>
+  <h2 style="font-family:'Outfit',sans-serif;font-size:24px;font-weight:900;margin-bottom:8px">Send Mass Messages</h2>
+  <p style="color:var(--sub);font-size:14px;margin-bottom:20px">Send a WhatsApp message to all your customers at once.</p>
+
+  <div class="info-box">
+    ⚙️ This uses your Netlify function at <code style="color:var(--greenL)">/.netlify/functions/broadcast</code><br>
+    Make sure <strong>BROADCAST_SECRET</strong> is set in Netlify env vars before using.
+  </div>
+
+  <div class="card">
+    <div class="card-title">📋 Message Templates</div>
+    <div class="template-grid">
+      <button class="template-btn" onclick="loadTemplate('launch')">
+        <div class="template-btn-name">🚀 Launch Day</div>
+        <div class="template-btn-preview">Announce SAVY is live — first order promo</div>
+      </button>
+      <button class="template-btn" onclick="loadTemplate('weekend')">
+        <div class="template-btn-name">🌙 Weekend Promo</div>
+        <div class="template-btn-preview">Friday blast for dinner orders</div>
+      </button>
+      <button class="template-btn" onclick="loadTemplate('loyalty')">
+        <div class="template-btn-name">💎 Loyalty Reminder</div>
+        <div class="template-btn-preview">Remind customers of their tier and discount</div>
+      </button>
+      <button class="template-btn" onclick="loadTemplate('newdish')">
+        <div class="template-btn-name">✨ New Dish Alert</div>
+        <div class="template-btn-preview">Announce a new item on the menu</div>
+      </button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="form-group">
+      <label class="form-label">Netlify Site URL</label>
+      <input class="form-input" id="site-url" placeholder="https://savy.netlify.app" value="https://savy.netlify.app"/>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Broadcast Secret</label>
+      <input class="form-input" id="broadcast-secret" type="password" placeholder="Your BROADCAST_SECRET env var value"/>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Message</label>
+      <textarea class="form-textarea" id="broadcast-msg" placeholder="Write your message here..."></textarea>
+      <div class="form-hint" id="char-count">0 characters</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">WhatsApp Numbers (one per line)</label>
+      <textarea class="form-textarea" id="broadcast-numbers" placeholder="212612345678&#10;212698765432&#10;0612345678" style="min-height:120px;font-family:monospace;font-size:13px;"></textarea>
+      <div class="form-hint" id="number-count">0 numbers</div>
+    </div>
+    <button class="btn-send" id="send-btn" onclick="sendBroadcast()">
+      <span>📣</span> Send Broadcast
+    </button>
+  </div>
+
+  <div id="broadcast-results">
+    <div class="result-summary">
+      <div class="result-stat total">
+        <div class="result-stat-val" id="res-total">0</div>
+        <div class="result-stat-lbl">Total sent</div>
+      </div>
+      <div class="result-stat success">
+        <div class="result-stat-val" id="res-sent">0</div>
+        <div class="result-stat-lbl">Delivered ✓</div>
+      </div>
+      <div class="result-stat fail">
+        <div class="result-stat-val" id="res-failed">0</div>
+        <div class="result-stat-lbl">Failed ✗</div>
+      </div>
+    </div>
+    <div class="result-list" id="result-list"></div>
+  </div>
+</div>
+
+<!-- ══ UTM BUILDER ════════════════════════════════════════════ -->
+<div class="tab-content" id="tab-utm">
+
+  <div class="eyebrow">Attribution Tracking</div>
+  <h2 style="font-family:'Outfit',sans-serif;font-size:24px;font-weight:900;margin-bottom:8px">UTM Link Builder</h2>
+  <p style="color:var(--sub);font-size:14px;margin-bottom:24px">Build tracking links so you know exactly where your orders come from.</p>
+
+  <div class="card">
+    <div class="form-group">
+      <label class="form-label">Base URL</label>
+      <input class="form-input" id="utm-base" value="https://savy.netlify.app/" oninput="buildUTM()"/>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Source</label>
+      <input class="form-input" id="utm-source" placeholder="instagram / tiktok / whatsapp / google" oninput="buildUTM()"/>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Medium</label>
+      <input class="form-input" id="utm-medium" placeholder="linkinbio / story / bio / broadcast / organic" oninput="buildUTM()"/>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Campaign</label>
+      <input class="form-input" id="utm-campaign" placeholder="launch / menu / nutri / weekend-promo" oninput="buildUTM()"/>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Content (optional)</label>
+      <input class="form-input" id="utm-content" placeholder="chef-cta / order-btn / story-swipe" oninput="buildUTM()"/>
+    </div>
+    <div class="utm-output" id="utm-output">Fill the fields above to generate your tracking link</div>
+    <button class="copy-btn" id="copy-utm-btn" onclick="copyUTM()">📋 Copy Link</button>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⚡ Quick Links</div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div id="quick-links"></div>
+    </div>
+  </div>
+
+</div>
+</main>
+
+<script>
+// ── Tab switching ──────────────────────────────────────────────
+function showTab(id) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ── Checklist ─────────────────────────────────────────────────
+const TOTAL_CHECKS = 18;
+function toggleCheck(el) {
+  el.classList.toggle('done');
+  saveChecks();
+  updateProgress();
+}
+function updateProgress() {
+  const done = document.querySelectorAll('.check-item.done').length;
+  const pct  = Math.round((done / TOTAL_CHECKS) * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-label-txt').textContent = `${done} / ${TOTAL_CHECKS} completed`;
+  document.getElementById('progress-pct').textContent = pct + '%';
+}
+function saveChecks() {
+  const items = document.querySelectorAll('.check-item');
+  const state = Array.from(items).map(el => el.classList.contains('done'));
+  localStorage.setItem('savy_checklist', JSON.stringify(state));
+}
+function loadChecks() {
+  try {
+    const state = JSON.parse(localStorage.getItem('savy_checklist') || '[]');
+    const items = document.querySelectorAll('.check-item');
+    state.forEach((done, i) => { if(done && items[i]) items[i].classList.add('done'); });
+    updateProgress();
+  } catch {}
+}
+loadChecks();
+
+// ── Broadcast Templates ───────────────────────────────────────
+const templates = {
+  launch: `Salam ! 👋
+
+*SAVY est maintenant LIVE à Tétouan, M'diq & Martil !* 🎉🧬
+
+Ton premier Chef IA au Maroc est prêt à te préparer des repas sains livrés en 45 min ⚡
+
+🍽️ 18 plats à partir de *39 MAD*
+💪 Calculés pour tes objectifs nutritionnels
+🛵 Livraison garantie 45 min
+
+*Commander maintenant 👇*
+https://savy.netlify.app/?utm_source=whatsapp&utm_medium=broadcast&utm_campaign=launch`,
+
+  weekend: `Salam ! 🌙
+
+C'est vendredi — tu mérites un bon repas ce weekend 😄
+
+*SAVY te propose ce soir :*
+• 🍝 Pasta aux Crevettes — 62 MAD
+• 🍖 Blanc Poulet Légumes — 58 MAD
+• 🍰 Tiramisu Healthy — 30 MAD
+
+Livraison en 45 min jusqu'à 21h ⚡
+
+Commander → https://savy.netlify.app/?utm_source=whatsapp&utm_medium=broadcast&utm_campaign=weekend`,
+
+  loyalty: `Salam ! 💎
+
+Tu fais partie de nos meilleurs clients — voici ton statut fidélité SAVY :
+
+🏅 Bronze → 1-5 commandes : +10 pts
+🥈 Silver → 6-15 commandes : +15 pts, -5%
+🥇 Gold   → 16-30 commandes : +20 pts, -10%
+💎 Platine → 31+ commandes : +25 pts, -15%
+
+Vérifie ton niveau ici → https://savy.netlify.app/?utm_source=whatsapp&utm_medium=broadcast&utm_campaign=loyalty#loyalty
+
+Merci pour ta fidélité ! 💚`,
+
+  newdish: `Salam ! ✨
+
+*Nouveau plat chez SAVY !* 🎉
+
+[NOM DU PLAT] — [PRIX] MAD
+[CALORIES]kcal | [PROTEINES]g protéines
+
+Parfait pour [PERSONA/OCCASION]
+
+Disponible maintenant → https://savy.netlify.app/?utm_source=whatsapp&utm_medium=broadcast&utm_campaign=newdish#menu`
+};
+
+function loadTemplate(name) {
+  document.getElementById('broadcast-msg').value = templates[name];
+  updateCharCount();
+}
+
+// ── Character counter ──────────────────────────────────────────
+document.getElementById('broadcast-msg').addEventListener('input', updateCharCount);
+document.getElementById('broadcast-numbers').addEventListener('input', updateNumberCount);
+
+function updateCharCount() {
+  const len = document.getElementById('broadcast-msg').value.length;
+  document.getElementById('char-count').textContent = `${len} characters`;
+}
+function updateNumberCount() {
+  const raw  = document.getElementById('broadcast-numbers').value;
+  const nums = raw.split('\n').map(s => s.trim()).filter(s => s.length > 6);
+  document.getElementById('number-count').textContent = `${nums.length} numbers`;
+}
+
+// ── Broadcast sender ──────────────────────────────────────────
+async function sendBroadcast() {
+  const url     = (document.getElementById('site-url').value || '').trim().replace(/\/$/, '');
+  const secret  = document.getElementById('broadcast-secret').value.trim();
+  const message = document.getElementById('broadcast-msg').value.trim();
+  const rawNums = document.getElementById('broadcast-numbers').value;
+  const numbers = rawNums.split('\n').map(s => s.trim()).filter(s => s.length > 6);
+
+  if (!url)     return alert('Enter your Netlify site URL');
+  if (!secret)  return alert('Enter your BROADCAST_SECRET');
+  if (!message) return alert('Write a message first');
+  if (!numbers.length) return alert('Add at least one number');
+
+  const btn = document.getElementById('send-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span>⏳</span> Sending ' + numbers.length + ' messages...';
+
+  try {
+    const res = await fetch(`${url}/.netlify/functions/broadcast`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ secret, message, numbers })
+    });
+    const data = await res.json();
+
+    // Show results
+    document.getElementById('broadcast-results').style.display = 'block';
+    document.getElementById('res-total').textContent  = data.summary?.total  || 0;
+    document.getElementById('res-sent').textContent   = data.summary?.sent   || 0;
+    document.getElementById('res-failed').textContent = data.summary?.failed || 0;
+
+    const list = document.getElementById('result-list');
+    list.innerHTML = (data.results || []).map(r =>
+      `<div class="result-item ${r.status}">
+        ${r.status === 'sent' ? '✓' : '✗'} ${r.to}
+        ${r.error ? `<span style="opacity:.7"> — ${r.error}</span>` : ''}
+      </div>`
+    ).join('');
+
+  } catch (err) {
+    alert('Error: ' + err.message + '\nMake sure your site URL is correct and broadcast.js is deployed.');
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = '<span>📣</span> Send Broadcast';
+}
+
+// ── UTM Builder ───────────────────────────────────────────────
+function buildUTM() {
+  const base     = document.getElementById('utm-base').value.trim();
+  const source   = document.getElementById('utm-source').value.trim();
+  const medium   = document.getElementById('utm-medium').value.trim();
+  const campaign = document.getElementById('utm-campaign').value.trim();
+  const content  = document.getElementById('utm-content').value.trim();
+
+  if (!base) { document.getElementById('utm-output').textContent = 'Enter a base URL'; return; }
+
+  try {
+    const url = new URL(base);
+    if (source)   url.searchParams.set('utm_source', source);
+    if (medium)   url.searchParams.set('utm_medium', medium);
+    if (campaign) url.searchParams.set('utm_campaign', campaign);
+    if (content)  url.searchParams.set('utm_content', content);
+    document.getElementById('utm-output').textContent = url.toString();
+  } catch {
+    document.getElementById('utm-output').textContent = 'Invalid URL';
+  }
+}
+
+function copyUTM() {
+  const txt = document.getElementById('utm-output').textContent;
+  navigator.clipboard.writeText(txt).then(() => {
+    const btn = document.getElementById('copy-utm-btn');
+    btn.textContent = '✓ Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = '📋 Copy Link'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+// Quick links generator
+const BASE = 'https://savy.netlify.app/';
+const quickLinks = [
+  { label: '📸 Instagram bio',     src: 'instagram', med: 'linkinbio',  camp: 'launch' },
+  { label: '📖 Instagram story',   src: 'instagram', med: 'story',      camp: 'swipe-up' },
+  { label: '🎬 TikTok bio',        src: 'tiktok',    med: 'bio',        camp: 'launch' },
+  { label: '💬 WhatsApp broadcast',src: 'whatsapp',  med: 'broadcast',  camp: 'launch' },
+  { label: '🔍 Google My Business',src: 'google',    med: 'gmb',        camp: 'organic' },
+  { label: '👥 Word of mouth',     src: 'referral',  med: 'wom',        camp: 'friend' },
+];
+const ql = document.getElementById('quick-links');
+ql.innerHTML = quickLinks.map(l => {
+  const url = new URL(BASE);
+  url.searchParams.set('utm_source',   l.src);
+  url.searchParams.set('utm_medium',   l.med);
+  url.searchParams.set('utm_campaign', l.camp);
+  return `<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)">
+    <span style="font-size:14px;font-weight:600;color:var(--text);flex:1">${l.label}</span>
+    <span style="font-family:monospace;font-size:11px;color:var(--greenL);max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${url}</span>
+    <button class="copy-btn" style="flex-shrink:0" onclick="navigator.clipboard.writeText('${url}');this.textContent='✓';this.style.color='var(--green)';setTimeout(()=>{this.textContent='Copy';this.style.color=''},1500)">Copy</button>
+  </div>`;
+}).join('');
+</script>
+</body>
+</html>
