@@ -6935,6 +6935,7 @@ function _renderLeadMealCards(isAr, cl) {
   orderDishes.forEach((d, idx) => {
     const card = document.createElement("div");
     card.className = "lead-meal-card";
+    card.dataset.id = d.id;   // ← needed by submitLead to read meals from DOM
     card.style.cssText = "opacity:0;transform:translateY(6px);transition:opacity .2s,transform .2s;";
     requestAnimationFrame(() => { card.style.opacity = "1"; card.style.transform = "translateY(0)"; });
 
@@ -7743,12 +7744,36 @@ function submitLead() {
   localStorage.setItem("savy_customer_phone", phone);
 
   // Build structured meal data from _savyOrderDishes
-  const orderedDishes = window._savyOrderDishes || [];
-  const mealNames     = orderedDishes.map(d => d.name).join(", ") || "—";
-  const mealTotal     = orderedDishes.reduce((s, d) => s + (d.price || 0), 0);
-  const delivery      = orderedDishes.length >= 2 ? 0 : 10;
-  const orderTotal    = mealTotal + delivery;
-  const orderId       = "SAVY-" + Math.floor(1000 + Math.random() * 9000);
+  // ── Resolve ordered dishes — DOM cards are the source of truth ──────────
+  // Read from the rendered meal cards first (always accurate — matches exactly what customer sees)
+  let orderedDishes = [];
+  const mealCardEls = document.querySelectorAll("#lead-meal-items .lead-meal-card[data-id]");
+  if (mealCardEls.length > 0) {
+    mealCardEls.forEach(card => {
+      const id = parseInt(card.dataset.id);
+      const d  = (dishes || []).find(x => x.id === id);
+      if (d) orderedDishes.push(d);
+    });
+  }
+  // Fallback 1: _savyOrderDishes in memory
+  if (orderedDishes.length === 0 && window._savyOrderDishes && window._savyOrderDishes.length > 0) {
+    orderedDishes = window._savyOrderDishes;
+  }
+  // Fallback 2: scan full chat history for dish names
+  if (orderedDishes.length === 0) {
+    const allBotText = (chatHistory||[]).filter(m=>m.role==="assistant").map(m=>m.content||"").join(" ");
+    orderedDishes = _extractAllConfirmedDishes(allBotText);
+  }
+  // Fallback 3: cart
+  if (orderedDishes.length === 0 && cart && cart.length > 0) {
+    orderedDishes = cart.map(id=>(dishes||[]).find(x=>x.id===id)).filter(Boolean);
+  }
+
+  const mealNames  = orderedDishes.map(d => d.name).join(", ") || "—";
+  const mealTotal  = orderedDishes.reduce((s, d) => s + (d.price || 0), 0);
+  const delivery   = orderedDishes.length >= 2 ? 0 : 10;
+  const orderTotal = mealTotal + delivery;
+  const orderId    = "SAVY-" + Math.floor(1000 + Math.random() * 9000);
 
   saveToSheets({
     order_id:    orderId,
