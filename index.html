@@ -2259,8 +2259,8 @@
 
     /* 2-column square grid */
     .chat-menu-grid {
-      display:grid; grid-template-columns:1fr 1fr;
-      gap:8px; margin-top:10px; width:100%;
+      display:grid; grid-template-columns:1fr 1fr 1fr;
+      gap:6px; margin-top:10px; width:100%;
     }
     .chat-menu-card {
       display:flex; flex-direction:column;
@@ -2307,20 +2307,20 @@
 
     /* Card bottom info */
     .chat-menu-body {
-      padding:7px 8px 8px; flex:1;
-      display:flex; flex-direction:column; gap:2px;
+      padding:5px 6px 7px; flex:1;
+      display:flex; flex-direction:column; gap:1px;
     }
     .chat-menu-name {
-      font-family:'Outfit',sans-serif; font-weight:800; font-size:11px;
-      color:var(--text); line-height:1.25;
+      font-family:'Outfit',sans-serif; font-weight:800; font-size:9.5px;
+      color:var(--text); line-height:1.2;
       display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;
       overflow:hidden;
     }
     .chat-menu-price {
-      font-size:11.5px; font-weight:900; color:var(--green); margin-top:2px;
+      font-size:10px; font-weight:900; color:var(--green); margin-top:2px;
     }
     .chat-menu-cal {
-      font-size:9.5px; color:var(--muted); margin-top:1px;
+      font-size:8.5px; color:var(--muted); margin-top:1px;
     }
 
     /* Mini cart below grid */
@@ -6094,6 +6094,22 @@ async function chatSend() {
 }
 
 async function chatSendText(text) {
+  // ── Menu keyword shortcut — skip API, show grid immediately ──────────────
+  const _menuKw = /\b(menu|carte|voir le menu|show.*menu|see.*menu|show me|voir|قائمة|menú|lista)\b/i;
+  const _lower  = text.toLowerCase();
+  if (_menuKw.test(_lower) || _lower === "📋 voir le menu" || _lower === "📋 see the menu" || _lower === "📋 ver el menú" || _lower === "📋 عرض القائمة") {
+    addUserMsg(text);
+    chatHistory.push({ role:"user", content: text });
+    const cl2 = window._savyChatLang || lang || "fr";
+    const p2  = persona || "employee";
+    const menuAck = {fr:"Voilà notre menu ! 😊",en:"Here's our menu! 😊",ar:"إليكم قائمتنا! 😊",es:"¡Aquí nuestro menú! 😊"};
+    const ack = menuAck[cl2] || menuAck.fr;
+    addBotMsg(ack, p2 === "couple");
+    chatHistory.push({ role:"assistant", content: ack });
+    setTimeout(() => _showChatMenu(), 400);
+    return;
+  }
+
   // If form is visible and user types → change of mind → dismiss form, unlock chat
   if (leadShown) {
     const form      = document.getElementById("chat-lead-form");
@@ -6202,192 +6218,150 @@ function _showChatMenu() {
   const isCouple = p === "couple";
 
   const menuTitle = {
-    fr:"🍽️ Notre menu — choisissez vos plats :", en:"🍽️ Our menu — pick your dishes:",
-    ar:"🍽️ قائمتنا — اختر أطباقك:", es:"🍽️ Nuestro menú — elige tus platos:",
+    fr:"🍽️ Notre menu — touchez un plat pour les infos, + pour l'ajouter :",
+    en:"🍽️ Our menu — tap a dish for details, + to add it:",
+    ar:"🍽️ قائمتنا — اضغط للتفاصيل، + للإضافة:", es:"🍽️ Nuestro menú — toca para ver, + para agregar:",
   };
 
-  // ── Build bubble ──────────────────────────────────────
-  const row    = document.createElement("div");
-  row.className = "msg-bot";
-  const avatar  = document.createElement("div");
-  avatar.className = "msg-avatar";
-  avatar.textContent = "👨‍🍳";
-  const bubble  = document.createElement("div");
-  bubble.className = "msg-bubble";
-  bubble.style.cssText = "max-width:98%;width:100%;";
+  const row = document.createElement("div"); row.className = "msg-bot";
+  const avatar = document.createElement("div"); avatar.className = "msg-avatar"; avatar.textContent = "👨‍🍳";
+  const bubble = document.createElement("div"); bubble.className = "msg-bubble";
+  bubble.style.cssText = "max-width:99%;width:100%;";
 
   const titleEl = document.createElement("div");
-  titleEl.style.cssText = "font-family:'Outfit',sans-serif;font-weight:900;font-size:13px;margin-bottom:6px;color:var(--text);";
+  titleEl.style.cssText = "font-family:'Outfit',sans-serif;font-weight:900;font-size:12px;margin-bottom:6px;color:var(--text);line-height:1.4;";
   titleEl.textContent = menuTitle[cl] || menuTitle.fr;
   bubble.appendChild(titleEl);
 
-  // ── Cart state ─────────────────────────────────────────
   const cartIds = new Set();
 
-  // ── 2-col square grid ─────────────────────────────────
-  const grid = document.createElement("div");
-  grid.className = "chat-menu-grid";
+  // ── 3-column square grid ──────────────────────────────
+  const grid = document.createElement("div"); grid.className = "chat-menu-grid";
 
-  // ── Mini cart ──────────────────────────────────────────
-  const cartBox = document.createElement("div");
-  cartBox.className = "chat-menu-cart";
-  cartBox.style.display = "none";
+  // ── Mini cart ─────────────────────────────────────────
+  const cartBox = document.createElement("div"); cartBox.className = "chat-menu-cart"; cartBox.style.display = "none";
+  const cartTitle = document.createElement("div"); cartTitle.className = "chat-menu-cart-title";
+  cartTitle.textContent = {fr:"🧬 Votre sélection",en:"🧬 Your selection",ar:"🧬 اختياركم",es:"🧬 Tu selección"}[cl]||"🧬 Selection";
+  const cartItemsEl = document.createElement("div"); cartItemsEl.className = "chat-menu-cart-items";
+  const cartTotalEl = document.createElement("div"); cartTotalEl.className = "chat-menu-cart-total";
+  const confirmBtn  = document.createElement("button"); confirmBtn.className = "chat-menu-confirm-btn";
+  confirmBtn.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> <span>${{fr:"Confirmer ma commande",en:"Confirm order",ar:"تأكيد الطلب",es:"Confirmar pedido"}[cl]||"Confirm"}</span>`;
+  cartBox.appendChild(cartTitle); cartBox.appendChild(cartItemsEl); cartBox.appendChild(cartTotalEl); cartBox.appendChild(confirmBtn);
 
-  const cartTitle = document.createElement("div");
-  cartTitle.className = "chat-menu-cart-title";
-  cartTitle.textContent = {fr:"🧬 Votre sélection",en:"🧬 Your selection",ar:"🧬 اختياركم",es:"🧬 Tu selección"}[cl] || "🧬 Your selection";
-
-  const cartItemsEl   = document.createElement("div"); cartItemsEl.className   = "chat-menu-cart-items";
-  const cartTotalEl   = document.createElement("div"); cartTotalEl.className   = "chat-menu-cart-total";
-  const confirmBtn    = document.createElement("button"); confirmBtn.className  = "chat-menu-confirm-btn";
-  confirmBtn.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> <span>${{fr:"Confirmer ma commande",en:"Confirm my order",ar:"تأكيد طلبي",es:"Confirmar mi pedido"}[cl]||"Confirm"}</span>`;
-
-  cartBox.appendChild(cartTitle);
-  cartBox.appendChild(cartItemsEl);
-  cartBox.appendChild(cartTotalEl);
-  cartBox.appendChild(confirmBtn);
-
-  // ── Update cart display ────────────────────────────────
   function _updateCart() {
-    const selected = [...cartIds].map(id => (dishes||[]).find(d=>d.id===id)).filter(Boolean);
-    if (selected.length === 0) { cartBox.style.display = "none"; return; }
+    const sel = [...cartIds].map(id => (dishes||[]).find(d=>d.id===id)).filter(Boolean);
+    if (!sel.length) { cartBox.style.display="none"; return; }
     cartBox.style.display = "block";
     cartItemsEl.innerHTML = "";
     let total = 0;
-    selected.forEach(d => {
-      total += d.price || 0;
-      const row2 = document.createElement("div"); row2.className = "chat-menu-cart-item";
-      row2.innerHTML = `<span class="chat-menu-cart-item-name">${d.name}</span><span class="chat-menu-cart-item-price">${d.price} MAD</span>`;
+    sel.forEach(d => {
+      total += d.price||0;
+      const ri = document.createElement("div"); ri.className = "chat-menu-cart-item";
+      ri.innerHTML = `<span class="chat-menu-cart-item-name">${d.name}</span><span class="chat-menu-cart-item-price">${d.price} MAD</span>`;
       const del = document.createElement("button"); del.className = "chat-menu-cart-item-del"; del.textContent = "×";
-      del.onclick = (e) => {
-        e.stopPropagation();
-        cartIds.delete(d.id);
+      del.onclick = e => {
+        e.stopPropagation(); cartIds.delete(d.id);
         const card2 = grid.querySelector(`[data-id="${d.id}"]`);
-        if (card2) card2.classList.remove("selected");
+        if (card2) { card2.classList.remove("selected"); _syncAddBtn(card2, false); }
         _updateCart();
       };
-      row2.appendChild(del);
-      cartItemsEl.appendChild(row2);
+      ri.appendChild(del); cartItemsEl.appendChild(ri);
     });
-    const isFree = selected.length >= 2;
-    const delivNote = isFree
+    const isFree = sel.length >= 2;
+    const dl = isFree
       ? `<span style="font-size:10px;color:var(--green);font-weight:700;">🛵 ${{fr:"Livraison offerte",en:"Free delivery",ar:"توصيل مجاني",es:"Envío gratis"}[cl]||"Free"}</span>`
       : `<span style="font-size:10px;color:var(--muted);">🛵 +10 MAD</span>`;
-    cartTotalEl.innerHTML = `${delivNote}<span>${{fr:"Total",en:"Total",ar:"المجموع",es:"Total"}[cl]||"Total"} : <span>${total + (isFree?0:10)} MAD</span></span>`;
+    cartTotalEl.innerHTML = `${dl}<span>${{fr:"Total",en:"Total",ar:"المجموع",es:"Total"}[cl]||"Total"} : <span>${total+(isFree?0:10)} MAD</span></span>`;
   }
 
-  // ── Build each square card ─────────────────────────────
+  function _syncAddBtn(card, added) {
+    const btn = card.querySelector(".cmc-add-btn");
+    if (!btn) return;
+    if (added) {
+      btn.style.background = "#ef4444";
+      btn.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>`;
+    } else {
+      btn.style.background = "var(--green)";
+      btn.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>`;
+    }
+  }
+
   (dishes||[]).forEach(d => {
     const card = document.createElement("div");
-    card.className = "chat-menu-card";
-    card.dataset.id = d.id;
+    card.className = "chat-menu-card"; card.dataset.id = d.id;
 
-    // Square image wrapper
-    const imgWrap = document.createElement("div");
-    imgWrap.className = "chat-menu-img-wrap";
-    imgWrap.style.position = "relative";
-
+    // Square image
+    const iw = document.createElement("div"); iw.className = "chat-menu-img-wrap"; iw.style.position="relative";
     if (d.img) {
-      const img = document.createElement("img");
-      img.className = "chat-menu-img";
-      img.src = d.img; img.alt = d.name;
-      const fallback = document.createElement("div");
-      fallback.className = "chat-menu-emoji-sq"; fallback.textContent = d.e || "🍽️"; fallback.style.display = "none";
-      img.onerror = () => { img.style.display="none"; fallback.style.display="flex"; };
-      imgWrap.appendChild(img); imgWrap.appendChild(fallback);
+      const img = document.createElement("img"); img.className="chat-menu-img"; img.src=d.img; img.alt=d.name;
+      const fb  = document.createElement("div"); fb.className="chat-menu-emoji-sq"; fb.textContent=d.e||"🍽️"; fb.style.display="none";
+      img.onerror = () => { img.style.display="none"; fb.style.display="flex"; };
+      iw.appendChild(img); iw.appendChild(fb);
     } else {
-      const em = document.createElement("div"); em.className = "chat-menu-emoji-sq"; em.textContent = d.e || "🍽️";
-      imgWrap.appendChild(em);
+      const em = document.createElement("div"); em.className="chat-menu-emoji-sq"; em.textContent=d.e||"🍽️"; iw.appendChild(em);
     }
 
-    // Checkmark overlay
-    const chk = document.createElement("div"); chk.className = "chat-menu-check"; chk.textContent = "✓";
-    imgWrap.appendChild(chk);
+    // Checkmark
+    const chk = document.createElement("div"); chk.className="chat-menu-check"; chk.textContent="✓"; iw.appendChild(chk);
 
-    card.appendChild(imgWrap);
-
-    // Bottom info
-    const body = document.createElement("div"); body.className = "chat-menu-body";
-    body.innerHTML = `<div class="chat-menu-name">${d.name}</div><div class="chat-menu-price">${d.price} MAD</div><div class="chat-menu-cal">${d.cal} kcal · ${d.tag||""}</div>`;
-    card.appendChild(body);
-
-    // Click: open the real dish modal (same as page menu)
-    // Long-press (>300ms) or second tap → add to selection
-    let _tapTimer = null;
-    let _tapStart = 0;
-
-    card.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const dur = Date.now() - _tapStart;
-      if (dur < 300) {
-        // Quick tap → open dish modal
-        openDishModal(d.id);
-      }
-    });
-    card.addEventListener("pointerdown", () => { _tapStart = Date.now(); });
-
-    // Toggle selection via a small +/✓ button at bottom-right
-    const addBtn = document.createElement("button");
-    addBtn.style.cssText = `position:absolute;bottom:7px;right:7px;
-      width:24px;height:24px;border-radius:50%;border:none;
-      background:var(--green);color:#fff;font-size:14px;font-weight:900;
+    // Small + button
+    const addBtn = document.createElement("button"); addBtn.className="cmc-add-btn";
+    addBtn.style.cssText=`position:absolute;bottom:4px;right:4px;width:20px;height:20px;border-radius:50%;
+      border:none;background:var(--green);color:#fff;font-size:11px;
       display:flex;align-items:center;justify-content:center;cursor:pointer;
-      box-shadow:0 2px 8px rgba(9,184,48,0.4);transition:transform .12s;
-      -webkit-tap-highlight-color:transparent;z-index:2;`;
-    addBtn.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>`;
-    addBtn.addEventListener("click", (e) => {
+      box-shadow:0 2px 6px rgba(9,184,48,0.4);transition:background .12s,transform .1s;
+      -webkit-tap-highlight-color:transparent;z-index:3;`;
+    addBtn.innerHTML=`<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>`;
+    addBtn.addEventListener("click", e => {
       e.stopPropagation();
       if (cartIds.has(d.id)) {
-        cartIds.delete(d.id);
-        card.classList.remove("selected");
-        addBtn.style.background = "var(--green)";
-        addBtn.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>`;
+        cartIds.delete(d.id); card.classList.remove("selected"); _syncAddBtn(card,false);
       } else {
-        cartIds.add(d.id);
-        card.classList.add("selected");
-        addBtn.style.background = "#ef4444";
-        addBtn.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>`;
+        cartIds.add(d.id); card.classList.add("selected"); _syncAddBtn(card,true);
       }
       _updateCart();
     });
-    imgWrap.appendChild(addBtn);
+    iw.appendChild(addBtn);
+    card.appendChild(iw);
+
+    // Body
+    const body = document.createElement("div"); body.className="chat-menu-body";
+    body.innerHTML=`<div class="chat-menu-name">${d.name}</div><div class="chat-menu-price">${d.price} MAD</div><div class="chat-menu-cal">${d.cal} kcal</div>`;
+    card.appendChild(body);
+
+    // ── Click card (NOT the + button) → open real dish modal ──
+    card.addEventListener("click", e => {
+      // Only open modal if click wasn't on the add button
+      if (e.target.closest(".cmc-add-btn")) return;
+      openDishModal(d.id);
+    });
 
     grid.appendChild(card);
   });
 
-  // ── Confirm handler ────────────────────────────────────
+  // ── Confirm ───────────────────────────────────────────
   confirmBtn.addEventListener("click", () => {
-    const selected = [...cartIds].map(id => (dishes||[]).find(d=>d.id===id)).filter(Boolean);
-    if (selected.length === 0) {
-      const em = document.createElement("div"); em.className = "chat-menu-empty";
-      em.textContent = {fr:"Choisissez au moins un plat 😊",en:"Pick at least one dish 😊",ar:"اختر طبقاً واحداً على الأقل 😊",es:"Elige al menos un plato 😊"}[cl]||"Pick at least one dish 😊";
-      cartBox.insertBefore(em, confirmBtn);
-      setTimeout(() => em.remove(), 2000);
-      return;
+    const sel = [...cartIds].map(id=>(dishes||[]).find(d=>d.id===id)).filter(Boolean);
+    if (!sel.length) {
+      const em=document.createElement("div"); em.className="chat-menu-empty";
+      em.textContent={fr:"Choisissez au moins un plat 😊",en:"Pick at least one dish 😊",ar:"اختر طبقاً واحداً على الأقل 😊",es:"Elige al menos un plato 😊"}[cl]||"Pick at least one dish";
+      cartBox.insertBefore(em,confirmBtn); setTimeout(()=>em.remove(),2000); return;
     }
-    window._savyOrderDishes   = selected;
-    window._savyConfirmedDish = selected[0];
-    const total = selected.reduce((s,d) => s+(d.price||0), 0);
-    const names = selected.map(d=>d.name).join(" + ");
-    const confirmMsg = {
-      fr:`Parfait ! 🧬 ${names} — ${total} MAD. Complétez vos infos pour confirmer 👇`,
-      en:`Perfect! 🧬 ${names} — ${total} MAD. Fill in your details to confirm 👇`,
-      ar:`ممتاز! 🧬 ${names} — ${total} درهم. أكملوا معلوماتكم للتأكيد 👇`,
-      es:`¡Perfecto! 🧬 ${names} — ${total} MAD. Completa tus datos para confirmar 👇`,
-    };
-    addBotMsg(confirmMsg[cl]||confirmMsg.fr, isCouple);
-    chatHistory.push({ role:"assistant", content: confirmMsg[cl]||confirmMsg.fr });
-    setTimeout(() => showLeadForm(p), 600);
+    window._savyOrderDishes=sel; window._savyConfirmedDish=sel[0];
+    const total=sel.reduce((s,d)=>s+(d.price||0),0);
+    const names=sel.map(d=>d.name).join(" + ");
+    const cm={fr:`Parfait ! 🧬 ${names} — ${total} MAD. Vos infos pour confirmer 👇`,en:`Perfect! 🧬 ${names} — ${total} MAD. Your details to confirm 👇`,ar:`ممتاز! 🧬 ${names} — ${total} درهم. معلوماتكم للتأكيد 👇`,es:`¡Perfecto! 🧬 ${names} — ${total} MAD. Tus datos para confirmar 👇`};
+    addBotMsg(cm[cl]||cm.fr,isCouple);
+    chatHistory.push({role:"assistant",content:cm[cl]||cm.fr});
+    setTimeout(()=>showLeadForm(p),600);
   });
 
-  bubble.appendChild(grid);
-  bubble.appendChild(cartBox);
-  row.appendChild(avatar);
-  row.appendChild(bubble);
-
-  const msgsEl = document.getElementById("chat-msgs");
-  if (msgsEl) { msgsEl.appendChild(row); scrollChatToBottom(); }
+  bubble.appendChild(grid); bubble.appendChild(cartBox);
+  row.appendChild(avatar); row.appendChild(bubble);
+  const msgsEl=document.getElementById("chat-msgs");
+  if(msgsEl){msgsEl.appendChild(row);scrollChatToBottom();}
 }
+
 
 
 function getFallbackReply(p, isAr, userMsg) {
