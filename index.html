@@ -2019,7 +2019,8 @@
     #chat-window {
       position:fixed; bottom:88px; right:22px; z-index:1201;
       width:380px; max-height:620px;
-      border-radius:24px; overflow:hidden;
+      border-radius:24px;
+      overflow:hidden;          /* normal clip for chat content */
       display:none; flex-direction:column;
       background:var(--card);
       border:1px solid rgba(9,184,48,0.2);
@@ -2254,6 +2255,128 @@
     }
     .chat-send:disabled { opacity:.35; cursor:not-allowed; transform:none !important; }
     .chat-send:not(:disabled):hover { transform:scale(1.09); }
+
+    /* ══ CHAT DISH PANEL (CDP) ═══════════════════════
+       Mini info sheet that slides up inside the chat window.
+       Same content as the page dish modal, but compact & scoped.
+    ════════════════════════════════════════════════ */
+
+    /* Dim backdrop inside the chat window */
+    #cdp-backdrop {
+      display:none; position:absolute; inset:0;
+      background:rgba(0,0,0,0.45);
+      backdrop-filter:blur(3px);
+      z-index:20; border-radius:inherit;
+    }
+    #cdp-backdrop.open { display:block; }
+
+    /* The panel itself — slides up from bottom of chat */
+    #cdp {
+      display:none; flex-direction:column;
+      position:absolute; bottom:0; left:0; right:0;
+      background:var(--card);
+      border-radius:18px 18px 0 0;
+      z-index:21;
+      max-height:88%;
+      overflow-y:auto;
+      box-shadow:0 -8px 32px rgba(0,0,0,0.22);
+      animation:cdpUp .28s cubic-bezier(.32,1.2,.64,1) both;
+      -webkit-overflow-scrolling:touch;
+    }
+    #cdp.open { display:flex; }
+    @keyframes cdpUp {
+      from { transform:translateY(100%); opacity:.6; }
+      to   { transform:translateY(0);   opacity:1; }
+    }
+    #cdp::-webkit-scrollbar { width:3px; }
+    #cdp::-webkit-scrollbar-thumb { background:var(--border); border-radius:99px; }
+
+    /* Drag handle */
+    #cdp-drag-bar {
+      width:36px; height:4px; border-radius:99px;
+      background:var(--border); margin:10px auto 0;
+      flex-shrink:0;
+    }
+
+    /* Close button */
+    #cdp-close {
+      position:absolute; top:10px; right:12px;
+      width:26px; height:26px; border-radius:50%;
+      background:var(--bg); border:1px solid var(--border);
+      color:var(--muted); cursor:pointer;
+      display:flex; align-items:center; justify-content:center;
+      transition:background .15s; z-index:2;
+    }
+    #cdp-close:hover { background:var(--border); color:var(--text); }
+
+    /* Hero image */
+    #cdp-img-wrap img {
+      width:100%; height:140px; object-fit:cover;
+      display:block; margin-top:8px;
+    }
+    #cdp-img-wrap .cdp-img-placeholder {
+      width:100%; height:100px;
+      display:flex; align-items:center; justify-content:center;
+      font-size:44px; margin-top:8px;
+    }
+
+    /* Header row: emoji · name/ar/meta · price/add */
+    #cdp-header {
+      display:flex; align-items:flex-start; gap:10px;
+      padding:10px 14px 8px;
+      background:linear-gradient(135deg,var(--green) 0%,#06b237 100%);
+    }
+    .cdp-emoji { font-size:24px; flex-shrink:0; margin-top:2px; }
+    .cdp-header-info { flex:1; min-width:0; }
+    .cdp-name {
+      font-family:'Outfit',sans-serif; font-weight:900; font-size:14px;
+      color:#fff; line-height:1.2;
+    }
+    .cdp-ar { font-size:11px; color:rgba(255,255,255,.8); margin-top:2px; }
+    .cdp-meta { display:flex; align-items:center; gap:8px; margin-top:5px; flex-wrap:wrap; }
+    .cdp-star { font-size:11px; color:#fff; font-weight:700; }
+    .cdp-time { font-size:11px; color:rgba(255,255,255,.85); }
+    .cdp-price-wrap { text-align:center; flex-shrink:0; }
+    .cdp-price {
+      font-family:'Outfit',sans-serif; font-weight:900; font-size:15px;
+      color:#fff; margin-bottom:6px;
+    }
+    .cdp-add-btn {
+      background:rgba(255,255,255,.22); border:1.5px solid rgba(255,255,255,.4);
+      color:#fff; border-radius:8px; padding:5px 10px;
+      font-size:11px; font-weight:800; font-family:'DM Sans',sans-serif;
+      cursor:pointer; white-space:nowrap; transition:all .18s;
+    }
+    .cdp-add-btn:hover  { background:rgba(255,255,255,.35); }
+    .cdp-add-btn.added  { background:rgba(255,255,255,.15) !important; }
+
+    /* Macros row — reuse dm- color classes */
+    .cdp-macros {
+      display:grid; grid-template-columns:repeat(6,1fr);
+      gap:5px; padding:10px 10px 6px;
+    }
+    .cdp-macro {
+      border-radius:10px; padding:7px 4px;
+      display:flex; flex-direction:column; align-items:center;
+      border:1px solid #e5e7eb; text-align:center;
+    }
+    .cdp-macro-icon { font-size:14px; margin-bottom:2px; }
+    .cdp-macro-val  { font-family:'Outfit',sans-serif; font-weight:900; font-size:11px; color:#1a1a1a; }
+    .cdp-macro-lbl  { font-size:8px; color:#666; font-weight:700; text-transform:uppercase; margin-top:2px; letter-spacing:.03em; }
+
+    /* Body: ingredients, allergens, tags */
+    .cdp-body { padding:0 14px 18px; background:#fff; }
+    [data-theme="dark"] .cdp-body { background:var(--card); }
+    .cdp-section { padding:8px 0; }
+    .cdp-section-title {
+      font-family:'Outfit',sans-serif; font-weight:800; font-size:11px;
+      color:var(--green); margin-bottom:5px;
+      display:flex; align-items:center; gap:6px;
+    }
+    .cdp-section-title::after { content:''; flex:1; height:1px; background:var(--greenXL); }
+    .cdp-ing { font-size:11px; color:var(--sub); line-height:1.6; margin:0; }
+    .cdp-divider { height:1px; background:linear-gradient(90deg,transparent,#e5e7eb,transparent); margin:2px 0; }
+    .cdp-tags { display:flex; flex-wrap:wrap; gap:5px; padding:8px 0 4px; }
 
     /* ── Inline menu in chat ─────────────────────── */
 
@@ -4386,6 +4509,47 @@
       </button>
     </div>
   </div>
+
+  <!-- ── Chat Dish Panel — mini info sheet inside the chat ── -->
+  <div id="cdp-backdrop" onclick="_closeChatDishPanel()"></div>
+  <div id="cdp">
+    <div id="cdp-drag-bar"></div>
+    <button id="cdp-close" onclick="_closeChatDishPanel()">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div id="cdp-img-wrap"></div>
+    <div id="cdp-header">
+      <div id="cdp-emoji" class="cdp-emoji"></div>
+      <div class="cdp-header-info">
+        <div id="cdp-name" class="cdp-name"></div>
+        <div id="cdp-ar"   class="cdp-ar"></div>
+        <div class="cdp-meta">
+          <span class="cdp-star">★ <span id="cdp-rating"></span></span>
+          <span class="cdp-time">⏱ <span id="cdp-time"></span> min</span>
+          <span id="cdp-badge-wrap"></span>
+        </div>
+      </div>
+      <div class="cdp-price-wrap">
+        <div id="cdp-price" class="cdp-price"></div>
+        <button id="cdp-add-btn" class="cdp-add-btn" onclick="_cdpToggle()"></button>
+      </div>
+    </div>
+    <div id="cdp-macros" class="cdp-macros">
+      <div class="cdp-macro dm-kcal"><div class="cdp-macro-icon">🔥</div><div id="cdp-cal" class="cdp-macro-val"></div><div id="cdp-lbl-kcal" class="cdp-macro-lbl">kcal</div></div>
+      <div class="cdp-macro dm-prot"><div class="cdp-macro-icon">💪</div><div id="cdp-prot" class="cdp-macro-val"></div><div id="cdp-lbl-prot" class="cdp-macro-lbl">Protéines</div></div>
+      <div class="cdp-macro dm-carb"><div class="cdp-macro-icon">⚡</div><div id="cdp-carb" class="cdp-macro-val"></div><div id="cdp-lbl-carb" class="cdp-macro-lbl">Glucides</div></div>
+      <div class="cdp-macro dm-fat" ><div class="cdp-macro-icon">🥑</div><div id="cdp-fat"  class="cdp-macro-val"></div><div id="cdp-lbl-fat"  class="cdp-macro-lbl">Lipides</div></div>
+      <div class="cdp-macro dm-fiber"><div class="cdp-macro-icon">🌿</div><div id="cdp-fiber" class="cdp-macro-val"></div><div id="cdp-lbl-fiber" class="cdp-macro-lbl">Fibres</div></div>
+      <div class="cdp-macro dm-sodium"><div class="cdp-macro-icon">🧂</div><div id="cdp-sodium" class="cdp-macro-val"></div><div id="cdp-lbl-sodium" class="cdp-macro-lbl">Sodium</div></div>
+    </div>
+    <div id="cdp-body" class="cdp-body">
+      <div class="cdp-section"><div id="cdp-lbl-ing" class="cdp-section-title">🥘 Ingrédients</div><p id="cdp-ing" class="cdp-ing"></p></div>
+      <div class="cdp-divider"></div>
+      <div class="cdp-section"><div id="cdp-lbl-al" class="cdp-section-title">⚠️ Allergènes</div><div id="cdp-allergens" class="dm-allergens"></div></div>
+      <div class="cdp-divider"></div>
+      <div id="cdp-tags" class="cdp-tags"></div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -6329,11 +6493,18 @@ function _showChatMenu() {
     body.innerHTML=`<div class="chat-menu-name">${d.name}</div><div class="chat-menu-price">${d.price} MAD</div><div class="chat-menu-cal">${d.cal} kcal</div>`;
     card.appendChild(body);
 
-    // ── Click card (NOT the + button) → open real dish modal ──
+    // ── Click card (NOT the + button) → open chat dish panel ──
     card.addEventListener("click", e => {
-      // Only open modal if click wasn't on the add button
       if (e.target.closest(".cmc-add-btn")) return;
-      openDishModal(d.id);
+      // Pass a toggle callback so the Add button in CDP controls the grid cart too
+      _openChatDishPanel(d.id, (id) => {
+        if (cartIds.has(id)) {
+          cartIds.delete(id); card.classList.remove("selected"); _syncAddBtn(card,false);
+        } else {
+          cartIds.add(id); card.classList.add("selected"); _syncAddBtn(card,true);
+        }
+        _updateCart();
+      });
     });
 
     grid.appendChild(card);
@@ -6557,6 +6728,123 @@ function _closeLightbox() {
   document.removeEventListener("keydown", _lbKeyClose);
 }
 function _lbKeyClose(e) { if (e.key === "Escape") _closeLightbox(); }
+
+/* ══ CHAT DISH PANEL ══════════════════════════════════════
+   Mini info sheet that opens inside the chat window.
+   Populated with the same data as the page dish modal.
+══════════════════════════════════════════════════════════ */
+let _cdpDishId  = null;
+let _cdpCartCb  = null;   // callback(id, add) from _showChatMenu
+
+function _openChatDishPanel(dishId, addToCartCallback) {
+  const d = (dishes||[]).find(x => x.id === dishId);
+  if (!d) return;
+  _cdpDishId = dishId;
+  _cdpCartCb = addToCartCallback || null;
+
+  const cl   = window._savyChatLang || lang || "fr";
+  const isAr = cl === "ar";
+
+  // Image
+  const iw = document.getElementById("cdp-img-wrap");
+  if (iw) iw.innerHTML = d.img
+    ? `<img src="${d.img}" alt="${d.name}" onerror="this.style.display='none'">`
+    : `<div class="cdp-img-placeholder">${d.e||"🍽️"}</div>`;
+
+  // Header
+  const $ = id => document.getElementById(id);
+  $("cdp-emoji").textContent   = d.e || "🍽️";
+  $("cdp-name").textContent    = d.name;
+  $("cdp-ar").textContent      = d.ar || "";
+  $("cdp-rating").textContent  = d.r;
+  $("cdp-time").textContent    = d.t;
+  $("cdp-price").textContent   = d.price + " MAD";
+
+  // Macros
+  $("cdp-cal").textContent    = d.cal;
+  $("cdp-prot").textContent   = (d.p || 0) + "g";
+  $("cdp-carb").textContent   = (d.c || 0) + "g";
+  $("cdp-fat").textContent    = (d.f_g || 0) + "g";
+  $("cdp-fiber").textContent  = (d.fiber || 0) + "g";
+  $("cdp-sodium").textContent = (d.sodium || 0) + "mg";
+
+  // Macro labels
+  const lbls = cl === "ar"
+    ? ["سعرات","بروتين","كربوهيد","دهون","ألياف","صوديوم"]
+    : cl === "en"
+    ? ["kcal","Protein","Carbs","Fat","Fiber","Sodium"]
+    : ["kcal","Protéines","Glucides","Lipides","Fibres","Sodium"];
+  ["cdp-lbl-kcal","cdp-lbl-prot","cdp-lbl-carb","cdp-lbl-fat","cdp-lbl-fiber","cdp-lbl-sodium"]
+    .forEach((id,i) => { const el=$( id); if(el) el.textContent=lbls[i]; });
+
+  // Ingredients
+  $("cdp-ing").textContent = isAr ? (d.ing_ar||d.ing_fr||"—") : (d.ing_fr||"—");
+  $("cdp-lbl-ing").textContent = cl==="ar" ? "🥘 المكونات" : cl==="en" ? "🥘 Ingredients" : "🥘 Ingrédients";
+  $("cdp-lbl-al").textContent  = cl==="ar" ? "⚠️ الحساسيات" : cl==="en" ? "⚠️ Allergens" : "⚠️ Allergènes";
+
+  // Allergens
+  const alEl = $("cdp-allergens");
+  if (alEl) {
+    const alStr = isAr ? (d.al_ar||"") : (d.al_fr||"");
+    const noAl  = cl==="ar" ? "لا يوجد حساسية" : cl==="en" ? "No major allergens" : "Aucun allergène majeur";
+    if (!alStr || alStr.toLowerCase().includes("aucun") || alStr.includes("لا "))
+      alEl.innerHTML = `<span class="dm-al-tag dm-al-clean">✓ ${noAl}</span>`;
+    else
+      alEl.innerHTML = alStr.split("·").map(a=>`<span class="dm-al-tag">⚠ ${a.trim()}</span>`).join("");
+  }
+
+  // Badge
+  const bw = $("cdp-badge-wrap");
+  if (bw) bw.innerHTML = d.badge ? `<span class="tag-badge" style="font-size:9px;">${d.badge}</span>` : "";
+
+  // Tags
+  const tags = $("cdp-tags");
+  if (tags) {
+    const icons = {employee:"💼",sportif:"💪",famille:"👨‍👩‍👧",couple:"💑"};
+    tags.innerHTML = [
+      `<span class="tag-veg" style="font-size:10px;">${d.tag||""}</span>`,
+      `<span class="tag-cuisine" style="font-size:10px;">${d.cuis||""}</span>`,
+    ].join("");
+  }
+
+  // Add button state
+  _cdpUpdateBtn();
+
+  // Show panel
+  document.getElementById("cdp-backdrop").classList.add("open");
+  document.getElementById("cdp").classList.add("open");
+  document.addEventListener("keydown", _cdpKeyClose);
+}
+
+function _cdpUpdateBtn() {
+  const btn = document.getElementById("cdp-add-btn");
+  if (!btn || _cdpDishId === null) return;
+  const cl = window._savyChatLang || lang || "fr";
+  // Check if dish is in the active chat cart (tracked via _savyOrderDishes or the menu grid)
+  const inCart = (window._savyOrderDishes||[]).some(d=>d.id===_cdpDishId);
+  const addLbl = {fr:"+ Ajouter",en:"+ Add",ar:"+ أضف",es:"+ Agregar"}[cl]||"+ Add";
+  const remLbl = {fr:"✓ Sélectionné",en:"✓ Selected",ar:"✓ مختار",es:"✓ Seleccionado"}[cl]||"✓";
+  btn.textContent = inCart ? remLbl : addLbl;
+  btn.classList.toggle("added", inCart);
+}
+
+function _cdpToggle() {
+  if (_cdpDishId === null) return;
+  if (_cdpCartCb) {
+    _cdpCartCb(_cdpDishId);   // delegate to the menu grid's cart logic
+    _cdpUpdateBtn();
+  }
+}
+
+function _closeChatDishPanel() {
+  document.getElementById("cdp-backdrop")?.classList.remove("open");
+  document.getElementById("cdp")?.classList.remove("open");
+  document.removeEventListener("keydown", _cdpKeyClose);
+  _cdpDishId = null; _cdpCartCb = null;
+}
+function _cdpKeyClose(e) { if (e.key === "Escape") _closeChatDishPanel(); }
+
+
 
 function _renderLeadMealCards(isAr, cl) {
   const summaryEl = document.getElementById("lead-meal-summary");
