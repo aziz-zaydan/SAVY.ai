@@ -4326,10 +4326,45 @@
     <div id="om-cart-summary" style="background:var(--greenXL);border-radius:14px;padding:12px 14px;margin-bottom:16px;font-size:13px;"></div>
     <!-- Loyalty badge -->
     <div id="om-loyalty-badge" style="display:none;border-radius:14px;padding:11px 14px;margin-bottom:12px;font-size:13px;"></div>
-    <!-- Personal info form -->
-    <input class="lead-inp" id="om-name"  type="text" placeholder="Nom complet / Full name"/>
-    <input class="lead-inp" id="om-city"  type="text" placeholder="Adresse (ex: Rue Ibn Batouta, Tétouan)"/>
-    <input class="lead-inp" id="om-phone" type="tel"  placeholder="WhatsApp (+212 6XX XXX XXX)" oninput="debounceLoyaltyLookup(this.value)"/>
+    <!-- Personal info form — same structure as chat lead form -->
+
+    <!-- Gender toggle (required) -->
+    <div class="lead-gender-row" id="om-gender-row">
+      <button class="lead-gender-btn" id="om-gender-male" onclick="_setOmGender('male')">
+        👨 <span id="om-gender-male-lbl">Homme</span>
+      </button>
+      <button class="lead-gender-btn" id="om-gender-female" onclick="_setOmGender('female')">
+        👩 <span id="om-gender-female-lbl">Femme</span>
+      </button>
+    </div>
+
+    <div class="lead-inp-wrap">
+      <span class="lead-inp-icon">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </span>
+      <input class="lead-inp" id="om-name" type="text" autocomplete="given-name" placeholder="Prénom complet"/>
+    </div>
+
+    <div class="lead-inp-wrap">
+      <span class="lead-inp-icon">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      </span>
+      <input class="lead-inp" id="om-city" type="text" autocomplete="street-address" placeholder="Adresse de livraison"/>
+    </div>
+
+    <div class="lead-inp-wrap">
+      <span class="lead-inp-icon">
+        <svg width="12" height="12" viewBox="0 0 32 32" fill="none"><path d="M16 2C8.268 2 2 8.268 2 16c0 2.484.668 4.81 1.836 6.818L2 30l7.384-1.812A13.94 13.94 0 0016 30c7.732 0 14-6.268 14-14S23.732 2 16 2z" fill="#25D366"/><path d="M22.498 19.533c-.305-.152-1.8-.888-2.079-.99-.278-.102-.481-.152-.683.152s-.783.99-.96 1.193c-.177.202-.354.228-.659.076-.305-.152-1.288-.475-2.453-1.513-.907-.808-1.518-1.806-1.697-2.111-.177-.304-.019-.469.133-.62.137-.136.305-.355.457-.532.152-.178.203-.305.304-.508.103-.203.051-.38-.025-.532-.077-.152-.684-1.648-.937-2.258-.246-.593-.497-.513-.683-.522l-.583-.01c-.203 0-.532.076-.81.38s-1.063 1.04-1.063 2.534 1.089 2.94 1.24 3.143c.152.203 2.143 3.272 5.191 4.586.726.314 1.293.5 1.735.641.729.23 1.392.198 1.916.12.584-.087 1.8-.735 2.054-1.446.254-.71.254-1.32.178-1.447-.077-.127-.278-.203-.583-.355z" fill="#fff"/></svg>
+      </span>
+      <input class="lead-inp" id="om-phone" type="tel" autocomplete="tel" placeholder="WhatsApp (+212 6XX XXX XXX)" oninput="debounceLoyaltyLookup(this.value)"/>
+    </div>
+
+    <div class="lead-inp-wrap">
+      <span class="lead-inp-icon" style="top:7px;transform:none;">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      </span>
+      <textarea class="lead-inp" id="om-comment" placeholder="Note (allergies, étage, instructions...)"></textarea>
+    </div>
     <!-- ── Scheduling ── -->
     <div class="sched-wrap">
       <span class="sched-label" id="sched-label">⏰ Livraison souhaitée :</span>
@@ -7201,6 +7236,33 @@ function showLeadForm(p) {
 /* ── Lead form gender toggle ──────────────────────────────── */
 let _leadGender = null;    // null = not yet chosen
 
+/* ── Order modal gender toggle ───────────────────────────── */
+let _omGender = null;
+
+function _setOmGender(g) {
+  _omGender = g;
+  const male   = document.getElementById("om-gender-male");
+  const female = document.getElementById("om-gender-female");
+  if (male)   { male.classList.toggle("active-male",   g==="male");   male.classList.toggle("active-female", false); }
+  if (female) { female.classList.toggle("active-female",g==="female"); female.classList.toggle("active-male", false); }
+}
+
+// Reset when order modal opens
+function _resetOmGender() {
+  _omGender = null;
+  const male   = document.getElementById("om-gender-male");
+  const female = document.getElementById("om-gender-female");
+  if (male)   { male.classList.remove("active-male","active-female"); }
+  if (female) { female.classList.remove("active-male","active-female"); }
+  // Pulse attention
+  setTimeout(() => {
+    ["om-gender-male","om-gender-female"].forEach(id => {
+      const b = document.getElementById(id);
+      if (b && !_omGender) { b.classList.add("attention"); setTimeout(()=>b.classList.remove("attention"),2500); }
+    });
+  }, 400);
+}
+
 function _setLeadGender(g) {
   _leadGender = g;
   const male   = document.getElementById("lead-gender-male");
@@ -7306,6 +7368,17 @@ function openOrderModal() {
   setTimeout(checkUpsell, 100);
   const isAr = lang === "ar" || false;
   const t = copy[lang] || copy.fr;
+
+  // Reset and localise gender toggle
+  _resetOmGender();
+  const genderLabels = {
+    fr:["Homme","Femme"], en:["Male","Female"], ar:["ذكر","أنثى"], es:["Hombre","Mujer"]
+  };
+  const [mLbl, fLbl] = genderLabels[lang] || genderLabels.fr;
+  const mEl = document.getElementById("om-gender-male-lbl");
+  const fEl = document.getElementById("om-gender-female-lbl");
+  if (mEl) mEl.textContent = mLbl;
+  if (fEl) fEl.textContent = fLbl;
 
   // Localise texts
   const om = document.getElementById("order-modal");
@@ -7621,10 +7694,37 @@ function showFieldError(id, msgKey) {
 }
 
 function submitOrder() {
-  const isAr = lang === "ar" || false;
+  const isAr  = lang === "ar" || false;
   const name  = (document.getElementById("om-name").value  || "").trim();
   const city  = (document.getElementById("om-city").value  || "").trim();
   const phone = normalizePhone(document.getElementById("om-phone").value || "");
+  const comment = (document.getElementById("om-comment") ? document.getElementById("om-comment").value : "").trim();
+
+  // Gender required validation
+  if (!_omGender) {
+    const row = document.getElementById("om-gender-row");
+    if (row) {
+      let shakes = 0;
+      const shake = setInterval(() => {
+        row.style.transform = shakes % 2 === 0 ? "translateX(5px)" : "translateX(-5px)";
+        if (++shakes >= 6) { clearInterval(shake); row.style.transform = ""; }
+      }, 60);
+      ["om-gender-male","om-gender-female"].forEach(id => {
+        const b = document.getElementById(id);
+        if (b) { b.style.borderColor="#ef4444"; setTimeout(()=>b.style.borderColor="",1600); }
+      });
+      const gErr = document.getElementById("om-gender-err");
+      if (!gErr) {
+        const err = document.createElement("div");
+        err.id = "om-gender-err";
+        err.style.cssText = "font-size:10.5px;color:#ef4444;font-weight:700;text-align:center;margin:-2px 0 6px;font-family:'DM Sans',sans-serif;";
+        err.textContent = isAr ? "اختر جنسك 👆" : (lang==="en" ? "Please select your gender 👆" : lang==="es" ? "Selecciona tu género 👆" : "Choisissez votre genre 👆");
+        if (row) row.insertAdjacentElement("afterend", err);
+        setTimeout(() => err.remove(), 2500);
+      }
+    }
+    return;
+  }
 
   const hi = (id) => {
     const el = document.getElementById(id);
@@ -7667,8 +7767,10 @@ function submitOrder() {
   const originalTotal = Math.round(cart.reduce((s,d) => s + d.price * d.qty, 0));
 
   // Save to Google Sheets
-  saveToSheets({ name, city, phone: "'" + phone, persona: persona || "general", lang,
+  saveToSheets({ name, city, phone: "'" + phone, persona: _omGender || "general", lang,
     source:       "menu",
+    gender:       _omGender || "",
+    comment:      comment || "",
     meals:        items,
     meal_count:   cartItems.length,
     conversation: items,
