@@ -3677,54 +3677,98 @@
         </div>
       </div>
 
-      <!-- ── Dual CTA row ── -->
-      <div style="display:flex;gap:10px;flex-wrap:wrap;margin:16px 0 6px;">
+      <!-- ── Triple CTA row ── -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;margin:18px 0 8px;">
+
+        <!-- 1 — AI Chef (primary green) -->
         <button onclick="openChat()" id="hero-cta-primary" class="hero-cta-primary">
-          🧬 <span id="hero-cta-primary-txt">Chef IA — Commencer</span>
+          <span style="font-size:18px;line-height:1;">🧬</span>
+          <span style="display:flex;flex-direction:column;align-items:flex-start;gap:1px;">
+            <span style="font-size:10px;opacity:.8;font-weight:600;letter-spacing:.04em;">SAVY AI</span>
+            <span id="hero-cta-primary-txt" style="font-size:12.5px;font-weight:900;white-space:nowrap;">Chef IA</span>
+          </span>
         </button>
-        <a href="#menu" style="text-decoration:none;flex:1;min-width:120px;">
+
+        <!-- 2 — View menu (blue accent) -->
+        <a href="#menu" style="text-decoration:none;">
           <button id="hero-cta-secondary" class="hero-cta-secondary">
-            🍽️ <span id="hero-cta-secondary-txt">Voir le menu</span>
+            <span style="font-size:18px;line-height:1;">🍽️</span>
+            <span style="display:flex;flex-direction:column;align-items:flex-start;gap:1px;">
+              <span style="font-size:10px;opacity:.75;font-weight:600;letter-spacing:.04em;">MENU</span>
+              <span id="hero-cta-secondary-txt" style="font-size:12.5px;font-weight:900;white-space:nowrap;">Voir le menu</span>
+            </span>
           </button>
         </a>
-        <a href="#nutri-calc" style="text-decoration:none;flex:1;min-width:140px;">
-          <button id="hero-cta-nutri" class="hero-cta-secondary" style="white-space:nowrap;border-color:rgba(240,180,41,.4);color:var(--text);">
-            🔥 <span id="hero-cta-nutri-txt">Calculer mes calories</span>
+
+        <!-- 3 — Calorie calculator (gold accent) -->
+        <a href="#nutri-calc" style="text-decoration:none;">
+          <button id="hero-cta-nutri" class="hero-cta-nutri">
+            <span style="font-size:18px;line-height:1;">🔥</span>
+            <span style="display:flex;flex-direction:column;align-items:flex-start;gap:1px;">
+              <span style="font-size:10px;opacity:.75;font-weight:600;letter-spacing:.04em;">CALORIES</span>
+              <span id="hero-cta-nutri-txt" style="font-size:12.5px;font-weight:900;white-space:nowrap;">Calculer</span>
+            </span>
           </button>
         </a>
+
       </div>
       <style>
+        /* ── Shared base ── */
+        .hero-cta-primary,
+        .hero-cta-secondary,
+        .hero-cta-nutri {
+          width:100%; border-radius:14px;
+          padding:12px 10px 12px 12px;
+          display:flex; align-items:center; gap:9px;
+          cursor:pointer; transition:transform .18s, box-shadow .18s, border-color .18s;
+          -webkit-tap-highlight-color:transparent;
+          font-family:'Outfit',sans-serif;
+          text-align:left; border:2px solid transparent;
+        }
+        .hero-cta-primary:active,
+        .hero-cta-secondary:active,
+        .hero-cta-nutri:active  { transform:scale(0.96) !important; }
+
+        /* 1 — Green gradient (AI Chef) */
         .hero-cta-primary {
-          flex:1; min-width:140px; width:100%;
-          background:linear-gradient(135deg,var(--green),var(--greenL));
-          color:#fff; border:none; border-radius:14px;
-          padding:13px 18px; font-size:13px; font-weight:800;
-          font-family:'Outfit',sans-serif; cursor:pointer;
-          box-shadow:0 6px 22px rgba(9,184,48,0.38);
-          display:flex; align-items:center; justify-content:center; gap:8px;
-          transition:transform .2s,box-shadow .2s;
+          background:linear-gradient(135deg,#089929,#2BCE4E);
+          color:#fff; border-color:transparent;
+          box-shadow:0 6px 20px rgba(9,184,48,0.4);
           animation:ctaPulse 2.8s ease-in-out infinite;
-          -webkit-tap-highlight-color:transparent;
         }
-        .hero-cta-primary:hover { transform:translateY(-2px); box-shadow:0 10px 30px rgba(9,184,48,.5); }
-        .hero-cta-primary:active { transform:scale(0.97); animation:none; }
+        .hero-cta-primary:hover { transform:translateY(-2px); box-shadow:0 10px 28px rgba(9,184,48,.55); animation:none; }
+
+        /* 2 — Glass card (View menu) */
         .hero-cta-secondary {
-          flex:1; min-width:120px; width:100%;
-          background:var(--card); color:var(--text);
-          border:1.5px solid var(--border); border-radius:14px;
-          padding:13px 18px; font-size:13px; font-weight:700;
-          font-family:'DM Sans',sans-serif; cursor:pointer;
-          display:flex; align-items:center; justify-content:center; gap:7px;
-          transition:all .2s; white-space:nowrap;
-          -webkit-tap-highlight-color:transparent;
+          background:var(--card);
+          color:var(--text);
+          border-color:var(--border);
+          box-shadow:0 2px 8px rgba(0,0,0,.08);
         }
-        .hero-cta-secondary:hover { border-color:var(--green); color:var(--green); }
-        .hero-cta-secondary:active { transform:scale(0.97); }
+        .hero-cta-secondary:hover { transform:translateY(-2px); border-color:var(--green); color:var(--green); box-shadow:0 6px 18px rgba(9,184,48,.2); }
+
+        /* 3 — Gold accent (Calories) */
+        .hero-cta-nutri {
+          background:var(--card);
+          color:var(--text);
+          border-color:rgba(240,180,41,.35);
+          box-shadow:0 2px 8px rgba(240,180,41,.12);
+        }
+        .hero-cta-nutri:hover { transform:translateY(-2px); border-color:rgba(240,180,41,.8); color:#A07010; box-shadow:0 6px 18px rgba(240,180,41,.25); }
+        [data-theme="light"] .hero-cta-nutri:hover { color:#7a5400; }
+
         @keyframes ctaPulse {
-          0%,100% { box-shadow:0 6px 22px rgba(9,184,48,.38); }
-          50%      { box-shadow:0 6px 32px rgba(9,184,48,.6), 0 0 0 6px rgba(9,184,48,.08); }
+          0%,100% { box-shadow:0 6px 20px rgba(9,184,48,.4); }
+          50%      { box-shadow:0 6px 28px rgba(9,184,48,.65), 0 0 0 5px rgba(9,184,48,.09); }
+        }
+
+        /* Responsive — stack to 2+1 on very small screens */
+        @media(max-width:380px){
+          .hero-cta-row { grid-template-columns:1fr 1fr !important; }
+          .hero-cta-row > :last-child { grid-column:1/-1; }
         }
       </style>
+
 
       <!-- Packaging Slideshow -->
       <div class="pkg-slideshow su3b">
@@ -5485,7 +5529,7 @@ function renderDishes(){
   document.getElementById("dishes-list").innerHTML=filtered.map((d,i)=>`
     <div class="dish-card" style="animation-delay:${i*.04}s;" onclick="openDishModal(${d.id})">
       ${d.img ? `
-      <div style="position:relative;width:100%;height:168px;overflow:hidden;border-radius:18px 18px 0 0;">
+      <div style="position:relative;width:100%;aspect-ratio:1/1;overflow:hidden;border-radius:18px 18px 0 0;">
         <img src="${d.img}" alt="${d.name}" loading="lazy"
           style="width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .45s;display:block;"
           onload="this.style.opacity=1">
