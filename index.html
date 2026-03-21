@@ -6015,9 +6015,15 @@ async function chatSendText(text) {
     chatHistory.push({ role:"assistant", content:reply });
     addBotMsg(reply, isCouple);
     if(triggerLead && !leadShown) {
-      // Capture confirmed dish from the confirmation message (last bot reply)
-      // This is the ONLY source of truth — not the full chat history
-      window._savyConfirmedDish = _extractConfirmedDish(reply);
+      // Extract ALL confirmed dishes from the bot's confirmation message
+      const allDishes = _extractAllConfirmedDishes(reply);
+      if (allDishes.length > 0) {
+        window._savyOrderDishes   = allDishes;
+        window._savyConfirmedDish = allDishes[0]; // compat
+      } else {
+        window._savyConfirmedDish = null;
+        window._savyOrderDishes   = null;
+      }
       setTimeout(() => showLeadForm(p), 800);
     }
   } else {
@@ -6129,37 +6135,48 @@ function getFallbackReply(p, isAr, userMsg) {
 /* ═══════════════════════════════════════════
    LEAD FORM
 ═══════════════════════════════════════════ */
-// Extract the confirmed dish from the bot's confirmation message
-// Only called right when SAVY_GET_LEAD fires — most accurate source
+// Extract ONE confirmed dish (legacy compat)
 function _extractConfirmedDish(botMsg) {
-  if (!botMsg || !dishes || !dishes.length) return null;
-  const msg = botMsg.toLowerCase();
+  const all = _extractAllConfirmedDishes(botMsg);
+  return all.length > 0 ? all[0] : null;
+}
 
-  // Try exact French name match first (most reliable)
-  let matched = dishes.find(d => d.name && msg.includes(d.name.toLowerCase()));
-  if (matched) return matched;
+// Extract ALL dishes mentioned in a bot confirmation message
+// Called when SAVY_GET_LEAD fires — scans entire message for every dish
+function _extractAllConfirmedDishes(botMsg) {
+  if (!botMsg || !dishes || !dishes.length) return [];
+  const msg     = botMsg.toLowerCase();
+  const found   = [];
+  const seen    = new Set();
 
-  // Try Arabic name match
-  matched = dishes.find(d => d.ar && botMsg.includes(d.ar));
-  if (matched) return matched;
+  dishes.forEach(d => {
+    if (seen.has(d.id)) return;
 
-  // Try partial keyword match — covers English/Spanish translations by the AI
-  // Build keyword map from each dish name (all words 4+ chars)
-  matched = dishes.find(d => {
+    // 1. Exact French name
+    if (d.name && msg.includes(d.name.toLowerCase())) {
+      found.push(d); seen.add(d.id); return;
+    }
+    // 2. Arabic name
+    if (d.ar && botMsg.includes(d.ar)) {
+      found.push(d); seen.add(d.id); return;
+    }
+    // 3. Partial keyword (words ≥ 4 chars from French name)
     const words = (d.name || "").toLowerCase().split(/\s+/).filter(w => w.length >= 4);
-    return words.length > 0 && words.some(w => msg.includes(w));
+    if (words.length > 0 && words.filter(w => msg.includes(w)).length >= Math.min(2, words.length)) {
+      found.push(d); seen.add(d.id); return;
+    }
   });
-  if (matched) return matched;
 
-  // Last resort: check price mention in message to narrow candidates
-  const priceMatch = msg.match(/(\d{2,3})\s*(?:mad|درهم|dh)/);
-  if (priceMatch) {
-    const price = parseInt(priceMatch[1]);
-    matched = dishes.find(d => d.price === price);
-    if (matched) return matched;
+  // 4. Price fallback — find all prices mentioned, map each to a dish
+  if (found.length === 0) {
+    const prices = [...msg.matchAll(/(\d{2,3})\s*(?:mad|درهم|dh)/gi)].map(m => parseInt(m[1]));
+    prices.forEach(price => {
+      const d = dishes.find(x => x.price === price && !seen.has(x.id));
+      if (d) { found.push(d); seen.add(d.id); }
+    });
   }
 
-  return null;
+  return found;
 }
 
 function buildLeadMealSummary(isAr) {
@@ -6168,24 +6185,30 @@ function buildLeadMealSummary(isAr) {
   const totalEl   = document.getElementById("lead-meal-total");
   if (!summaryEl || !itemsEl || !totalEl) return;
 
-  // _savyOrderDishes: array of dish objects confirmed for this order
-  // Initialise from confirmed dish or cart if not set yet
-  if (!window._savyOrderDishes) {
-    if (window._savyConfirmedDish) {
-      window._savyOrderDishes = [window._savyConfirmedDish];
-    } else if (cart && cart.length > 0) {
-      window._savyOrderDishes = cart
-        .map(id => (dishes || []).find(x => x.id === id))
-        .filter(Boolean);
-    } else {
-      // Last-resort: scan last 2 bot messages for ONE dish only
-      const recent = (chatHistory || []).filter(m => m.role === "assistant").slice(-2).map(m => m.content || "").join(" ");
-      const found = (dishes || []).find(d =>
-        (d.name && recent.toLowerCase().includes(d.name.toLowerCase())) ||
-        (d.ar   && recent.includes(d.ar))
-      );
-      window._savyOrderDishes = found ? [found] : [];
-    }
+  // If already set (e.g. from trigger), just render
+  if (window._savyOrderDishes && window._savyOrderDishes.length > 0) {
+    const cl = window._savyChatLang || lang || "fr";
+    _renderLeadMealCards(isAr, cl);
+    return;
+  }
+
+  // Scan ALL bot messages in history for dish names
+  const allBotText = (chatHistory || [])
+    .filter(m => m.role === "assistant")
+    .map(m => m.content || "")
+    .join(" ");
+
+  const found = _extractAllConfirmedDishes(allBotText);
+
+  if (found.length > 0) {
+    window._savyOrderDishes = found;
+  } else if (cart && cart.length > 0) {
+    // Fall back to cart
+    window._savyOrderDishes = cart
+      .map(id => (dishes || []).find(x => x.id === id))
+      .filter(Boolean);
+  } else {
+    window._savyOrderDishes = [];
   }
 
   const cl = window._savyChatLang || lang || "fr";
@@ -6436,15 +6459,35 @@ function _cancelLeadForm() {
   const msgs      = document.getElementById("chat-msgs");
   const overlay   = document.getElementById("lead-form-overlay");
   const inputArea = document.getElementById("chat-input-area");
+
   if (form)      form.style.display = "none";
   if (msgs)      msgs.classList.remove("form-open");
   if (overlay)   overlay.classList.remove("active");
   if (inputArea) inputArea.style.display = "flex";
+
   leadShown = false;
-  window._savyOrderDishes   = null;
-  window._savyConfirmedDish = null;
-  const inp = document.getElementById("chat-inp");
-  if (inp) setTimeout(() => inp.focus(), 100);
+
+  // Keep dishes in memory so SAVY knows what was ordered
+  // (don't null out _savyOrderDishes — chatSendText will clear on next send if needed)
+
+  // SAVY acknowledges and offers to help change
+  const cl = window._savyChatLang || lang || "fr";
+  const p  = persona || "employee";
+  const isCouple = p === "couple";
+
+  const changeMsg = {
+    fr: "Bien sûr 😊 Qu'est-ce que vous souhaitez modifier ? Dites-moi et je m'en occupe !",
+    en: "Of course 😊 What would you like to change? Just tell me and I'll take care of it!",
+    ar: "بالطبع 😊 ماذا تريد تغييره؟ أخبرني وسأهتم بذلك!",
+    es: "¡Claro que sí 😊 ¿Qué te gustaría cambiar? ¡Dímelo y lo arreglo!",
+  };
+
+  setTimeout(() => {
+    addBotMsg(changeMsg[cl] || changeMsg.fr, isCouple);
+    scrollChatToBottom();
+    const inp = document.getElementById("chat-inp");
+    if (inp) setTimeout(() => inp.focus(), 150);
+  }, 200);
 }
 
 /* ═══════════════════════════════════════════
