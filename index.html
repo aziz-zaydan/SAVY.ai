@@ -355,6 +355,30 @@
       font-weight:900; letter-spacing:.03em;
       animation: ctaPulse 2.5s ease-in-out infinite;
     }
+
+    /* ── Navbar tracking pill ── */
+    .nav-track-btn {
+      display:inline-flex; align-items:center; gap:7px;
+      background:linear-gradient(135deg, #089929, #06b237);
+      color:#fff; border:none; border-radius:99px;
+      padding:7px 14px 7px 10px;
+      font-size:12px; font-weight:800; font-family:'DM Sans',sans-serif;
+      cursor:pointer; white-space:nowrap;
+      box-shadow:0 2px 12px rgba(9,184,48,0.35);
+      transition:transform .2s, box-shadow .2s;
+      -webkit-tap-highlight-color:transparent;
+    }
+    .nav-track-btn:hover { transform:translateY(-1px); box-shadow:0 6px 18px rgba(9,184,48,0.45); }
+    .nav-track-btn:active { transform:scale(0.97); }
+    .nav-track-dot {
+      width:8px; height:8px; border-radius:50%;
+      background:#fff; opacity:0.9; flex-shrink:0;
+      animation:trackPulse 1.4s ease-in-out infinite;
+    }
+    @keyframes trackPulse {
+      0%,100% { box-shadow:0 0 0 0 rgba(255,255,255,0.4); opacity:0.9; }
+      50%      { box-shadow:0 0 0 4px rgba(255,255,255,0); opacity:1; }
+    }
     @keyframes ctaPulse {
       0%,100% { box-shadow: 0 0 0 0 rgba(9,184,48,0); transform: scale(1); }
       50%      { box-shadow: 0 0 0 6px rgba(9,184,48,0.2); transform: scale(1.03); }
@@ -2219,6 +2243,49 @@
       display:block; box-sizing:border-box;
     }
     textarea.lead-inp { resize:none; line-height:1.4; height:44px; }
+    /* ── Meal cards in order summary ── */
+    .lead-meal-card {
+      display:flex; align-items:center; gap:9px;
+      background:var(--bg); border-radius:9px;
+      padding:7px 8px; margin-bottom:6px;
+      border:1px solid var(--border);
+      transition:opacity .2s;
+    }
+    .lead-meal-card:last-child { margin-bottom:0; }
+    .lead-meal-img {
+      width:40px; height:40px; border-radius:7px;
+      object-fit:cover; flex-shrink:0;
+      background:var(--mint);
+    }
+    .lead-meal-emoji {
+      width:40px; height:40px; border-radius:7px;
+      background:var(--greenXL); flex-shrink:0;
+      display:flex; align-items:center; justify-content:center;
+      font-size:20px;
+    }
+    .lead-meal-info { flex:1; min-width:0; }
+    .lead-meal-name {
+      font-family:'Outfit',sans-serif; font-weight:800;
+      font-size:11.5px; color:var(--text);
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }
+    .lead-meal-price {
+      font-size:11px; font-weight:700; color:var(--green);
+      margin-top:1px;
+    }
+    .lead-meal-remove {
+      width:24px; height:24px; border-radius:50%; flex-shrink:0;
+      border:1.5px solid #fee2e2; background:#fff5f5;
+      color:#ef4444; font-size:13px; font-weight:900;
+      display:flex; align-items:center; justify-content:center;
+      cursor:pointer; transition:all .15s; line-height:1;
+      font-family:system-ui,sans-serif;
+    }
+    .lead-meal-remove:hover { background:#ef4444; color:#fff; border-color:#ef4444; transform:scale(1.1); }
+    [data-theme="dark"] .lead-meal-card  { background:var(--mint); }
+    [data-theme="dark"] .lead-meal-remove { border-color:#7f1d1d; background:#2d1515; color:#fca5a5; }
+    [data-theme="dark"] .lead-meal-remove:hover { background:#ef4444; color:#fff; }
+
     .lead-inp:focus {
       border-color:var(--green);
       box-shadow:0 0 0 3px rgba(9,184,48,0.1);
@@ -4738,6 +4805,7 @@ function setLang(l) {
     chatHistory = [];
   window._savyChatLang = null;
   window._savyConfirmedDish = null;
+  window._savyOrderDishes = null;
     chatMsgs.innerHTML = "";
     leadShown = false; leadDone = false; userMsgCount = 0;
     const leadForm  = document.getElementById("chat-lead-form");
@@ -5200,6 +5268,7 @@ function resetChatForPersona(p) {
   chatHistory = [];
   window._savyChatLang = null;
   window._savyConfirmedDish = null;
+  window._savyOrderDishes = null;
   leadShown   = false;
   leadDone    = false;
   userMsgCount = 0;
@@ -5301,6 +5370,7 @@ function chatSetPersona(p) {
   chatHistory = [];
   window._savyChatLang = null;
   window._savyConfirmedDish = null;
+  window._savyOrderDishes = null;
   document.getElementById("chat-msgs").innerHTML = "";
   leadShown = false; leadDone = false; userMsgCount = 0;
   const rlf=document.getElementById("chat-lead-form"); if(rlf) rlf.style.display="none";
@@ -5884,65 +5954,122 @@ function buildLeadMealSummary(isAr) {
   const summaryEl = document.getElementById("lead-meal-summary");
   const itemsEl   = document.getElementById("lead-meal-items");
   const totalEl   = document.getElementById("lead-meal-total");
-  if(!summaryEl || !itemsEl || !totalEl) return;
+  if (!summaryEl || !itemsEl || !totalEl) return;
 
-  let lines = [];
-  let total = 0;
-
-  // Priority 1: confirmed dish captured at SAVY_GET_LEAD moment
-  if (window._savyConfirmedDish) {
-    const d = window._savyConfirmedDish;
-    lines.push({ name: isAr ? (d.ar || d.name) : d.name, price: d.price });
-    total += d.price;
-  }
-  // Priority 2: cart items (added via dish cards, not chat)
-  else if (cart && cart.length > 0) {
-    cart.forEach(id => {
-      const d = dishes.find(x => x.id === id);
-      if (d) { lines.push({ name: isAr ? (d.ar || d.name) : d.name, price: d.price }); total += d.price; }
-    });
-  }
-  // Priority 3: scan ONLY the last 2 assistant messages (confirmation step only)
-  else {
-    const lastBotMsgs = (chatHistory || [])
-      .filter(m => m.role === "assistant")
-      .slice(-2)
-      .map(m => m.content || "");
-    const recentText = lastBotMsgs.join(" ").toLowerCase();
-    const recentRaw  = lastBotMsgs.join(" ");
-    const matched = dishes.filter(d =>
-      (d.name && recentText.includes(d.name.toLowerCase())) ||
-      (d.ar   && recentRaw.includes(d.ar))
-    ).slice(0, 1); // only ONE dish — the confirmed one
-    matched.forEach(d => {
-      lines.push({ name: isAr ? (d.ar || d.name) : d.name, price: d.price });
-      total += d.price;
-    });
+  // _savyOrderDishes: array of dish objects confirmed for this order
+  // Initialise from confirmed dish or cart if not set yet
+  if (!window._savyOrderDishes) {
+    if (window._savyConfirmedDish) {
+      window._savyOrderDishes = [window._savyConfirmedDish];
+    } else if (cart && cart.length > 0) {
+      window._savyOrderDishes = cart
+        .map(id => (dishes || []).find(x => x.id === id))
+        .filter(Boolean);
+    } else {
+      // Last-resort: scan last 2 bot messages for ONE dish only
+      const recent = (chatHistory || []).filter(m => m.role === "assistant").slice(-2).map(m => m.content || "").join(" ");
+      const found = (dishes || []).find(d =>
+        (d.name && recent.toLowerCase().includes(d.name.toLowerCase())) ||
+        (d.ar   && recent.includes(d.ar))
+      );
+      window._savyOrderDishes = found ? [found] : [];
+    }
   }
 
-  if (lines.length > 0) {
-    itemsEl.innerHTML = lines.map(l =>
-      `<div style="display:flex;justify-content:space-between;gap:8px;">` +
-      `<span>• ${l.name}</span>` +
-      `<span style="font-weight:700;color:var(--green)">${l.price} MAD</span>` +
-      `</div>`
-    ).join("");
-    const totalLabel = { fr:"Total", en:"Total", ar:"المجموع", es:"Total" }[lang] || "Total";
-    const cl = window._savyChatLang || lang || "fr";
-    const delivLabels = {
-      fr: ["🛵 Livraison offerte", "+10 MAD livraison"],
-      en: ["🛵 Free delivery",     "+10 MAD delivery"],
-      ar: ["🛵 توصيل مجاني",       "+10 درهم توصيل"],
-      es: ["🛵 Envío gratis",      "+10 MAD envío"],
-    };
-    const [freeLabel, paidLabel] = delivLabels[cl] || delivLabels.fr;
-    const delivLabel = total >= 2*35
-      ? `<span style="font-size:10px;color:var(--green);font-weight:600;"> · ${freeLabel}</span>`
-      : `<span style="font-size:10px;color:var(--muted);"> · ${paidLabel}</span>`;
-    totalEl.innerHTML = `${totalLabel} : <strong>${total} MAD</strong>${delivLabel}`;
-    summaryEl.style.display = "block";
-  }
+  const cl = window._savyChatLang || lang || "fr";
+  _renderLeadMealCards(isAr, cl);
 }
+
+function _renderLeadMealCards(isAr, cl) {
+  const summaryEl = document.getElementById("lead-meal-summary");
+  const itemsEl   = document.getElementById("lead-meal-items");
+  const totalEl   = document.getElementById("lead-meal-total");
+  if (!summaryEl || !itemsEl || !totalEl) return;
+
+  const orderDishes = window._savyOrderDishes || [];
+  if (orderDishes.length === 0) { summaryEl.style.display = "none"; return; }
+
+  // Update header label
+  const headerEl = summaryEl.querySelector("div:first-child");
+  if (headerEl) {
+    const labels = { fr:"🧬 Votre commande", en:"🧬 Your order", ar:"🧬 طلبكم", es:"🧬 Tu pedido" };
+    headerEl.textContent = labels[cl] || labels.fr;
+  }
+
+  // Render each dish as a card
+  itemsEl.innerHTML = "";
+  orderDishes.forEach((d, idx) => {
+    const card = document.createElement("div");
+    card.className = "lead-meal-card";
+
+    // Image or emoji fallback (dishes use d.img and d.e)
+    const imgWrap = document.createElement("div");
+    if (d.img) {
+      const img = document.createElement("img");
+      img.className = "lead-meal-img";
+      img.src = d.img;
+      img.alt = d.name || "";
+      const emojiDiv = document.createElement("div");
+      emojiDiv.className = "lead-meal-emoji";
+      emojiDiv.textContent = d.e || "🍽️";
+      emojiDiv.style.display = "none";
+      img.onerror = () => { img.style.display="none"; emojiDiv.style.display="flex"; };
+      imgWrap.appendChild(img);
+      imgWrap.appendChild(emojiDiv);
+    } else {
+      const emojiDiv = document.createElement("div");
+      emojiDiv.className = "lead-meal-emoji";
+      emojiDiv.textContent = d.e || "🍽️";
+      imgWrap.appendChild(emojiDiv);
+    }
+    card.appendChild(imgWrap);
+
+    // Name + price
+    const info = document.createElement("div");
+    info.className = "lead-meal-info";
+    const nameEl = document.createElement("div");
+    nameEl.className = "lead-meal-name";
+    nameEl.textContent = (isAr && d.ar) ? d.ar : (d.name || "");
+    const priceEl = document.createElement("div");
+    priceEl.className = "lead-meal-price";
+    priceEl.textContent = (d.price || 0) + " MAD";
+    info.appendChild(nameEl);
+    info.appendChild(priceEl);
+    card.appendChild(info);
+
+    // Remove button — only show if more than 1 dish
+    const removeBtn = document.createElement("button");
+    removeBtn.className = "lead-meal-remove";
+    removeBtn.textContent = "×";
+    removeBtn.title = { fr:"Retirer", en:"Remove", ar:"حذف", es:"Quitar" }[cl] || "×";
+    removeBtn.style.display = orderDishes.length > 1 ? "flex" : "none";
+    removeBtn.addEventListener("click", () => {
+      window._savyOrderDishes.splice(idx, 1);
+      _renderLeadMealCards(isAr, cl);
+    });
+    card.appendChild(removeBtn);
+
+    itemsEl.appendChild(card);
+  });
+
+  // Total
+  const total = orderDishes.reduce((s, d) => s + (d.price || 0), 0);
+  const totalLabel = { fr:"Total", en:"Total", ar:"المجموع", es:"Total" }[cl] || "Total";
+  const delivLabels = {
+    fr: ["🛵 Livraison offerte", "+10 MAD livraison"],
+    en: ["🛵 Free delivery",     "+10 MAD delivery"],
+    ar: ["🛵 توصيل مجاني",       "+10 درهم توصيل"],
+    es: ["🛵 Envío gratis",      "+10 MAD envío"],
+  };
+  const [freeLabel, paidLabel] = delivLabels[cl] || delivLabels.fr;
+  const delivLabel = orderDishes.length >= 2
+    ? `<span style="font-size:10px;color:var(--green);font-weight:600;"> · ${freeLabel}</span>`
+    : `<span style="font-size:10px;color:var(--muted);"> · ${paidLabel}</span>`;
+  totalEl.innerHTML = `${totalLabel} : <strong>${total} MAD</strong>${delivLabel}`;
+
+  summaryEl.style.display = "block";
+}
+
 
 function showLeadForm(p) {
   if(leadShown) return;
@@ -6546,6 +6673,16 @@ function submitLead() {
     };
     window.open(`https://wa.me/212708700830?text=${encodeURIComponent(waConfirm[cl] || waConfirm.fr)}`, "_blank");
     animateLoyaltyPoints(10);
+
+    // Close chat + redirect to live tracking after short delay
+    setTimeout(() => {
+      closeChat();
+      showOrderTracking(name, leadId);
+      setTimeout(() => {
+        const s = document.getElementById("order-track-section");
+        if (s) s.scrollIntoView({ behavior:"smooth", block:"center" });
+      }, 400);
+    }, 2200);
   }, 1200);
 }
 
@@ -7218,6 +7355,7 @@ function resetChat() {
   chatHistory = [];
   window._savyChatLang = null;
   window._savyConfirmedDish = null;
+  window._savyOrderDishes = null;
   leadShown = false; leadDone = false; userMsgCount = 0;
   const msgs = document.getElementById("chat-msgs");
   if(msgs) msgs.innerHTML = "";
