@@ -2205,59 +2205,66 @@
 
     /* ── Lead form inside chat ── */
     #chat-lead-form {
-      padding:12px 13px 12px; border-top:1.5px solid var(--border);
+      padding:10px 11px 10px; border-top:1.5px solid var(--border);
       background:var(--card); flex-shrink:0; display:none;
       animation:slideDown .3s ease both;
+      overflow-y:auto; max-height:55dvh;
     }
     .lead-inp {
-      width:100%; padding:10px 12px; border-radius:11px;
+      width:100%; padding:8px 10px; border-radius:9px;
       border:1.5px solid var(--border);
-      font-size:13px; outline:none; color:var(--text);
+      font-size:12px; outline:none; color:var(--text);
       background:var(--bg); font-family:'DM Sans',sans-serif;
-      margin-bottom:8px; transition:border-color .2s, box-shadow .2s;
+      margin-bottom:6px; transition:border-color .2s, box-shadow .2s;
       display:block; box-sizing:border-box;
     }
-    textarea.lead-inp { resize:none; line-height:1.5; }
+    textarea.lead-inp { resize:none; line-height:1.4; height:44px; }
     .lead-inp:focus {
       border-color:var(--green);
       box-shadow:0 0 0 3px rgba(9,184,48,0.1);
       background:var(--card);
     }
     .lead-inp::placeholder { color:var(--muted); }
-    #lead-meal-summary { animation:slideDown .3s ease both; }
+    #lead-meal-summary {
+      animation:slideDown .3s ease both;
+      padding:8px 10px !important;
+      margin-bottom:8px !important;
+      font-size:11px !important;
+      border-radius:10px !important;
+    }
     @keyframes slideDown {
       from { opacity:0; transform:translateY(-8px); }
       to   { opacity:1; transform:translateY(0); }
     }
     .lead-submit {
-      width:100%; padding:13px; border-radius:13px; border:none;
+      width:100%; padding:10px; border-radius:10px; border:none;
       background:linear-gradient(135deg,var(--green),#06b237);
-      color:#fff; font-size:14px; font-weight:800;
+      color:#fff; font-size:13px; font-weight:800;
       cursor:pointer; font-family:'Outfit',sans-serif; letter-spacing:.01em;
-      box-shadow:0 6px 20px rgba(9,184,48,0.32);
+      box-shadow:0 4px 16px rgba(9,184,48,0.28);
       transition:all .2s;
       display:flex; align-items:center; justify-content:center; gap:8px;
     }
-    .lead-submit:hover { transform:translateY(-2px); box-shadow:0 10px 28px rgba(9,184,48,0.42); }
+    .lead-submit:hover { transform:translateY(-2px); box-shadow:0 8px 22px rgba(9,184,48,0.38); }
     .lead-submit:active { transform:translateY(0); }
     .lead-submit-pink {
       background:linear-gradient(135deg,#ec4899,#f472b6);
-      box-shadow:0 6px 20px rgba(236,72,153,0.32);
+      box-shadow:0 4px 16px rgba(236,72,153,0.28);
     }
-    .lead-submit-pink:hover { box-shadow:0 10px 28px rgba(236,72,153,0.42); }
+    .lead-submit-pink:hover { box-shadow:0 8px 22px rgba(236,72,153,0.38); }
     .lead-trust-row {
-      display:flex; align-items:center; justify-content:center; gap:12px;
-      margin-top:9px; flex-wrap:wrap;
+      display:flex; align-items:center; justify-content:center; gap:8px;
+      margin-top:7px; flex-wrap:wrap;
     }
     .lead-trust-item {
-      display:flex; align-items:center; gap:4px;
-      font-size:10.5px; color:var(--muted); font-family:'DM Sans',sans-serif;
+      display:flex; align-items:center; gap:3px;
+      font-size:10px; color:var(--muted); font-family:'DM Sans',sans-serif;
     }
     .lead-step-dots {
-      display:flex; align-items:center; justify-content:center; gap:6px;
-      margin-bottom:10px;
+      display:flex; align-items:center; justify-content:center; gap:5px;
+      margin-bottom:8px;
     }
-    .lead-step-dot { width:7px; height:7px; border-radius:50%; background:var(--border); transition:all .3s; }
+    .lead-step-dot { width:6px; height:6px; border-radius:50%; background:var(--border); transition:all .3s; }
     .lead-step-dot.active { background:var(--green); transform:scale(1.35); }
     .lead-step-dot.done   { background:var(--green); opacity:.5; }
 
@@ -3626,7 +3633,7 @@
     <div class="wwd-box wwd-box--teal">
       <span class="wwd-box-icon">💬</span>
       <div class="wwd-box-name" id="wwd-c5-title">Chef IA</div>
-      <div class="wwd-box-tag">💚 Darija · FR</div>
+      <div class="wwd-box-tag">💚 FR · AR · EN · ES</div>
     </div>
   </div>
 </section>
@@ -4009,12 +4016,12 @@
     <!-- ── Meal summary ── -->
     <div id="lead-meal-summary" style="
       background:var(--greenXL); border:1.5px solid var(--border);
-      border-radius:12px; padding:10px 12px; margin-bottom:10px;
-      font-size:12px; color:var(--text); display:none;
+      border-radius:10px; padding:8px 10px; margin-bottom:8px;
+      font-size:11px; color:var(--text); display:none;
     ">
-      <div style="font-family:'Outfit',sans-serif;font-weight:800;font-size:11px;color:var(--green);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px;">🧬 Votre commande</div>
-      <div id="lead-meal-items" style="line-height:1.8;color:var(--sub);"></div>
-      <div id="lead-meal-total" style="font-family:'Outfit',sans-serif;font-weight:900;font-size:15px;color:var(--green);margin-top:6px;padding-top:6px;border-top:1px solid var(--border);"></div>
+      <div style="font-family:'Outfit',sans-serif;font-weight:800;font-size:10px;color:var(--green);letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px;">🧬 Votre commande</div>
+      <div id="lead-meal-items" style="line-height:1.7;color:var(--sub);"></div>
+      <div id="lead-meal-total" style="font-family:'Outfit',sans-serif;font-weight:900;font-size:13px;color:var(--green);margin-top:5px;padding-top:5px;border-top:1px solid var(--border);"></div>
     </div>
     <!-- ── Fields ── -->
     <input class="lead-inp" id="lead-name"  type="text" placeholder="Votre prénom / اسمك" autocomplete="given-name"/>
@@ -4226,7 +4233,7 @@ const copy = {
       {icon:"👨‍🍳", title:"Cooked to order",          desc:"Nothing is pre-made. Every dish is cooked the moment you order, with fresh ingredients from the Tétouan market.", tag:"🌿 100% Fresh"},
       {icon:"🛵", title:"Delivered in 45 minutes",    desc:"Tétouan, M'diq, Martil — your meal arrives hot, fresh, and carefully packed. Guaranteed. Always on time.", tag:"⏱ 45 min guarantee"},
       {icon:"🍽️", title:"18 dishes, 4 world cuisines",desc:"Moroccan, Asian, Mediterranean, Fusion — an international menu designed for your health, with flavours you love.", tag:"🌍 4 Cuisines"},
-      {icon:"💬", title:"A real chef who talks to you", desc:"Ask anything — allergens, calories, portions. Chef SAVY answers in English, Darija & French like a nutrition expert at your service.", tag:"💚 EN · Darija · Français"},
+      {icon:"💬", title:"A real chef who talks to you", desc:"Ask anything — allergens, calories, portions. Chef SAVY answers in English, French, Arabic & Spanish like a nutrition expert at your service.", tag:"💚 EN · FR · AR · ES"},
     ],
     otsEyebrow:"🛵 Live tracking", otsS0:"Order received", otsS1:"Preparing", otsS2:"Packaging", otsS3:"On the way", otsActive:"in progress...", otsCta:"Haven't ordered yet?", otsCtaBtn:"Order →",
     revEyebrow:"⭐ Customer Reviews",
@@ -4321,7 +4328,7 @@ const copy = {
       {icon:"👨‍🍳", title:"Cuisiné à la commande",            desc:"Rien n'est préparé à l'avance. Chaque plat est cuisiné au moment de votre commande, avec des ingrédients frais du marché de Tétouan.", tag:"🌿 100% Frais"},
       {icon:"🛵", title:"Livraison en 45 minutes",           desc:"Tétouan, M'diq, Martil — votre repas arrive chaud, frais et emballé avec soin. Garanti. Toujours à l'heure.", tag:"⏱ Garanti 45 min"},
       {icon:"🍽️", title:"16 plats, 4 cuisines du monde",    desc:"Marocain, Asiatique, Méditerranéen, Fusion — une carte internationale pensée pour votre santé, avec les saveurs que vous aimez.", tag:"🌍 4 Cuisines"},
-      {icon:"💬", title:"Un vrai chef qui vous parle",       desc:"Posez toutes vos questions — allergènes, calories, portions. Chef SAVY répond en Darija et français, comme un expert en nutrition à votre service.", tag:"💚 Darija · Français · عربي"},
+      {icon:"💬", title:"Un vrai chef qui vous parle",       desc:"Posez toutes vos questions — allergènes, calories, portions. Chef SAVY répond en français, arabe, anglais et espagnol, comme un expert en nutrition à votre service.", tag:"💚 FR · AR · EN · ES"},
     ],
     otsEyebrow:"🛵 Suivi en direct", otsS0:"Commande reçue", otsS1:"En préparation", otsS2:"Emballage", otsS3:"En route", otsActive:"en cours...", otsCta:"Pas encore commandé ?", otsCtaBtn:"Commander →",
     revEyebrow:"⭐ Avis Clients",
@@ -4416,7 +4423,7 @@ const copy = {
       {icon:"👨‍🍳", title:"مطبوخ عند الطلب",                   desc:"لا شيء يُحضَّر مسبقاً. كل طبق يُطبخ لحظة استلام طلبكم، بمكونات طازجة من سوق تطوان المحلي.", tag:"🌿 100% طازج"},
       {icon:"🛵", title:"توصيل في 45 دقيقة",                 desc:"تطوان · المضيق · مرتيل — وجبتكم تصل ساخنة وطازجة ومعبأة بعناية. مضمون دائماً. في الوقت دائماً.", tag:"⏱ مضمون 45 دقيقة"},
       {icon:"🍽️", title:"16 طبقاً من 4 مطابخ عالمية",        desc:"مغربي، آسيوي، متوسطي، فيوجن — قائمة دولية مصممة لصحتكم بالنكهات التي تعشقونها.", tag:"🌍 4 مطابخ"},
-      {icon:"💬", title:"شيف حقيقي يتحدث معكم",              desc:"اسألوا كل أسئلتكم — مكونات، سعرات، حصص، حساسيات. Chef SAVY يجيب بالدارجة والعربية والفرنسية كخبير تغذية في خدمتكم.", tag:"💚 عربية · Français · EN"},
+      {icon:"💬", title:"شيف حقيقي يتحدث معكم",              desc:"اسألوا كل أسئلتكم — مكونات، سعرات حرارية، حصص، حساسيات. Chef SAVY يجيب بالعربية والفرنسية والإنجليزية والإسبانية كخبير تغذية في خدمتكم.", tag:"💚 AR · FR · EN · ES"},
     ],
     otsEyebrow:"🛵 التتبع المباشر", otsS0:"تم استلام الطلب", otsS1:"قيد التحضير", otsS2:"التغليف", otsS3:"في الطريق", otsActive:"جارٍ...", otsCta:"لم تطلب بعد؟", otsCtaBtn:"اطلب الآن →",
     revEyebrow:"⭐ آراء العملاء",
@@ -4730,6 +4737,7 @@ function setLang(l) {
   if (chatMsgs) {
     chatHistory = [];
   window._savyChatLang = null;
+  window._savyConfirmedDish = null;
     chatMsgs.innerHTML = "";
     leadShown = false; leadDone = false; userMsgCount = 0;
     const leadForm  = document.getElementById("chat-lead-form");
@@ -5191,6 +5199,7 @@ function resetChatForPersona(p) {
   // Clear state
   chatHistory = [];
   window._savyChatLang = null;
+  window._savyConfirmedDish = null;
   leadShown   = false;
   leadDone    = false;
   userMsgCount = 0;
@@ -5291,6 +5300,7 @@ function chatSetPersona(p) {
   });
   chatHistory = [];
   window._savyChatLang = null;
+  window._savyConfirmedDish = null;
   document.getElementById("chat-msgs").innerHTML = "";
   leadShown = false; leadDone = false; userMsgCount = 0;
   const rlf=document.getElementById("chat-lead-form"); if(rlf) rlf.style.display="none";
@@ -5485,6 +5495,19 @@ function _onLangPicked(code, name, flag, p) {
   if (pickerMsg) pickerMsg.remove();
 
   window._savyChatLang = code;
+
+  // Update input placeholder & direction to match chosen language
+  const inp = document.getElementById("chat-inp");
+  if (inp) {
+    const placeholders = {
+      fr: "Écris à Chef SAVY...",
+      en: "Message Chef SAVY...",
+      ar: "اكتب لـ Chef SAVY...",
+      es: "Escribe a Chef SAVY...",
+    };
+    inp.placeholder = placeholders[code] || placeholders.fr;
+    inp.dir = code === "ar" ? "rtl" : "ltr";
+  }
 
   addUserMsg(flag + " " + name);
   chatHistory.push({ role: "user", content: name });
@@ -5730,6 +5753,9 @@ async function chatSendText(text) {
     chatHistory.push({ role:"assistant", content:reply });
     addBotMsg(reply, isCouple);
     if(triggerLead && !leadShown) {
+      // Capture confirmed dish from the confirmation message (last bot reply)
+      // This is the ONLY source of truth — not the full chat history
+      window._savyConfirmedDish = _extractConfirmedDish(reply);
       setTimeout(() => showLeadForm(p), 800);
     }
   } else {
@@ -5747,113 +5773,173 @@ async function chatSendText(text) {
    Per-persona so even the error feels contextual.
 ═══════════════════════════════════════════ */
 function getFallbackReply(p, isAr, userMsg) {
-  const q = (userMsg||"").toLowerCase();
+  const q  = (userMsg || "").toLowerCase();
+  const cl = window._savyChatLang || lang || "fr";
 
-  // ── Keyword-matched static FAQ (works fully offline) ──────────────────
   const faq = [
-    { keys:["livraison","delivery","توصيل","وصول","وقت"],
-      fr:"🛵 Livraison en 45 min max à Tétouan, M'diq et Martil. Commande avant 20h pour le soir même !",
-      ar:"🛵 التوصيل خلال 45 دقيقة إلى تطوان، مارتيل والمضيق. اطلب قبل الساعة 8 مساءً لنفس اليوم!" },
-    { keys:["prix","price","tarif","cost","سعر","تكلفة","ثمن"],
-      fr:"💰 Nos plats vont de 45 à 95 MAD. Livraison offerte à partir de 2 plats commandés !",
-      ar:"💰 أسعارنا من 45 إلى 95 درهم. التوصيل مجاني من طلبيتين فأكثر!" },
-    { keys:["calories","calorie","kcal","macro","protéine","protein","بروتين","سعرات"],
-      fr:"🔥 Chaque plat affiche ses calories et macros. Filtre par 'High Protein' ou 'Low Carb' dans le menu !",
-      ar:"🔥 كل طبق يعرض السعرات والماكروز. فلتر 'بروتين عالي' أو 'كارب منخفض' في المنيو!" },
-    { keys:["commande","order","commander","اطلب","طلب","كيف"],
-      fr:"🍽️ Choisis tes plats dans le menu → clique sur Ajouter → puis sur 'Commander'. C'est tout !",
-      ar:"🍽️ اختر أطباقك من المنيو → انقر إضافة → ثم 'اطلب الآن'. بسيط !" },
-    { keys:["ingrédient","fresh","frais","طازج","مكونات"],
+    { keys:["livraison","delivery","توصيل","وصول","وقت","entrega","envío"],
+      fr:"🛵 Livraison en 45 min max à Tétouan, M'diq et Martil. Commande avant 21h !",
+      en:"🛵 Delivery in 45 min to Tétouan, M'diq and Martil. Order before 9 PM!",
+      ar:"🛵 التوصيل خلال 45 دقيقة إلى تطوان، المضيق ومارتيل. اطلب قبل الساعة 9 مساءً!",
+      es:"🛵 Entrega en 45 min en Tétouan, M'diq y Martil. ¡Pide antes de las 21h!" },
+    { keys:["prix","price","tarif","cost","سعر","تكلفة","ثمن","precio","coût"],
+      fr:"💰 Nos plats vont de 39 à 65 MAD. Livraison offerte à partir de 2 plats !",
+      en:"💰 Our dishes range from 39 to 65 MAD. Free delivery from 2 dishes!",
+      ar:"💰 أسعارنا من 39 إلى 65 درهم. التوصيل مجاني من طلبيتين فأكثر!",
+      es:"💰 Nuestros platos van de 39 a 65 MAD. ¡Envío gratis a partir de 2 platos!" },
+    { keys:["calories","calorie","kcal","macro","protéine","protein","بروتين","سعرات","proteína"],
+      fr:"🔥 Chaque plat affiche ses calories et macros. Notre menu va de 180 à 490 kcal par portion.",
+      en:"🔥 Every dish shows its calories and macros. Our menu ranges from 180 to 490 kcal per portion.",
+      ar:"🔥 كل طبق يعرض السعرات والماكروز. تتراوح أطباقنا بين 180 و490 سعرة حرارية.",
+      es:"🔥 Cada plato muestra sus calorías y macros. Nuestro menú va de 180 a 490 kcal por porción." },
+    { keys:["commande","order","commander","اطلب","طلب","كيف","pedir","pedido"],
+      fr:"🍽️ Dis-moi ce que tu veux manger et je te prépare la commande en quelques secondes !",
+      en:"🍽️ Tell me what you'd like to eat and I'll prepare your order in seconds!",
+      ar:"🍽️ أخبرني بما تريد تناوله وسأجهّز طلبك في ثوانٍ!",
+      es:"🍽️ ¡Dime qué quieres comer y preparo tu pedido en segundos!" },
+    { keys:["ingrédient","fresh","frais","طازج","مكونات","fresco","ingrediente"],
       fr:"✅ Tous nos plats sont préparés le jour même avec des ingrédients frais du marché local.",
-      ar:"✅ كل أطباقنا تُحضَّر يوميًا بمكونات طازجة من السوق المحلي." },
-    { keys:["allergi","allergen","gluten","حساسية","غلوتين"],
-      fr:"⚠️ Informe-nous de tes allergies dans le message WhatsApp — notre chef adaptera ta commande.",
-      ar:"⚠️ أخبرنا بحساسيتك عبر واتساب وسيتكيف الشيف مع طلبك." },
-    { keys:["fidélité","loyalty","points","نقاط","ولاء","خصم"],
-      fr:"🎁 Programme fidélité SAVY : dès 3 commandes tu débloques des réductions allant jusqu'à 15% !",
-      ar:"🎁 برنامج ولاء SAVY: من 3 طلبيات تحصل على خصومات تصل إلى 15%!" },
-    { keys:["zone","ville","city","مدينة","منطقة","تطوان","مضيق","مارتيل"],
+      en:"✅ All our dishes are prepared daily with fresh ingredients from the local market.",
+      ar:"✅ كل أطباقنا تُحضَّر يومياً بمكونات طازجة من السوق المحلي.",
+      es:"✅ Todos nuestros platos se preparan a diario con ingredientes frescos del mercado local." },
+    { keys:["allergi","allergen","gluten","حساسية","غلوتين","alergia","alérgeno"],
+      fr:"⚠️ Informe-nous de tes allergies dans le champ 'Note' lors de la commande — notre chef adaptera ton repas.",
+      en:"⚠️ Let us know your allergies in the 'Note' field when ordering — our chef will adapt your meal.",
+      ar:"⚠️ أخبرنا بحساسيتك في حقل 'ملاحظة' عند الطلب وسيتكيف الشيف مع احتياجاتك.",
+      es:"⚠️ Indícanos tus alergias en el campo 'Nota' al pedir — nuestro chef adaptará tu comida." },
+    { keys:["fidélité","loyalty","points","نقاط","ولاء","خصم","fidelidad","puntos"],
+      fr:"🎁 Programme fidélité SAVY : dès 6 commandes tu débloques des réductions jusqu'à 15% !",
+      en:"🎁 SAVY loyalty programme: from 6 orders you unlock discounts of up to 15%!",
+      ar:"🎁 برنامج ولاء SAVY: من 6 طلبيات تحصل على خصومات تصل إلى 15%!",
+      es:"🎁 Programa de fidelidad SAVY: ¡a partir de 6 pedidos obtienes descuentos de hasta el 15%!" },
+    { keys:["zone","ville","city","مدينة","منطقة","تطوان","مضيق","مارتيل","ciudad","zona"],
       fr:"📍 On livre à Tétouan, M'diq et Martil. D'autres zones arrivent bientôt !",
-      ar:"📍 نوصّل إلى تطوان، المضيق ومارتيل. مناطق أخرى قريباً!" },
+      en:"📍 We deliver to Tétouan, M'diq and Martil. More areas coming soon!",
+      ar:"📍 نوصّل إلى تطوان، المضيق ومارتيل. مناطق إضافية قريباً!",
+      es:"📍 Entregamos en Tétouan, M'diq y Martil. ¡Más zonas próximamente!" },
   ];
 
-  for(const item of faq){
-    if(item.keys.some(k=>q.includes(k))){
-      return { text: (isAr ? item.ar : item.fr) + (isAr ? "\n\n_(وضع غير متصل — معلومات ثابتة)_" : "\n\n_(mode hors-ligne — info statique)_") };
+  const offlineNote = {
+    fr:"\n\n_(mode hors-ligne — info statique)_",
+    en:"\n\n_(offline mode — static info)_",
+    ar:"\n\n_(وضع غير متصل — معلومات ثابتة)_",
+    es:"\n\n_(modo sin conexión — info estática)_",
+  };
+
+  for (const item of faq) {
+    if (item.keys.some(k => q.includes(k))) {
+      const txt = item[cl] || item.fr;
+      return { text: txt + (offlineNote[cl] || offlineNote.fr) };
     }
   }
 
-  // ── Per-persona generic fallback ─────────────────────────────────────
+  // Per-persona generic fallback in all 4 languages
   const msgs = {
     employee: {
-      fr: "Petite coupure réseau 😕 Réessaie dans quelques secondes — ta pause déjeuner ne va pas attendre !",
-      ar: "انقطع الاتصال لحظياً 😕 جرّب مجدداً — وقت الغداء لا ينتظر !",
+      fr:"Petite coupure réseau 😕 Réessaie dans quelques secondes — ta pause déjeuner ne va pas attendre !",
+      en:"Quick network hiccup 😕 Try again in a moment — your lunch break can't wait!",
+      ar:"انقطع الاتصال لحظياً 😕 جرّب مجدداً — وقت الغداء لا ينتظر!",
+      es:"Corte de red momentáneo 😕 Inténtalo de nuevo — ¡tu pausa de almuerzo no puede esperar!",
     },
     sportif: {
-      fr: "Connexion perdue un instant 😕 Réessaie vite, champion — tes macros t'attendent !",
-      ar: "انقطع الاتصال للحظة 😕 جرّب مجدداً بطل — الماكروز في انتظارك !",
+      fr:"Connexion perdue un instant 😕 Réessaie vite, champion — tes macros t'attendent !",
+      en:"Lost connection for a moment 😕 Try again, champion — your macros are waiting!",
+      ar:"انقطع الاتصال للحظة 😕 جرّب مجدداً بطل — الماكروز في انتظارك!",
+      es:"Conexión perdida un momento 😕 ¡Inténtalo de nuevo, campeón — tus macros te esperan!",
     },
     famille: {
-      fr: "Petite coupure réseau 😕 Réessaie dans quelques secondes — toute la famille attend son repas !",
-      ar: "انقطع الاتصال لحظياً 😕 جرّب مجدداً — العائلة تنتظر !",
+      fr:"Petite coupure réseau 😕 Réessaie dans quelques secondes — toute la famille attend son repas !",
+      en:"Quick network hiccup 😕 Try again in a moment — the whole family is waiting!",
+      ar:"انقطع الاتصال لحظياً 😕 جرّب مجدداً — العائلة تنتظر!",
+      es:"Corte de red momentáneo 😕 Inténtalo de nuevo — ¡toda la familia está esperando!",
     },
     couple: {
-      fr: "Petite interruption 😕 Réessaie dans un instant — votre soirée mérite le meilleur 💑",
-      ar: "انقطع الاتصال للحظة 😕 جرّب مجدداً — سهرتكم تستحق الأفضل 💑",
+      fr:"Petite interruption 😕 Réessaie dans un instant — votre soirée mérite le meilleur 💑",
+      en:"Brief interruption 😕 Try again in a moment — your evening deserves the best 💑",
+      ar:"انقطع الاتصال للحظة 😕 جرّب مجدداً — سهرتكم تستحق الأفضل 💑",
+      es:"Breve interrupción 😕 Inténtalo de nuevo — vuestra velada merece lo mejor 💑",
     },
   };
   const set = msgs[p] || msgs.employee;
-  const key = isAr ? "ar" : "fr";
-  return { text: set[key] };
+  return { text: set[cl] || set.fr };
 }
 
 /* ═══════════════════════════════════════════
    LEAD FORM
 ═══════════════════════════════════════════ */
+// Extract the confirmed dish from the bot's confirmation message
+// Only called right when SAVY_GET_LEAD fires — most accurate source
+function _extractConfirmedDish(botMsg) {
+  if (!botMsg || !dishes || !dishes.length) return null;
+  const msg = botMsg.toLowerCase();
+  // Match against dish names and arabic names
+  const matched = dishes.find(d =>
+    (d.name && msg.includes(d.name.toLowerCase())) ||
+    (d.ar   && botMsg.includes(d.ar))
+  );
+  return matched || null;
+}
+
 function buildLeadMealSummary(isAr) {
   const summaryEl = document.getElementById("lead-meal-summary");
   const itemsEl   = document.getElementById("lead-meal-items");
   const totalEl   = document.getElementById("lead-meal-total");
   if(!summaryEl || !itemsEl || !totalEl) return;
 
-  // Try to get meals from cart first
   let lines = [];
   let total = 0;
 
-  if(cart && cart.length > 0) {
-    // Use actual cart items
+  // Priority 1: confirmed dish captured at SAVY_GET_LEAD moment
+  if (window._savyConfirmedDish) {
+    const d = window._savyConfirmedDish;
+    lines.push({ name: isAr ? (d.ar || d.name) : d.name, price: d.price });
+    total += d.price;
+  }
+  // Priority 2: cart items (added via dish cards, not chat)
+  else if (cart && cart.length > 0) {
     cart.forEach(id => {
       const d = dishes.find(x => x.id === id);
-      if(d) {
-        lines.push((isAr ? d.ar : d.name) + " — " + d.price + " MAD");
-        total += d.price;
-      }
+      if (d) { lines.push({ name: isAr ? (d.ar || d.name) : d.name, price: d.price }); total += d.price; }
     });
-  } else {
-    // Extract from chat history — look for dish names mentioned
-    const history = chatHistory || [];
-    const allText = history.map(m => m.content || "").join(" ");
-    const mentioned = dishes.filter(d =>
-      allText.toLowerCase().includes(d.name.toLowerCase()) ||
-      allText.includes(d.ar)
-    ).slice(0, 4);
-    if(mentioned.length > 0) {
-      mentioned.forEach(d => {
-        lines.push((isAr ? d.ar : d.name) + " — " + d.price + " MAD");
-        total += d.price;
-      });
-    }
+  }
+  // Priority 3: scan ONLY the last 2 assistant messages (confirmation step only)
+  else {
+    const lastBotMsgs = (chatHistory || [])
+      .filter(m => m.role === "assistant")
+      .slice(-2)
+      .map(m => m.content || "");
+    const recentText = lastBotMsgs.join(" ").toLowerCase();
+    const recentRaw  = lastBotMsgs.join(" ");
+    const matched = dishes.filter(d =>
+      (d.name && recentText.includes(d.name.toLowerCase())) ||
+      (d.ar   && recentRaw.includes(d.ar))
+    ).slice(0, 1); // only ONE dish — the confirmed one
+    matched.forEach(d => {
+      lines.push({ name: isAr ? (d.ar || d.name) : d.name, price: d.price });
+      total += d.price;
+    });
   }
 
-  if(lines.length > 0) {
+  if (lines.length > 0) {
     itemsEl.innerHTML = lines.map(l =>
-      "<div style='display:flex;justify-content:space-between;gap:8px;'>" +
-      "<span>• " + l.split(" — ")[0] + "</span>" +
-      "<span style='font-weight:700;color:var(--green)'>" + l.split(" — ")[1] + "</span>" +
-      "</div>"
+      `<div style="display:flex;justify-content:space-between;gap:8px;">` +
+      `<span>• ${l.name}</span>` +
+      `<span style="font-weight:700;color:var(--green)">${l.price} MAD</span>` +
+      `</div>`
     ).join("");
-    const label = isAr ? "المجموع" : (lang==="en" ? "Total" : "Total");
-    totalEl.textContent = label + " : " + total + " MAD";
+    const totalLabel = { fr:"Total", en:"Total", ar:"المجموع", es:"Total" }[lang] || "Total";
+    const cl = window._savyChatLang || lang || "fr";
+    const delivLabels = {
+      fr: ["🛵 Livraison offerte", "+10 MAD livraison"],
+      en: ["🛵 Free delivery",     "+10 MAD delivery"],
+      ar: ["🛵 توصيل مجاني",       "+10 درهم توصيل"],
+      es: ["🛵 Envío gratis",      "+10 MAD envío"],
+    };
+    const [freeLabel, paidLabel] = delivLabels[cl] || delivLabels.fr;
+    const delivLabel = total >= 2*35
+      ? `<span style="font-size:10px;color:var(--green);font-weight:600;"> · ${freeLabel}</span>`
+      : `<span style="font-size:10px;color:var(--muted);"> · ${paidLabel}</span>`;
+    totalEl.innerHTML = `${totalLabel} : <strong>${total} MAD</strong>${delivLabel}`;
     summaryEl.style.display = "block";
   }
 }
@@ -5861,35 +5947,80 @@ function buildLeadMealSummary(isAr) {
 function showLeadForm(p) {
   if(leadShown) return;
   leadShown = true;
-  const isAr    = lang==="ar"||false;
-  const isCouple = p==="couple";
+
+  // Use the chat's chosen language, not the page language
+  const cl      = window._savyChatLang || lang || "fr";
+  const isAr    = cl === "ar";
+  const isCouple = p === "couple";
 
   buildLeadMealSummary(isAr);
 
-  const prompt = isAr
-    ? "ممتاز ! 🧬 لإتمام طلبكم، يرجى ملء المعلومات التالية :"
-    : (lang==="en"
-      ? "Perfect! 🧬 To confirm your order, fill in your details below:"
-      : "Parfait ! 🧬 Pour finaliser votre commande, complétez vos infos ci-dessous :");
-  addBotMsg(prompt, isCouple);
+  const prompts = {
+    fr: "Parfait ! 🧬 Pour finaliser votre commande, complétez vos infos ci-dessous :",
+    en: "Perfect! 🧬 To confirm your order, fill in your details below:",
+    ar: "ممتاز ! 🧬 لإتمام طلبكم، يرجى ملء المعلومات التالية :",
+    es: "¡Perfecto! 🧬 Para confirmar tu pedido, completa tus datos a continuación:",
+  };
+  addBotMsg(prompts[cl] || prompts.fr, isCouple);
 
   setTimeout(() => {
-    // Keep input area visible — user can still type to change order
     const form = document.getElementById("chat-lead-form");
     form.style.display = "block";
     form.dir = isAr ? "rtl" : "ltr";
 
+    // Localise input placeholders
+    const namePh  = { fr:"Votre prénom", en:"Your first name", ar:"اسمك", es:"Tu nombre" };
+    const cityPh  = { fr:"Adresse de livraison", en:"Delivery address", ar:"عنوان التوصيل", es:"Dirección de entrega" };
+    const phonePh = { fr:"WhatsApp (+212 6XX XXX XXX)", en:"WhatsApp (+212 6XX XXX XXX)", ar:"واتساب (+212 6XX XXX XXX)", es:"WhatsApp (+212 6XX XXX XXX)" };
+    const notePh  = { fr:"Note (allergies, étage, instructions...)", en:"Note (allergies, floor, instructions...)", ar:"ملاحظة (حساسيات، طابق، تعليمات...)", es:"Nota (alergias, piso, instrucciones...)" };
+
+    const nameInp  = document.getElementById("lead-name");
+    const cityInp  = document.getElementById("lead-city");
+    const phoneInp = document.getElementById("lead-phone");
+    const noteInp  = document.getElementById("lead-comment");
+    if (nameInp)  nameInp.placeholder  = namePh[cl]  || namePh.fr;
+    if (cityInp)  cityInp.placeholder  = cityPh[cl]  || cityPh.fr;
+    if (phoneInp) phoneInp.placeholder = phonePh[cl] || phonePh.fr;
+    if (noteInp)  noteInp.placeholder  = notePh[cl]  || notePh.fr;
+
     // Localise back button
     const backTxt = document.getElementById("back-btn-txt");
-    if(backTxt) backTxt.textContent = isAr
-      ? "تغيير طلبي"
-      : (lang==="en" ? "Change my order" : "Changer ma commande");
+    const backLabels = { fr:"Changer ma commande", en:"Change my order", ar:"تغيير طلبي", es:"Cambiar mi pedido" };
+    if (backTxt) backTxt.textContent = backLabels[cl] || backLabels.fr;
 
-    if(isCouple) {
-      document.getElementById("lead-submit-btn").className = "lead-submit lead-submit-pink";
-      document.getElementById("lead-submit-btn").textContent = isAr ? "🌸 أرسل طلبي ✨" : "🌸 Envoyer ma commande ✨";
+    // Localise submit button
+    const btnTxtEl = document.getElementById("lead-btn-txt");
+    const submitLabels = { fr:"🛵 Confirmer ma commande", en:"🛵 Confirm my order", ar:"🛵 تأكيد طلبي", es:"🛵 Confirmar mi pedido" };
+    if (btnTxtEl) btnTxtEl.textContent = submitLabels[cl] || submitLabels.fr;
+
+    // Trust items
+    const trustEls = document.querySelectorAll(".lead-trust-item");
+    const trustLabels = {
+      fr: ["🔒 Données privées", "⚡ 45 min garanti", "✅ 125+ clients"],
+      en: ["🔒 Data private",    "⚡ 45 min guaranteed", "✅ 125+ customers"],
+      ar: ["🔒 بياناتك خاصة",   "⚡ 45 دق مضمونة",     "✅ +125 عميل"],
+      es: ["🔒 Datos privados",  "⚡ 45 min garantizado","✅ 125+ clientes"],
+    };
+    const tl = trustLabels[cl] || trustLabels.fr;
+    trustEls.forEach((el, i) => { if (tl[i]) el.textContent = tl[i]; });
+
+    // Couple pink style
+    if (isCouple) {
+      const submitBtn = document.getElementById("lead-submit-btn");
+      if (submitBtn) {
+        submitBtn.className = "lead-submit lead-submit-pink";
+        if (btnTxtEl) btnTxtEl.textContent = isAr ? "🌸 أرسل طلبي ✨" : (cl==="en" ? "🌸 Send my order ✨" : cl==="es" ? "🌸 Enviar mi pedido ✨" : "🌸 Envoyer ma commande ✨");
+      }
     }
-    form.scrollIntoView({behavior:"smooth", block:"nearest"});
+
+    // Summary label
+    const summaryLabel = document.querySelector("#lead-meal-summary div:first-child");
+    if (summaryLabel) {
+      const labels = { fr:"🧬 Votre commande", en:"🧬 Your order", ar:"🧬 طلبكم", es:"🧬 Tu pedido" };
+      summaryLabel.textContent = labels[cl] || labels.fr;
+    }
+
+    form.scrollIntoView({ behavior:"smooth", block:"nearest" });
   }, 600);
 }
 
@@ -6351,55 +6482,69 @@ function submitOrder() {
 }
 
 function submitLead() {
-  const btn = document.getElementById("lead-submit-btn");
+  const btn    = document.getElementById("lead-submit-btn");
   const btnTxt = document.getElementById("lead-btn-txt");
-  if(btn) { btn.disabled = true; }
-  if(btnTxt) btnTxt.textContent = "⏳ Envoi en cours...";
+
+  const cl      = window._savyChatLang || lang || "fr";
+  const isAr    = cl === "ar";
+  const isCouple = persona === "couple";
+
+  const loadingLabels = { fr:"⏳ Envoi en cours...", en:"⏳ Sending...", ar:"⏳ جاري الإرسال...", es:"⏳ Enviando..." };
+  if (btn)    btn.disabled = true;
+  if (btnTxt) btnTxt.textContent = loadingLabels[cl] || loadingLabels.fr;
+
   const name    = (document.getElementById("lead-name").value    || "").trim();
   const city    = (document.getElementById("lead-city").value    || "").trim();
   const phone   = normalizePhone(document.getElementById("lead-phone").value || "");
   const comment = (document.getElementById("lead-comment") ? document.getElementById("lead-comment").value : "").trim();
-  const isCouple = persona === "couple";
-  const isAr   = lang === "ar" || false;
 
-  const hi = (id) => {
-    const el = document.getElementById(id);
-    if(el){ el.style.borderColor = "#e53935"; setTimeout(() => el.style.borderColor = "", 1500); }
-  };
-  if(!name)  { showFieldError("lead-name",  "required"); return; }
-  if(name.length < 3) { showFieldError("lead-name", "min 3 chars"); return; }
-  if(!city)  { showFieldError("lead-city",  "required"); return; }
-  if(!phone) { showFieldError("lead-phone", "required"); return; }
-  const phoneClean = phone.replace(/\s+/g, '');
-  const validPhone = /^(\+212|0212|212|0)[5-7]\d{8}$/.test(phoneClean);
-  if(!validPhone) { showFieldError("lead-phone", lang==="ar" ? "رقم غير صحيح" : "Numéro invalide (+212 6XX)"); return; }
-  if(!validatePhone(phone)) { showFieldError("lead-phone", "phone"); return; }
+  const phoneErrLabel = { fr:"Numéro invalide (+212 6XX)", en:"Invalid number (+212 6XX)", ar:"رقم غير صحيح", es:"Número inválido (+212 6XX)" };
+
+  const _fail = () => { if(btn) btn.disabled = false; if(btnTxt) btnTxt.textContent = loadingLabels[cl]; };
+  if (!name)           { showFieldError("lead-name",  "required"); _fail(); return; }
+  if (name.length < 2) { showFieldError("lead-name",  "required"); _fail(); return; }
+  if (!city)           { showFieldError("lead-city",  "required"); _fail(); return; }
+  if (!phone)          { showFieldError("lead-phone", "required"); _fail(); return; }
+  const phoneClean = phone.replace(/\s+/g, "");
+  const validPhone = /(\+212|0212|212|0)[5-7]\d{8}$/.test(phoneClean);
+  if (!validPhone)     { showFieldError("lead-phone", phoneErrLabel[cl] || phoneErrLabel.fr); _fail(); return; }
+  if (!validatePhone(phone)) { showFieldError("lead-phone", "phone"); _fail(); return; }
 
   leadDone = true;
-  try { trackEvent('lead_submit', { persona: persona || 'unknown', lang }); } catch(e){}
-  // Remember customer for next visit
+  try { trackEvent("lead_submit", { persona: persona || "unknown", lang: cl }); } catch(e){}
   localStorage.setItem("savy_customer_name",  name);
   localStorage.setItem("savy_customer_phone", phone);
-  const sbtn = document.getElementById("lead-submit-btn");
-  if(sbtn){ sbtn.textContent = isAr ? "⏳ جاري..." : "⏳ ..."; sbtn.disabled = true; }
 
-  saveToSheets({ name, city, phone: "'" + phone, persona: persona || "employee", lang,
+  saveToSheets({
+    name, city, phone: "'" + phone, persona: persona || "employee", lang: cl,
     comment: comment || "",
-    conversation: chatHistory.filter(m => m.role === "user").map(m => m.content).join(" | ") });
+    conversation: chatHistory.filter(m => m.role === "user").map(m => m.content).join(" | ")
+  });
 
   setTimeout(() => {
-    const hideLF=document.getElementById("chat-lead-form"); if(hideLF) hideLF.style.display="none";
-    const finalMsg = isAr
-      ? `شكراً جزيلاً، ${name} ! 🍽️
-طلبكم في يد شيفنا — سيُحضَّر بعناية وكل الحب ويُسلَّم خلال 45 دقيقة. ستصلكم رسالة تأكيد على WhatsApp. 💚`
-      : `Merci beaucoup, ${name} ! 🍽️
-Votre commande est entre les mains de notre chef — préparée avec soin et livrée dans 45 minutes. Vous recevrez une confirmation sur votre WhatsApp. 💚`;
-    addBotMsg(finalMsg, isCouple);
+    const hideLF = document.getElementById("chat-lead-form");
+    if (hideLF) hideLF.style.display = "none";
+
+    const thankYou = {
+      fr: `Merci beaucoup, ${name} ! 🍽️\nVotre commande est entre les mains de notre chef — préparée avec soin et livrée dans 45 minutes. Vous recevrez une confirmation sur WhatsApp. 💚`,
+      en: `Thank you so much, ${name}! 🍽️\nYour order is now with our chef — prepared with care and delivered within 45 minutes. You will receive a WhatsApp confirmation shortly. 💚`,
+      ar: `شكراً جزيلاً، ${name} ! 🍽️\nطلبكم في يد شيفنا — سيُحضَّر بعناية وكل الحب ويُسلَّم خلال 45 دقيقة. ستصلكم رسالة تأكيد على WhatsApp. 💚`,
+      es: `¡Muchas gracias, ${name}! 🍽️\nTu pedido está en manos de nuestro chef — preparado con cuidado y entregado en 45 minutos. Recibirás una confirmación por WhatsApp. 💚`,
+    };
+    addBotMsg(thankYou[cl] || thankYou.fr, isCouple);
+
     const cst = document.getElementById("chat-status-txt");
-    if(cst) cst.textContent = isAr ? "✅ طلبك في الطريق — 45 دق ⏱️" : "✅ Commande en route — 45 min ⏱️";
+    const statusLabels = { fr:"✅ Commande en route — 45 min ⏱️", en:"✅ Order on the way — 45 min ⏱️", ar:"✅ طلبك في الطريق — 45 دق ⏱️", es:"✅ Pedido en camino — 45 min ⏱️" };
+    if (cst) cst.textContent = statusLabels[cl] || statusLabels.fr;
+
     const leadId = "SAVY-" + Math.floor(1000 + Math.random() * 9000);
-    const waMsg = encodeURIComponent(isAr ? `سلام SAVY! أؤكد طلبي رقم ${leadId} ✅` : `Salam SAVY ! Je confirme ma commande ${leadId} ✅`);
-    window.open(`https://wa.me/212708700830?text=${waMsg}`, "_blank");
+    const waConfirm = {
+      fr: `Salam SAVY ! Je confirme ma commande ${leadId} ✅`,
+      en: `Hello SAVY! I confirm my order ${leadId} ✅`,
+      ar: `سلام SAVY! أؤكد طلبي رقم ${leadId} ✅`,
+      es: `¡Hola SAVY! Confirmo mi pedido ${leadId} ✅`,
+    };
+    window.open(`https://wa.me/212708700830?text=${encodeURIComponent(waConfirm[cl] || waConfirm.fr)}`, "_blank");
     animateLoyaltyPoints(10);
   }, 1200);
 }
@@ -7072,6 +7217,7 @@ function backToChat() {
 function resetChat() {
   chatHistory = [];
   window._savyChatLang = null;
+  window._savyConfirmedDish = null;
   leadShown = false; leadDone = false; userMsgCount = 0;
   const msgs = document.getElementById("chat-msgs");
   if(msgs) msgs.innerHTML = "";
