@@ -2243,88 +2243,102 @@
       display:block; box-sizing:border-box;
     }
     textarea.lead-inp { resize:none; line-height:1.4; height:44px; }
-    /* ── Meal cards in order summary ── */
-    .lead-meal-card {
-      display:flex; align-items:center; gap:9px;
-      background:var(--bg); border-radius:9px;
-      padding:7px 8px; margin-bottom:6px;
-      border:1px solid var(--border);
-      transition:opacity .2s;
+    /* ── Order summary section ── */
+    #lead-meal-summary {
+      background:var(--greenXL); border:1.5px solid var(--border);
+      border-radius:12px; padding:10px; margin-bottom:0;
+      animation:slideDown .3s ease both;
     }
-    .lead-meal-card:last-child { margin-bottom:0; }
+    @keyframes slideDown {
+      from { opacity:0; transform:translateY(-6px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    .lms-header {
+      font-family:'Outfit',sans-serif; font-weight:900;
+      font-size:10px; color:var(--green);
+      letter-spacing:.08em; text-transform:uppercase;
+      margin-bottom:8px;
+    }
+    #lead-meal-items { display:flex; flex-direction:column; gap:6px; }
+    .lead-meal-card {
+      display:flex; align-items:center; gap:8px;
+      background:var(--card); border-radius:9px;
+      padding:6px 7px;
+      border:1px solid var(--border);
+    }
     .lead-meal-img {
-      width:40px; height:40px; border-radius:7px;
+      width:42px; height:42px; border-radius:7px;
       object-fit:cover; flex-shrink:0;
-      background:var(--mint);
     }
     .lead-meal-emoji {
-      width:40px; height:40px; border-radius:7px;
-      background:var(--greenXL); flex-shrink:0;
+      width:42px; height:42px; border-radius:7px;
+      background:var(--mint); flex-shrink:0;
       display:flex; align-items:center; justify-content:center;
-      font-size:20px;
+      font-size:22px;
     }
     .lead-meal-info { flex:1; min-width:0; }
     .lead-meal-name {
       font-family:'Outfit',sans-serif; font-weight:800;
-      font-size:11.5px; color:var(--text);
+      font-size:12px; color:var(--text);
       white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
     }
     .lead-meal-price {
       font-size:11px; font-weight:700; color:var(--green);
-      margin-top:1px;
+      margin-top:2px;
     }
     .lead-meal-remove {
-      width:24px; height:24px; border-radius:50%; flex-shrink:0;
-      border:1.5px solid #fee2e2; background:#fff5f5;
-      color:#ef4444; font-size:13px; font-weight:900;
+      width:28px; height:28px; border-radius:7px; flex-shrink:0;
+      border:1.5px solid rgba(239,68,68,0.25);
+      background:rgba(239,68,68,0.06);
+      color:#ef4444;
       display:flex; align-items:center; justify-content:center;
-      cursor:pointer; transition:all .15s; line-height:1;
-      font-family:system-ui,sans-serif;
+      cursor:pointer; transition:all .18s;
     }
-    .lead-meal-remove:hover { background:#ef4444; color:#fff; border-color:#ef4444; transform:scale(1.1); }
-    [data-theme="dark"] .lead-meal-card  { background:var(--mint); }
-    [data-theme="dark"] .lead-meal-remove { border-color:#7f1d1d; background:#2d1515; color:#fca5a5; }
-    [data-theme="dark"] .lead-meal-remove:hover { background:#ef4444; color:#fff; }
+    .lead-meal-remove:hover { background:#ef4444; color:#fff; border-color:#ef4444; transform:scale(1.08); }
+    .lead-meal-remove:active { transform:scale(0.95); }
+    .lead-meal-remove svg { pointer-events:none; }
+    [data-theme="dark"] .lead-meal-card   { background:var(--mint); }
+    [data-theme="dark"] .lead-meal-remove { border-color:rgba(239,68,68,0.3); background:rgba(239,68,68,0.1); }
+    #lead-meal-total {
+      font-family:'Outfit',sans-serif; font-weight:900;
+      font-size:13px; color:var(--green);
+      margin-top:8px; padding-top:8px;
+      border-top:1px solid var(--border);
+      display:flex; align-items:center; justify-content:space-between;
+    }
+    .lead-divider {
+      height:1px; background:var(--border); margin:10px 0;
+    }
 
+    /* ── Lead form inputs ── */
     .lead-inp:focus {
       border-color:var(--green);
       box-shadow:0 0 0 3px rgba(9,184,48,0.1);
       background:var(--card);
     }
     .lead-inp::placeholder { color:var(--muted); }
-    #lead-meal-summary {
-      animation:slideDown .3s ease both;
-      padding:8px 10px !important;
-      margin-bottom:8px !important;
-      font-size:11px !important;
-      border-radius:10px !important;
-    }
-    @keyframes slideDown {
-      from { opacity:0; transform:translateY(-8px); }
-      to   { opacity:1; transform:translateY(0); }
-    }
     .lead-submit {
-      width:100%; padding:10px; border-radius:10px; border:none;
+      width:100%; padding:11px; border-radius:11px; border:none;
       background:linear-gradient(135deg,var(--green),#06b237);
       color:#fff; font-size:13px; font-weight:800;
-      cursor:pointer; font-family:'Outfit',sans-serif; letter-spacing:.01em;
-      box-shadow:0 4px 16px rgba(9,184,48,0.28);
+      cursor:pointer; font-family:'Outfit',sans-serif;
+      box-shadow:0 4px 16px rgba(9,184,48,0.3);
       transition:all .2s;
       display:flex; align-items:center; justify-content:center; gap:8px;
+      -webkit-tap-highlight-color:transparent;
     }
-    .lead-submit:hover { transform:translateY(-2px); box-shadow:0 8px 22px rgba(9,184,48,0.38); }
-    .lead-submit:active { transform:translateY(0); }
+    .lead-submit:hover  { transform:translateY(-2px); box-shadow:0 8px 22px rgba(9,184,48,0.42); }
+    .lead-submit:active { transform:scale(0.97); }
     .lead-submit-pink {
       background:linear-gradient(135deg,#ec4899,#f472b6);
-      box-shadow:0 4px 16px rgba(236,72,153,0.28);
+      box-shadow:0 4px 16px rgba(236,72,153,0.3);
     }
-    .lead-submit-pink:hover { box-shadow:0 8px 22px rgba(236,72,153,0.38); }
+    .lead-submit-pink:hover { box-shadow:0 8px 22px rgba(236,72,153,0.42); }
     .lead-trust-row {
-      display:flex; align-items:center; justify-content:center; gap:8px;
-      margin-top:7px; flex-wrap:wrap;
+      display:flex; align-items:center; justify-content:center; gap:10px;
+      margin-top:8px; flex-wrap:wrap;
     }
     .lead-trust-item {
-      display:flex; align-items:center; gap:3px;
       font-size:10px; color:var(--muted); font-family:'DM Sans',sans-serif;
     }
     .lead-step-dots {
@@ -4080,25 +4094,27 @@
         <div class="lead-step-dot active"></div>
       </div>
     </div>
-    <!-- ── Meal summary ── -->
-    <div id="lead-meal-summary" style="
-      background:var(--greenXL); border:1.5px solid var(--border);
-      border-radius:10px; padding:8px 10px; margin-bottom:8px;
-      font-size:11px; color:var(--text); display:none;
-    ">
-      <div style="font-family:'Outfit',sans-serif;font-weight:800;font-size:10px;color:var(--green);letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px;">🧬 Votre commande</div>
-      <div id="lead-meal-items" style="line-height:1.7;color:var(--sub);"></div>
-      <div id="lead-meal-total" style="font-family:'Outfit',sans-serif;font-weight:900;font-size:13px;color:var(--green);margin-top:5px;padding-top:5px;border-top:1px solid var(--border);"></div>
+    <!-- ── Order summary ── -->
+    <div id="lead-meal-summary" style="display:none;">
+      <div class="lms-header" id="lms-header-lbl">🧬 Votre commande</div>
+      <div id="lead-meal-items"></div>
+      <div id="lead-meal-total"></div>
     </div>
-    <!-- ── Fields ── -->
-    <input class="lead-inp" id="lead-name"  type="text" placeholder="Votre prénom / اسمك" autocomplete="given-name"/>
-    <input class="lead-inp" id="lead-city"  type="text" placeholder="Adresse de livraison · عنوان التوصيل" autocomplete="street-address"/>
+
+    <!-- ── Divider ── -->
+    <div class="lead-divider" id="lead-divider" style="display:none;"></div>
+
+    <!-- ── Visitor fields ── -->
+    <input class="lead-inp" id="lead-name"  type="text" placeholder="Prénom complet / Full name" autocomplete="given-name"/>
+    <input class="lead-inp" id="lead-city"  type="text" placeholder="Adresse de livraison" autocomplete="street-address"/>
     <input class="lead-inp" id="lead-phone" type="tel"  placeholder="WhatsApp (+212 6XX XXX XXX)" autocomplete="tel"/>
-    <textarea class="lead-inp" id="lead-comment" rows="2" placeholder="Note (allergies, étage, instructions...)" style="resize:none;height:50px;"></textarea>
+    <textarea class="lead-inp" id="lead-comment" placeholder="Note (allergies, étage, instructions...)" style="resize:none;height:44px;"></textarea>
+
     <button class="lead-submit" id="lead-submit-btn" onclick="submitLead()">
-      <span id="lead-btn-txt">🛵 Confirmer ma commande</span>
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"/><path d="M8 12L11 15L16 9"/></svg>
+      <span id="lead-btn-txt">Confirmer ma commande</span>
     </button>
-    <!-- Trust signals -->
+
     <div class="lead-trust-row">
       <span class="lead-trust-item">🔒 Données privées</span>
       <span class="lead-trust-item">⚡ 45 min garanti</span>
@@ -5990,7 +6006,7 @@ function _renderLeadMealCards(isAr, cl) {
   if (orderDishes.length === 0) { summaryEl.style.display = "none"; return; }
 
   // Update header label
-  const headerEl = summaryEl.querySelector("div:first-child");
+  const headerEl = document.getElementById("lms-header-lbl");
   if (headerEl) {
     const labels = { fr:"🧬 Votre commande", en:"🧬 Your order", ar:"🧬 طلبكم", es:"🧬 Tu pedido" };
     headerEl.textContent = labels[cl] || labels.fr;
@@ -6037,35 +6053,41 @@ function _renderLeadMealCards(isAr, cl) {
     info.appendChild(priceEl);
     card.appendChild(info);
 
-    // Remove button — only show if more than 1 dish
+    // Remove button — always visible with wastebasket icon
     const removeBtn = document.createElement("button");
     removeBtn.className = "lead-meal-remove";
-    removeBtn.textContent = "×";
-    removeBtn.title = { fr:"Retirer", en:"Remove", ar:"حذف", es:"Quitar" }[cl] || "×";
-    removeBtn.style.display = orderDishes.length > 1 ? "flex" : "none";
+    removeBtn.setAttribute("aria-label", { fr:"Retirer", en:"Remove", ar:"حذف", es:"Quitar" }[cl] || "Remove");
+    removeBtn.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>`;
     removeBtn.addEventListener("click", () => {
+      if (window._savyOrderDishes.length <= 1) return; // keep at least 1
       window._savyOrderDishes.splice(idx, 1);
       _renderLeadMealCards(isAr, cl);
     });
+    // Dim slightly if only 1 dish (can't remove last one)
+    if (orderDishes.length <= 1) {
+      removeBtn.style.opacity = "0.3";
+      removeBtn.style.cursor  = "not-allowed";
+    }
     card.appendChild(removeBtn);
 
     itemsEl.appendChild(card);
   });
 
-  // Total
+  // Total row
   const total = orderDishes.reduce((s, d) => s + (d.price || 0), 0);
   const totalLabel = { fr:"Total", en:"Total", ar:"المجموع", es:"Total" }[cl] || "Total";
   const delivLabels = {
-    fr: ["🛵 Livraison offerte", "+10 MAD livraison"],
-    en: ["🛵 Free delivery",     "+10 MAD delivery"],
-    ar: ["🛵 توصيل مجاني",       "+10 درهم توصيل"],
-    es: ["🛵 Envío gratis",      "+10 MAD envío"],
+    fr: ["🛵 Livraison offerte", "🛵 +10 MAD livraison"],
+    en: ["🛵 Free delivery",     "🛵 +10 MAD delivery"],
+    ar: ["🛵 توصيل مجاني",       "🛵 +10 درهم توصيل"],
+    es: ["🛵 Envío gratis",      "🛵 +10 MAD envío"],
   };
   const [freeLabel, paidLabel] = delivLabels[cl] || delivLabels.fr;
-  const delivLabel = orderDishes.length >= 2
-    ? `<span style="font-size:10px;color:var(--green);font-weight:600;"> · ${freeLabel}</span>`
-    : `<span style="font-size:10px;color:var(--muted);"> · ${paidLabel}</span>`;
-  totalEl.innerHTML = `${totalLabel} : <strong>${total} MAD</strong>${delivLabel}`;
+  const delivNote = orderDishes.length >= 2 ? freeLabel : paidLabel;
+  const delivColor = orderDishes.length >= 2 ? "var(--green)" : "var(--muted)";
+  totalEl.innerHTML =
+    `<span style="font-size:10px;font-weight:600;color:${delivColor};">${delivNote}</span>` +
+    `<span>${totalLabel} : ${total} MAD</span>`;
 
   summaryEl.style.display = "block";
 }
@@ -6096,7 +6118,7 @@ function showLeadForm(p) {
     form.dir = isAr ? "rtl" : "ltr";
 
     // Localise input placeholders
-    const namePh  = { fr:"Votre prénom", en:"Your first name", ar:"اسمك", es:"Tu nombre" };
+    const namePh  = { fr:"Prénom complet", en:"Full name", ar:"الاسم الكامل", es:"Nombre completo" };
     const cityPh  = { fr:"Adresse de livraison", en:"Delivery address", ar:"عنوان التوصيل", es:"Dirección de entrega" };
     const phonePh = { fr:"WhatsApp (+212 6XX XXX XXX)", en:"WhatsApp (+212 6XX XXX XXX)", ar:"واتساب (+212 6XX XXX XXX)", es:"WhatsApp (+212 6XX XXX XXX)" };
     const notePh  = { fr:"Note (allergies, étage, instructions...)", en:"Note (allergies, floor, instructions...)", ar:"ملاحظة (حساسيات، طابق، تعليمات...)", es:"Nota (alergias, piso, instrucciones...)" };
@@ -6110,6 +6132,10 @@ function showLeadForm(p) {
     if (phoneInp) phoneInp.placeholder = phonePh[cl] || phonePh.fr;
     if (noteInp)  noteInp.placeholder  = notePh[cl]  || notePh.fr;
 
+    // Show divider between meal summary and fields
+    const divider = document.getElementById("lead-divider");
+    if (divider) divider.style.display = "block";
+
     // Localise back button
     const backTxt = document.getElementById("back-btn-txt");
     const backLabels = { fr:"Changer ma commande", en:"Change my order", ar:"تغيير طلبي", es:"Cambiar mi pedido" };
@@ -6117,7 +6143,7 @@ function showLeadForm(p) {
 
     // Localise submit button
     const btnTxtEl = document.getElementById("lead-btn-txt");
-    const submitLabels = { fr:"🛵 Confirmer ma commande", en:"🛵 Confirm my order", ar:"🛵 تأكيد طلبي", es:"🛵 Confirmar mi pedido" };
+    const submitLabels = { fr:"Confirmer ma commande", en:"Confirm my order", ar:"تأكيد طلبي", es:"Confirmar mi pedido" };
     if (btnTxtEl) btnTxtEl.textContent = submitLabels[cl] || submitLabels.fr;
 
     // Trust items
@@ -6136,21 +6162,20 @@ function showLeadForm(p) {
       const submitBtn = document.getElementById("lead-submit-btn");
       if (submitBtn) {
         submitBtn.className = "lead-submit lead-submit-pink";
-        if (btnTxtEl) btnTxtEl.textContent = isAr ? "🌸 أرسل طلبي ✨" : (cl==="en" ? "🌸 Send my order ✨" : cl==="es" ? "🌸 Enviar mi pedido ✨" : "🌸 Envoyer ma commande ✨");
+        if (btnTxtEl) btnTxtEl.textContent = isAr ? "أرسل طلبي" : (cl==="en" ? "Send my order" : cl==="es" ? "Enviar mi pedido" : "Envoyer ma commande");
       }
     }
 
-    // Summary label
-    const summaryLabel = document.querySelector("#lead-meal-summary div:first-child");
-    if (summaryLabel) {
+    // Update summary header label
+    const headerLbl = document.getElementById("lms-header-lbl");
+    if (headerLbl) {
       const labels = { fr:"🧬 Votre commande", en:"🧬 Your order", ar:"🧬 طلبكم", es:"🧬 Tu pedido" };
-      summaryLabel.textContent = labels[cl] || labels.fr;
+      headerLbl.textContent = labels[cl] || labels.fr;
     }
 
     form.scrollIntoView({ behavior:"smooth", block:"nearest" });
   }, 600);
 }
-
 /* ═══════════════════════════════════════════
    SUBMIT LEAD
 ═══════════════════════════════════════════ */
