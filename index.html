@@ -1781,15 +1781,15 @@
       padding:10px 4px 20px;
     }
     .dish-card {
-      background:var(--card); border-radius:20px;
-      padding:0 0 14px;
-      box-shadow:0 2px 12px rgba(9,184,48,0.07); border:1.5px solid var(--border);
-      display:flex; flex-direction:column; gap:6px;
+      background:var(--card); border-radius:18px;
+      padding:0 0 4px;
+      box-shadow:0 2px 14px rgba(0,0,0,0.07); border:1.5px solid var(--border);
+      display:flex; flex-direction:column;
       transition:transform .22s cubic-bezier(.34,1.56,.64,1), box-shadow .2s;
       animation:slideUp .4s ease both;
-      cursor:pointer; overflow:hidden;
+      cursor:pointer; overflow:visible;
     }
-    .dish-card:hover { transform:translateY(-5px) scale(1.01); box-shadow:0 12px 36px rgba(9,184,48,0.16); border-color:var(--green); }
+    .dish-card:hover { transform:translateY(-4px); box-shadow:0 10px 32px rgba(9,184,48,0.14); border-color:rgba(9,184,48,0.4); }
     @media(max-width:900px){ .dishes { grid-template-columns:repeat(2, 1fr); gap:12px; } }
     @media(max-width:480px){ .dishes { grid-template-columns:repeat(2, 1fr) !important; gap:10px !important; } }
     /* Dish card mobile tweaks */
@@ -5567,49 +5567,41 @@ function renderDishes(){
   }
   document.getElementById("dishes-list").innerHTML=filtered.map((d,i)=>`
     <div class="dish-card" style="animation-delay:${i*.04}s;" onclick="openDishModal(${d.id})">
-      ${d.img ? `
-      <div style="position:relative;width:100%;aspect-ratio:1/1;overflow:hidden;border-radius:18px 18px 0 0;">
+
+      <!-- Top info row: price + kcal -->
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px 6px;">
+        <span style="font-family:'Outfit',sans-serif;font-size:13px;font-weight:900;color:var(--text);">${d.price} MAD</span>
+        <span style="font-size:11px;color:var(--muted);font-weight:600;">${d.cal} kcal</span>
+      </div>
+
+      <!-- Square image -->
+      <div style="position:relative;width:calc(100% - 16px);margin:0 8px;aspect-ratio:1/1;overflow:hidden;border-radius:14px;background:var(--mint);">
+        ${d.img ? `
         <img src="${d.img}" alt="${d.name}" loading="lazy"
           style="width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .45s;display:block;"
-          onload="this.style.opacity=1">
-        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.55) 0%,transparent 50%);pointer-events:none;"></div>
-        <span class="dish-price" style="position:absolute;bottom:9px;left:10px;">${d.price} MAD</span>
+          onload="this.style.opacity=1">` :
+        `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:52px;">${d.e}</div>`}
+        <!-- Badge top-left -->
+        ${d.badge?`<span style="position:absolute;top:8px;left:8px;font-size:9px;padding:3px 8px;border-radius:6px;background:rgba(244,163,48,.92);color:#7a3d00;font-weight:800;font-family:'Outfit',sans-serif;">${d.badge}</span>`:""}
+        <!-- + button bottom-right -->
         <button class="add-btn ${cart.includes(d.id)?'added':''}"
           onclick="event.stopPropagation();toggleCart(${d.id})"
-          style="position:absolute;top:9px;right:9px;width:34px;height:34px;font-size:18px;border-radius:10px;box-shadow:0 3px 10px rgba(0,0,0,.22);">
+          style="position:absolute;bottom:8px;right:8px;width:32px;height:32px;font-size:18px;border-radius:50%;box-shadow:0 3px 10px rgba(9,184,48,.45);background:${cart.includes(d.id)?'var(--green)':'#fff'};color:${cart.includes(d.id)?'#fff':'var(--green)'};border:none;font-weight:900;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .18s;">
           ${cart.includes(d.id)?'✓':'+'}
         </button>
-        ${d.badge?`<span style="position:absolute;top:9px;left:9px;font-size:9px;padding:3px 7px;border-radius:6px;background:rgba(244,163,48,.9);color:#7a3d00;font-weight:800;font-family:'Outfit',sans-serif;">${d.badge}</span>`:""}
-      </div>` : `
-      <div class="dish-card-top" style="padding:14px 12px 4px;">
-        <span style="font-size:42px;line-height:1;">${d.e}</span>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;" onclick="event.stopPropagation()">
-          <span class="dish-price">${d.price} MAD</span>
-          <button class="add-btn ${cart.includes(d.id)?'added':''}" onclick="toggleCart(${d.id})" style="width:34px;height:34px;font-size:18px;border-radius:10px;">
-            ${cart.includes(d.id)?'✓':'+'}
-          </button>
-        </div>
-      </div>`}
-      <div style="padding:8px 12px 2px;">
+      </div>
+
+      <!-- Bottom info: name + price + kcal -->
+      <div style="padding:9px 12px 12px;">
         <div class="${isAr?'dish-name dish-name-ar':'dish-name'}"
-          style="font-size:13.5px;font-weight:800;line-height:1.3;margin-bottom:4px;text-align:${isAr?'right':'left'};">
+          style="font-size:13px;font-weight:800;line-height:1.3;margin-bottom:5px;text-align:${isAr?'right':'left'};">
           ${d.name}
-          ${isAr?`<div style="font-size:10.5px;color:var(--muted);font-weight:500;margin-top:2px;">${d.ar}</div>`:""}
+          ${isAr?`<div style="font-size:10px;color:var(--muted);font-weight:500;margin-top:1px;">${d.ar}</div>`:""}
         </div>
-        <div style="display:flex;align-items:center;gap:4px;flex-wrap:wrap;">
-          <span class="tag-veg" style="font-size:9px;padding:2px 7px;">${d.tag}</span>
-          <span style="font-size:9px;background:rgba(9,184,48,.1);color:var(--green);border-radius:6px;padding:2px 6px;font-weight:800;font-family:'Outfit',sans-serif;">🏅 +2pts</span>
-        </div>
+        <div style="font-family:'Outfit',sans-serif;font-size:14px;font-weight:900;color:var(--green);margin-bottom:2px;">${d.price} MAD</div>
+        <div style="font-size:11px;color:var(--muted);font-weight:600;">${d.cal} kcal</div>
       </div>
-      <div class="dish-macros" style="margin-top:auto;padding:6px 12px 0;gap:5px;">
-        <span style="font-size:11px;">🔥 ${d.cal}kcal</span>
-        ${isSportifView
-          ? `<span class="macro-chip macro-p">P ${d.p}g</span><span class="macro-chip macro-c">C ${d.c}g</span><span class="macro-chip macro-f">F ${d.f_g}g</span>`
-          : `<span style="font-size:11px;">💪 ${d.p}g P</span>`
-        }
-        <span class="dish-star" style="font-size:11px;">★ ${d.r}</span>
-        <span class="meta" style="font-size:10px;">⏱ ${d.t}m</span>
-      </div>
+
     </div>`).join("");
 }
 function clearCart(){
