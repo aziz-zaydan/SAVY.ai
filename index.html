@@ -5997,12 +5997,32 @@ function getFallbackReply(p, isAr, userMsg) {
 function _extractConfirmedDish(botMsg) {
   if (!botMsg || !dishes || !dishes.length) return null;
   const msg = botMsg.toLowerCase();
-  // Match against dish names and arabic names
-  const matched = dishes.find(d =>
-    (d.name && msg.includes(d.name.toLowerCase())) ||
-    (d.ar   && botMsg.includes(d.ar))
-  );
-  return matched || null;
+
+  // Try exact French name match first (most reliable)
+  let matched = dishes.find(d => d.name && msg.includes(d.name.toLowerCase()));
+  if (matched) return matched;
+
+  // Try Arabic name match
+  matched = dishes.find(d => d.ar && botMsg.includes(d.ar));
+  if (matched) return matched;
+
+  // Try partial keyword match — covers English/Spanish translations by the AI
+  // Build keyword map from each dish name (all words 4+ chars)
+  matched = dishes.find(d => {
+    const words = (d.name || "").toLowerCase().split(/\s+/).filter(w => w.length >= 4);
+    return words.length > 0 && words.some(w => msg.includes(w));
+  });
+  if (matched) return matched;
+
+  // Last resort: check price mention in message to narrow candidates
+  const priceMatch = msg.match(/(\d{2,3})\s*(?:mad|درهم|dh)/);
+  if (priceMatch) {
+    const price = parseInt(priceMatch[1]);
+    matched = dishes.find(d => d.price === price);
+    if (matched) return matched;
+  }
+
+  return null;
 }
 
 function buildLeadMealSummary(isAr) {
@@ -6079,12 +6099,12 @@ function _renderLeadMealCards(isAr, cl) {
     }
     card.appendChild(imgWrap);
 
-    // Name + price
+    // Name always in French (d.name) + price
     const info = document.createElement("div");
     info.className = "lead-meal-info";
     const nameEl = document.createElement("div");
     nameEl.className = "lead-meal-name";
-    nameEl.textContent = (isAr && d.ar) ? d.ar : (d.name || "");
+    nameEl.textContent = d.name || "";   // always French
     const priceEl = document.createElement("div");
     priceEl.className = "lead-meal-price";
     priceEl.textContent = (d.price || 0) + " MAD";
