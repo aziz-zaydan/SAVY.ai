@@ -3889,34 +3889,40 @@
 <section id="menu">
   <div class="menu-inner">
 
+    <!-- Header -->
     <div class="section-header">
       <h2 class="section-title fh" id="menu-title">Notre Menu</h2>
-      <p style="color:var(--sub);font-size:14px;margin-top:6px;" id="menu-sub">Des saveurs du monde, optimisées par l'IA pour vos objectifs</p>
+      <p style="color:var(--sub);font-size:14px;margin-top:6px;line-height:1.6;" id="menu-sub">Des saveurs du monde, optimisées par l'IA pour vos objectifs</p>
       <div class="title-bar" style="margin-top:10px;"></div>
     </div>
 
-    <!-- Search -->
-    <div class="search-wrap" style="margin-bottom:14px;">
-      <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8FBFAA" stroke-width="2" stroke-linecap="round">
-        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-      </svg>
-      <input class="search-inp" id="search" placeholder="Rechercher des plats..." oninput="renderDishes()"/>
+    <!-- Search + filters row -->
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap;">
+      <div class="search-wrap" style="flex:1;min-width:180px;">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8FBFAA" stroke-width="2" stroke-linecap="round">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+        <input class="search-inp" id="search" placeholder="Rechercher..." oninput="renderDishes()"/>
+      </div>
     </div>
 
+    <!-- Diet filter pills -->
+    <div id="diet-filters" class="filter-row" style="margin-bottom:18px;"></div>
+
     <!-- Cart bar -->
-    <div id="cart-bar" style="display:none;align-items:center;justify-content:space-between;padding:12px 16px;border-radius:14px;background:var(--green);margin-bottom:16px;animation:popIn .3s ease;flex-wrap:wrap;gap:8px;">
+    <div id="cart-bar" style="display:none;align-items:center;justify-content:space-between;padding:12px 16px;border-radius:16px;background:linear-gradient(135deg,var(--green),#05a827);margin-bottom:18px;animation:popIn .3s ease;flex-wrap:wrap;gap:8px;box-shadow:0 6px 24px rgba(9,184,48,.3);">
       <div style="display:flex;flex-direction:column;gap:2px;">
-        <span id="cart-txt" style="color:#fff;font-size:13px;font-weight:600;">0 plat sélectionné</span>
-        <span id="cart-total" style="color:#fff;font-size:16px;font-weight:900;font-family:'Outfit',sans-serif;"></span>
+        <span id="cart-txt" style="color:#fff;font-size:12px;font-weight:600;opacity:.9;">0 plat sélectionné</span>
+        <span id="cart-total" style="color:#fff;font-size:18px;font-weight:900;font-family:'Outfit',sans-serif;letter-spacing:-.5px;"></span>
         <div id="cart-sched-display"></div>
       </div>
       <div style="display:flex;gap:8px;align-items:center;">
-        <button onclick="clearCart()" style="background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.3);color:#fff;border-radius:10px;padding:8px 12px;cursor:pointer;font-size:12px;font-weight:700;font-family:'Outfit',sans-serif;">✕ Annuler</button>
-        <button onclick="openOrderModal()" id="order-btn">Commander maintenant</button>
+        <button onclick="clearCart()" style="background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.28);color:#fff;border-radius:10px;padding:8px 13px;cursor:pointer;font-size:11.5px;font-weight:700;font-family:'DM Sans',sans-serif;transition:background .15s;" onmouseenter="this.style.background='rgba(255,255,255,.25)'" onmouseleave="this.style.background='rgba(255,255,255,.15)'">✕ Vider</button>
+        <button onclick="openOrderModal()" id="order-btn" style="background:#fff;color:var(--green);border:none;border-radius:10px;padding:9px 16px;font-size:12.5px;font-weight:800;cursor:pointer;font-family:'Outfit',sans-serif;transition:all .15s;box-shadow:0 2px 8px rgba(0,0,0,.12);">🛵 Commander</button>
       </div>
     </div>
 
-    <!-- ══ DISH GRID — 3 columns, pure grid, no flex no scroll ══ -->
+    <!-- Dish grid — fully inline, no CSS class dependency -->
     <div id="dishes-list"></div>
 
   </div>
@@ -5574,17 +5580,24 @@ function renderDishes(){
     return;
   }
   const dishesEl = document.getElementById("dishes-list");
-  // Write entire grid as a self-contained HTML block with inline styles only
-  // No CSS classes on the grid wrapper — fully immune to cached stylesheets
   dishesEl.removeAttribute("class");
   dishesEl.removeAttribute("style");
+
   dishesEl.innerHTML = `<div style="
     display:grid;
     grid-template-columns:repeat(3,1fr);
-    gap:12px;
-    padding:10px 0 24px;
-    overflow:visible;
-  ">${filtered.map((d,i)=>`
+    gap:14px;
+    padding:4px 0 32px;
+  ">${filtered.map((d,i)=>{
+    const added = cart.includes(d.id);
+    // Star rating bar (out of 5)
+    const rPct  = Math.round((d.r/5)*100);
+    // Macro bar widths relative to max sensible values
+    const pPct  = Math.min(Math.round(d.p/50*100),100);
+    const cPct  = Math.min(Math.round(d.c/80*100),100);
+    const fPct  = Math.min(Math.round(d.f_g/30*100),100);
+
+    return `
     <div onclick="openDishModal(${d.id})" style="
       background:var(--card);
       border:1.5px solid var(--border);
@@ -5593,43 +5606,93 @@ function renderDishes(){
       cursor:pointer;
       display:flex;
       flex-direction:column;
-      animation:slideUp .4s ease both;
+      box-shadow:0 2px 12px rgba(0,0,0,.07);
+      transition:transform .2s,box-shadow .2s,border-color .2s;
+      animation:slideUp .38s cubic-bezier(.22,1,.36,1) both;
       animation-delay:${i*.04}s;
-    ">
+    " onmouseenter="this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 32px rgba(9,184,48,.16)';this.style.borderColor='rgba(9,184,48,.4)'"
+       onmouseleave="this.style.transform='';this.style.boxShadow='0 2px 12px rgba(0,0,0,.07)';this.style.borderColor='var(--border)'">
 
-      <!-- price + kcal top -->
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 9px 4px;">
-        <span style="font-family:'Outfit',sans-serif;font-size:11.5px;font-weight:900;color:var(--text);">${d.price} MAD</span>
-        <span style="font-size:9px;color:var(--muted);font-weight:600;">${d.cal}</span>
-      </div>
-
-      <!-- square image -->
-      <div style="position:relative;width:100%;aspect-ratio:1/1;overflow:hidden;background:var(--mint);">
+      <!-- ── Image ── -->
+      <div style="position:relative;width:100%;aspect-ratio:1/1;overflow:hidden;background:var(--mint);flex-shrink:0;">
         ${d.img
-          ? `<img src="${d.img}" alt="${d.name}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .4s;" onload="this.style.opacity=1">`
-          : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:40px;">${d.e}</div>`
+          ? `<img src="${d.img}" alt="${d.name}" loading="lazy"
+               style="width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .5s;"
+               onload="this.style.opacity=1">`
+          : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:46px;">${d.e}</div>`
         }
-        ${d.badge ? `<span style="position:absolute;top:5px;left:5px;font-size:8px;padding:2px 5px;border-radius:5px;background:rgba(244,163,48,.9);color:#7a3d00;font-weight:800;">${d.badge}</span>` : ""}
+        <!-- Gradient overlay -->
+        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.6) 0%,rgba(0,0,0,.1) 45%,transparent 70%);pointer-events:none;"></div>
+
+        <!-- Badge top-right -->
+        ${d.badge ? `<span style="position:absolute;top:7px;right:7px;font-size:8px;padding:3px 7px;border-radius:20px;background:rgba(240,163,48,.95);color:#7a3d00;font-weight:800;font-family:'Outfit',sans-serif;backdrop-filter:blur(4px);">${d.badge}</span>` : ""}
+
+        <!-- Time + Rating bottom-left on image -->
+        <div style="position:absolute;bottom:7px;left:7px;display:flex;flex-direction:column;gap:3px;">
+          <span style="font-size:8.5px;color:#fff;font-weight:700;background:rgba(0,0,0,.35);padding:2px 6px;border-radius:20px;backdrop-filter:blur(4px);">⏱ ${d.t} min</span>
+          <span style="font-size:8.5px;color:#fff;font-weight:700;background:rgba(0,0,0,.35);padding:2px 6px;border-radius:20px;backdrop-filter:blur(4px);">★ ${d.r}</span>
+        </div>
+
+        <!-- Add button bottom-right -->
         <button onclick="event.stopPropagation();toggleCart(${d.id})" style="
-          position:absolute;bottom:6px;right:6px;
-          width:26px;height:26px;border-radius:50%;border:none;
-          background:${cart.includes(d.id) ? "var(--green)" : "#fff"};
-          color:${cart.includes(d.id) ? "#fff" : "var(--green)"};
-          font-size:16px;font-weight:900;line-height:1;
+          position:absolute;bottom:7px;right:7px;
+          width:30px;height:30px;border-radius:50%;border:none;
+          background:${added ? "var(--green)" : "rgba(255,255,255,.9)"};
+          color:${added ? "#fff" : "var(--green)"};
+          font-size:18px;font-weight:900;line-height:1;
           display:flex;align-items:center;justify-content:center;
-          cursor:pointer;box-shadow:0 2px 8px rgba(9,184,48,.4);
+          cursor:pointer;
+          box-shadow:0 3px 12px rgba(0,0,0,.25);
           transition:all .18s;
-        ">${cart.includes(d.id) ? "✓" : "+"}</button>
+        ">${added ? "✓" : "+"}</button>
       </div>
 
-      <!-- name + price + kcal bottom -->
-      <div style="padding:6px 8px 9px;flex:1;">
-        <div style="font-family:'Outfit',sans-serif;font-size:11px;font-weight:800;line-height:1.25;color:var(--text);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:4px;">${d.name}</div>
-        <div style="font-family:'Outfit',sans-serif;font-size:11.5px;font-weight:900;color:var(--green);">${d.price} MAD</div>
-        <div style="font-size:9px;color:var(--muted);font-weight:600;">${d.cal} kcal</div>
-      </div>
+      <!-- ── Card body ── -->
+      <div style="padding:9px 10px 10px;display:flex;flex-direction:column;gap:0;flex:1;">
 
-    </div>`).join("")}</div>`;
+        <!-- Tag pill -->
+        <span style="display:inline-block;font-size:8px;font-weight:700;padding:2px 7px;border-radius:20px;background:var(--greenXL);color:var(--green);margin-bottom:5px;width:fit-content;">${d.tag}</span>
+
+        <!-- Name -->
+        <div style="font-family:'Outfit',sans-serif;font-size:11.5px;font-weight:800;line-height:1.25;color:var(--text);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:7px;">${d.name}</div>
+
+        <!-- Price row -->
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+          <span style="font-family:'Outfit',sans-serif;font-size:14px;font-weight:900;color:var(--green);">${d.price} MAD</span>
+          <span style="font-size:9px;color:var(--muted);font-weight:600;">🔥 ${d.cal} kcal</span>
+        </div>
+
+        <!-- Macro bars: Protein / Carbs / Fat -->
+        <div style="display:flex;flex-direction:column;gap:4px;margin-top:auto;">
+          <!-- Protein -->
+          <div style="display:flex;align-items:center;gap:5px;">
+            <span style="font-size:8px;color:var(--muted);font-weight:700;width:9px;">P</span>
+            <div style="flex:1;height:4px;border-radius:99px;background:var(--border);overflow:hidden;">
+              <div style="height:100%;width:${pPct}%;border-radius:99px;background:#4ade80;transition:width .6s ease;"></div>
+            </div>
+            <span style="font-size:8px;color:var(--sub);font-weight:700;width:20px;text-align:right;">${d.p}g</span>
+          </div>
+          <!-- Carbs -->
+          <div style="display:flex;align-items:center;gap:5px;">
+            <span style="font-size:8px;color:var(--muted);font-weight:700;width:9px;">C</span>
+            <div style="flex:1;height:4px;border-radius:99px;background:var(--border);overflow:hidden;">
+              <div style="height:100%;width:${cPct}%;border-radius:99px;background:#facc15;transition:width .6s ease;"></div>
+            </div>
+            <span style="font-size:8px;color:var(--sub);font-weight:700;width:20px;text-align:right;">${d.c}g</span>
+          </div>
+          <!-- Fat -->
+          <div style="display:flex;align-items:center;gap:5px;">
+            <span style="font-size:8px;color:var(--muted);font-weight:700;width:9px;">F</span>
+            <div style="flex:1;height:4px;border-radius:99px;background:var(--border);overflow:hidden;">
+              <div style="height:100%;width:${fPct}%;border-radius:99px;background:#fb923c;transition:width .6s ease;"></div>
+            </div>
+            <span style="font-size:8px;color:var(--sub);font-weight:700;width:20px;text-align:right;">${d.f_g}g</span>
+          </div>
+        </div>
+
+      </div>
+    </div>`;
+  }).join("")}</div>`;
 }
 function clearCart(){
   cart = [];
