@@ -2083,6 +2083,29 @@
     .q-chip.pink  { border-color:var(--pink); color:var(--pink); background:var(--pinkXL); }
     .q-chip.pink:hover { background:var(--pink); color:#fff; }
 
+    /* ── Language picker (inline in chat bubble) ── */
+    .lang-picker {
+      display:grid; grid-template-columns:1fr 1fr;
+      gap:8px; margin-top:10px;
+    }
+    .lang-picker-btn {
+      display:flex; align-items:center; gap:8px;
+      padding:10px 12px; border-radius:12px;
+      border:1.5px solid var(--border);
+      background:var(--bg); cursor:pointer;
+      font-size:13px; font-weight:700;
+      font-family:'DM Sans',sans-serif;
+      color:var(--text); transition:all .2s;
+      -webkit-tap-highlight-color:transparent;
+    }
+    .lang-picker-btn:hover { border-color:var(--green); background:var(--greenXL); color:var(--green); transform:translateY(-1px); }
+    .lang-picker-btn:active { transform:scale(0.97); }
+    .lang-picker-btn .lang-flag { font-size:20px; line-height:1; flex-shrink:0; }
+    .lang-picker-btn .lang-name { font-size:13px; font-weight:800; }
+    .lang-picker-btn .lang-sub  { font-size:10px; font-weight:500; color:var(--muted); display:block; margin-top:1px; }
+    [data-theme="dark"] .lang-picker-btn { background:var(--card); }
+    [data-theme="dark"] .lang-picker-btn:hover { background:var(--mint); }
+
     /* ── Input area ── */
     .chat-input-area {
       padding:8px 10px 10px;
@@ -4745,6 +4768,7 @@ function setLang(l) {
   const chatMsgs = document.getElementById("chat-msgs");
   if (chatMsgs) {
     chatHistory = [];
+  window._savyChatLang = null;
     chatMsgs.innerHTML = "";
     leadShown = false; leadDone = false; userMsgCount = 0;
     const leadForm  = document.getElementById("chat-lead-form");
@@ -5205,6 +5229,7 @@ function resetChatForPersona(p) {
 
   // Clear state
   chatHistory = [];
+  window._savyChatLang = null;
   leadShown   = false;
   leadDone    = false;
   userMsgCount = 0;
@@ -5334,6 +5359,7 @@ function chatSetPersona(p) {
     if(el){ el.className="p-btn"; if(x===p) el.classList.add("sel-"+x); }
   });
   chatHistory = [];
+  window._savyChatLang = null;
   document.getElementById("chat-msgs").innerHTML = "";
   leadShown = false; leadDone = false; userMsgCount = 0;
   const rlf=document.getElementById("chat-lead-form"); if(rlf) rlf.style.display="none";
@@ -5347,64 +5373,46 @@ function chatSetPersona(p) {
    SAVY already knows about them, and how to open.
 ═══════════════════════════════════════════ */
 async function initChat() {
-  const p    = persona || "employee";
-  const isAr = lang === "ar" || false;
+  const p = persona || "employee";
 
-  // Per-persona seed — gives Groq full visitor context so the
-  // opening is 100% tailored, not generic.
+  // ── Step 1: show language picker as first bot message (no API call) ──
+  if (!chatHistory.length) {
+    _showLangPicker(p);
+    return;
+  }
+
+  // ── Step 2: called after visitor picks a language — send seed to API ──
+  const chosenChatLang = window._savyChatLang || "fr";
+
   const seeds = {
     employee: {
-      fr: `[SYSTEM_OPEN:employee]
-Un(e) professionnel(le) actif(ve) vient de sélectionner "Employé(e)" et d'ouvrir le chat.
-Ce que tu sais déjà : cette personne travaille, son temps est limité au déjeuner, elle veut manger sain sans se fatiguer à choisir.
-Ouvre la conversation en reconnaissant sa réalité de professionnel(le) actif(ve). Montre que tu comprends : pause courte, besoin d'énergie pour tenir l'après-midi, pas le temps de chercher.
-Invite-la naturellement à te dire ce dont elle a envie aujourd'hui — sans poser de question fermée.`,
-      ar: `[SYSTEM_OPEN:employee]
-موظف أو موظفة اختار/ت "موظف/ة" وفتح/ت المحادثة.
-ما تعرفه بالفعل: هذا الشخص يعمل، وقت الغداء محدود، يريد أكلاً صحياً وسريعاً بدون تعقيد.
-افتح المحادثة بطريقة تُظهر أنك تفهم حياته/حياتها المهنية المشغولة. أشعره/أشعرها أنك هنا لتسهّل يومه/يومها.
-ادعوه/ادعوها بشكل طبيعي لإخبارك بما يريد/تريد اليوم.`,
+      fr: `[SYSTEM_OPEN:employee]\nUn(e) professionnel(le) vient d'ouvrir le chat et a choisi le français. Accueille-le/la chaleureusement en français en une phrase, et demande ce qu'il/elle souhaite manger aujourd'hui.`,
+      ar: `[SYSTEM_OPEN:employee]\nموظف أو موظفة اختار/ت العربية. رحّب/رحّبي به/بها بجملة واحدة دافئة بالعربية الفصحى، واسأله/اسأليها عمّا يريد/تريد تناوله اليوم.`,
+      en: `[SYSTEM_OPEN:employee]\nA professional just opened the chat and chose English. Welcome them warmly in one sentence, and ask what they would like to eat today.`,
+      es: `[SYSTEM_OPEN:employee]\nUn/a profesional acaba de abrir el chat y eligió español. Dale la bienvenida calurosamente en una oración y pregúntale qué le gustaría comer hoy.`,
     },
     sportif: {
-      fr: `[SYSTEM_OPEN:sportif]
-Un(e) sportif(ve) vient de sélectionner "Sportif(ve)" et d'ouvrir le chat.
-Ce que tu sais déjà : cette personne fait du sport, suit sa nutrition, s'intéresse aux protéines et aux macros.
-Ouvre la conversation en reconnaissant son profil d'athlète. Montre que tu comprends les enjeux : récupération, protéines, énergie pour l'entraînement.
-Invite-le/la naturellement à te parler de son objectif du moment — sans l'assommer de questions.`,
-      ar: `[SYSTEM_OPEN:sportif]
-رياضي أو رياضية اختار/ت "رياضي/ة" وفتح/ت المحادثة.
-ما تعرفه: هذا الشخص يمارس الرياضة ويهتم بالتغذية والبروتين والماكروز.
-افتح المحادثة بطريقة تُظهر أنك تفهم متطلبات الرياضي: استرداد، بروتين، طاقة للتمرين.
-ادعوه/ادعوها بشكل طبيعي لإخبارك عن هدفه/هدفها الرياضي الحالي.`,
+      fr: `[SYSTEM_OPEN:sportif]\nUn(e) sportif(ve) vient d'ouvrir le chat et a choisi le français. Accueille-le/la en reconnaissant son profil sportif en une phrase chaleureuse, et demande son objectif du moment.`,
+      ar: `[SYSTEM_OPEN:sportif]\nرياضي أو رياضية اختار/ت العربية. رحّب/رحّبي به/بها بجملة دافئة تُظهر فهمك لاحتياجات الرياضي، واسأل/اسألي عن هدفه/هدفها الحالي.`,
+      en: `[SYSTEM_OPEN:sportif]\nAn athlete just opened the chat and chose English. Welcome them in one warm sentence acknowledging their athletic profile, and ask about their current goal.`,
+      es: `[SYSTEM_OPEN:sportif]\nUn/a deportista acaba de abrir el chat y eligió español. Dale la bienvenida en una oración cálida reconociendo su perfil deportivo, y pregúntale su objetivo actual.`,
     },
     famille: {
-      fr: `[SYSTEM_OPEN:famille]
-Quelqu'un vient de sélectionner "Famille" et d'ouvrir le chat — il/elle commande pour plusieurs personnes.
-Ce que tu sais déjà : cette personne a une famille à nourrir, veut des plats qui plaisent à tout le monde (grands et petits), cherche variété et générosité.
-Ouvre la conversation chaleureusement en reconnaissant qu'on commande pour toute la famille. Montre que tu es prêt(e) à trouver quelque chose qui ravit tout le monde.
-Invite-les naturellement à te dire combien ils sont et si y'a des enfants — pour mieux les conseiller.`,
-      ar: `[SYSTEM_OPEN:famille]
-شخص اختار "عائلة" وفتح المحادثة — يطلب لعدة أشخاص.
-ما تعرفه: هذا الشخص يريد أطباقاً تناسب الجميع، كبير وصغير، تنوع وكرم.
-افتح المحادثة بدفء وحرارة مُعترفاً بأن الطلب لعائلة كاملة. أشعره أنك هنا لإسعاد الجميع.
-ادعوه بشكل طبيعي ليخبرك كم هم وإن كان هناك أطفال — حتى تنصحه بشكل أفضل.`,
+      fr: `[SYSTEM_OPEN:famille]\nQuelqu'un commande pour toute la famille et a choisi le français. Accueille-le/la chaleureusement en une phrase, et demande pour combien de personnes il/elle commande.`,
+      ar: `[SYSTEM_OPEN:famille]\nشخص يطلب لعائلته واختار/ت العربية. رحّب/رحّبي به/بها بدفء في جملة واحدة، واسأل/اسألي لكم شخصاً يطلب.`,
+      en: `[SYSTEM_OPEN:famille]\nSomeone is ordering for the whole family and chose English. Welcome them warmly in one sentence, and ask how many people they are ordering for.`,
+      es: `[SYSTEM_OPEN:famille]\nAlguien está pidiendo para toda la familia y eligió español. Dale la bienvenida calurosamente en una oración, y pregúntale para cuántas personas está pidiendo.`,
     },
     couple: {
-      fr: `[SYSTEM_OPEN:couple]
-Un couple vient de sélectionner "Couple" et d'ouvrir le chat pour planifier un dîner romantique.
-Ce que tu sais déjà : ces deux personnes veulent un beau dîner ensemble, cherchent quelque chose d'élégant et de mémorable, l'ambiance compte autant que la nourriture.
-Ouvre avec chaleur et une pointe poétique — reconnais que c'est un moment spécial pour deux. Ne sois pas clinique.
-Invite-les naturellement à te décrire l'ambiance qu'ils souhaitent ce soir — légère et raffinée, ou généreuse et chaleureuse.`,
-      ar: `[SYSTEM_OPEN:couple]
-زوجان أو زوجين اختارا "زوجان" وفتحا المحادثة لتنظيم عشاء رومانسي.
-ما تعرفه: هذان الشخصان يريدان عشاءً جميلاً معاً، يبحثان عن شيء أنيق لا يُنسى، الأجواء تهمهما بقدر الطعام.
-افتح بدفء ولمسة شاعرية — اعترف بأن هذه لحظة خاصة لاثنين.
-ادعوهما بشكل طبيعي لإخبارك عن الأجواء التي يريدانها الليلة.`,
+      fr: `[SYSTEM_OPEN:couple]\nUn couple vient d'ouvrir le chat pour un dîner ensemble et a choisi le français. Accueille-les avec chaleur et une touche poétique en une phrase, et demande quelle ambiance ils souhaitent ce soir.`,
+      ar: `[SYSTEM_OPEN:couple]\nزوجان اختارا العربية لتنظيم عشاء. رحّب/رحّبي بهما بدفء ولمسة رومانسية في جملة واحدة، واسأل/اسألي عن الأجواء التي يريدانها الليلة.`,
+      en: `[SYSTEM_OPEN:couple]\nA couple just opened the chat to plan a dinner together and chose English. Welcome them warmly with a poetic touch in one sentence, and ask what kind of evening they have in mind.`,
+      es: `[SYSTEM_OPEN:couple]\nUna pareja acaba de abrir el chat para planificar una cena y eligió español. Dales la bienvenida con calidez y un toque poético en una oración, y pregúntales qué ambiente desean esta noche.`,
     },
   };
 
   const seedObj = seeds[p] || seeds.employee;
-  const seedText = isAr ? seedObj.ar : seedObj.fr;
+  const seedText = seedObj[chosenChatLang] || seedObj.fr;
 
   showTyping();
 
@@ -5418,38 +5426,116 @@ Invite-les naturellement à te décrire l'ambiance qu'ils souhaitent ce soir —
   let greeting = "";
   for (let attempt = 0; attempt < 2; attempt++) {
     try {
-      if (attempt === 1) {
-        // Brief pause before retry so it doesn't feel instant
-        await new Promise(r => setTimeout(r, 1200));
-      }
+      if (attempt === 1) await new Promise(r => setTimeout(r, 1200));
       const res  = await _fetchWithTimeout(GROQ_API_URL, {
         method:  "POST",
         headers: { "Content-Type": "application/json" },
         body:    JSON.stringify({
           messages: [{ role: "user", content: seedText }],
-          lang,
+          lang: chosenChatLang,
           persona: p,
         }),
       });
       const data = await res.json();
       greeting = (data.reply || "").trim().replace("SAVY_GET_LEAD", "").trim();
-      if (greeting) break;        // success — exit retry loop
-    } catch (e) {
-      if (attempt === 0) continue; // first fail → retry silently
+      if (greeting) break;
+    } catch(e) {
+      if (attempt === 0) continue;
     }
   }
 
   hideTyping();
-  if (greeting) {
-    addBotMsg(greeting, p === "couple");
-    chatHistory.push({ role: "assistant", content: greeting });
-  } else {
-    const fallback = isAr
-      ? "سلام ! 👋 أنا Chef SAVY — كيف نقدر نساعدك اليوم ؟"
-      : "Bonjour ! 👋 Je suis Chef SAVY — comment puis-je vous aider aujourd'hui ?";
-    addBotMsg(fallback, p === "couple");
-    chatHistory.push({ role: "assistant", content: fallback });
-  }
+
+  const fallbacks = {
+    fr: "Bonjour ! 👋 Je suis Chef SAVY — comment puis-je vous aider aujourd'hui ?",
+    ar: "مرحباً! 👋 أنا الشيف SAVY — كيف يمكنني مساعدتك اليوم؟",
+    en: "Hello! 👋 I'm Chef SAVY — how can I help you today?",
+    es: "¡Hola! 👋 Soy Chef SAVY — ¿cómo puedo ayudarte hoy?",
+  };
+
+  const msg = greeting || fallbacks[chosenChatLang] || fallbacks.fr;
+  addBotMsg(msg, p === "couple");
+  chatHistory.push({ role: "assistant", content: msg });
+}
+
+// ── Language picker bubble ──────────────────────────────────────────────────
+function _showLangPicker(p) {
+  const msgs = document.getElementById("chat-msgs");
+  const div  = document.createElement("div");
+  div.className = "msg-bot";
+  div.id = "lang-picker-msg";
+
+  const avatarDiv = document.createElement("div");
+  avatarDiv.className = "msg-avatar";
+  avatarDiv.innerHTML = `<svg width="16" height="16" viewBox="0 0 80 80" fill="none">
+    <ellipse cx="40" cy="21" rx="13" ry="5" fill="#a7f3d0" opacity=".9"/>
+    <rect x="27" y="16" width="26" height="14" rx="4" fill="#a7f3d0" opacity=".9"/>
+    <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="#a7f3d0"/>
+    <rect x="26" y="28" width="28" height="20" rx="9" fill="#a7f3d0"/>
+    <circle cx="34" cy="37" r="3.2" fill="#089929"/>
+    <circle cx="46" cy="37" r="3.2" fill="#089929"/>
+  </svg>`;
+
+  const bubble = document.createElement("div");
+  bubble.className = "msg-bubble";
+  bubble.style.maxWidth = "100%";
+
+  const greet = document.createElement("div");
+  greet.style.cssText = "font-weight:700;margin-bottom:6px;font-size:13px;";
+  greet.textContent = "Welcome to SAVY 🧬";
+  bubble.appendChild(greet);
+
+  const sub = document.createElement("div");
+  sub.style.cssText = "font-size:11px;color:var(--muted);margin-bottom:10px;line-height:1.5;";
+  sub.textContent = "Please choose your language:";
+  bubble.appendChild(sub);
+
+  const grid = document.createElement("div");
+  grid.className = "lang-picker";
+
+  const langs = [
+    { code:"en", flag:"🇬🇧", name:"English",  sub:"English"  },
+    { code:"fr", flag:"🇫🇷", name:"Français", sub:"French"   },
+    { code:"ar", flag:"🇸🇦", name:"العربية",  sub:"Arabic"   },
+    { code:"es", flag:"🇪🇸", name:"Español",  sub:"Spanish"  },
+  ];
+
+  langs.forEach(l => {
+    const btn = document.createElement("button");
+    btn.className = "lang-picker-btn";
+    btn.innerHTML = `<span class="lang-flag">${l.flag}</span><span><span class="lang-name">${l.name}</span><span class="lang-sub">${l.sub}</span></span>`;
+    btn.addEventListener("click", () => _onLangPicked(l.code, l.name, l.flag, p));
+    grid.appendChild(btn);
+  });
+
+  bubble.appendChild(grid);
+
+  const timeDiv = document.createElement("div");
+  timeDiv.className = "msg-time";
+  timeDiv.textContent = _getTimeNow();
+
+  const rightCol = document.createElement("div");
+  rightCol.style.flex = "1";
+  rightCol.appendChild(bubble);
+  rightCol.appendChild(timeDiv);
+
+  div.appendChild(avatarDiv);
+  div.appendChild(rightCol);
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+// ── Called when visitor clicks a language button ────────────────────────────
+function _onLangPicked(code, name, flag, p) {
+  const pickerMsg = document.getElementById("lang-picker-msg");
+  if (pickerMsg) pickerMsg.remove();
+
+  window._savyChatLang = code;
+
+  addUserMsg(flag + " " + name);
+  chatHistory.push({ role: "user", content: name });
+
+  initChat();
 }
 
 /* ═══════════════════════════════════════════
@@ -7031,6 +7117,7 @@ function backToChat() {
 
 function resetChat() {
   chatHistory = [];
+  window._savyChatLang = null;
   leadShown = false; leadDone = false; userMsgCount = 0;
   const msgs = document.getElementById("chat-msgs");
   if(msgs) msgs.innerHTML = "";
