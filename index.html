@@ -3888,42 +3888,40 @@
 <!-- ══ MENU ═══════════════════════════════════════════════ -->
 <section id="menu">
   <div class="menu-inner">
+
     <div class="section-header">
       <h2 class="section-title fh" id="menu-title">Notre Menu</h2>
       <p style="color:var(--sub);font-size:14px;margin-top:6px;" id="menu-sub">Des saveurs du monde, optimisées par l'IA pour vos objectifs</p>
       <div class="title-bar" style="margin-top:10px;"></div>
     </div>
-    <div class="search-wrap">
+
+    <!-- Search -->
+    <div class="search-wrap" style="margin-bottom:14px;">
       <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8FBFAA" stroke-width="2" stroke-linecap="round">
         <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
       </svg>
       <input class="search-inp" id="search" placeholder="Rechercher des plats..." oninput="renderDishes()"/>
     </div>
-    <!-- Persona Tabs -->
-    <div class="persona-tabs-label" id="persona-tabs-label">Je cherche pour :</div>
-    <div class="filter-row" id="cuisine-tabs" style="display:none;"></div>
-    <div class="filter-row" id="diet-filters" style="display:none;"></div>
-    <div class="cart-bar" id="cart-bar" style="display:none;">
+
+    <!-- Cart bar -->
+    <div id="cart-bar" style="display:none;align-items:center;justify-content:space-between;padding:12px 16px;border-radius:14px;background:var(--green);margin-bottom:16px;animation:popIn .3s ease;flex-wrap:wrap;gap:8px;">
       <div style="display:flex;flex-direction:column;gap:2px;">
-        <span id="cart-txt">0 plat sélectionné</span>
-        <span id="cart-total" style="color:#fff;font-size:16px;font-weight:900;font-family:'Outfit',sans-serif;letter-spacing:.02em;"></span>
+        <span id="cart-txt" style="color:#fff;font-size:13px;font-weight:600;">0 plat sélectionné</span>
+        <span id="cart-total" style="color:#fff;font-size:16px;font-weight:900;font-family:'Outfit',sans-serif;"></span>
         <div id="cart-sched-display"></div>
       </div>
       <div style="display:flex;gap:8px;align-items:center;">
-        <button onclick="clearCart()" id="clear-cart-btn" title="Vider le panier" style="
-          background:rgba(255,255,255,.15); border:1.5px solid rgba(255,255,255,.3);
-          color:#fff; border-radius:10px; padding:8px 12px; cursor:pointer;
-          font-size:12px; font-weight:700; transition:all .2s; white-space:nowrap;
-          font-family:'Outfit',sans-serif;
-        ">✕ Annuler</button>
+        <button onclick="clearCart()" style="background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.3);color:#fff;border-radius:10px;padding:8px 12px;cursor:pointer;font-size:12px;font-weight:700;font-family:'Outfit',sans-serif;">✕ Annuler</button>
         <button onclick="openOrderModal()" id="order-btn">Commander maintenant</button>
       </div>
     </div>
-    <div class="menu-slider-wrap">
-      <div class="dishes" id="dishes-list" style="display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:12px!important;overflow:visible!important;flex-direction:unset!important;scroll-snap-type:none!important;"><div class="dish-skeleton"><div class="sk-img"></div><div class="sk-line"></div><div class="sk-line short"></div><div class="sk-line xshort"></div></div><div class="dish-skeleton"><div class="sk-img"></div><div class="sk-line"></div><div class="sk-line short"></div><div class="sk-line xshort"></div></div><div class="dish-skeleton"><div class="sk-img"></div><div class="sk-line"></div><div class="sk-line short"></div><div class="sk-line xshort"></div></div><div class="dish-skeleton"><div class="sk-img"></div><div class="sk-line"></div><div class="sk-line short"></div><div class="sk-line xshort"></div></div></div>
-    </div>
+
+    <!-- ══ DISH GRID — 3 columns, pure grid, no flex no scroll ══ -->
+    <div id="dishes-list"></div>
+
   </div>
 </section>
+
 
 
 <!-- ══ NUTRITIONAL CALCULATOR ══════════════════════════════════ -->
@@ -5534,14 +5532,18 @@ function startInscritCounter() {
 
 function renderCuisineTabs(){
   const isAr=lang==="ar"||false;
-  document.getElementById("cuisine-tabs").innerHTML = cuisineTabs.map(c=>`
+  const el = document.getElementById("cuisine-tabs");
+  if(!el) return;
+  el.innerHTML = cuisineTabs.map(c=>`
     <button class="pill ${activeCuis===c.id?"active":""}" onclick="setCuisine('${c.id}')">
       ${c.flag} ${isAr?c.ar:c.fr}
     </button>`).join("");
 }
 function setCuisine(id){ activeCuis=id; renderCuisineTabs(); renderDishes(); }
 function renderDietFilters(){
-  document.getElementById("diet-filters").innerHTML = dietFilters.map(f=>`
+  const el = document.getElementById("diet-filters");
+  if(!el) return;
+  el.innerHTML = dietFilters.map(f=>`
     <button class="pill ${activeDiet===f?"active":""}" onclick="setDiet('${f}')">${f}</button>`).join("");
 }
 function setDiet(f){ activeDiet=f; renderDietFilters(); renderDishes(); }
@@ -5557,56 +5559,77 @@ function renderDishes(){
     return ms&&mf&&mc&&mp;
   });
   const cb=document.getElementById("cart-bar");
-  if(cart.length>0){
+  if(cart.length>0 && cb){
     cb.style.display="flex";
-    document.getElementById("cart-txt").textContent=t.cartMsg(cart.length);
+    const ctEl = document.getElementById("cart-txt");
+    if(ctEl) ctEl.textContent=t.cartMsg(cart.length);
     const total = cart.reduce((sum,id)=>{ const d=dishes.find(x=>x.id===id); return sum+(d?d.price:0); },0);
     const totalEl = document.getElementById("cart-total");
     if(totalEl) totalEl.textContent = total+" MAD";
     updateCartSchedDisplay();
   }
-  else { cb.style.display="none"; }
+  else if(cb){ cb.style.display="none"; }
   if(!filtered.length){
     document.getElementById("dishes-list").innerHTML=`<div class="empty-state"><div class="big">🔍</div><p>${t.noResult}</p></div>`;
     return;
   }
   const dishesEl = document.getElementById("dishes-list");
-  // Force 3-col grid inline — overrides any cached CSS
-  dishesEl.style.cssText = "display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:12px!important;overflow:visible!important;scroll-snap-type:none!important;padding:10px 4px 20px!important;";
-  dishesEl.innerHTML=filtered.map((d,i)=>`
-    <div class="dish-card" style="animation-delay:${i*.04}s;" onclick="openDishModal(${d.id})">
+  // Write entire grid as a self-contained HTML block with inline styles only
+  // No CSS classes on the grid wrapper — fully immune to cached stylesheets
+  dishesEl.removeAttribute("class");
+  dishesEl.removeAttribute("style");
+  dishesEl.innerHTML = `<div style="
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    padding:10px 0 24px;
+    overflow:visible;
+  ">${filtered.map((d,i)=>`
+    <div onclick="openDishModal(${d.id})" style="
+      background:var(--card);
+      border:1.5px solid var(--border);
+      border-radius:16px;
+      overflow:hidden;
+      cursor:pointer;
+      display:flex;
+      flex-direction:column;
+      animation:slideUp .4s ease both;
+      animation-delay:${i*.04}s;
+    ">
 
-      <!-- Top: price + kcal -->
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 9px 5px;">
-        <span style="font-family:'Outfit',sans-serif;font-size:12px;font-weight:900;color:var(--text);">${d.price} MAD</span>
-        <span style="font-size:9.5px;color:var(--muted);font-weight:600;">${d.cal} kcal</span>
+      <!-- price + kcal top -->
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 9px 4px;">
+        <span style="font-family:'Outfit',sans-serif;font-size:11.5px;font-weight:900;color:var(--text);">${d.price} MAD</span>
+        <span style="font-size:9px;color:var(--muted);font-weight:600;">${d.cal}</span>
       </div>
 
-      <!-- Square image -->
-      <div style="position:relative;width:calc(100% - 12px);margin:0 6px;aspect-ratio:1/1;overflow:hidden;border-radius:12px;background:var(--mint);">
-        ${d.img ? `
-        <img src="${d.img}" alt="${d.name}" loading="lazy"
-          style="width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .4s;display:block;"
-          onload="this.style.opacity=1">` :
-        `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:40px;">${d.e}</div>`}
-        ${d.badge?`<span style="position:absolute;top:5px;left:5px;font-size:8px;padding:2px 6px;border-radius:5px;background:rgba(244,163,48,.92);color:#7a3d00;font-weight:800;font-family:'Outfit',sans-serif;">${d.badge}</span>`:""}
-        <button class="add-btn ${cart.includes(d.id)?'added':''}"
-          onclick="event.stopPropagation();toggleCart(${d.id})"
-          style="position:absolute;bottom:6px;right:6px;width:28px;height:28px;font-size:16px;border-radius:50%;box-shadow:0 2px 8px rgba(9,184,48,.5);background:${cart.includes(d.id)?'var(--green)':'#fff'};color:${cart.includes(d.id)?'#fff':'var(--green)'};border:none;font-weight:900;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .18s;line-height:1;">
-          ${cart.includes(d.id)?'✓':'+'}
-        </button>
+      <!-- square image -->
+      <div style="position:relative;width:100%;aspect-ratio:1/1;overflow:hidden;background:var(--mint);">
+        ${d.img
+          ? `<img src="${d.img}" alt="${d.name}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .4s;" onload="this.style.opacity=1">`
+          : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:40px;">${d.e}</div>`
+        }
+        ${d.badge ? `<span style="position:absolute;top:5px;left:5px;font-size:8px;padding:2px 5px;border-radius:5px;background:rgba(244,163,48,.9);color:#7a3d00;font-weight:800;">${d.badge}</span>` : ""}
+        <button onclick="event.stopPropagation();toggleCart(${d.id})" style="
+          position:absolute;bottom:6px;right:6px;
+          width:26px;height:26px;border-radius:50%;border:none;
+          background:${cart.includes(d.id) ? "var(--green)" : "#fff"};
+          color:${cart.includes(d.id) ? "#fff" : "var(--green)"};
+          font-size:16px;font-weight:900;line-height:1;
+          display:flex;align-items:center;justify-content:center;
+          cursor:pointer;box-shadow:0 2px 8px rgba(9,184,48,.4);
+          transition:all .18s;
+        ">${cart.includes(d.id) ? "✓" : "+"}</button>
       </div>
 
-      <!-- Bottom: name + price + kcal -->
-      <div style="padding:7px 9px 10px;">
-        <div style="font-family:'Outfit',sans-serif;font-size:11.5px;font-weight:800;line-height:1.25;margin-bottom:4px;color:var(--text);text-align:${isAr?'right':'left'};display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">
-          ${d.name}
-        </div>
-        <div style="font-family:'Outfit',sans-serif;font-size:12.5px;font-weight:900;color:var(--green);">${d.price} MAD</div>
-        <div style="font-size:9.5px;color:var(--muted);font-weight:600;margin-top:1px;">${d.cal} kcal</div>
+      <!-- name + price + kcal bottom -->
+      <div style="padding:6px 8px 9px;flex:1;">
+        <div style="font-family:'Outfit',sans-serif;font-size:11px;font-weight:800;line-height:1.25;color:var(--text);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:4px;">${d.name}</div>
+        <div style="font-family:'Outfit',sans-serif;font-size:11.5px;font-weight:900;color:var(--green);">${d.price} MAD</div>
+        <div style="font-size:9px;color:var(--muted);font-weight:600;">${d.cal} kcal</div>
       </div>
 
-    </div>`).join("");
+    </div>`).join("")}</div>`;
 }
 function clearCart(){
   cart = [];
