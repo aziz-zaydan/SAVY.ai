@@ -4624,7 +4624,7 @@
    CONFIG — Replace these two values
 ═══════════════════════════════════════════ */
 const GROQ_API_URL       = "/.netlify/functions/gemini"; // Netlify function proxy
-const GOOGLE_SHEET_URL   = "https://script.google.com/macros/s/AKfycbz-cxIN1r4MOXBdpx6MVwKVHar2rwGpxdomfi9_6mHdhDXUdSel6cweTw-JmVrUQdSF_g/exec";
+const GOOGLE_SHEET_URL   = "https://script.google.com/macros/s/AKfycbx3yMAFQaLqHwg9HjZnF5Sly3hFstj1AX7afxEFnAm5br2GHToIO-Awb3GKWIGn68D33w/exec";
 
 /* ═══════════════════════════════════════════
    DATA
@@ -7615,6 +7615,9 @@ function submitOrder() {
 
   // Save to Google Sheets
   saveToSheets({ name, city, phone: "'" + phone, persona: persona || "general", lang,
+    source:       "menu",
+    meals:        items,
+    meal_count:   cartItems.length,
     conversation: items,
     order_id: orderId,
     loyalty_tier: tier.id,
