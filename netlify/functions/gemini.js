@@ -152,6 +152,8 @@ Prices: 28–65 MAD. Free delivery from 2 dishes ordered.
 GREETING: When the message contains [SYSTEM_OPEN:${persona}], reply with a short 1-sentence welcome IN THE DETECTED LANGUAGE that asks what the visitor wants today.`;
 }
 
+// ─── Groq API call ──────────────────────────────────────────────────────────
+function callGroq(apiKey, payload) {
   return new Promise((resolve, reject) => {
     const body    = JSON.stringify(payload);
     const options = {
