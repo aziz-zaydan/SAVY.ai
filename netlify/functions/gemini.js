@@ -369,7 +369,7 @@ exports.handler = async (event) => {
     { model: "llama-3.1-8b-instant",       temp: 0.65, tokens: 280 },
   ];
 
-  const messages = [
+  const apiMessages = [
     { role: "system", content: buildSystemPrompt(safePersona, chosenLang) },
     ...normalized,
   ];
@@ -381,7 +381,7 @@ exports.handler = async (event) => {
   for (const { model, temp, tokens } of MODEL_CHAIN) {
     try {
       const res = await callGroq(apiKey, {
-        model, temperature: temp, max_tokens: tokens, messages,
+        model, temperature: temp, max_tokens: tokens, messages: apiMessages,
       });
       // Retry with next model on rate-limit (429) or server error (5xx)
       if (!res.ok && (res.status === 429 || res.status >= 500)) {
