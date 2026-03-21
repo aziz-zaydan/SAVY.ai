@@ -5451,9 +5451,9 @@ async function initChat() {
   };
 
   let greeting = "";
-  for (let attempt = 0; attempt < 2; attempt++) {
+  for (let attempt = 0; attempt < 3; attempt++) {
     try {
-      if (attempt === 1) await new Promise(r => setTimeout(r, 1200));
+      if (attempt > 0) await new Promise(r => setTimeout(r, attempt * 1000));
       const res  = await _fetchWithTimeout(GROQ_API_URL, {
         method:  "POST",
         headers: { "Content-Type": "application/json" },
@@ -5809,9 +5809,9 @@ async function chatSendText(text) {
   };
 
   let reply = "";
-  for (let attempt = 0; attempt < 2; attempt++) {
+  for (let attempt = 0; attempt < 3; attempt++) {
     try {
-      if (attempt === 1) await new Promise(r => setTimeout(r, 1200));
+      if (attempt > 0) await new Promise(r => setTimeout(r, attempt * 1000));
       const res  = await _ft(GROQ_API_URL, {
         method:"POST",
         headers:{"Content-Type":"application/json"},
