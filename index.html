@@ -3920,7 +3920,7 @@
       </div>
     </div>
     <div class="menu-slider-wrap">
-      <div class="dishes" id="dishes-list"><div class="dish-skeleton"><div class="sk-img"></div><div class="sk-line"></div><div class="sk-line short"></div><div class="sk-line xshort"></div></div><div class="dish-skeleton"><div class="sk-img"></div><div class="sk-line"></div><div class="sk-line short"></div><div class="sk-line xshort"></div></div><div class="dish-skeleton"><div class="sk-img"></div><div class="sk-line"></div><div class="sk-line short"></div><div class="sk-line xshort"></div></div><div class="dish-skeleton"><div class="sk-img"></div><div class="sk-line"></div><div class="sk-line short"></div><div class="sk-line xshort"></div></div></div>
+      <div class="dishes" id="dishes-list" style="display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:12px!important;overflow:visible!important;flex-direction:unset!important;scroll-snap-type:none!important;"><div class="dish-skeleton"><div class="sk-img"></div><div class="sk-line"></div><div class="sk-line short"></div><div class="sk-line xshort"></div></div><div class="dish-skeleton"><div class="sk-img"></div><div class="sk-line"></div><div class="sk-line short"></div><div class="sk-line xshort"></div></div><div class="dish-skeleton"><div class="sk-img"></div><div class="sk-line"></div><div class="sk-line short"></div><div class="sk-line xshort"></div></div><div class="dish-skeleton"><div class="sk-img"></div><div class="sk-line"></div><div class="sk-line short"></div><div class="sk-line xshort"></div></div></div>
     </div>
   </div>
 </section>
@@ -5570,7 +5570,10 @@ function renderDishes(){
     document.getElementById("dishes-list").innerHTML=`<div class="empty-state"><div class="big">🔍</div><p>${t.noResult}</p></div>`;
     return;
   }
-  document.getElementById("dishes-list").innerHTML=filtered.map((d,i)=>`
+  const dishesEl = document.getElementById("dishes-list");
+  // Force 3-col grid inline — overrides any cached CSS
+  dishesEl.style.cssText = "display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:12px!important;overflow:visible!important;scroll-snap-type:none!important;padding:10px 4px 20px!important;";
+  dishesEl.innerHTML=filtered.map((d,i)=>`
     <div class="dish-card" style="animation-delay:${i*.04}s;" onclick="openDishModal(${d.id})">
 
       <!-- Top: price + kcal -->
@@ -9426,4 +9429,3 @@ if (typeof _origRenderDishes === "function") {
 
 </body>
 </html>
-  
