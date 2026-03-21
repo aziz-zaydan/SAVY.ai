@@ -2228,119 +2228,113 @@
     /* Input persona accent */
 
     /* ── Lead form inside chat ── */
+    /* ══ LEAD FORM ══════════════════════════════════════════════════════ */
     #chat-lead-form {
-      padding:10px 11px 10px; border-top:1.5px solid var(--border);
+      border-top:1px solid var(--border);
       background:var(--card); flex-shrink:0; display:none;
-      animation:slideDown .3s ease both;
-      overflow-y:auto; max-height:55dvh;
-    }
-    .lead-inp {
-      width:100%; padding:8px 10px; border-radius:9px;
-      border:1.5px solid var(--border);
-      font-size:12px; outline:none; color:var(--text);
-      background:var(--bg); font-family:'DM Sans',sans-serif;
-      margin-bottom:6px; transition:border-color .2s, box-shadow .2s;
-      display:block; box-sizing:border-box;
-    }
-    textarea.lead-inp { resize:none; line-height:1.4; height:44px; }
-    /* ── Order summary section ── */
-    #lead-meal-summary {
-      background:var(--greenXL); border:1.5px solid var(--border);
-      border-radius:12px; padding:10px; margin-bottom:0;
-      animation:slideDown .3s ease both;
+      overflow-y:auto; max-height:56dvh;
+      padding:0;
     }
     @keyframes slideDown {
-      from { opacity:0; transform:translateY(-6px); }
+      from { opacity:0; transform:translateY(-5px); }
       to   { opacity:1; transform:translateY(0); }
     }
-    .lms-header {
-      font-family:'Outfit',sans-serif; font-weight:900;
-      font-size:10px; color:var(--green);
-      letter-spacing:.08em; text-transform:uppercase;
-      margin-bottom:8px;
+
+    /* ── Meal summary block ── */
+    #lead-meal-summary {
+      background:var(--greenXL);
+      padding:9px 10px 8px;
+      border-bottom:1px solid var(--border);
+      animation:slideDown .25s ease both;
+      display:none;
     }
-    #lead-meal-items { display:flex; flex-direction:column; gap:6px; }
+    .lms-header {
+      font-family:'Outfit',sans-serif; font-weight:900; font-size:9px;
+      color:var(--green); letter-spacing:.1em; text-transform:uppercase;
+      margin-bottom:6px;
+    }
+    #lead-meal-items { display:flex; flex-direction:column; gap:4px; }
+
+    /* Each meal row */
     .lead-meal-card {
-      display:flex; align-items:center; gap:8px;
-      background:var(--card); border-radius:9px;
-      padding:6px 7px;
-      border:1px solid var(--border);
+      display:flex; align-items:center; gap:7px;
+      background:var(--card); border-radius:8px;
+      padding:5px 6px; border:1px solid var(--border);
     }
     .lead-meal-img {
-      width:42px; height:42px; border-radius:7px;
-      object-fit:cover; flex-shrink:0;
+      width:34px; height:34px; border-radius:6px;
+      object-fit:cover; flex-shrink:0; display:block;
     }
     .lead-meal-emoji {
-      width:42px; height:42px; border-radius:7px;
+      width:34px; height:34px; border-radius:6px;
       background:var(--mint); flex-shrink:0;
       display:flex; align-items:center; justify-content:center;
-      font-size:22px;
+      font-size:18px;
     }
     .lead-meal-info { flex:1; min-width:0; }
     .lead-meal-name {
-      font-family:'Outfit',sans-serif; font-weight:800;
-      font-size:12px; color:var(--text);
-      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+      font-family:'Outfit',sans-serif; font-weight:800; font-size:11px;
+      color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
     }
-    .lead-meal-price {
-      font-size:11px; font-weight:700; color:var(--green);
-      margin-top:2px;
-    }
+    .lead-meal-price { font-size:10px; font-weight:700; color:var(--green); margin-top:1px; }
     .lead-meal-remove {
-      width:28px; height:28px; border-radius:7px; flex-shrink:0;
-      border:1.5px solid rgba(239,68,68,0.25);
-      background:rgba(239,68,68,0.06);
-      color:#ef4444;
-      display:flex; align-items:center; justify-content:center;
-      cursor:pointer; transition:all .18s;
+      width:24px; height:24px; border-radius:6px; flex-shrink:0;
+      border:1px solid rgba(239,68,68,0.3); background:rgba(239,68,68,0.06);
+      color:#ef4444; display:flex; align-items:center; justify-content:center;
+      cursor:pointer; transition:all .15s; -webkit-tap-highlight-color:transparent;
     }
-    .lead-meal-remove:hover { background:#ef4444; color:#fff; border-color:#ef4444; transform:scale(1.08); }
-    .lead-meal-remove:active { transform:scale(0.95); }
-    .lead-meal-remove svg { pointer-events:none; }
-    [data-theme="dark"] .lead-meal-card   { background:var(--mint); }
-    [data-theme="dark"] .lead-meal-remove { border-color:rgba(239,68,68,0.3); background:rgba(239,68,68,0.1); }
+    .lead-meal-remove:hover  { background:#ef4444; color:#fff; border-color:#ef4444; }
+    .lead-meal-remove:active { transform:scale(0.92); }
+    .lead-meal-remove svg    { pointer-events:none; }
+    [data-theme="dark"] .lead-meal-card   { background:var(--bg); }
+    [data-theme="dark"] .lead-meal-remove { background:rgba(239,68,68,0.1); }
+
+    /* Total row */
     #lead-meal-total {
-      font-family:'Outfit',sans-serif; font-weight:900;
-      font-size:13px; color:var(--green);
-      margin-top:8px; padding-top:8px;
+      font-family:'Outfit',sans-serif; font-weight:900; font-size:12px;
+      color:var(--green); margin-top:7px; padding-top:7px;
       border-top:1px solid var(--border);
       display:flex; align-items:center; justify-content:space-between;
     }
-    .lead-divider {
-      height:1px; background:var(--border); margin:10px 0;
-    }
 
-    /* ── Lead form inputs ── */
+    /* ── Visitor fields block ── */
+    .lead-fields {
+      padding:8px 10px 10px;
+    }
+    .lead-inp {
+      width:100%; padding:8px 10px; border-radius:8px;
+      border:1.5px solid var(--border); font-size:12px;
+      outline:none; color:var(--text); background:var(--bg);
+      font-family:'DM Sans',sans-serif; margin-bottom:5px;
+      transition:border-color .2s, box-shadow .2s;
+      display:block; box-sizing:border-box;
+    }
+    textarea.lead-inp { resize:none; height:38px; line-height:1.4; }
     .lead-inp:focus {
-      border-color:var(--green);
+      border-color:var(--green); background:var(--card);
       box-shadow:0 0 0 3px rgba(9,184,48,0.1);
-      background:var(--card);
     }
     .lead-inp::placeholder { color:var(--muted); }
+    [data-theme="dark"] .lead-inp { background:var(--mint); }
+
     .lead-submit {
-      width:100%; padding:11px; border-radius:11px; border:none;
+      width:100%; padding:10px; border-radius:10px; border:none;
       background:linear-gradient(135deg,var(--green),#06b237);
-      color:#fff; font-size:13px; font-weight:800;
-      cursor:pointer; font-family:'Outfit',sans-serif;
-      box-shadow:0 4px 16px rgba(9,184,48,0.3);
-      transition:all .2s;
-      display:flex; align-items:center; justify-content:center; gap:8px;
+      color:#fff; font-size:12px; font-weight:800;
+      font-family:'Outfit',sans-serif;
+      box-shadow:0 4px 14px rgba(9,184,48,0.28);
+      display:flex; align-items:center; justify-content:center; gap:7px;
+      cursor:pointer; transition:all .2s; margin-top:2px;
       -webkit-tap-highlight-color:transparent;
     }
-    .lead-submit:hover  { transform:translateY(-2px); box-shadow:0 8px 22px rgba(9,184,48,0.42); }
+    .lead-submit:hover  { transform:translateY(-1px); box-shadow:0 7px 20px rgba(9,184,48,0.4); }
     .lead-submit:active { transform:scale(0.97); }
-    .lead-submit-pink {
-      background:linear-gradient(135deg,#ec4899,#f472b6);
-      box-shadow:0 4px 16px rgba(236,72,153,0.3);
-    }
-    .lead-submit-pink:hover { box-shadow:0 8px 22px rgba(236,72,153,0.42); }
+    .lead-submit-pink   { background:linear-gradient(135deg,#ec4899,#f472b6); box-shadow:0 4px 14px rgba(236,72,153,0.28); }
     .lead-trust-row {
-      display:flex; align-items:center; justify-content:center; gap:10px;
-      margin-top:8px; flex-wrap:wrap;
+      display:flex; align-items:center; justify-content:center;
+      gap:8px; margin-top:7px; flex-wrap:wrap;
     }
-    .lead-trust-item {
-      font-size:10px; color:var(--muted); font-family:'DM Sans',sans-serif;
-    }
+    .lead-trust-item { font-size:9.5px; color:var(--muted); font-family:'DM Sans',sans-serif; }
     .lead-step-dots {
       display:flex; align-items:center; justify-content:center; gap:5px;
       margin-bottom:8px;
@@ -4075,50 +4069,31 @@
 
   <!-- Lead form -->
   <div id="chat-lead-form">
-    <!-- ── Back button ── -->
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-      <button id="lead-back-btn" onclick="backToChat()" style="
-        display:flex;align-items:center;gap:6px;
-        background:none;border:1.5px solid var(--border);
-        border-radius:10px;padding:6px 12px;cursor:pointer;
-        font-size:12px;font-weight:700;color:var(--sub);
-        font-family:'DM Sans',sans-serif;transition:all .2s;
-      " onmouseover="this.style.borderColor='var(--green)';this.style.color='var(--green)'"
-         onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--sub)'">
-        ← <span id="back-btn-txt">Changer ma commande</span>
-      </button>
-      <!-- Step progress dots -->
-      <div class="lead-step-dots" id="lead-step-dots" style="margin-bottom:0;">
-        <div class="lead-step-dot done"></div>
-        <div class="lead-step-dot done"></div>
-        <div class="lead-step-dot active"></div>
-      </div>
-    </div>
-    <!-- ── Order summary ── -->
-    <div id="lead-meal-summary" style="display:none;">
+
+    <!-- ── Meal summary (image · name · price · remove) ── -->
+    <div id="lead-meal-summary">
       <div class="lms-header" id="lms-header-lbl">🧬 Votre commande</div>
       <div id="lead-meal-items"></div>
       <div id="lead-meal-total"></div>
     </div>
 
-    <!-- ── Divider ── -->
-    <div class="lead-divider" id="lead-divider" style="display:none;"></div>
-
     <!-- ── Visitor fields ── -->
-    <input class="lead-inp" id="lead-name"  type="text" placeholder="Prénom complet / Full name" autocomplete="given-name"/>
-    <input class="lead-inp" id="lead-city"  type="text" placeholder="Adresse de livraison" autocomplete="street-address"/>
-    <input class="lead-inp" id="lead-phone" type="tel"  placeholder="WhatsApp (+212 6XX XXX XXX)" autocomplete="tel"/>
-    <textarea class="lead-inp" id="lead-comment" placeholder="Note (allergies, étage, instructions...)" style="resize:none;height:44px;"></textarea>
+    <div class="lead-fields">
+      <input class="lead-inp" id="lead-name"  type="text"  autocomplete="given-name"     placeholder="Prénom complet"/>
+      <input class="lead-inp" id="lead-city"  type="text"  autocomplete="street-address" placeholder="Adresse de livraison"/>
+      <input class="lead-inp" id="lead-phone" type="tel"   autocomplete="tel"            placeholder="WhatsApp (+212 6XX XXX XXX)"/>
+      <textarea class="lead-inp" id="lead-comment" placeholder="Note (allergies, étage...)"></textarea>
 
-    <button class="lead-submit" id="lead-submit-btn" onclick="submitLead()">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"/><path d="M8 12L11 15L16 9"/></svg>
-      <span id="lead-btn-txt">Confirmer ma commande</span>
-    </button>
+      <button class="lead-submit" id="lead-submit-btn" onclick="submitLead()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <span id="lead-btn-txt">Confirmer ma commande</span>
+      </button>
 
-    <div class="lead-trust-row">
-      <span class="lead-trust-item">🔒 Données privées</span>
-      <span class="lead-trust-item">⚡ 45 min garanti</span>
-      <span class="lead-trust-item">✅ 125+ clients</span>
+      <div class="lead-trust-row">
+        <span class="lead-trust-item">🔒 Données privées</span>
+        <span class="lead-trust-item">⚡ 45 min garanti</span>
+        <span class="lead-trust-item">✅ 125+ clients</span>
+      </div>
     </div>
   </div>
 
@@ -6132,15 +6107,6 @@ function showLeadForm(p) {
     if (cityInp)  cityInp.placeholder  = cityPh[cl]  || cityPh.fr;
     if (phoneInp) phoneInp.placeholder = phonePh[cl] || phonePh.fr;
     if (noteInp)  noteInp.placeholder  = notePh[cl]  || notePh.fr;
-
-    // Show divider between meal summary and fields
-    const divider = document.getElementById("lead-divider");
-    if (divider) divider.style.display = "block";
-
-    // Localise back button
-    const backTxt = document.getElementById("back-btn-txt");
-    const backLabels = { fr:"Changer ma commande", en:"Change my order", ar:"تغيير طلبي", es:"Cambiar mi pedido" };
-    if (backTxt) backTxt.textContent = backLabels[cl] || backLabels.fr;
 
     // Localise submit button
     const btnTxtEl = document.getElementById("lead-btn-txt");
