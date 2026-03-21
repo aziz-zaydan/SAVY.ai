@@ -2650,6 +2650,14 @@
       transition:all .22s; -webkit-tap-highlight-color:transparent;
     }
     .lead-gender-btn:active { transform:scale(0.97); }
+    /* Attention pulse when no gender chosen yet */
+    .lead-gender-btn.attention {
+      animation:genderPulse 1.2s ease-in-out 2;
+    }
+    @keyframes genderPulse {
+      0%,100% { border-color:var(--border); }
+      50%      { border-color:var(--green); box-shadow:0 0 0 3px rgba(9,184,48,0.15); }
+    }
     .lead-gender-btn.active-male {
       background:var(--green); border-color:var(--green); color:#fff;
       box-shadow:0 3px 12px rgba(9,184,48,0.3);
@@ -4502,7 +4510,7 @@
 
         <!-- Gender toggle -->
         <div class="lead-gender-row">
-          <button class="lead-gender-btn active-male" id="lead-gender-male" onclick="_setLeadGender('male')">
+          <button class="lead-gender-btn" id="lead-gender-male" onclick="_setLeadGender('male')">
             👨 <span id="lead-gender-male-lbl">Homme</span>
           </button>
           <button class="lead-gender-btn" id="lead-gender-female" onclick="_setLeadGender('female')">
@@ -7089,9 +7097,15 @@ function showLeadForm(p) {
     const cancelTxt = $("lf-cancel-txt");
     if (cancelTxt) cancelTxt.textContent = cancelLabels[cl] || cancelLabels.fr;
 
-    // Gender buttons — localise + reset to male by default
+    // Gender buttons — required, no default, pulse to draw attention
     _resetLeadGender();
     _localiseGenderBtns(cl);
+    setTimeout(() => {
+      ["lead-gender-male","lead-gender-female"].forEach(id => {
+        const b = document.getElementById(id);
+        if (b && !_leadGender) { b.classList.add("attention"); setTimeout(() => b.classList.remove("attention"), 2500); }
+      });
+    }, 500);
 
     // Header title
     const headerLbl = $("lms-header-lbl");
@@ -7131,7 +7145,7 @@ function showLeadForm(p) {
 
 // ── Cancel / unlock chat ───────────────────────────────────────────────────
 /* ── Lead form gender toggle ──────────────────────────────── */
-let _leadGender = "male";  // default
+let _leadGender = null;    // null = not yet chosen
 
 function _setLeadGender(g) {
   _leadGender = g;
@@ -7147,8 +7161,13 @@ function _setLeadGender(g) {
 }
 
 function _resetLeadGender() {
-  _leadGender = "male";
-  _setLeadGender("male");
+  _leadGender = null;
+  const male   = document.getElementById("lead-gender-male");
+  const female = document.getElementById("lead-gender-female");
+  if (male)   { male.classList.remove("active-male","active-female"); }
+  if (female) { female.classList.remove("active-male","active-female"); }
+  const cw = document.getElementById("chat-window");
+  if (cw) cw.classList.remove("chat-female-mode");
 }
 
 function _localiseGenderBtns(cl) {
@@ -7678,6 +7697,37 @@ function submitLead() {
   const phoneErrLabel = { fr:"Numéro invalide (+212 6XX)", en:"Invalid number (+212 6XX)", ar:"رقم غير صحيح", es:"Número inválido (+212 6XX)" };
 
   const _fail = () => { if(btn) btn.disabled = false; if(btnTxt) btnTxt.textContent = loadingLabels[cl]; };
+
+  // ── Gender is required ──────────────────────────────────────────────────
+  if (!_leadGender) {
+    const genderRow = document.querySelector(".lead-gender-row");
+    if (genderRow) {
+      genderRow.style.transition = "transform .08s";
+      let _shakes = 0;
+      const _shake = setInterval(() => {
+        genderRow.style.transform = _shakes % 2 === 0 ? "translateX(5px)" : "translateX(-5px)";
+        if (++_shakes >= 6) { clearInterval(_shake); genderRow.style.transform = ""; }
+      }, 60);
+      // Highlight both buttons as required
+      [document.getElementById("lead-gender-male"), document.getElementById("lead-gender-female")].forEach(b => {
+        if (b) { b.style.borderColor = "#ef4444"; setTimeout(() => b.style.borderColor = "", 1600); }
+      });
+    }
+    // Show error hint
+    const genderErr = { fr:"Choisissez votre genre 👆", en:"Please select your gender 👆", ar:"اختر جنسك 👆", es:"Selecciona tu género 👆" };
+    const existing = document.getElementById("lead-gender-err");
+    if (!existing) {
+      const err = document.createElement("div");
+      err.id = "lead-gender-err";
+      err.style.cssText = "font-size:10.5px;color:#ef4444;font-weight:700;text-align:center;margin:-4px 0 6px;font-family:'DM Sans',sans-serif;";
+      err.textContent = genderErr[cl] || genderErr.fr;
+      const genderRow2 = document.querySelector(".lead-gender-row");
+      if (genderRow2) genderRow2.insertAdjacentElement("afterend", err);
+      setTimeout(() => err.remove(), 2500);
+    }
+    _fail(); return;
+  }
+
   if (!name)           { showFieldError("lead-name",  "required"); _fail(); return; }
   if (name.length < 2) { showFieldError("lead-name",  "required"); _fail(); return; }
   if (!city)           { showFieldError("lead-city",  "required"); _fail(); return; }
@@ -7712,10 +7762,10 @@ function submitLead() {
     total_meals: mealTotal,
     delivery_fee: delivery,
     order_total: orderTotal,
-    // Context
-    persona:     persona || "employee",
+    // Context — persona column now shows gender choice
+    persona:     _leadGender || "unknown",
     lang:        cl,
-    gender:      _leadGender,
+    gender:      _leadGender || "unknown",
     source:      "chat",
     conversation: chatHistory.filter(m => m.role === "user").map(m => m.content).join(" | "),
   });
