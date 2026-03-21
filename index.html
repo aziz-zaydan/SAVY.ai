@@ -5820,7 +5820,8 @@ async function chatSendText(text) {
             role: m.role,
             content: String(m.content||"").slice(0, 400)
           })),
-          lang, persona:p, scheduledTime: scheduledTime||null
+          lang: window._savyChatLang || lang,
+          persona:p, scheduledTime: scheduledTime||null
         })
       });
       const data = await res.json();
