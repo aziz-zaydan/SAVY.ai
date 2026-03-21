@@ -2637,6 +2637,55 @@
     /* ── Fields section ── */
     .lead-fields { padding:8px 11px 10px; }
 
+    /* ── Gender toggle in lead form ── */
+    .lead-gender-row {
+      display:flex; gap:7px; margin-bottom:8px;
+    }
+    .lead-gender-btn {
+      flex:1; display:flex; align-items:center; justify-content:center; gap:5px;
+      padding:8px 10px; border-radius:9px;
+      border:1.5px solid var(--border); background:var(--bg);
+      font-size:12px; font-weight:700; font-family:'DM Sans',sans-serif;
+      color:var(--sub); cursor:pointer;
+      transition:all .22s; -webkit-tap-highlight-color:transparent;
+    }
+    .lead-gender-btn:active { transform:scale(0.97); }
+    .lead-gender-btn.active-male {
+      background:var(--green); border-color:var(--green); color:#fff;
+      box-shadow:0 3px 12px rgba(9,184,48,0.3);
+    }
+    .lead-gender-btn.active-female {
+      background:#e91e8c; border-color:#e91e8c; color:#fff;
+      box-shadow:0 3px 12px rgba(233,30,140,0.3);
+    }
+    /* Chat pink mode when female selected */
+    #chat-window.chat-female-mode .chat-header {
+      background:linear-gradient(135deg,#c2185b,#e91e8c,#f06292) !important;
+    }
+    #chat-window.chat-female-mode .msg-user .msg-bubble {
+      background:linear-gradient(135deg,#e91e8c,#f06292) !important;
+    }
+    #chat-window.chat-female-mode .chat-send.ready {
+      background:linear-gradient(135deg,#e91e8c,#f06292) !important;
+      box-shadow:0 4px 16px rgba(233,30,140,0.38) !important;
+    }
+    #chat-window.chat-female-mode .lead-submit:not(.lead-submit-pink) {
+      background:linear-gradient(135deg,#e91e8c,#f06292) !important;
+      box-shadow:0 4px 14px rgba(233,30,140,0.3) !important;
+    }
+    #chat-window.chat-female-mode .chat-status-dot {
+      background:#f9a8d4 !important;
+      box-shadow:0 0 0 2.5px rgba(249,168,212,0.4) !important;
+    }
+    #chat-window.chat-female-mode #cdp-header {
+      background:linear-gradient(135deg,#c2185b,#e91e8c) !important;
+    }
+    #chat-window.chat-female-mode .chat-menu-card.selected {
+      border-color:#e91e8c !important;
+      box-shadow:0 0 0 2px rgba(233,30,140,0.2) !important;
+      background:var(--pinkXL, #fff0f7) !important;
+    }
+
     .lead-inp-wrap { position:relative; margin-bottom:5px; }
     .lead-inp-icon {
       position:absolute; left:8px; top:50%; transform:translateY(-50%);
@@ -4451,6 +4500,16 @@
       <!-- Visitor fields -->
       <div class="lead-fields">
 
+        <!-- Gender toggle -->
+        <div class="lead-gender-row">
+          <button class="lead-gender-btn active-male" id="lead-gender-male" onclick="_setLeadGender('male')">
+            👨 <span id="lead-gender-male-lbl">Homme</span>
+          </button>
+          <button class="lead-gender-btn" id="lead-gender-female" onclick="_setLeadGender('female')">
+            👩 <span id="lead-gender-female-lbl">Femme</span>
+          </button>
+        </div>
+
         <div class="lead-inp-wrap">
           <span class="lead-inp-icon">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
@@ -5701,6 +5760,7 @@ function resetChatForPersona(p) {
   leadShown   = false;
   leadDone    = false;
   userMsgCount = 0;
+  _resetLeadGender();
   const _msgs = document.getElementById("chat-msgs");
   const _lf   = document.getElementById("chat-lead-form");
   const _ia   = document.getElementById("chat-input-area");
@@ -7029,6 +7089,10 @@ function showLeadForm(p) {
     const cancelTxt = $("lf-cancel-txt");
     if (cancelTxt) cancelTxt.textContent = cancelLabels[cl] || cancelLabels.fr;
 
+    // Gender buttons — localise + reset to male by default
+    _resetLeadGender();
+    _localiseGenderBtns(cl);
+
     // Header title
     const headerLbl = $("lms-header-lbl");
     if (headerLbl) {
@@ -7066,6 +7130,41 @@ function showLeadForm(p) {
 }
 
 // ── Cancel / unlock chat ───────────────────────────────────────────────────
+/* ── Lead form gender toggle ──────────────────────────────── */
+let _leadGender = "male";  // default
+
+function _setLeadGender(g) {
+  _leadGender = g;
+  const male   = document.getElementById("lead-gender-male");
+  const female = document.getElementById("lead-gender-female");
+  const cw     = document.getElementById("chat-window");
+
+  if (male)   { male.classList.toggle("active-male",   g === "male");   male.classList.toggle("active-female", false); }
+  if (female) { female.classList.toggle("active-female", g === "female"); female.classList.toggle("active-male", false); }
+
+  // Turn chat pink when female, green when male
+  if (cw) cw.classList.toggle("chat-female-mode", g === "female");
+}
+
+function _resetLeadGender() {
+  _leadGender = "male";
+  _setLeadGender("male");
+}
+
+function _localiseGenderBtns(cl) {
+  const labels = {
+    fr: ["👨 Homme",  "👩 Femme"],
+    en: ["👨 Male",   "👩 Female"],
+    ar: ["👨 ذكر",    "👩 أنثى"],
+    es: ["👨 Hombre", "👩 Mujer"],
+  };
+  const [mLbl, fLbl] = labels[cl] || labels.fr;
+  const m = document.getElementById("lead-gender-male-lbl");
+  const f = document.getElementById("lead-gender-female-lbl");
+  if (m) m.textContent = mLbl.replace("👨 ","");
+  if (f) f.textContent = fLbl.replace("👩 ","");
+}
+
 function _cancelLeadForm() {
   const form      = document.getElementById("chat-lead-form");
   const msgs      = document.getElementById("chat-msgs");
@@ -7616,6 +7715,7 @@ function submitLead() {
     // Context
     persona:     persona || "employee",
     lang:        cl,
+    gender:      _leadGender,
     source:      "chat",
     conversation: chatHistory.filter(m => m.role === "user").map(m => m.content).join(" | "),
   });
