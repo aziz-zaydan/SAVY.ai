@@ -306,7 +306,8 @@ function callGroq(apiKey, payload) {
         "Authorization":  `Bearer ${apiKey}`,
         "Content-Length": Buffer.byteLength(body),
       },
-      timeout: 9000,
+      // Hard timeout: abort before Netlify's 10s limit
+      timeout: 9500,
     };
     const req = https.request(options, res => {
       let data = "";
@@ -362,26 +363,45 @@ exports.handler = async (event) => {
     }))
     .filter(m => m.content && (m.role === "user" || m.role === "assistant"));
 
+  // Model fallback chain — try best quality first, fall back on rate-limit or error
+  const MODEL_CHAIN = [
+    { model: "llama-3.3-70b-versatile",   temp: 0.6, tokens: 300 },
+    { model: "llama-3.1-8b-instant",       temp: 0.65, tokens: 280 },
+  ];
+
+  const messages = [
+    { role: "system", content: buildSystemPrompt(safePersona, chosenLang) },
+    ...normalized,
+  ];
+
+  let result = null;
+  let usedModel = "";
   const t0 = Date.now();
-  let result;
-  try {
-    result = await callGroq(apiKey, {
-      model:       "llama-3.3-70b-versatile",
-      messages:    [
-        { role: "system", content: buildSystemPrompt(safePersona, chosenLang) },
-        ...normalized,
-      ],
-      temperature: 0.6,
-      max_tokens:  300,
-    });
-    console.log(`[SAVY] OK — persona:${safePersona} lang:${chosenLang||"pending"} turns:${normalized.length} ${Date.now()-t0}ms`);
-  } catch (err) {
-    console.error(`[SAVY] Groq FAIL ${Date.now()-t0}ms:`, err.message);
+
+  for (const { model, temp, tokens } of MODEL_CHAIN) {
+    try {
+      const res = await callGroq(apiKey, {
+        model, temperature: temp, max_tokens: tokens, messages,
+      });
+      // Retry with next model on rate-limit (429) or server error (5xx)
+      if (!res.ok && (res.status === 429 || res.status >= 500)) {
+        console.warn(`[SAVY] ${model} → ${res.status}, trying fallback`);
+        continue;
+      }
+      result   = res;
+      usedModel = model;
+      break;
+    } catch (err) {
+      console.warn(`[SAVY] ${model} threw: ${err.message}, trying fallback`);
+    }
+  }
+
+  if (!result || !result.ok) {
+    console.error(`[SAVY] All models failed in ${Date.now()-t0}ms`);
     return { statusCode: 502, headers, body: JSON.stringify({ error: "Service temporarily unavailable. Please try again." }) };
   }
 
-  if (!result.ok)
-    return { statusCode: 502, headers, body: JSON.stringify({ error: "Service temporarily unavailable. Please try again." }) };
+  console.log(`[SAVY] OK — model:${usedModel} persona:${safePersona} lang:${chosenLang||"pending"} turns:${normalized.length} ${Date.now()-t0}ms`);
 
   const text = result.json?.choices?.[0]?.message?.content?.trim();
   if (!text)
