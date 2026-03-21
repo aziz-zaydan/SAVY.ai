@@ -1877,6 +1877,106 @@
     #chat-window:not([data-persona])      .chat-header {
       background: linear-gradient(135deg, #089929 0%, #089929 100%);
     }
+    /* ── Header child elements ──────────────────── */
+    .chat-header-avatar {
+      width:40px; height:40px; border-radius:14px;
+      background:rgba(255,255,255,0.18);
+      backdrop-filter:blur(8px);
+      border:1.5px solid rgba(255,255,255,0.28);
+      display:flex; align-items:center; justify-content:center;
+      flex-shrink:0;
+      box-shadow:0 2px 10px rgba(0,0,0,0.18);
+    }
+    .chat-header-info { flex:1; min-width:0; }
+    .chat-header-name {
+      font-family:'Outfit',sans-serif; font-weight:900;
+      font-size:14px; color:#fff; letter-spacing:-.01em;
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }
+    .chat-header-status {
+      display:flex; align-items:center; gap:5px;
+      font-size:10.5px; color:rgba(255,255,255,0.82);
+      margin-top:2px; font-family:'DM Sans',sans-serif;
+    }
+    .chat-status-dot {
+      width:7px; height:7px; border-radius:50%;
+      background:#a7f3d0; flex-shrink:0;
+      box-shadow:0 0 0 2.5px rgba(167,243,208,0.35);
+      animation:statusPulse 2s ease-in-out infinite;
+    }
+    @keyframes statusPulse {
+      0%,100% { box-shadow:0 0 0 2.5px rgba(167,243,208,0.35); }
+      50%      { box-shadow:0 0 0 5px rgba(167,243,208,0.12); }
+    }
+    .chat-header-actions {
+      display:flex; align-items:center; gap:5px; flex-shrink:0;
+    }
+    .chat-action-btn {
+      width:30px; height:30px; border-radius:9px;
+      background:rgba(255,255,255,0.14);
+      border:1px solid rgba(255,255,255,0.22);
+      color:#fff; cursor:pointer;
+      display:flex; align-items:center; justify-content:center;
+      transition:background .16s, transform .14s;
+      -webkit-tap-highlight-color:transparent;
+      flex-shrink:0;
+    }
+    .chat-action-btn:hover  { background:rgba(255,255,255,0.28); }
+    .chat-action-btn:active { transform:scale(0.9); background:rgba(255,255,255,0.35); }
+    .chat-action-btn svg    { display:block; pointer-events:none; }
+    .chat-close {
+      width:30px; height:30px; border-radius:9px;
+      background:rgba(255,255,255,0.14);
+      border:1px solid rgba(255,255,255,0.22);
+      color:#fff; cursor:pointer; font-size:14px; font-weight:600;
+      display:flex; align-items:center; justify-content:center;
+      transition:background .16s, transform .14s;
+      -webkit-tap-highlight-color:transparent;
+      flex-shrink:0;
+    }
+    .chat-close:hover  { background:rgba(255,59,48,0.55); border-color:rgba(255,59,48,0.4); }
+    .chat-close:active { transform:scale(0.9); }
+    .chat-close svg    { display:block; pointer-events:none; }
+
+    /* ── Meal image lightbox ─────────────────────── */
+    #meal-lightbox {
+      display:none; position:fixed; inset:0; z-index:9999;
+      background:rgba(0,0,0,0.88);
+      backdrop-filter:blur(12px);
+      align-items:center; justify-content:center;
+      animation:lbIn .18s ease both;
+      cursor:zoom-out;
+    }
+    #meal-lightbox.open { display:flex; }
+    @keyframes lbIn { from{opacity:0;transform:scale(.92)} to{opacity:1;transform:scale(1)} }
+    #meal-lightbox img {
+      max-width:min(340px, 88vw);
+      max-height:70vh;
+      border-radius:18px;
+      box-shadow:0 32px 80px rgba(0,0,0,0.6);
+      pointer-events:none;
+    }
+    #meal-lightbox-close {
+      position:absolute; top:18px; right:18px;
+      width:36px; height:36px; border-radius:50%;
+      background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.2);
+      color:#fff; font-size:18px; cursor:pointer;
+      display:flex; align-items:center; justify-content:center;
+      transition:background .15s;
+    }
+    #meal-lightbox-close:hover { background:rgba(255,255,255,0.28); }
+    #meal-lightbox-name {
+      position:absolute; bottom:28px; left:50%; transform:translateX(-50%);
+      color:#fff; font-family:'Outfit',sans-serif; font-weight:800;
+      font-size:15px; white-space:nowrap;
+      background:rgba(0,0,0,0.5); padding:6px 16px; border-radius:99px;
+      backdrop-filter:blur(6px);
+    }
+
+    /* ── Meal card image clickable ───────────────── */
+    .lead-meal-img { cursor:zoom-in !important; }
+    .lead-meal-emoji { cursor:default; }
+
     /* User bubbles, avatars, send btn — all green */
     #chat-window .msg-user .msg-bubble { background:var(--green); }
     #chat-window .msg-avatar            { background:var(--green); }
@@ -4023,6 +4123,13 @@
 <!-- ══ CHAT WINDOW ══════════════════════════════════════════ -->
 <div id="chat-backdrop" onclick="closeChat()"></div>
 
+<!-- Meal image lightbox -->
+<div id="meal-lightbox" onclick="_closeLightbox()">
+  <button id="meal-lightbox-close" onclick="_closeLightbox()">✕</button>
+  <img id="meal-lightbox-img" src="" alt=""/>
+  <div id="meal-lightbox-name"></div>
+</div>
+
 <div id="chat-window">
 
   <!-- Header -->
@@ -6077,6 +6184,25 @@ function buildLeadMealSummary(isAr) {
   _renderLeadMealCards(isAr, cl);
 }
 
+/* ── Meal image lightbox ──────────────────────────────── */
+function _openLightbox(src, name) {
+  const lb  = document.getElementById("meal-lightbox");
+  const img = document.getElementById("meal-lightbox-img");
+  const lbl = document.getElementById("meal-lightbox-name");
+  if (!lb || !img) return;
+  img.src = src;
+  img.alt = name || "";
+  if (lbl) lbl.textContent = name || "";
+  lb.classList.add("open");
+  document.addEventListener("keydown", _lbKeyClose);
+}
+function _closeLightbox() {
+  const lb = document.getElementById("meal-lightbox");
+  if (lb) lb.classList.remove("open");
+  document.removeEventListener("keydown", _lbKeyClose);
+}
+function _lbKeyClose(e) { if (e.key === "Escape") _closeLightbox(); }
+
 function _renderLeadMealCards(isAr, cl) {
   const summaryEl = document.getElementById("lead-meal-summary");
   const itemsEl   = document.getElementById("lead-meal-items");
@@ -6086,31 +6212,44 @@ function _renderLeadMealCards(isAr, cl) {
   const orderDishes = window._savyOrderDishes || [];
   if (orderDishes.length === 0) { summaryEl.style.display = "none"; return; }
 
-  // Update header label
+  // Header label
   const headerEl = document.getElementById("lms-header-lbl");
   if (headerEl) {
     const labels = { fr:"🧬 Votre commande", en:"🧬 Your order", ar:"🧬 طلبكم", es:"🧬 Tu pedido" };
     headerEl.textContent = labels[cl] || labels.fr;
   }
 
-  // Render each dish as a card
   itemsEl.innerHTML = "";
+
   orderDishes.forEach((d, idx) => {
     const card = document.createElement("div");
     card.className = "lead-meal-card";
+    card.style.cssText = "opacity:0;transform:translateY(6px);transition:opacity .2s,transform .2s;";
+    requestAnimationFrame(() => { card.style.opacity = "1"; card.style.transform = "translateY(0)"; });
 
-    // Image or emoji fallback (dishes use d.img and d.e)
+    // ── Image / emoji ──────────────────────────────────────
     const imgWrap = document.createElement("div");
+    imgWrap.style.cssText = "position:relative;flex-shrink:0;";
+
     if (d.img) {
       const img = document.createElement("img");
       img.className = "lead-meal-img";
       img.src = d.img;
       img.alt = d.name || "";
+
       const emojiDiv = document.createElement("div");
       emojiDiv.className = "lead-meal-emoji";
       emojiDiv.textContent = d.e || "🍽️";
       emojiDiv.style.display = "none";
-      img.onerror = () => { img.style.display="none"; emojiDiv.style.display="flex"; };
+
+      img.onerror = () => { img.style.display = "none"; emojiDiv.style.display = "flex"; };
+
+      // Click → lightbox
+      img.addEventListener("click", (e) => {
+        e.stopPropagation();
+        _openLightbox(d.img, d.name || "");
+      });
+
       imgWrap.appendChild(img);
       imgWrap.appendChild(emojiDiv);
     } else {
@@ -6121,40 +6260,66 @@ function _renderLeadMealCards(isAr, cl) {
     }
     card.appendChild(imgWrap);
 
-    // Name always in French (d.name) + price
+    // ── Name (always French) + price ──────────────────────
     const info = document.createElement("div");
     info.className = "lead-meal-info";
+
     const nameEl = document.createElement("div");
     nameEl.className = "lead-meal-name";
-    nameEl.textContent = d.name || "";   // always French
+    nameEl.textContent = d.name || "";   // always the French menu name
+
     const priceEl = document.createElement("div");
     priceEl.className = "lead-meal-price";
     priceEl.textContent = (d.price || 0) + " MAD";
+
     info.appendChild(nameEl);
     info.appendChild(priceEl);
     card.appendChild(info);
 
-    // Remove button — always visible with wastebasket icon
+    // ── Remove button ──────────────────────────────────────
+    const canRemove = orderDishes.length > 1;
+
     const removeBtn = document.createElement("button");
     removeBtn.className = "lead-meal-remove";
-    removeBtn.setAttribute("aria-label", { fr:"Retirer", en:"Remove", ar:"حذف", es:"Quitar" }[cl] || "Remove");
-    removeBtn.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>`;
-    removeBtn.addEventListener("click", () => {
-      if (window._savyOrderDishes.length <= 1) return; // keep at least 1
-      window._savyOrderDishes.splice(idx, 1);
-      _renderLeadMealCards(isAr, cl);
-    });
-    // Dim slightly if only 1 dish (can't remove last one)
-    if (orderDishes.length <= 1) {
-      removeBtn.style.opacity = "0.3";
-      removeBtn.style.cursor  = "not-allowed";
-    }
-    card.appendChild(removeBtn);
+    removeBtn.setAttribute("aria-label", "Remove");
+    removeBtn.title = { fr:"Supprimer", en:"Remove", ar:"حذف", es:"Quitar" }[cl] || "Remove";
+    removeBtn.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="3 6 5 6 21 6"/>
+      <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/>
+      <path d="M10 11v6M14 11v6"/>
+      <path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/>
+    </svg>`;
 
+    if (!canRemove) {
+      removeBtn.style.opacity = "0.28";
+      removeBtn.style.cursor  = "not-allowed";
+      removeBtn.title = { fr:"Dernier plat", en:"Last item", ar:"آخر طبق", es:"Último plato" }[cl] || "Last item";
+    } else {
+      removeBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        // Animate card out then remove
+        card.style.transition = "opacity .18s, transform .18s, max-height .22s";
+        card.style.opacity    = "0";
+        card.style.transform  = "translateX(12px) scale(0.95)";
+        card.style.maxHeight  = card.offsetHeight + "px";
+        setTimeout(() => {
+          card.style.maxHeight  = "0";
+          card.style.marginBottom = "0";
+          card.style.padding    = "0";
+        }, 160);
+        setTimeout(() => {
+          window._savyOrderDishes.splice(idx, 1);
+          _renderLeadMealCards(isAr, cl);
+        }, 340);
+      });
+    }
+
+    card.appendChild(removeBtn);
     itemsEl.appendChild(card);
   });
 
-  // Total row
+  // ── Total row ──────────────────────────────────────────
   const total = orderDishes.reduce((s, d) => s + (d.price || 0), 0);
   const totalLabel = { fr:"Total", en:"Total", ar:"المجموع", es:"Total" }[cl] || "Total";
   const delivLabels = {
@@ -6166,11 +6331,12 @@ function _renderLeadMealCards(isAr, cl) {
   const [freeLabel, paidLabel] = delivLabels[cl] || delivLabels.fr;
   const isFree = orderDishes.length >= 2;
   totalEl.innerHTML =
-    `<span class="lmt-delivery${isFree ? ' free' : ''}">${isFree ? freeLabel : paidLabel}</span>` +
+    `<span class="lmt-delivery${isFree ? " free" : ""}">${isFree ? freeLabel : paidLabel}</span>` +
     `<span class="lmt-price">${totalLabel} <span>${total} MAD</span></span>`;
 
   summaryEl.style.display = "block";
 }
+
 
 
 function showLeadForm(p) {
