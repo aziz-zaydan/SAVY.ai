@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
 
   <!-- SEO -->
   <meta name="description" content="SAVY — Premier Chef IA du Maroc. Repas sains ingéniérisés, livraison 45 min à Tétouan, M'diq & Martil. Dès 39 MAD."/>
@@ -166,13 +166,50 @@
       position:absolute; top:-3px; right:-3px;
       width:17px; height:17px; background:var(--pink);
       border-radius:50%; border:2px solid var(--card);
-      font-size:8px; font-weight:900; color:#fff;
+      font-size:11px; font-weight:900; color:#fff;
       display:flex; align-items:center; justify-content:center;
       font-family:'Outfit',sans-serif; pointer-events:none;
     }
     #fab-group { display:none; }
 
     /* ── STICKY WHATSAPP PILL ────────────────────────────── */
+    /* ── STICKY ORDER BAR ────────────────────────────────────── */
+    #sticky-order-bar {
+      position:fixed; bottom:0; left:0; right:0; z-index:997;
+      background:var(--navbar-bg); backdrop-filter:blur(16px);
+      -webkit-backdrop-filter:blur(16px);
+      border-top:1px solid var(--border);
+      display:flex; align-items:center; justify-content:space-between;
+      padding:10px 16px calc(10px + env(safe-area-inset-bottom, 0px));
+      gap:12px;
+      transform:translateY(100%);
+      transition:transform .35s cubic-bezier(.34,1.2,.64,1);
+      pointer-events:none;
+    }
+    #sticky-order-bar.visible {
+      transform:translateY(0);
+      pointer-events:auto;
+    }
+    #sob-left {
+      flex:1; font-size:13px; font-weight:600;
+      color:var(--sub); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+    }
+    #sob-cart-info { font-family:'Outfit',sans-serif; }
+    #sob-btn {
+      background:linear-gradient(135deg,#25D366,#128C7E);
+      color:#fff; border:none; border-radius:12px;
+      padding:10px 18px; font-size:13px; font-weight:800;
+      font-family:'Outfit',sans-serif; cursor:pointer;
+      display:flex; align-items:center; gap:7px;
+      white-space:nowrap; flex-shrink:0;
+      box-shadow:0 4px 16px rgba(37,211,102,0.4);
+      -webkit-tap-highlight-color:transparent;
+      transition:transform .15s;
+    }
+    #sob-btn:active { transform:scale(0.96); }
+    /* hide sticky bar on desktop where FABs are already visible */
+    @media(min-width:769px){ #sticky-order-bar { display:none; } }
+
     #wa-sticky {
       position:fixed; left:16px; bottom:28px; z-index:998;
       background:linear-gradient(135deg,#25D366,#128C7E);
@@ -191,6 +228,11 @@
       50%      { box-shadow:0 6px 32px rgba(37,211,102,0.7); }
     }
     @media(max-width:480px){ #wa-sticky-lbl { display:none; } #wa-sticky { padding:10px; } }
+    /* On mobile, sticky order bar replaces the wa-sticky pill */
+    @media(max-width:768px){
+      #wa-sticky { display:none !important; }
+      #fab-main-wrap { bottom:76px; }
+    }
 
     /* ── EXIT INTENT POPUP ───────────────────────────────── */
     /* ── DISH MODAL OVERLAY ── */
@@ -393,11 +435,12 @@
     .slide-btn {
       position:absolute; top:50%; transform:translateY(-50%);
       background:rgba(255,255,255,0.85); border:none; cursor:pointer;
-      width:36px; height:36px; border-radius:50%;
+      width:44px; height:44px; border-radius:50%;
       font-size:22px; line-height:1; color:#0D1F18;
       box-shadow:0 2px 12px rgba(0,0,0,0.15);
       display:flex; align-items:center; justify-content:center;
       transition:background .2s; z-index:10;
+      -webkit-tap-highlight-color:transparent;
     }
     .slide-btn:hover { background:#fff; }
     .slide-btn.prev { left:10px; }
@@ -861,7 +904,7 @@
       nav#navbar     { padding:0 12px; height:52px; top:28px; }
       .nav-logo span { font-size:16px !important; }
       .nav-links     { display:none; }
-      .lang-btn      { font-size:8px; padding:2px 5px; }
+      .lang-btn      { font-size:11px; padding:2px 5px; }
       .nav-track-btn { font-size:12px; padding:7px 12px; }
       .btn-cta       { padding:9px 14px; font-size:12px; }
 
@@ -882,7 +925,7 @@
       .persona-card  { min-width:unset; padding:10px 6px; border-radius:12px; border-width:1.5px; }
       .persona-emoji { font-size:18px; margin-bottom:2px; }
       .persona-label { font-size:10px; }
-      .persona-desc  { font-size:8px; line-height:1.3; }
+      .persona-desc  { font-size:11px; line-height:1.3; }
       .proof         { margin-top:14px; gap:8px; flex-wrap:wrap; }
       .av            { width:24px; height:24px; font-size:9px; }
       .proof-text    { font-size:12px; }
@@ -1017,7 +1060,7 @@
       .footer-links  { gap:14px; flex-wrap:wrap; }
 
       /* ── Chat window ── */
-      #chat-window   { width:calc(100vw - 20px); right:10px; left:10px; bottom:82px; max-height:68dvh; border-radius:16px; }
+      #chat-window   { width:calc(100vw - 20px); right:10px; left:10px; bottom:140px; max-height:60dvh; border-radius:16px; }
       .msg-bubble    { font-size:12px; padding:7px 10px; }
       .chat-inp      { font-size:13px; }
 
@@ -1025,7 +1068,7 @@
       .section-title { font-size:clamp(20px,5.5vw,28px) !important; }
 
       /* ── FABs ── */
-      #fab-main-wrap { bottom:14px; right:10px; }
+      #fab-main-wrap { bottom:76px !important; right:10px; }
       #fab-main      { width:48px; height:48px; }
       #wa-sticky     { bottom:16px; left:10px; padding:9px 12px; font-size:11px; }
     }
@@ -2285,7 +2328,7 @@
       #navbar            { padding:0 12px !important; height:52px !important; top:28px !important; }
       .nav-logo span     { font-size:16px !important; }
       .nav-links         { display:none !important; }
-      .lang-btn          { font-size:8px !important; padding:2px 5px !important; }
+      .lang-btn          { font-size:11px !important; padding:2px 5px !important; }
       .btn-cta           { padding:8px 12px !important; font-size:12px !important; border-radius:10px !important; }
 
       /* ── Section spacing ── */
@@ -2313,9 +2356,9 @@
       .stat-chips            { gap:6px !important; flex-wrap:wrap !important; }
       .chip                  { padding:7px 9px !important; border-radius:11px !important; }
       .chip-val              { font-size:12px !important; }
-      .chip-lbl              { font-size:9px !important; }
+      .chip-lbl              { font-size:11px !important; }
       .proof                 { margin-top:12px !important; gap:7px !important; flex-wrap:wrap !important; }
-      .av                    { width:24px !important; height:24px !important; font-size:9px !important; }
+      .av                    { width:24px !important; height:24px !important; font-size:11px !important; }
       .proof-text            { font-size:12px !important; }
       .delivery-badge        { font-size:11px !important; padding:5px 11px !important; margin-top:10px !important; }
       #persona-highlight     { max-width:100% !important; padding:12px 10px !important; border-radius:14px !important; }
@@ -2326,7 +2369,7 @@
       .persona-card  { min-width:unset !important; padding:9px 6px !important; border-radius:11px !important; border-width:1.5px !important; }
       .persona-emoji { font-size:17px !important; margin-bottom:2px !important; }
       .persona-label { font-size:10px !important; }
-      .persona-desc  { font-size:8px !important; line-height:1.3 !important; }
+      .persona-desc  { font-size:11px !important; line-height:1.3 !important; }
 
       /* ── How it works ── */
       .steps-grid  { grid-template-columns:1fr 1fr !important; gap:8px !important; }
@@ -2340,14 +2383,14 @@
       .wwd-box          { padding:9px 7px !important; border-radius:11px !important; }
       .wwd-box-icon     { font-size:19px !important; }
       .wwd-box-name     { font-size:10px !important; }
-      .wwd-box-tag      { font-size:8px !important; }
+      .wwd-box-tag      { font-size:11px !important; }
       .wwd-grid         { grid-template-columns:1fr !important; gap:9px !important; }
       .wwd-card         { padding:13px 12px !important; border-radius:13px !important; }
       .wwd-card--wide   { grid-column:span 1 !important; }
       .wwd-icon         { font-size:24px !important; }
       .wwd-card-title   { font-size:13px !important; }
       .wwd-card-desc    { font-size:12px !important; line-height:1.55 !important; }
-      .wwd-tag          { font-size:9px !important; }
+      .wwd-tag          { font-size:11px !important; }
 
       /* ── Menu ── */
       #menu              { padding:18px 14px 24px !important; }
@@ -2367,11 +2410,11 @@
       .dish-card         { flex:0 0 80vw !important; min-width:80vw !important; padding:11px 10px !important; border-radius:14px !important; }
       .dish-emoji        { width:54px !important; height:54px !important; font-size:27px !important; border-radius:11px !important; }
       .dish-name         { font-size:13px !important; }
-      .dish-name-sub     { font-size:9px !important; }
+      .dish-name-sub     { font-size:11px !important; }
       .dish-price        { font-size:11px !important; padding:2px 7px !important; }
       .add-btn           { width:28px !important; height:28px !important; font-size:14px !important; }
-      .macro-chip        { font-size:9px !important; padding:1px 5px !important; }
-      .tag-cuisine       { font-size:9px !important; padding:2px 6px !important; }
+      .macro-chip        { font-size:11px !important; padding:1px 5px !important; }
+      .tag-cuisine       { font-size:11px !important; padding:2px 6px !important; }
 
       /* ── Order modal (bottom sheet) ── */
       #order-modal-overlay { align-items:flex-end !important; padding:0 !important; }
@@ -2439,7 +2482,7 @@
       .nutri-macros-row   { gap:6px !important; }
       .nutri-macro        { padding:7px !important; border-radius:9px !important; }
       .nutri-macro-val    { font-size:15px !important; }
-      .nutri-macro-lbl    { font-size:9px !important; }
+      .nutri-macro-lbl    { font-size:11px !important; }
       .nutri-dishes-label { font-size:12px !important; margin-bottom:6px !important; }
       .nutri-dish-chip    { font-size:10px !important; padding:4px 8px !important; }
       #nc-disclaimer      { font-size:11px !important; padding:8px 10px !important; border-radius:9px !important; line-height:1.55 !important; margin-top:10px !important; }
@@ -2464,13 +2507,13 @@
 
       /* ── Chat window ── */
       #chat-window   { width:calc(100vw - 16px) !important; right:8px !important; left:8px !important;
-                       bottom:80px !important; max-height:66dvh !important; border-radius:15px !important; }
+                       bottom:138px !important; max-height:58dvh !important; border-radius:15px !important; }
       .msg-bubble    { font-size:12px !important; padding:7px 10px !important; }
       .chat-inp      { font-size:13px !important; }
       .chat-header   { padding:9px 11px !important; }
 
       /* ── FABs ── */
-      #fab-main-wrap { bottom:12px !important; right:8px !important; }
+      #fab-main-wrap { bottom:76px !important; right:8px !important; }
       #fab-main      { width:48px !important; height:48px !important; }
       #wa-sticky     { bottom:14px !important; left:8px !important; padding:8px 11px !important; font-size:11px !important; }
       #wa-sticky svg { width:15px !important; height:15px !important; }
@@ -2485,7 +2528,7 @@
       .btn-cta       { font-size:11px !important; padding:7px 10px !important; }
       .persona-card  { padding:7px 4px !important; border-radius:9px !important; }
       .persona-emoji { font-size:15px !important; }
-      .persona-label { font-size:9px !important; }
+      .persona-label { font-size:11px !important; }
       .persona-desc  { display:none !important; }
       .chip          { padding:6px 8px !important; }
       .chip-val      { font-size:11px !important; }
@@ -2493,7 +2536,7 @@
       .dish-emoji    { width:48px !important; height:48px !important; font-size:24px !important; }
       .step-card     { padding:8px 6px !important; }
       .step-title    { font-size:10px !important; }
-      .step-desc     { font-size:9px !important; }
+      .step-desc     { font-size:11px !important; }
       .nutri-tog-btn { font-size:10px !important; padding:6px 2px !important; }
       .nutri-input,
       .nutri-select  { font-size:12px !important; padding:8px 8px !important; }
@@ -3118,8 +3161,18 @@
 
       <!-- ── Dual CTA row ── -->
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin:16px 0 6px;">
-        <button onclick="openChat()" id="hero-cta-primary" style="
-          flex:1; min-width:140px;
+        <button onclick="openChat()" id="hero-cta-primary" class="hero-cta-primary">
+          🧬 <span id="hero-cta-primary-txt">Chef IA — Commencer</span>
+        </button>
+        <a href="#menu" style="text-decoration:none;flex:1;min-width:120px;">
+          <button id="hero-cta-secondary" class="hero-cta-secondary">
+            🍽️ <span id="hero-cta-secondary-txt">Voir le menu</span>
+          </button>
+        </a>
+      </div>
+      <style>
+        .hero-cta-primary {
+          flex:1; min-width:140px; width:100%;
           background:linear-gradient(135deg,var(--green),var(--greenL));
           color:#fff; border:none; border-radius:14px;
           padding:13px 18px; font-size:13px; font-weight:800;
@@ -3128,26 +3181,22 @@
           display:flex; align-items:center; justify-content:center; gap:8px;
           transition:transform .2s,box-shadow .2s;
           animation:ctaPulse 2.8s ease-in-out infinite;
-        " onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 10px 30px rgba(9,184,48,.5)'"
-           onmouseout="this.style.transform='';this.style.boxShadow='0 6px 22px rgba(9,184,48,0.38)'">
-          🧬 <span id="hero-cta-primary-txt">Chef IA — Commencer</span>
-        </button>
-        <a href="#menu" style="text-decoration:none;">
-          <button id="hero-cta-secondary" style="
-            flex:1; min-width:120px;
-            background:var(--card); color:var(--text);
-            border:1.5px solid var(--border); border-radius:14px;
-            padding:13px 18px; font-size:13px; font-weight:700;
-            font-family:'DM Sans',sans-serif; cursor:pointer;
-            display:flex; align-items:center; justify-content:center; gap:7px;
-            transition:all .2s; white-space:nowrap;
-          " onmouseover="this.style.borderColor='var(--green)';this.style.color='var(--green)'"
-             onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text)'">
-            🍽️ <span id="hero-cta-secondary-txt">Voir le menu</span>
-          </button>
-        </a>
-      </div>
-      <style>
+          -webkit-tap-highlight-color:transparent;
+        }
+        .hero-cta-primary:hover { transform:translateY(-2px); box-shadow:0 10px 30px rgba(9,184,48,.5); }
+        .hero-cta-primary:active { transform:scale(0.97); animation:none; }
+        .hero-cta-secondary {
+          flex:1; min-width:120px; width:100%;
+          background:var(--card); color:var(--text);
+          border:1.5px solid var(--border); border-radius:14px;
+          padding:13px 18px; font-size:13px; font-weight:700;
+          font-family:'DM Sans',sans-serif; cursor:pointer;
+          display:flex; align-items:center; justify-content:center; gap:7px;
+          transition:all .2s; white-space:nowrap;
+          -webkit-tap-highlight-color:transparent;
+        }
+        .hero-cta-secondary:hover { border-color:var(--green); color:var(--green); }
+        .hero-cta-secondary:active { transform:scale(0.97); }
         @keyframes ctaPulse {
           0%,100% { box-shadow:0 6px 22px rgba(9,184,48,.38); }
           50%      { box-shadow:0 6px 32px rgba(9,184,48,.6), 0 0 0 6px rgba(9,184,48,.08); }
@@ -3251,6 +3300,49 @@
   </div>
 </section>
 
+<!-- ══ MENU ═══════════════════════════════════════════════ -->
+<section id="menu">
+  <div class="menu-inner">
+    <div class="section-header">
+      <h2 class="section-title fh" id="menu-title">Notre Menu</h2>
+      <p style="color:var(--sub);font-size:14px;margin-top:6px;" id="menu-sub">Des saveurs du monde, optimisées par l'IA pour vos objectifs</p>
+      <div class="title-bar" style="margin-top:10px;"></div>
+    </div>
+    <div class="search-wrap">
+      <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8FBFAA" stroke-width="2" stroke-linecap="round">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input class="search-inp" id="search" placeholder="Rechercher des plats..." oninput="renderDishes()"/>
+    </div>
+    <!-- Persona Tabs -->
+    <div class="persona-tabs-label" id="persona-tabs-label">Je cherche pour :</div>
+    <div class="filter-row" id="cuisine-tabs" style="display:none;"></div>
+    <div class="filter-row" id="diet-filters" style="display:none;"></div>
+    <div class="cart-bar" id="cart-bar" style="display:none;">
+      <div style="display:flex;flex-direction:column;gap:2px;">
+        <span id="cart-txt">0 plat sélectionné</span>
+        <span id="cart-total" style="color:#fff;font-size:16px;font-weight:900;font-family:'Outfit',sans-serif;letter-spacing:.02em;"></span>
+        <div id="cart-sched-display"></div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <button onclick="clearCart()" id="clear-cart-btn" title="Vider le panier" style="
+          background:rgba(255,255,255,.15); border:1.5px solid rgba(255,255,255,.3);
+          color:#fff; border-radius:10px; padding:8px 12px; cursor:pointer;
+          font-size:12px; font-weight:700; transition:all .2s; white-space:nowrap;
+          font-family:'Outfit',sans-serif;
+        ">✕ Annuler</button>
+        <button onclick="openOrderModal()" id="order-btn">Commander maintenant</button>
+      </div>
+    </div>
+    <div class="menu-slider-wrap">
+      <button class="menu-arrow menu-arrow-prev" id="menu-prev" onclick="menuSlide(-1)">‹</button>
+      <div class="dishes" id="dishes-list"><div class="dish-skeleton"><div class="sk-img"></div><div class="sk-line"></div><div class="sk-line short"></div><div class="sk-line xshort"></div></div><div class="dish-skeleton"><div class="sk-img"></div><div class="sk-line"></div><div class="sk-line short"></div><div class="sk-line xshort"></div></div><div class="dish-skeleton"><div class="sk-img"></div><div class="sk-line"></div><div class="sk-line short"></div><div class="sk-line xshort"></div></div><div class="dish-skeleton"><div class="sk-img"></div><div class="sk-line"></div><div class="sk-line short"></div><div class="sk-line xshort"></div></div></div>
+      <button class="menu-arrow menu-arrow-next" id="menu-next" onclick="menuSlide(1)">›</button>
+    </div>
+  </div>
+</section>
+
+
 <!-- ══ NUTRITIONAL CALCULATOR ══════════════════════════════════ -->
 <section id="nutri-calc">
   <div class="nutri-inner">
@@ -3327,48 +3419,6 @@
           💡 Basé sur la formule Harris-Benedict révisée. Ces estimations sont indicatives — consultez un professionnel de santé pour un bilan personnalisé.
         </div>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══ MENU ═══════════════════════════════════════════════ -->
-<section id="menu">
-  <div class="menu-inner">
-    <div class="section-header">
-      <h2 class="section-title fh" id="menu-title">Notre Menu</h2>
-      <p style="color:var(--sub);font-size:14px;margin-top:6px;" id="menu-sub">Des saveurs du monde, optimisées par l'IA pour vos objectifs</p>
-      <div class="title-bar" style="margin-top:10px;"></div>
-    </div>
-    <div class="search-wrap">
-      <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8FBFAA" stroke-width="2" stroke-linecap="round">
-        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-      </svg>
-      <input class="search-inp" id="search" placeholder="Rechercher des plats..." oninput="renderDishes()"/>
-    </div>
-    <!-- Persona Tabs -->
-    <div class="persona-tabs-label" id="persona-tabs-label">Je cherche pour :</div>
-    <div class="filter-row" id="cuisine-tabs" style="display:none;"></div>
-    <div class="filter-row" id="diet-filters" style="display:none;"></div>
-    <div class="cart-bar" id="cart-bar" style="display:none;">
-      <div style="display:flex;flex-direction:column;gap:2px;">
-        <span id="cart-txt">0 plat sélectionné</span>
-        <span id="cart-total" style="color:#fff;font-size:16px;font-weight:900;font-family:'Outfit',sans-serif;letter-spacing:.02em;"></span>
-        <div id="cart-sched-display"></div>
-      </div>
-      <div style="display:flex;gap:8px;align-items:center;">
-        <button onclick="clearCart()" id="clear-cart-btn" title="Vider le panier" style="
-          background:rgba(255,255,255,.15); border:1.5px solid rgba(255,255,255,.3);
-          color:#fff; border-radius:10px; padding:8px 12px; cursor:pointer;
-          font-size:12px; font-weight:700; transition:all .2s; white-space:nowrap;
-          font-family:'Outfit',sans-serif;
-        ">✕ Annuler</button>
-        <button onclick="openOrderModal()" id="order-btn">Commander maintenant</button>
-      </div>
-    </div>
-    <div class="menu-slider-wrap">
-      <button class="menu-arrow menu-arrow-prev" id="menu-prev" onclick="menuSlide(-1)">‹</button>
-      <div class="dishes" id="dishes-list"><div class="dish-skeleton"><div class="sk-img"></div><div class="sk-line"></div><div class="sk-line short"></div><div class="sk-line xshort"></div></div><div class="dish-skeleton"><div class="sk-img"></div><div class="sk-line"></div><div class="sk-line short"></div><div class="sk-line xshort"></div></div><div class="dish-skeleton"><div class="sk-img"></div><div class="sk-line"></div><div class="sk-line short"></div><div class="sk-line xshort"></div></div><div class="dish-skeleton"><div class="sk-img"></div><div class="sk-line"></div><div class="sk-line short"></div><div class="sk-line xshort"></div></div></div>
-      <button class="menu-arrow menu-arrow-next" id="menu-next" onclick="menuSlide(1)">›</button>
     </div>
   </div>
 </section>
@@ -3476,6 +3526,28 @@
   <p style="text-align:center;margin-top:18px;font-size:12px;color:var(--muted);cursor:pointer;" onclick="openLoyaltyChecker()">
       👆 اضغط على أي بطاقة لمعرفة مستواك · Appuyez sur une carte pour voir votre niveau
     </p>
+
+    <!-- Referral share button -->
+    <div style="text-align:center;margin-top:18px;">
+      <button id="loy-share-btn" onclick="shareSAVY()" style="
+        display:inline-flex;align-items:center;gap:8px;
+        background:linear-gradient(135deg,#25D366,#128C7E);
+        color:#fff;border:none;border-radius:14px;
+        padding:11px 22px;font-size:13px;font-weight:800;
+        font-family:'Outfit',sans-serif;cursor:pointer;
+        box-shadow:0 4px 18px rgba(37,211,102,0.35);
+        -webkit-tap-highlight-color:transparent;
+        transition:transform .15s,box-shadow .15s;
+      " onmouseenter="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 24px rgba(37,211,102,.5)'"
+         onmouseleave="this.style.transform='';this.style.boxShadow='0 4px 18px rgba(37,211,102,.35)'"
+         onmousedown="this.style.transform='scale(0.96)'" onmouseup="this.style.transform=''">
+        <svg width="17" height="17" viewBox="0 0 32 32" fill="none">
+          <path d="M16 2C8.268 2 2 8.268 2 16c0 2.484.668 4.81 1.836 6.818L2 30l7.384-1.812A13.94 13.94 0 0016 30c7.732 0 14-6.268 14-14S23.732 2 16 2z" fill="#fff"/>
+          <path d="M22.498 19.533c-.305-.152-1.8-.888-2.079-.99-.278-.102-.481-.152-.683.152s-.783.99-.96 1.193c-.177.202-.354.228-.659.076-.305-.152-1.288-.475-2.453-1.513-.907-.808-1.518-1.806-1.697-2.111-.177-.304-.019-.469.133-.62.137-.136.305-.355.457-.532.152-.178.203-.305.304-.508.103-.203.051-.38-.025-.532-.077-.152-.684-1.648-.937-2.258-.246-.593-.497-.513-.683-.522l-.583-.01c-.203 0-.532.076-.81.38s-1.063 1.04-1.063 2.534 1.089 2.94 1.24 3.143c.152.203 2.143 3.272 5.191 4.586.726.314 1.293.5 1.735.641.729.23 1.392.198 1.916.12.584-.087 1.8-.735 2.054-1.446.254-.71.254-1.32.178-1.447-.077-.127-.278-.203-.583-.355z" fill="#25D366"/>
+        </svg>
+        <span id="loy-share-txt">Inviter un ami — gagne 20 pts 🎁</span>
+      </button>
+    </div>
   </div>
 </section>
 
@@ -3754,6 +3826,20 @@
   </div>
 </div>
 
+
+<!-- ══ STICKY ORDER BAR (appears after hero scroll) ══════════ -->
+<div id="sticky-order-bar">
+  <div id="sob-left">
+    <span id="sob-cart-info"></span>
+  </div>
+  <button id="sob-btn" onclick="openWhatsApp()">
+    <svg width="16" height="16" viewBox="0 0 32 32" fill="none" style="flex-shrink:0">
+      <path d="M16 2C8.268 2 2 8.268 2 16c0 2.484.668 4.81 1.836 6.818L2 30l7.384-1.812A13.94 13.94 0 0016 30c7.732 0 14-6.268 14-14S23.732 2 16 2z" fill="#fff"/>
+      <path d="M22.498 19.533c-.305-.152-1.8-.888-2.079-.99-.278-.102-.481-.152-.683.152s-.783.99-.96 1.193c-.177.202-.354.228-.659.076-.305-.152-1.288-.475-2.453-1.513-.907-.808-1.518-1.806-1.697-2.111-.177-.304-.019-.469.133-.62.137-.136.305-.355.457-.532.152-.178.203-.305.304-.508.103-.203.051-.38-.025-.532-.077-.152-.684-1.648-.937-2.258-.246-.593-.497-.513-.683-.522l-.583-.01c-.203 0-.532.076-.81.38s-1.063 1.04-1.063 2.534 1.089 2.94 1.24 3.143c.152.203 2.143 3.272 5.191 4.586.726.314 1.293.5 1.735.641.729.23 1.392.198 1.916.12.584-.087 1.8-.735 2.054-1.446.254-.71.254-1.32.178-1.447-.077-.127-.278-.203-.583-.355z" fill="#25D366"/>
+    </svg>
+    <span id="sob-btn-txt">Commander</span>
+  </button>
+</div>
 
 <!-- ══ STICKY WHATSAPP PILL (left) ══════════════════════════ -->
 <div id="wa-sticky" onclick="openWhatsApp()" title="Commander sur WhatsApp">
@@ -4581,6 +4667,12 @@ function setLang(l) {
   // Sticky WA pill
   if($el("wa-sticky-lbl")) $el("wa-sticky-lbl").textContent = isAr ? "اطلب عبر واتساب" : (l==="en" ? "Order on WhatsApp" : "Commander sur WhatsApp");
 
+  // Sticky order bar + loyalty share button
+  if($el("sob-btn-txt"))   $el("sob-btn-txt").textContent   = isAr ? "اطلب الآن" : (l==="en" ? "Order now" : "Commander");
+  if($el("loy-share-txt")) $el("loy-share-txt").textContent = isAr ? "ادعُ صديقاً — اربح 20 نقطة 🎁" : (l==="en" ? "Invite a friend — earn 20 pts 🎁" : "Inviter un ami — gagne 20 pts 🎁");
+  // Re-run sticky bar info text after lang change
+  _updateStickyBar();
+
   // Exit popup
   if($el("exit-title"))   $el("exit-title").textContent   = isAr ? "قبل المغادرة..." : (l==="en" ? "Before you go..." : "Avant de partir...");
   if($el("exit-sub"))     $el("exit-sub").textContent     = isAr ? "احصل على قائمة الطعام الكاملة وعروض اليوم مباشرة على واتساب 📲" : (l==="en" ? "Get the full menu + today's deals straight to your WhatsApp 📲" : "Reçois le menu complet + nos offres du jour directement sur ton WhatsApp 📲");
@@ -4890,6 +4982,7 @@ function toggleCart(id){
   try { localStorage.setItem("savy_cart", JSON.stringify(cart)); } catch(e){}
   renderDishes();
   if(cart.includes(id)) showCartToast();
+  document.dispatchEvent(new Event('savy:cartchange'));
 }
 
 function menuSlide(dir) {
@@ -5207,6 +5300,27 @@ function closeChat() {
   chatOpen = false;
   const cw = document.getElementById("chat-window");
   if(cw) cw.classList.remove("open");
+}
+
+// ── Fix: chat window repositions when virtual keyboard opens ──
+if (window.visualViewport) {
+  window.visualViewport.addEventListener('resize', () => {
+    const cw = document.getElementById('chat-window');
+    if (!cw || !cw.classList.contains('open')) return;
+    const vvH = window.visualViewport.height;
+    const winH = window.innerHeight;
+    const kbH = Math.max(0, winH - vvH);
+    cw.style.bottom = (kbH + 14) + 'px';
+    cw.style.maxHeight = (vvH - 80) + 'px';
+  });
+  window.visualViewport.addEventListener('scroll', () => {
+    const cw = document.getElementById('chat-window');
+    if (!cw || !cw.classList.contains('open')) return;
+    const vvH = window.visualViewport.height;
+    const winH = window.innerHeight;
+    const kbH = Math.max(0, winH - vvH);
+    cw.style.bottom = (kbH + 14) + 'px';
+  });
 }
 
 /* ═══════════════════════════════════════════
@@ -6486,6 +6600,14 @@ function renderReviews() {
   // Duplicate for seamless infinite scroll
   track.innerHTML = cards + cards;
   track.style.animationDuration = "50s";
+
+  // Pause animation when scrolled off-screen (saves CPU on low-end phones)
+  if (window.IntersectionObserver) {
+    const obs = new IntersectionObserver(([entry]) => {
+      track.style.animationPlayState = entry.isIntersecting ? 'running' : 'paused';
+    }, { threshold: 0.05 });
+    obs.observe(track);
+  }
 }
 
 window.addEventListener("resize", () => { renderReviews(); });
@@ -6549,6 +6671,20 @@ const WA_NUMBER = "212708700830";
 function openWhatsApp() {
   const msg = encodeURIComponent("Salam ! Bghit ncommande mn SAVY 🍽️ — wayla nshof le menu. 3afak ayda liya 🙏");
   window.open(`https://wa.me/212708700830?text=${msg}`, "_blank");
+}
+
+function shareSAVY() {
+  const msgs = {
+    fr: "🍽️ J'utilise SAVY pour mes repas à Tétouan — repas sains livrés en 45 min, dès 39 MAD ! Essaie ici 👉 https://savy.netlify.app",
+    en: "🍽️ I use SAVY for my meals in Tétouan — healthy food delivered in 45 min from 39 MAD! Try it 👉 https://savy.netlify.app",
+    ar: "🍽️ أنا نستعمل SAVY للأكل فتطوان — وجبات صحية تتوصل بها في 45 دقيقة! جرب هنا 👉 https://savy.netlify.app"
+  };
+  const txt = msgs[lang] || msgs.fr;
+  if (navigator.share) {
+    navigator.share({ title: 'SAVY — Chef IA', text: txt, url: 'https://savy.netlify.app' }).catch(()=>{});
+  } else {
+    window.open(`https://wa.me/?text=${encodeURIComponent(txt)}`, "_blank");
+  }
 }
 
 function openWhatsAppOrder() {
@@ -6973,10 +7109,37 @@ function reactMsg(btn) {
   btn.classList.add("selected");
 }
 
-// Navbar scroll shadow
-window.addEventListener("scroll",()=>{
-  const nb=document.getElementById("navbar"); if(nb) nb.style.boxShadow = window.scrollY>40 ? "0 2px 20px rgba(9,184,48,0.1)" : "none";
+// Navbar scroll shadow + sticky order bar
+var _sobTicking = false;
+
+function _updateStickyBar() {
+  const sob     = document.getElementById('sticky-order-bar');
+  const sobInfo = document.getElementById('sob-cart-info');
+  if (!sob) return;
+  const heroH = (document.getElementById('hero') || {}).offsetHeight || 400;
+  const show = window.scrollY > heroH * 0.6;
+  sob.classList.toggle('visible', show);
+  if (sobInfo) {
+    const cartCount = (cart || []).length;
+    if (cartCount > 0) {
+      sobInfo.textContent = `🛒 ${cartCount} plat${cartCount>1?'s':''} sélectionné${cartCount>1?'s':''}`;
+    } else {
+      const msgs = { fr:'🛵 Livraison 45 min · Dès 39 MAD', en:'🛵 45-min delivery · From 39 MAD', ar:'🛵 توصيل 45 دقيقة · من 39 درهم' };
+      sobInfo.textContent = msgs[lang] || msgs.fr;
+    }
+  }
+  _sobTicking = false;
+}
+
+window.addEventListener("scroll", () => {
+  const nb = document.getElementById("navbar");
+  if (nb) nb.style.boxShadow = window.scrollY > 40 ? "0 2px 20px rgba(9,184,48,0.1)" : "none";
+  if (!_sobTicking) { requestAnimationFrame(_updateStickyBar); _sobTicking = true; }
 });
+
+// Update bar text when cart changes
+document.addEventListener('savy:cartchange', _updateStickyBar);
+setTimeout(_updateStickyBar, 800);
 
 
 
@@ -7015,6 +7178,18 @@ function _resetSlideTimer() {
 }
 // Start auto-play on load
 window.addEventListener('load', () => { _resetSlideTimer(); });
+
+// ── Swipe support for slideshow ──
+(function() {
+  let _tx = 0;
+  const el = document.getElementById('slides-track');
+  if (!el) return;
+  el.addEventListener('touchstart', e => { _tx = e.touches[0].clientX; }, { passive: true });
+  el.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - _tx;
+    if (Math.abs(dx) > 40) { dx < 0 ? nextSlide() : prevSlide(); }
+  }, { passive: true });
+})();
 
 
 /* ═══════════════════════════════════════════════════════════════
