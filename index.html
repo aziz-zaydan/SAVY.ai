@@ -880,7 +880,7 @@
       .steps-grid    { grid-template-columns:repeat(2,1fr); gap:10px; }
       .wwd-grid      { grid-template-columns:1fr !important; }
       .wwd-card--wide{ grid-column:span 1 !important; }
-      #chat-window   { width:calc(100vw - 24px); right:12px; left:12px; }
+      #chat-window   { width:min(320px, calc(100vw - 32px)); right:16px; left:auto; }
     }
 
     /* ══════════════════════════════════════════════════════════
@@ -1060,7 +1060,8 @@
       .footer-links  { gap:14px; flex-wrap:wrap; }
 
       /* ── Chat window ── */
-      #chat-window   { width:calc(100vw - 20px); right:10px; left:10px; bottom:140px; max-height:60dvh; border-radius:16px; }
+      #chat-window   { width:min(290px, calc(100vw - 28px)); right:14px; left:auto; bottom:90px; height:380px; max-height:calc(100dvh - 120px); border-radius:18px; }
+      .chat-header   { cursor:default !important; }
       .msg-bubble    { font-size:12px; padding:7px 10px; }
       .chat-inp      { font-size:13px; }
 
@@ -1870,14 +1871,30 @@
        ║  CHAT WINDOW — Premium Redesign                         ║
        ╚══════════════════════════════════════════════════════════╝ */
 
+    /* ── Chat backdrop — locks page when chat is open ── */
+    #chat-backdrop {
+      display:none;
+      position:fixed; inset:0; z-index:1200;
+      background:rgba(0,0,0,0.45);
+      backdrop-filter:blur(3px);
+      -webkit-backdrop-filter:blur(3px);
+      cursor:pointer;
+      animation:backdropIn .2s ease;
+    }
+    #chat-backdrop.open { display:block; }
+    @keyframes backdropIn {
+      from { opacity:0; }
+      to   { opacity:1; }
+    }
+
     #chat-window {
-      position:fixed; bottom:110px; right:20px; z-index:998;
-      width:360px; max-height:560px;
+      position:fixed; bottom:84px; right:20px; z-index:1201;
+      width:300px; max-height:460px;
       background:var(--card);
-      border-radius:24px;
+      border-radius:20px;
       box-shadow:
         0 0 0 1px rgba(9,184,48,0.12),
-        0 20px 60px rgba(0,0,0,0.18),
+        0 24px 64px rgba(0,0,0,0.28),
         0 4px 16px rgba(9,184,48,0.08);
       border:none;
       display:none; flex-direction:column;
@@ -1890,6 +1907,9 @@
       to   { transform:scale(1)   translateY(0);    opacity:1; }
     }
 
+    /* ── Resize handle (top-left corner) ── */
+
+
     /* ── Header ── */
     .chat-header {
       background:linear-gradient(135deg, var(--green) 0%, #06b237 60%, #09b830 100%);
@@ -1898,6 +1918,8 @@
       flex-shrink:0;
       position:relative; overflow:hidden;
     }
+
+    /* ── Resize grip (bottom-right corner) ── */
     .chat-header::before {
       content:'';
       position:absolute; inset:0;
@@ -2333,7 +2355,7 @@
       .rev-card    { flex:0 0 min(300px,88vw) !important; width:min(300px,88vw) !important; }
 
       /* Chat */
-      #chat-window { width:calc(100vw - 24px) !important; right:12px !important; left:12px !important; }
+      #chat-window { width:min(320px, calc(100vw - 32px)) !important; right:16px !important; left:auto !important; }
     }
 
     /* ══════════════════════════════════════════════════════════
@@ -2529,8 +2551,8 @@
       .s-handle      { font-size:11px !important; }
 
       /* ── Chat window ── */
-      #chat-window   { width:calc(100vw - 16px) !important; right:8px !important; left:8px !important;
-                       bottom:138px !important; max-height:58dvh !important; border-radius:15px !important; }
+      #chat-window   { width:min(300px, calc(100vw - 32px)) !important; right:16px !important; left:auto !important;
+                       bottom:90px !important; height:420px !important; max-height:calc(100dvh - 120px) !important; border-radius:18px !important; }
       .msg-bubble    { font-size:12px !important; padding:7px 10px !important; }
       .chat-inp      { font-size:13px !important; }
       .chat-header   { padding:9px 11px !important; }
@@ -3922,6 +3944,8 @@
 <div id="fab-group" style="display:none"></div>
 
 <!-- ══ CHAT WINDOW ══════════════════════════════════════════ -->
+<div id="chat-backdrop" onclick="closeChat()"></div>
+
 <div id="chat-window">
 
   <!-- Header -->
@@ -3959,70 +3983,7 @@
   <!-- Messages -->
   <div id="chat-msgs"></div>
 
-  <!-- ── Language Picker (shown before first message) ── -->
-  <div id="chat-lang-picker" style="
-    flex:1; display:none; flex-direction:column; align-items:center; justify-content:center;
-    padding:20px 16px; background:var(--bg); gap:12px;
-  ">
-    <!-- Header -->
-    <div style="text-align:center; margin-bottom:4px;">
-      <div style="font-size:36px; margin-bottom:10px; line-height:1;">🧬</div>
-      <div style="font-family:'Outfit',sans-serif; font-weight:900; font-size:16px; color:var(--text); margin-bottom:6px; letter-spacing:-.01em;">Chef SAVY</div>
-      <div style="font-size:11.5px; color:var(--muted); font-family:'DM Sans',sans-serif; line-height:1.7;">
-        Choisissez votre langue
-        <span style="color:var(--border); margin:0 6px;">·</span>
-        Choose your language<br>
-        اختر لغتك
-        <span style="color:var(--border); margin:0 6px;">·</span>
-        Elige tu idioma
-      </div>
-    </div>
 
-    <!-- Language buttons -->
-    <div style="display:flex; flex-direction:column; gap:7px; width:100%;">
-
-      <button class="lang-pick-btn" onclick="pickChatLang('fr')">
-        <span class="lang-pick-flag">🇫🇷</span>
-        <span class="lang-pick-name">
-          Français
-          <span class="lang-pick-sub">Bonjour, Chef SAVY vous accueille !</span>
-        </span>
-      </button>
-
-      <button class="lang-pick-btn" onclick="pickChatLang('da')">
-        <span class="lang-pick-flag">🇲🇦</span>
-        <span class="lang-pick-name">
-          Darija
-          <span class="lang-pick-sub">سلام، Chef SAVY راه هنا معاك</span>
-        </span>
-      </button>
-
-      <button class="lang-pick-btn" onclick="pickChatLang('ar')">
-        <span class="lang-pick-flag">🌙</span>
-        <span class="lang-pick-name">
-          العربية
-          <span class="lang-pick-sub">أهلاً، Chef SAVY في خدمتك</span>
-        </span>
-      </button>
-
-      <button class="lang-pick-btn" onclick="pickChatLang('en')">
-        <span class="lang-pick-flag">🇬🇧</span>
-        <span class="lang-pick-name">
-          English
-          <span class="lang-pick-sub">Hello, Chef SAVY is ready to help!</span>
-        </span>
-      </button>
-
-      <button class="lang-pick-btn" onclick="pickChatLang('es')">
-        <span class="lang-pick-flag">🇪🇸</span>
-        <span class="lang-pick-name">
-          Español
-          <span class="lang-pick-sub">¡Hola, Chef SAVY a tu servicio!</span>
-        </span>
-      </button>
-
-    </div>
-  </div>
 
   <!-- Lead form -->
   <div id="chat-lead-form">
@@ -5266,65 +5227,35 @@ function resetChatForPersona(p) {
 function openChat() {
   try { trackEvent('chat_open', { persona: typeof persona !== 'undefined' ? persona : 'unknown', lang: typeof lang !== 'undefined' ? lang : 'fr' }); } catch(e){}
   chatOpen = true;
+
+  // Show backdrop + lock page scroll
+  const bd = document.getElementById("chat-backdrop");
+  if (bd) bd.classList.add("open");
+  document.body.style.overflow = "hidden";
+
   const cw = document.getElementById("chat-window");
   if(cw) cw.classList.add("open");
-  // Always ensure input area is visible when opening
   const ia = document.getElementById("chat-input-area");
   if(ia) ia.style.display = "flex";
 
-  // Show lang picker if chat hasn't started yet
-  if(chatHistory.length === 0 && !chatLangPicked) {
-    const picker = document.getElementById("chat-lang-picker");
-    if(picker) picker.style.display = "flex";
-    const msgs = document.getElementById("chat-msgs");
-    if(msgs) msgs.style.display = "none";
-    if(ia) ia.style.display = "none";
-  } else if(chatHistory.length === 0) {
+  if(chatHistory.length === 0) {
     initChat();
   }
 }
 
-let chatLangPicked = false;
-
-function pickChatLang(l) {
-  chatLangPicked = true;
-  // Set global lang
-  lang = l;
-
-  // Hide picker, show messages + input
-  document.getElementById("chat-lang-picker").style.display = "none";
-  document.getElementById("chat-msgs").style.display = "flex";
-  const ia = document.getElementById("chat-input-area");
-  if(ia) ia.style.display = "flex";
-
-  // Update placeholder per language
-  const inp = document.getElementById("chat-inp");
-  if(inp) {
-    const placeholders = {
-      fr: "Écris à Chef SAVY...",
-      ar: "اكتب لـ Chef SAVY...",
-      da: "Kteb l Chef SAVY...",
-      en: "Message Chef SAVY...",
-      es: "Escribe a Chef SAVY...",
-    };
-    inp.placeholder = placeholders[l] || placeholders.fr;
-    // RTL for Arabic
-    inp.dir = (l === "ar") ? "rtl" : "ltr";
-  }
-
-  // Update page lang if needed
-  if(l === "ar" || l === "da") {
-    document.documentElement.lang = "ar";
-  } else {
-    document.documentElement.lang = l;
-  }
-
-  initChat();
-}
 function closeChat() {
   chatOpen = false;
+
+  // Hide backdrop + restore page scroll
+  const bd = document.getElementById("chat-backdrop");
+  if (bd) bd.classList.remove("open");
+  document.body.style.overflow = "";
+
   const cw = document.getElementById("chat-window");
   if(cw) cw.classList.remove("open");
+
+  // Reset keyboard offset if it was applied
+  if (cw) { cw.style.bottom = ""; cw.style.maxHeight = ""; }
 }
 
 // ── Fix: chat window repositions when virtual keyboard opens ──
@@ -5476,19 +5407,42 @@ function _showLangPicker(p) {
     <circle cx="46" cy="37" r="3.2" fill="#089929"/>
   </svg>`;
 
+  // Page language-aware welcome copy
+  const pageLang = (typeof lang !== 'undefined' ? lang : 'fr');
+  const copy = {
+    fr: {
+      title: "Bienvenue chez SAVY 🧬",
+      desc:  "Votre chef IA personnel — je compose des repas sains selon vos objectifs et vous les livre en 45 min à Tétouan, M'diq et Martil. Choisissez votre langue :",
+    },
+    en: {
+      title: "Welcome to SAVY 🧬",
+      desc:  "Your personal AI chef — I craft healthy meals tailored to your goals and deliver them in 45 min across Tétouan, M'diq and Martil. Choose your language:",
+    },
+    ar: {
+      title: "مرحباً بك في SAVY 🧬",
+      desc:  "شيفك الذكي الشخصي — أُعِدّ لك وجبات صحية مصمَّمة وفق أهدافك وأوصّلها إليك خلال 45 دقيقة في تطوان والمضيق ومرتيل. اختر لغتك:",
+    },
+    es: {
+      title: "Bienvenido a SAVY 🧬",
+      desc:  "Tu chef IA personal — creo comidas saludables adaptadas a tus objetivos y las entrego en 45 min en Tétouan, M'diq y Martil. Elige tu idioma:",
+    },
+  };
+  const c = copy[pageLang] || copy.fr;
+  const isRtl = pageLang === 'ar';
+
   const bubble = document.createElement("div");
   bubble.className = "msg-bubble";
-  bubble.style.maxWidth = "100%";
+  bubble.style.cssText = "max-width:100%;" + (isRtl ? "direction:rtl;text-align:right;" : "");
 
-  const greet = document.createElement("div");
-  greet.style.cssText = "font-weight:700;margin-bottom:6px;font-size:13px;";
-  greet.textContent = "Welcome to SAVY 🧬";
-  bubble.appendChild(greet);
+  const title = document.createElement("div");
+  title.style.cssText = "font-weight:800;margin-bottom:6px;font-size:13px;font-family:'Outfit',sans-serif;";
+  title.textContent = c.title;
+  bubble.appendChild(title);
 
-  const sub = document.createElement("div");
-  sub.style.cssText = "font-size:11px;color:var(--muted);margin-bottom:10px;line-height:1.5;";
-  sub.textContent = "Please choose your language:";
-  bubble.appendChild(sub);
+  const desc = document.createElement("div");
+  desc.style.cssText = "font-size:11.5px;color:var(--sub);margin-bottom:12px;line-height:1.6;";
+  desc.textContent = c.desc;
+  bubble.appendChild(desc);
 
   const grid = document.createElement("div");
   grid.className = "lang-picker";
@@ -7197,6 +7151,70 @@ function reactMsg(btn) {
 }
 
 // Navbar scroll shadow + sticky order bar
+// ── Chat window drag-to-resize ────────────────────────────────────────────
+(function() {
+  const handle = document.getElementById('chat-resize-handle');
+  const win    = document.getElementById('chat-window');
+  if (!handle || !win) return;
+
+  let dragging = false, startX, startY, startW, startH, startR, startB;
+
+  function onStart(e) {
+    e.preventDefault();
+    dragging = true;
+    const isTouch = e.touches;
+    startX = isTouch ? e.touches[0].clientX : e.clientX;
+    startY = isTouch ? e.touches[0].clientY : e.clientY;
+    startW = win.offsetWidth;
+    startH = win.offsetHeight;
+    // right and bottom are fixed; we grow left and up
+    const rect = win.getBoundingClientRect();
+    startR = window.innerWidth  - rect.right;
+    startB = window.innerHeight - rect.bottom;
+
+    win.style.transition = 'none';
+    document.body.style.userSelect = 'none';
+
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup',   onEnd);
+    document.addEventListener('touchmove', onMove, { passive:false });
+    document.addEventListener('touchend',  onEnd);
+  }
+
+  function onMove(e) {
+    if (!dragging) return;
+    if (e.cancelable) e.preventDefault();
+    const isTouch = e.touches;
+    const cx = isTouch ? e.touches[0].clientX : e.clientX;
+    const cy = isTouch ? e.touches[0].clientY : e.clientY;
+
+    const dx = startX - cx;  // dragging left  = wider
+    const dy = startY - cy;  // dragging up    = taller
+
+    const minW = 260, maxW = Math.min(480, window.innerWidth  - startR - 16);
+    const minH = 320, maxH = Math.min(window.innerHeight - startB - 16, window.innerHeight - 80);
+
+    const newW = Math.max(minW, Math.min(maxW, startW + dx));
+    const newH = Math.max(minH, Math.min(maxH, startH + dy));
+
+    win.style.width  = newW + 'px';
+    win.style.height = newH + 'px';
+  }
+
+  function onEnd() {
+    dragging = false;
+    win.style.transition = '';
+    document.body.style.userSelect = '';
+    document.removeEventListener('mousemove', onMove);
+    document.removeEventListener('mouseup',   onEnd);
+    document.removeEventListener('touchmove', onMove);
+    document.removeEventListener('touchend',  onEnd);
+  }
+
+  handle.addEventListener('mousedown',  onStart);
+  handle.addEventListener('touchstart', onStart, { passive:false });
+})();
+
 var _sobTicking = false;
 
 function _updateStickyBar() {
@@ -7227,6 +7245,11 @@ window.addEventListener("scroll", () => {
 // Update bar text when cart changes
 document.addEventListener('savy:cartchange', _updateStickyBar);
 setTimeout(_updateStickyBar, 800);
+
+// Close chat on Escape key
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && chatOpen) closeChat();
+});
 
 
 
