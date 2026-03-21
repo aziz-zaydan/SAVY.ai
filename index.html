@@ -2041,6 +2041,7 @@
       padding:14px 14px 14px 16px !important;
       background:linear-gradient(135deg, #089929 0%, #06b237 60%, #04a030 100%) !important;
       position:relative; overflow:hidden;
+      flex-shrink:0 !important;  /* always visible — never squeezed */
     }
     /* Subtle grain texture on header */
     #chat-window .chat-header::after {
@@ -2190,7 +2191,7 @@
       padding:8px 10px 11px;
       border-top:1px solid var(--border);
       background:var(--card);
-      flex-shrink:0;
+      flex-shrink:0 !important;
     }
     #chat-scroll-btn {
       display:none; float:right; margin-bottom:4px;
@@ -2284,6 +2285,8 @@
       background:var(--card);
       border-top:2px solid var(--green);
       animation:lfSlideUp .22s cubic-bezier(.34,1.2,.64,1) both;
+      /* Do not grow beyond what the window allows */
+      min-height:0; overflow:hidden;
     }
     @keyframes lfSlideUp {
       from { opacity:0; transform:translateY(8px); }
@@ -2312,7 +2315,9 @@
 
     /* ── Scrollable body ── */
     .lf-body {
-      overflow-y:auto; max-height:52dvh;
+      overflow-y:auto;
+      /* Dynamic max: window max-height minus header(~70px) minus input(~56px) minus form-header(~40px) */
+      max-height:min(52dvh, calc(620px - 70px - 56px - 40px));
       -webkit-overflow-scrolling:touch;
       scrollbar-width:thin;
       scrollbar-color:var(--border) transparent;
@@ -5935,25 +5940,28 @@ function setQuickChips(chips) {
 async function chatSend() {
   const inp  = document.getElementById("chat-inp");
   const text = inp.value.trim();
-  if(!text || leadDone) return;
+  if (!text) return;
   inp.value = "";
   document.getElementById("quick-chips").innerHTML = "";
   await chatSendText(text);
 }
 
 async function chatSendText(text) {
-  if(leadDone) return;
-
-  // If form is visible and user is typing → treat as "change order" — hide form
-  if(leadShown) {
-    const form = document.getElementById("chat-lead-form");
-    if(form && form.style.display !== "none") {
-      form.style.display = "none";
-      leadShown = false;
-      // Clear meal summary so it rebuilds fresh next time
-      const summaryEl = document.getElementById("lead-meal-summary");
-      if(summaryEl) summaryEl.style.display = "none";
-    }
+  // If form is visible and user types → change of mind → dismiss form, unlock chat
+  if (leadShown) {
+    const form      = document.getElementById("chat-lead-form");
+    const msgs      = document.getElementById("chat-msgs");
+    const overlay   = document.getElementById("lead-form-overlay");
+    const inputArea = document.getElementById("chat-input-area");
+    if (form)      form.style.display = "none";
+    if (msgs)      msgs.classList.remove("form-open");
+    if (overlay)   overlay.classList.remove("active");
+    if (inputArea) inputArea.style.display = "flex";
+    leadShown = false;
+    window._savyOrderDishes   = null;
+    window._savyConfirmedDish = null;
+    const summaryEl = document.getElementById("lead-meal-summary");
+    if (summaryEl) summaryEl.style.display = "none";
   }
 
   addUserMsg(text);
@@ -6975,6 +6983,29 @@ function submitLead() {
         const s = document.getElementById("order-track-section");
         if (s) s.scrollIntoView({ behavior:"smooth", block:"center" });
       }, 400);
+
+      // Reset so customer can order again if they reopen the chat
+      setTimeout(() => {
+        leadDone = false;
+        window._savyOrderDishes   = null;
+        window._savyConfirmedDish = null;
+        // Restore input area (was hidden during form)
+        const ia = document.getElementById("chat-input-area");
+        if (ia) ia.style.display = "flex";
+        // Add a friendly follow-up after a pause
+        const cl2 = window._savyChatLang || lang || "fr";
+        const followUp = {
+          fr: "🍽️ Votre commande est confirmée ! Voulez-vous ajouter un dessert ou commander pour quelqu'un d'autre ?",
+          en: "🍽️ Your order is confirmed! Would you like to add a dessert or order for someone else?",
+          ar: "🍽️ تم تأكيد طلبكم! هل تودّون إضافة حلوى أو طلب شيء آخر؟",
+          es: "🍽️ ¡Tu pedido está confirmado! ¿Te gustaría agregar un postre o pedir algo más?",
+        };
+        setTimeout(() => {
+          addBotMsg(followUp[cl2] || followUp.fr, isCouple);
+          const inp = document.getElementById("chat-inp");
+          if (inp) inp.focus();
+        }, 3000);
+      }, 2800);
     }, 2200);
   }, 1200);
 }
