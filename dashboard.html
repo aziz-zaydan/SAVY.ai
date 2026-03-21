@@ -4,444 +4,383 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>SAVY — Admin Dashboard</title>
-<!-- PWA — Separate Admin App -->
-  <link rel="manifest" href="/dashboard-manifest.json"/>
-  <meta name="theme-color" content="#080F0A"/>
-  <meta name="mobile-web-app-capable" content="yes"/>
-  <meta name="apple-mobile-web-app-capable" content="yes"/>
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-  <meta name="apple-mobile-web-app-title" content="SAVY Admin"/>
-  <link rel="apple-touch-icon" href="/images/icon-dash-192.png"/>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link rel="manifest" href="/dashboard-manifest.json"/>
+<meta name="theme-color" content="#050D07"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="SAVY Admin"/>
+<link rel="apple-touch-icon" href="/images/icon-dash-192.png"/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet"/>
 <style>
 :root {
-  --bg:       #080F0A;
-  --card:     #0D1810;
-  --card2:    #111F14;
-  --green:    #09B830;
-  --greenL:   #2BCE4E;
-  --greenXL:  #0A2A12;
-  --text:     #E8F5EC;
-  --sub:      #6BBF7A;
-  --muted:    #3A6644;
-  --border:   #1A3A22;
-  --gold:     #F4C430;
-  --red:      #FF4D4D;
-  --blue:     #4DA6FF;
-  --purple:   #B87AFF;
-  --font-title: 'Outfit', sans-serif;
-  --font-mono:  'DM Mono', monospace;
-  --font-body:  'DM Sans', sans-serif;
+  --bg:      #050D07;
+  --card:    #0C1710;
+  --card2:   #101D13;
+  --green:   #09B830;
+  --greenL:  #2BCE4E;
+  --greenXL: #091A0C;
+  --text:    #E6F4EA;
+  --sub:     #5FA86D;
+  --muted:   #2D5438;
+  --border:  #172B1C;
+  --gold:    #F0B429;
+  --red:     #F04747;
+  --blue:    #4B9FFF;
+  --pink:    #E91E8C;
+  --purple:  #A855F7;
+  --font:    'Outfit', sans-serif;
+  --mono:    'DM Mono', monospace;
+  --body:    'DM Sans', sans-serif;
+  --radius:  14px;
 }
-
-/* ── LIGHT THEME ── */
 [data-theme="light"] {
-  --bg:       #F5FBF7;
-  --card:     #FFFFFF;
-  --card2:    #EEF7F1;
-  --green:    #089929;
-  --greenL:   #2BCE4E;
-  --greenXL:  #E6F5EF;
-  --text:     #0D1F18;
-  --sub:      #2E6644;
-  --muted:    #8FBFAA;
-  --border:   #D4EDE3;
-  --gold:     #B8860B;
-  --red:      #CC0000;
-  --blue:     #1565C0;
-  --purple:   #6A1B9A;
+  --bg:      #F4FAF6;
+  --card:    #FFFFFF;
+  --card2:   #EEF7F1;
+  --green:   #089929;
+  --greenXL: #E4F4EA;
+  --text:    #0A1C10;
+  --sub:     #2E6644;
+  --muted:   #8FBFAA;
+  --border:  #CDE8D8;
+  --gold:    #A0760A;
+  --red:     #CC1111;
+  --blue:    #1558C0;
+  --pink:    #C2185B;
+  --purple:  #6A1B9A;
 }
-[data-theme="light"] html,
-[data-theme="light"] body { background:var(--bg); }
-[data-theme="light"] .sidebar { background:var(--card); border-color:var(--border); }
-[data-theme="light"] .sidebar-logo { color:var(--green); }
-[data-theme="light"] .nav-item { color:var(--sub); }
-[data-theme="light"] .nav-item.active { color:var(--green); background:var(--greenXL); }
-[data-theme="light"] .nav-item:hover { background:var(--card2); color:var(--text); }
-[data-theme="light"] .table-wrap { border-color:var(--border); }
-[data-theme="light"] thead tr { background:var(--card2); }
-[data-theme="light"] td { border-color:var(--border); }
-[data-theme="light"] tr:hover td { background:var(--card2); }
-[data-theme="light"] .stat-card { background:var(--card); border-color:var(--border); box-shadow:0 2px 12px rgba(0,0,0,.06); }
-[data-theme="light"] .chart-card { background:var(--card); border-color:var(--border); }
-[data-theme="light"] .login-box { background:var(--card); border-color:var(--border); box-shadow:0 8px 32px rgba(0,0,0,.08); }
-[data-theme="light"] .login-input { background:var(--bg); border-color:var(--border); color:var(--text); }
-[data-theme="light"] .filter-btn { background:var(--card2); border-color:var(--border); color:var(--sub); }
-[data-theme="light"] .filter-btn.active { background:var(--greenXL); border-color:var(--green); color:var(--green); }
-[data-theme="light"] .search-input { background:var(--card2); border-color:var(--border); color:var(--text); }
-[data-theme="light"] .refresh-btn { background:var(--card2); border-color:var(--border); color:var(--sub); }
-[data-theme="light"] .config-card { background:var(--card); border-color:var(--border); }
-[data-theme="light"] .config-input { background:var(--bg); border-color:var(--border); color:var(--text); }
-[data-theme="light"] .bar { background:linear-gradient(180deg,var(--green),var(--greenL)); }
-[data-theme="light"] .order-id { color:var(--green); }
-[data-theme="light"] .total-val { color:#B8860B; }
-[data-theme="light"] #mobile-nav { background:var(--card); border-color:var(--border); }
-[data-theme="light"] #login-screen { background:var(--bg); }
-* { box-sizing:border-box; margin:0; padding:0; }
-html,body { background:var(--bg); color:var(--text); font-family:'DM Sans',sans-serif; min-height:100vh; }
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{background:var(--bg);color:var(--text);font-family:var(--body);min-height:100vh;}
 
-/* ── Login Screen ── */
-#login-screen {
-  position:fixed; inset:0; background:var(--bg);
-  display:flex; align-items:center; justify-content:center;
-  z-index:1000; flex-direction:column; gap:24px;
+/* ── LOGIN ────────────────────────────────────────────── */
+#login-screen{
+  position:fixed;inset:0;background:var(--bg);
+  display:flex;align-items:center;justify-content:center;
+  z-index:1000;flex-direction:column;gap:20px;
 }
-.login-box {
-  background:var(--card); border:1px solid var(--border);
-  border-radius:24px; padding:48px 40px; width:min(400px,90vw);
+.login-box{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:24px;padding:48px 40px;width:min(400px,92vw);
   text-align:center;
+  box-shadow:0 24px 64px rgba(0,0,0,.3),0 0 0 1px rgba(9,184,48,.08);
 }
-.login-logo { font-family:'Outfit',sans-serif; font-size:36px; font-weight:900; color:var(--green); letter-spacing:-1px; margin-bottom:8px; }
-.login-sub { font-size:13px; color:var(--muted); margin-bottom:32px; }
-.login-input {
-  width:100%; background:var(--bg); border:1px solid var(--border);
-  border-radius:12px; padding:14px 16px; font-size:15px; color:var(--text);
-  outline:none; margin-bottom:12px; font-family:'DM Sans',sans-serif;
+.login-logo{
+  font-family:var(--font);font-weight:900;font-size:44px;
+  color:var(--green);letter-spacing:-2px;margin-bottom:6px;
+}
+.login-sub{font-size:12px;color:var(--muted);margin-bottom:32px;letter-spacing:.05em;}
+.login-input{
+  width:100%;background:var(--bg);border:1.5px solid var(--border);
+  border-radius:12px;padding:13px 16px;font-size:15px;color:var(--text);
+  outline:none;margin-bottom:12px;font-family:var(--body);
   transition:border-color .2s;
 }
-.login-input:focus { border-color:var(--green); }
-.login-btn {
-  width:100%; background:linear-gradient(135deg,var(--green),var(--greenL));
-  color:#fff; border:none; border-radius:12px; padding:14px;
-  font-size:15px; font-weight:800; cursor:pointer;
-  font-family:'Outfit',sans-serif; letter-spacing:.03em;
-  transition:opacity .2s;
+.login-input:focus{border-color:var(--green);}
+.login-btn{
+  width:100%;background:linear-gradient(135deg,var(--green),var(--greenL));
+  color:#fff;border:none;border-radius:12px;padding:14px;
+  font-size:14px;font-weight:800;cursor:pointer;font-family:var(--font);
+  letter-spacing:.04em;transition:opacity .2s;
 }
-.login-btn:hover { opacity:.88; }
-.login-err { color:var(--red); font-size:12px; margin-top:8px; display:none; }
+.login-btn:hover{opacity:.88;}
+.login-err{color:var(--red);font-size:12px;margin-top:8px;display:none;}
 
-/* ── Layout ── */
-#app { display:none; min-height:100vh; }
+/* ── APP LAYOUT ───────────────────────────────────────── */
+#app{display:none;min-height:100vh;}
 
-/* ── Sidebar ── */
-.sidebar {
-  position:fixed; left:0; top:0; bottom:0; width:220px;
-  background:var(--card); border-right:1px solid var(--border);
-  display:flex; flex-direction:column; padding:24px 0; z-index:100;
+/* Sidebar */
+.sidebar{
+  position:fixed;left:0;top:0;bottom:0;width:224px;
+  background:var(--card);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;padding:0;z-index:100;
 }
-.sidebar-logo {
-  font-family:'Outfit',sans-serif; font-weight:900; font-size:22px;
-  color:var(--green); padding:0 24px 24px; letter-spacing:-0.5px;
-  border-bottom:1px solid var(--border);
+.sidebar-brand{
+  padding:22px 20px 18px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:10px;
 }
-.sidebar-logo span { color:var(--sub); font-size:11px; font-weight:500; display:block; letter-spacing:.05em; margin-top:2px; }
-.nav-items { padding:16px 0; flex:1; }
-.nav-item {
-  display:flex; align-items:center; gap:12px;
-  padding:11px 24px; font-size:13px; font-weight:600;
-  color:var(--sub); cursor:pointer; transition:all .15s;
-  border-left:3px solid transparent;
-}
-.nav-item:hover { color:var(--text); background:var(--card2); }
-.nav-item.active { color:var(--green); background:var(--greenXL); border-left-color:var(--green); }
-.nav-item .icon { font-size:16px; }
-.sidebar-footer { padding:16px 24px; border-top:1px solid var(--border); font-size:11px; color:var(--muted); }
-.online-dot { width:6px; height:6px; background:var(--green); border-radius:50%; display:inline-block; margin-right:6px; animation:blink 2s infinite; }
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
-
-/* ── Main content ── */
-.main { margin-left:220px; padding:32px; min-height:100vh; }
-.page { display:none; }
-.page.active { display:block; }
-
-/* ── Top bar ── */
-.topbar {
-  display:flex; align-items:center; justify-content:space-between;
-  margin-bottom:32px;
-}
-.page-title { font-family:'Outfit',sans-serif; font-weight:900; font-size:24px; color:var(--text); }
-.page-sub { font-size:13px; color:var(--muted); margin-top:4px; }
-.refresh-btn {
-  background:var(--card2); border:1px solid var(--border);
-  color:var(--sub); border-radius:10px; padding:9px 16px;
-  font-size:12px; font-weight:700; cursor:pointer;
-  transition:all .2s; display:flex; align-items:center; gap:8px;
-}
-.refresh-btn:hover { border-color:var(--green); color:var(--green); }
-
-/* ── Stat cards ── */
-.stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:28px; }
-.stat-card {
-  background:var(--card); border:1px solid var(--border);
-  border-radius:16px; padding:20px;
-  position:relative; overflow:hidden;
-}
-.stat-card::before {
-  content:''; position:absolute; top:0; right:0;
-  width:60px; height:60px; border-radius:0 16px 0 60px;
-  opacity:.15;
-}
-.stat-card.green::before { background:var(--green); }
-.stat-card.gold::before  { background:var(--gold); }
-.stat-card.blue::before  { background:var(--blue); }
-.stat-card.purple::before{ background:var(--purple); }
-.stat-icon { font-size:20px; margin-bottom:12px; }
-.stat-val  { font-family:'Outfit',sans-serif; font-weight:900; font-size:28px; color:var(--text); }
-.stat-lbl  { font-size:12px; color:var(--muted); margin-top:4px; font-weight:600; }
-.stat-delta{ font-size:11px; margin-top:6px; font-weight:700; }
-.stat-delta.up   { color:var(--green); }
-.stat-delta.flat { color:var(--muted); }
-
-/* ── Section header ── */
-.section-hdr {
-  display:flex; align-items:center; justify-content:space-between;
-  margin-bottom:16px;
-}
-.section-title { font-family:'Outfit',sans-serif; font-weight:800; font-size:15px; color:var(--text); }
-
-/* ── Table ── */
-.table-wrap { background:var(--card); border:1px solid var(--border); border-radius:16px; overflow:hidden; }
-table { width:100%; border-collapse:collapse; font-size:13px; }
-thead tr { background:var(--card2); }
-th { padding:12px 16px; text-align:left; font-size:10px; font-weight:800; color:var(--muted); letter-spacing:.1em; text-transform:uppercase; }
-td { padding:13px 16px; border-top:1px solid var(--border); vertical-align:middle; }
-tr:hover td { background:var(--card2); }
-.order-id { font-family:'DM Mono',monospace; font-size:12px; color:var(--green); font-weight:500; }
-.customer-name { font-weight:700; color:var(--text); }
-.customer-phone { font-family:'DM Mono',monospace; font-size:11px; color:var(--sub); }
-.total-val { font-family:'Outfit',sans-serif; font-weight:800; color:var(--gold); }
-.persona-badge {
-  display:inline-block; padding:3px 8px; border-radius:6px;
-  font-size:10px; font-weight:700; letter-spacing:.03em;
-}
-.persona-badge.employee { background:rgba(77,166,255,.15); color:var(--blue); }
-.persona-badge.sportif  { background:rgba(9,184,48,.15);  color:var(--green); }
-.persona-badge.famille  { background:rgba(244,196,48,.15); color:var(--gold); }
-.persona-badge.couple   { background:rgba(184,122,255,.15);color:var(--purple); }
-.persona-badge.whatsapp { background:rgba(37,211,102,.15); color:#25D366; }
-.status-badge {
-  display:inline-flex; align-items:center; gap:5px;
-  padding:4px 10px; border-radius:8px; font-size:11px; font-weight:700;
-  cursor:pointer; transition:all .2s;
-}
-.status-badge.new      { background:rgba(9,184,48,.15);  color:var(--green); border:1px solid rgba(9,184,48,.3); }
-.status-badge.prep     { background:rgba(244,196,48,.15); color:var(--gold);  border:1px solid rgba(244,196,48,.3); }
-.status-badge.delivery { background:rgba(77,166,255,.15); color:var(--blue);  border:1px solid rgba(77,166,255,.3); }
-.status-badge.done     { background:rgba(100,100,100,.15);color:var(--muted); border:1px solid var(--border); }
-.tier-badge {
-  display:inline-block; padding:3px 8px; border-radius:6px;
-  font-size:10px; font-weight:800;
-}
-.tier-bronze   { background:rgba(205,127,50,.2);  color:#CD7F32; }
-.tier-silver   { background:rgba(192,192,192,.2);  color:#C0C0C0; }
-.tier-gold     { background:rgba(244,196,48,.2);   color:var(--gold); }
-.tier-platinum { background:rgba(184,122,255,.2);  color:var(--purple); }
-
-/* ── Charts area ── */
-.charts-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:28px; }
-.chart-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:20px; }
-.chart-title { font-family:'Outfit',sans-serif; font-weight:800; font-size:13px; color:var(--text); margin-bottom:16px; }
-.bar-chart { display:flex; align-items:flex-end; gap:6px; height:100px; }
-.bar-col { flex:1; display:flex; flex-direction:column; align-items:center; gap:4px; }
-.bar {
-  width:100%; background:linear-gradient(180deg,var(--green),var(--greenL));
-  border-radius:4px 4px 0 0; transition:height .5s ease; min-height:4px;
-}
-.bar-lbl { font-size:9px; color:var(--muted); font-weight:600; }
-.bar-val { font-size:9px; color:var(--sub); font-weight:700; }
-.donut-wrap { display:flex; align-items:center; gap:20px; }
-.donut-legend { display:flex; flex-direction:column; gap:8px; }
-.legend-item { display:flex; align-items:center; gap:8px; font-size:12px; }
-.legend-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
-
-/* ── Filter bar ── */
-.filter-bar { display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap; align-items:center; }
-.filter-btn {
-  background:var(--card2); border:1px solid var(--border);
-  color:var(--sub); border-radius:8px; padding:7px 14px;
-  font-size:12px; font-weight:700; cursor:pointer; transition:all .2s;
-}
-.filter-btn.active, .filter-btn:hover { border-color:var(--green); color:var(--green); background:var(--greenXL); }
-.search-input {
-  background:var(--card2); border:1px solid var(--border);
-  color:var(--text); border-radius:8px; padding:7px 14px;
-  font-size:12px; outline:none; transition:border-color .2s;
-  font-family:'DM Sans',sans-serif; width:200px;
-}
-.search-input:focus { border-color:var(--green); }
-
-/* ── Empty state ── */
-.empty-state { text-align:center; padding:48px 24px; color:var(--muted); }
-.empty-state .big { font-size:40px; margin-bottom:12px; }
-.empty-state p { font-size:13px; }
-
-/* ── Config panel ── */
-.config-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:24px; margin-bottom:16px; }
-.config-label { font-size:12px; color:var(--muted); font-weight:700; margin-bottom:8px; text-transform:uppercase; letter-spacing:.06em; }
-.config-input {
-  width:100%; background:var(--bg); border:1px solid var(--border);
-  border-radius:10px; padding:11px 14px; font-size:13px; color:var(--text);
-  outline:none; font-family:'DM Mono',monospace;
-  transition:border-color .2s;
-}
-.config-input:focus { border-color:var(--green); }
-.save-btn {
+.brand-logo{
+  width:36px;height:36px;border-radius:10px;
   background:linear-gradient(135deg,var(--green),var(--greenL));
-  color:#fff; border:none; border-radius:10px; padding:11px 24px;
-  font-size:13px; font-weight:800; cursor:pointer; margin-top:12px;
-  font-family:'Outfit',sans-serif;
+  display:flex;align-items:center;justify-content:center;font-size:18px;
+}
+.brand-text{font-family:var(--font);font-weight:900;font-size:16px;color:var(--text);letter-spacing:-.5px;}
+.brand-text span{display:block;font-size:9px;font-weight:600;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-top:1px;}
+
+.nav-items{padding:12px 0;flex:1;overflow-y:auto;}
+.nav-section{
+  font-size:9px;font-weight:800;color:var(--muted);letter-spacing:.12em;
+  text-transform:uppercase;padding:14px 20px 6px;
+}
+.nav-item{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 20px;font-size:13px;font-weight:600;
+  color:var(--sub);cursor:pointer;transition:all .15s;
+  border-left:3px solid transparent;margin:1px 0;
+  border-radius:0 10px 10px 0;margin-right:8px;
+}
+.nav-item:hover{color:var(--text);background:var(--card2);}
+.nav-item.active{color:var(--green);background:var(--greenXL);border-left-color:var(--green);}
+.nav-item .ni{font-size:15px;flex-shrink:0;}
+
+.sidebar-foot{
+  padding:14px 16px;border-top:1px solid var(--border);
+  display:flex;flex-direction:column;gap:6px;
+}
+.foot-btn{
+  width:100%;background:transparent;border:1px solid var(--border);
+  border-radius:9px;color:var(--muted);padding:7px 12px;cursor:pointer;
+  font-size:11px;font-weight:700;text-align:left;
+  display:flex;align-items:center;gap:8px;transition:all .18s;
+  font-family:var(--body);
+}
+.foot-btn:hover{border-color:var(--green);color:var(--green);}
+.live-dot{width:6px;height:6px;background:var(--green);border-radius:50%;display:inline-block;animation:blink 2s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+
+/* Main */
+.main{margin-left:224px;padding:28px 28px 40px;min-height:100vh;}
+.page{display:none;}
+.page.active{display:block;}
+
+/* Topbar */
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;gap:12px;flex-wrap:wrap;}
+.page-title{font-family:var(--font);font-weight:900;font-size:22px;color:var(--text);letter-spacing:-.5px;}
+.page-sub{font-size:12px;color:var(--muted);margin-top:3px;}
+.topbar-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.action-btn{
+  background:var(--card2);border:1px solid var(--border);
+  color:var(--sub);border-radius:9px;padding:8px 14px;
+  font-size:12px;font-weight:700;cursor:pointer;transition:all .18s;
+  display:flex;align-items:center;gap:6px;font-family:var(--body);
+}
+.action-btn:hover{border-color:var(--green);color:var(--green);}
+.action-btn.icon-only{padding:8px 10px;}
+
+/* ── STAT CARDS ───────────────────────────────────────── */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px;}
+.stat-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:18px 20px;
+  position:relative;overflow:hidden;
+}
+.stat-card::after{
+  content:'';position:absolute;top:-20px;right:-20px;
+  width:80px;height:80px;border-radius:50%;opacity:.07;
+}
+.stat-card.c-green::after{background:var(--green);}
+.stat-card.c-gold::after{background:var(--gold);}
+.stat-card.c-blue::after{background:var(--blue);}
+.stat-card.c-pink::after{background:var(--pink);}
+.stat-card.c-purple::after{background:var(--purple);}
+.stat-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.stat-icon-wrap{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;}
+.c-green .stat-icon-wrap{background:rgba(9,184,48,.12);}
+.c-gold  .stat-icon-wrap{background:rgba(240,180,41,.12);}
+.c-blue  .stat-icon-wrap{background:rgba(75,159,255,.12);}
+.c-pink  .stat-icon-wrap{background:rgba(233,30,140,.12);}
+.c-purple .stat-icon-wrap{background:rgba(168,85,247,.12);}
+.stat-badge{font-size:10px;font-weight:700;padding:3px 8px;border-radius:6px;}
+.badge-up{background:rgba(9,184,48,.12);color:var(--green);}
+.badge-flat{background:rgba(255,255,255,.06);color:var(--muted);}
+.stat-val{font-family:var(--font);font-weight:900;font-size:26px;color:var(--text);letter-spacing:-1px;}
+.stat-lbl{font-size:11px;color:var(--muted);margin-top:3px;font-weight:600;letter-spacing:.02em;}
+
+/* ── CHARTS ───────────────────────────────────────────── */
+.charts-grid{display:grid;grid-template-columns:3fr 2fr;gap:14px;margin-bottom:24px;}
+.chart-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;}
+.chart-title{font-family:var(--font);font-weight:800;font-size:13px;color:var(--text);margin-bottom:18px;display:flex;align-items:center;gap:8px;}
+.bar-chart{display:flex;align-items:flex-end;gap:5px;height:90px;}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;}
+.bar{width:100%;border-radius:4px 4px 0 0;transition:height .5s ease;min-height:3px;}
+.bar-lbl{font-size:9px;color:var(--muted);font-weight:700;}
+.bar-val{font-size:9px;color:var(--sub);font-weight:700;}
+.donut-wrap{display:flex;align-items:center;gap:18px;}
+.donut-legend{display:flex;flex-direction:column;gap:7px;flex:1;}
+.legend-row{display:flex;align-items:center;gap:8px;font-size:11.5px;}
+.legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.legend-lbl{color:var(--sub);flex:1;}
+.legend-val{color:var(--text);font-weight:800;font-family:var(--font);}
+
+/* ── TABLE ────────────────────────────────────────────── */
+.section-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.section-title{font-family:var(--font);font-weight:800;font-size:14px;color:var(--text);}
+.table-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:600px;}
+thead tr{background:var(--card2);}
+th{padding:11px 14px;text-align:left;font-size:9.5px;font-weight:800;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;}
+td{padding:12px 14px;border-top:1px solid var(--border);vertical-align:middle;}
+tr:hover td{background:rgba(255,255,255,.02);}
+.order-id{font-family:var(--mono);font-size:11px;color:var(--green);font-weight:500;}
+.customer-name{font-weight:700;color:var(--text);font-size:13px;}
+.customer-sub{font-size:11px;color:var(--sub);margin-top:1px;}
+.mono-small{font-family:var(--mono);font-size:11px;color:var(--sub);}
+.total-val{font-family:var(--font);font-weight:800;color:var(--gold);font-size:13px;}
+
+/* Badges */
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:6px;font-size:10px;font-weight:700;white-space:nowrap;}
+.badge-chat   {background:rgba(9,184,48,.12);color:var(--green);}
+.badge-menu   {background:rgba(75,159,255,.12);color:var(--blue);}
+.badge-male   {background:rgba(9,184,48,.14);color:var(--green);}
+.badge-female {background:rgba(233,30,140,.14);color:var(--pink);}
+.badge-new    {background:rgba(9,184,48,.14);color:var(--green);border:1px solid rgba(9,184,48,.25);cursor:pointer;}
+.badge-prep   {background:rgba(240,180,41,.14);color:var(--gold);border:1px solid rgba(240,180,41,.25);cursor:pointer;}
+.badge-delivery{background:rgba(75,159,255,.14);color:var(--blue);border:1px solid rgba(75,159,255,.25);cursor:pointer;}
+.badge-done   {background:rgba(100,100,100,.12);color:var(--muted);border:1px solid var(--border);cursor:pointer;}
+.tier-bronze  {background:rgba(205,127,50,.18);color:#CD7F32;}
+.tier-silver  {background:rgba(192,192,192,.15);color:#A0A0A0;}
+.tier-gold    {background:rgba(240,180,41,.18);color:var(--gold);}
+.tier-platinum{background:rgba(168,85,247,.18);color:var(--purple);}
+
+/* ── FILTER BAR ───────────────────────────────────────── */
+.filter-bar{display:flex;gap:7px;margin-bottom:14px;flex-wrap:wrap;align-items:center;}
+.filter-btn{
+  background:var(--card2);border:1px solid var(--border);
+  color:var(--sub);border-radius:8px;padding:6px 13px;
+  font-size:11.5px;font-weight:700;cursor:pointer;transition:all .18s;font-family:var(--body);
+}
+.filter-btn.active,.filter-btn:hover{border-color:var(--green);color:var(--green);background:var(--greenXL);}
+.search-box{
+  flex:1;min-width:180px;max-width:260px;
+  background:var(--card2);border:1px solid var(--border);
+  color:var(--text);border-radius:8px;padding:6px 13px;
+  font-size:12px;outline:none;transition:border-color .2s;font-family:var(--body);
+}
+.search-box:focus{border-color:var(--green);}
+
+/* ── CONFIG PAGE ──────────────────────────────────────── */
+.config-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:14px;}
+.config-label{font-size:11px;color:var(--muted);font-weight:800;margin-bottom:7px;text-transform:uppercase;letter-spacing:.07em;}
+.config-input{
+  width:100%;background:var(--bg);border:1.5px solid var(--border);
+  border-radius:10px;padding:11px 14px;font-size:13px;color:var(--text);
+  outline:none;font-family:var(--mono);transition:border-color .2s;
+}
+.config-input:focus{border-color:var(--green);}
+.save-btn{
+  background:linear-gradient(135deg,var(--green),var(--greenL));
+  color:#fff;border:none;border-radius:10px;padding:10px 22px;
+  font-size:13px;font-weight:800;cursor:pointer;margin-top:12px;font-family:var(--font);
 }
 
-/* ── Loading ── */
-.loading { text-align:center; padding:40px; color:var(--muted); font-size:13px; }
-.spinner { display:inline-block; width:20px; height:20px; border:2px solid var(--border); border-top-color:var(--green); border-radius:50%; animation:spin .8s linear infinite; margin-right:8px; vertical-align:middle; }
-@keyframes spin { to { transform:rotate(360deg); } }
+/* ── EMPTY / LOADING ──────────────────────────────────── */
+.empty-state{text-align:center;padding:44px 24px;color:var(--muted);}
+.empty-state .ico{font-size:36px;margin-bottom:10px;}
+.empty-state p{font-size:13px;}
+.loading{text-align:center;padding:36px;color:var(--muted);font-size:13px;}
+.spinner{display:inline-block;width:18px;height:18px;border:2px solid var(--border);border-top-color:var(--green);border-radius:50%;animation:spin .8s linear infinite;margin-right:8px;vertical-align:middle;}
+@keyframes spin{to{transform:rotate(360deg);}}
 
-/* ── Responsive ── */
+/* ── MEALS CELL ───────────────────────────────────────── */
+.meals-cell{max-width:200px;font-size:11px;color:var(--sub);line-height:1.5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
+/* ── RESPONSIVE ───────────────────────────────────────── */
 @media(max-width:900px){
-  .sidebar { display:none; }
-  .main { margin-left:0; padding:12px; }
-  .stats-grid { grid-template-columns:1fr 1fr; gap:10px; }
-  .charts-grid { grid-template-columns:1fr; }
-  .page-title { font-size:18px; }
-  table { font-size:11px; }
-  th,td { padding:8px 10px; }
+  .sidebar{display:none;}
+  .main{margin-left:0;padding:12px;padding-bottom:70px;}
+  .stats-grid{grid-template-columns:1fr 1fr;gap:10px;}
+  .charts-grid{grid-template-columns:1fr;}
+  .page-title{font-size:18px;}
+  th,td{padding:9px 11px;}
 }
 @media(max-width:480px){
-  .stats-grid { grid-template-columns:1fr 1fr; gap:8px; }
-  .stat-val { font-size:20px; }
-  .stat-lbl { font-size:10px; }
-  .main { padding:10px; }
-  .topbar { flex-direction:column; align-items:flex-start; gap:8px; }
-  .filter-bar { gap:6px; }
-  .filter-btn { padding:5px 10px; font-size:11px; }
-  .search-input { width:100%; }
-  /* Hide less important columns on phone */
-  th:nth-child(4), td:nth-child(4),
-  th:nth-child(5), td:nth-child(5) { display:none; }
+  .stats-grid{grid-template-columns:1fr 1fr;gap:8px;}
+  .stat-val{font-size:20px;}
+  .main{padding:10px;padding-bottom:72px;}
+  th:nth-child(4),td:nth-child(4),
+  th:nth-child(5),td:nth-child(5){display:none;}
 }
-
-    /* ── Enhanced typography ── */
-    .page-title {
-      font-family: 'Outfit', sans-serif !important;
-      font-weight: 900 !important;
-      font-size: 26px !important;
-      letter-spacing: -0.8px;
-      background: linear-gradient(135deg, var(--text) 0%, var(--sub) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .section-title {
-      font-family: 'Outfit', sans-serif !important;
-      font-weight: 800 !important;
-      letter-spacing: -0.3px;
-    }
-    .sidebar-logo {
-      font-family: 'Outfit', sans-serif !important;
-      font-weight: 900 !important;
-      letter-spacing: -1px;
-    }
-    .login-logo {
-      font-family: 'Outfit', sans-serif !important;
-      font-weight: 900 !important;
-      letter-spacing: -2px;
-      font-size: 44px !important;
-    }
-    .stat-val {
-      font-family: 'Outfit', sans-serif !important;
-      font-weight: 900 !important;
-      letter-spacing: -1px;
-    }
-    .chart-title {
-      font-family: 'Outfit', sans-serif !important;
-      font-weight: 700 !important;
-      letter-spacing: -0.2px;
-    }
-    th {
-      font-family: 'Outfit', sans-serif !important;
-      font-weight: 800 !important;
-      letter-spacing: 0.08em;
-    }
 </style>
 </head>
 <body>
 
-<!-- ── Login ── -->
+<!-- ── LOGIN ── -->
 <div id="login-screen">
   <div class="login-box">
-    <div class="login-logo">SAVY</div>
-    <div class="login-sub">Admin Dashboard · لوحة التحكم</div>
-    <input class="login-input" id="pwd-input" type="password" placeholder="Mot de passe admin" onkeydown="if(event.key==='Enter')doLogin()"/>
+    <div class="login-logo">🧬 SAVY</div>
+    <div class="login-sub">TABLEAU DE BORD ADMIN</div>
+    <input class="login-input" id="pwd-input" type="password" placeholder="Mot de passe admin"
+      onkeydown="if(event.key==='Enter')doLogin()"/>
     <button class="login-btn" onclick="doLogin()">Accéder →</button>
     <div class="login-err" id="login-err">❌ Mot de passe incorrect</div>
   </div>
 </div>
 
-<!-- ── App ── -->
+<!-- ── APP ── -->
 <div id="app">
+
   <!-- Sidebar -->
   <div class="sidebar">
-    <div class="sidebar-logo">SAVY <span>ADMIN PANEL</span></div>
-    <div class="nav-items">
-      <div class="nav-item active" onclick="showPage('overview')"><span class="icon">📊</span> Vue d'ensemble</div>
-      <div class="nav-item" onclick="showPage('orders')"><span class="icon">📦</span> Commandes</div>
-      <div class="nav-item" onclick="showPage('customers')"><span class="icon">👥</span> Clients</div>
-      <div class="nav-item" onclick="showPage('revenue')"><span class="icon">💰</span> Revenus</div>
-      <div class="nav-item" onclick="showPage('settings')"><span class="icon">⚙️</span> Paramètres</div>
+    <div class="sidebar-brand">
+      <div class="brand-logo">🧬</div>
+      <div class="brand-text">SAVY <span>Admin Panel</span></div>
     </div>
-    <div class="sidebar-footer">
-      <span class="online-dot"></span> Système actif
-      <button onclick="logout()" style="
-        margin-top:10px; width:100%; background:transparent;
-        border:1px solid var(--border); border-radius:8px;
-        color:var(--muted); padding:6px 10px; cursor:pointer;
-        font-size:11px; font-weight:700; text-align:left;
-        display:flex; align-items:center; gap:8px;
-      ">🚪 Déconnexion</button>
-      <button id="theme-toggle" onclick="toggleDashTheme()" style="
-        margin-top:10px; width:100%; background:var(--card2);
-        border:1px solid var(--border); border-radius:8px;
-        color:var(--sub); padding:7px 10px; cursor:pointer;
-        font-size:12px; font-weight:700; text-align:left;
-        transition:all .2s; display:flex; align-items:center; gap:8px;
-      ">🌙 Mode sombre</button>
+    <div class="nav-items">
+      <div class="nav-section">Principal</div>
+      <div class="nav-item active" onclick="showPage('overview',this)"><span class="ni">📊</span> Vue d'ensemble</div>
+      <div class="nav-item" onclick="showPage('orders',this)"><span class="ni">📦</span> Commandes</div>
+      <div class="nav-item" onclick="showPage('customers',this)"><span class="ni">👥</span> Clients</div>
+      <div class="nav-section">Analyse</div>
+      <div class="nav-item" onclick="showPage('revenue',this)"><span class="ni">💰</span> Revenus</div>
+      <div class="nav-item" onclick="showPage('settings',this)"><span class="ni">⚙️</span> Paramètres</div>
+    </div>
+    <div class="sidebar-foot">
+      <div style="font-size:11px;color:var(--muted);margin-bottom:4px;">
+        <span class="live-dot"></span> Système actif
+      </div>
+      <button class="foot-btn" id="theme-toggle" onclick="toggleDashTheme()">🌙 Mode sombre</button>
+      <button class="foot-btn" onclick="logout()">🚪 Déconnexion</button>
     </div>
   </div>
 
-  <!-- Main -->
   <div class="main">
 
-    <!-- ── Overview ── -->
+    <!-- ══ OVERVIEW ══ -->
     <div class="page active" id="page-overview">
       <div class="topbar">
         <div>
           <div class="page-title">Vue d'ensemble</div>
-          <div class="page-sub" id="last-updated">Chargement...</div>
+          <div class="page-sub" id="last-updated">Chargement…</div>
         </div>
-        <div style="display:flex;gap:8px;align-items:center;">
-          <button id="theme-toggle-top" onclick="toggleDashTheme()" style="
-            background:var(--card2); border:1px solid var(--border);
-            color:var(--sub); border-radius:8px; padding:8px 10px;
-            font-size:14px; cursor:pointer; transition:all .2s;
-          ">🌙</button>
-          <button class="refresh-btn" onclick="loadData()">🔄 Actualiser</button>
+        <div class="topbar-actions">
+          <button class="action-btn icon-only" id="theme-toggle-top" onclick="toggleDashTheme()" title="Thème">🌙</button>
+          <button class="action-btn" onclick="loadData()">🔄 Actualiser</button>
         </div>
       </div>
+
+      <!-- Stats -->
       <div class="stats-grid">
-        <div class="stat-card green">
-          <div class="stat-icon">📦</div>
+        <div class="stat-card c-green">
+          <div class="stat-top">
+            <div class="stat-icon-wrap">📦</div>
+            <span class="stat-badge badge-up" id="stat-today-badge">— auj.</span>
+          </div>
           <div class="stat-val" id="stat-total-orders">—</div>
-          <div class="stat-lbl">Total Commandes</div>
-          <div class="stat-delta up" id="stat-today-orders">— aujourd'hui</div>
+          <div class="stat-lbl">Total commandes</div>
         </div>
-        <div class="stat-card gold">
-          <div class="stat-icon">💰</div>
+        <div class="stat-card c-gold">
+          <div class="stat-top">
+            <div class="stat-icon-wrap">💰</div>
+            <span class="stat-badge badge-up" id="stat-today-rev-badge">— auj.</span>
+          </div>
           <div class="stat-val" id="stat-revenue">—</div>
-          <div class="stat-lbl">Revenu Total (MAD)</div>
-          <div class="stat-delta up" id="stat-today-revenue">— aujourd'hui</div>
+          <div class="stat-lbl">Revenu total (MAD)</div>
         </div>
-        <div class="stat-card blue">
-          <div class="stat-icon">👥</div>
+        <div class="stat-card c-blue">
+          <div class="stat-top">
+            <div class="stat-icon-wrap">👥</div>
+            <span class="stat-badge badge-flat" id="stat-returning-badge">— fidèles</span>
+          </div>
           <div class="stat-val" id="stat-customers">—</div>
-          <div class="stat-lbl">Clients Uniques</div>
-          <div class="stat-delta flat" id="stat-returning">— fidèles</div>
+          <div class="stat-lbl">Clients uniques</div>
         </div>
-        <div class="stat-card purple">
-          <div class="stat-icon">⭐</div>
+        <div class="stat-card c-pink">
+          <div class="stat-top">
+            <div class="stat-icon-wrap">⭐</div>
+            <span class="stat-badge badge-flat">par commande</span>
+          </div>
           <div class="stat-val" id="stat-avg-order">—</div>
-          <div class="stat-lbl">Panier Moyen (MAD)</div>
-          <div class="stat-delta flat">par commande</div>
+          <div class="stat-lbl">Panier moyen (MAD)</div>
         </div>
       </div>
 
@@ -452,9 +391,9 @@ tr:hover td { background:var(--card2); }
           <div class="bar-chart" id="chart-orders"></div>
         </div>
         <div class="chart-card">
-          <div class="chart-title">🥧 Commandes par persona</div>
+          <div class="chart-title">🥧 Répartition</div>
           <div class="donut-wrap">
-            <canvas id="donut-canvas" width="100" height="100"></canvas>
+            <canvas id="donut-canvas" width="90" height="90"></canvas>
             <div class="donut-legend" id="donut-legend"></div>
           </div>
         </div>
@@ -467,23 +406,26 @@ tr:hover td { background:var(--card2); }
       <div class="table-wrap">
         <table>
           <thead><tr>
-            <th>ID</th><th>Client</th><th>Plats</th><th>Total</th><th>Persona</th><th>Statut</th>
+            <th>ID</th><th>Client</th><th>Plats commandés</th><th>Total</th><th>Genre</th><th>Source</th><th>Statut</th>
           </tr></thead>
           <tbody id="recent-orders-body">
-            <tr><td colspan="6" class="loading"><span class="spinner"></span>Chargement des données...</td></tr>
+            <tr><td colspan="7" class="loading"><span class="spinner"></span>Chargement…</td></tr>
           </tbody>
         </table>
       </div>
     </div>
 
-    <!-- ── Orders ── -->
+    <!-- ══ ORDERS ══ -->
     <div class="page" id="page-orders">
       <div class="topbar">
         <div>
           <div class="page-title">Commandes</div>
           <div class="page-sub">Toutes les commandes reçues</div>
         </div>
-        <button class="refresh-btn" onclick="loadData()">🔄 Actualiser</button>
+        <div class="topbar-actions">
+          <button class="action-btn" onclick="exportCSV()">⬇️ Export CSV</button>
+          <button class="action-btn" onclick="loadData()">🔄 Actualiser</button>
+        </div>
       </div>
       <div class="filter-bar">
         <button class="filter-btn active" onclick="filterOrders('all',this)">Toutes</button>
@@ -491,681 +433,545 @@ tr:hover td { background:var(--card2); }
         <button class="filter-btn" onclick="filterOrders('prep',this)">🟡 En prépa</button>
         <button class="filter-btn" onclick="filterOrders('delivery',this)">🔵 Livraison</button>
         <button class="filter-btn" onclick="filterOrders('done',this)">✅ Livrées</button>
-        <input class="search-input" placeholder="🔍 Chercher client..." oninput="searchOrders(this.value)" id="order-search"/>
+        <button class="filter-btn" onclick="filterSource('all',this)" id="src-all">Toutes sources</button>
+        <button class="filter-btn" onclick="filterSource('chat',this)" id="src-chat">💬 Chat</button>
+        <button class="filter-btn" onclick="filterSource('menu',this)" id="src-menu">🛒 Menu</button>
+        <input class="search-box" placeholder="🔍 Chercher…" oninput="searchOrders(this.value)"/>
       </div>
       <div class="table-wrap">
         <table>
           <thead><tr>
-            <th>ID</th><th>Date/Heure</th><th>Client</th><th>Adresse</th><th>Téléphone</th><th>Plats</th><th>Total</th><th>Statut</th>
+            <th>ID</th><th>Date/Heure</th><th>Client</th><th>Téléphone</th><th>Plats</th><th>Total</th><th>Genre</th><th>Source</th><th>Statut</th>
           </tr></thead>
           <tbody id="orders-body">
-            <tr><td colspan="8" class="loading"><span class="spinner"></span>Chargement...</td></tr>
+            <tr><td colspan="9" class="loading"><span class="spinner"></span>Chargement…</td></tr>
           </tbody>
         </table>
       </div>
     </div>
 
-    <!-- ── Customers ── -->
+    <!-- ══ CUSTOMERS ══ -->
     <div class="page" id="page-customers">
       <div class="topbar">
         <div>
           <div class="page-title">Clients</div>
-          <div class="page-sub">Base clients + programme fidélité</div>
+          <div class="page-sub">Base clients · programme fidélité</div>
         </div>
-        <button class="refresh-btn" onclick="loadData()">🔄 Actualiser</button>
+        <button class="action-btn" onclick="loadData()">🔄 Actualiser</button>
       </div>
       <div class="table-wrap">
         <table>
           <thead><tr>
-            <th>Client</th><th>Téléphone</th><th>Ville</th><th>Commandes</th><th>Total dépensé</th><th>Tier Fidélité</th><th>Dernière commande</th>
+            <th>Client</th><th>Téléphone</th><th>Ville</th><th>Commandes</th><th>Total dépensé</th><th>Fidélité</th><th>Dernière commande</th>
           </tr></thead>
           <tbody id="customers-body">
-            <tr><td colspan="7" class="loading"><span class="spinner"></span>Chargement...</td></tr>
+            <tr><td colspan="7" class="loading"><span class="spinner"></span>Chargement…</td></tr>
           </tbody>
         </table>
       </div>
     </div>
 
-    <!-- ── Revenue ── -->
+    <!-- ══ REVENUE ══ -->
     <div class="page" id="page-revenue">
       <div class="topbar">
         <div>
           <div class="page-title">Revenus</div>
           <div class="page-sub">Analyse financière</div>
         </div>
-        <button class="refresh-btn" onclick="loadData()">🔄 Actualiser</button>
+        <button class="action-btn" onclick="loadData()">🔄 Actualiser</button>
       </div>
       <div class="stats-grid">
-        <div class="stat-card green">
-          <div class="stat-icon">📅</div>
-          <div class="stat-val" id="rev-today">—</div>
-          <div class="stat-lbl">Aujourd'hui (MAD)</div>
-        </div>
-        <div class="stat-card gold">
-          <div class="stat-icon">📆</div>
-          <div class="stat-val" id="rev-week">—</div>
-          <div class="stat-lbl">Cette semaine (MAD)</div>
-        </div>
-        <div class="stat-card blue">
-          <div class="stat-icon">🗓️</div>
-          <div class="stat-val" id="rev-month">—</div>
-          <div class="stat-lbl">Ce mois (MAD)</div>
-        </div>
-        <div class="stat-card purple">
-          <div class="stat-icon">🏆</div>
-          <div class="stat-val" id="rev-total">—</div>
-          <div class="stat-lbl">Total (MAD)</div>
-        </div>
+        <div class="stat-card c-green"><div class="stat-top"><div class="stat-icon-wrap">📅</div></div><div class="stat-val" id="rev-today">—</div><div class="stat-lbl">Aujourd'hui (MAD)</div></div>
+        <div class="stat-card c-gold"><div class="stat-top"><div class="stat-icon-wrap">📆</div></div><div class="stat-val" id="rev-week">—</div><div class="stat-lbl">Cette semaine (MAD)</div></div>
+        <div class="stat-card c-blue"><div class="stat-top"><div class="stat-icon-wrap">🗓️</div></div><div class="stat-val" id="rev-month">—</div><div class="stat-lbl">Ce mois (MAD)</div></div>
+        <div class="stat-card c-purple"><div class="stat-top"><div class="stat-icon-wrap">🏆</div></div><div class="stat-val" id="rev-total">—</div><div class="stat-lbl">Total (MAD)</div></div>
       </div>
-      <div class="chart-card" style="margin-bottom:16px;">
+      <div class="chart-card" style="margin-bottom:20px;">
         <div class="chart-title">💰 Revenus — 7 derniers jours</div>
         <div class="bar-chart" id="chart-revenue"></div>
       </div>
       <div class="section-hdr"><div class="section-title">🍽️ Plats les plus commandés</div></div>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Plat</th><th>Nombre de commandes</th><th>Revenu généré (MAD)</th></tr></thead>
+          <thead><tr><th>Plat</th><th>Commandes</th><th>Part du revenu (MAD)</th></tr></thead>
           <tbody id="top-dishes-body"></tbody>
         </table>
       </div>
     </div>
 
-    <!-- ── Settings ── -->
+    <!-- ══ SETTINGS ══ -->
     <div class="page" id="page-settings">
       <div class="topbar">
-        <div>
-          <div class="page-title">Paramètres</div>
-          <div class="page-sub">Configuration du dashboard</div>
-        </div>
+        <div><div class="page-title">Paramètres</div><div class="page-sub">Configuration du dashboard</div></div>
       </div>
       <div class="config-card">
-        <div class="config-label">🔗 Google Sheets URL (lecture des données)</div>
-        <input class="config-input" id="cfg-sheet-url" placeholder="https://script.google.com/macros/s/..."/>
-        <br/>
-        <div class="config-label" style="margin-top:16px;">🔒 Mot de passe Admin</div>
-        <input class="config-input" id="cfg-password" type="password" placeholder="Nouveau mot de passe"/>
-        <br/>
-        <button class="save-btn" onclick="saveSettings()">💾 Sauvegarder</button>
+        <div class="config-label">🔗 Google Apps Script URL</div>
+        <input class="config-input" id="cfg-sheet-url" value="https://script.google.com/macros/s/AKfycbx3yMAFQaLqHwg9HjZnF5Sly3hFstj1AX7afxEFnAm5br2GHToIO-Awb3GKWIGn68D33w/exec"/>
+        <div class="config-label" style="margin-top:16px;">🔒 Nouveau mot de passe admin</div>
+        <input class="config-input" id="cfg-password" type="password" placeholder="Laisser vide pour ne pas changer"/>
+        <br/><button class="save-btn" onclick="saveSettings()">💾 Sauvegarder</button>
       </div>
       <div class="config-card">
-        <div class="config-label">ℹ️ Statut connexion</div>
-        <div id="sheet-status" style="font-size:13px;color:var(--sub);line-height:1.8;padding:12px;background:var(--bg);border-radius:10px;border:1px solid var(--border);">
-          ⏳ Vérification...
-        </div>
-        <button class="save-btn" onclick="testConnection()" style="margin-top:8px;background:var(--card2);color:var(--sub);border:1px solid var(--border);">
-          🔌 Tester la connexion
-        </button>
+        <div class="config-label">📡 Statut connexion</div>
+        <div id="sheet-status" style="font-size:12px;color:var(--sub);line-height:1.8;padding:12px;background:var(--bg);border-radius:10px;border:1px solid var(--border);">⏳ Non testé</div>
+        <button class="save-btn" onclick="testConnection()" style="background:var(--card2);color:var(--sub);border:1px solid var(--border);">🔌 Tester la connexion</button>
       </div>
     </div>
 
-  </div><!-- end main -->
-</div><!-- end app -->
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<!-- Mobile nav -->
+<div id="mobile-nav" style="display:none;position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--border);padding:6px 0;z-index:200;">
+  <div style="display:flex;justify-content:space-around;">
+    <div onclick="showPage('overview',this)" style="text-align:center;cursor:pointer;padding:4px 10px;color:var(--sub)"><div style="font-size:18px;">📊</div><div style="font-size:9px;margin-top:2px;">Stats</div></div>
+    <div onclick="showPage('orders',this)" style="text-align:center;cursor:pointer;padding:4px 10px;color:var(--sub)"><div style="font-size:18px;">📦</div><div style="font-size:9px;margin-top:2px;">Orders</div></div>
+    <div onclick="showPage('customers',this)" style="text-align:center;cursor:pointer;padding:4px 10px;color:var(--sub)"><div style="font-size:18px;">👥</div><div style="font-size:9px;margin-top:2px;">Clients</div></div>
+    <div onclick="showPage('revenue',this)" style="text-align:center;cursor:pointer;padding:4px 10px;color:var(--sub)"><div style="font-size:18px;">💰</div><div style="font-size:9px;margin-top:2px;">Revenus</div></div>
+    <div onclick="showPage('settings',this)" style="text-align:center;cursor:pointer;padding:4px 10px;color:var(--sub)"><div style="font-size:18px;">⚙️</div><div style="font-size:9px;margin-top:2px;">Config</div></div>
+  </div>
+</div>
 
 <script>
-// ── Config ────────────────────────────────────────────────────
-const ADMIN_PASSWORD = localStorage.getItem('savy_admin_pwd') || 'savy2025';
-let SHEET_URL = localStorage.getItem('savy_sheet_url') || 'https://script.google.com/macros/s/AKfycbyTHkPgiGPgxjTPSXiVy3r1uFGqUX0ZPwMtpdipkN7qA8y8VaDU7HLH1Z-zGpYdLEKYyA/exec';
+// ── Config ────────────────────────────────────────────────
+const PROXY_URL = '/.netlify/functions/sheets-proxy';
+let SHEET_URL   = localStorage.getItem('savy_sheet_url') ||
+  'https://script.google.com/macros/s/AKfycbx3yMAFQaLqHwg9HjZnF5Sly3hFstj1AX7afxEFnAm5br2GHToIO-Awb3GKWIGn68D33w/exec';
+
 let allOrders    = [];
 let orderFilter  = 'all';
+let sourceFilter = 'all';
 let orderSearch  = '';
-// Store order statuses locally
 let orderStatuses = JSON.parse(localStorage.getItem('savy_order_statuses') || '{}');
 
-// ── Login ─────────────────────────────────────────────────────
+// ── Login ─────────────────────────────────────────────────
 function doLogin() {
-  const pwd = document.getElementById('pwd-input').value;
+  const pwd    = document.getElementById('pwd-input').value;
   const stored = localStorage.getItem('savy_admin_pwd') || 'savy2025';
   if (pwd === stored) {
-    // Save session so user stays logged in
     localStorage.setItem('savy_admin_session', btoa(stored + ':' + Date.now()));
     showApp();
-    // Pre-fill settings
-    document.getElementById('cfg-sheet-url').value = SHEET_URL || 'https://script.google.com/macros/s/AKfycbyTHkPgiGPgxjTPSXiVy3r1uFGqUX0ZPwMtpdipkN7qA8y8VaDU7HLH1Z-zGpYdLEKYyA/exec';
-    setTimeout(testConnection, 1500);
   } else {
     document.getElementById('login-err').style.display = 'block';
+    document.getElementById('pwd-input').style.borderColor = 'var(--red)';
   }
 }
 
-// ── Navigation ────────────────────────────────────────────────
-function showPage(name) {
+function showApp() {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  document.getElementById('cfg-sheet-url').value = SHEET_URL;
+  loadData();
+  setTimeout(testConnection, 1800);
+}
+
+// ── Navigation ────────────────────────────────────────────
+function showPage(name, el) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   document.getElementById('page-' + name).classList.add('active');
-  event.currentTarget.classList.add('active');
+  if (el && el.classList) el.classList.add('active');
 }
 
-// ── Load data from Google Sheets ─────────────────────────────
+// ── Load data ─────────────────────────────────────────────
 function loadData() {
-  if (!SHEET_URL) { loadDemoData(); return; }
-  const statusEl = document.getElementById('last-updated');
-  if(statusEl) statusEl.textContent = '⏳ Chargement...';
-  // Skip fetch entirely — use JSONP directly (Google Apps Script requires this)
-  loadViaJSONP();
-}
-
-function loadViaJSONP() {
-  // Use Netlify proxy — works on all devices including mobile
-  const statusEl = document.getElementById('last-updated');
-  if(statusEl) statusEl.textContent = '⏳ Chargement...';
-
-  fetch('/.netlify/functions/sheets-proxy?action=dashboard&t=' + Date.now())
+  setText('last-updated', '⏳ Chargement…');
+  fetch(PROXY_URL + '?action=dashboard&t=' + Date.now())
     .then(r => r.json())
     .then(data => {
       const orders = data.orders || (Array.isArray(data) ? data : []);
-      if(orders.length > 0){
+      if (orders.length > 0) {
         allOrders = orders;
-        renderAll(allOrders);
-        if(statusEl) statusEl.textContent = '✅ ' + new Date().toLocaleTimeString('fr-FR') + ' · ' + orders.length + ' commandes';
+        renderAll(orders);
+        setText('last-updated', '✅ ' + new Date().toLocaleTimeString('fr-FR') + ' · ' + orders.length + ' commandes');
       } else {
-        if(statusEl) statusEl.textContent = '⚠️ Aucune commande encore';
+        setText('last-updated', '⚠️ Aucune commande · données démo affichées');
         loadDemoData();
       }
     })
-    .catch(err => {
-      console.warn('Proxy error:', err.message);
-      if(statusEl) statusEl.textContent = '❌ Erreur chargement';
-      loadDemoData();
-    });
+    .catch(() => { setText('last-updated', '❌ Erreur réseau'); loadDemoData(); });
 }
 
-function loadFromSheetDirect(){ loadViaJSONP(); }
-
-function showNoSheetMsg() {
-  const msg = `<tr><td colspan="8" class="empty-state"><div class="big">⚙️</div><p>Configure l'URL Google Sheets dans <strong>Paramètres</strong></p></td></tr>`;
-  ['recent-orders-body','orders-body','customers-body','top-dishes-body'].forEach(id => {
-    const el = document.getElementById(id);
-    if(el) el.innerHTML = msg;
-  });
-  // Show demo data
-  loadDemoData();
-}
-
-// ── Demo data (shows while Sheet not configured) ──────────────
+// ── Demo data ─────────────────────────────────────────────
 function loadDemoData() {
-  const demo = [
-    { order_id:'SAVY-0042', name:'Karim A.', city:'Tétouan, Rue Hassan II', phone:'0625736569', conversation:'Pasta aux Crevettes × 1, Salad César Poulet × 1', order_total:'111', persona:'employee', timestamp: new Date().toISOString() },
-    { order_id:'SAVY-0043', name:'Amina B.', city:'M\'diq, Avenue Med V', phone:'0661234567', conversation:'Blanc Poulet Pasta × 2, Tiramisu Healthy × 1', order_total:'160', persona:'sportif', timestamp: new Date(Date.now()-3600000).toISOString() },
-    { order_id:'SAVY-0044', name:'Said M.', city:'Martil, Rue 2 Mars', phone:'0698765432', conversation:'Club Sandwich × 3, Flan Caramel × 3', order_total:'228', persona:'famille', timestamp: new Date(Date.now()-7200000).toISOString() },
-    { order_id:'SAVY-0045', name:'Fatima Z.', city:'Tétouan, Avenue Masira', phone:'0612345678', conversation:'Pasta aux Crevettes × 1, Cheesecake Creamy × 1', order_total:'94', persona:'couple', timestamp: new Date(Date.now()-10800000).toISOString() },
-    { order_id:'SAVY-0046', name:'Youssef K.', city:'M\'diq', phone:'0634567890', conversation:'Burger Viande Hachée × 1, Chicken Nuggets × 1', order_total:'96', persona:'sportif', timestamp: new Date(Date.now()-86400000).toISOString() },
+  allOrders = [
+    { order_id:'SAVY-1042', name:'Karim A.', city:'Tétouan, Rue Hassan II', phone:'0625736569', meals:'Pasta aux Crevettes, Salad César Poulet', meal_count:'2', order_total:'111', gender:'male', source:'chat', timestamp: new Date().toISOString() },
+    { order_id:'SAVY-1043', name:'Amina B.', city:"M'diq, Avenue Med V", phone:'0661234567', meals:'Blanc Poulet Pasta, Salad de Pâte Fit', meal_count:'2', order_total:'107', gender:'female', source:'chat', timestamp: new Date(Date.now()-3600000).toISOString() },
+    { order_id:'SAVY-1044', name:'Said M.', city:"Martil, Rue 2 Mars", phone:'0698765432', meals:'Club Sandwich Complet, Mini Burger Gourmet, Croquette au Four', meal_count:'3', order_total:'115', gender:'male', source:'menu', timestamp: new Date(Date.now()-7200000).toISOString() },
+    { order_id:'SAVY-1045', name:'Fatima Z.', city:'Tétouan, Avenue Masira', phone:'0612345678', meals:'Pasta aux Crevettes', meal_count:'1', order_total:'72', gender:'female', source:'chat', timestamp: new Date(Date.now()-10800000).toISOString() },
+    { order_id:'SAVY-1046', name:'Youssef K.', city:"M'diq", phone:'0634567890', meals:'Burger Viande Hachée, Chicken Nuggets Maison', meal_count:'2', order_total:'96', gender:'male', source:'menu', timestamp: new Date(Date.now()-86400000).toISOString() },
+    { order_id:'SAVY-1047', name:'Sara L.', city:'Tétouan', phone:'0677889900', meals:'Salade Poulet Grillé, Tacos Mixed SAVY', meal_count:'2', order_total:'113', gender:'female', source:'chat', timestamp: new Date(Date.now()-172800000).toISOString() },
   ];
-  allOrders = demo;
-  renderAll(demo);
-  document.getElementById('last-updated').textContent = '⚠️ Données démo — Configure Google Sheets';
+  renderAll(allOrders);
 }
 
-// ── Render all sections ───────────────────────────────────────
+// ── Render all ────────────────────────────────────────────
 function renderAll(orders) {
   renderStats(orders);
-  renderRecentOrders(orders.slice(0,8));
+  renderRecentOrders(orders.slice(0, 8));
   renderOrdersTable(orders);
   renderCustomers(orders);
   renderRevenue(orders);
   renderCharts(orders);
 }
 
-function getStatus(orderId) {
-  return orderStatuses[orderId] || 'new';
-}
-
-function statusBadge(orderId) {
-  const s = getStatus(orderId);
+// ── Helpers: status ───────────────────────────────────────
+function getStatus(id) { return orderStatuses[id] || 'new'; }
+function statusBadge(id) {
+  const s = getStatus(id);
   const labels = { new:'🟢 Nouvelle', prep:'🟡 En prépa', delivery:'🔵 Livraison', done:'✅ Livrée' };
-  return `<span class="status-badge ${s}" onclick="cycleStatus('${orderId}',this)">${labels[s]||s}</span>`;
+  return `<span class="badge badge-${s}" onclick="cycleStatus('${id}',this)">${labels[s]||s}</span>`;
 }
-
-function cycleStatus(orderId, el) {
+function cycleStatus(id, el) {
   const cycle = ['new','prep','delivery','done'];
-  const cur   = getStatus(orderId);
-  const next  = cycle[(cycle.indexOf(cur)+1) % cycle.length];
-  orderStatuses[orderId] = next;
+  const next  = cycle[(cycle.indexOf(getStatus(id))+1) % cycle.length];
+  orderStatuses[id] = next;
   localStorage.setItem('savy_order_statuses', JSON.stringify(orderStatuses));
   const labels = { new:'🟢 Nouvelle', prep:'🟡 En prépa', delivery:'🔵 Livraison', done:'✅ Livrée' };
-  el.textContent = labels[next];
-  el.className = `status-badge ${next}`;
+  el.textContent = labels[next]; el.className = `badge badge-${next}`;
 }
 
-// ── Stats ─────────────────────────────────────────────────────
+// ── Helper: resolve meals field ───────────────────────────
+function getMeals(o) {
+  // Chat sends "meals", menu sends "conversation" or "meals"
+  return (o.meals || o.conversation || '').trim();
+}
+
+// ── Stats ─────────────────────────────────────────────────
 function renderStats(orders) {
-  const today = new Date().toDateString();
-  const todayOrders   = orders.filter(o => new Date(o.timestamp).toDateString() === today);
-  const uniquePhones  = new Set(orders.map(o => o.phone)).size;
-  const totalRevenue  = orders.reduce((s,o) => s + (parseFloat(o.order_total)||0), 0);
-  const todayRevenue  = todayOrders.reduce((s,o) => s + (parseFloat(o.order_total)||0), 0);
-  const avgOrder      = orders.length ? (totalRevenue / orders.length).toFixed(0) : 0;
-  const returning     = orders.filter(o => orders.filter(x=>x.phone===o.phone).length > 1);
-  const uniqueReturning = new Set(returning.map(o=>o.phone)).size;
+  const today      = new Date().toDateString();
+  const todayOrds  = orders.filter(o => new Date(o.timestamp).toDateString() === today);
+  const phones     = new Set(orders.map(o => o.phone));
+  const totalRev   = orders.reduce((s,o) => s + (parseFloat(o.order_total)||0), 0);
+  const todayRev   = todayOrds.reduce((s,o) => s + (parseFloat(o.order_total)||0), 0);
+  const avg        = orders.length ? (totalRev/orders.length).toFixed(0) : 0;
+  const returning  = new Set(orders.filter(o => orders.filter(x=>x.phone===o.phone).length>1).map(o=>o.phone)).size;
 
   setText('stat-total-orders', orders.length);
-  setText('stat-revenue', totalRevenue.toFixed(0) + ' MAD');
-  setText('stat-customers', uniquePhones);
-  setText('stat-avg-order', avgOrder + ' MAD');
-  setText('stat-today-orders', todayOrders.length + ' aujourd\'hui');
-  setText('stat-today-revenue', todayRevenue.toFixed(0) + ' MAD aujourd\'hui');
-  setText('stat-returning', uniqueReturning + ' fidèles');
+  setText('stat-revenue', totalRev.toFixed(0));
+  setText('stat-customers', phones.size);
+  setText('stat-avg-order', avg);
+  setText('stat-today-badge', todayOrds.length + ' auj.');
+  setText('stat-today-rev-badge', todayRev.toFixed(0) + ' auj.');
+  setText('stat-returning-badge', returning + ' fidèles');
 }
 
-// ── Recent orders ─────────────────────────────────────────────
+// ── Recent orders ─────────────────────────────────────────
 function renderRecentOrders(orders) {
-  const tbody = document.getElementById('recent-orders-body');
-  if(!orders.length){ tbody.innerHTML = emptyRow(6,'Aucune commande'); return; }
-  tbody.innerHTML = orders.map(o => `
-    <tr>
-      <td><span class="order-id">${o.order_id||'—'}</span></td>
-      <td><div class="customer-name">${o.name||'—'}</div></td>
-      <td style="max-width:200px;font-size:11px;color:var(--sub)">${(o.conversation||'').slice(0,60)}${(o.conversation||'').length>60?'…':''}</td>
-      <td><span class="total-val">${o.order_total||'—'} MAD</span></td>
-      <td><span class="persona-badge ${o.persona||''}">${personaLabel(o.persona)}</span></td>
-      <td>${statusBadge(o.order_id)}</td>
-    </tr>`).join('');
-}
-
-// ── Orders table ──────────────────────────────────────────────
-function renderOrdersTable(orders) {
-  let filtered = orders;
-  if(orderFilter !== 'all') filtered = orders.filter(o => getStatus(o.order_id) === orderFilter);
-  if(orderSearch) filtered = filtered.filter(o =>
-    (o.name||'').toLowerCase().includes(orderSearch) ||
-    (o.phone||'').includes(orderSearch) ||
-    (o.order_id||'').toLowerCase().includes(orderSearch)
-  );
-  const tbody = document.getElementById('orders-body');
-  if(!filtered.length){ tbody.innerHTML = emptyRow(8,'Aucune commande'); return; }
-  tbody.innerHTML = filtered.map(o => `
-    <tr>
-      <td><span class="order-id">${o.order_id||'—'}</span></td>
-      <td style="font-size:11px;color:var(--sub)">${formatDate(o.timestamp)}</td>
-      <td><div class="customer-name">${o.name||'—'}</div></td>
-      <td style="font-size:11px;color:var(--sub);max-width:120px">${(o.city||'').slice(0,30)}</td>
-      <td><span class="customer-phone">${o.phone||'—'}</span></td>
-      <td style="font-size:11px;color:var(--sub);max-width:180px">${(o.conversation||'').slice(0,50)}${(o.conversation||'').length>50?'…':''}</td>
-      <td><span class="total-val">${o.order_total||'—'} MAD</span></td>
-      <td>${statusBadge(o.order_id)}</td>
-    </tr>`).join('');
-}
-
-// ── Customers ─────────────────────────────────────────────────
-function renderCustomers(orders) {
-  // Group by phone
-  const map = {};
-  orders.forEach(o => {
-    const p = o.phone || 'unknown';
-    if(!map[p]) map[p] = { name:o.name, phone:p, city:o.city, orders:[], lastOrder:o.timestamp };
-    map[p].orders.push(o);
-    if(new Date(o.timestamp) > new Date(map[p].lastOrder)) map[p].lastOrder = o.timestamp;
-  });
-  const customers = Object.values(map).sort((a,b) => b.orders.length - a.orders.length);
-  const tbody = document.getElementById('customers-body');
-  if(!customers.length){ tbody.innerHTML = emptyRow(7,'Aucun client'); return; }
-  tbody.innerHTML = customers.map(c => {
-    const total   = c.orders.reduce((s,o) => s+(parseFloat(o.order_total)||0), 0);
-    const tier    = getLoyaltyTier(c.orders.length);
+  const el = document.getElementById('recent-orders-body');
+  if (!orders.length) { el.innerHTML = emptyRow(7, 'Aucune commande'); return; }
+  el.innerHTML = orders.map(o => {
+    const meals = getMeals(o);
     return `<tr>
-      <td><div class="customer-name">${c.name||'—'}</div></td>
-      <td><span class="customer-phone">${c.phone}</span></td>
-      <td style="font-size:12px;color:var(--sub)">${(c.city||'').split(',')[0]}</td>
-      <td style="font-weight:700;color:var(--text)">${c.orders.length}</td>
-      <td><span class="total-val">${total.toFixed(0)} MAD</span></td>
-      <td><span class="tier-badge tier-${tier.id}">${tier.icon} ${tier.label}</span></td>
-      <td style="font-size:11px;color:var(--sub)">${formatDate(c.lastOrder)}</td>
+      <td><span class="order-id">${o.order_id||'—'}</span></td>
+      <td><div class="customer-name">${o.name||'—'}</div><div class="customer-sub">${fmtDate(o.timestamp)}</div></td>
+      <td class="meals-cell" title="${meals}">${meals||'—'}</td>
+      <td><span class="total-val">${o.order_total||'—'} MAD</span></td>
+      <td>${genderBadge(o.gender)}</td>
+      <td>${sourceBadge(o.source)}</td>
+      <td>${statusBadge(o.order_id)}</td>
     </tr>`;
   }).join('');
 }
 
-// ── Revenue ───────────────────────────────────────────────────
-function renderRevenue(orders) {
-  const now   = new Date();
-  const today = now.toDateString();
-  const weekAgo  = new Date(now - 7*86400000);
-  const monthAgo = new Date(now.getFullYear(), now.getMonth(), 1);
+// ── Orders table ──────────────────────────────────────────
+function renderOrdersTable(orders) {
+  let list = [...orders];
+  if (orderFilter !== 'all') list = list.filter(o => getStatus(o.order_id) === orderFilter);
+  if (sourceFilter !== 'all') list = list.filter(o => (o.source||'menu') === sourceFilter);
+  if (orderSearch) list = list.filter(o =>
+    (o.name||'').toLowerCase().includes(orderSearch) ||
+    (o.phone||'').includes(orderSearch) ||
+    (o.order_id||'').toLowerCase().includes(orderSearch) ||
+    getMeals(o).toLowerCase().includes(orderSearch)
+  );
+  const el = document.getElementById('orders-body');
+  if (!list.length) { el.innerHTML = emptyRow(9, 'Aucune commande'); return; }
+  el.innerHTML = list.map(o => {
+    const meals = getMeals(o);
+    return `<tr>
+      <td><span class="order-id">${o.order_id||'—'}</span></td>
+      <td style="font-size:11px;color:var(--sub);white-space:nowrap;">${fmtDate(o.timestamp)}</td>
+      <td><div class="customer-name">${o.name||'—'}</div><div class="customer-sub">${(o.city||'').slice(0,28)}</div></td>
+      <td><span class="mono-small">${o.phone||'—'}</span></td>
+      <td class="meals-cell" title="${meals}">${meals||'—'}</td>
+      <td><span class="total-val">${o.order_total||'—'} MAD</span></td>
+      <td>${genderBadge(o.gender)}</td>
+      <td>${sourceBadge(o.source)}</td>
+      <td>${statusBadge(o.order_id)}</td>
+    </tr>`;
+  }).join('');
+}
 
+// ── Customers ─────────────────────────────────────────────
+function renderCustomers(orders) {
+  const map = {};
+  orders.forEach(o => {
+    const p = o.phone||'?';
+    if (!map[p]) map[p] = { name:o.name, phone:p, city:o.city, orders:[], last:o.timestamp };
+    map[p].orders.push(o);
+    if (new Date(o.timestamp) > new Date(map[p].last)) map[p].last = o.timestamp;
+  });
+  const list = Object.values(map).sort((a,b) => b.orders.length - a.orders.length);
+  const el   = document.getElementById('customers-body');
+  if (!list.length) { el.innerHTML = emptyRow(7, 'Aucun client'); return; }
+  el.innerHTML = list.map(c => {
+    const total = c.orders.reduce((s,o) => s+(parseFloat(o.order_total)||0), 0);
+    const tier  = loyaltyTier(c.orders.length);
+    return `<tr>
+      <td><div class="customer-name">${c.name||'—'}</div></td>
+      <td><span class="mono-small">${c.phone}</span></td>
+      <td style="font-size:11px;color:var(--sub)">${(c.city||'').split(',')[0]}</td>
+      <td style="font-weight:800;color:var(--text);font-family:var(--font)">${c.orders.length}</td>
+      <td><span class="total-val">${total.toFixed(0)} MAD</span></td>
+      <td><span class="badge tier-${tier.id}">${tier.icon} ${tier.label}</span></td>
+      <td style="font-size:11px;color:var(--sub)">${fmtDate(c.last)}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ── Revenue ───────────────────────────────────────────────
+function renderRevenue(orders) {
+  const now      = new Date();
+  const today    = now.toDateString();
+  const weekAgo  = new Date(now - 7*86400000);
+  const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
   const sum = arr => arr.reduce((s,o) => s+(parseFloat(o.order_total)||0), 0);
 
   setText('rev-today', sum(orders.filter(o=>new Date(o.timestamp).toDateString()===today)).toFixed(0));
   setText('rev-week',  sum(orders.filter(o=>new Date(o.timestamp)>=weekAgo)).toFixed(0));
-  setText('rev-month', sum(orders.filter(o=>new Date(o.timestamp)>=monthAgo)).toFixed(0));
+  setText('rev-month', sum(orders.filter(o=>new Date(o.timestamp)>=monthStart)).toFixed(0));
   setText('rev-total', sum(orders).toFixed(0));
 
-  // Top dishes
-  const dishCount = {};
-  const dishRevenue = {};
+  // Top dishes — parse from meals field (comma-separated dish names)
+  const dishCount = {}; const dishRev = {};
   orders.forEach(o => {
-    const parts = (o.conversation||'').split(',');
-    parts.forEach(p => {
-      const name = p.replace(/×.*$/,'').replace(/\d+/g,'').trim();
-      if(name.length > 3){
-        dishCount[name]   = (dishCount[name]||0)+1;
-        dishRevenue[name] = (dishRevenue[name]||0)+(parseFloat(o.order_total)||0)/parts.length;
-      }
+    const meals = getMeals(o);
+    if (!meals) return;
+    const total = parseFloat(o.order_total) || 0;
+    const parts = meals.split(',').map(s => s.replace(/[×x]\s*\d+/gi,'').trim()).filter(s => s.length > 2);
+    const share = parts.length ? total / parts.length : 0;
+    parts.forEach(name => {
+      dishCount[name] = (dishCount[name]||0) + 1;
+      dishRev[name]   = (dishRev[name]||0) + share;
     });
   });
-  const topDishes = Object.entries(dishCount).sort((a,b)=>b[1]-a[1]).slice(0,8);
-  const tbody = document.getElementById('top-dishes-body');
-  tbody.innerHTML = topDishes.length
-    ? topDishes.map(([name,count]) => `<tr>
-        <td style="font-weight:600">${name}</td>
-        <td><div style="display:flex;align-items:center;gap:8px">
-          <div style="width:${Math.round(count/topDishes[0][1]*120)}px;height:6px;background:linear-gradient(90deg,var(--green),var(--greenL));border-radius:3px"></div>
-          <span style="font-weight:700;color:var(--text)">${count}</span>
-        </div></td>
-        <td><span class="total-val">${(dishRevenue[name]||0).toFixed(0)} MAD</span></td>
-      </tr>`).join('')
-    : emptyRow(3,'Aucune donnée');
+  const top = Object.entries(dishCount).sort((a,b)=>b[1]-a[1]).slice(0,10);
+  const maxC = top[0]?.[1] || 1;
+  const el   = document.getElementById('top-dishes-body');
+  el.innerHTML = top.length ? top.map(([name,count]) => `<tr>
+    <td style="font-weight:600;color:var(--text)">${name}</td>
+    <td><div style="display:flex;align-items:center;gap:10px">
+      <div style="width:${Math.round(count/maxC*100)}px;height:5px;background:linear-gradient(90deg,var(--green),var(--greenL));border-radius:3px;min-width:4px"></div>
+      <span style="font-weight:800;color:var(--text);font-family:var(--font)">${count}</span>
+    </div></td>
+    <td><span class="total-val">${(dishRev[name]||0).toFixed(0)} MAD</span></td>
+  </tr>`).join('') : emptyRow(3, 'Aucune donnée');
 }
 
-// ── Charts ────────────────────────────────────────────────────
+// ── Charts ────────────────────────────────────────────────
 function renderCharts(orders) {
-  // 7-day bar charts
   const days = [];
-  for(let i=6;i>=0;i--){
+  for (let i=6; i>=0; i--) {
     const d = new Date(); d.setDate(d.getDate()-i);
-    const label = ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'][d.getDay()];
-    const dayStr = d.toDateString();
-    const dayOrders   = orders.filter(o=>new Date(o.timestamp).toDateString()===dayStr);
-    const dayRevenue  = dayOrders.reduce((s,o)=>s+(parseFloat(o.order_total)||0),0);
-    days.push({ label, count:dayOrders.length, revenue:dayRevenue });
+    const lbl  = ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'][d.getDay()];
+    const ds   = d.toDateString();
+    const dos  = orders.filter(o => new Date(o.timestamp).toDateString()===ds);
+    days.push({ lbl, count:dos.length, rev:dos.reduce((s,o)=>s+(parseFloat(o.order_total)||0),0) });
   }
 
-  // Orders chart
-  const maxOrders  = Math.max(...days.map(d=>d.count), 1);
+  // Orders bar
+  const maxO = Math.max(...days.map(d=>d.count), 1);
   document.getElementById('chart-orders').innerHTML = days.map(d => `
     <div class="bar-col">
       <div class="bar-val">${d.count||''}</div>
-      <div class="bar" style="height:${Math.round(d.count/maxOrders*80)+4}px"></div>
-      <div class="bar-lbl">${d.label}</div>
+      <div class="bar" style="height:${Math.round(d.count/maxO*78)+3}px;background:linear-gradient(180deg,var(--green),var(--greenL))"></div>
+      <div class="bar-lbl">${d.lbl}</div>
     </div>`).join('');
 
-  // Revenue chart
-  const maxRev = Math.max(...days.map(d=>d.revenue), 1);
+  // Revenue bar
+  const maxR = Math.max(...days.map(d=>d.rev), 1);
   document.getElementById('chart-revenue').innerHTML = days.map(d => `
     <div class="bar-col">
-      <div class="bar-val">${d.revenue?d.revenue.toFixed(0):''}</div>
-      <div class="bar" style="height:${Math.round(d.revenue/maxRev*80)+4}px;background:linear-gradient(180deg,var(--gold),#B8860B)"></div>
-      <div class="bar-lbl">${d.label}</div>
+      <div class="bar-val">${d.rev?d.rev.toFixed(0):''}</div>
+      <div class="bar" style="height:${Math.round(d.rev/maxR*78)+3}px;background:linear-gradient(180deg,var(--gold),#A07010)"></div>
+      <div class="bar-lbl">${d.lbl}</div>
     </div>`).join('');
 
-  // Persona donut
-  const personaCounts = {};
-  orders.forEach(o => {
-    const p = o.persona || 'other';
-    personaCounts[p] = (personaCounts[p]||0)+1;
-  });
-  const colors   = { employee:'#4DA6FF', sportif:'#09B830', famille:'#F4C430', couple:'#B87AFF', whatsapp:'#25D366', general:'#6BBF7A' };
-  const labels   = { employee:'💼 Employé', sportif:'🏋️ Sportif', famille:'👨‍👩‍👧 Famille', couple:'💑 Couple', whatsapp:'📱 WhatsApp', general:'🌐 Général' };
-  const entries  = Object.entries(personaCounts);
-  const total    = entries.reduce((s,[,v])=>s+v,0);
+  // Donut — gender + source breakdown
+  const isDark = (document.documentElement.getAttribute('data-theme')||'dark') === 'dark';
+  const male   = orders.filter(o=>(o.gender||'').toLowerCase()==='male').length;
+  const female = orders.filter(o=>(o.gender||'').toLowerCase()==='female').length;
+  const chat   = orders.filter(o=>(o.source||'menu')==='chat').length;
+  const menu   = orders.filter(o=>(o.source||'menu')==='menu').length;
 
-  // Simple canvas donut
+  const segments = [
+    { label:'👨 Homme', count:male,   color:'#09B830' },
+    { label:'👩 Femme', count:female, color:'#E91E8C' },
+    { label:'💬 Chat',  count:chat,   color:'#4B9FFF' },
+    { label:'🛒 Menu',  count:menu,   color:'#A855F7' },
+  ].filter(s=>s.count>0);
+
+  const total = segments.reduce((s,x)=>s+x.count, 0) || 1;
   const canvas = document.getElementById('donut-canvas');
   const ctx    = canvas.getContext('2d');
-  ctx.clearRect(0,0,100,100);
-  let startAngle = -Math.PI/2;
-  entries.forEach(([p,count]) => {
-    const angle = (count/total)*2*Math.PI;
-    ctx.beginPath();
-    ctx.moveTo(50,50);
-    ctx.arc(50,50,45,startAngle,startAngle+angle);
-    ctx.closePath();
-    ctx.fillStyle = colors[p]||'#6BBF7A';
-    ctx.fill();
-    startAngle += angle;
+  ctx.clearRect(0,0,90,90);
+  let angle = -Math.PI/2;
+  segments.forEach(s => {
+    const a = (s.count/total)*2*Math.PI;
+    ctx.beginPath(); ctx.moveTo(45,45);
+    ctx.arc(45,45,42,angle,angle+a); ctx.closePath();
+    ctx.fillStyle = s.color; ctx.fill(); angle += a;
   });
-  // Hole
-  ctx.beginPath();
-  ctx.arc(50,50,28,0,2*Math.PI);
-  ctx.fillStyle = '#0D1810';
-  ctx.fill();
-  // Center text
-  ctx.fillStyle = '#E8F5EC';
-  ctx.font = 'bold 14px Syne,sans-serif';
-  ctx.textAlign = 'center';
-  ctx.fillText(total, 50, 54);
+  ctx.beginPath(); ctx.arc(45,45,25,0,2*Math.PI);
+  ctx.fillStyle = isDark ? '#0C1710' : '#FFFFFF'; ctx.fill();
+  ctx.fillStyle = isDark ? '#E6F4EA' : '#0A1C10';
+  ctx.font = 'bold 13px Outfit,sans-serif'; ctx.textAlign='center';
+  ctx.fillText(orders.length, 45, 50);
 
-  document.getElementById('donut-legend').innerHTML = entries.map(([p,count]) => `
-    <div class="legend-item">
-      <div class="legend-dot" style="background:${colors[p]||'#6BBF7A'}"></div>
-      <span style="color:var(--sub)">${labels[p]||p}</span>
-      <span style="color:var(--text);font-weight:700;margin-left:auto">${count}</span>
+  document.getElementById('donut-legend').innerHTML = segments.map(s => `
+    <div class="legend-row">
+      <div class="legend-dot" style="background:${s.color}"></div>
+      <span class="legend-lbl">${s.label}</span>
+      <span class="legend-val">${s.count}</span>
     </div>`).join('');
 }
 
-// ── Filters ───────────────────────────────────────────────────
-function filterOrders(filter, btn) {
-  orderFilter = filter;
-  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+// ── Badge helpers ─────────────────────────────────────────
+function genderBadge(g) {
+  if (!g || g==='unknown') return '<span style="color:var(--muted);font-size:11px;">—</span>';
+  const isFemale = g.toLowerCase()==='female';
+  return `<span class="badge ${isFemale?'badge-female':'badge-male'}">${isFemale?'👩 Femme':'👨 Homme'}</span>`;
+}
+function sourceBadge(s) {
+  return s==='chat'
+    ? '<span class="badge badge-chat">💬 Chat</span>'
+    : '<span class="badge badge-menu">🛒 Menu</span>';
+}
+
+// ── Filters ───────────────────────────────────────────────
+function filterOrders(f, btn) {
+  orderFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => {
+    if (['all','new','prep','delivery','done'].includes(b.textContent.replace(/[🟢🟡🔵✅ ]/g,'').toLowerCase().split(' ')[0])) b.classList.remove('active');
+  });
   btn.classList.add('active');
   renderOrdersTable(allOrders);
 }
-function searchOrders(val) {
-  orderSearch = val.toLowerCase();
+function filterSource(s, btn) {
+  sourceFilter = s;
+  ['src-all','src-chat','src-menu'].forEach(id => {
+    const el = document.getElementById(id); if(el) el.classList.remove('active');
+  });
+  btn.classList.add('active');
   renderOrdersTable(allOrders);
 }
+function searchOrders(val) { orderSearch = val.toLowerCase(); renderOrdersTable(allOrders); }
 
-// ── Settings ──────────────────────────────────────────────────
+// ── Export CSV ────────────────────────────────────────────
+function exportCSV() {
+  const headers = ['Order ID','Date','Nom','Téléphone','Ville','Plats','Total','Genre','Source'];
+  const rows    = allOrders.map(o => [
+    o.order_id||'', fmtDate(o.timestamp), o.name||'', o.phone||'', o.city||'',
+    getMeals(o), (o.order_total||'')+ ' MAD', o.gender||'', o.source||'menu'
+  ].map(v => `"${String(v).replace(/"/g,'""')}"`).join(','));
+  const csv  = [headers.join(','), ...rows].join('\n');
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a'); a.href=url; a.download='savy-commandes.csv'; a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ── Settings ──────────────────────────────────────────────
 function saveSettings() {
   const url = document.getElementById('cfg-sheet-url').value.trim();
   const pwd = document.getElementById('cfg-password').value.trim();
-  if(url) { SHEET_URL = url; localStorage.setItem('savy_sheet_url', url); }
-  if(pwd) { localStorage.setItem('savy_admin_pwd', pwd); }
-  alert('✅ Paramètres sauvegardés! Rechargez la page.');
+  if (url) { SHEET_URL=url; localStorage.setItem('savy_sheet_url',url); }
+  if (pwd) localStorage.setItem('savy_admin_pwd',pwd);
+  alert('✅ Sauvegardé! Rechargez la page.');
+}
+function testConnection() {
+  const el = document.getElementById('sheet-status');
+  if (!el) return;
+  el.innerHTML='⏳ Test…';
+  fetch(PROXY_URL+'?action=dashboard&t='+Date.now())
+    .then(r=>r.json())
+    .then(data => {
+      const orders = data.orders||[];
+      el.style.color='var(--green)';
+      el.innerHTML = orders.length
+        ? `✅ Connecté — <strong>${orders.length} commandes</strong> trouvées`
+        : '✅ Connecté — aucune commande encore';
+      if (orders.length) { allOrders=orders; renderAll(orders); }
+    })
+    .catch(err => { el.style.color='var(--red)'; el.innerHTML='❌ '+err.message; });
 }
 
-// ── Helpers ───────────────────────────────────────────────────
-function setText(id, val) {
-  const el = document.getElementById(id);
-  if(el) el.textContent = val;
-}
+// ── Helpers ───────────────────────────────────────────────
+function setText(id, v) { const el=document.getElementById(id); if(el) el.textContent=v; }
 function emptyRow(cols, msg) {
-  return `<tr><td colspan="${cols}" class="empty-state"><div class="big">📭</div><p>${msg}</p></td></tr>`;
+  return `<tr><td colspan="${cols}" class="empty-state"><div class="ico">📭</div><p>${msg}</p></td></tr>`;
 }
-function formatDate(ts) {
-  if(!ts) return '—';
+function fmtDate(ts) {
+  if (!ts) return '—';
   const d = new Date(ts);
-  if(isNaN(d)) return ts;
+  if (isNaN(d)) return String(ts).slice(0,16);
   return d.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit'}) + ' ' +
          d.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
 }
-function personaLabel(p) {
-  const m = { employee:'💼 Employé', sportif:'🏋️ Sport', famille:'👨‍👩‍👧 Famille', couple:'💑 Couple', whatsapp:'📱 WA', general:'🌐', '':'—' };
-  return m[p]||p||'—';
-}
-function getLoyaltyTier(count) {
-  if(count>=31) return { id:'platinum', label:'Platine', icon:'💎' };
-  if(count>=16) return { id:'gold',     label:'Gold',    icon:'🥇' };
-  if(count>=6)  return { id:'silver',   label:'Silver',  icon:'🥈' };
-  return               { id:'bronze',   label:'Bronze',  icon:'🥉' };
+function loyaltyTier(n) {
+  if (n>=31) return {id:'platinum',label:'Platine',icon:'💎'};
+  if (n>=16) return {id:'gold',    label:'Gold',   icon:'🥇'};
+  if (n>=6)  return {id:'silver',  label:'Silver', icon:'🥈'};
+  return             {id:'bronze', label:'Bronze', icon:'🥉'};
 }
 
-// ── Test connection ──────────────────────────────────────────
-function testConnection() {
-  const el = document.getElementById('sheet-status');
-  if(!el) return;
-  el.innerHTML = '⏳ Test en cours...';
-
-  fetch('/.netlify/functions/sheets-proxy?action=dashboard&t=' + Date.now())
-    .then(r => r.json())
-    .then(data => {
-      const orders = data.orders || [];
-      el.style.color = 'var(--green)';
-      if(orders.length > 0){
-        el.innerHTML = "✅ Connecté — <strong>" + orders.length + " commandes</strong> trouvées!";
-        allOrders = orders; renderAll(allOrders);
-      } else {
-        el.innerHTML = "✅ Connecté — aucune commande encore. Passez une commande test sur le site.";
-      }
-    })
-    .catch(err => {
-      el.style.color = 'var(--red)';
-      el.innerHTML = '❌ Erreur: ' + err.message;
-    });
-}
-
-// ── Logout ───────────────────────────────────────────────────
-function logout() {
-  localStorage.removeItem('savy_admin_session');
-  location.reload();
-}
-
-// ── Theme toggle ─────────────────────────────────────────────
+// ── Theme ─────────────────────────────────────────────────
 function toggleDashTheme() {
-  const current = document.documentElement.getAttribute('data-theme') || 'dark';
-  const next    = current === 'dark' ? 'light' : 'dark';
-  setDashTheme(next);
-  localStorage.setItem('savy_dash_theme', next);
+  const cur  = document.documentElement.getAttribute('data-theme')||'dark';
+  const next = cur==='dark'?'light':'dark';
+  applyTheme(next); localStorage.setItem('savy_dash_theme',next);
 }
-
-function setDashTheme(theme) {
-  document.documentElement.setAttribute('data-theme', theme);
-  const isDark = theme === 'dark';
-  const icon   = isDark ? '🌙' : '☀️';
-  const label  = isDark ? 'Mode sombre' : 'Mode clair';
-  const btn1   = document.getElementById('theme-toggle');
-  const btn2   = document.getElementById('theme-toggle-top');
-  if(btn1){ btn1.innerHTML = icon + ' ' + label; }
-  if(btn2){ btn2.textContent = icon; }
-  // Update donut canvas background
-  const canvas = document.getElementById('donut-canvas');
-  if(canvas){
-    const ctx = canvas.getContext('2d');
-    // Redraw hole with correct bg color
-    ctx.beginPath();
-    ctx.arc(50,50,28,0,2*Math.PI);
-    ctx.fillStyle = isDark ? '#0D1810' : '#FFFFFF';
-    ctx.fill();
-  }
+function applyTheme(t) {
+  document.documentElement.setAttribute('data-theme',t);
+  const isDark = t==='dark';
+  const icon   = isDark?'🌙':'☀️';
+  const lbl    = isDark?'Mode sombre':'Mode clair';
+  const b1     = document.getElementById('theme-toggle');
+  const b2     = document.getElementById('theme-toggle-top');
+  if(b1) b1.textContent = icon+' '+lbl;
+  if(b2) b2.textContent = icon;
+  // Redraw donut hole
+  if (allOrders.length) renderCharts(allOrders);
 }
+(function(){ const t=localStorage.getItem('savy_dash_theme')||'dark'; applyTheme(t); })();
 
-// Apply saved theme on load
+// ── Logout ────────────────────────────────────────────────
+function logout() { localStorage.removeItem('savy_admin_session'); location.reload(); }
+
+// ── Session check ─────────────────────────────────────────
 (function(){
-  const saved = localStorage.getItem('savy_dash_theme') || 'dark';
-  document.documentElement.setAttribute('data-theme', saved);
-  // Apply after DOM ready
-  document.addEventListener('DOMContentLoaded', function(){
-    setDashTheme(saved);
-  });
-})();
-
-// ── Show app (skip login screen) ─────────────────────────────
-function showApp() {
-  document.getElementById('login-screen').style.display = 'none';
-  document.getElementById('app').style.display = 'block';
-  loadData();
-  const url = localStorage.getItem('savy_sheet_url') ||
-    'https://script.google.com/macros/s/AKfycbyTHkPgiGPgxjTPSXiVy3r1uFGqUX0ZPwMtpdipkN7qA8y8VaDU7HLH1Z-zGpYdLEKYyA/exec';
-  const el = document.getElementById('cfg-sheet-url');
-  if(el) el.value = url;
-  setTimeout(testConnection, 1500);
-}
-
-// ── Auto-login: check saved session on every page load ────────
-(function checkSession(){
-  const session = localStorage.getItem('savy_admin_session');
-  if(!session) return; // no session — show login
-  try {
-    const decoded = atob(session);
-    const stored  = localStorage.getItem('savy_admin_pwd') || 'savy2025';
-    // Session is valid if it contains the correct password hash
-    if(decoded.startsWith(stored + ':')) {
-      // Valid session — skip login and go straight to app
-      showApp();
-    }
-  } catch(e) {
-    localStorage.removeItem('savy_admin_session');
+  const sess   = localStorage.getItem('savy_admin_session');
+  const stored = localStorage.getItem('savy_admin_pwd')||'savy2025';
+  if (sess) {
+    try { if (atob(sess).startsWith(stored+':')) { showApp(); return; } }
+    catch(e) { localStorage.removeItem('savy_admin_session'); }
   }
 })();
 
-// ── Auto-refresh every 2 minutes ─────────────────────────────
-setInterval(() => {
-  if(document.getElementById('app').style.display!=='none') loadData();
-}, 120000);
+// ── Auto-refresh every 2min ───────────────────────────────
+setInterval(() => { if(document.getElementById('app').style.display!=='none') loadData(); }, 120000);
+
+// ── Mobile nav ────────────────────────────────────────────
+if (window.innerWidth<=900) {
+  document.getElementById('mobile-nav').style.display='block';
+  const m = document.querySelector('.main');
+  if(m) m.style.paddingBottom='72px';
+}
+
+// ── PWA ───────────────────────────────────────────────────
+if('serviceWorker' in navigator && location.protocol==='https:')
+  window.addEventListener('load',()=>navigator.serviceWorker.register('/sw-dashboard.js').catch(()=>{}));
 </script>
-
-<!-- Mobile bottom nav -->
-<div style="display:none;position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--border);padding:8px 0;z-index:200;" id="mobile-nav">
-  <div style="display:flex;justify-content:space-around;">
-    <div onclick="showPage('overview')" style="text-align:center;cursor:pointer;padding:4px 12px;">
-      <div style="font-size:20px;">📊</div><div style="font-size:9px;color:var(--sub);">Stats</div>
-    </div>
-    <div onclick="showPage('orders')" style="text-align:center;cursor:pointer;padding:4px 12px;">
-      <div style="font-size:20px;">📦</div><div style="font-size:9px;color:var(--sub);">Orders</div>
-    </div>
-    <div onclick="showPage('customers')" style="text-align:center;cursor:pointer;padding:4px 12px;">
-      <div style="font-size:20px;">👥</div><div style="font-size:9px;color:var(--sub);">Clients</div>
-    </div>
-    <div onclick="showPage('revenue')" style="text-align:center;cursor:pointer;padding:4px 12px;">
-      <div style="font-size:20px;">💰</div><div style="font-size:9px;color:var(--sub);">Revenus</div>
-    </div>
-    <div onclick="showPage('settings')" style="text-align:center;cursor:pointer;padding:4px 12px;">
-      <div style="font-size:20px;">⚙️</div><div style="font-size:9px;color:var(--sub);">Config</div>
-    </div>
-  </div>
-</div>
-<script>
-// Show mobile nav on small screens
-if(window.innerWidth <= 900){
-  document.getElementById('mobile-nav').style.display = 'block';
-  document.querySelector('.main').style.paddingBottom = '70px';
-}
-</script>
-
-<!-- PWA Install Bar -->
-<div id="dash-install-bar" style="
-  display:none; position:fixed; bottom:80px; left:50%; transform:translateX(-50%);
-  background:var(--green); color:#fff; border-radius:14px; padding:10px 16px;
-  align-items:center; gap:10px; z-index:9999;
-  box-shadow:0 8px 32px rgba(9,184,48,.4); font-size:13px; font-weight:700;
-  max-width:calc(100vw - 32px); white-space:nowrap;
-">
-  <span>📲</span>
-  <span>Installer SAVY Admin</span>
-  <button onclick="installDashApp()" style="background:#fff;color:var(--green);border:none;border-radius:8px;padding:6px 14px;font-size:12px;font-weight:900;cursor:pointer;">Installer</button>
-  <button onclick="dismissDashInstall()" style="background:transparent;color:rgba(255,255,255,.7);border:none;font-size:16px;cursor:pointer;">✕</button>
-</div>
-
-<script>
-// ── Register Dashboard Service Worker ────────────────────────
-if("serviceWorker" in navigator && location.protocol === "https:") {
-  window.addEventListener("load", function(){
-    setTimeout(function(){
-      try {
-        navigator.serviceWorker.register("/sw-dashboard.js")
-          .then(function(){})
-          .catch(function(){});
-      } catch(e) {}
-    }, 2000);
-  });
-}
-
-// ── Install Prompt ────────────────────────────────────────────
-let _dashPrompt = null;
-window.addEventListener("beforeinstallprompt", function(e){
-  e.preventDefault();
-  _dashPrompt = e;
-  if(localStorage.getItem("savy_dash_pwa_dismissed")) return;
-  setTimeout(function(){
-    const bar = document.getElementById("dash-install-bar");
-    if(bar && _dashPrompt) bar.style.display = "flex";
-  }, 5000);
-});
-
-function installDashApp(){
-  if(!_dashPrompt) return;
-  _dashPrompt.prompt();
-  _dashPrompt.userChoice.then(function(){ 
-    _dashPrompt = null;
-    document.getElementById("dash-install-bar").style.display = "none";
-  });
-}
-function dismissDashInstall(){
-  document.getElementById("dash-install-bar").style.display = "none";
-  localStorage.setItem("savy_dash_pwa_dismissed","1");
-}
-window.addEventListener("appinstalled", function(){
-  const bar = document.getElementById("dash-install-bar");
-  if(bar) bar.style.display = "none";
-});
-</script>
-
 </body>
 </html>
