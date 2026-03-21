@@ -2255,6 +2255,116 @@
     .chat-send:disabled { opacity:.35; cursor:not-allowed; transform:none !important; }
     .chat-send:not(:disabled):hover { transform:scale(1.09); }
 
+    /* ── Inline menu in chat ─────────────────────── */
+    .chat-menu-grid {
+      display:flex; flex-direction:column; gap:8px;
+      margin-top:10px; width:100%;
+    }
+    .chat-menu-card {
+      display:flex; align-items:center; gap:10px;
+      background:var(--bg); border-radius:12px;
+      border:1.5px solid var(--border);
+      padding:7px 9px; cursor:default;
+      transition:border-color .18s, box-shadow .18s;
+      position:relative;
+    }
+    .chat-menu-card.selected {
+      border-color:var(--green);
+      box-shadow:0 0 0 2px rgba(9,184,48,0.12);
+      background:var(--greenXL);
+    }
+    [data-theme="dark"] .chat-menu-card { background:var(--bg); }
+    [data-theme="dark"] .chat-menu-card.selected { background:var(--mint); }
+    .chat-menu-img {
+      width:44px; height:44px; border-radius:8px;
+      object-fit:cover; flex-shrink:0; cursor:zoom-in;
+    }
+    .chat-menu-emoji {
+      width:44px; height:44px; border-radius:8px;
+      background:var(--mint); flex-shrink:0;
+      display:flex; align-items:center; justify-content:center;
+      font-size:22px;
+    }
+    .chat-menu-info { flex:1; min-width:0; }
+    .chat-menu-name {
+      font-family:'Outfit',sans-serif; font-weight:800; font-size:12.5px;
+      color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }
+    .chat-menu-meta {
+      font-size:10.5px; color:var(--muted); margin-top:2px;
+      display:flex; gap:6px; align-items:center; flex-wrap:wrap;
+    }
+    .chat-menu-price { font-weight:800; color:var(--green); }
+    .chat-menu-cal   { color:var(--muted); }
+    .chat-menu-tag   {
+      font-size:9.5px; font-weight:700; padding:1px 6px;
+      border-radius:99px; background:var(--mint); color:var(--green);
+    }
+    .chat-menu-add {
+      width:28px; height:28px; border-radius:8px; flex-shrink:0;
+      background:var(--green); color:#fff; border:none;
+      display:flex; align-items:center; justify-content:center;
+      cursor:pointer; font-size:16px; font-weight:700; line-height:1;
+      transition:transform .12s, background .12s;
+      -webkit-tap-highlight-color:transparent;
+    }
+    .chat-menu-add:hover  { transform:scale(1.1); }
+    .chat-menu-add:active { transform:scale(0.92); }
+    .chat-menu-add.added  { background:#ef4444; }
+    .chat-menu-add svg    { pointer-events:none; display:block; }
+
+    /* Mini cart summary below menu */
+    .chat-menu-cart {
+      margin-top:10px; padding:9px 11px;
+      background:var(--greenXL); border-radius:10px;
+      border:1.5px solid rgba(9,184,48,0.2);
+      font-family:'DM Sans',sans-serif;
+    }
+    [data-theme="dark"] .chat-menu-cart { background:var(--mint); }
+    .chat-menu-cart-title {
+      font-family:'Outfit',sans-serif; font-weight:900; font-size:10px;
+      color:var(--green); text-transform:uppercase; letter-spacing:.08em;
+      margin-bottom:6px;
+    }
+    .chat-menu-cart-items { display:flex; flex-direction:column; gap:3px; }
+    .chat-menu-cart-item {
+      display:flex; align-items:center; justify-content:space-between;
+      font-size:11.5px; color:var(--text);
+    }
+    .chat-menu-cart-item-name { font-weight:600; flex:1; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .chat-menu-cart-item-price { font-weight:800; color:var(--green); margin-left:8px; flex-shrink:0; }
+    .chat-menu-cart-item-del {
+      width:18px; height:18px; border-radius:4px;
+      background:transparent; border:1px solid rgba(239,68,68,0.3);
+      color:#ef4444; cursor:pointer; font-size:11px; font-weight:700;
+      display:flex; align-items:center; justify-content:center;
+      margin-left:6px; flex-shrink:0; transition:background .12s;
+    }
+    .chat-menu-cart-item-del:hover { background:#ef4444; color:#fff; }
+    .chat-menu-cart-total {
+      display:flex; justify-content:space-between; align-items:center;
+      margin-top:7px; padding-top:7px; border-top:1px solid rgba(9,184,48,0.18);
+      font-family:'Outfit',sans-serif; font-weight:900; font-size:13px;
+      color:var(--text);
+    }
+    .chat-menu-cart-total span { color:var(--green); }
+    .chat-menu-confirm-btn {
+      width:100%; margin-top:8px; padding:9px;
+      background:linear-gradient(135deg,var(--green),#05a827);
+      color:#fff; border:none; border-radius:9px;
+      font-family:'Outfit',sans-serif; font-weight:800; font-size:12.5px;
+      cursor:pointer; transition:box-shadow .18s, transform .12s;
+      display:flex; align-items:center; justify-content:center; gap:6px;
+      -webkit-tap-highlight-color:transparent;
+      box-shadow:0 3px 12px rgba(9,184,48,0.28);
+    }
+    .chat-menu-confirm-btn:hover  { box-shadow:0 6px 18px rgba(9,184,48,0.4); transform:translateY(-1px); }
+    .chat-menu-confirm-btn:active { transform:scale(0.97); }
+    .chat-menu-empty {
+      font-size:11px; color:var(--muted); text-align:center;
+      padding:4px 0; font-style:italic;
+    }
+
     /* Message animations */
     .msg-user { animation:msgOut .22s cubic-bezier(.34,1.4,.64,1) both; }
     @keyframes msgOut { from{transform:translateX(10px) scale(.96);opacity:0} to{transform:translateX(0) scale(1);opacity:1} }
@@ -5570,28 +5680,28 @@ async function initChat() {
 
   const seeds = {
     employee: {
-      fr: `[SYSTEM_OPEN:employee]\nUn(e) professionnel(le) vient d'ouvrir le chat et a choisi le français. Accueille-le/la chaleureusement en français en une phrase, et demande ce qu'il/elle souhaite manger aujourd'hui.`,
-      ar: `[SYSTEM_OPEN:employee]\nموظف أو موظفة اختار/ت العربية. رحّب/رحّبي به/بها بجملة واحدة دافئة بالعربية الفصحى، واسأله/اسأليها عمّا يريد/تريد تناوله اليوم.`,
-      en: `[SYSTEM_OPEN:employee]\nA professional just opened the chat and chose English. Welcome them warmly in one sentence, and ask what they would like to eat today.`,
-      es: `[SYSTEM_OPEN:employee]\nUn/a profesional acaba de abrir el chat y eligió español. Dale la bienvenida calurosamente en una oración y pregúntale qué le gustaría comer hoy.`,
+      fr: `[SYSTEM_OPEN:employee]\nUn(e) professionnel(le) vient d'ouvrir le chat et a choisi le français. Accueille-le/la chaleureusement en UNE seule phrase, puis demande en UNE phrase : "Voulez-vous voir notre menu ?"`,
+      ar: `[SYSTEM_OPEN:employee]\nموظف أو موظفة اختار/ت العربية. رحّب/رحّبي في جملة واحدة دافئة، ثم اسأل/اسألي في جملة واحدة: "هل تودّ/تودّين الاطلاع على قائمتنا؟"`,
+      en: `[SYSTEM_OPEN:employee]\nA professional just opened the chat and chose English. Welcome them warmly in ONE sentence, then ask in ONE sentence: "Would you like to see our menu?"`,
+      es: `[SYSTEM_OPEN:employee]\nUn/a profesional abrió el chat y eligió español. Dale la bienvenida en UNA oración, luego pregunta en UNA oración: "¿Te gustaría ver nuestro menú?"`,
     },
     sportif: {
-      fr: `[SYSTEM_OPEN:sportif]\nUn(e) sportif(ve) vient d'ouvrir le chat et a choisi le français. Accueille-le/la en reconnaissant son profil sportif en une phrase chaleureuse, et demande son objectif du moment.`,
-      ar: `[SYSTEM_OPEN:sportif]\nرياضي أو رياضية اختار/ت العربية. رحّب/رحّبي به/بها بجملة دافئة تُظهر فهمك لاحتياجات الرياضي، واسأل/اسألي عن هدفه/هدفها الحالي.`,
-      en: `[SYSTEM_OPEN:sportif]\nAn athlete just opened the chat and chose English. Welcome them in one warm sentence acknowledging their athletic profile, and ask about their current goal.`,
-      es: `[SYSTEM_OPEN:sportif]\nUn/a deportista acaba de abrir el chat y eligió español. Dale la bienvenida en una oración cálida reconociendo su perfil deportivo, y pregúntale su objetivo actual.`,
+      fr: `[SYSTEM_OPEN:sportif]\nUn(e) sportif(ve) a choisi le français. Accueille-le/la en UNE phrase valorisant la performance, puis demande : "Voulez-vous voir notre menu ?"`,
+      ar: `[SYSTEM_OPEN:sportif]\nرياضي/رياضية اختار/ت العربية. رحّب/رحّبي في جملة واحدة تُبرز الأداء، ثم اسأل/اسألي: "هل تودّ/تودّين الاطلاع على قائمتنا؟"`,
+      en: `[SYSTEM_OPEN:sportif]\nAn athlete chose English. Welcome them in ONE sentence highlighting performance, then ask: "Would you like to see our menu?"`,
+      es: `[SYSTEM_OPEN:sportif]\nUn/a deportista eligió español. Salúdale en UNA oración sobre rendimiento, luego pregunta: "¿Te gustaría ver nuestro menú?"`,
     },
     famille: {
-      fr: `[SYSTEM_OPEN:famille]\nQuelqu'un commande pour toute la famille et a choisi le français. Accueille-le/la chaleureusement en une phrase, et demande pour combien de personnes il/elle commande.`,
-      ar: `[SYSTEM_OPEN:famille]\nشخص يطلب لعائلته واختار/ت العربية. رحّب/رحّبي به/بها بدفء في جملة واحدة، واسأل/اسألي لكم شخصاً يطلب.`,
-      en: `[SYSTEM_OPEN:famille]\nSomeone is ordering for the whole family and chose English. Welcome them warmly in one sentence, and ask how many people they are ordering for.`,
-      es: `[SYSTEM_OPEN:famille]\nAlguien está pidiendo para toda la familia y eligió español. Dale la bienvenida calurosamente en una oración, y pregúntale para cuántas personas está pidiendo.`,
+      fr: `[SYSTEM_OPEN:famille]\nQuelqu'un commande pour sa famille et a choisi le français. Accueille-le/la en UNE phrase chaleureuse, puis demande : "Voulez-vous voir notre menu ?"`,
+      ar: `[SYSTEM_OPEN:famille]\nشخص يطلب لعائلته واختار/ت العربية. رحّب/رحّبي في جملة واحدة دافئة، ثم اسأل/اسألي: "هل تودّون الاطلاع على قائمتنا؟"`,
+      en: `[SYSTEM_OPEN:famille]\nSomeone ordering for their family chose English. Welcome them warmly in ONE sentence, then ask: "Would you like to see our menu?"`,
+      es: `[SYSTEM_OPEN:famille]\nAlguien para su familia eligió español. Dales la bienvenida en UNA oración, luego pregunta: "¿Les gustaría ver nuestro menú?"`,
     },
     couple: {
-      fr: `[SYSTEM_OPEN:couple]\nUn couple vient d'ouvrir le chat pour un dîner ensemble et a choisi le français. Accueille-les avec chaleur et une touche poétique en une phrase, et demande quelle ambiance ils souhaitent ce soir.`,
-      ar: `[SYSTEM_OPEN:couple]\nزوجان اختارا العربية لتنظيم عشاء. رحّب/رحّبي بهما بدفء ولمسة رومانسية في جملة واحدة، واسأل/اسألي عن الأجواء التي يريدانها الليلة.`,
-      en: `[SYSTEM_OPEN:couple]\nA couple just opened the chat to plan a dinner together and chose English. Welcome them warmly with a poetic touch in one sentence, and ask what kind of evening they have in mind.`,
-      es: `[SYSTEM_OPEN:couple]\nUna pareja acaba de abrir el chat para planificar una cena y eligió español. Dales la bienvenida con calidez y un toque poético en una oración, y pregúntales qué ambiente desean esta noche.`,
+      fr: `[SYSTEM_OPEN:couple]\nUn couple a choisi le français pour un dîner. Accueille-les avec chaleur et poésie en UNE phrase, puis demande : "Voulez-vous voir notre menu ?"`,
+      ar: `[SYSTEM_OPEN:couple]\nزوجان اختارا العربية. رحّب/رحّبي بهما بدفء ورومانسية في جملة واحدة، ثم اسأل/اسألي: "هل تودّان الاطلاع على قائمتنا؟"`,
+      en: `[SYSTEM_OPEN:couple]\nA couple chose English for dinner. Welcome them with warmth and poetry in ONE sentence, then ask: "Would you like to see our menu?"`,
+      es: `[SYSTEM_OPEN:couple]\nUna pareja eligió español para una cena. Dales la bienvenida con calidez en UNA oración, luego pregunta: "¿Les gustaría ver nuestro menú?"`,
     },
   };
 
@@ -6010,11 +6120,15 @@ async function chatSendText(text) {
   hideTyping();
 
   if (reply) {
+    const triggerMenu = reply.includes("SAVY_SHOW_MENU");
     const triggerLead = reply.includes("SAVY_GET_LEAD");
-    reply = reply.replace("SAVY_GET_LEAD","").trim();
+    reply = reply.replace("SAVY_SHOW_MENU","").replace("SAVY_GET_LEAD","").trim();
     chatHistory.push({ role:"assistant", content:reply });
     addBotMsg(reply, isCouple);
-    if(triggerLead && !leadShown) {
+
+    if (triggerMenu) {
+      setTimeout(() => _showChatMenu(), 500);
+    } else if(triggerLead && !leadShown) {
       // Extract ALL confirmed dishes from the bot's confirmation message
       const allDishes = _extractAllConfirmedDishes(reply);
       if (allDishes.length > 0) {
@@ -6040,6 +6154,214 @@ async function chatSendText(text) {
    FALLBACK — only fires on network/API failure.
    Per-persona so even the error feels contextual.
 ═══════════════════════════════════════════ */
+/* ═══════════════════════════════════════════
+   INLINE CHAT MENU
+   Renders all dishes as interactive cards in a chat bubble.
+   Customer taps + to add, × to remove. Confirm sends to form.
+═══════════════════════════════════════════ */
+function _showChatMenu() {
+  const p  = persona || "employee";
+  const cl = window._savyChatLang || lang || "fr";
+  const isCouple = p === "couple";
+
+  // Header label per language
+  const menuTitle = {
+    fr: "🍽️ Notre menu — choisissez vos plats :",
+    en: "🍽️ Our menu — pick your dishes:",
+    ar: "🍽️ قائمتنا — اختر أطباقك:",
+    es: "🍽️ Nuestro menú — elige tus platos:",
+  };
+
+  // Render bubble wrapper
+  const row = document.createElement("div");
+  row.className = "msg-bot";
+
+  const avatar = document.createElement("div");
+  avatar.className = "msg-avatar";
+  avatar.textContent = "👨‍🍳";
+
+  const bubble = document.createElement("div");
+  bubble.className = "msg-bubble";
+  bubble.style.maxWidth = "96%";
+  bubble.style.width    = "100%";
+
+  const titleEl = document.createElement("div");
+  titleEl.style.cssText = "font-family:'Outfit',sans-serif;font-weight:900;font-size:13px;margin-bottom:4px;color:var(--text);";
+  titleEl.textContent = menuTitle[cl] || menuTitle.fr;
+  bubble.appendChild(titleEl);
+
+  // Cart state — dish ids selected
+  const cartIds = new Set();
+
+  // ── Grid of dish cards ───────────────────────────
+  const grid = document.createElement("div");
+  grid.className = "chat-menu-grid";
+
+  // ── Mini cart below the grid ─────────────────────
+  const cartBox = document.createElement("div");
+  cartBox.className = "chat-menu-cart";
+  cartBox.style.display = "none";
+
+  const cartTitle = document.createElement("div");
+  cartTitle.className = "chat-menu-cart-title";
+  cartTitle.textContent = { fr:"🧬 Votre sélection", en:"🧬 Your selection", ar:"🧬 اختياركم", es:"🧬 Tu selección" }[cl] || "🧬 Your selection";
+
+  const cartItemsEl = document.createElement("div");
+  cartItemsEl.className = "chat-menu-cart-items";
+
+  const cartTotalEl = document.createElement("div");
+  cartTotalEl.className = "chat-menu-cart-total";
+
+  const confirmBtn = document.createElement("button");
+  confirmBtn.className = "chat-menu-confirm-btn";
+  confirmBtn.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> <span>${{fr:"Confirmer ma commande", en:"Confirm my order", ar:"تأكيد طلبي", es:"Confirmar mi pedido"}[cl] || "Confirm my order"}</span>`;
+
+  cartBox.appendChild(cartTitle);
+  cartBox.appendChild(cartItemsEl);
+  cartBox.appendChild(cartTotalEl);
+  cartBox.appendChild(confirmBtn);
+
+  // ── Render / update cart box ─────────────────────
+  function _updateCart() {
+    const selected = [...cartIds].map(id => (dishes || []).find(d => d.id === id)).filter(Boolean);
+    if (selected.length === 0) {
+      cartBox.style.display = "none";
+      return;
+    }
+    cartBox.style.display = "block";
+    cartItemsEl.innerHTML = "";
+    let total = 0;
+    selected.forEach(d => {
+      total += d.price || 0;
+      const row2 = document.createElement("div");
+      row2.className = "chat-menu-cart-item";
+      row2.innerHTML = `<span class="chat-menu-cart-item-name">${d.name}</span>
+        <span class="chat-menu-cart-item-price">${d.price} MAD</span>`;
+      const del = document.createElement("button");
+      del.className = "chat-menu-cart-item-del";
+      del.innerHTML = "×";
+      del.onclick = () => {
+        cartIds.delete(d.id);
+        // Un-select the card
+        const card2 = grid.querySelector(`[data-id="${d.id}"]`);
+        if (card2) {
+          card2.classList.remove("selected");
+          const addBtn2 = card2.querySelector(".chat-menu-add");
+          if (addBtn2) {
+            addBtn2.classList.remove("added");
+            addBtn2.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>`;
+          }
+        }
+        _updateCart();
+      };
+      row2.appendChild(del);
+      cartItemsEl.appendChild(row2);
+    });
+    const delivLabel = selected.length >= 2 
+      ? `<span style="font-size:10px;color:var(--green);font-weight:700;">🛵 ${{fr:"Livraison offerte",en:"Free delivery",ar:"توصيل مجاني",es:"Envío gratis"}[cl]||"Free delivery"}</span>`
+      : `<span style="font-size:10px;color:var(--muted);">🛵 +10 MAD</span>`;
+    cartTotalEl.innerHTML = `${delivLabel}<span>${{fr:"Total",en:"Total",ar:"المجموع",es:"Total"}[cl]||"Total"} : <span>${total} MAD</span></span>`;
+  }
+
+  // ── Build each dish card ─────────────────────────
+  (dishes || []).forEach(d => {
+    const card = document.createElement("div");
+    card.className = "chat-menu-card";
+    card.dataset.id = d.id;
+
+    // Image
+    const imgWrap = document.createElement("div");
+    if (d.img) {
+      const img = document.createElement("img");
+      img.className = "chat-menu-img";
+      img.src = d.img; img.alt = d.name;
+      const fallback = document.createElement("div");
+      fallback.className = "chat-menu-emoji"; fallback.textContent = d.e || "🍽️"; fallback.style.display = "none";
+      img.onerror = () => { img.style.display="none"; fallback.style.display="flex"; };
+      img.onclick = () => _openLightbox(d.img, d.name);
+      imgWrap.appendChild(img); imgWrap.appendChild(fallback);
+    } else {
+      const em = document.createElement("div");
+      em.className = "chat-menu-emoji"; em.textContent = d.e || "🍽️";
+      imgWrap.appendChild(em);
+    }
+    card.appendChild(imgWrap);
+
+    // Info
+    const info = document.createElement("div");
+    info.className = "chat-menu-info";
+    info.innerHTML = `<div class="chat-menu-name">${d.name}</div>
+      <div class="chat-menu-meta">
+        <span class="chat-menu-price">${d.price} MAD</span>
+        <span class="chat-menu-cal">${d.cal} kcal</span>
+        ${d.tag ? `<span class="chat-menu-tag">${d.tag}</span>` : ""}
+      </div>`;
+    card.appendChild(info);
+
+    // Add/Remove toggle button
+    const addBtn = document.createElement("button");
+    addBtn.className = "chat-menu-add";
+    addBtn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>`;
+    addBtn.setAttribute("aria-label", "Add");
+    addBtn.onclick = () => {
+      if (cartIds.has(d.id)) {
+        cartIds.delete(d.id);
+        card.classList.remove("selected");
+        addBtn.classList.remove("added");
+        addBtn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>`;
+      } else {
+        cartIds.add(d.id);
+        card.classList.add("selected");
+        addBtn.classList.add("added");
+        addBtn.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>`;
+      }
+      _updateCart();
+    };
+    card.appendChild(addBtn);
+    grid.appendChild(card);
+  });
+
+  // ── Confirm handler ───────────────────────────────
+  confirmBtn.onclick = () => {
+    const selected = [...cartIds].map(id => (dishes || []).find(d => d.id === id)).filter(Boolean);
+    if (selected.length === 0) {
+      const empty = document.createElement("div");
+      empty.className = "chat-menu-empty";
+      empty.textContent = { fr:"Choisissez au moins un plat 😊", en:"Pick at least one dish 😊", ar:"اختر طبقاً واحداً على الأقل 😊", es:"Elige al menos un plato 😊" }[cl] || "Pick at least one dish 😊";
+      cartBox.insertBefore(empty, confirmBtn);
+      setTimeout(() => empty.remove(), 2000);
+      return;
+    }
+    // Set dishes and trigger form
+    window._savyOrderDishes   = selected;
+    window._savyConfirmedDish = selected[0];
+    // Add a bot confirm message
+    const total = selected.reduce((s, d) => s + (d.price||0), 0);
+    const names = selected.map(d => d.name).join(" + ");
+    const confirmMsg = {
+      fr: `Parfait ! 🧬 ${names} — ${total} MAD. Complétez vos infos pour confirmer 👇`,
+      en: `Perfect! 🧬 ${names} — ${total} MAD. Fill in your details to confirm 👇`,
+      ar: `ممتاز! 🧬 ${names} — ${total} درهم. أكملوا معلوماتكم للتأكيد 👇`,
+      es: `¡Perfecto! 🧬 ${names} — ${total} MAD. Completa tus datos para confirmar 👇`,
+    };
+    addBotMsg(confirmMsg[cl] || confirmMsg.fr, isCouple);
+    // Push to chatHistory so backend has context
+    chatHistory.push({ role:"assistant", content: confirmMsg[cl] || confirmMsg.fr });
+    setTimeout(() => showLeadForm(p), 600);
+  };
+
+  bubble.appendChild(grid);
+  bubble.appendChild(cartBox);
+  row.appendChild(avatar);
+  row.appendChild(bubble);
+
+  const msgsEl = document.getElementById("chat-msgs");
+  if (msgsEl) {
+    msgsEl.appendChild(row);
+    scrollChatToBottom();
+  }
+}
+
 function getFallbackReply(p, isAr, userMsg) {
   const q  = (userMsg || "").toLowerCase();
   const cl = window._savyChatLang || lang || "fr";
@@ -6981,10 +7303,31 @@ function submitLead() {
   localStorage.setItem("savy_customer_name",  name);
   localStorage.setItem("savy_customer_phone", phone);
 
+  // Build structured meal data from _savyOrderDishes
+  const orderedDishes = window._savyOrderDishes || [];
+  const mealNames     = orderedDishes.map(d => d.name).join(", ") || "—";
+  const mealTotal     = orderedDishes.reduce((s, d) => s + (d.price || 0), 0);
+  const delivery      = orderedDishes.length >= 2 ? 0 : 10;
+  const orderTotal    = mealTotal + delivery;
+  const orderId       = "SAVY-" + Math.floor(1000 + Math.random() * 9000);
+
   saveToSheets({
-    name, city, phone: "'" + phone, persona: persona || "employee", lang: cl,
-    comment: comment || "",
-    conversation: chatHistory.filter(m => m.role === "user").map(m => m.content).join(" | ")
+    order_id:    orderId,
+    // Customer info
+    name, city,
+    phone:       "'" + phone,
+    comment:     comment || "",
+    // Order details
+    meals:       mealNames,
+    meal_count:  orderedDishes.length,
+    total_meals: mealTotal,
+    delivery_fee: delivery,
+    order_total: orderTotal,
+    // Context
+    persona:     persona || "employee",
+    lang:        cl,
+    source:      "chat",
+    conversation: chatHistory.filter(m => m.role === "user").map(m => m.content).join(" | "),
   });
 
   setTimeout(() => {
@@ -7008,12 +7351,12 @@ function submitLead() {
     const statusLabels = { fr:"✅ Commande en route — 45 min ⏱️", en:"✅ Order on the way — 45 min ⏱️", ar:"✅ طلبك في الطريق — 45 دق ⏱️", es:"✅ Pedido en camino — 45 min ⏱️" };
     if (cst) cst.textContent = statusLabels[cl] || statusLabels.fr;
 
-    const leadId = "SAVY-" + Math.floor(1000 + Math.random() * 9000);
+    // Include meal names + total in WhatsApp confirmation message
     const waConfirm = {
-      fr: `Salam SAVY ! Je confirme ma commande ${leadId} ✅`,
-      en: `Hello SAVY! I confirm my order ${leadId} ✅`,
-      ar: `سلام SAVY! أؤكد طلبي رقم ${leadId} ✅`,
-      es: `¡Hola SAVY! Confirmo mi pedido ${leadId} ✅`,
+      fr: `Salam SAVY ! Je confirme ma commande ${orderId} ✅\nPlats: ${mealNames}\nTotal: ${orderTotal} MAD`,
+      en: `Hello SAVY! I confirm my order ${orderId} ✅\nDishes: ${mealNames}\nTotal: ${orderTotal} MAD`,
+      ar: `سلام SAVY! أؤكد طلبي رقم ${orderId} ✅\nالأطباق: ${mealNames}\nالمجموع: ${orderTotal} درهم`,
+      es: `¡Hola SAVY! Confirmo mi pedido ${orderId} ✅\nPlatos: ${mealNames}\nTotal: ${orderTotal} MAD`,
     };
     window.open(`https://wa.me/212708700830?text=${encodeURIComponent(waConfirm[cl] || waConfirm.fr)}`, "_blank");
     animateLoyaltyPoints(10);
@@ -7021,7 +7364,7 @@ function submitLead() {
     // Close chat + redirect to live tracking after short delay
     setTimeout(() => {
       closeChat();
-      showOrderTracking(name, leadId);
+      showOrderTracking(name, orderId);
       setTimeout(() => {
         const s = document.getElementById("order-track-section");
         if (s) s.scrollIntoView({ behavior:"smooth", block:"center" });
