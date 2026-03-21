@@ -4714,6 +4714,7 @@ let lang        = "fr"; // default FR — overridden by smart detection below
 let activeCuis  = "all";
 let activePersonaMenu = "all";
 let activeDiet  = "All";
+let scheduledTime = null; // null = ASAP, string = "DD/MM/YYYY HH:MM"
 let cart        = (function(){
   try {
     const saved = localStorage.getItem("savy_cart");
@@ -8270,13 +8271,15 @@ window.addEventListener("resize", () => { renderReviews(); });
 // Smart language detection — saved preference > browser lang > default FR
 (function(){
   const saved = localStorage.getItem('savy_lang');
-  if(saved && ['ar','fr','en'].includes(saved)){
+  if (saved && ['ar','fr','en','es'].includes(saved)) {
     setLang(saved);
   } else {
+    // Only use browser language if no preference ever saved
     const bl = (navigator.language || navigator.userLanguage || 'fr').toLowerCase();
-    if(bl.startsWith('ar')) setLang('ar');
-    else if(bl.startsWith('en')) setLang('en');
-    else setLang('fr');
+    if      (bl.startsWith('ar')) setLang('ar');
+    else if (bl.startsWith('es')) setLang('es');
+    else if (bl.startsWith('en')) setLang('en');
+    else                          setLang('fr');
   }
   // Re-render dishes with correct language
   renderCuisineTabs();
@@ -8565,7 +8568,7 @@ function calcNutri() {
 /* ═══════════════════════════════════════════
    ORDER SCHEDULING
 ═══════════════════════════════════════════ */
-let scheduledTime = null; // null = ASAP, string = "DD/MM/YYYY HH:MM"
+// scheduledTime declared in STATE block above
 
 function generateTimeSlots() {
   const slots = [];
