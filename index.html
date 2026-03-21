@@ -2227,114 +2227,152 @@
 
     /* Input persona accent */
 
-    /* ── Lead form inside chat ── */
-    /* ══ LEAD FORM ══════════════════════════════════════════════════════ */
+    /* ══ LEAD FORM — chat order summary + visitor fields ══════════════ */
     #chat-lead-form {
+      flex-shrink:0; display:none;
+      background:var(--card);
       border-top:1px solid var(--border);
-      background:var(--card); flex-shrink:0; display:none;
-      overflow-y:auto; max-height:56dvh;
-      padding:0;
+      overflow-y:auto;
+      max-height:54dvh;
     }
-    @keyframes slideDown {
-      from { opacity:0; transform:translateY(-5px); }
+    @keyframes lfFadeIn {
+      from { opacity:0; transform:translateY(4px); }
       to   { opacity:1; transform:translateY(0); }
     }
 
-    /* ── Meal summary block ── */
+    /* ── Meal summary ──────────────────────────────────── */
     #lead-meal-summary {
-      background:var(--greenXL);
-      padding:9px 10px 8px;
-      border-bottom:1px solid var(--border);
-      animation:slideDown .25s ease both;
       display:none;
+      padding:10px 12px 8px;
+      background:var(--greenXL);
+      border-bottom:1px solid var(--border);
+      animation:lfFadeIn .2s ease both;
     }
-    .lms-header {
-      font-family:'Outfit',sans-serif; font-weight:900; font-size:9px;
-      color:var(--green); letter-spacing:.1em; text-transform:uppercase;
-      margin-bottom:6px;
-    }
-    #lead-meal-items { display:flex; flex-direction:column; gap:4px; }
+    [data-theme="dark"] #lead-meal-summary { background:var(--mint); }
 
-    /* Each meal row */
-    .lead-meal-card {
-      display:flex; align-items:center; gap:7px;
-      background:var(--card); border-radius:8px;
-      padding:5px 6px; border:1px solid var(--border);
+    .lms-header {
+      font-family:'Outfit',sans-serif; font-weight:900;
+      font-size:10px; letter-spacing:.08em; text-transform:uppercase;
+      color:var(--green); margin-bottom:7px;
     }
+    #lead-meal-items { display:flex; flex-direction:column; gap:5px; }
+
+    .lead-meal-card {
+      display:flex; align-items:center; gap:8px;
+      background:var(--card); border-radius:8px;
+      border:1px solid var(--border);
+      padding:5px 7px 5px 5px;
+      animation:lfFadeIn .18s ease both;
+    }
+    [data-theme="dark"] .lead-meal-card { background:var(--bg); }
+
     .lead-meal-img {
-      width:34px; height:34px; border-radius:6px;
+      width:36px; height:36px; border-radius:6px;
       object-fit:cover; flex-shrink:0; display:block;
+      background:var(--mint);
     }
     .lead-meal-emoji {
-      width:34px; height:34px; border-radius:6px;
+      width:36px; height:36px; border-radius:6px;
       background:var(--mint); flex-shrink:0;
       display:flex; align-items:center; justify-content:center;
-      font-size:18px;
+      font-size:19px;
     }
-    .lead-meal-info { flex:1; min-width:0; }
+    .lead-meal-info { flex:1; min-width:0; line-height:1; }
     .lead-meal-name {
-      font-family:'Outfit',sans-serif; font-weight:800; font-size:11px;
+      font-family:'Outfit',sans-serif; font-weight:800; font-size:11.5px;
       color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
     }
-    .lead-meal-price { font-size:10px; font-weight:700; color:var(--green); margin-top:1px; }
+    .lead-meal-price {
+      font-size:10.5px; font-weight:700; color:var(--green); margin-top:3px;
+    }
     .lead-meal-remove {
-      width:24px; height:24px; border-radius:6px; flex-shrink:0;
-      border:1px solid rgba(239,68,68,0.3); background:rgba(239,68,68,0.06);
+      width:26px; height:26px; border-radius:6px; flex-shrink:0;
+      background:transparent; border:1px solid rgba(239,68,68,0.25);
       color:#ef4444; display:flex; align-items:center; justify-content:center;
-      cursor:pointer; transition:all .15s; -webkit-tap-highlight-color:transparent;
+      cursor:pointer; transition:background .15s, transform .12s;
+      -webkit-tap-highlight-color:transparent;
     }
     .lead-meal-remove:hover  { background:#ef4444; color:#fff; border-color:#ef4444; }
-    .lead-meal-remove:active { transform:scale(0.92); }
-    .lead-meal-remove svg    { pointer-events:none; }
-    [data-theme="dark"] .lead-meal-card   { background:var(--bg); }
-    [data-theme="dark"] .lead-meal-remove { background:rgba(239,68,68,0.1); }
+    .lead-meal-remove:active { transform:scale(0.88); }
+    .lead-meal-remove svg    { pointer-events:none; display:block; }
+    [data-theme="dark"] .lead-meal-remove { border-color:rgba(239,68,68,0.35); }
 
-    /* Total row */
     #lead-meal-total {
-      font-family:'Outfit',sans-serif; font-weight:900; font-size:12px;
-      color:var(--green); margin-top:7px; padding-top:7px;
-      border-top:1px solid var(--border);
       display:flex; align-items:center; justify-content:space-between;
+      margin-top:8px; padding-top:7px;
+      border-top:1px solid var(--border);
     }
+    .lmt-delivery {
+      font-size:10px; font-weight:700; color:var(--muted);
+      display:flex; align-items:center; gap:3px;
+    }
+    .lmt-delivery.free { color:var(--green); }
+    .lmt-price {
+      font-family:'Outfit',sans-serif; font-weight:900;
+      font-size:13px; color:var(--text);
+    }
+    .lmt-price span { color:var(--green); }
 
-    /* ── Visitor fields block ── */
-    .lead-fields {
-      padding:8px 10px 10px;
+    /* ── Visitor fields ────────────────────────────────── */
+    .lead-fields { padding:10px 12px 12px; }
+
+    .lead-inp-wrap {
+      position:relative; margin-bottom:6px;
     }
+    .lead-inp-icon {
+      position:absolute; left:9px; top:50%; transform:translateY(-50%);
+      color:var(--muted); pointer-events:none; display:flex;
+      align-items:center;
+    }
+    .lead-inp-wrap textarea + .lead-inp-icon,
+    .lead-inp-wrap:has(textarea) .lead-inp-icon { top:9px; transform:none; }
+
     .lead-inp {
-      width:100%; padding:8px 10px; border-radius:8px;
-      border:1.5px solid var(--border); font-size:12px;
-      outline:none; color:var(--text); background:var(--bg);
-      font-family:'DM Sans',sans-serif; margin-bottom:5px;
-      transition:border-color .2s, box-shadow .2s;
+      width:100%; padding:8px 10px 8px 30px;
+      border-radius:8px; border:1.5px solid var(--border);
+      font-size:12px; outline:none; color:var(--text);
+      background:var(--bg); font-family:'DM Sans',sans-serif;
+      transition:border-color .18s, box-shadow .18s;
       display:block; box-sizing:border-box;
     }
-    textarea.lead-inp { resize:none; height:38px; line-height:1.4; }
+    textarea.lead-inp { resize:none; height:36px; line-height:1.45; padding-top:8px; }
     .lead-inp:focus {
       border-color:var(--green); background:var(--card);
       box-shadow:0 0 0 3px rgba(9,184,48,0.1);
     }
-    .lead-inp::placeholder { color:var(--muted); }
+    .lead-inp::placeholder { color:var(--muted); font-size:11.5px; }
     [data-theme="dark"] .lead-inp { background:var(--mint); }
+    [data-theme="dark"] .lead-inp:focus { background:var(--card); }
 
     .lead-submit {
-      width:100%; padding:10px; border-radius:10px; border:none;
-      background:linear-gradient(135deg,var(--green),#06b237);
-      color:#fff; font-size:12px; font-weight:800;
-      font-family:'Outfit',sans-serif;
-      box-shadow:0 4px 14px rgba(9,184,48,0.28);
+      width:100%; padding:10px 14px; border-radius:10px; border:none;
+      background:linear-gradient(135deg, var(--green) 0%, #05a827 100%);
+      color:#fff; font-size:12.5px; font-weight:800;
+      font-family:'Outfit',sans-serif; letter-spacing:.01em;
+      box-shadow:0 4px 14px rgba(9,184,48,0.3);
       display:flex; align-items:center; justify-content:center; gap:7px;
-      cursor:pointer; transition:all .2s; margin-top:2px;
+      cursor:pointer; transition:box-shadow .2s, transform .15s; margin-top:4px;
       -webkit-tap-highlight-color:transparent;
     }
-    .lead-submit:hover  { transform:translateY(-1px); box-shadow:0 7px 20px rgba(9,184,48,0.4); }
-    .lead-submit:active { transform:scale(0.97); }
-    .lead-submit-pink   { background:linear-gradient(135deg,#ec4899,#f472b6); box-shadow:0 4px 14px rgba(236,72,153,0.28); }
+    .lead-submit:hover  { box-shadow:0 7px 20px rgba(9,184,48,0.42); transform:translateY(-1px); }
+    .lead-submit:active { transform:scale(0.97); box-shadow:none; }
+    .lead-submit:disabled { opacity:.6; cursor:not-allowed; transform:none; }
+    .lead-submit-pink {
+      background:linear-gradient(135deg,#e91e8c,#f06292);
+      box-shadow:0 4px 14px rgba(233,30,140,0.3);
+    }
+    .lead-submit-pink:hover { box-shadow:0 7px 20px rgba(233,30,140,0.42); }
+
     .lead-trust-row {
       display:flex; align-items:center; justify-content:center;
-      gap:8px; margin-top:7px; flex-wrap:wrap;
+      gap:10px; margin-top:8px; flex-wrap:wrap;
     }
-    .lead-trust-item { font-size:9.5px; color:var(--muted); font-family:'DM Sans',sans-serif; }
+    .lead-trust-item {
+      font-size:9.5px; color:var(--muted);
+      font-family:'DM Sans',sans-serif; white-space:nowrap;
+    }
+
+    /* ── step dots (keep for JS compat) ── */
     .lead-step-dots {
       display:flex; align-items:center; justify-content:center; gap:5px;
       margin-bottom:8px;
@@ -4070,7 +4108,7 @@
   <!-- Lead form -->
   <div id="chat-lead-form">
 
-    <!-- ── Meal summary (image · name · price · remove) ── -->
+    <!-- ── Order summary: meal photo · name · price · remove ── -->
     <div id="lead-meal-summary">
       <div class="lms-header" id="lms-header-lbl">🧬 Votre commande</div>
       <div id="lead-meal-items"></div>
@@ -4079,13 +4117,37 @@
 
     <!-- ── Visitor fields ── -->
     <div class="lead-fields">
-      <input class="lead-inp" id="lead-name"  type="text"  autocomplete="given-name"     placeholder="Prénom complet"/>
-      <input class="lead-inp" id="lead-city"  type="text"  autocomplete="street-address" placeholder="Adresse de livraison"/>
-      <input class="lead-inp" id="lead-phone" type="tel"   autocomplete="tel"            placeholder="WhatsApp (+212 6XX XXX XXX)"/>
-      <textarea class="lead-inp" id="lead-comment" placeholder="Note (allergies, étage...)"></textarea>
+
+      <div class="lead-inp-wrap">
+        <span class="lead-inp-icon">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </span>
+        <input class="lead-inp" id="lead-name" type="text" autocomplete="given-name" placeholder="Prénom complet"/>
+      </div>
+
+      <div class="lead-inp-wrap">
+        <span class="lead-inp-icon">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </span>
+        <input class="lead-inp" id="lead-city" type="text" autocomplete="street-address" placeholder="Adresse de livraison"/>
+      </div>
+
+      <div class="lead-inp-wrap">
+        <span class="lead-inp-icon">
+          <svg width="13" height="13" viewBox="0 0 32 32" fill="none"><path d="M16 2C8.268 2 2 8.268 2 16c0 2.484.668 4.81 1.836 6.818L2 30l7.384-1.812A13.94 13.94 0 0016 30c7.732 0 14-6.268 14-14S23.732 2 16 2z" fill="#25D366"/><path d="M22.498 19.533c-.305-.152-1.8-.888-2.079-.99-.278-.102-.481-.152-.683.152s-.783.99-.96 1.193c-.177.202-.354.228-.659.076-.305-.152-1.288-.475-2.453-1.513-.907-.808-1.518-1.806-1.697-2.111-.177-.304-.019-.469.133-.62.137-.136.305-.355.457-.532.152-.178.203-.305.304-.508.103-.203.051-.38-.025-.532-.077-.152-.684-1.648-.937-2.258-.246-.593-.497-.513-.683-.522l-.583-.01c-.203 0-.532.076-.81.38s-1.063 1.04-1.063 2.534 1.089 2.94 1.24 3.143c.152.203 2.143 3.272 5.191 4.586.726.314 1.293.5 1.735.641.729.23 1.392.198 1.916.12.584-.087 1.8-.735 2.054-1.446.254-.71.254-1.32.178-1.447-.077-.127-.278-.203-.583-.355z" fill="#fff"/></svg>
+        </span>
+        <input class="lead-inp" id="lead-phone" type="tel" autocomplete="tel" placeholder="WhatsApp (+212 6XX XXX XXX)"/>
+      </div>
+
+      <div class="lead-inp-wrap">
+        <span class="lead-inp-icon" style="top:9px;transform:none;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        </span>
+        <textarea class="lead-inp" id="lead-comment" placeholder="Note (allergies, étage, instructions...)"></textarea>
+      </div>
 
       <button class="lead-submit" id="lead-submit-btn" onclick="submitLead()">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
         <span id="lead-btn-txt">Confirmer ma commande</span>
       </button>
 
@@ -4094,6 +4156,7 @@
         <span class="lead-trust-item">⚡ 45 min garanti</span>
         <span class="lead-trust-item">✅ 125+ clients</span>
       </div>
+
     </div>
   </div>
 
@@ -6059,11 +6122,10 @@ function _renderLeadMealCards(isAr, cl) {
     es: ["🛵 Envío gratis",      "🛵 +10 MAD envío"],
   };
   const [freeLabel, paidLabel] = delivLabels[cl] || delivLabels.fr;
-  const delivNote = orderDishes.length >= 2 ? freeLabel : paidLabel;
-  const delivColor = orderDishes.length >= 2 ? "var(--green)" : "var(--muted)";
+  const isFree = orderDishes.length >= 2;
   totalEl.innerHTML =
-    `<span style="font-size:10px;font-weight:600;color:${delivColor};">${delivNote}</span>` +
-    `<span>${totalLabel} : ${total} MAD</span>`;
+    `<span class="lmt-delivery${isFree ? ' free' : ''}">${isFree ? freeLabel : paidLabel}</span>` +
+    `<span class="lmt-price">${totalLabel} <span>${total} MAD</span></span>`;
 
   summaryEl.style.display = "block";
 }
