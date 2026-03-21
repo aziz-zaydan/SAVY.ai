@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+  <meta http-equiv="Pragma" content="no-cache"/>
+  <meta http-equiv="Expires" content="0"/>
 
   <!-- SEO -->
   <meta name="description" content="SAVY — Premier Chef IA du Maroc. Repas sains ingéniérisés, livraison 45 min à Tétouan, M'diq & Martil. Dès 39 MAD."/>
@@ -9238,8 +9241,17 @@ function renderLoyaltyCheckerResult(count, phone) {
 </div>
 
 <script>
-// ── Register Service Worker ──────────────────────────────────
+// ── Clear old service worker caches & re-register ─────────
 if("serviceWorker" in navigator && location.protocol === "https:") {
+  // First: unregister all old SWs and clear their caches to bust stale CSS
+  navigator.serviceWorker.getRegistrations().then(function(regs) {
+    regs.forEach(function(reg) { reg.unregister(); });
+  });
+  if("caches" in window) {
+    caches.keys().then(function(names) {
+      names.forEach(function(name) { caches.delete(name); });
+    });
+  }
   window.addEventListener("load", function() {
     setTimeout(function() {
       try {
@@ -9414,3 +9426,4 @@ if (typeof _origRenderDishes === "function") {
 
 </body>
 </html>
+  
