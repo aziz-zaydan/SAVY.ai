@@ -2154,7 +2154,7 @@
 
     /* ── Input area ── */
     .chat-input-area {
-      padding:8px 10px 10px;
+      padding:6px 8px 8px;
       border-top:1px solid var(--border);
       background:var(--card);
       flex-shrink:0;
@@ -2172,21 +2172,20 @@
     #chat-scroll-btn:hover { border-color:var(--green); color:var(--green); }
 
     .chat-input-row {
-      display:flex; gap:6px; align-items:center;
+      display:flex; gap:5px; align-items:center;
       background:var(--bg);
       border:1.5px solid var(--border);
-      border-radius:14px; padding:3px 4px 3px 6px;
+      border-radius:10px; padding:2px 3px 2px 8px;
       transition:border-color .2s, box-shadow .2s;
     }
     .chat-input-row:focus-within {
       border-color:var(--green);
-      box-shadow:0 0 0 3px rgba(9,184,48,0.1);
-      background:var(--bg);
+      box-shadow:0 0 0 2.5px rgba(9,184,48,0.1);
     }
     .chat-inp {
-      flex:1; padding:7px 6px;
+      flex:1; padding:5px 4px;
       border:none; outline:none;
-      font-size:13px; color:var(--text);
+      font-size:12.5px; color:var(--text);
       background:transparent;
       font-family:'DM Sans',sans-serif;
       caret-color:var(--green);
@@ -2210,9 +2209,9 @@
     .chat-voice-btn.active { opacity:1; animation:micPulse 1s ease-in-out infinite; }
     @keyframes micPulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.15)} }
     .chat-send {
-      width:36px; height:36px; border-radius:11px; border:none;
+      width:30px; height:30px; border-radius:8px; border:none;
       background:var(--border); color:var(--muted);
-      cursor:pointer; font-size:15px;
+      cursor:pointer; font-size:13px;
       display:flex; align-items:center; justify-content:center;
       flex-shrink:0; transition:all .2s;
     }
@@ -2235,10 +2234,12 @@
       transition:opacity .25s;
     }
 
-    /* Full-width overlay over the chat messages — blocks interaction */
+    /* Overlay sits inside #chat-msgs, blocks it but NOT the form */
+    #chat-msgs { position:relative; }
     #lead-form-overlay {
       display:none; position:absolute; inset:0;
-      z-index:10; cursor:not-allowed;
+      z-index:2; cursor:not-allowed;
+      border-radius:inherit;
     }
     #lead-form-overlay.active { display:block; }
 
@@ -4120,13 +4121,10 @@
     </div>
   </div>
 
-  <!-- Messages -->
-  <div id="chat-msgs"></div>
-
-
-
-  <!-- Overlay: blocks chat messages when form is open -->
-  <div id="lead-form-overlay"></div>
+  <!-- Messages (overlay lives here so it only blocks msgs, not the form) -->
+  <div id="chat-msgs">
+    <div id="lead-form-overlay"></div>
+  </div>
 
   <!-- Lead form -->
   <div id="chat-lead-form">
