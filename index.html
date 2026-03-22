@@ -8,15 +8,15 @@
   <meta http-equiv="Expires" content="0"/>
 
   <!-- SEO -->
-  <meta name="description" content="SAVY — Premier Chef IA du Maroc. Repas sains ingéniérisés, livraison 45 min à Tétouan, M'diq & Martil. Dès 39 MAD."/>
-  <meta name="keywords" content="livraison repas Tétouan, nourriture saine Maroc, chef IA, SAVY, livraison M'diq, repas Martil"/>
+  <meta name="description" content="SAVY — Premier Chef IA du Maroc. Repas sains ingéniérisés, livraison 45 min à Tétouan, Tétouan. Dès 39 MAD."/>
+  <meta name="keywords" content="livraison repas Tétouan, nourriture saine Maroc, chef IA, SAVY, livraison Tétouan"/>
   <meta name="robots" content="index, follow"/>
 
   <!-- Open Graph (WhatsApp, Facebook, LinkedIn) -->
   <meta property="og:type"        content="website"/>
   <meta property="og:url"         content="https://savy.netlify.app/"/>
   <meta property="og:title"       content="SAVY 🤖 — Premier Chef IA du Maroc"/>
-  <meta property="og:description" content="Repas sains ingéniérisés par IA · Livraison 45 min · Tétouan · M'diq · Martil · Dès 39 MAD"/>
+  <meta property="og:description" content="Repas sains ingéniérisés par IA · Livraison 45 min · Tétouan · Dès 39 MAD"/>
   <meta property="og:image"       content="https://savy.netlify.app/images/slide_1.jpg"/>
   <meta property="og:image:width" content="1200"/>
   <meta property="og:image:height" content="630"/>
@@ -32,7 +32,7 @@
   <!-- WhatsApp / iMessage preview -->
   <meta property="og:image:alt"   content="SAVY — Repas sains livrés en 45 min à Tétouan"/>
   <title>SAVY – Meal Engineer | الشيف الذكي</title>
-  <meta name="description" content="SAVY – Morocco's first AI Personal Chef. Specially Engineered meals, delivered in 45 min. Tétouan · M'diq · Martil."/>
+  <meta name="description" content="SAVY – Morocco's first AI Personal Chef. Specially Engineered meals, delivered in 45 min. Tétouan."/>
   <!-- PWA -->
   <link rel="manifest" href="/manifest.json"/>
   <meta name="theme-color" content="#089929"/>
@@ -385,7 +385,7 @@
     .nav-track-btn:hover { transform:translateY(-1px); box-shadow:0 6px 18px rgba(9,184,48,0.45); }
     .nav-track-btn:active { transform:scale(0.97); }
     .nav-track-dot {
-      width:8px; height:8px; border-radius:50%;
+      width:5px; height:5px; border-radius:50%;
       background:#fff; opacity:0.9; flex-shrink:0;
       animation:trackPulse 1.4s ease-in-out infinite;
     }
@@ -455,10 +455,10 @@
 
     /* ── PACKAGING SLIDESHOW ── */
     .pkg-slideshow {
-      position:relative; width:100%; max-width:480px;
-      border-radius:20px; overflow:hidden;
-      margin-bottom:28px;
-      box-shadow:0 12px 40px rgba(9,184,48,0.18);
+      position:relative; width:100%; max-width:340px;
+      border-radius:16px; overflow:hidden;
+      margin-bottom:16px;
+      box-shadow:0 6px 24px rgba(9,184,48,0.14);
       aspect-ratio:4/3;
       background:var(--mint);
     }
@@ -473,8 +473,8 @@
     .slide-btn {
       position:absolute; top:50%; transform:translateY(-50%);
       background:rgba(255,255,255,0.85); border:none; cursor:pointer;
-      width:44px; height:44px; border-radius:50%;
-      font-size:22px; line-height:1; color:#0D1F18;
+      width:30px; height:30px; border-radius:50%;
+      font-size:16px; line-height:1; color:#0D1F18;
       box-shadow:0 2px 12px rgba(0,0,0,0.15);
       display:flex; align-items:center; justify-content:center;
       transition:background .2s; z-index:10;
@@ -484,11 +484,11 @@
     .slide-btn.prev { left:10px; }
     .slide-btn.next { right:10px; }
     .slide-dots {
-      position:absolute; bottom:10px; left:50%; transform:translateX(-50%);
-      display:flex; gap:6px; z-index:10;
+      position:absolute; bottom:7px; left:50%; transform:translateX(-50%);
+      display:flex; gap:5px; z-index:10;
     }
     .slide-dot {
-      width:8px; height:8px; border-radius:50%;
+      width:5px; height:5px; border-radius:50%;
       background:rgba(255,255,255,0.5); cursor:pointer;
       transition:background .3s, transform .3s;
     }
@@ -974,7 +974,7 @@
       .proof         { margin-top:14px; gap:8px; flex-wrap:wrap; }
       .av            { width:24px; height:24px; font-size:9px; }
       .proof-text    { font-size:12px; }
-      .pkg-slideshow { max-width:100%; border-radius:14px; }
+      .pkg-slideshow { max-width:100%; border-radius:12px; }
       .delivery-badge{ font-size:11px; padding:6px 12px; margin-top:10px; }
 
       /* ── How it works ── */
@@ -2921,7 +2921,7 @@
       .proof-text            { font-size:12px !important; }
       .delivery-badge        { font-size:11px !important; padding:5px 11px !important; margin-top:10px !important; }
       #persona-highlight     { max-width:100% !important; padding:12px 10px !important; border-radius:14px !important; }
-      .pkg-slideshow         { max-width:100% !important; border-radius:12px !important; }
+      .pkg-slideshow         { max-width:100% !important; border-radius:10px !important; }
 
       /* ── Persona cards ── */
       .persona-cards { display:grid !important; grid-template-columns:1fr 1fr !important; gap:7px !important; }
@@ -3687,7 +3687,7 @@
     <div class="hero-stagger">
       <div class="city-badge su">
         <span class="city-dot"></span>
-        <span class="label" id="hero-city">🇲🇦 Tétouan · M'diq · Martil</span>
+        <span class="label" id="hero-city">🇲🇦 Tétouan</span>
       </div>
       <p class="su" id="hero-tagline" style="color:var(--muted);font-size:12px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px;font-weight:700;">
         Morocco's First AI Personal Chef
@@ -3878,7 +3878,7 @@
     </div>
     <div>
       <div style="font-size:12.5px;font-weight:700;color:var(--text);font-family:'DM Sans',sans-serif;"><em id="strip-count" style="color:var(--green);font-style:normal;">+125</em> <span id="strip-happy">happy customers this week</span></div>
-      <div style="font-size:10px;color:var(--muted);margin-top:1px;">⭐⭐⭐⭐⭐ <span id="strip-cities">Tétouan · M'diq · Martil</span></div>
+      <div style="font-size:10px;color:var(--muted);margin-top:1px;">⭐⭐⭐⭐⭐ <span id="strip-cities">Tétouan</span></div>
     </div>
   </div>
 </div>
@@ -4042,7 +4042,7 @@
 <!-- Reviews → Order CTA nudge -->
 <div id="reviews-cta-nudge" style="text-align:center;padding:20px 16px 8px;background:var(--bg);">
   <p style="font-size:13px;color:var(--sub);margin-bottom:12px;line-height:1.6;" id="reviews-nudge-quote">
-    💬 <em>"Zéro fatigue post-déjeuner, je reste concentré toute l'après-midi."</em> — Karim A., Martil
+    💬 <em>"Zéro fatigue post-déjeuner, je reste concentré toute l'après-midi."</em> — Karim A., Tétouan
   </p>
   <button onclick="openOrderModal()" style="
     background:linear-gradient(135deg,var(--green),var(--greenL));color:#fff;border:none;border-radius:99px;
@@ -4054,7 +4054,7 @@
   " onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 10px 28px rgba(9,184,48,.45)'" onmouseout="this.style.transform='';this.style.boxShadow='0 6px 20px rgba(9,184,48,.3)'">
     🛵 <span id="reviews-nudge-txt">Je veux le même résultat</span>
   </button>
-  <p style="font-size:11px;color:var(--muted);margin-top:8px;" id="reviews-nudge-sub">Livraison en 45 min · Tétouan · M'diq · Martil</p>
+  <p style="font-size:11px;color:var(--muted);margin-top:8px;" id="reviews-nudge-sub">Livraison en 45 min · Tétouan</p>
 </div>
 
 <!-- ══ LOYALTY / REWARDS ═══════════════════════════════════════ -->
@@ -4355,7 +4355,7 @@
           <span style="font-size:12px;font-weight:900;color:var(--green);font-family:'Outfit',sans-serif;">+ 28 MAD</span>
         </div>
       </div>
-      <p id="om-sub" style="font-size:12px;color:var(--muted);margin-top:4px;">Livraison en 45 min · Tétouan · M'diq · Martil</p>
+      <p id="om-sub" style="font-size:12px;color:var(--muted);margin-top:4px;">Livraison en 45 min · Tétouan</p>
     </div>
     <!-- Cart summary -->
     <div id="om-cart-summary" style="background:var(--greenXL);border-radius:14px;padding:12px 14px;margin-bottom:16px;font-size:13px;"></div>
@@ -4721,9 +4721,6 @@ const dishes = [
   {id:13,price:52, e:"🫔",img:"images/dish_13.jpg",name:"Quesadilla Massala",     ar:"كيساديا مصالة",        cal:380,p:24,c:34,f_g:13, t:18,r:4.7,tag:"Spicy Fusion", badge:"",            cuis:"🌯",f:"spicy",        personas:["couple","employee"],ing_fr:"Tortilla blé · Poulet mariné · Fromage fondu · Poivron · Oignon · Épices massala",ing_ar:"تورتيلا · دجاج متبّل · جبن مذاب · فلفل · بصل · بهارات مصالة",al_fr:"Gluten · Lait",al_ar:"غلوتين · حليب",fiber:3,sugar:4,sodium:540},
   {id:14,price:58, e:"🍔",img:"images/dish_14.jpg",name:"Burger Viande Hachée",   ar:"برغر لحم",             cal:460,p:34,c:36,f_g:16, t:20,r:4.8,tag:"High Protein", badge:"Trending",    cuis:"🌯",f:"high-protein",personas:["sportif","famille"],ing_fr:"Pain burger · Steak haché 100% bœuf · Salade · Tomate · Cornichons · Sauce burger",ing_ar:"خبز برغر · ستيك لحم مفروم 100% · خس · طماطم · مخللات · صوص برغر",al_fr:"Gluten · Sésame · Moutarde",al_ar:"غلوتين · سمسم · خردل",fiber:3,sugar:6,sodium:590},
   // ── Desserts Smart ────────────────────────────────────────────────────
-  {id:16,price:28, e:"🍮",img:"images/dish_16.jpg",name:"Flan Caramel Léger",     ar:"فلان كراميل",          cal:180,p:5, c:28,f_g:4,  t:5, r:4.7,tag:"Low Fat",      badge:"",            cuis:"🍰",f:"low-fat",      personas:["couple","famille","employee"],ing_fr:"Lait écrémé · Œufs · Sucre de canne · Caramel léger · Vanille naturelle",ing_ar:"حليب خفيف · بيض · سكر القصب · كراميل خفيف · فانيليا طبيعية",al_fr:"Lait · Œufs",al_ar:"حليب · بيض",fiber:1,sugar:18,sodium:120},
-  {id:17,price:32, e:"🍰",img:"images/dish_17.jpg",name:"Cheesecake Creamy",      ar:"تشيزكيك كريمي",        cal:260,p:8, c:24,f_g:14, t:5, r:4.9,tag:"Vegetarian",  badge:"Best Seller", cuis:"🍰",f:"vegetarian",   personas:["couple","famille"],ing_fr:"Fromage frais · Biscuits complets · Citron · Sucre non raffiné · Vanille · Sans cuisson",ing_ar:"جبن طازج · بسكويت كامل · ليمون · سكر غير مكرر · فانيليا · بدون خبز",al_fr:"Gluten · Lait",al_ar:"غلوتين · حليب",fiber:2,sugar:16,sodium:190},
-  {id:18,price:30, e:"🍰",img:"images/dish_18.jpg",name:"Tiramisu Healthy",       ar:"تيراميسو صحي",         cal:240,p:7, c:26,f_g:10, t:5, r:4.8,tag:"Low Sugar",    badge:"Chef's Pick", cuis:"🍰",f:"low-sugar",    personas:["couple","famille","employee"],ing_fr:"Mascarpone allégé · Biscuits cuillère · Café · Cacao · Sucre de canne · Œufs",ing_ar:"ماسكاربوني خفيف · بسكويت سيدار · قهوة · كاكاو · سكر القصب · بيض",al_fr:"Gluten · Lait · Œufs",al_ar:"غلوتين · حليب · بيض",fiber:1,sugar:14,sodium:140},
 ];
 const cuisineTabs = [
   {id:"all",  flag:"🌍", fr:"Tout",            ar:"الكل"},
@@ -4782,7 +4779,7 @@ Object.defineProperties(window, {
 ═══════════════════════════════════════════ */
 const copy = {
   en:{
-    city:"🇲🇦 Tétouan · M'diq · Martil",
+    city:"🇲🇦 Tétouan",
     tagline:"Morocco's First AI Personal Chef",
     h1:'Engineered for you.<br><span class="accent">Cooked with love.</span>',
     sub:"SAVY is your personal Meal Engineer — combining AI precision with a Chef's heart to create meals that fuel your goals, your glow, and your grind.",
@@ -4826,7 +4823,7 @@ const copy = {
     wwdB1:"AI Nutrition", wwdB2:"Fresh Cooked", wwdB3:"45 min", wwdB4:"18 dishes", wwdB5:"AI Chef",
     wwdTitle:"An AI chef for every aspect of your life",
     wwdSub:"SAVY doesn't just deliver food. We analyse your needs, calculate your nutrients, and cook with local ingredients — all in 45 minutes.",
-    deliveryText:"Local delivery · Tétouan · Martil · M'diq · 45 min · Cash or Card",
+    deliveryText:"Local delivery · Tétouan · 45 min · Cash or Card",
     loyEyebrow:"⭐ SAVY Loyalty Program",
     loyTitle:"Every meal rewards you",
     loySub:"Order, earn points, unlock exclusive perks. The healthier you eat, the more you earn.",
@@ -4866,7 +4863,7 @@ const copy = {
     wwdCards:[
       {icon:"🧬", title:"AI-personalised nutrition",  desc:"Our AI analyses your profile and calculates every gram of protein, carb, and fat to hit your exact goals.", tag:"🤖 Powered by AI"},
       {icon:"👨‍🍳", title:"Cooked to order",          desc:"Nothing is pre-made. Every dish is cooked the moment you order, with fresh ingredients from the Tétouan market.", tag:"🌿 100% Fresh"},
-      {icon:"🛵", title:"Delivered in 45 minutes",    desc:"Tétouan, M'diq, Martil — your meal arrives hot, fresh, and carefully packed. Guaranteed. Always on time.", tag:"⏱ 45 min guarantee"},
+      {icon:"🛵", title:"Delivered in 45 minutes",    desc:"Tétouan — your meal arrives hot, fresh, and carefully packed. Guaranteed. Always on time.", tag:"⏱ 45 min guarantee"},
       {icon:"🍽️", title:"18 dishes, 4 world cuisines",desc:"Moroccan, Asian, Mediterranean, Fusion — an international menu designed for your health, with flavours you love.", tag:"🌍 4 Cuisines"},
       {icon:"💬", title:"A real chef who talks to you", desc:"Ask anything — allergens, calories, portions. Chef SAVY answers in English, French, Arabic & Spanish like a nutrition expert at your service.", tag:"💚 EN · FR · AR · ES"},
     ],
@@ -4877,7 +4874,7 @@ const copy = {
     revCountLbl:"Based on 125+ reviews",
   },
   fr:{
-    city:"🇲🇦 Tétouan · M'diq · Martil",
+    city:"🇲🇦 Tétouan",
     tagline:"Morocco's First AI Personal Chef",
     h1:'Engineered for you.<br><span class="accent">Cooked with love.</span>',
     sub:"SAVY est votre Meal Engineer personnel — combinant la précision de l'IA avec le cœur d'un Chef pour créer des repas qui nourrissent vos objectifs, votre éclat et votre grind.",
@@ -4921,7 +4918,7 @@ const copy = {
     wwdB1:"Nutrition IA", wwdB2:"Cuisiné frais", wwdB3:"45 min", wwdB4:"18 plats", wwdB5:"Chef IA",
     wwdTitle:"Un chef IA pour chaque aspect de votre vie",
     wwdSub:"SAVY ne se contente pas de livrer de la nourriture. Nous analysons vos besoins, calculons vos nutriments et cuisinons avec des ingrédients locaux — tout ça en 45 minutes.",
-    deliveryText:"Livraison locale · Tétouan · Martil · M'diq · 45 min · Cash ou Carte",
+    deliveryText:"Livraison locale · Tétouan · 45 min · Cash ou Carte",
     loyEyebrow:"⭐ Programme Fidélité SAVY",
     loyTitle:"Chaque repas vous récompense",
     loySub:"Commandez, gagnez des points, débloquez des avantages exclusifs. Plus vous mangez sain, plus vous êtes récompensé.",
@@ -4961,7 +4958,7 @@ const copy = {
     wwdCards:[
       {icon:"🧬", title:"Nutrition personnalisée par IA",    desc:"Notre IA analyse votre profil et calcule chaque gramme de protéine, glucide et lipide pour atteindre vos objectifs précis.", tag:"🤖 Powered by AI"},
       {icon:"👨‍🍳", title:"Cuisiné à la commande",            desc:"Rien n'est préparé à l'avance. Chaque plat est cuisiné au moment de votre commande, avec des ingrédients frais du marché de Tétouan.", tag:"🌿 100% Frais"},
-      {icon:"🛵", title:"Livraison en 45 minutes",           desc:"Tétouan, M'diq, Martil — votre repas arrive chaud, frais et emballé avec soin. Garanti. Toujours à l'heure.", tag:"⏱ Garanti 45 min"},
+      {icon:"🛵", title:"Livraison en 45 minutes",           desc:"Tétouan — votre repas arrive chaud, frais et emballé avec soin. Garanti. Toujours à l'heure.", tag:"⏱ Garanti 45 min"},
       {icon:"🍽️", title:"16 plats, 4 cuisines du monde",    desc:"Marocain, Asiatique, Méditerranéen, Fusion — une carte internationale pensée pour votre santé, avec les saveurs que vous aimez.", tag:"🌍 4 Cuisines"},
       {icon:"💬", title:"Un vrai chef qui vous parle",       desc:"Posez toutes vos questions — allergènes, calories, portions. Chef SAVY répond en français, arabe, anglais et espagnol, comme un expert en nutrition à votre service.", tag:"💚 FR · AR · EN · ES"},
     ],
@@ -4972,7 +4969,7 @@ const copy = {
     revCountLbl:"Basé sur 125+ avis",
   },
   ar:{
-    city:"🇲🇦 تطوان · مديق · مرتيل",
+    city:"🇲🇦 تطوان",
     tagline:"أول شيف شخصي بالذكاء الاصطناعي في المغرب",
     h1:'مصمم لك خصيصاً.<br><span class="accent">مطبوخ بكل حب.</span>',
     sub:"SAVY هو مهندس وجباتك الشخصي — يجمع بين دقة الذكاء الاصطناعي وقلب الشيف لخلق وجبات تغذي أهدافك وجمالك وأداءك.",
@@ -5016,7 +5013,7 @@ const copy = {
     wwdB1:"تغذية ذكية", wwdB2:"طازج دائماً", wwdB3:"45 دقيقة", wwdB4:"18 طبق", wwdB5:"شيف ذكي",
     wwdTitle:"شيف ذكاء اصطناعي لكل جانب من حياتكم",
     wwdSub:"SAVY لا يكتفي بتوصيل الطعام. نحن نحلل احتياجاتكم، نحسب مغذياتكم، ونطبخ بمكونات محلية طازجة — كل ذلك في 45 دقيقة.",
-    deliveryText:"توصيل محلي · تطوان · مرتيل · المضيق · 45 دقيقة · نقداً أو بطاقة",
+    deliveryText:"توصيل محلي · تطوان · 45 دقيقة · نقداً أو بطاقة",
     loyEyebrow:"⭐ برنامج ولاء SAVY",
     loyTitle:"كل وجبة تكافئك",
     loySub:"اطلب، اجمع النقاط، افتح مزايا حصرية. كلما أكلت صحياً، كلما حصلت على مكافآت أكثر.",
@@ -5056,7 +5053,7 @@ const copy = {
     wwdCards:[
       {icon:"🧬", title:"تغذية شخصية بالذكاء الاصطناعي",    desc:"يحلل ذكاؤنا الاصطناعي ملفكم الشخصي ويحسب كل غرام بروتين وكربوهيدرات ودهون لتحقيق أهدافكم بدقة.", tag:"🤖 مدعوم بالذكاء الاصطناعي"},
       {icon:"👨‍🍳", title:"مطبوخ عند الطلب",                   desc:"لا شيء يُحضَّر مسبقاً. كل طبق يُطبخ لحظة استلام طلبكم، بمكونات طازجة من سوق تطوان المحلي.", tag:"🌿 100% طازج"},
-      {icon:"🛵", title:"توصيل في 45 دقيقة",                 desc:"تطوان · المضيق · مرتيل — وجبتكم تصل ساخنة وطازجة ومعبأة بعناية. مضمون دائماً. في الوقت دائماً.", tag:"⏱ مضمون 45 دقيقة"},
+      {icon:"🛵", title:"توصيل في 45 دقيقة",                 desc:"تطوان — وجبتكم تصل ساخنة وطازجة ومعبأة بعناية. مضمون دائماً. في الوقت دائماً.", tag:"⏱ مضمون 45 دقيقة"},
       {icon:"🍽️", title:"16 طبقاً من 4 مطابخ عالمية",        desc:"مغربي، آسيوي، متوسطي، فيوجن — قائمة دولية مصممة لصحتكم بالنكهات التي تعشقونها.", tag:"🌍 4 مطابخ"},
       {icon:"💬", title:"شيف حقيقي يتحدث معكم",              desc:"اسألوا كل أسئلتكم — مكونات، سعرات حرارية، حصص، حساسيات. Chef SAVY يجيب بالعربية والفرنسية والإنجليزية والإسبانية كخبير تغذية في خدمتكم.", tag:"💚 AR · FR · EN · ES"},
     ],
@@ -5146,7 +5143,7 @@ function renderUrgencyStrip() {
   const count = getUrgencyCount();
   const hour  = new Date().getHours();
   const slots      = Math.max(1, 5 - (hour % 4));
-  const cities     = ["Tétouan","M'diq","Martil"];
+  const cities     = ["Tétouan"];
   const city       = cities[hour % 3];
   const closingHour = hour < 13 ? 14 : 21;
 
@@ -5258,10 +5255,10 @@ function setLang(l) {
   $t("chip-inscrits", t.chips[0]);  $t("chip-livraison", t.chips[1]);  $t("chip-note", t.chips[2]);
   // Social proof strip
   const _strip = {
-    fr: ["Livraison 45 min", "À partir de 39 MAD", "+125 avis", "happy customers this week", "Tétouan · M'diq · Martil"],
-    en: ["Delivery 45 min",  "From 39 MAD",        "+125 reviews","happy customers this week","Tétouan · M'diq · Martil"],
-    ar: ["توصيل 45 دقيقة",   "من 39 درهم",         "+125 تقييم",  "عميل سعيد هذا الأسبوع",   "تطوان · مضيق · مرتيل"],
-    es: ["Entrega 45 min",   "Desde 39 MAD",       "+125 reseñas","clientes felices esta semana","Tétouan · M'diq · Martil"],
+    fr: ["Livraison 45 min", "À partir de 39 MAD", "+125 avis", "happy customers this week", "Tétouan"],
+    en: ["Delivery 45 min",  "From 39 MAD",        "+125 reviews","happy customers this week","Tétouan"],
+    ar: ["توصيل 45 دقيقة",   "من 39 درهم",         "+125 تقييم",  "عميل سعيد هذا الأسبوع",   "تطوان"],
+    es: ["Entrega 45 min",   "Desde 39 MAD",       "+125 reseñas","clientes felices esta semana","Tétouan"],
   };
   const _sl = _strip[l] || _strip.fr;
   $t("strip-delivery", _sl[0]); $t("strip-price", _sl[1]); $t("strip-reviews", _sl[2]);
@@ -5291,7 +5288,7 @@ function setLang(l) {
   const nudgeTxt = isAr ? "اطلب الآن 🛵" : (l==="en" ? "Order now 🛵" : "Commander maintenant 🛵");
   const nudgeSub = isAr ? "⭐ 4.9 · +125 عميل · توصيل 45 دقيقة" : (l==="en" ? "⭐ 4.9 · 125+ clients · 45 min delivery" : "⭐ 4.9 · 125+ clients · Livraison 45 min");
   const revTxt   = isAr ? "🛵 أريد نفس النتيجة" : (l==="en" ? "🛵 I want the same result" : "🛵 Je veux le même résultat");
-  const revSub   = isAr ? "توصيل في 45 دقيقة · تطوان · مضيق · مرتيل" : (l==="en" ? "Delivery in 45 min · Tétouan · M'diq · Martil" : "Livraison en 45 min · Tétouan · M'diq · Martil");
+  const revSub   = isAr ? "توصيل في 45 دقيقة · تطوان" : (l==="en" ? "Delivery in 45 min · Tétouan" : "Livraison en 45 min · Tétouan");
   const $el = id => document.getElementById(id);
   if($el("menu-nudge-txt"))    $el("menu-nudge-txt").textContent    = nudgeTxt;
   if($el("menu-nudge-sub"))    $el("menu-nudge-sub").textContent    = nudgeSub;
@@ -6257,19 +6254,19 @@ function _showLangPicker(p) {
   const copy = {
     fr: {
       title: "Bienvenue chez SAVY 🧬",
-      desc:  "Votre chef IA personnel — je compose des repas sains selon vos objectifs et vous les livre en 45 min à Tétouan, M'diq et Martil. Choisissez votre langue :",
+      desc:  "Votre chef IA personnel — je compose des repas sains selon vos objectifs et vous les livre en 45 min à Tétouan. Choisissez votre langue :",
     },
     en: {
       title: "Welcome to SAVY 🧬",
-      desc:  "Your personal AI chef — I craft healthy meals tailored to your goals and deliver them in 45 min across Tétouan, M'diq and Martil. Choose your language:",
+      desc:  "Your personal AI chef — I craft healthy meals tailored to your goals and deliver them in 45 min across Tétouan. Choose your language:",
     },
     ar: {
       title: "مرحباً بك في SAVY 🧬",
-      desc:  "شيفك الذكي الشخصي — أُعِدّ لك وجبات صحية مصمَّمة وفق أهدافك وأوصّلها إليك خلال 45 دقيقة في تطوان والمضيق ومرتيل. اختر لغتك:",
+      desc:  "شيفك الذكي الشخصي — أُعِدّ لك وجبات صحية مصمَّمة وفق أهدافك وأوصّلها إليك خلال 45 دقيقة في تطوان. اختر لغتك:",
     },
     es: {
       title: "Bienvenido a SAVY 🧬",
-      desc:  "Tu chef IA personal — creo comidas saludables adaptadas a tus objetivos y las entrego en 45 min en Tétouan, M'diq y Martil. Elige tu idioma:",
+      desc:  "Tu chef IA personal — creo comidas saludables adaptadas a tus objetivos y las entrego en 45 min en Tétouan. Elige tu idioma:",
     },
   };
   const c = copy[pageLang] || copy.fr;
@@ -6829,10 +6826,10 @@ function getFallbackReply(p, isAr, userMsg) {
 
   const faq = [
     { keys:["livraison","delivery","توصيل","وصول","وقت","entrega","envío"],
-      fr:"🛵 Livraison en 45 min max à Tétouan, M'diq et Martil. Commande avant 21h !",
-      en:"🛵 Delivery in 45 min to Tétouan, M'diq and Martil. Order before 9 PM!",
-      ar:"🛵 التوصيل خلال 45 دقيقة إلى تطوان، المضيق ومارتيل. اطلب قبل الساعة 9 مساءً!",
-      es:"🛵 Entrega en 45 min en Tétouan, M'diq y Martil. ¡Pide antes de las 21h!" },
+      fr:"🛵 Livraison en 45 min max à Tétouan. Commande avant 21h !",
+      en:"🛵 Delivery in 45 min to Tétouan. Order before 9 PM!",
+      ar:"🛵 التوصيل خلال 45 دقيقة إلى تطوان. اطلب قبل الساعة 9 مساءً!",
+      es:"🛵 Entrega en 45 min en Tétouan. ¡Pide antes de las 21h!" },
     { keys:["prix","price","tarif","cost","سعر","تكلفة","ثمن","precio","coût"],
       fr:"💰 Nos plats vont de 39 à 65 MAD. Livraison offerte à partir de 2 plats !",
       en:"💰 Our dishes range from 39 to 65 MAD. Free delivery from 2 dishes!",
@@ -6863,11 +6860,11 @@ function getFallbackReply(p, isAr, userMsg) {
       en:"🎁 SAVY loyalty programme: from 6 orders you unlock discounts of up to 15%!",
       ar:"🎁 برنامج ولاء SAVY: من 6 طلبيات تحصل على خصومات تصل إلى 15%!",
       es:"🎁 Programa de fidelidad SAVY: ¡a partir de 6 pedidos obtienes descuentos de hasta el 15%!" },
-    { keys:["zone","ville","city","مدينة","منطقة","تطوان","مضيق","مارتيل","ciudad","zona"],
-      fr:"📍 On livre à Tétouan, M'diq et Martil. D'autres zones arrivent bientôt !",
-      en:"📍 We deliver to Tétouan, M'diq and Martil. More areas coming soon!",
-      ar:"📍 نوصّل إلى تطوان، المضيق ومارتيل. مناطق إضافية قريباً!",
-      es:"📍 Entregamos en Tétouan, M'diq y Martil. ¡Más zonas próximamente!" },
+    { keys:["zone","ville","city","مدينة","منطقة","تطوان","تطوان","ciudad","zona"],
+      fr:"📍 On livre à Tétouan. D'autres zones arrivent bientôt !",
+      en:"📍 We deliver to Tétouan. More areas coming soon!",
+      ar:"📍 نوصّل إلى تطوان. مناطق إضافية قريباً!",
+      es:"📍 Entregamos en Tétouan. ¡Más zonas próximamente!" },
   ];
 
   const offlineNote = {
@@ -7366,6 +7363,12 @@ function showLeadForm(p) {
 
 // ── Cancel / unlock chat ───────────────────────────────────────────────────
 /* ── Lead form gender toggle ──────────────────────────────── */
+/* ═══════════════════════════════════════════
+   PRE-LAUNCH MODE
+   Set to false when business opens to restore normal WhatsApp flow
+═══════════════════════════════════════════ */
+const PRELAUNCH_MODE = true;
+
 let _leadGender = null;    // null = not yet chosen
 
 /* ── Order modal gender toggle ───────────────────────────── */
@@ -7531,7 +7534,7 @@ function openOrderModal() {
   const om = document.getElementById("order-modal");
   if(!om) return;
   document.getElementById("om-title").textContent = isAr ? "تأكيد طلبي" : (lang==="en" ? "Confirm my order" : "Finaliser ma commande");
-  document.getElementById("om-sub").textContent   = isAr ? "توصيل في 45 دقيقة · تطوان · مضيق · مرتيل" : (lang==="en" ? "Delivery in 45 min · Tétouan · M'diq · Martil" : "Livraison en 45 min · Tétouan · M'diq · Martil");
+  document.getElementById("om-sub").textContent   = isAr ? "توصيل في 45 دقيقة · تطوان" : (lang==="en" ? "Delivery in 45 min · Tétouan" : "Livraison en 45 min · Tétouan");
   document.getElementById("om-submit-btn").textContent = isAr ? "🛵 أكد طلبي الآن" : (lang==="en" ? "🛵 Place my order" : "🛵 Commander maintenant");
 
   // Localise placeholders
@@ -7958,6 +7961,16 @@ function submitOrder() {
       : (lang==="en"
         ? `Hi SAVY! I confirm my order ${orderId} ✅\n━━━━━━━━━━━━━━\nName: ${name}\nCity: ${city}\nDishes: ${items||"see menu"}${schedLine}${discountLine}`
         : `Salam SAVY ! Je confirme ma commande ${orderId} ✅\n━━━━━━━━━━━━━━\nNom: ${name}\nAdresse: ${city}\nPlats: ${items||"voir le menu"}${schedLine}${discountLine}`);
+    if (PRELAUNCH_MODE) {
+      // No WhatsApp — show whitelist modal
+      const overlay0 = document.getElementById("order-modal-overlay");
+      if(overlay0) overlay0.classList.remove("open");
+      cart = []; renderDishes(); animateLoyaltyPoints(10);
+      const plName = isAr ? name : name;
+      const cl0 = lang || "fr";
+      showPrelaunchModal(name, orderId, items, total, cl0);
+      return;
+    }
     window.open(`https://wa.me/212708700830?text=${encodeURIComponent(msg)}`, "_blank");
 
     // Reset
@@ -8109,6 +8122,22 @@ function submitLead() {
     if (msgs)    msgs.classList.remove("form-open");
     if (overlay) overlay.classList.remove("active");
 
+    // PRE-LAUNCH: no WhatsApp, show whitelist confirmation
+    if (PRELAUNCH_MODE) {
+      animateLoyaltyPoints(10);
+      window._lastOrderId     = orderId;
+      window._lastOrderName   = name;
+      window._lastOrderCity   = city;
+      window._lastOrderPhone  = phone;
+      window._lastOrderDishes = orderedDishes.slice();
+      window._lastOrderComment = comment || "";
+      setTimeout(() => {
+        closeChat();
+        showPrelaunchModal(name, orderId, mealNames, orderTotal, cl);
+      }, 800);
+      return;
+    }
+
     const thankYou = {
       fr: `Merci beaucoup, ${name} ! 🍽️\nVotre commande est entre les mains de notre chef — préparée avec soin et livrée dans 45 minutes. Vous recevrez une confirmation sur WhatsApp. 💚`,
       en: `Thank you so much, ${name}! 🍽️\nYour order is now with our chef — prepared with care and delivered within 45 minutes. You will receive a WhatsApp confirmation shortly. 💚`,
@@ -8121,7 +8150,6 @@ function submitLead() {
     const statusLabels = { fr:"✅ Commande en route — 45 min ⏱️", en:"✅ Order on the way — 45 min ⏱️", ar:"✅ طلبك في الطريق — 45 دق ⏱️", es:"✅ Pedido en camino — 45 min ⏱️" };
     if (cst) cst.textContent = statusLabels[cl] || statusLabels.fr;
 
-    // Include meal names + total in WhatsApp confirmation message
     const waConfirm = {
       fr: `Salam SAVY ! Je confirme ma commande ${orderId} ✅\nPlats: ${mealNames}\nTotal: ${orderTotal} MAD`,
       en: `Hello SAVY! I confirm my order ${orderId} ✅\nDishes: ${mealNames}\nTotal: ${orderTotal} MAD`,
@@ -8131,7 +8159,6 @@ function submitLead() {
     window.open(`https://wa.me/212708700830?text=${encodeURIComponent(waConfirm[cl] || waConfirm.fr)}`, "_blank");
     animateLoyaltyPoints(10);
 
-    // Store confirmed order data for potential add-ons
     window._lastOrderId    = orderId;
     window._lastOrderName  = name;
     window._lastOrderCity  = city;
@@ -8426,6 +8453,207 @@ function _closeChatConversation(cl, custName, isCouple) {
 }
 
 /* ═══════════════════════════════════════════
+   PRE-LAUNCH WHITELIST MODAL
+═══════════════════════════════════════════ */
+function showPrelaunchModal(name, orderId, meals, total, cl) {
+  // Remove if already exists
+  const existing = document.getElementById("prelaunch-overlay");
+  if (existing) existing.remove();
+
+  const copy = {
+    fr: {
+      badge:    "🚀 BIENTÔT DISPONIBLE",
+      title:    "Vous êtes sur la whitelist SAVY !",
+      sub:      `Merci <strong>${name||"cher ami"}</strong> — votre pré-commande <strong>${orderId||""}</strong> est bien enregistrée.`,
+      body:     "Des surprises incroyables vous attendent à l'ouverture 🎁\nSoyez parmi les premiers à découvrir SAVY !",
+      meals_lbl:"Votre sélection :",
+      msg_lbl:  "💬 Un message ou conseil pour nous ? (optionnel)",
+      msg_ph:   "Partagez vos attentes, idées, conseils...",
+      send:     "Envoyer mon message 💌",
+      skip:     "Fermer",
+      sent:     "Merci ! Votre message nous est précieux 💚",
+    },
+    en: {
+      badge:    "🚀 COMING SOON",
+      title:    "You're on the SAVY whitelist!",
+      sub:      `Thank you <strong>${name||"friend"}</strong> — your pre-order <strong>${orderId||""}</strong> has been saved.`,
+      body:     "Incredible surprises are waiting for you at launch 🎁\nBe among the first to experience SAVY!",
+      meals_lbl:"Your selection:",
+      msg_lbl:  "💬 A message or advice for us? (optional)",
+      msg_ph:   "Share your expectations, ideas, feedback...",
+      send:     "Send my message 💌",
+      skip:     "Close",
+      sent:     "Thank you! Your message means a lot to us 💚",
+    },
+    ar: {
+      badge:    "🚀 قريباً",
+      title:    "أنت على قائمة الانتظار الخاصة بـ SAVY!",
+      sub:      `شكراً <strong>${name||"صديقنا"}</strong> — طلبك المسبق <strong>${orderId||""}</strong> تم تسجيله.`,
+      body:     "مفاجآت رائعة بانتظارك يوم الافتتاح 🎁\nكن من أوائل من يكتشف SAVY!",
+      meals_lbl:"اختيارك:",
+      msg_lbl:  "💬 رسالة أو نصيحة لنا؟ (اختياري)",
+      msg_ph:   "شاركنا توقعاتك وأفكارك...",
+      send:     "أرسل رسالتي 💌",
+      skip:     "إغلاق",
+      sent:     "شكراً! رسالتك تعني لنا الكثير 💚",
+    },
+    es: {
+      badge:    "🚀 PRÓXIMAMENTE",
+      title:    "¡Estás en la lista blanca de SAVY!",
+      sub:      `Gracias <strong>${name||"amigo"}</strong> — tu pre-pedido <strong>${orderId||""}</strong> ha sido registrado.`,
+      body:     "¡Te esperan sorpresas increíbles en el lanzamiento 🎁\n¡Sé de los primeros en descubrir SAVY!",
+      meals_lbl:"Tu selección:",
+      msg_lbl:  "💬 ¿Un mensaje o consejo para nosotros? (opcional)",
+      msg_ph:   "Comparte tus expectativas, ideas, consejos...",
+      send:     "Enviar mi mensaje 💌",
+      skip:     "Cerrar",
+      sent:     "¡Gracias! Tu mensaje es muy valioso para nosotros 💚",
+    },
+  };
+  const t = copy[cl] || copy.fr;
+  const isFemale = document.body.classList.contains("female-mode");
+  const accent   = isFemale ? "#E91E8C" : "#089929";
+  const accentL  = isFemale ? "#F06292" : "#2BCE4E";
+  const accentBg = isFemale ? "rgba(233,30,140,.08)" : "rgba(9,184,48,.08)";
+
+  const overlay = document.createElement("div");
+  overlay.id = "prelaunch-overlay";
+  overlay.style.cssText = `
+    position:fixed;inset:0;z-index:9999;
+    background:rgba(0,0,0,0.72);backdrop-filter:blur(12px);
+    display:flex;align-items:center;justify-content:center;padding:20px;
+    animation:bdIn .25s ease both;
+  `;
+
+  const box = document.createElement("div");
+  box.style.cssText = `
+    background:var(--card);border-radius:24px;
+    padding:32px 28px 28px;
+    width:min(460px,100%);
+    box-shadow:0 24px 80px rgba(0,0,0,0.4),0 0 0 1px ${accent}22;
+    text-align:center;
+    border:1.5px solid ${accent}33;
+    position:relative;
+    animation:cwPop .32s cubic-bezier(.22,1.4,.36,1) both;
+    max-height:90dvh;overflow-y:auto;
+  `;
+
+  box.innerHTML = `
+    <!-- Confetti emoji row -->
+    <div style="font-size:32px;margin-bottom:10px;letter-spacing:4px;">🎊 🧬 🎊</div>
+
+    <!-- Badge -->
+    <div style="display:inline-block;background:${accentBg};color:${accent};
+      border:1px solid ${accent}44;border-radius:99px;padding:4px 14px;
+      font-size:10px;font-weight:800;letter-spacing:.12em;font-family:'Outfit',sans-serif;
+      margin-bottom:14px;">${t.badge}</div>
+
+    <!-- Title -->
+    <h2 style="font-family:'Outfit',sans-serif;font-weight:900;font-size:20px;
+      color:var(--text);letter-spacing:-.5px;margin-bottom:10px;line-height:1.25;">
+      ${t.title}
+    </h2>
+
+    <!-- Sub -->
+    <p style="font-size:13px;color:var(--sub);line-height:1.65;margin-bottom:8px;">
+      ${t.sub}
+    </p>
+
+    <!-- Meals selection -->
+    ${meals ? `<div style="background:${accentBg};border-radius:12px;padding:10px 14px;margin:12px 0;text-align:left;">
+      <div style="font-size:10.5px;font-weight:700;color:${accent};margin-bottom:5px;">${t.meals_lbl}</div>
+      <div style="font-size:12px;color:var(--text);font-weight:600;">${meals}</div>
+      ${total ? `<div style="font-family:'Outfit',sans-serif;font-size:14px;font-weight:900;color:${accent};margin-top:4px;">${total} MAD</div>` : ""}
+    </div>` : ""}
+
+    <!-- Body text -->
+    <p style="font-size:12.5px;color:var(--sub);line-height:1.7;margin-bottom:18px;white-space:pre-line;">
+      ${t.body}
+    </p>
+
+    <!-- Message textarea -->
+    <div style="text-align:left;margin-bottom:14px;">
+      <label style="font-size:11.5px;font-weight:700;color:var(--text);display:block;margin-bottom:7px;">${t.msg_lbl}</label>
+      <textarea id="prelaunch-msg" rows="3"
+        placeholder="${t.msg_ph}"
+        style="width:100%;border:1.5px solid var(--border);border-radius:12px;
+          padding:11px 13px;font-size:13px;color:var(--text);background:var(--bg);
+          outline:none;resize:none;font-family:'DM Sans',sans-serif;
+          transition:border-color .2s;"
+        onfocus="this.style.borderColor='${accent}'"
+        onblur="this.style.borderColor='var(--border)'"
+      ></textarea>
+    </div>
+
+    <!-- Buttons -->
+    <button id="prelaunch-send-btn"
+      onclick="submitPrelaunchMessage('${orderId}','${name}','${cl}')"
+      style="width:100%;padding:13px;border-radius:13px;border:none;
+        background:linear-gradient(135deg,${accent},${accentL});
+        color:#fff;font-family:'Outfit',sans-serif;font-size:14px;font-weight:800;
+        cursor:pointer;margin-bottom:8px;
+        box-shadow:0 6px 20px ${accent}44;transition:opacity .2s;">
+      ${t.send}
+    </button>
+    <button onclick="document.getElementById('prelaunch-overlay').remove()"
+      style="width:100%;padding:10px;border-radius:12px;
+        background:transparent;border:1.5px solid var(--border);
+        color:var(--muted);font-size:13px;font-weight:600;cursor:pointer;
+        font-family:'DM Sans',sans-serif;transition:all .18s;"
+      onmouseenter="this.style.borderColor='${accent}';this.style.color='${accent}'"
+      onmouseleave="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">
+      ${t.skip}
+    </button>
+  `;
+
+  // Close on backdrop click
+  overlay.onclick = (e) => { if (e.target === overlay) overlay.remove(); };
+  overlay.appendChild(box);
+  document.body.appendChild(overlay);
+}
+
+function submitPrelaunchMessage(orderId, name, cl) {
+  const msgEl = document.getElementById("prelaunch-msg");
+  const msg   = msgEl ? msgEl.value.trim() : "";
+  const btn   = document.getElementById("prelaunch-send-btn");
+
+  // Save to sheets as a message record
+  if (msg) {
+    saveToSheets({
+      order_id:    (orderId||"MSG") + "-NOTE",
+      name:        name || "",
+      city:        "",
+      phone:       "'" + (window._lastOrderPhone || localStorage.getItem("savy_customer_phone") || ""),
+      comment:     msg,
+      meals:       "Prelaunch message",
+      meal_count:  0,
+      total_meals: 0,
+      delivery_fee:0,
+      order_total: 0,
+      persona:     _leadGender || "unknown",
+      lang:        cl,
+      gender:      _leadGender || "unknown",
+      source:      "prelaunch-message",
+      conversation: msg,
+    });
+  }
+
+  // Show sent confirmation
+  if (btn) {
+    const sentLabels = {fr:"Merci ! Votre message nous est précieux 💚",en:"Thank you! Your message means a lot 💚",ar:"شكراً! رسالتك تعني لنا الكثير 💚",es:"¡Gracias! Tu mensaje es muy valioso 💚"};
+    btn.textContent = sentLabels[cl] || sentLabels.fr;
+    btn.style.background = "#059669";
+    btn.disabled = true;
+    if (msgEl) msgEl.disabled = true;
+  }
+
+  setTimeout(() => {
+    const ov = document.getElementById("prelaunch-overlay");
+    if (ov) ov.remove();
+  }, 2200);
+}
+
+/* ═══════════════════════════════════════════
    UTM TRACKING — reads URL params, stores in localStorage,
    passes to Sheets on every lead/order submit
 ═══════════════════════════════════════════ */
@@ -8551,12 +8779,12 @@ const reviews = [
     fr:"Franchement incroyable. Les macros sont exactement ce qu'il me faut pour ma préparation. Livré en 38 minutes, encore chaud. SAVY a changé ma routine.",
     ar:"صراحة خدمة لا مثيل لها. المواد الغذائية بالضبط اللي كنت محتاجها لتحضيري. وصلت في 38 دقيقة وما زالت ساخنة. غيّر SAVY روتيني.",
     en:"Honestly incredible. The macros are exactly what I need for my training. Delivered in 38 minutes, still hot. SAVY changed my routine." },
-  { name:"Salma E.", city:"M'diq", persona:"couple", avatar:"SE", color:"#be185d",
+  { name:"Salma E.", city:"Tétouan", persona:"couple", avatar:"SE", color:"#be185d",
     stars:5, tag:"💑 Couple",
     fr:"On a commandé pour notre anniversaire. La présentation était magnifique, le goût encore mieux. Chef SAVY a vraiment cuisiné avec amour.",
     ar:"طلبنا في ذكرى زواجنا. التقديم كان رائعاً والطعم أروع. الشيف ساڤي طبخ بحب حقيقي.",
     en:"We ordered for our anniversary. The presentation was beautiful, the taste even better. Chef SAVY really cooked with love." },
-  { name:"Karim A.", city:"Martil", persona:"employee", avatar:"KA", color:"#1E40AF",
+  { name:"Karim A.", city:"Tétouan", persona:"employee", avatar:"KA", color:"#1E40AF",
     stars:5, tag:"💼 Employé",
     fr:"Je commande tous les midis depuis 3 semaines. Zéro fatigue post-déjeuner, je reste concentré toute l'après-midi. Meilleur investissement de ma journée.",
     ar:"أطلب كل يوم منذ 3 أسابيع. لا إجهاد بعد الغداء، أبقى مركّزاً طوال المساء. أفضل استثمار في يومي.",
@@ -8566,7 +8794,7 @@ const reviews = [
     fr:"Mes enfants ont adoré ! Ce qui m'impressionne c'est que chaque plat est adapté — les enfants ont mangé leur portion, moi la mienne. Bravo SAVY.",
     ar:"أحب أطفالي الطعام! ما يدهشني أن كل طبق كان مناسباً — الأطفال أكلوا حصتهم وأنا حصتي. أحسنت يا SAVY.",
     en:"My kids loved it! What impresses me is every portion is tailored — kids got their serving, I got mine. Well done SAVY." },
-  { name:"Hamza O.", city:"M'diq", persona:"sportif", avatar:"HO", color:"#D97706",
+  { name:"Hamza O.", city:"Tétouan", persona:"sportif", avatar:"HO", color:"#D97706",
     stars:5, tag:"💪 Sportif",
     fr:"Le calculateur nutritionnel m'a bluffé. J'ai mis mes données, il m'a recommandé exactement les plats qu'il me fallait. C'est vraiment intelligent.",
     ar:"حاسبة السعرات أذهلتني. أدخلت بياناتي وأوصى لي بالضبط بالأطباق التي احتجتها. ذكاء حقيقي.",
@@ -8576,12 +8804,12 @@ const reviews = [
     fr:"La livraison en 45 minutes c'est réel ! J'habite en haut de la ville et ça arrive toujours à l'heure. Le packaging est propre et bien isolé thermiquement.",
     ar:"توصيل 45 دقيقة حقيقي! أسكن فوق المدينة ودائماً يصل في الوقت. التغليف نظيف وجيد العزل.",
     en:"The 45-minute delivery is real! I live at the top of the city and it always arrives on time. Packaging is clean and well insulated." },
-  { name:"Amine R.", city:"Martil", persona:"sportif", avatar:"AR", color:"#D97706",
+  { name:"Amine R.", city:"Tétouan", persona:"sportif", avatar:"AR", color:"#D97706",
     stars:5, tag:"💪 Sportif",
     fr:"Je suis coach sportif et je recommande SAVY à tous mes clients. Les portions sont précises, les ingrédients frais et l'IA connaît vraiment la nutrition.",
     ar:"أنا مدرب رياضي وأوصي بـ SAVY لجميع عملائي. الحصص دقيقة والمكونات طازجة والذكاء الاصطناعي يعرف التغذية فعلاً.",
     en:"I'm a sports coach and I recommend SAVY to all my clients. Portions are precise, ingredients fresh, and the AI truly understands nutrition." },
-  { name:"Rim B.", city:"M'diq", persona:"couple", avatar:"RB", color:"#be185d",
+  { name:"Rim B.", city:"Tétouan", persona:"couple", avatar:"RB", color:"#be185d",
     stars:5, tag:"💑 Couple",
     fr:"Mon mari et moi on a des objectifs différents — lui muscle, moi perte de poids. SAVY gère les deux en une seule commande. Magique !",
     ar:"أنا وزوجي لدينا أهداف مختلفة — هو بناء عضلات وأنا خسارة وزن. ساڤي يتعامل مع الاثنين في طلب واحد. سحر!",
@@ -8591,7 +8819,7 @@ const reviews = [
     fr:"J'avais l'habitude de sauter le déjeuner au bureau. Maintenant je commande SAVY et je mange sainement en 5 minutes. Productivité au top.",
     ar:"كنت معتاداً على تخطي الغداء في المكتب. الآن أطلب SAVY وآكل بصحة في 5 دقائق. إنتاجية في أعلى مستوياتها.",
     en:"I used to skip lunch at the office. Now I order SAVY and eat healthy in 5 minutes. Productivity through the roof." },
-  { name:"Kenza L.", city:"Martil", persona:"famille", avatar:"KL", color:"#0D9488",
+  { name:"Kenza L.", city:"Tétouan", persona:"famille", avatar:"KL", color:"#0D9488",
     stars:5, tag:"👨‍👩‍👧 Famille",
     fr:"Trois enfants, trois goûts différents — et SAVY satisfait tout le monde. Le service client est également très réactif. On est clients à vie.",
     ar:"ثلاثة أطفال وثلاثة أذواق مختلفة — وساڤي يُرضي الجميع. خدمة العملاء أيضاً سريعة جداً. نحن عملاء مدى الحياة.",
@@ -8601,7 +8829,7 @@ const reviews = [
     fr:"Compétition dans 2 mois et SAVY est mon allié nutrition. Chaque repas est calculé pour ma phase de sèche. Résultats visibles en 3 semaines.",
     ar:"منافسة بعد شهرين وساڤي هو حليفي الغذائي. كل وجبة محسوبة لمرحلة التخفيف عندي. نتائج ظاهرة في 3 أسابيع.",
     en:"Competition in 2 months and SAVY is my nutrition ally. Every meal is calculated for my cutting phase. Visible results in 3 weeks." },
-  { name:"Zineb H.", city:"M'diq", persona:"famille", avatar:"ZH", color:"#0D9488",
+  { name:"Zineb H.", city:"Tétouan", persona:"famille", avatar:"ZH", color:"#0D9488",
     stars:5, tag:"👨‍👩‍👧 Famille",
     fr:"Ce que j'aime le plus c'est la transparence sur les calories. Je sais exactement ce que mes enfants mangent. Plus besoin de stresser pour les repas.",
     ar:"ما أحبه أكثر هو الشفافية في السعرات الحرارية. أعرف بالضبط ما يأكله أطفالي. لا داعي للقلق على الوجبات بعد الآن.",
@@ -8739,6 +8967,7 @@ document.getElementById("exit-overlay").addEventListener("click", function(e) {
 const WA_NUMBER = "212708700830";
 
 function openWhatsApp() {
+  if (PRELAUNCH_MODE) { showPrelaunchModal("", "", "", 0, lang||"fr"); return; }
   const msg = encodeURIComponent("Salam ! Bghit ncommande mn SAVY 🍽️ — wayla nshof le menu. 3afak ayda liya 🙏");
   window.open(`https://wa.me/212708700830?text=${msg}`, "_blank");
 }
@@ -8758,6 +8987,7 @@ function shareSAVY() {
 }
 
 function openWhatsAppOrder() {
+  if (PRELAUNCH_MODE) { showPrelaunchModal("", "", "", 0, lang||"fr"); return; }
   const dish = chatHistory.find(m => m.role === "user");
   const context = dish ? encodeURIComponent(`Salam SAVY ! J'ai discuté avec votre chef IA et je voudrais commander. Mon choix: ${dish.content}`) 
                        : encodeURIComponent("Salam ! Bghit ncommande mn SAVY 🍽️");
