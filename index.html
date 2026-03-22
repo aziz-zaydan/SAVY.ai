@@ -1918,7 +1918,7 @@
     }
     .chat-header-status {
       display:flex; align-items:center; gap:3px;
-      font-size:8.5px; color:rgba(255,255,255,0.75);
+      font-size:9px; color:rgba(255,255,255,0.80);
       margin-top:0px; font-family:'DM Sans',sans-serif;
     }
     .chat-status-dot {
@@ -2062,10 +2062,14 @@
 
     /* ── Header ────────────────────────────────────────────── */
     #chat-window .chat-header {
-      padding:5px 10px 5px 12px !important;
+      padding:6px 10px 6px 12px !important;
       background:linear-gradient(135deg, #089929 0%, #06b237 60%, #04a030 100%) !important;
       position:relative; overflow:hidden;
-      flex-shrink:0 !important;  /* always visible — never squeezed */
+      flex-shrink:0 !important;
+      display:flex !important;
+      align-items:center !important;
+      justify-content:space-between !important;
+      gap:8px !important;
     }
     /* Subtle grain texture on header */
     #chat-window .chat-header::after {
@@ -4510,19 +4514,31 @@
 
   <!-- Header -->
   <div class="chat-header">
-    <div class="chat-header-avatar">
-      <svg width="14" height="14" viewBox="0 0 80 80" fill="none">
-        <ellipse cx="40" cy="21" rx="13" ry="5" fill="#fff" opacity=".9"/>
-        <rect x="27" y="16" width="26" height="14" rx="4" fill="#fff" opacity=".9"/>
-        <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="#fff"/>
-        <rect x="26" y="28" width="28" height="20" rx="9" fill="#fff"/>
-        <circle cx="34" cy="37" r="3.2" fill="#089929"/>
-        <circle cx="46" cy="37" r="3.2" fill="#089929"/>
-        <rect x="28" y="50" width="24" height="18" rx="5" fill="#fff"/>
-      </svg>
+
+    <!-- LEFT: avatar + name stacked with subtitle -->
+    <div style="display:flex;align-items:center;gap:8px;flex:1;min-width:0;overflow:hidden;">
+      <div class="chat-header-avatar" style="flex-shrink:0;">
+        <svg width="14" height="14" viewBox="0 0 80 80" fill="none">
+          <ellipse cx="40" cy="21" rx="13" ry="5" fill="#fff" opacity=".9"/>
+          <rect x="27" y="16" width="26" height="14" rx="4" fill="#fff" opacity=".9"/>
+          <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="#fff"/>
+          <rect x="26" y="28" width="28" height="20" rx="9" fill="#fff"/>
+          <circle cx="34" cy="37" r="3.2" fill="#089929"/>
+          <circle cx="46" cy="37" r="3.2" fill="#089929"/>
+          <rect x="28" y="50" width="24" height="18" rx="5" fill="#fff"/>
+        </svg>
+      </div>
+      <div style="display:flex;flex-direction:column;justify-content:center;min-width:0;">
+        <div class="chat-header-name">Chef SAVY <span style="font-size:9.5px;opacity:.7;font-weight:600;">🧬 AI</span></div>
+        <div class="chat-header-status">
+          <span class="chat-status-dot"></span>
+          <span id="chat-status-txt">🍽️ Meal Engineer · En ligne</span>
+        </div>
+      </div>
     </div>
-    <!-- Action buttons on the LEFT — before name -->
-    <div class="chat-header-actions" style="margin-right:6px;">
+
+    <!-- RIGHT: action icons always opposite Chef SAVY -->
+    <div class="chat-header-actions" style="flex-shrink:0;">
       <button class="chat-action-btn" onclick="resetChat()" title="Nouvelle conversation">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
       </button>
@@ -4532,19 +4548,11 @@
           <path d="M22.498 19.533c-.305-.152-1.8-.888-2.079-.99-.278-.102-.481-.152-.683.152s-.783.99-.96 1.193c-.177.202-.354.228-.659.076-.305-.152-1.288-.475-2.453-1.513-.907-.808-1.518-1.806-1.697-2.111-.177-.304-.019-.469.133-.62.137-.136.305-.355.457-.532.152-.178.203-.305.304-.508.103-.203.051-.38-.025-.532-.077-.152-.684-1.648-.937-2.258-.246-.593-.497-.513-.683-.522l-.583-.01c-.203 0-.532.076-.81.38s-1.063 1.04-1.063 2.534 1.089 2.94 1.24 3.143c.152.203 2.143 3.272 5.191 4.586.726.314 1.293.5 1.735.641.729.23 1.392.198 1.916.12.584-.087 1.8-.735 2.054-1.446.254-.71.254-1.32.178-1.447-.077-.127-.278-.203-.583-.355z" fill="#089929"/>
         </svg>
       </button>
+      <button class="chat-close" onclick="closeChat()">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
     </div>
-    <!-- Name + status — centred/flex grows -->
-    <div class="chat-header-info" style="display:flex;align-items:center;gap:6px;flex:1;min-width:0;">
-      <div class="chat-header-name" style="font-size:11px;">Chef SAVY <span style="font-size:9.5px;opacity:.7;font-weight:600;">🧬 AI</span></div>
-      <div class="chat-header-status" style="margin-top:0;">
-        <span class="chat-status-dot"></span>
-        <span id="chat-status-txt" style="font-size:8px;opacity:.75;">En ligne</span>
-      </div>
-    </div>
-    <!-- Close button stays on the right -->
-    <button class="chat-close" onclick="closeChat()" style="margin-left:4px;">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-    </button>
+
   </div>
 
   <!-- Messages (overlay lives here so it only blocks msgs, not the form) -->
