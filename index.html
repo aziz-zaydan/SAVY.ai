@@ -963,12 +963,12 @@
       .hero-cta-primary,
       .hero-cta-secondary,
       .hero-cta-nutri {
-        padding:6px 4px !important;
-        border-radius:9px !important;
+        padding:12px 8px !important;
+        border-radius:12px !important;
       }
       .hero-cta-primary span[id],
       .hero-cta-secondary span[id],
-      .hero-cta-nutri span[id] { font-size:9.5px !important; }
+      .hero-cta-nutri span[id] { font-size:12px !important; }
 
       /* ── Slideshow ── */
       .proof         { margin-top:14px; gap:8px; flex-wrap:wrap; }
@@ -3697,24 +3697,33 @@
       </p>
 
       <!-- ── Triple CTA row ── -->
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin:12px 0 4px;" class="hero-cta-row">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:18px 0 8px;" class="hero-cta-row">
 
         <button onclick="openChat()" id="hero-cta-primary" class="hero-cta-primary">
-          <span style="font-size:13px;line-height:1;">🧬</span>
-          <span id="hero-cta-primary-txt" style="font-size:10px;font-weight:800;white-space:nowrap;">Chef IA</span>
+          <span style="font-size:20px;line-height:1;">🧬</span>
+          <span style="display:flex;flex-direction:column;align-items:center;gap:1px;">
+            <span style="font-size:9px;opacity:.85;font-weight:600;letter-spacing:.05em;text-transform:uppercase;">SAVY AI</span>
+            <span id="hero-cta-primary-txt" style="font-size:13px;font-weight:900;white-space:nowrap;">Chef IA</span>
+          </span>
         </button>
 
         <a href="#menu" style="text-decoration:none;">
           <button id="hero-cta-secondary" class="hero-cta-secondary">
-            <span style="font-size:13px;line-height:1;">🍽️</span>
-            <span id="hero-cta-secondary-txt" style="font-size:10px;font-weight:800;white-space:nowrap;">Menu</span>
+            <span style="font-size:20px;line-height:1;">🍽️</span>
+            <span style="display:flex;flex-direction:column;align-items:center;gap:1px;">
+              <span style="font-size:9px;opacity:.75;font-weight:600;letter-spacing:.05em;text-transform:uppercase;">MENU</span>
+              <span id="hero-cta-secondary-txt" style="font-size:13px;font-weight:900;white-space:nowrap;">Voir le menu</span>
+            </span>
           </button>
         </a>
 
         <a href="#nutri-calc" style="text-decoration:none;">
           <button id="hero-cta-nutri" class="hero-cta-nutri">
-            <span style="font-size:13px;line-height:1;">🔥</span>
-            <span id="hero-cta-nutri-txt" style="font-size:10px;font-weight:800;white-space:nowrap;">Calories</span>
+            <span style="font-size:20px;line-height:1;">🔥</span>
+            <span style="display:flex;flex-direction:column;align-items:center;gap:1px;">
+              <span style="font-size:9px;opacity:.75;font-weight:600;letter-spacing:.05em;text-transform:uppercase;">CALORIES</span>
+              <span id="hero-cta-nutri-txt" style="font-size:13px;font-weight:900;white-space:nowrap;">Calculer</span>
+            </span>
           </button>
         </a>
 
@@ -3724,10 +3733,10 @@
         .hero-cta-primary,
         .hero-cta-secondary,
         .hero-cta-nutri {
-          width:100%; border-radius:9px;
-          padding:7px 6px;
-          display:flex; align-items:center; justify-content:center; gap:5px;
-          cursor:pointer; transition:transform .18s, box-shadow .18s, border-color .18s;
+          width:100%; border-radius:14px;
+          padding:14px 10px;
+          display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px;
+          cursor:pointer; transition:transform .2s, box-shadow .2s, border-color .2s;
           -webkit-tap-highlight-color:transparent;
           font-family:'Outfit',sans-serif;
           text-align:center; border:1.5px solid transparent;
