@@ -1902,29 +1902,29 @@
     }
     /* ── Header child elements ──────────────────── */
     .chat-header-avatar {
-      width:30px; height:30px; border-radius:9px;
+      width:24px; height:24px; border-radius:7px;
       background:rgba(255,255,255,0.18);
       backdrop-filter:blur(8px);
-      border:1px solid rgba(255,255,255,0.24);
+      border:1px solid rgba(255,255,255,0.22);
       display:flex; align-items:center; justify-content:center;
       flex-shrink:0;
-      box-shadow:0 1px 6px rgba(0,0,0,0.15);
+      box-shadow:0 1px 4px rgba(0,0,0,0.12);
     }
     .chat-header-info { flex:1; min-width:0; }
     .chat-header-name {
       font-family:'Outfit',sans-serif; font-weight:900;
-      font-size:12.5px; color:#fff; letter-spacing:-.01em;
+      font-size:11px; color:#fff; letter-spacing:-.01em;
       white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
     }
     .chat-header-status {
-      display:flex; align-items:center; gap:4px;
-      font-size:9.5px; color:rgba(255,255,255,0.80);
-      margin-top:1px; font-family:'DM Sans',sans-serif;
+      display:flex; align-items:center; gap:3px;
+      font-size:8.5px; color:rgba(255,255,255,0.75);
+      margin-top:0px; font-family:'DM Sans',sans-serif;
     }
     .chat-status-dot {
-      width:5px; height:5px; border-radius:50%;
+      width:4px; height:4px; border-radius:50%;
       background:#a7f3d0; flex-shrink:0;
-      box-shadow:0 0 0 2px rgba(167,243,208,0.3);
+      box-shadow:0 0 0 1.5px rgba(167,243,208,0.25);
       animation:statusPulse 2s ease-in-out infinite;
     }
     @keyframes statusPulse {
@@ -1932,10 +1932,10 @@
       50%      { box-shadow:0 0 0 5px rgba(167,243,208,0.12); }
     }
     .chat-header-actions {
-      display:flex; align-items:center; gap:5px; flex-shrink:0;
+      display:flex; align-items:center; gap:4px; flex-shrink:0;
     }
     .chat-action-btn {
-      width:26px; height:26px; border-radius:7px;
+      width:22px; height:22px; border-radius:6px;
       background:rgba(255,255,255,0.14);
       border:1px solid rgba(255,255,255,0.22);
       color:#fff; cursor:pointer;
@@ -1948,7 +1948,7 @@
     .chat-action-btn:active { transform:scale(0.9); background:rgba(255,255,255,0.35); }
     .chat-action-btn svg    { display:block; pointer-events:none; }
     .chat-close {
-      width:26px; height:26px; border-radius:7px;
+      width:22px; height:22px; border-radius:6px;
       background:rgba(255,255,255,0.14);
       border:1px solid rgba(255,255,255,0.22);
       color:#fff; cursor:pointer; font-size:14px; font-weight:600;
@@ -2062,7 +2062,7 @@
 
     /* ── Header ────────────────────────────────────────────── */
     #chat-window .chat-header {
-      padding:9px 12px 9px 14px !important;
+      padding:5px 10px 5px 12px !important;
       background:linear-gradient(135deg, #089929 0%, #06b237 60%, #04a030 100%) !important;
       position:relative; overflow:hidden;
       flex-shrink:0 !important;  /* always visible — never squeezed */
@@ -3065,7 +3065,7 @@
                        bottom:76px !important; height:auto !important; max-height:calc(100dvh - 96px) !important; border-radius:20px !important; }
       .msg-bubble    { font-size:12px !important; padding:7px 10px !important; }
       .chat-inp      { font-size:13px !important; }
-      .chat-header   { padding:9px 11px !important; }
+      .chat-header   { padding:4px 9px !important; }
 
       /* ── FABs ── */
       #fab-main-wrap { bottom:76px !important; right:8px !important; }
@@ -3803,19 +3803,6 @@
       </div>
 
 
-      <!-- Social proof -->
-      <div class="proof su5" style="align-items:center;gap:12px;">
-        <div class="avatars">
-          <div class="av" style="background:linear-gradient(135deg,#089929,#2BCE4E);">Y</div>
-          <div class="av" style="background:linear-gradient(135deg,#E91E8C,#FF4DB8);">K</div>
-          <div class="av" style="background:linear-gradient(135deg,#F59E0B,#FCD34D);">N</div>
-          <div class="av" style="background:linear-gradient(135deg,#2BCE4E,#4DB6AC);">M</div>
-        </div>
-        <div>
-          <div class="proof-text fb"><em id="live-count">125+</em> <span id="proof-txt">personnes inscrites</span></div>
-          <div class="proof-stars">⭐⭐⭐⭐⭐</div>
-        </div>
-      </div>
     </div>
 
     <!-- Right -->
@@ -4524,7 +4511,7 @@
   <!-- Header -->
   <div class="chat-header">
     <div class="chat-header-avatar">
-      <svg width="17" height="17" viewBox="0 0 80 80" fill="none">
+      <svg width="14" height="14" viewBox="0 0 80 80" fill="none">
         <ellipse cx="40" cy="21" rx="13" ry="5" fill="#fff" opacity=".9"/>
         <rect x="27" y="16" width="26" height="14" rx="4" fill="#fff" opacity=".9"/>
         <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="#fff"/>
@@ -4534,25 +4521,25 @@
         <rect x="28" y="50" width="24" height="18" rx="5" fill="#fff"/>
       </svg>
     </div>
-    <div class="chat-header-info">
-      <div class="chat-header-name">Chef SAVY <span style="font-size:11px;opacity:.7;font-weight:600;">🧬 AI</span></div>
-      <div class="chat-header-status">
+    <div class="chat-header-info" style="display:flex;align-items:center;gap:6px;flex:1;min-width:0;">
+      <div class="chat-header-name" style="font-size:11px;">Chef SAVY <span style="font-size:9.5px;opacity:.7;font-weight:600;">🧬 AI</span></div>
+      <div class="chat-header-status" style="margin-top:0;">
         <span class="chat-status-dot"></span>
-        <span id="chat-status-txt">En ligne · Répond en quelques secondes</span>
+        <span id="chat-status-txt" style="font-size:8px;opacity:.75;">En ligne</span>
       </div>
     </div>
     <div class="chat-header-actions">
       <button class="chat-action-btn" onclick="resetChat()" title="Nouvelle conversation">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
       </button>
       <button class="chat-action-btn" onclick="openWhatsAppOrder()" title="WhatsApp">
-        <svg width="15" height="15" viewBox="0 0 32 32" fill="none">
+        <svg width="13" height="13" viewBox="0 0 32 32" fill="none">
           <path d="M16 2C8.268 2 2 8.268 2 16c0 2.484.668 4.81 1.836 6.818L2 30l7.384-1.812A13.94 13.94 0 0016 30c7.732 0 14-6.268 14-14S23.732 2 16 2z" fill="rgba(255,255,255,0.9)"/>
           <path d="M22.498 19.533c-.305-.152-1.8-.888-2.079-.99-.278-.102-.481-.152-.683.152s-.783.99-.96 1.193c-.177.202-.354.228-.659.076-.305-.152-1.288-.475-2.453-1.513-.907-.808-1.518-1.806-1.697-2.111-.177-.304-.019-.469.133-.62.137-.136.305-.355.457-.532.152-.178.203-.305.304-.508.103-.203.051-.38-.025-.532-.077-.152-.684-1.648-.937-2.258-.246-.593-.497-.513-.683-.522l-.583-.01c-.203 0-.532.076-.81.38s-1.063 1.04-1.063 2.534 1.089 2.94 1.24 3.143c.152.203 2.143 3.272 5.191 4.586.726.314 1.293.5 1.735.641.729.23 1.392.198 1.916.12.584-.087 1.8-.735 2.054-1.446.254-.71.254-1.32.178-1.447-.077-.127-.278-.203-.583-.355z" fill="#089929"/>
         </svg>
       </button>
       <button class="chat-close" onclick="closeChat()">
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
   </div>
@@ -4661,7 +4648,7 @@
   <div id="cdp">
     <div id="cdp-drag-bar"></div>
     <button id="cdp-close" onclick="_closeChatDishPanel()">
-      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     </button>
     <div id="cdp-img-wrap"></div>
     <div id="cdp-header">
@@ -7369,12 +7356,24 @@ let _leadGender = null;    // null = not yet chosen
 /* ── Order modal gender toggle ───────────────────────────── */
 let _omGender = null;
 
+/* ── Global gender mode — persists across page loads ─────── */
+function setSavyGender(g) {
+  try { localStorage.setItem('savy_gender', g); } catch(e) {}
+  if (g === 'female') {
+    document.body.classList.add('female-mode');
+  } else {
+    document.body.classList.remove('female-mode');
+  }
+}
+
 function _setOmGender(g) {
   _omGender = g;
   const male   = document.getElementById("om-gender-male");
   const female = document.getElementById("om-gender-female");
   if (male)   { male.classList.toggle("active-male",   g==="male");   male.classList.toggle("active-female", false); }
   if (female) { female.classList.toggle("active-female",g==="female"); female.classList.toggle("active-male", false); }
+  // Apply page-wide gender mode
+  setSavyGender(g);
 }
 
 // Reset when order modal opens
@@ -7404,6 +7403,9 @@ function _setLeadGender(g) {
 
   // Turn chat pink when female, green when male
   if (cw) cw.classList.toggle("chat-female-mode", g === "female");
+
+  // Apply page-wide gender mode
+  setSavyGender(g);
 }
 
 function _resetLeadGender() {
@@ -8396,6 +8398,14 @@ function renderReviews() {
 }
 
 window.addEventListener("resize", () => { renderReviews(); });
+
+// Restore saved gender mode — persists after WhatsApp redirect
+(function(){
+  try {
+    const g = localStorage.getItem('savy_gender');
+    if (g === 'female') document.body.classList.add('female-mode');
+  } catch(e) {}
+})();
 
 // Smart language detection — saved preference > browser lang > default FR
 (function(){
