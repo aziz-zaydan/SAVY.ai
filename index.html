@@ -963,13 +963,12 @@
       .hero-cta-primary,
       .hero-cta-secondary,
       .hero-cta-nutri {
-        padding:7px 7px 7px 9px !important;
-        border-radius:10px !important;
+        padding:6px 4px !important;
+        border-radius:9px !important;
       }
-      /* Labels at small size */
       .hero-cta-primary span[id],
       .hero-cta-secondary span[id],
-      .hero-cta-nutri span[id] { font-size:10.5px !important; }
+      .hero-cta-nutri span[id] { font-size:9.5px !important; }
 
       /* ── Slideshow ── */
       .proof         { margin-top:14px; gap:8px; flex-wrap:wrap; }
@@ -3696,56 +3695,26 @@
       <p class="hero-sub fb su3" id="hero-sub">
         SAVY is your personal Meal Engineer — combining AI precision with a Chef's heart to create meals that fuel your goals, your glow, and your grind.
       </p>
-      <!-- Value pills -->
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 10px;">
-        <span style="background:var(--green);color:#fff;border-radius:99px;padding:5px 13px;font-size:12px;font-weight:800;font-family:'Outfit',sans-serif;">&#x1F6F5; <span id="v-delivery">Livraison 45 min</span></span>
-        <span style="background:var(--greenXL);color:var(--green);border:1.5px solid var(--border);border-radius:99px;padding:5px 13px;font-size:12px;font-weight:800;font-family:'Outfit',sans-serif;">&#x1F4B0; <span id="v-price">Dès 39 MAD</span></span>
-        <span style="background:var(--greenXL);color:var(--green);border:1.5px solid var(--border);border-radius:99px;padding:5px 13px;font-size:12px;font-weight:800;font-family:'Outfit',sans-serif;">&#x2B50; <span id="v-rating">4.9 · +125 avis</span></span>
-      </div>
-      <!-- Social proof row -->
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
-        <div style="display:flex;">
-          <div style="width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#089929,#2BCE4E);border:2px solid #fff;display:flex;align-items:center;justify-content:center;font-size:11px;margin-right:-6px;z-index:3;">&#x1F468;</div>
-          <div style="width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#2BCE4E,#089929);border:2px solid #fff;display:flex;align-items:center;justify-content:center;font-size:11px;margin-right:-6px;z-index:2;">&#x1F469;</div>
-          <div style="width:26px;height:26px;border-radius:50%;background:var(--green);border:2px solid #fff;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;color:#fff;font-family:'Outfit',sans-serif;z-index:1;">+123</div>
-        </div>
-        <div>
-          <div style="font-size:11px;font-weight:800;color:var(--text);font-family:'Outfit',sans-serif;" id="v-social">+125 clients satisfaits cette semaine</div>
-          <div style="font-size:10px;color:var(--muted);">&#x2B50;&#x2B50;&#x2B50;&#x2B50;&#x2B50; Tétouan · M'diq · Martil</div>
-        </div>
-      </div>
 
       <!-- ── Triple CTA row ── -->
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin:14px 0 6px;" class="hero-cta-row">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin:12px 0 4px;" class="hero-cta-row">
 
-        <!-- 1 — AI Chef (primary green) -->
         <button onclick="openChat()" id="hero-cta-primary" class="hero-cta-primary">
-          <span style="font-size:14px;line-height:1;flex-shrink:0;">🧬</span>
-          <span style="display:flex;flex-direction:column;align-items:flex-start;gap:0;min-width:0;">
-            <span style="font-size:8.5px;opacity:.8;font-weight:600;letter-spacing:.04em;white-space:nowrap;">SAVY AI</span>
-            <span id="hero-cta-primary-txt" style="font-size:11px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;">Chef IA</span>
-          </span>
+          <span style="font-size:13px;line-height:1;">🧬</span>
+          <span id="hero-cta-primary-txt" style="font-size:10px;font-weight:800;white-space:nowrap;">Chef IA</span>
         </button>
 
-        <!-- 2 — View menu -->
         <a href="#menu" style="text-decoration:none;">
           <button id="hero-cta-secondary" class="hero-cta-secondary">
-            <span style="font-size:14px;line-height:1;flex-shrink:0;">🍽️</span>
-            <span style="display:flex;flex-direction:column;align-items:flex-start;gap:0;min-width:0;">
-              <span style="font-size:8.5px;opacity:.75;font-weight:600;letter-spacing:.04em;">MENU</span>
-              <span id="hero-cta-secondary-txt" style="font-size:11px;font-weight:900;white-space:nowrap;">Voir le menu</span>
-            </span>
+            <span style="font-size:13px;line-height:1;">🍽️</span>
+            <span id="hero-cta-secondary-txt" style="font-size:10px;font-weight:800;white-space:nowrap;">Menu</span>
           </button>
         </a>
 
-        <!-- 3 — Calorie calculator -->
         <a href="#nutri-calc" style="text-decoration:none;">
           <button id="hero-cta-nutri" class="hero-cta-nutri">
-            <span style="font-size:14px;line-height:1;flex-shrink:0;">🔥</span>
-            <span style="display:flex;flex-direction:column;align-items:flex-start;gap:0;min-width:0;">
-              <span style="font-size:8.5px;opacity:.75;font-weight:600;letter-spacing:.04em;">CALORIES</span>
-              <span id="hero-cta-nutri-txt" style="font-size:11px;font-weight:900;white-space:nowrap;">Calculer</span>
-            </span>
+            <span style="font-size:13px;line-height:1;">🔥</span>
+            <span id="hero-cta-nutri-txt" style="font-size:10px;font-weight:800;white-space:nowrap;">Calories</span>
           </button>
         </a>
 
@@ -3755,13 +3724,13 @@
         .hero-cta-primary,
         .hero-cta-secondary,
         .hero-cta-nutri {
-          width:100%; border-radius:10px;
-          padding:8px 8px 8px 10px;
-          display:flex; align-items:center; gap:6px;
+          width:100%; border-radius:9px;
+          padding:7px 6px;
+          display:flex; align-items:center; justify-content:center; gap:5px;
           cursor:pointer; transition:transform .18s, box-shadow .18s, border-color .18s;
           -webkit-tap-highlight-color:transparent;
           font-family:'Outfit',sans-serif;
-          text-align:left; border:1.5px solid transparent;
+          text-align:center; border:1.5px solid transparent;
         }
         .hero-cta-primary:active,
         .hero-cta-secondary:active,
@@ -3880,6 +3849,40 @@
 </section>
 
 <!-- ══ MENU ═══════════════════════════════════════════════ -->
+
+<!-- ── Social proof strip: between slider and menu ── -->
+<div style="
+  padding:10px clamp(14px,4vw,48px);
+  background:var(--bg);
+  display:flex; flex-direction:column; gap:10px;
+">
+  <!-- Pill badges row -->
+  <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+    <span style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:99px;background:var(--green);color:#fff;font-size:12px;font-weight:700;font-family:'DM Sans',sans-serif;white-space:nowrap;">
+      🛵 <span id="strip-delivery">Livraison 45 min</span>
+    </span>
+    <span style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:99px;background:var(--card);border:1.5px solid var(--border);color:var(--text);font-size:12px;font-weight:700;font-family:'DM Sans',sans-serif;white-space:nowrap;">
+      💰 <span id="strip-price">À partir de 39 MAD</span>
+    </span>
+    <span style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:99px;background:var(--card);border:1.5px solid var(--border);color:var(--text);font-size:12px;font-weight:700;font-family:'DM Sans',sans-serif;white-space:nowrap;">
+      ★ 4.9 · <span id="strip-reviews">+125 avis</span>
+    </span>
+  </div>
+  <!-- Avatars + customer count -->
+  <div style="display:flex;align-items:center;gap:10px;">
+    <div style="display:flex;margin-right:2px;">
+      <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#089929,#2BCE4E);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;border:2px solid var(--bg);margin-right:-8px;z-index:4;">Y</div>
+      <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#E91E8C,#FF4DB8);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;border:2px solid var(--bg);margin-right:-8px;z-index:3;">K</div>
+      <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#F59E0B,#FCD34D);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;border:2px solid var(--bg);margin-right:-8px;z-index:2;">N</div>
+      <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#2BCE4E,#4DB6AC);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;border:2px solid var(--bg);z-index:1;">123</div>
+    </div>
+    <div>
+      <div style="font-size:12.5px;font-weight:700;color:var(--text);font-family:'DM Sans',sans-serif;"><em id="strip-count" style="color:var(--green);font-style:normal;">+125</em> <span id="strip-happy">happy customers this week</span></div>
+      <div style="font-size:10px;color:var(--muted);margin-top:1px;">⭐⭐⭐⭐⭐ <span id="strip-cities">Tétouan · M'diq · Martil</span></div>
+    </div>
+  </div>
+</div>
+
 <section id="menu">
   <div class="menu-inner">
 
@@ -5252,6 +5255,16 @@ function setLang(l) {
 
   $t("proof-txt",     t.proof);
   $t("chip-inscrits", t.chips[0]);  $t("chip-livraison", t.chips[1]);  $t("chip-note", t.chips[2]);
+  // Social proof strip
+  const _strip = {
+    fr: ["Livraison 45 min", "À partir de 39 MAD", "+125 avis", "happy customers this week", "Tétouan · M'diq · Martil"],
+    en: ["Delivery 45 min",  "From 39 MAD",        "+125 reviews","happy customers this week","Tétouan · M'diq · Martil"],
+    ar: ["توصيل 45 دقيقة",   "من 39 درهم",         "+125 تقييم",  "عميل سعيد هذا الأسبوع",   "تطوان · مضيق · مرتيل"],
+    es: ["Entrega 45 min",   "Desde 39 MAD",       "+125 reseñas","clientes felices esta semana","Tétouan · M'diq · Martil"],
+  };
+  const _sl = _strip[l] || _strip.fr;
+  $t("strip-delivery", _sl[0]); $t("strip-price", _sl[1]); $t("strip-reviews", _sl[2]);
+  $t("strip-happy", _sl[3]); $t("strip-cities", _sl[4]);
 
   $t("how-title", t.how);  $cs("how-title", ff);
 
