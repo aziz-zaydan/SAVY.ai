@@ -1935,7 +1935,7 @@
       display:flex; align-items:center; gap:4px; flex-shrink:0;
     }
     .chat-action-btn {
-      width:22px; height:22px; border-radius:6px;
+      width:28px; height:28px; border-radius:8px;
       background:rgba(255,255,255,0.14);
       border:1px solid rgba(255,255,255,0.22);
       color:#fff; cursor:pointer;
@@ -1948,7 +1948,7 @@
     .chat-action-btn:active { transform:scale(0.9); background:rgba(255,255,255,0.35); }
     .chat-action-btn svg    { display:block; pointer-events:none; }
     .chat-close {
-      width:22px; height:22px; border-radius:6px;
+      width:28px; height:28px; border-radius:8px;
       background:rgba(255,255,255,0.14);
       border:1px solid rgba(255,255,255,0.22);
       color:#fff; cursor:pointer; font-size:14px; font-weight:600;
@@ -4521,6 +4521,19 @@
         <rect x="28" y="50" width="24" height="18" rx="5" fill="#fff"/>
       </svg>
     </div>
+    <!-- Action buttons on the LEFT — before name -->
+    <div class="chat-header-actions" style="margin-right:6px;">
+      <button class="chat-action-btn" onclick="resetChat()" title="Nouvelle conversation">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
+      </button>
+      <button class="chat-action-btn" onclick="openWhatsAppOrder()" title="WhatsApp">
+        <svg width="17" height="17" viewBox="0 0 32 32" fill="none">
+          <path d="M16 2C8.268 2 2 8.268 2 16c0 2.484.668 4.81 1.836 6.818L2 30l7.384-1.812A13.94 13.94 0 0016 30c7.732 0 14-6.268 14-14S23.732 2 16 2z" fill="rgba(255,255,255,0.9)"/>
+          <path d="M22.498 19.533c-.305-.152-1.8-.888-2.079-.99-.278-.102-.481-.152-.683.152s-.783.99-.96 1.193c-.177.202-.354.228-.659.076-.305-.152-1.288-.475-2.453-1.513-.907-.808-1.518-1.806-1.697-2.111-.177-.304-.019-.469.133-.62.137-.136.305-.355.457-.532.152-.178.203-.305.304-.508.103-.203.051-.38-.025-.532-.077-.152-.684-1.648-.937-2.258-.246-.593-.497-.513-.683-.522l-.583-.01c-.203 0-.532.076-.81.38s-1.063 1.04-1.063 2.534 1.089 2.94 1.24 3.143c.152.203 2.143 3.272 5.191 4.586.726.314 1.293.5 1.735.641.729.23 1.392.198 1.916.12.584-.087 1.8-.735 2.054-1.446.254-.71.254-1.32.178-1.447-.077-.127-.278-.203-.583-.355z" fill="#089929"/>
+        </svg>
+      </button>
+    </div>
+    <!-- Name + status — centred/flex grows -->
     <div class="chat-header-info" style="display:flex;align-items:center;gap:6px;flex:1;min-width:0;">
       <div class="chat-header-name" style="font-size:11px;">Chef SAVY <span style="font-size:9.5px;opacity:.7;font-weight:600;">🧬 AI</span></div>
       <div class="chat-header-status" style="margin-top:0;">
@@ -4528,20 +4541,10 @@
         <span id="chat-status-txt" style="font-size:8px;opacity:.75;">En ligne</span>
       </div>
     </div>
-    <div class="chat-header-actions">
-      <button class="chat-action-btn" onclick="resetChat()" title="Nouvelle conversation">
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
-      </button>
-      <button class="chat-action-btn" onclick="openWhatsAppOrder()" title="WhatsApp">
-        <svg width="13" height="13" viewBox="0 0 32 32" fill="none">
-          <path d="M16 2C8.268 2 2 8.268 2 16c0 2.484.668 4.81 1.836 6.818L2 30l7.384-1.812A13.94 13.94 0 0016 30c7.732 0 14-6.268 14-14S23.732 2 16 2z" fill="rgba(255,255,255,0.9)"/>
-          <path d="M22.498 19.533c-.305-.152-1.8-.888-2.079-.99-.278-.102-.481-.152-.683.152s-.783.99-.96 1.193c-.177.202-.354.228-.659.076-.305-.152-1.288-.475-2.453-1.513-.907-.808-1.518-1.806-1.697-2.111-.177-.304-.019-.469.133-.62.137-.136.305-.355.457-.532.152-.178.203-.305.304-.508.103-.203.051-.38-.025-.532-.077-.152-.684-1.648-.937-2.258-.246-.593-.497-.513-.683-.522l-.583-.01c-.203 0-.532.076-.81.38s-1.063 1.04-1.063 2.534 1.089 2.94 1.24 3.143c.152.203 2.143 3.272 5.191 4.586.726.314 1.293.5 1.735.641.729.23 1.392.198 1.916.12.584-.087 1.8-.735 2.054-1.446.254-.71.254-1.32.178-1.447-.077-.127-.278-.203-.583-.355z" fill="#089929"/>
-        </svg>
-      </button>
-      <button class="chat-close" onclick="closeChat()">
-        <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
-    </div>
+    <!-- Close button stays on the right -->
+    <button class="chat-close" onclick="closeChat()" style="margin-left:4px;">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
   </div>
 
   <!-- Messages (overlay lives here so it only blocks msgs, not the form) -->
@@ -8363,8 +8366,9 @@ function _closeChatConversation(cl, custName, isCouple) {
   };
   addBotMsg(bye[cl]||bye.fr, isCouple);
 
-  // Lock input bar after a short delay
+  // Lock entire chat body (messages + input) but keep header fully clickable
   setTimeout(() => {
+    // Lock input bar
     const ia = document.getElementById("chat-input-area");
     if (ia) {
       ia.style.opacity = "0.45";
@@ -8375,20 +8379,46 @@ function _closeChatConversation(cl, custName, isCouple) {
         inp.placeholder = { fr:"Commande terminée 🎉", en:"Order complete 🎉", ar:"تم الطلب 🎉", es:"Pedido completo 🎉" }[cl] || "Order complete 🎉";
       }
     }
-    // Show a small "new conversation" hint
-    const quickChips = document.getElementById("quick-chips");
-    if (quickChips) {
-      quickChips.innerHTML = "";
+
+    // Lock messages area — no more button/chip clicks
+    const msgs = document.getElementById("chat-msgs");
+    if (msgs) {
+      msgs.style.pointerEvents = "none";
+      msgs.style.userSelect    = "none";
+    }
+
+    // Lock quick chips
+    const qc = document.getElementById("quick-chips");
+    if (qc) { qc.style.pointerEvents = "none"; qc.innerHTML = ""; }
+
+    // Ensure header stays fully interactive (undo any inherited lock)
+    const hdr = document.querySelector("#chat-window .chat-header");
+    if (hdr) {
+      hdr.style.pointerEvents = "auto";
+      hdr.style.position      = "relative";
+      hdr.style.zIndex        = "10";
+    }
+
+    // Show "New order" chip above the locked input
+    if (ia) {
+      const newWrap = document.createElement("div");
+      newWrap.style.cssText = "padding:6px 12px 4px;display:flex;justify-content:center;pointer-events:auto;";
       const newBtn = document.createElement("button");
       newBtn.className = "q-chip";
+      newBtn.style.cssText = "pointer-events:auto;";
       newBtn.textContent = {fr:"🔄 Nouvelle commande",en:"🔄 New order",ar:"🔄 طلب جديد",es:"🔄 Nuevo pedido"}[cl]||"🔄 New order";
       newBtn.onclick = () => {
-        resetChat();
-        if (ia) { ia.style.opacity=""; ia.style.pointerEvents=""; }
+        // Unlock everything on new order
+        if (msgs)  { msgs.style.pointerEvents=""; msgs.style.userSelect=""; }
+        if (ia)    { ia.style.opacity=""; ia.style.pointerEvents=""; }
+        if (hdr)   { hdr.style.zIndex=""; }
+        newWrap.remove();
         const inpEl = document.getElementById("chat-inp");
         if (inpEl) { inpEl.disabled=false; inpEl.placeholder=""; }
+        resetChat();
       };
-      quickChips.appendChild(newBtn);
+      newWrap.appendChild(newBtn);
+      ia.parentNode.insertBefore(newWrap, ia);
     }
   }, 1200);
 }
@@ -9074,15 +9104,21 @@ function resetChat() {
   window._savyOrderDishes = null;
   leadShown = false; leadDone = false; userMsgCount = 0;
   const msgs = document.getElementById("chat-msgs");
-  if(msgs) msgs.innerHTML = "";
+  if(msgs) { msgs.innerHTML = ""; msgs.style.pointerEvents=""; msgs.style.userSelect=""; }
   const lf = document.getElementById("chat-lead-form");
   const ia = document.getElementById("chat-input-area");
   if(lf) { lf.style.display = "none"; }
-  if(ia) { ia.style.display = "flex"; }
+  if(ia) { ia.style.display = "flex"; ia.style.opacity=""; ia.style.pointerEvents=""; }
+  const inp = document.getElementById("chat-inp");
+  if(inp) { inp.disabled=false; inp.placeholder=""; }
   const summaryEl = document.getElementById("lead-meal-summary");
   if(summaryEl) summaryEl.style.display = "none";
   const qc = document.getElementById("quick-chips");
-  if(qc) qc.innerHTML = "";
+  if(qc) { qc.innerHTML=""; qc.style.pointerEvents=""; }
+  // Remove any "new order" wrap that was inserted above input
+  document.querySelectorAll("#chat-window .q-chip").forEach(el => {
+    if (el.parentNode && el.parentNode !== qc) el.parentNode.remove();
+  });
   initChat();
 }
 
