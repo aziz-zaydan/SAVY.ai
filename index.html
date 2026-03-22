@@ -408,7 +408,7 @@
 
     /* ── HERO ── */
     #hero {
-      padding:36px clamp(16px,4vw,56px) 44px;
+      padding:18px clamp(16px,4vw,48px) 22px;
       background: linear-gradient(160deg, var(--greenXL) 0%, var(--bg) 55%, var(--mint) 100%);
       position:relative; overflow:hidden;
     }
@@ -543,7 +543,7 @@
     .persona-desc  { font-size:9px; color:var(--muted); margin-top:2px; line-height:1.3; }
 
     /* ── STEPS / HOW ── */
-    #how { padding:20px clamp(16px,4vw,56px) 24px; background:var(--card); }
+    #how { padding:16px clamp(16px,4vw,48px) 18px; background:var(--card); }
     .section-header { text-align:center; margin-bottom:10px; }
     .section-title { font-family:'Cormorant Garamond',serif; font-size:clamp(30px,4.5vw,48px); font-weight:700; color:var(--text); margin-bottom:10px; }
     .title-bar { width:48px; height:4px; background:var(--green); border-radius:99px; margin:0 auto; }
@@ -556,12 +556,12 @@
     .step-desc  { font-size:11px; color:var(--sub); line-height:1.5; }
 
     /* ── REVIEWS ──────────────────────────────────────── */
-    #reviews { padding:28px clamp(16px,4vw,56px); background:var(--bg); overflow:hidden; }
+    #reviews { padding:16px clamp(16px,4vw,48px); background:var(--bg); overflow:hidden; }
     .reviews-inner { max-width:1100px; margin:0 auto; }
     .rev-sub { font-size:15px; color:var(--sub); margin-bottom:0; }
 
     /* Summary bar */
-    .rev-summary { display:flex; align-items:center; gap:28px; background:var(--card); border:1px solid var(--border); border-radius:16px; padding:16px 20px; margin-bottom:20px; box-shadow:var(--shadow); flex-wrap:wrap; }
+    .rev-summary { display:flex; align-items:center; gap:16px; background:var(--card); border:1px solid var(--border); border-radius:10px; padding:8px 12px; margin-bottom:10px; box-shadow:var(--shadow); flex-wrap:wrap; }
     [data-theme="dark"] .rev-summary { background:var(--card); }
     /* ── DARK MODE : Reviews section ─────────────────────── */
     [data-theme="dark"] #reviews {
@@ -599,15 +599,15 @@
     [data-theme="dark"] .rev-verified::before { color: #2BCE4E !important; }
     [data-theme="dark"] .rev-stars { color: #FBBF24 !important; }
     [data-theme="dark"] .rev-name  { color: #D1FAE5 !important; }
-    .rev-big-score { font-family:'Outfit',sans-serif; font-size:40px; font-weight:900; color:var(--green); line-height:1; }
+    .rev-big-score { font-family:'Outfit',sans-serif; font-size:22px; font-weight:900; color:var(--green); line-height:1; }
     .rev-stars-wrap { display:flex; flex-direction:column; gap:4px; }
-    .rev-stars-big { font-size:17px; color:#F59E0B; letter-spacing:2px; }
-    .rev-count-lbl { font-size:12px; color:var(--muted); font-weight:600; }
+    .rev-stars-big { font-size:11px; color:#F59E0B; letter-spacing:.5px; }
+    .rev-count-lbl { font-size:10px; color:var(--muted); font-weight:600; }
     .rev-bars { flex:1; min-width:180px; display:flex; flex-direction:column; gap:6px; }
     .rev-bar-row { display:flex; align-items:center; gap:8px; font-size:12px; color:var(--sub); font-weight:600; }
     .rev-bar-row span:first-child { width:22px; text-align:right; }
     .rev-bar-row span:last-child  { width:28px; }
-    .rev-bar-track { flex:1; height:8px; background:var(--border); border-radius:99px; overflow:hidden; }
+    .rev-bar-track { flex:1; height:5px; background:var(--border); border-radius:99px; overflow:hidden; }
     .rev-bar-fill  { height:100%; background:linear-gradient(90deg,#F59E0B,#FBBF24); border-radius:99px; transition:width 1s ease; }
 
     /* Carousel — infinite marquee */
@@ -617,7 +617,7 @@
       mask: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
     }
     .rev-track {
-      display:flex; gap:16px; padding:4px 2px 12px;
+      display:flex; gap:10px; padding:2px 2px 6px;
       width:max-content;
       animation: revScroll 45s linear infinite;
     }
@@ -627,9 +627,9 @@
       100% { transform: translateX(-50%); }
     }
     .rev-card {
-      flex:0 0 300px; width:300px;
-      background:var(--card); border:1.5px solid var(--border); border-radius:22px;
-      padding:0; box-shadow:0 2px 12px rgba(9,184,48,0.07);
+      flex:0 0 190px; width:190px;
+      background:var(--card); border:1.5px solid var(--border); border-radius:14px;
+      padding:0; box-shadow:0 2px 10px rgba(9,184,48,0.07);
       display:flex; flex-direction:column;
       transition:transform .22s cubic-bezier(.34,1.56,.64,1), box-shadow .2s, border-color .2s;
       user-select:none; overflow:hidden;
@@ -643,33 +643,33 @@
 
     /* Colored header strip */
     .rev-card-header {
-      padding:18px 18px 14px;
+      padding:8px 10px 6px;
       position:relative; overflow:hidden;
     }
     .rev-card-header::after {
       content:'❝';
       position:absolute; top:8px; right:14px;
-      font-size:52px; line-height:1; opacity:.12;
+      font-size:36px; line-height:1; opacity:.1;
       color:#fff; font-family:Georgia,serif;
       pointer-events:none;
     }
     .rev-card-top { display:flex; align-items:center; gap:12px; }
     .rev-avatar {
-      width:50px; height:50px; border-radius:14px;
+      width:36px; height:36px; border-radius:10px;
       display:flex; align-items:center; justify-content:center;
-      font-family:'Outfit',sans-serif; font-size:17px; font-weight:900;
+      font-family:'Outfit',sans-serif; font-size:13px; font-weight:900;
       color:#fff; flex-shrink:0;
       box-shadow:0 4px 14px rgba(0,0,0,0.2);
       border:2px solid rgba(255,255,255,0.25);
     }
-    .rev-name { font-family:'Outfit',sans-serif; font-size:14px; font-weight:800; color:#fff; }
-    .rev-meta { font-size:11px; color:rgba(255,255,255,0.75); margin-top:2px; }
-    .rev-stars { font-size:14px; color:#FCD34D; letter-spacing:1px; margin-top:6px; }
+    .rev-name { font-family:'Outfit',sans-serif; font-size:11px; font-weight:800; color:#fff; }
+    .rev-meta { font-size:9px; color:rgba(255,255,255,0.75); margin-top:1px; }
+    .rev-stars { font-size:10px; color:#FCD34D; letter-spacing:.5px; margin-top:3px; }
 
     /* Card body */
-    .rev-card-body { padding:14px 18px 16px; display:flex; flex-direction:column; gap:12px; flex:1; }
+    .rev-card-body { padding:7px 10px 9px; display:flex; flex-direction:column; gap:5px; flex:1; }
     .rev-text {
-      font-size:12.5px; color:var(--sub); line-height:1.7; flex:1;
+      font-size:10px; color:var(--sub); line-height:1.55; flex:1;
       font-style:italic; position:relative; padding-left:14px;
     }
     .rev-text::before {
@@ -678,20 +678,20 @@
       background:var(--green); border-radius:2px; opacity:.5;
     }
     .rev-card-footer { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:6px; }
-    .rev-tag { display:inline-block; font-size:11px; font-weight:700; padding:3px 10px; border-radius:20px; background:var(--greenXL); color:var(--green); }
+    .rev-tag { display:inline-block; font-size:9.5px; font-weight:700; padding:2px 8px; border-radius:20px; background:var(--greenXL); color:var(--green); }
     .rev-verified { font-size:10.5px; color:var(--muted); display:flex; align-items:center; gap:4px; }
     .rev-verified::before { content:'✓'; color:var(--green); font-weight:900; }
 
     /* Dots — hidden, marquee has no pages */
     .rev-dots { display:none; }
     @media(max-width:768px){
-      .rev-summary { gap:16px; padding:18px; }
-      .rev-big-score { font-size:44px; }
+      .rev-summary { gap:10px; padding:10px; }
+      .rev-big-score { font-size:26px; }
     }
 
 
     #what-we-do {
-      padding: 32px clamp(16px,4vw,56px) 36px;
+      padding: 18px clamp(16px,4vw,48px) 20px;
       max-width: 1160px;
       margin: 0 auto;
     }
@@ -932,7 +932,7 @@
       /* ── Global section padding ── */
       #what-we-do, #how, #loyalty, #order-track-section,
       #reviews, #stats, #final, #faq, #nutri-calc, #menu,
-      footer { padding:22px 16px 28px; }
+      footer { padding:12px 16px 16px; }
 
       /* ── Urgency strip ── */
       #urgency-strip  { font-size:10px; padding:6px 10px; }
@@ -947,7 +947,7 @@
       .btn-cta       { padding:9px 14px; font-size:12px; }
 
       /* ── Hero ── */
-      #hero          { padding:22px 16px 28px; }
+      #hero          { padding:14px 16px 16px; }
       .hero-inner    { grid-template-columns:1fr; gap:14px; }
       .hero-right    { display:none; }
       h1.hero-title  { font-size:clamp(26px,7.5vw,38px); line-height:1.08; margin-bottom:10px; }
@@ -986,7 +986,7 @@
       .step-desc     { font-size:10.5px; line-height:1.55; }
 
       /* ── Stats ── */
-      #stats         { padding:20px 16px; }
+      #stats         { padding:12px 16px; }
       .stat-card     { padding:14px 10px; border-radius:16px; }
       .stat-val      { font-size:22px; }
       .stat-lbl      { font-size:9.5px; }
@@ -1005,7 +1005,7 @@
       .wwd-tag       { font-size:10px !important; }
 
       /* ── Menu section ── */
-      #menu          { padding:20px 14px 28px; }
+      #menu          { padding:12px 14px 16px; }
       .menu-inner    { padding:0; }
       #menu-title    { font-size:clamp(20px,6vw,28px) !important; }
       .search-inp    { padding:10px 14px 10px 38px; font-size:13px; border-radius:12px; }
@@ -1052,13 +1052,13 @@
       .sched-select             { padding:9px 10px; font-size:12px; border-radius:10px; }
 
       /* ── Reviews ── */
-      .rev-summary   { flex-direction:column; gap:10px; padding:12px; border-radius:14px; }
-      .rev-big-score { font-size:38px; }
+      .rev-summary   { flex-direction:column; gap:7px; padding:9px; border-radius:11px; }
+      .rev-big-score { font-size:26px; }
       .rev-stars-big { font-size:16px; }
-      .rev-card      { flex:0 0 84vw; min-width:84vw; border-radius:18px; }
-      .rev-card-header { padding:14px 14px 10px; }
-      .rev-card-body { padding:10px 14px 13px; }
-      .rev-text      { font-size:12px; line-height:1.65; }
+      .rev-card      { flex:0 0 72vw; min-width:72vw; border-radius:14px; }
+      .rev-card-header { padding:8px 10px 6px; }
+      .rev-card-body { padding:6px 10px 9px; }
+      .rev-text      { font-size:10px; line-height:1.55; }
 
       /* ── Loyalty ── */
       .loy-header    { margin-bottom:18px; }
@@ -1076,7 +1076,7 @@
       .ots-step-desc { font-size:11px; }
 
       /* ── Nutrition calculator ── */
-      #nutri-calc           { padding:20px 16px 24px; }
+      #nutri-calc           { padding:12px 16px 16px; }
       .nutri-inner          { max-width:100%; }
       #nutri-title          { font-size:clamp(18px,5.5vw,24px) !important; }
       #nutri-sub            { font-size:12px !important; line-height:1.65 !important; margin-top:6px !important; }
@@ -1106,7 +1106,7 @@
       .faq-item.open .faq-body { padding:0 15px 14px; }
 
       /* ── Final CTA ── */
-      #final         { padding:24px 16px 32px; }
+      #final         { padding:14px 16px 20px; }
       .final-title   { font-size:clamp(18px,5.5vw,24px); }
       .final-sub     { font-size:13px; line-height:1.7; margin-bottom:20px; }
       .social-links  { gap:8px; }
@@ -1158,7 +1158,7 @@
       .nutri-select  { font-size:12px; padding:8px 9px; }
       .loy-card      { padding:11px 8px; }
       .loy-badge     { font-size:20px; }
-      .rev-card      { flex:0 0 86vw; min-width:86vw; }
+      .rev-card      { flex:0 0 60vw; min-width:60vw; }
       #order-modal   { padding:16px 13px max(22px,env(safe-area-inset-bottom,22px)); }
       .lead-inp      { padding:10px 11px; font-size:12px; }
       .lead-submit   { padding:12px; font-size:13px; }
@@ -1194,11 +1194,11 @@
     [data-theme="dark"] .macro-f { background:rgba(185,28,28,0.2); color:#FCA5A5; }
 
     /* ── STATS ── */
-    #stats { padding:28px clamp(16px,4vw,56px); background:var(--bg); }
+    #stats { padding:14px clamp(16px,4vw,48px); background:var(--bg); }
 
     /* ── NUTRITION CALCULATOR ── */
     #nutri-calc {
-      padding:28px clamp(16px,4vw,56px);
+      padding:14px clamp(16px,4vw,48px);
       background:var(--card);
     }
     .nutri-inner { max-width:900px; margin:0 auto; }
@@ -1717,7 +1717,7 @@
 
     /* ── LOYALTY ── */
     #loyalty {
-      padding: 28px clamp(16px,4vw,56px) 32px;
+      padding: 16px clamp(16px,4vw,48px) 18px;
       background: var(--bg);
     }
     .loyalty-inner { max-width:900px; margin:0 auto; }
@@ -1755,7 +1755,7 @@
     @media(max-width:640px){ .loy-cards { grid-template-columns:repeat(2,1fr); } }
 
     /* ── MENU ── */
-    #menu { padding:32px clamp(16px,4vw,56px) 40px; background:var(--card); }
+    #menu { padding:16px clamp(16px,4vw,48px) 20px; background:var(--card); }
     .menu-inner { max-width:900px; margin:0 auto; }
     .search-wrap { position:relative; margin-bottom:18px; }
     .search-icon { position:absolute; left:14px; top:50%; transform:translateY(-50%); pointer-events:none; }
@@ -1836,7 +1836,7 @@
 
     /* ── FINAL CTA ── */
     /* ── FAQ ─────────────────────────────────────────────── */
-    #faq { padding:32px clamp(16px,4vw,56px); background:var(--card); }
+    #faq { padding:16px clamp(16px,4vw,48px); background:var(--card); }
     [data-theme="dark"] #faq { background:var(--bg); }
     .faq-inner { max-width:760px; margin:0 auto; }
     .faq-item {
@@ -1878,7 +1878,7 @@
     }
     [dir="rtl"] .faq-tag { margin-left:0; margin-right:8px; }
 
-    #final { padding:28px clamp(16px,4vw,56px); background:linear-gradient(135deg, var(--greenXL), var(--bg)); text-align:center; }
+    #final { padding:16px clamp(16px,4vw,48px); background:linear-gradient(135deg, var(--greenXL), var(--bg)); text-align:center; }
     .final-inner { max-width:560px; margin:0 auto; }
     .final-title { font-family:'Outfit',sans-serif; font-size:clamp(20px,3vw,28px); font-weight:900; color:var(--text); margin-bottom:8px; }
     .final-sub { font-size:15px; color:var(--sub); line-height:1.8; margin-bottom:32px; }
@@ -2863,7 +2863,7 @@
 
       /* Reviews */
       .rev-summary { flex-direction:column !important; gap:12px !important; }
-      .rev-card    { flex:0 0 min(300px,88vw) !important; width:min(300px,88vw) !important; }
+      .rev-card    { flex:0 0 min(180px,65vw) !important; width:min(180px,65vw) !important; }
 
       /* Chat */
       #chat-window { width:min(370px, calc(100vw - 32px)) !important; right:18px !important; left:auto !important; }
@@ -2902,7 +2902,7 @@
       .loy-heading   { font-size:clamp(18px,5vw,24px)   !important; }
 
       /* ── Hero ── */
-      #hero                  { padding:22px 14px 30px !important; }
+      #hero                  { padding:12px 14px 16px !important; }
       .hero-inner            { grid-template-columns:1fr !important; gap:14px !important; }
       .hero-right            { display:none !important; }
       h1.hero-title          { font-size:clamp(24px,7vw,34px) !important; line-height:1.1 !important; margin-bottom:10px !important; }
@@ -2949,7 +2949,7 @@
       .wwd-tag          { font-size:11px !important; }
 
       /* ── Menu ── */
-      #menu              { padding:18px 14px 24px !important; }
+      #menu              { padding:10px 14px 14px !important; }
       .menu-inner        { padding:0 !important; }
       #menu-title        { font-size:clamp(19px,5.5vw,26px) !important; }
       .search-inp        { padding:10px 12px 10px 36px !important; font-size:13px !important; border-radius:12px !important; }
@@ -2988,7 +2988,7 @@
       .sched-select        { padding:9px 10px !important; font-size:12px !important; border-radius:9px !important; }
 
       /* ── Reviews ── */
-      #reviews           { padding:18px 14px 22px !important; }
+      #reviews           { padding:10px 14px 14px !important; }
       .reviews-inner     { max-width:100% !important; padding:0 !important; }
       .rev-summary       { flex-direction:column !important; gap:9px !important; padding:12px !important; border-radius:13px !important; margin-bottom:20px !important; }
       .rev-big-score     { font-size:36px !important; }
@@ -2996,7 +2996,7 @@
       .rev-count-lbl     { font-size:11px !important; }
       .rev-bars          { min-width:0 !important; width:100% !important; }
       .rev-track-wrap    { margin:0 -14px !important; padding:0 14px !important; }
-      .rev-card          { flex:0 0 84vw !important; width:84vw !important; border-radius:16px !important; }
+      .rev-card          { flex:0 0 68vw !important; width:68vw !important; border-radius:13px !important; }
       .rev-card-header   { padding:14px 14px 11px !important; }
       .rev-card-body     { padding:11px 14px 13px !important; }
       .rev-text          { font-size:12px !important; line-height:1.55 !important; }
@@ -3020,7 +3020,7 @@
       .ots-step-desc { font-size:11px !important; }
 
       /* ── Nutrition calculator ── */
-      #nutri-calc         { padding:18px 14px 22px !important; }
+      #nutri-calc         { padding:10px 14px 14px !important; }
       .nutri-inner        { max-width:100% !important; padding:0 !important; }
       #nutri-title        { font-size:clamp(17px,5vw,22px) !important; margin-bottom:4px !important; }
       #nutri-sub          { font-size:12px !important; line-height:1.55 !important; margin:5px auto 0 !important; max-width:100% !important; }
@@ -3052,7 +3052,7 @@
       .faq-item.open .faq-body { padding:0 13px 13px !important; }
 
       /* ── Final CTA ── */
-      #final         { padding:20px 14px 28px !important; }
+      #final         { padding:12px 14px 18px !important; }
       .final-inner   { max-width:100% !important; padding:0 !important; }
       .final-title   { font-size:clamp(16px,5vw,21px) !important; }
       .final-sub     { font-size:13px !important; line-height:1.65 !important; margin-bottom:18px !important; }
@@ -3101,7 +3101,7 @@
       .loy-card      { padding:10px 7px !important; }
       .loy-badge     { font-size:18px !important; }
       .loy-card-name { font-size:10px !important; }
-      .rev-card      { flex:0 0 87vw !important; width:87vw !important; }
+      .rev-card      { flex:0 0 70vw !important; width:70vw !important; }
       #order-modal   { padding:15px 12px max(20px,env(safe-area-inset-bottom,20px)) !important; }
       .lead-inp      { padding:10px 10px !important; font-size:12px !important; }
       .lead-submit   { padding:11px !important; font-size:13px !important; }
@@ -3889,25 +3889,8 @@
 <section id="menu">
   <div class="menu-inner">
 
-    <!-- Header -->
-    <div class="section-header">
-      <h2 class="section-title fh" id="menu-title">Notre Menu</h2>
-      <p style="color:var(--sub);font-size:14px;margin-top:6px;line-height:1.6;" id="menu-sub">Des saveurs du monde, optimisées par l'IA pour vos objectifs</p>
-      <div class="title-bar" style="margin-top:10px;"></div>
-    </div>
-
-    <!-- Search + filters row -->
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap;">
-      <div class="search-wrap" style="flex:1;min-width:180px;">
-        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8FBFAA" stroke-width="2" stroke-linecap="round">
-          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-        </svg>
-        <input class="search-inp" id="search" placeholder="Rechercher..." oninput="renderDishes()"/>
-      </div>
-    </div>
-
     <!-- Diet filter pills -->
-    <div id="diet-filters" class="filter-row" style="margin-bottom:18px;"></div>
+    <div id="diet-filters" class="filter-row" style="margin-bottom:14px;margin-top:4px;"></div>
 
     <!-- Cart bar -->
     <div id="cart-bar" style="display:none;align-items:center;justify-content:space-between;padding:12px 16px;border-radius:16px;background:linear-gradient(135deg,var(--green),#05a827);margin-bottom:18px;animation:popIn .3s ease;flex-wrap:wrap;gap:8px;box-shadow:0 6px 24px rgba(9,184,48,.3);">
@@ -5555,7 +5538,7 @@ function renderDietFilters(){
 function setDiet(f){ activeDiet=f; renderDietFilters(); renderDishes(); }
 function renderDishes(){
   const t=copy[lang]||copy['fr']||copy['en']; const isAr=lang==="ar"||false;
-  const q=document.getElementById("search").value.toLowerCase();
+  const q=(document.getElementById("search")?.value||"").toLowerCase();
   const isSportifView = activePersonaMenu==="sportif";
   const filtered=dishes.filter(d=>{
     const ms=d.name.toLowerCase().includes(q)||d.ar.includes(q);
