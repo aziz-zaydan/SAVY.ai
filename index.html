@@ -6794,6 +6794,16 @@ function _showChatMenu() {
     window._savyOrderDishes=sel; window._savyConfirmedDish=sel[0];
     const total=sel.reduce((s,d)=>s+(d.price||0),0);
     const names=sel.map(d=>d.name).join(" + ");
+
+    // If this is an add-on (customer already ordered), skip lead form
+    if (window._isAddonFlow) {
+      menuEl.remove();
+      const am={fr:`Super choix ! 🧬 ${names} — ${total} MAD. Je confirme l'ajout à votre commande...`,en:`Great choice! 🧬 ${names} — ${total} MAD. Adding to your order...`,ar:`اختيار رائع! 🧬 ${names} — ${total} درهم. جاري إضافته إلى طلبك...`,es:`¡Excelente elección! 🧬 ${names} — ${total} MAD. Añadiendo a tu pedido...`};
+      addBotMsg(am[cl]||am.fr,isCouple);
+      setTimeout(()=>_submitAddon(sel),800);
+      return;
+    }
+
     const cm={fr:`Parfait ! 🧬 ${names} — ${total} MAD. Vos infos pour confirmer 👇`,en:`Perfect! 🧬 ${names} — ${total} MAD. Your details to confirm 👇`,ar:`ممتاز! 🧬 ${names} — ${total} درهم. معلوماتكم للتأكيد 👇`,es:`¡Perfecto! 🧬 ${names} — ${total} MAD. Tus datos para confirmar 👇`};
     addBotMsg(cm[cl]||cm.fr,isCouple);
     chatHistory.push({role:"assistant",content:cm[cl]||cm.fr});
@@ -8116,7 +8126,15 @@ function submitLead() {
     window.open(`https://wa.me/212708700830?text=${encodeURIComponent(waConfirm[cl] || waConfirm.fr)}`, "_blank");
     animateLoyaltyPoints(10);
 
-    // Close chat + redirect to live tracking after short delay
+    // Store confirmed order data for potential add-ons
+    window._lastOrderId    = orderId;
+    window._lastOrderName  = name;
+    window._lastOrderCity  = city;
+    window._lastOrderPhone = phone;
+    window._lastOrderDishes = orderedDishes.slice();
+    window._lastOrderComment = comment || "";
+
+    // Show order tracking, but keep chat available for add-ons
     setTimeout(() => {
       closeChat();
       showOrderTracking(name, orderId);
@@ -8125,32 +8143,255 @@ function submitLead() {
         if (s) s.scrollIntoView({ behavior:"smooth", block:"center" });
       }, 400);
 
-      // Reset so customer can order again if they reopen the chat
+      // Reset state for add-on flow
       setTimeout(() => {
-        leadDone = false;
+        leadDone  = false;
+        leadShown = false;
         window._savyOrderDishes   = null;
         window._savyConfirmedDish = null;
-        // Restore input area (was hidden during form)
+        window._isAddonFlow       = false;
         const ia = document.getElementById("chat-input-area");
         if (ia) ia.style.display = "flex";
-        // Add a friendly follow-up after a pause
+
+        // Re-open chat with dessert offer
         const cl2 = window._savyChatLang || lang || "fr";
-        const followUp = {
-          fr: "🍽️ Votre commande est confirmée ! Voulez-vous ajouter un dessert ou commander pour quelqu'un d'autre ?",
-          en: "🍽️ Your order is confirmed! Would you like to add a dessert or order for someone else?",
-          ar: "🍽️ تم تأكيد طلبكم! هل تودّون إضافة حلوى أو طلب شيء آخر؟",
-          es: "🍽️ ¡Tu pedido está confirmado! ¿Te gustaría agregar un postre o pedir algo más?",
-        };
         setTimeout(() => {
-          addBotMsg(followUp[cl2] || followUp.fr, isCouple);
-          const inp = document.getElementById("chat-inp");
-          if (inp) inp.focus();
-        }, 3000);
+          openChat();
+          setTimeout(() => { _showDessertMenu(cl2, orderId, name, isCouple); }, 500);
+        }, 2000);
       }, 2800);
     }, 2200);
   }, 1200);
 }
 
+
+/* ═══════════════════════════════════════════
+   DESSERT ADD-ON FLOW
+═══════════════════════════════════════════ */
+window._isAddonFlow = false;
+const DESSERT_IDS   = [16, 17, 18];   // Flan Caramel Léger · Cheesecake Creamy · Tiramisu Healthy
+
+// Step 1 — show the dessert mini-menu right inside the chat
+function _showDessertMenu(cl, origOrderId, custName, isCouple) {
+  const msgsEl = document.getElementById("chat-msgs");
+  if (!msgsEl) return;
+
+  const desserts = DESSERT_IDS.map(id => (dishes||[]).find(d => d.id === id)).filter(Boolean);
+  if (!desserts.length) return;
+
+  const intro = {
+    fr: `🍽️ Votre commande <b>${origOrderId}</b> est confirmée, ${custName} ! 🎉
+En attendant la livraison, vous pouvez ajouter un dessert 👇`,
+    en: `🍽️ Order <b>${origOrderId}</b> confirmed, ${custName}! 🎉
+While you wait, would you like to add a dessert? 👇`,
+    ar: `🍽️ تم تأكيد طلبك <b>${origOrderId}</b>، ${custName}! 🎉
+هل تريد إضافة حلوى؟ 👇`,
+    es: `🍽️ ¡Pedido <b>${origOrderId}</b> confirmado, ${custName}! 🎉
+Mientras esperas, ¿quieres agregar un postre? 👇`,
+  };
+  const noThanks = { fr:"Non merci 🙂", en:"No thanks 🙂", ar:"لا شكراً 🙂", es:"No gracias 🙂" };
+
+  const row = document.createElement("div");
+  row.className = "msg-bot";
+  row.id = "dessert-offer-row";
+  const av = document.createElement("div");
+  av.className = "msg-avatar"; av.textContent = "👨‍🍳";
+  const bub = document.createElement("div");
+  bub.className = "msg-bubble";
+  bub.style.cssText = "max-width:99%;padding:11px 12px;";
+
+  // Intro text
+  const txt = document.createElement("div");
+  txt.innerHTML = (intro[cl]||intro.fr).replace(/\n/g,"<br>");
+  txt.style.cssText = "font-size:12.5px;margin-bottom:12px;line-height:1.55;";
+  bub.appendChild(txt);
+
+  // Dessert cards grid (1 col, compact)
+  const grid = document.createElement("div");
+  grid.style.cssText = "display:flex;flex-direction:column;gap:7px;margin-bottom:10px;";
+
+  desserts.forEach(d => {
+    const card = document.createElement("div");
+    card.style.cssText = `
+      display:flex;align-items:center;gap:9px;
+      background:var(--card2);border:1.5px solid var(--border);
+      border-radius:12px;padding:8px 10px;cursor:pointer;
+      transition:border-color .15s,background .15s;
+    `;
+    card.innerHTML = `
+      ${d.img ? `<img src="${d.img}" style="width:44px;height:44px;border-radius:8px;object-fit:cover;flex-shrink:0;">` :
+                `<div style="width:44px;height:44px;border-radius:8px;background:var(--greenXL);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">${d.e}</div>`}
+      <div style="flex:1;min-width:0;">
+        <div style="font-family:'Outfit',sans-serif;font-size:12px;font-weight:800;color:var(--text);">${d.name}</div>
+        <div style="font-size:10px;color:var(--muted);">${d.cal} kcal · ${d.tag}</div>
+      </div>
+      <div style="font-family:'Outfit',sans-serif;font-size:13px;font-weight:900;color:var(--green);flex-shrink:0;">${d.price} MAD</div>
+    `;
+    card.onmouseenter = () => { card.style.borderColor="var(--green)"; card.style.background="var(--greenXL)"; };
+    card.onmouseleave = () => { card.style.borderColor="var(--border)"; card.style.background="var(--card2)"; };
+    card.onclick = () => {
+      document.getElementById("dessert-offer-row")?.remove();
+      _confirmDessert(cl, origOrderId, custName, isCouple, d);
+    };
+    grid.appendChild(card);
+  });
+  bub.appendChild(grid);
+
+  // No thanks button
+  const btnNo = document.createElement("button");
+  btnNo.textContent = noThanks[cl]||noThanks.fr;
+  btnNo.style.cssText = "width:100%;padding:9px;border-radius:10px;background:transparent;border:1.5px solid var(--border);color:var(--muted);font-size:12px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;";
+  btnNo.onclick = () => {
+    document.getElementById("dessert-offer-row")?.remove();
+    _closeChatConversation(cl, custName, isCouple);
+  };
+  bub.appendChild(btnNo);
+
+  row.appendChild(av);
+  row.appendChild(bub);
+  msgsEl.appendChild(row);
+  scrollChatToBottom();
+}
+
+// Step 2 — confirm the chosen dessert, ask "is that all?"
+function _confirmDessert(cl, origOrderId, custName, isCouple, d) {
+  const confirm = {
+    fr: `🍰 Super choix ! <b>${d.name}</b> (${d.price} MAD) ajouté à votre commande ${origOrderId}.
+
+Je prépare la confirmation WhatsApp ✅`,
+    en: `🍰 Great choice! <b>${d.name}</b> (${d.price} MAD) added to order ${origOrderId}.
+
+Sending WhatsApp confirmation ✅`,
+    ar: `🍰 اختيار رائع! <b>${d.name}</b> (${d.price} درهم) أُضيف إلى طلبك ${origOrderId}.
+
+جاري إرسال تأكيد WhatsApp ✅`,
+    es: `🍰 ¡Excelente elección! <b>${d.name}</b> (${d.price} MAD) añadido al pedido ${origOrderId}.
+
+Enviando confirmación WhatsApp ✅`,
+  };
+
+  // Save add-on to sheets
+  saveToSheets({
+    order_id:    origOrderId + "-DSS",
+    name:        custName,
+    city:        window._lastOrderCity  || "",
+    phone:       "'" + (window._lastOrderPhone || ""),
+    comment:     "Dessert add-on to " + origOrderId,
+    meals:       d.name,
+    meal_count:  1,
+    total_meals: d.price,
+    delivery_fee:0,
+    order_total: d.price,
+    persona:     _leadGender || "unknown",
+    lang:        cl,
+    gender:      _leadGender || "unknown",
+    source:      "chat-dessert",
+    conversation:"Dessert add-on to " + origOrderId + ": " + d.name,
+  });
+
+  // WA message
+  const waMsg = {
+    fr: `Salam SAVY ! Je veux ajouter un dessert à ma commande ${origOrderId} :\n${d.name} — ${d.price} MAD 🍰 Merci !`,
+    en: `Hello SAVY! I'd like to add a dessert to order ${origOrderId}:\n${d.name} — ${d.price} MAD 🍰 Thanks!`,
+    ar: `سلام SAVY! أريد إضافة حلوى لطلبي ${origOrderId}:\n${d.name} — ${d.price} درهم 🍰 شكراً!`,
+    es: `¡Hola SAVY! Quiero agregar un postre al pedido ${origOrderId}:\n${d.name} — ${d.price} MAD 🍰 ¡Gracias!`,
+  };
+  window.open(`https://wa.me/212708700830?text=${encodeURIComponent((waMsg[cl]||waMsg.fr).replace(/\\n/g,"\n"))}`, "_blank");
+
+  // Show confirmation bubble + "is that all?" buttons
+  const msgsEl = document.getElementById("chat-msgs");
+  const row = document.createElement("div");
+  row.className = "msg-bot";
+  row.id = "dessert-confirm-row";
+  const av = document.createElement("div");
+  av.className = "msg-avatar"; av.textContent = "👨‍🍳";
+  const bub = document.createElement("div");
+  bub.className = "msg-bubble";
+  bub.style.cssText = "max-width:99%;padding:11px 12px;";
+
+  const txt = document.createElement("div");
+  txt.innerHTML = (confirm[cl]||confirm.fr).replace(/\n/g,"<br>");
+  txt.style.cssText = "font-size:12.5px;margin-bottom:12px;line-height:1.55;";
+  bub.appendChild(txt);
+
+  // "Is that all?" buttons
+  const allQ = {fr:"C'est tout pour vous ?",en:"Is that all for you?",ar:"هل هذا كل شيء؟",es:"¿Es todo por ahora?"};
+  const qlbl = document.createElement("div");
+  qlbl.textContent = allQ[cl]||allQ.fr;
+  qlbl.style.cssText = "font-size:11.5px;font-weight:700;color:var(--sub);margin-bottom:8px;";
+  bub.appendChild(qlbl);
+
+  const btnWrap = document.createElement("div");
+  btnWrap.style.cssText = "display:flex;gap:7px;";
+
+  const yesLbl = {fr:"✅ Oui, c'est tout !",en:"✅ Yes, that's all!",ar:"✅ نعم، هذا كل شيء",es:"✅ ¡Sí, es todo!"};
+  const moreLbl = {fr:"➕ Ajouter autre chose",en:"➕ Add something else",ar:"➕ إضافة شيء آخر",es:"➕ Agregar algo más"};
+
+  const btnYes = document.createElement("button");
+  btnYes.textContent = yesLbl[cl]||yesLbl.fr;
+  btnYes.style.cssText = "flex:1;padding:9px 8px;border-radius:10px;background:var(--green);color:#fff;border:none;font-size:11.5px;font-weight:800;cursor:pointer;font-family:'Outfit',sans-serif;";
+  btnYes.onclick = () => {
+    document.getElementById("dessert-confirm-row")?.remove();
+    _closeChatConversation(cl, custName, isCouple);
+  };
+
+  const btnMore = document.createElement("button");
+  btnMore.textContent = moreLbl[cl]||moreLbl.fr;
+  btnMore.style.cssText = "flex:1;padding:9px 8px;border-radius:10px;background:var(--card);color:var(--text);border:1.5px solid var(--border);font-size:11.5px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;";
+  btnMore.onclick = () => {
+    document.getElementById("dessert-confirm-row")?.remove();
+    window._isAddonFlow = true;
+    chatSendText(moreLbl[cl]||moreLbl.fr);
+  };
+
+  btnWrap.appendChild(btnYes);
+  btnWrap.appendChild(btnMore);
+  bub.appendChild(btnWrap);
+  row.appendChild(av);
+  row.appendChild(bub);
+  msgsEl.appendChild(row);
+  scrollChatToBottom();
+}
+
+// Step 3 — thank customer and lock input bar
+function _closeChatConversation(cl, custName, isCouple) {
+  const bye = {
+    fr: `Merci ${custName} ! 💚 À très bientôt chez SAVY — votre chef prépare tout avec amour 👨‍🍳✨`,
+    en: `Thank you ${custName}! 💚 See you soon at SAVY — your chef is preparing everything with love 👨‍🍳✨`,
+    ar: `شكراً ${custName}! 💚 نراكم قريباً في SAVY — شيفنا يحضر كل شيء بكل حب 👨‍🍳✨`,
+    es: `¡Gracias ${custName}! 💚 Hasta pronto en SAVY — tu chef lo prepara todo con amor 👨‍🍳✨`,
+  };
+  addBotMsg(bye[cl]||bye.fr, isCouple);
+
+  // Lock input bar after a short delay
+  setTimeout(() => {
+    const ia = document.getElementById("chat-input-area");
+    if (ia) {
+      ia.style.opacity = "0.45";
+      ia.style.pointerEvents = "none";
+      const inp = document.getElementById("chat-inp");
+      if (inp) {
+        inp.disabled = true;
+        inp.placeholder = { fr:"Commande terminée 🎉", en:"Order complete 🎉", ar:"تم الطلب 🎉", es:"Pedido completo 🎉" }[cl] || "Order complete 🎉";
+      }
+    }
+    // Show a small "new conversation" hint
+    const quickChips = document.getElementById("quick-chips");
+    if (quickChips) {
+      quickChips.innerHTML = "";
+      const newBtn = document.createElement("button");
+      newBtn.className = "q-chip";
+      newBtn.textContent = {fr:"🔄 Nouvelle commande",en:"🔄 New order",ar:"🔄 طلب جديد",es:"🔄 Nuevo pedido"}[cl]||"🔄 New order";
+      newBtn.onclick = () => {
+        resetChat();
+        if (ia) { ia.style.opacity=""; ia.style.pointerEvents=""; }
+        const inpEl = document.getElementById("chat-inp");
+        if (inpEl) { inpEl.disabled=false; inpEl.placeholder=""; }
+      };
+      quickChips.appendChild(newBtn);
+    }
+  }, 1200);
+}
 
 /* ═══════════════════════════════════════════
    UTM TRACKING — reads URL params, stores in localStorage,
