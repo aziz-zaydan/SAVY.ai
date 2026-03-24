@@ -1,58 +1,1395 @@
-[build]
-  publish = "."
-  functions = "netlify/functions"
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SAVY — Premium Meal Menu</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg:       #0C0F0C;
+  --surface:  #141914;
+  --card:     #1A201A;
+  --border:   rgba(255,255,255,0.07);
+  --text:     #F0F7F0;
+  --muted:    #6B8B6B;
+  --faint:    #2A332A;
 
-[build.environment]
-  NODE_VERSION = "18"
+  /* Section accent colors */
+  --muscle:   #00E676;
+  --muscle-d: #00C060;
+  --lean:     #FF6B9D;
+  --lean-d:   #E0527E;
+  --fast:     #FF9F43;
+  --fast-d:   #E07A1A;
+  --sweet:    #C77DFF;
+  --sweet-d:  #9B4FD6;
 
-[functions]
-  node_bundler = "esbuild"
+  --radius:   20px;
+  --font:     'Outfit', sans-serif;
+  --body:     'DM Sans', sans-serif;
+}
 
-[[headers]]
-  for = "/*"
-  [headers.values]
-    X-Frame-Options = "DENY"
-    X-Content-Type-Options = "nosniff"
-    Referrer-Policy = "strict-origin-when-cross-origin"
-    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--body);
+  min-height:100vh;
+  overflow-x:hidden;
+}
 
-[[headers]]
-  for = "/*.html"
-  [headers.values]
-    Cache-Control = "public, max-age=0, must-revalidate"
 
-[[headers]]
-  for = "/netlify/functions/*"
-  [headers.values]
-    Cache-Control = "no-store"
+/* ── RTL / ARABIC ── */
+[lang="ar"] { direction: rtl; }
+[lang="ar"] body { font-family: 'Tajawal', sans-serif; }
+[lang="ar"] .nav-logo,
+[lang="ar"] .section-title,
+[lang="ar"] .sub-plan-name,
+[lang="ar"] .hero-title,
+[lang="ar"] .sub-title,
+[lang="ar"] .meal-name,
+[lang="ar"] .cart-item-name { font-family: 'Tajawal', sans-serif; font-weight: 800; }
+[lang="ar"] .meal-tag { left: auto; right: 8px; }
+[lang="ar"] .meal-add-btn { right: auto; left: 8px; }
+[lang="ar"] .combo-banner { direction: rtl; }
+[lang="ar"] .sub-plan::before { right: auto; left: 14px; }
 
-[[headers]]
-  for = "/sw.js"
-  [headers.values]
-    Cache-Control = "no-cache"
-    Content-Type = "application/javascript; charset=utf-8"
-    Service-Worker-Allowed = "/"
+/* ── LANG TOGGLE ── */
+.lang-toggle {
+  display: flex; gap: 4px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 99px; padding: 3px;
+  border: 1px solid var(--border);
+}
+.lang-btn {
+  padding: 4px 10px; border-radius: 99px;
+  font-size: 11px; font-weight: 700;
+  border: none; cursor: pointer;
+  font-family: var(--font);
+  color: var(--muted); background: transparent;
+  transition: all .18s;
+}
+.lang-btn.active {
+  background: var(--muscle);
+  color: #032b14;
+}
 
-[[headers]]
-  for = "/manifest.json"
-  [headers.values]
-    Cache-Control = "public, max-age=0, must-revalidate"
-    Content-Type = "application/manifest+json; charset=utf-8"
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--faint);border-radius:2px;}
 
-[[headers]]
-  for = "/netlify/functions/whatsapp"
-  [headers.values]
-    Cache-Control = "no-store"
+/* ── NAV ── */
+nav {
+  position:sticky;top:0;z-index:100;
+  background:rgba(12,15,12,0.92);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  padding:14px 20px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.nav-logo {
+  font-family:var(--font);font-weight:900;font-size:22px;
+  color:var(--muscle);letter-spacing:-1px;
+}
+.nav-logo span{color:var(--text);font-weight:300;}
+.nav-city {
+  font-size:11px;color:var(--muted);font-weight:500;
+  display:flex;align-items:center;gap:5px;
+}
+.nav-city::before{content:'📍';}
+.nav-cart-mini {
+  background:var(--muscle);color:#0C0F0C;
+  border:none;border-radius:99px;
+  padding:7px 14px;font-size:12px;font-weight:800;
+  cursor:pointer;font-family:var(--font);
+  display:flex;align-items:center;gap:6px;
+  transition:all .18s;
+}
+.nav-cart-mini:hover{background:var(--muscle-d);}
+#cart-count-badge {
+  background:#0C0F0C;color:var(--muscle);
+  width:18px;height:18px;border-radius:50%;
+  font-size:10px;font-weight:900;
+  display:none;align-items:center;justify-content:center;
+}
+#cart-count-badge.show{display:flex;}
 
-[[headers]]
-  for = "/sw-dashboard.js"
-  [headers.values]
-    Cache-Control = "no-cache"
-    Content-Type = "application/javascript; charset=utf-8"
-    Service-Worker-Allowed = "/"
+/* ── SECTION NAV PILLS ── */
+.section-nav {
+  position:sticky;top:57px;z-index:99;
+  background:rgba(12,15,12,0.95);
+  backdrop-filter:blur(20px);
+  padding:0 20px;
+  border-bottom:1px solid var(--border);
+  display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;
+}
+.section-nav::-webkit-scrollbar{display:none;}
+.snav-pill {
+  padding:12px 16px;font-size:12px;font-weight:700;
+  color:var(--muted);cursor:pointer;
+  border-bottom:2px solid transparent;
+  white-space:nowrap;font-family:var(--font);
+  transition:all .2s;flex-shrink:0;
+}
+.snav-pill:hover{color:var(--text);}
+.snav-pill.active-muscle{color:var(--muscle);border-color:var(--muscle);}
+.snav-pill.active-lean{color:var(--lean);border-color:var(--lean);}
+.snav-pill.active-fast{color:var(--fast);border-color:var(--fast);}
+.snav-pill.active-sweet{color:var(--sweet);border-color:var(--sweet);}
 
-[[headers]]
-  for = "/dashboard-manifest.json"
-  [headers.values]
-    Cache-Control = "public, max-age=0, must-revalidate"
-    Content-Type = "application/manifest+json; charset=utf-8"
+/* ── HERO BAND ── */
+.hero-band {
+  padding:40px 20px 32px;
+  text-align:center;
+  background:radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,230,118,0.12) 0%, transparent 70%);
+}
+.hero-eyebrow {
+  font-size:10px;font-weight:800;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--muscle);
+  margin-bottom:10px;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.hero-eyebrow::before,.hero-eyebrow::after{content:'';width:24px;height:1px;background:var(--muscle);opacity:.5;}
+.hero-title {
+  font-family:var(--font);font-weight:900;
+  font-size:clamp(28px,7vw,48px);
+  line-height:1.05;letter-spacing:-1.5px;
+  color:var(--text);margin-bottom:12px;
+}
+.hero-title span{color:var(--muscle);}
+.hero-sub {
+  font-size:14px;color:var(--muted);line-height:1.7;
+  max-width:340px;margin:0 auto 20px;
+}
+.hero-badges {
+  display:flex;gap:8px;justify-content:center;flex-wrap:wrap;
+}
+.hero-badge {
+  padding:6px 14px;border-radius:99px;font-size:11px;font-weight:700;
+  border:1px solid rgba(0,230,118,0.25);color:var(--muscle);
+  background:rgba(0,230,118,0.06);
+}
+
+/* ── SECTION ── */
+.menu-section { padding:32px 16px 24px; }
+.section-header {
+  display:flex;align-items:center;gap:12px;
+  margin-bottom:6px;
+}
+.section-icon {
+  width:42px;height:42px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;font-size:20px;
+  flex-shrink:0;
+}
+.section-title {
+  font-family:var(--font);font-weight:900;font-size:20px;
+  letter-spacing:-.5px;color:var(--text);
+}
+.section-desc {
+  font-size:12px;color:var(--muted);margin-top:2px;
+}
+.section-divider {
+  height:1px;background:var(--border);margin:16px 0 20px;
+}
+
+/* Muscle section */
+#muscle .section-icon{background:rgba(0,230,118,0.12);}
+#muscle .section-title{color:var(--muscle);}
+/* Lean section */
+#lean .section-icon{background:rgba(255,107,157,0.12);}
+#lean .section-title{color:var(--lean);}
+/* Fast section */
+#fast .section-icon{background:rgba(255,159,67,0.12);}
+#fast .section-title{color:var(--fast);}
+/* Sweet section */
+#sweet .section-icon{background:rgba(199,125,255,0.12);}
+#sweet .section-title{color:var(--sweet);}
+
+/* ── MEAL GRID ── */
+.meal-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+/* ── MEAL CARD ── */
+.meal-card {
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  overflow:hidden;
+  display:flex;flex-direction:column;
+  transition:transform .22s cubic-bezier(.34,1.56,.64,1),box-shadow .2s,border-color .2s;
+  animation:cardIn .4s ease both;
+  cursor:pointer;
+  position:relative;
+}
+.meal-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 16px 48px rgba(0,0,0,0.4);
+}
+.meal-card:active{transform:scale(.97);}
+@keyframes cardIn{
+  from{opacity:0;transform:translateY(16px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+/* Image area */
+.meal-img {
+  width:100%;aspect-ratio:1/1;
+  position:relative;overflow:hidden;
+  background:var(--faint);
+  flex-shrink:0;
+}
+.meal-img img{
+  width:100%;height:100%;object-fit:cover;
+  display:block;opacity:0;transition:opacity .5s;
+}
+.meal-img img.loaded{opacity:1;}
+.meal-img-placeholder{
+  width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:48px;
+}
+.meal-gradient{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(0,0,0,.7) 0%,rgba(0,0,0,.1) 50%,transparent 100%);
+  pointer-events:none;
+}
+.meal-tag{
+  position:absolute;top:8px;left:8px;
+  font-size:8.5px;font-weight:800;
+  padding:3px 9px;border-radius:99px;
+  font-family:var(--font);letter-spacing:.04em;
+  text-transform:uppercase;
+  backdrop-filter:blur(8px);
+}
+.tag-muscle{background:rgba(0,230,118,.85);color:#032b14;}
+.tag-lean{background:rgba(255,107,157,.85);color:#4a0020;}
+.tag-fast{background:rgba(255,159,67,.85);color:#3d1f00;}
+.tag-sweet{background:rgba(199,125,255,.85);color:#1a003d;}
+.tag-bestseller{background:rgba(255,200,0,.9);color:#3d2800;}
+.tag-new{background:rgba(0,200,255,.85);color:#001a2d;}
+
+.meal-add-btn{
+  position:absolute;bottom:8px;right:8px;
+  width:32px;height:32px;border-radius:50%;
+  border:none;cursor:pointer;
+  font-size:20px;font-weight:900;line-height:1;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .18s cubic-bezier(.34,1.56,.64,1);
+  box-shadow:0 4px 16px rgba(0,0,0,.35);
+}
+.meal-add-btn.idle{
+  background:rgba(255,255,255,.9);
+  color:#0C0F0C;
+}
+.meal-add-btn.added{
+  background:var(--muscle);
+  color:#0C0F0C;
+  transform:scale(1.1);
+}
+.meal-add-btn.lean-added{background:var(--lean);color:#fff;}
+.meal-add-btn.fast-added{background:var(--fast);color:#fff;}
+.meal-add-btn.sweet-added{background:var(--sweet);color:#fff;}
+.meal-add-btn:active{transform:scale(.92);}
+
+/* Card body */
+.meal-body{padding:10px 11px 12px;flex:1;display:flex;flex-direction:column;gap:4px;}
+.meal-name{
+  font-family:var(--font);font-weight:800;
+  font-size:13px;line-height:1.25;color:var(--text);
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.meal-desc{
+  font-size:10.5px;color:var(--muted);line-height:1.5;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.meal-macros{
+  display:flex;align-items:center;gap:6px;
+  margin-top:4px;
+}
+.macro-pill{
+  font-size:9px;font-weight:700;padding:2px 7px;border-radius:99px;
+  font-family:var(--font);
+}
+.mp-cal{background:rgba(255,255,255,.07);color:var(--muted);}
+.mp-prot{background:rgba(0,230,118,.12);color:var(--muscle);}
+.meal-footer{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:6px;
+}
+.meal-price{
+  font-family:var(--font);font-weight:900;font-size:15px;
+  color:var(--text);letter-spacing:-.3px;
+}
+.meal-price span{font-size:10px;font-weight:500;color:var(--muted);}
+
+/* ── WIDE CARD (featured, spans 2 cols) ── */
+.meal-card.wide{
+  grid-column:span 2;
+  flex-direction:row;
+}
+.meal-card.wide .meal-img{
+  width:45%;aspect-ratio:unset;flex-shrink:0;
+}
+.meal-card.wide .meal-body{padding:14px;}
+.meal-card.wide .meal-name{font-size:15px;-webkit-line-clamp:3;}
+.meal-card.wide .meal-desc{-webkit-line-clamp:3;font-size:11px;}
+
+/* ── SUBSCRIPTION SECTION ── */
+.sub-section{
+  padding:36px 16px 40px;
+  background:radial-gradient(ellipse 80% 50% at 50% 0%, rgba(0,230,118,0.07) 0%, transparent 70%);
+  border-top:1px solid var(--border);
+}
+.sub-header{text-align:center;margin-bottom:28px;}
+.sub-eyebrow{
+  font-size:10px;font-weight:800;letter-spacing:.18em;
+  color:var(--muscle);text-transform:uppercase;
+  margin-bottom:8px;display:block;
+}
+.sub-title{
+  font-family:var(--font);font-weight:900;font-size:clamp(22px,6vw,34px);
+  letter-spacing:-1px;color:var(--text);margin-bottom:8px;
+}
+.sub-subtitle{font-size:13px;color:var(--muted);}
+
+.sub-plans{
+  display:flex;flex-direction:column;gap:12px;
+}
+.sub-plan{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:20px;
+  position:relative;overflow:hidden;
+  transition:all .2s;
+}
+.sub-plan:hover{border-color:rgba(0,230,118,.3);}
+.sub-plan.featured{
+  background:linear-gradient(135deg,#0D2018,#0F2A1A);
+  border:1.5px solid var(--muscle);
+  box-shadow:0 0 0 4px rgba(0,230,118,.06),0 16px 48px rgba(0,0,0,.3);
+}
+/* placeholder-keep */{
+  content:'BEST VALUE'; /* translatable via .best-value-label */
+  position:absolute;top:14px;right:14px;
+  font-size:8px;font-weight:900;letter-spacing:.1em;
+  padding:3px 8px;border-radius:99px;
+  background:var(--muscle);color:#032b14;
+  font-family:var(--font);
+}
+.sub-plan-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.sub-plan-name{font-family:var(--font);font-weight:900;font-size:16px;color:var(--text);}
+.sub-plan-name span{font-size:11px;font-weight:500;color:var(--muted);margin-left:4px;}
+.sub-price{
+  font-family:var(--font);font-weight:900;font-size:22px;letter-spacing:-1px;
+}
+.sub-price span{font-size:11px;font-weight:400;color:var(--muted);}
+.sub-features{
+  display:flex;flex-direction:column;gap:5px;margin-bottom:14px;
+}
+.sub-feat{
+  font-size:12px;color:var(--muted);
+  display:flex;align-items:center;gap:8px;
+}
+.sub-feat::before{content:'✓';color:var(--muscle);font-weight:900;}
+.sub-cta{
+  width:100%;padding:12px;border-radius:12px;
+  font-family:var(--font);font-size:13px;font-weight:800;
+  cursor:pointer;transition:all .18s;border:none;
+}
+.sub-cta.outline{
+  background:transparent;color:var(--text);
+  border:1.5px solid var(--border);
+}
+.sub-cta.outline:hover{border-color:var(--muscle);color:var(--muscle);}
+.sub-cta.filled{
+  background:linear-gradient(135deg,var(--muscle),var(--muscle-d));
+  color:#032b14;
+  box-shadow:0 6px 24px rgba(0,230,118,.3);
+}
+.sub-cta.filled:hover{box-shadow:0 8px 32px rgba(0,230,118,.45);}
+
+/* ── STICKY CART ── */
+#sticky-cart{
+  position:fixed;bottom:0;left:0;right:0;z-index:200;
+  transform:translateY(100%);
+  transition:transform .32s cubic-bezier(.22,1,.36,1);
+}
+#sticky-cart.open{transform:translateY(0);}
+.cart-handle{
+  background:var(--muscle);
+  color:#032b14;
+  padding:10px 20px;
+  display:flex;align-items:center;justify-content:space-between;
+  cursor:pointer;
+  border-radius:20px 20px 0 0;
+}
+.cart-handle-left{
+  font-family:var(--font);font-weight:800;font-size:14px;
+  display:flex;align-items:center;gap:10px;
+}
+.cart-handle-count{
+  background:#032b14;color:var(--muscle);
+  width:22px;height:22px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:900;
+}
+.cart-handle-total{
+  font-family:var(--font);font-weight:900;font-size:16px;
+}
+.cart-expanded{
+  background:var(--surface);
+  border-top:1px solid var(--border);
+  max-height:60dvh;overflow-y:auto;
+  display:none;
+}
+.cart-expanded.open{display:block;}
+.cart-item{
+  display:flex;align-items:center;gap:12px;
+  padding:12px 16px;border-bottom:1px solid var(--border);
+}
+.cart-item-img{
+  width:48px;height:48px;border-radius:12px;
+  background:var(--faint);overflow:hidden;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:22px;
+}
+.cart-item-info{flex:1;min-width:0;}
+.cart-item-name{font-family:var(--font);font-weight:700;font-size:13px;color:var(--text);}
+.cart-item-price{font-size:12px;color:var(--muted);margin-top:2px;}
+.cart-item-remove{
+  background:rgba(255,80,80,.1);border:none;
+  color:#FF5050;width:28px;height:28px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:14px;flex-shrink:0;
+  transition:background .15s;
+}
+.cart-item-remove:hover{background:rgba(255,80,80,.2);}
+.cart-footer{
+  padding:14px 16px;
+  display:flex;gap:10px;align-items:center;
+}
+.cart-checkout-btn{
+  flex:1;padding:14px;border-radius:14px;border:none;
+  background:linear-gradient(135deg,var(--muscle),var(--muscle-d));
+  color:#032b14;font-family:var(--font);font-size:14px;font-weight:800;
+  cursor:pointer;box-shadow:0 6px 20px rgba(0,230,118,.3);
+  transition:all .18s;
+}
+.cart-checkout-btn:hover{box-shadow:0 8px 28px rgba(0,230,118,.45);}
+.cart-clear-btn{
+  padding:14px 16px;border-radius:14px;
+  background:var(--faint);color:var(--muted);
+  border:none;cursor:pointer;font-size:12px;font-weight:700;
+  transition:all .15s;
+}
+.cart-clear-btn:hover{color:var(--text);}
+
+/* Combo suggestion */
+.combo-banner{
+  margin:16px;padding:12px 14px;
+  border-radius:14px;
+  border:1px solid rgba(199,125,255,.25);
+  background:rgba(199,125,255,.06);
+  display:flex;align-items:center;gap:10px;
+}
+.combo-text{flex:1;}
+.combo-label{font-size:10px;font-weight:800;color:var(--sweet);text-transform:uppercase;letter-spacing:.1em;margin-bottom:2px;}
+.combo-name{font-size:13px;font-weight:700;color:var(--text);}
+.combo-add{
+  background:var(--sweet);color:#fff;
+  border:none;border-radius:8px;padding:7px 12px;
+  font-size:11px;font-weight:800;cursor:pointer;
+  font-family:var(--font);flex-shrink:0;
+}
+
+/* ── MOTIVATIONAL BANNER ── */
+.moto-banner{
+  margin:0 16px 24px;padding:16px;
+  border-radius:16px;
+  background:linear-gradient(135deg,rgba(0,230,118,.08),rgba(0,230,118,.03));
+  border:1px solid rgba(0,230,118,.15);
+  display:flex;align-items:center;gap:12px;
+}
+.moto-icon{font-size:28px;}
+.moto-title{font-family:var(--font);font-weight:800;font-size:14px;color:var(--text);margin-bottom:2px;}
+.moto-sub{font-size:11.5px;color:var(--muted);}
+
+/* ── ANIMATIONS ── */
+@keyframes slideUp{
+  from{opacity:0;transform:translateY(20px);}
+  to{opacity:1;transform:translateY(0);}
+}
+@keyframes pulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(0,230,118,.4);}
+  50%{box-shadow:0 0 0 8px rgba(0,230,118,0);}
+}
+
+/* ── EMPTY CART ── */
+.empty-cart{
+  text-align:center;padding:28px;
+  font-size:12px;color:var(--muted);
+}
+
+/* ── FOOTER ── */
+.page-footer{
+  padding:28px 20px;border-top:1px solid var(--border);
+  text-align:center;
+}
+.footer-logo{
+  font-family:var(--font);font-weight:900;font-size:24px;
+  color:var(--muscle);letter-spacing:-1px;margin-bottom:6px;
+}
+.footer-tagline{font-size:11px;color:var(--muted);}
+
+/* ── RESPONSIVE ── */
+@media(min-width:480px){
+  .meal-grid{grid-template-columns:repeat(3,1fr);}
+  .meal-card.wide{flex-direction:column;}
+  .meal-card.wide .meal-img{width:100%;aspect-ratio:4/3;}
+  .sub-plans{flex-direction:row;}
+  .sub-plan{flex:1;}
+}
+@media(min-width:760px){
+  .meal-grid{grid-template-columns:repeat(4,1fr);}
+  .meal-card.wide{grid-column:span 2;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">SAVY<span>menu</span></div>
+  <div class="nav-city" id="nav-city">Tétouan · Fast Delivery</div>
+  <div class="lang-toggle">
+    <button class="lang-btn active" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" onclick="setLang('ar')">ع</button>
+  </div>
+  <button class="nav-cart-mini" onclick="toggleCart()">
+    🛒
+    <span id="nav-cart-count">0 items</span>
+    <span class="cart-count-badge" id="cart-count-badge">0</span>
+  </button>
+</nav>
+
+<!-- SECTION NAV -->
+<div class="section-nav" id="section-nav">
+  <div class="snav-pill active-muscle" onclick="scrollTo('muscle')">💪 Muscle Series</div>
+  <div class="snav-pill" onclick="scrollTo('lean')">🌸 Lean & Fit</div>
+  <div class="snav-pill" onclick="scrollTo('fast')">⚡ Healthy Fast Food</div>
+  <div class="snav-pill" onclick="scrollTo('sweet')">🍓 Sweet & Add-ons</div>
+  <div class="snav-pill" onclick="scrollTo('plans')">💎 Plans</div>
+</div>
+
+<!-- HERO BAND -->
+<div class="hero-band">
+  <div class="hero-eyebrow" id="hero-eyebrow-el">Premium Fitness Meals</div>
+  <h1 class="hero-title" id="hero-title-el">Eat smart.<br><span>Look amazing.</span></h1>
+  <p class="hero-sub" id="hero-sub-el">Chef-crafted, macro-balanced meals delivered to your door. Built for your goals.</p>
+  <div class="hero-badges">
+    <span class="hero-badge" id="hero-b1">🚀 45 min delivery</span>
+    <span class="hero-badge" id="hero-b2">🧬 AI-optimised</span>
+    <span class="hero-badge" id="hero-b3">🌿 Fresh daily</span>
+  </div>
+</div>
+
+<!-- MOTIVATIONAL BANNER -->
+<div class="moto-banner">
+  <div class="moto-icon">🔥</div>
+  <div>
+    <div class="moto-title" id="moto-title-el">Your body deserves better fuel</div>
+    <div class="moto-sub" id="moto-sub-el">Every meal is engineered for energy, taste, and results.</div>
+  </div>
+</div>
+
+<!-- ══ MUSCLE SERIES ══ -->
+<section id="muscle" class="menu-section">
+  <div class="section-header">
+    <div class="section-icon">💪</div>
+    <div>
+      <div class="section-title" id="sec-muscle-title">Muscle Series</div>
+      <div class="section-desc" id="sec-muscle-desc">High-protein. Serious gains. Zero compromise.</div>
+    </div>
+  </div>
+  <div class="section-divider"></div>
+  <div class="meal-grid">
+
+    <!-- WIDE FEATURED CARD -->
+    <div class="meal-card wide" data-id="m1" data-name="Power Pasta Crevettes" data-price="72" data-emoji="🍝" data-section="muscle">
+      <div class="meal-img">
+        <img src="images/dish_08.jpg" alt="Power Pasta" onload="this.classList.add('loaded')">
+        <div class="meal-gradient"></div>
+        <span class="meal-tag tag-bestseller" data-tagkey="bestseller">🔥 Best Seller</span>
+        <button class="meal-add-btn idle" onclick="toggleItem(event,'m1','Power Pasta Crevettes',72,'🍝','muscle')">+</button>
+      </div>
+      <div class="meal-body">
+        <div class="meal-name">Power Pasta Crevettes</div>
+        <div class="meal-desc">Linguine, tiger prawns, light cream, parmesan. Rich in protein — feel the difference after day one.</div>
+        <div class="meal-macros">
+          <span class="macro-pill mp-cal">420 kcal</span>
+          <span class="macro-pill mp-prot">26g protein</span>
+        </div>
+        <div class="meal-footer">
+          <div class="meal-price">72 <span>MAD</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="meal-card" data-id="m2" data-name="Salad Russe Light" data-price="39" data-emoji="🥗" data-section="muscle">
+      <div class="meal-img">
+        <img src="images/dish_01.jpg" alt="Salad Russe" onload="this.classList.add('loaded')">
+        <div class="meal-gradient"></div>
+        <span class="meal-tag tag-muscle" data-tagkey="muscle">High Protein</span>
+        <button class="meal-add-btn idle" onclick="toggleItem(event,'m2','Salad Russe Light',39,'🥗','muscle')">+</button>
+      </div>
+      <div class="meal-body">
+        <div class="meal-name">Salad Russe Light</div>
+        <div class="meal-desc">Potatoes, eggs, veggies, clean mayo. Comfort food that loves you back.</div>
+        <div class="meal-macros">
+          <span class="macro-pill mp-cal">280 kcal</span>
+          <span class="macro-pill mp-prot">8g protein</span>
+        </div>
+        <div class="meal-footer">
+          <div class="meal-price">39 <span>MAD</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="meal-card" data-id="m3" data-name="Salad César Poulet" data-price="49" data-emoji="🥗" data-section="muscle">
+      <div class="meal-img">
+        <img src="images/dish_02.jpg" alt="Salad César" onload="this.classList.add('loaded')">
+        <div class="meal-gradient"></div>
+        <span class="meal-tag tag-muscle" data-tagkey="muscle">Lean Gains</span>
+        <button class="meal-add-btn idle" onclick="toggleItem(event,'m3','Salad César Poulet',49,'🥗','muscle')">+</button>
+      </div>
+      <div class="meal-body">
+        <div class="meal-name">Salad César Poulet</div>
+        <div class="meal-desc">Grilled chicken, romaine, parmesan, light caesar. Classic. Clean. Powerful.</div>
+        <div class="meal-macros">
+          <span class="macro-pill mp-cal">390 kcal</span>
+          <span class="macro-pill mp-prot">32g protein</span>
+        </div>
+        <div class="meal-footer">
+          <div class="meal-price">49 <span>MAD</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ LEAN & FIT ══ -->
+<section id="lean" class="menu-section">
+  <div class="section-header">
+    <div class="section-icon">🌸</div>
+    <div>
+      <div class="section-title" id="sec-lean-title">Lean & Fit</div>
+      <div class="section-desc" id="sec-lean-desc">Light, glowing, powerful. Crafted for her goals.</div>
+    </div>
+  </div>
+  <div class="section-divider"></div>
+  <div class="meal-grid">
+
+    <div class="meal-card" data-id="l1" data-name="Salad de Pâte Fit" data-price="45" data-emoji="🥗" data-section="lean">
+      <div class="meal-img">
+        <img src="images/dish_04.jpg" alt="Salad Pate Fit" onload="this.classList.add('loaded')">
+        <div class="meal-gradient"></div>
+        <span class="meal-tag tag-lean" data-tagkey="lean">Low Cal</span>
+        <button class="meal-add-btn idle" onclick="toggleItem(event,'l1','Salad de Pâte Fit',45,'🥗','lean')">+</button>
+      </div>
+      <div class="meal-body">
+        <div class="meal-name">Salad de Pâte Fit</div>
+        <div class="meal-desc">Whole pasta, fresh veggies, light vinaigrette. Feel lighter by evening.</div>
+        <div class="meal-macros">
+          <span class="macro-pill mp-cal">310 kcal</span>
+          <span class="macro-pill mp-prot">12g protein</span>
+        </div>
+        <div class="meal-footer">
+          <div class="meal-price">45 <span>MAD</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="meal-card" data-id="l2" data-name="Salade Poulet Grillé" data-price="52" data-emoji="🥗" data-section="lean">
+      <div class="meal-img">
+        <img src="images/dish_05.jpg" alt="Salade Poulet" onload="this.classList.add('loaded')">
+        <div class="meal-gradient"></div>
+        <span class="meal-tag tag-bestseller">🔥 Best Seller</span>
+        <button class="meal-add-btn idle" onclick="toggleItem(event,'l2','Salade Poulet Grillé',52,'🥗','lean')">+</button>
+      </div>
+      <div class="meal-body">
+        <div class="meal-name">Salade Poulet Grillé</div>
+        <div class="meal-desc">Smoky grilled chicken on fresh greens. Glow-boosting, protein-rich, zero guilt.</div>
+        <div class="meal-macros">
+          <span class="macro-pill mp-cal">340 kcal</span>
+          <span class="macro-pill mp-prot">28g protein</span>
+        </div>
+        <div class="meal-footer">
+          <div class="meal-price">52 <span>MAD</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WIDE -->
+    <div class="meal-card wide" data-id="l3" data-name="Pasta Pesto Légère" data-price="48" data-emoji="🍝" data-section="lean">
+      <div class="meal-img">
+        <img src="images/dish_09.jpg" alt="Pasta Pesto" onload="this.classList.add('loaded')">
+        <div class="meal-gradient"></div>
+        <span class="meal-tag tag-lean" data-tagkey="veg">Low Cal · Veg</span>
+        <button class="meal-add-btn idle" onclick="toggleItem(event,'l3','Pasta Pesto Légère',48,'🍝','lean')">+</button>
+      </div>
+      <div class="meal-body">
+        <div class="meal-name">Pasta Pesto Légère</div>
+        <div class="meal-desc">Whole-grain pasta, fresh basil pesto, cherry tomatoes, light parmesan. Mediterranean magic — under 400 kcal.</div>
+        <div class="meal-macros">
+          <span class="macro-pill mp-cal">370 kcal</span>
+          <span class="macro-pill mp-prot">14g protein</span>
+        </div>
+        <div class="meal-footer">
+          <div class="meal-price">48 <span>MAD</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ HEALTHY FAST FOOD ══ -->
+<section id="fast" class="menu-section">
+  <div class="section-header">
+    <div class="section-icon">⚡</div>
+    <div>
+      <div class="section-title" id="sec-fast-title">Healthy Fast Food</div>
+      <div class="section-desc" id="sec-fast-desc">The flavours you crave. The macros you need.</div>
+    </div>
+  </div>
+  <div class="section-divider"></div>
+  <div class="meal-grid">
+
+    <div class="meal-card" data-id="f1" data-name="Mini Burger Gourmet" data-price="55" data-emoji="🍔" data-section="fast">
+      <div class="meal-img">
+        <img src="images/dish_13.jpg" alt="Mini Burger" onload="this.classList.add('loaded')">
+        <div class="meal-gradient"></div>
+        <span class="meal-tag tag-fast" data-tagkey="fast">Cheat Smart</span>
+        <button class="meal-add-btn idle" onclick="toggleItem(event,'f1','Mini Burger Gourmet',55,'🍔','fast')">+</button>
+      </div>
+      <div class="meal-body">
+        <div class="meal-name">Mini Burger Gourmet</div>
+        <div class="meal-desc">Whole-wheat bun, lean beef, caramelised onions, house sauce. Guilt-free pleasure.</div>
+        <div class="meal-macros">
+          <span class="macro-pill mp-cal">380 kcal</span>
+          <span class="macro-pill mp-prot">24g protein</span>
+        </div>
+        <div class="meal-footer">
+          <div class="meal-price">55 <span>MAD</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="meal-card" data-id="f2" data-name="Burger Viande Hachée" data-price="58" data-emoji="🍔" data-section="fast">
+      <div class="meal-img">
+        <img src="images/dish_14.jpg" alt="Burger Viande" onload="this.classList.add('loaded')">
+        <div class="meal-gradient"></div>
+        <span class="meal-tag tag-bestseller" data-tagkey="top">🔥 Top Pick</span>
+        <button class="meal-add-btn idle" onclick="toggleItem(event,'f2','Burger Viande Hachée',58,'🍔','fast')">+</button>
+      </div>
+      <div class="meal-body">
+        <div class="meal-name">Burger Viande Hachée</div>
+        <div class="meal-desc">Juicy minced beef, smoked cheese, fresh lettuce. Weekend energy — any day of the week.</div>
+        <div class="meal-macros">
+          <span class="macro-pill mp-cal">440 kcal</span>
+          <span class="macro-pill mp-prot">30g protein</span>
+        </div>
+        <div class="meal-footer">
+          <div class="meal-price">58 <span>MAD</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="meal-card wide" data-id="f3" data-name="Wrap Poulet Fitness" data-price="50" data-emoji="🌯" data-section="fast">
+      <div class="meal-img">
+        <img src="images/dish_03.jpg" alt="Wrap Poulet" onload="this.classList.add('loaded')">
+        <div class="meal-gradient"></div>
+        <span class="meal-tag tag-new" data-tagkey="new">New</span>
+        <button class="meal-add-btn idle" onclick="toggleItem(event,'f3','Wrap Poulet Fitness',50,'🌯','fast')">+</button>
+      </div>
+      <div class="meal-body">
+        <div class="meal-name">Wrap Poulet Fitness</div>
+        <div class="meal-desc">Grilled chicken, avocado, salad, SAVY sauce in a whole-grain wrap. Portable power for busy days.</div>
+        <div class="meal-macros">
+          <span class="macro-pill mp-cal">410 kcal</span>
+          <span class="macro-pill mp-prot">29g protein</span>
+        </div>
+        <div class="meal-footer">
+          <div class="meal-price">50 <span>MAD</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ SWEET & ADD-ONS ══ -->
+<section id="sweet" class="menu-section">
+  <div class="section-header">
+    <div class="section-icon">🍓</div>
+    <div>
+      <div class="section-title" id="sec-sweet-title">Sweet & Add-ons</div>
+      <div class="section-desc" id="sec-sweet-desc">Treat yourself. Intelligently.</div>
+    </div>
+  </div>
+  <div class="section-divider"></div>
+  <div class="meal-grid">
+
+    <div class="meal-card" data-id="s1" data-name="Flan Caramel Léger" data-price="28" data-emoji="🍮" data-section="sweet">
+      <div class="meal-img" style="background:#1a1020;">
+        <div class="meal-img-placeholder">🍮</div>
+        <div class="meal-gradient"></div>
+        <span class="meal-tag tag-sweet" data-tagkey="sweet">Low Fat</span>
+        <button class="meal-add-btn idle" onclick="toggleItem(event,'s1','Flan Caramel Léger',28,'🍮','sweet')">+</button>
+      </div>
+      <div class="meal-body">
+        <div class="meal-name">Flan Caramel Léger</div>
+        <div class="meal-desc">Skim milk, natural caramel, vanilla. Sweet moment — smart choice.</div>
+        <div class="meal-macros">
+          <span class="macro-pill mp-cal">180 kcal</span>
+          <span class="macro-pill mp-prot">5g protein</span>
+        </div>
+        <div class="meal-footer">
+          <div class="meal-price">28 <span>MAD</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="meal-card" data-id="s2" data-name="Cheesecake Creamy" data-price="32" data-emoji="🍰" data-section="sweet">
+      <div class="meal-img" style="background:#1a1220;">
+        <div class="meal-img-placeholder">🍰</div>
+        <div class="meal-gradient"></div>
+        <span class="meal-tag tag-bestseller">🔥 Best Seller</span>
+        <button class="meal-add-btn idle" onclick="toggleItem(event,'s2','Cheesecake Creamy',32,'🍰','sweet')">+</button>
+      </div>
+      <div class="meal-body">
+        <div class="meal-name">Cheesecake Creamy</div>
+        <div class="meal-desc">Fresh cheese, whole biscuit base, no-bake. Creamy, dreamy, under control.</div>
+        <div class="meal-macros">
+          <span class="macro-pill mp-cal">260 kcal</span>
+          <span class="macro-pill mp-prot">8g protein</span>
+        </div>
+        <div class="meal-footer">
+          <div class="meal-price">32 <span>MAD</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="meal-card" data-id="s3" data-name="Tiramisu Healthy" data-price="30" data-emoji="🍰" data-section="sweet">
+      <div class="meal-img" style="background:#1a1015;">
+        <div class="meal-img-placeholder">🍰</div>
+        <div class="meal-gradient"></div>
+        <span class="meal-tag tag-sweet" data-tagkey="chefs">Chef's Pick</span>
+        <button class="meal-add-btn idle" onclick="toggleItem(event,'s3','Tiramisu Healthy',30,'🍰','sweet')">+</button>
+      </div>
+      <div class="meal-body">
+        <div class="meal-name">Tiramisu Healthy</div>
+        <div class="meal-desc">Light mascarpone, espresso, cocoa. Italian indulgence — macro-smart.</div>
+        <div class="meal-macros">
+          <span class="macro-pill mp-cal">240 kcal</span>
+          <span class="macro-pill mp-prot">7g protein</span>
+        </div>
+        <div class="meal-footer">
+          <div class="meal-price">30 <span>MAD</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="meal-card" data-id="s4" data-name="Protein Shake Vanille" data-price="35" data-emoji="🥤" data-section="sweet">
+      <div class="meal-img" style="background:#101a18;">
+        <div class="meal-img-placeholder">🥤</div>
+        <div class="meal-gradient"></div>
+        <span class="meal-tag tag-new">New</span>
+        <button class="meal-add-btn idle" onclick="toggleItem(event,'s4','Protein Shake Vanille',35,'🥤','sweet')">+</button>
+      </div>
+      <div class="meal-body">
+        <div class="meal-name">Protein Shake Vanille</div>
+        <div class="meal-desc">30g whey, almond milk, vanilla. Perfect post-workout recovery in a glass.</div>
+        <div class="meal-macros">
+          <span class="macro-pill mp-cal">190 kcal</span>
+          <span class="macro-pill mp-prot">30g protein</span>
+        </div>
+        <div class="meal-footer">
+          <div class="meal-price">35 <span>MAD</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ SUBSCRIPTION PLANS ══ -->
+<div id="plans" class="sub-section">
+  <div class="sub-header">
+    <span class="sub-eyebrow" id="sub-eyebrow-el">Weekly Plans</span>
+    <h2 class="sub-title" id="sub-title-el">Commit to your goals.</h2>
+    <p class="sub-subtitle" id="sub-sub-el">Save money. Eat better. Every week.</p>
+  </div>
+  <div class="sub-plans">
+
+    <div class="sub-plan">
+      <div class="sub-plan-top">
+        <div class="sub-plan-name"><span id="plan1-name">Starter</span> <span id="plan1-freq" style="font-size:11px;font-weight:500;color:var(--muted);margin-left:4px;">3 meals/week</span></div>
+        <div class="sub-price" style="color:var(--text);"><span id="plan1-price">390</span> <span>MAD/wk</span></div>
+      </div>
+      <div class="sub-features">
+        <div class="sub-feat" id="plan1-f1">3 chef-selected meals</div>
+        <div class="sub-feat" id="plan1-f2">Free delivery</div>
+        <div class="sub-feat" id="plan1-f3">Macro tracking access</div>
+      </div>
+      <button class="sub-cta outline">Subscribe Now</button>
+    </div>
+
+    <div class="sub-plan featured">
+      <div class="sub-plan-top">
+        <div class="sub-plan-name" style="color:var(--muscle);"><span id="plan2-name">Fitness</span> <span id="plan2-freq" style="font-size:11px;font-weight:500;color:var(--muted);margin-left:4px;">5 meals/week</span></div>
+        <div class="sub-price" style="color:var(--muscle);"><span id="plan2-price">590</span> <span>MAD/wk</span></div>
+      </div>
+      <div class="sub-features">
+        <div class="sub-feat" id="plan2-f1">5 personalised meals</div>
+        <div class="sub-feat" id="plan2-f2">Free priority delivery</div>
+        <div class="sub-feat" id="plan2-f3">AI nutrition coach</div>
+        <div class="sub-feat" id="plan2-f4">Weekly progress report</div>
+      </div>
+      <button class="sub-cta filled">Subscribe Now</button>
+    </div>
+
+    <div class="sub-plan">
+      <div class="sub-plan-top">
+        <div class="sub-plan-name"><span id="plan3-name">Athlete</span> <span id="plan3-freq" style="font-size:11px;font-weight:500;color:var(--muted);margin-left:4px;">7 meals/week</span></div>
+        <div class="sub-price" style="color:var(--text);"><span id="plan3-price">790</span> <span>MAD/wk</span></div>
+      </div>
+      <div class="sub-features">
+        <div class="sub-feat" id="plan3-f1">7 performance meals</div>
+        <div class="sub-feat" id="plan3-f2">Free express delivery</div>
+        <div class="sub-feat" id="plan3-f3">Dedicated chef session</div>
+        <div class="sub-feat" id="plan3-f4">Custom macro targets</div>
+        <div class="sub-feat" id="plan3-f5">Supplement bundle</div>
+      </div>
+      <button class="sub-cta outline">Subscribe Now</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="page-footer">
+  <div class="footer-logo">SAVY</div>
+  <div class="footer-tagline" id="footer-tag-el">🧬 AI Personal Chef · Tétouan · Engineered for you.</div>
+</div>
+
+<!-- ══ STICKY CART ══ -->
+<div id="sticky-cart">
+  <div class="cart-handle" onclick="toggleCartExpand()">
+    <div class="cart-handle-left">
+      <span class="cart-handle-count" id="cart-handle-count">0</span>
+      <span id="cart-title-el">Your Order</span>
+    </div>
+    <div class="cart-handle-total" id="cart-handle-total">0 MAD</div>
+  </div>
+  <div class="cart-expanded" id="cart-expanded">
+
+    <!-- Combo suggestion -->
+    <div class="combo-banner" id="combo-banner" style="display:none;">
+      <div class="combo-text">
+        <div class="combo-label" id="combo-label-el">✨ Add a shake</div>
+        <div class="combo-name" id="combo-name-el">Protein Shake Vanille — only 35 MAD</div>
+      </div>
+      <button class="combo-add" id="combo-add-el" onclick="addCombo()">Add +</button>
+    </div>
+
+    <div id="cart-items-list"></div>
+
+    <div class="cart-footer">
+      <button class="cart-clear-btn" id="cart-clear-el" onclick="clearCart()">Clear</button>
+      <button class="cart-checkout-btn" onclick="checkout()">
+        🛵 Order Now — <span id="cart-total-btn">0 MAD</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════
+//  TRANSLATIONS
+// ══════════════════════════════════════
+const T = {
+  en: {
+    nav_city:      "Tétouan · Fast Delivery",
+    hero_eyebrow:  "Premium Fitness Meals",
+    hero_title:    "Eat smart.<br><span>Look amazing.</span>",
+    hero_sub:      "Chef-crafted, macro-balanced meals delivered to your door. Built for your goals.",
+    hero_b1:       "🚀 45 min delivery",
+    hero_b2:       "🧬 AI-optimised",
+    hero_b3:       "🌿 Fresh daily",
+    moto_title:    "Your body deserves better fuel",
+    moto_sub:      "Every meal is engineered for energy, taste, and results.",
+    sec_muscle:    "Muscle Series",
+    sec_muscle_d:  "High-protein. Serious gains. Zero compromise.",
+    sec_lean:      "Lean & Fit",
+    sec_lean_d:    "Light, glowing, powerful. Crafted for her goals.",
+    sec_fast:      "Healthy Fast Food",
+    sec_fast_d:    "The flavours you crave. The macros you need.",
+    sec_sweet:     "Sweet & Add-ons",
+    sec_sweet_d:   "Treat yourself. Intelligently.",
+    sub_eyebrow:   "Weekly Plans",
+    sub_title:     "Commit to your goals.",
+    sub_sub:       "Save money. Eat better. Every week.",
+    plan1_name:    "Starter",
+    plan1_freq:    "3 meals/week",
+    plan1_price:   "390",
+    plan1_f1:      "3 chef-selected meals",
+    plan1_f2:      "Free delivery",
+    plan1_f3:      "Macro tracking access",
+    plan2_name:    "Fitness",
+    plan2_freq:    "5 meals/week",
+    plan2_price:   "590",
+    plan2_f1:      "5 personalised meals",
+    plan2_f2:      "Free priority delivery",
+    plan2_f3:      "AI nutrition coach",
+    plan2_f4:      "Weekly progress report",
+    plan3_name:    "Athlete",
+    plan3_freq:    "7 meals/week",
+    plan3_price:   "790",
+    plan3_f1:      "7 performance meals",
+    plan3_f2:      "Free express delivery",
+    plan3_f3:      "Dedicated chef session",
+    plan3_f4:      "Custom macro targets",
+    plan3_f5:      "Supplement bundle",
+    sub_cta:       "Subscribe Now",
+    best_value:    "BEST VALUE",
+    cart_title:    "Your Order",
+    cart_clear:    "Clear",
+    cart_checkout: "🛵 Order Now —",
+    cart_empty:    "Your order is empty 🍽️",
+    combo_label:   "✨ Add a shake",
+    combo_name:    "Protein Shake Vanille — only 35 MAD",
+    combo_add:     "Add +",
+    footer_tag:    "🧬 AI Personal Chef · Tétouan · Engineered for you.",
+    snav:          ["💪 Muscle Series","🌸 Lean & Fit","⚡ Healthy Fast Food","🍓 Sweet & Add-ons","💎 Plans"],
+    // Meals
+    meals: {
+      m1: { name:"Power Pasta Crevettes", desc:"Linguine, tiger prawns, light cream, parmesan. Rich in protein — feel the difference after day one." },
+      m2: { name:"Salad Russe Light",     desc:"Potatoes, eggs, veggies, clean mayo. Comfort food that loves you back." },
+      m3: { name:"Salad César Poulet",    desc:"Grilled chicken, romaine, parmesan, light caesar. Classic. Clean. Powerful." },
+      l1: { name:"Salad de Pâte Fit",     desc:"Whole pasta, fresh veggies, light vinaigrette. Feel lighter by evening." },
+      l2: { name:"Salade Poulet Grillé",  desc:"Smoky grilled chicken on fresh greens. Glow-boosting, protein-rich, zero guilt." },
+      l3: { name:"Pasta Pesto Légère",    desc:"Whole-grain pasta, basil pesto, cherry tomatoes. Mediterranean magic — under 400 kcal." },
+      f1: { name:"Mini Burger Gourmet",   desc:"Whole-wheat bun, lean beef, caramelised onions, house sauce. Guilt-free pleasure." },
+      f2: { name:"Burger Viande Hachée",  desc:"Juicy minced beef, smoked cheese, fresh lettuce. Weekend energy — any day of the week." },
+      f3: { name:"Wrap Poulet Fitness",   desc:"Grilled chicken, avocado, salad, SAVY sauce in a whole-grain wrap. Portable power." },
+      s1: { name:"Flan Caramel Léger",    desc:"Skim milk, natural caramel, vanilla. Sweet moment — smart choice." },
+      s2: { name:"Cheesecake Creamy",     desc:"Fresh cheese, whole biscuit base, no-bake. Creamy, dreamy, under control." },
+      s3: { name:"Tiramisu Healthy",      desc:"Light mascarpone, espresso, cocoa. Italian indulgence — macro-smart." },
+      s4: { name:"Protein Shake Vanille", desc:"30g whey, almond milk, vanilla. Perfect post-workout recovery in a glass." },
+    },
+    tags: { bestseller:"🔥 Best Seller", new:"New", muscle:"High Protein", lean:"Low Cal", fast:"Cheat Smart", sweet:"Low Fat", chefs:"Chef's Pick", top:"🔥 Top Pick", veg:"Low Cal · Veg" },
+  },
+  ar: {
+    nav_city:      "تطوان · توصيل سريع",
+    hero_eyebrow:  "وجبات فيتنس فاخرة",
+    hero_title:    "تغذّى بذكاء.<br><span>اظهر بأفضل شكل.</span>",
+    hero_sub:      "وجبات مُعدَّة بعناية، متوازنة المغذيات، تُوصَّل إلى بابك. مصمَّمة لأهدافك.",
+    hero_b1:       "🚀 توصيل في 45 دقيقة",
+    hero_b2:       "🧬 مُحسَّنة بالذكاء الاصطناعي",
+    hero_b3:       "🌿 طازجة يومياً",
+    moto_title:    "جسمك يستحق وقوداً أفضل",
+    moto_sub:      "كل وجبة مُصمَّمة للطاقة والمذاق والنتائج.",
+    sec_muscle:    "سلسلة العضلات",
+    sec_muscle_d:  "بروتين عالٍ. مكاسب حقيقية. لا تنازلات.",
+    sec_lean:      "رشيق وصحي",
+    sec_lean_d:    "خفيف، مُشرق، قوي. مُصمَّم لأهدافها.",
+    sec_fast:      "وجبات سريعة صحية",
+    sec_fast_d:    "النكهات التي تشتهيها. المغذيات التي تحتاجها.",
+    sec_sweet:     "حلويات وإضافات",
+    sec_sweet_d:   "دلّل نفسك. بذكاء.",
+    sub_eyebrow:   "خطط أسبوعية",
+    sub_title:     "التزم بأهدافك.",
+    sub_sub:       "وفّر المال. كُل أفضل. كل أسبوع.",
+    plan1_name:    "المبتدئ",
+    plan1_freq:    "3 وجبات/أسبوع",
+    plan1_price:   "390",
+    plan1_f1:      "3 وجبات مختارة من الشيف",
+    plan1_f2:      "توصيل مجاني",
+    plan1_f3:      "تتبع المغذيات",
+    plan2_name:    "فيتنس",
+    plan2_freq:    "5 وجبات/أسبوع",
+    plan2_price:   "590",
+    plan2_f1:      "5 وجبات مخصصة",
+    plan2_f2:      "توصيل ذو أولوية مجاني",
+    plan2_f3:      "مدرب تغذية بالذكاء الاصطناعي",
+    plan2_f4:      "تقرير تقدم أسبوعي",
+    plan3_name:    "الرياضي",
+    plan3_freq:    "7 وجبات/أسبوع",
+    plan3_price:   "790",
+    plan3_f1:      "7 وجبات أداء عالٍ",
+    plan3_f2:      "توصيل سريع مجاني",
+    plan3_f3:      "جلسة مخصصة مع الشيف",
+    plan3_f4:      "أهداف مغذيات مخصصة",
+    plan3_f5:      "حزمة مكملات غذائية",
+    sub_cta:       "اشترك الآن",
+    best_value:    "الأفضل قيمة",
+    cart_title:    "طلبك",
+    cart_clear:    "مسح",
+    cart_checkout: "🛵 اطلب الآن —",
+    cart_empty:    "طلبك فارغ 🍽️",
+    combo_label:   "✨ أضف شيكًا",
+    combo_name:    "بروتين شيك فانيليا — فقط 35 درهم",
+    combo_add:     "أضف +",
+    footer_tag:    "🧬 شيف ذكاء اصطناعي شخصي · تطوان · مُصمَّم لك.",
+    snav:          ["💪 العضلات","🌸 رشيق","⚡ وجبات سريعة","🍓 الحلويات","💎 الخطط"],
+    meals: {
+      m1: { name:"باستا الروبيان القوية",  desc:"لينغويني، روبيان طازج، كريمة خفيفة، بارميزان. غني بالبروتين — اشعر بالفرق من اليوم الأول." },
+      m2: { name:"سلطة روسية لايت",       desc:"بطاطس، بيض، خضروات، مايونيز صحي. طعام مريح يحبك." },
+      m3: { name:"سلطة سيزر دجاج",        desc:"دجاج مشوي، خس روماني، بارميزان، صوص سيزر خفيف. كلاسيك. نظيف. قوي." },
+      l1: { name:"سلطة باستا فيت",         desc:"باستا كاملة، خضروات طازجة، خل خفيف. اشعر بالخفة مساءً." },
+      l2: { name:"سلطة دجاج مشوي",        desc:"دجاج مشوي على خضر طازجة. غني بالبروتين، صفر ذنب." },
+      l3: { name:"باستا بيستو خفيفة",      desc:"باستا كاملة، بيستو ريحان طازج، طماطم شيري. سحر البحر المتوسط — أقل من 400 سعر." },
+      f1: { name:"برغر صغير جورميه",       desc:"خبز قمح كامل، لحم بقري قليل الدهون، بصل كراميل، صوص خاص. متعة بلا ذنب." },
+      f2: { name:"برغر لحم مفروم",         desc:"لحم مفروم طري، جبن مدخن، خس طازج. طاقة نهاية الأسبوع كل يوم." },
+      f3: { name:"راب دجاج فيتنس",         desc:"دجاج مشوي، أفوكادو، سلطة، صوص SAVY في لفة قمح كامل. قوة في كل مكان." },
+      s1: { name:"فلان كراميل خفيف",       desc:"حليب خفيف، كراميل طبيعي، فانيليا. لحظة حلوة — اختيار ذكي." },
+      s2: { name:"تشيزكيك كريمي",          desc:"جبن طازج، قاعدة بسكويت كامل، بدون خبز. كريمي، لذيذ، تحت السيطرة." },
+      s3: { name:"تيراميسو صحي",           desc:"ماسكاربوني خفيف، اسبريسو، كاكاو. انغماس إيطالي بمغذيات ذكية." },
+      s4: { name:"بروتين شيك فانيليا",     desc:"30 جرام واي، حليب لوز، فانيليا. تعافي مثالي بعد التمرين في كوب." },
+    },
+    tags: { bestseller:"🔥 الأكثر مبيعاً", new:"جديد", muscle:"بروتين عالٍ", lean:"سعرات منخفضة", fast:"لذيذ وصحي", sweet:"دهون منخفضة", chefs:"اختيار الشيف", top:"🔥 الأفضل", veg:"خضار · خفيف" },
+  },
+};
+
+let currentLang = 'en';
+
+function setLang(lang) {
+  currentLang = lang;
+  const html = document.documentElement;
+  html.lang = lang;
+  html.dir  = lang === 'ar' ? 'rtl' : 'ltr';
+
+  // Update lang buttons
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.textContent.trim() === (lang === 'ar' ? 'ع' : 'EN'));
+  });
+
+  const t = T[lang];
+
+  // Nav
+  setText('nav-city', t.nav_city);
+
+  // Hero
+  setHTML('hero-title-el', t.hero_title);
+  setText('hero-eyebrow-el', t.hero_eyebrow);
+  setText('hero-sub-el', t.hero_sub);
+  setText('hero-b1', t.hero_b1);
+  setText('hero-b2', t.hero_b2);
+  setText('hero-b3', t.hero_b3);
+
+  // Motivational banner
+  setText('moto-title-el', t.moto_title);
+  setText('moto-sub-el', t.moto_sub);
+
+  // Section headers
+  setText('sec-muscle-title', t.sec_muscle);
+  setText('sec-muscle-desc', t.sec_muscle_d);
+  setText('sec-lean-title', t.sec_lean);
+  setText('sec-lean-desc', t.sec_lean_d);
+  setText('sec-fast-title', t.sec_fast);
+  setText('sec-fast-desc', t.sec_fast_d);
+  setText('sec-sweet-title', t.sec_sweet);
+  setText('sec-sweet-desc', t.sec_sweet_d);
+
+  // Section nav pills
+  document.querySelectorAll('.snav-pill').forEach((p, i) => {
+    if (t.snav[i]) p.textContent = t.snav[i];
+  });
+
+  // Meal cards
+  Object.entries(t.meals).forEach(([id, meal]) => {
+    const card = document.querySelector(`[data-id="${id}"]`);
+    if (!card) return;
+    const nameEl = card.querySelector('.meal-name');
+    const descEl = card.querySelector('.meal-desc');
+    if (nameEl) nameEl.textContent = meal.name;
+    if (descEl) descEl.textContent = meal.desc;
+    card.dataset.name = meal.name;
+  });
+
+  // Tags
+  document.querySelectorAll('.meal-tag').forEach(tag => {
+    const key = tag.dataset.tagkey;
+    if (key && t.tags[key]) tag.textContent = t.tags[key];
+  });
+
+  // Subscription section
+  setText('sub-eyebrow-el', t.sub_eyebrow);
+  setText('sub-title-el', t.sub_title);
+  setText('sub-sub-el', t.sub_sub);
+  // Plans
+  ['1','2','3'].forEach(n => {
+    setText(`plan${n}-name`, t[`plan${n}_name`]);
+    setText(`plan${n}-freq`, t[`plan${n}_freq`]);
+    setText(`plan${n}-price`, t[`plan${n}_price`]);
+    for (let f = 1; f <= 5; f++) {
+      setText(`plan${n}-f${f}`, t[`plan${n}_f${f}`] || '');
+    }
+  });
+  document.querySelectorAll('.sub-cta').forEach(b => b.textContent = t.sub_cta);
+  document.querySelectorAll('.best-value-label').forEach(el => el.textContent = t.best_value);
+
+  // Cart
+  setText('cart-title-el', t.cart_title);
+  setText('cart-clear-el', t.cart_clear);
+  setText('combo-label-el', t.combo_label);
+  setText('combo-name-el', t.combo_name);
+  setText('combo-add-el', t.combo_add);
+  setText('footer-tag-el', t.footer_tag);
+
+  // Re-render cart items with new names
+  updateCartUI();
+}
+
+function setText(id, val) { const el = document.getElementById(id); if (el && val !== undefined) el.textContent = val; }
+function setHTML(id, val) { const el = document.getElementById(id); if (el && val !== undefined) el.innerHTML = val; }
+
+// ══════════════════════════════════════
+//  CART
+// ══════════════════════════════════════
+let cart = {};
+let cartExpanded = false;
+
+function toggleItem(e, id, name, price, emoji, section) {
+  e.stopPropagation();
+  if (cart[id]) {
+    delete cart[id];
+  } else {
+    const t = T[currentLang];
+    const mealName = t.meals[id] ? t.meals[id].name : name;
+    cart[id] = { name: mealName, price, emoji, section, qty: 1 };
+  }
+  updateCartUI();
+  updateCardUI(id);
+}
+
+function addCombo() {
+  const t = T[currentLang];
+  cart['s4'] = { name: t.meals.s4.name, price:35, emoji:'🥤', section:'sweet', qty:1 };
+  updateCartUI();
+  updateCardUI('s4');
+  document.getElementById('combo-banner').style.display = 'none';
+}
+
+function removeItem(id) {
+  delete cart[id];
+  updateCartUI();
+  updateCardUI(id);
+}
+
+function clearCart() {
+  cart = {};
+  updateCartUI();
+  document.querySelectorAll('.meal-add-btn').forEach(btn => {
+    btn.textContent = '+';
+    btn.className = 'meal-add-btn idle';
+  });
+}
+
+function checkout() {
+  if (!Object.keys(cart).length) return;
+  const t = T[currentLang];
+  alert(currentLang === 'ar'
+    ? '🧬 جاري التوجه لتأكيد الطلب...'
+    : '🧬 Redirecting to order confirmation...');
+}
+
+function updateCardUI(id) {
+  const btn = document.querySelector(`[data-id="${id}"] .meal-add-btn`);
+  if (!btn) return;
+  const section = document.querySelector(`[data-id="${id}"]`)?.dataset.section || 'muscle';
+  if (cart[id]) { btn.textContent = '✓'; btn.className = `meal-add-btn ${section}-added`; }
+  else           { btn.textContent = '+'; btn.className = 'meal-add-btn idle'; }
+}
+
+function updateCartUI() {
+  const t = T[currentLang];
+  const items = Object.entries(cart);
+  const count = items.length;
+  const total = items.reduce((s,[,v]) => s + v.price * v.qty, 0);
+
+  document.getElementById('nav-cart-count').textContent =
+    count === 0 ? (currentLang==='ar'?'0 عناصر':'0 items') : `${count} ${currentLang==='ar'?'عناصر':'item'}${count>1&&currentLang==='en'?'s':''}`;
+
+  document.getElementById('cart-handle-count').textContent = count;
+  document.getElementById('cart-handle-total').textContent = total + ' MAD';
+  const tb = document.getElementById('cart-total-btn');
+  if (tb) tb.textContent = total + ' MAD';
+
+  const stickyCart = document.getElementById('sticky-cart');
+  if (count > 0) stickyCart.classList.add('open');
+  else { stickyCart.classList.remove('open'); cartExpanded=false; document.getElementById('cart-expanded').classList.remove('open'); }
+
+  const listEl = document.getElementById('cart-items-list');
+  listEl.innerHTML = items.length === 0
+    ? `<div class="empty-cart">${t.cart_empty}</div>`
+    : items.map(([id, item]) => `
+        <div class="cart-item">
+          <div class="cart-item-img">${item.emoji}</div>
+          <div class="cart-item-info">
+            <div class="cart-item-name">${item.name}</div>
+            <div class="cart-item-price">${item.price} MAD</div>
+          </div>
+          <button class="cart-item-remove" onclick="removeItem('${id}')">✕</button>
+        </div>`).join('');
+
+  const cb = document.getElementById('combo-banner');
+  if (count > 0 && !cart['s4']) cb.style.display='flex'; else cb.style.display='none';
+}
+
+function toggleCart() { if (Object.keys(cart).length) toggleCartExpand(); }
+function toggleCartExpand() {
+  cartExpanded = !cartExpanded;
+  const exp = document.getElementById('cart-expanded');
+  if (cartExpanded) exp.classList.add('open'); else exp.classList.remove('open');
+}
+
+// ── Section nav scroll spy ──────────────────────────────────
+const sections = ['muscle','lean','fast','sweet','plans'];
+const pills = document.querySelectorAll('.snav-pill');
+const colorMap = { muscle:'active-muscle',lean:'active-lean',fast:'active-fast',sweet:'active-sweet',plans:'active-muscle' };
+
+function scrollTo(id) { document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'start'}); }
+
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      pills.forEach(p => p.classList.remove('active-muscle','active-lean','active-fast','active-sweet'));
+      const idx = sections.indexOf(id);
+      if (idx >= 0 && pills[idx]) pills[idx].classList.add(colorMap[id]||'active-muscle');
+    }
+  });
+}, { threshold:0.25 });
+sections.forEach(id => { const el=document.getElementById(id); if(el) obs.observe(el); });
+
+// ── Card animations ─────────────────────────────────────────
+document.querySelectorAll('.meal-card').forEach((card,i) => { card.style.animationDelay=`${i*.06}s`; });
+
+// ── Sub plan CTAs ────────────────────────────────────────────
+document.querySelectorAll('.sub-cta').forEach(btn => {
+  btn.addEventListener('click', () => {
+    alert(currentLang==='ar'
+      ? '🚀 خطط الاشتراك قادمة قريباً!'
+      : '🚀 Subscription plans launching soon!');
+  });
+});
+</script>
+</body>
+</html>
