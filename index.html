@@ -1684,8 +1684,6 @@
     [data-theme="dark"] body.female-mode .persona-card.active {
       border-color: #C2185B !important; background: #1A0512 !important;
     }
-      background: linear-gradient(160deg, var(--pinkXL) 0%, var(--bg) 60%);
-    }
     #nutri-calc.female-mode .nutri-calc-btn  { background: linear-gradient(135deg, var(--pink), var(--pinkL)); }
     #nutri-calc.female-mode .nutri-eyebrow-wrap { background:var(--pinkXL); color:var(--pink); border-color:var(--pinkBorder); }
     #nutri-calc.female-mode .nutri-tog-btn.active { background:var(--pink) !important; border-color:var(--pink) !important; color:#fff !important; box-shadow:0 2px 10px rgba(233,30,140,0.35); }
@@ -8811,7 +8809,6 @@ function submitPrelaunchMessage(orderId, name, cl) {
   }
   // Track page view event
   const src = localStorage.getItem('savy_utm_source') || 'direct';
-  console.log('[SAVY Analytics] Source:', src);
 })();
 
 function getUTMData() {
@@ -8833,7 +8830,6 @@ function trackEvent(eventName, data = {}) {
   // Keep last 50 events only
   if (events.length > 50) events.splice(0, events.length - 50);
   localStorage.setItem('savy_events', JSON.stringify(events));
-  console.log('[SAVY Event]', eventName, data);
 }
 
 /* ═══════════════════════════════════════════
@@ -10044,7 +10040,6 @@ if(_installBtn) {
     _deferredPrompt.prompt();
     const { outcome } = await _deferredPrompt.userChoice;
     if(outcome === "accepted") {
-      console.log("SAVY PWA installed ✓");
     }
     _deferredPrompt = null;
     _installBar.classList.remove("show");
