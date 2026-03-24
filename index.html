@@ -3886,8 +3886,34 @@
 <section id="menu">
   <div class="menu-inner">
 
-    <!-- Diet filter pills -->
-    <div id="diet-filters" class="filter-row" style="margin-bottom:14px;margin-top:4px;"></div>
+    <!-- ── SAVY Premium Menu — 4 category sections ── -->
+
+    <!-- Sticky section nav inside menu -->
+    <div id="menu-section-nav" style="
+      display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;
+      padding:0 0 2px;margin-bottom:18px;
+      border-bottom:1px solid var(--border);
+    ">
+      <style>
+        #menu-section-nav::-webkit-scrollbar{display:none;}
+        .mnav-pill{
+          padding:9px 14px;font-size:11.5px;font-weight:700;
+          color:var(--muted);cursor:pointer;
+          border-bottom:2px solid transparent;
+          white-space:nowrap;font-family:'Outfit',sans-serif;
+          transition:all .2s;flex-shrink:0;background:none;border-top:none;border-left:none;border-right:none;
+        }
+        .mnav-pill:hover{color:var(--text);}
+        .mnav-pill.mp-active{color:var(--green);border-bottom-color:var(--green);}
+        .mnav-pill.mp-lean{color:#FF6B9D;border-bottom-color:#FF6B9D;}
+        .mnav-pill.mp-fast{color:#FF9F43;border-bottom-color:#FF9F43;}
+        .mnav-pill.mp-sweet{color:#C77DFF;border-bottom-color:#C77DFF;}
+      </style>
+      <button class="mnav-pill mp-active" id="mnav-muscle" onclick="scrollToMenuSection('msec-muscle')">💪 <span class="mnt-muscle">Muscle Series</span></button>
+      <button class="mnav-pill" id="mnav-lean"   onclick="scrollToMenuSection('msec-lean')"  >🌸 <span class="mnt-lean">Lean & Fit</span></button>
+      <button class="mnav-pill" id="mnav-fast"   onclick="scrollToMenuSection('msec-fast')"  >⚡ <span class="mnt-fast">Healthy Fast Food</span></button>
+      <button class="mnav-pill" id="mnav-sweet"  onclick="scrollToMenuSection('msec-sweet')" >🍓 <span class="mnt-sweet">Sweet & Add-ons</span></button>
+    </div>
 
     <!-- Cart bar -->
     <div id="cart-bar" style="display:none;align-items:center;justify-content:space-between;padding:12px 16px;border-radius:16px;background:linear-gradient(135deg,var(--green),#05a827);margin-bottom:18px;animation:popIn .3s ease;flex-wrap:wrap;gap:8px;box-shadow:0 6px 24px rgba(9,184,48,.3);">
@@ -3897,15 +3923,17 @@
         <div id="cart-sched-display"></div>
       </div>
       <div style="display:flex;gap:8px;align-items:center;">
-        <button onclick="clearCart()" style="background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.28);color:#fff;border-radius:10px;padding:8px 13px;cursor:pointer;font-size:11.5px;font-weight:700;font-family:'DM Sans',sans-serif;transition:background .15s;" onmouseenter="this.style.background='rgba(255,255,255,.25)'" onmouseleave="this.style.background='rgba(255,255,255,.15)'">✕ Vider</button>
-        <button onclick="openOrderModal()" id="order-btn" style="background:#fff;color:var(--green);border:none;border-radius:10px;padding:9px 16px;font-size:12.5px;font-weight:800;cursor:pointer;font-family:'Outfit',sans-serif;transition:all .15s;box-shadow:0 2px 8px rgba(0,0,0,.12);">🛵 Commander</button>
+        <button onclick="clearCart()" style="background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.28);color:#fff;border-radius:10px;padding:8px 13px;cursor:pointer;font-size:11.5px;font-weight:700;font-family:'DM Sans',sans-serif;">✕ <span id="cart-vider">Vider</span></button>
+        <button onclick="openOrderModal()" id="order-btn" style="background:#fff;color:var(--green);border:none;border-radius:10px;padding:9px 16px;font-size:12.5px;font-weight:800;cursor:pointer;font-family:'Outfit',sans-serif;">🛵 <span id="cart-commander">Commander</span></button>
       </div>
     </div>
 
-    <!-- Dish grid — fully inline, no CSS class dependency -->
+    <!-- Dish grid — rendered by renderDishes() below -->
     <div id="dishes-list"></div>
 
   </div>
+</section>
+
 </section>
 
 
@@ -5274,6 +5302,22 @@ function setLang(l) {
 
   $t("menu-title", t.menuTitle);  $cs("menu-title", ff);
   $t("menu-sub",   t.menuSub);
+  // Menu category nav labels
+  const mnLabels = {
+    fr:["💪 Muscle Series","🌸 Lean & Fit","⚡ Fast Food Sain","🍓 Douceurs"],
+    en:["💪 Muscle Series","🌸 Lean & Fit","⚡ Healthy Fast Food","🍓 Sweet & Add-ons"],
+    ar:["💪 العضلات","🌸 رشيق","⚡ وجبات سريعة","🍓 الحلويات"],
+    es:["💪 Músculo","🌸 Lean & Fit","⚡ Comida Sana","🍓 Postres"],
+  };
+  const mnL = mnLabels[l] || mnLabels.fr;
+  [["mnt-muscle",0],["mnt-lean",1],["mnt-fast",2],["mnt-sweet",3]].forEach(([id,i]) => {
+    const el = document.querySelector("."+id); if(el) el.textContent = mnL[i].replace(/^[^\s]+ /,"");
+  });
+  // Cart labels
+  const cartViderEl = document.getElementById("cart-vider");
+  const cartCmdEl  = document.getElementById("cart-commander");
+  if(cartViderEl) cartViderEl.textContent = l==="ar"?"مسح":l==="en"?"Clear":"Vider";
+  if(cartCmdEl)  cartCmdEl.textContent  = l==="ar"?"اطلب الآن":l==="en"?"Order Now":"Commander";
   $p("search",     t.search);
   $t("order-btn",  t.order);
   renderCuisineTabs(); renderDietFilters(); renderDishes();
@@ -5544,144 +5588,210 @@ function setDiet(f){ activeDiet=f; renderDietFilters(); renderDishes(); }
 function renderDishes(){
   const t=copy[lang]||copy['fr']||copy['en']; const isAr=lang==="ar"||false;
   const q=(document.getElementById("search")?.value||"").toLowerCase();
-  const isSportifView = activePersonaMenu==="sportif";
-  const filtered=dishes.filter(d=>{
-    const ms=d.name.toLowerCase().includes(q)||d.ar.includes(q);
-    const mf=activeDiet==="All"||d.f===filterMap[activeDiet];
-    const mc=activeCuis==="all"||d.cuis===activeCuis;
-    const mp=activePersonaMenu==="all"||(d.personas&&d.personas.includes(activePersonaMenu));
-    return ms&&mf&&mc&&mp;
-  });
-  const cb=document.getElementById("cart-bar");
-  if(cart.length>0 && cb){
-    cb.style.display="flex";
-    const ctEl = document.getElementById("cart-txt");
-    if(ctEl) ctEl.textContent=t.cartMsg(cart.length);
-    const total = cart.reduce((sum,id)=>{ const d=dishes.find(x=>x.id===id); return sum+(d?d.price:0); },0);
-    const totalEl = document.getElementById("cart-total");
-    if(totalEl) totalEl.textContent = total+" MAD";
-    updateCartSchedDisplay();
-  }
-  else if(cb){ cb.style.display="none"; }
-  if(!filtered.length){
-    document.getElementById("dishes-list").innerHTML=`<div class="empty-state"><div class="big">🔍</div><p>${t.noResult}</p></div>`;
-    return;
-  }
+
+  // Category definitions
+  const categories = [
+    {
+      id:"msec-muscle", key:"muscle",
+      icon:"💪",
+      title:{ fr:"Muscle Series", en:"Muscle Series", ar:"سلسلة العضلات", es:"Muscle Series" },
+      desc:{ fr:"Protéines élevées. Vrais gains. Zéro compromis.", en:"High-protein. Serious gains. Zero compromise.", ar:"بروتين عالٍ. مكاسب حقيقية. لا تنازلات.", es:"Alta proteína. Ganancias reales." },
+      color:"var(--green)", bg:"rgba(9,184,48,0.08)",
+      ids:[2,4,8],
+    },
+    {
+      id:"msec-lean", key:"lean",
+      icon:"🌸",
+      title:{ fr:"Lean & Fit", en:"Lean & Fit", ar:"رشيق وصحي", es:"Lean & Fit" },
+      desc:{ fr:"Léger, lumineux, puissant. Créé pour elle.", en:"Light, glowing, powerful. Crafted for her goals.", ar:"خفيف ومُشرق وقوي. مُصمَّم لأهدافها.", es:"Ligero, brillante, poderoso." },
+      color:"#FF6B9D", bg:"rgba(255,107,157,0.08)",
+      ids:[1,3,9],
+    },
+    {
+      id:"msec-fast", key:"fast",
+      icon:"⚡",
+      title:{ fr:"Healthy Fast Food", en:"Healthy Fast Food", ar:"وجبات سريعة صحية", es:"Comida Rápida Sana" },
+      desc:{ fr:"Les saveurs que tu veux. Les macros qu'il te faut.", en:"The flavours you crave. The macros you need.", ar:"النكهات التي تشتهيها. المغذيات التي تحتاجها.", es:"Los sabores que deseas. Los macros que necesitas." },
+      color:"#FF9F43", bg:"rgba(255,159,67,0.08)",
+      ids:[5,13,14],
+    },
+  ];
+
   const dishesEl = document.getElementById("dishes-list");
   dishesEl.removeAttribute("class");
   dishesEl.removeAttribute("style");
 
-  dishesEl.innerHTML = `<div style="
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:14px;
-    padding:4px 0 32px;
-  ">${filtered.map((d,i)=>{
-    const added = cart.includes(d.id);
-    // Star rating bar (out of 5)
-    const rPct  = Math.round((d.r/5)*100);
-    // Macro bar widths relative to max sensible values
-    const pPct  = Math.min(Math.round(d.p/50*100),100);
-    const cPct  = Math.min(Math.round(d.c/80*100),100);
-    const fPct  = Math.min(Math.round(d.f_g/30*100),100);
+  // Filter all dishes by search query
+  const filtered = dishes.filter(d => {
+    const ms = d.name.toLowerCase().includes(q) || d.ar.includes(q);
+    return ms;
+  });
 
-    return `
-    <div onclick="openDishModal(${d.id})" style="
-      background:var(--card);
-      border:1.5px solid var(--border);
-      border-radius:16px;
-      overflow:hidden;
-      cursor:pointer;
-      display:flex;
-      flex-direction:column;
-      box-shadow:0 2px 12px rgba(0,0,0,.07);
-      transition:transform .2s,box-shadow .2s,border-color .2s;
-      animation:slideUp .38s cubic-bezier(.22,1,.36,1) both;
-      animation-delay:${i*.04}s;
-    " onmouseenter="this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 32px rgba(9,184,48,.16)';this.style.borderColor='rgba(9,184,48,.4)'"
-       onmouseleave="this.style.transform='';this.style.boxShadow='0 2px 12px rgba(0,0,0,.07)';this.style.borderColor='var(--border)'">
+  if (!filtered.length) {
+    dishesEl.innerHTML = `<div style="text-align:center;padding:48px 0;color:var(--muted);"><div style="font-size:36px;margin-bottom:10px;">🔍</div><p>${t.noResult||"Aucun résultat"}</p></div>`;
+    return;
+  }
 
-      <!-- ── Image ── -->
-      <div style="position:relative;width:100%;aspect-ratio:1/1;overflow:hidden;background:var(--mint);flex-shrink:0;">
-        ${d.img
-          ? `<img src="${d.img}" alt="${d.name}" loading="lazy"
-               style="width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .5s;"
-               onload="this.style.opacity=1">`
-          : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:46px;">${d.e}</div>`
-        }
-        <!-- Gradient overlay -->
-        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.6) 0%,rgba(0,0,0,.1) 45%,transparent 70%);pointer-events:none;"></div>
+  // Cart bar
+  const cb = document.getElementById("cart-bar");
+  if (cart.length > 0 && cb) {
+    cb.style.display = "flex";
+    const ctEl = document.getElementById("cart-txt");
+    if (ctEl) ctEl.textContent = t.cartMsg(cart.length);
+    const total = cart.reduce((sum,id) => { const d=dishes.find(x=>x.id===id); return sum+(d?d.price:0); }, 0);
+    const totalEl = document.getElementById("cart-total");
+    if (totalEl) totalEl.textContent = total + " MAD";
+    updateCartSchedDisplay();
+  } else if (cb) { cb.style.display = "none"; }
 
-        <!-- Badge top-right -->
-        ${d.badge ? `<span style="position:absolute;top:7px;right:7px;font-size:8px;padding:3px 7px;border-radius:20px;background:rgba(240,163,48,.95);color:#7a3d00;font-weight:800;font-family:'Outfit',sans-serif;backdrop-filter:blur(4px);">${d.badge}</span>` : ""}
+  // Build HTML — one section per category
+  let html = '';
 
-        <!-- Time + Rating bottom-left on image -->
-        <div style="position:absolute;bottom:7px;left:7px;display:flex;flex-direction:column;gap:3px;">
-          <span style="font-size:8.5px;color:#fff;font-weight:700;background:rgba(0,0,0,.35);padding:2px 6px;border-radius:20px;backdrop-filter:blur(4px);">⏱ ${d.t} min</span>
-          <span style="font-size:8.5px;color:#fff;font-weight:700;background:rgba(0,0,0,.35);padding:2px 6px;border-radius:20px;backdrop-filter:blur(4px);">★ ${d.r}</span>
+  categories.forEach((cat, ci) => {
+    const catDishes = cat.ids
+      .map(id => filtered.find(d => d.id === id))
+      .filter(Boolean);
+    if (!catDishes.length) return;
+
+    const catTitle = cat.title[lang] || cat.title.fr;
+    const catDesc  = cat.desc[lang]  || cat.desc.fr;
+
+    html += `<div id="${cat.id}" style="margin-bottom:28px;">
+      <!-- Section header -->
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+        <div style="width:38px;height:38px;border-radius:12px;background:${cat.bg};display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">${cat.icon}</div>
+        <div>
+          <div style="font-family:'Outfit',sans-serif;font-weight:900;font-size:17px;color:${cat.color};letter-spacing:-.3px;">${catTitle}</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:1px;">${catDesc}</div>
         </div>
-
-        <!-- Add button bottom-right -->
-        <button onclick="event.stopPropagation();toggleCart(${d.id})" style="
-          position:absolute;bottom:7px;right:7px;
-          width:30px;height:30px;border-radius:50%;border:none;
-          background:${added ? "var(--green)" : "rgba(255,255,255,.9)"};
-          color:${added ? "#fff" : "var(--green)"};
-          font-size:18px;font-weight:900;line-height:1;
-          display:flex;align-items:center;justify-content:center;
-          cursor:pointer;
-          box-shadow:0 3px 12px rgba(0,0,0,.25);
-          transition:all .18s;
-        ">${added ? "✓" : "+"}</button>
       </div>
-
-      <!-- ── Card body ── -->
-      <div style="padding:9px 10px 10px;display:flex;flex-direction:column;gap:0;flex:1;">
-
-        <!-- Tag pill -->
-        <span style="display:inline-block;font-size:8px;font-weight:700;padding:2px 7px;border-radius:20px;background:var(--greenXL);color:var(--green);margin-bottom:5px;width:fit-content;">${d.tag}</span>
-
-        <!-- Name -->
-        <div style="font-family:'Outfit',sans-serif;font-size:11.5px;font-weight:800;line-height:1.25;color:var(--text);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:7px;">${d.name}</div>
-
-        <!-- Price row -->
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-          <span style="font-family:'Outfit',sans-serif;font-size:14px;font-weight:900;color:var(--green);">${d.price} MAD</span>
-          <span style="font-size:9px;color:var(--muted);font-weight:600;">🔥 ${d.cal} kcal</span>
-        </div>
-
-        <!-- Macro bars: Protein / Carbs / Fat -->
-        <div style="display:flex;flex-direction:column;gap:4px;margin-top:auto;">
-          <!-- Protein -->
-          <div style="display:flex;align-items:center;gap:5px;">
-            <span style="font-size:8px;color:var(--muted);font-weight:700;width:9px;">P</span>
-            <div style="flex:1;height:4px;border-radius:99px;background:var(--border);overflow:hidden;">
-              <div style="height:100%;width:${pPct}%;border-radius:99px;background:#4ade80;transition:width .6s ease;"></div>
-            </div>
-            <span style="font-size:8px;color:var(--sub);font-weight:700;width:20px;text-align:right;">${d.p}g</span>
-          </div>
-          <!-- Carbs -->
-          <div style="display:flex;align-items:center;gap:5px;">
-            <span style="font-size:8px;color:var(--muted);font-weight:700;width:9px;">C</span>
-            <div style="flex:1;height:4px;border-radius:99px;background:var(--border);overflow:hidden;">
-              <div style="height:100%;width:${cPct}%;border-radius:99px;background:#facc15;transition:width .6s ease;"></div>
-            </div>
-            <span style="font-size:8px;color:var(--sub);font-weight:700;width:20px;text-align:right;">${d.c}g</span>
-          </div>
-          <!-- Fat -->
-          <div style="display:flex;align-items:center;gap:5px;">
-            <span style="font-size:8px;color:var(--muted);font-weight:700;width:9px;">F</span>
-            <div style="flex:1;height:4px;border-radius:99px;background:var(--border);overflow:hidden;">
-              <div style="height:100%;width:${fPct}%;border-radius:99px;background:#fb923c;transition:width .6s ease;"></div>
-            </div>
-            <span style="font-size:8px;color:var(--sub);font-weight:700;width:20px;text-align:right;">${d.f_g}g</span>
-          </div>
-        </div>
-
+      <div style="height:1px;background:var(--border);margin-bottom:14px;opacity:.5;"></div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+        ${catDishes.map((d,i) => renderMealCard(d, i, cat)).join("")}
       </div>
     </div>`;
-  }).join("")}</div>`;
+  });
+
+  // Remaining dishes not in any category
+  const usedIds = categories.flatMap(cat => cat.ids);
+  const extras  = filtered.filter(d => !usedIds.includes(d.id));
+  if (extras.length) {
+    html += `<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:28px;">
+      ${extras.map((d,i) => renderMealCard(d, i, {color:"var(--green)", bg:"rgba(9,184,48,0.08)", key:"extra"})).join("")}
+    </div>`;
+  }
+
+  dishesEl.innerHTML = html;
+
+  // Update section nav active state
+  updateMenuSectionNav();
 }
+
+function renderMealCard(d, i, cat) {
+  const isAr = lang === "ar";
+  const added = cart.includes(d.id);
+  const accentColor = cat.color;
+  const pPct = Math.min(Math.round(d.p/50*100),100);
+  const cPct = Math.min(Math.round(d.c/80*100),100);
+  const fPct = Math.min(Math.round(d.f_g/30*100),100);
+  const name = isAr ? (d.ar || d.name) : d.name;
+
+  return `<div onclick="openDishModal(${d.id})" style="
+    background:var(--card);
+    border:1.5px solid var(--border);
+    border-radius:16px;
+    overflow:hidden;
+    cursor:pointer;
+    display:flex;flex-direction:column;
+    box-shadow:0 2px 12px rgba(0,0,0,.06);
+    transition:transform .2s,box-shadow .2s,border-color .2s;
+    animation:slideUp .38s cubic-bezier(.22,1,.36,1) both;
+    animation-delay:${i*.04}s;
+  " onmouseenter="this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 32px rgba(0,0,0,.16)';this.style.borderColor='${accentColor}44'"
+     onmouseleave="this.style.transform='';this.style.boxShadow='0 2px 12px rgba(0,0,0,.06)';this.style.borderColor='var(--border)'">
+
+    <!-- Image -->
+    <div style="position:relative;width:100%;aspect-ratio:1/1;overflow:hidden;background:var(--mint);flex-shrink:0;">
+      ${d.img
+        ? `<img src="${d.img}" alt="${d.name}" loading="lazy"
+            style="width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .5s;"
+            onload="this.style.opacity=1">`
+        : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:44px;">${d.e}</div>`
+      }
+      <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.55) 0%,rgba(0,0,0,.05) 50%,transparent 70%);pointer-events:none;"></div>
+      ${d.badge ? `<span style="position:absolute;top:7px;${isAr?'right':'left'}:7px;font-size:8px;padding:3px 8px;border-radius:20px;background:rgba(244,163,48,.95);color:#7a3d00;font-weight:800;font-family:'Outfit',sans-serif;">${d.badge}</span>` : ""}
+      <!-- Prep time + rating -->
+      <div style="position:absolute;bottom:7px;${isAr?'right':'left'}:7px;display:flex;flex-direction:column;gap:2px;">
+        <span style="font-size:8px;color:#fff;font-weight:700;background:rgba(0,0,0,.4);padding:2px 6px;border-radius:20px;backdrop-filter:blur(4px);">⏱ ${d.t}m</span>
+        <span style="font-size:8px;color:#fff;font-weight:700;background:rgba(0,0,0,.4);padding:2px 6px;border-radius:20px;backdrop-filter:blur(4px);">★ ${d.r}</span>
+      </div>
+      <!-- Add button -->
+      <button onclick="event.stopPropagation();toggleCart(${d.id})" style="
+        position:absolute;bottom:7px;${isAr?'left':'right'}:7px;
+        width:30px;height:30px;border-radius:50%;border:none;
+        background:${added ? accentColor : "rgba(255,255,255,.92)"};
+        color:${added ? "#fff" : "#0a1c10"};
+        font-size:18px;font-weight:900;line-height:1;
+        display:flex;align-items:center;justify-content:center;
+        cursor:pointer;box-shadow:0 3px 12px rgba(0,0,0,.25);
+        transition:all .18s;
+      ">${added ? "✓" : "+"}</button>
+    </div>
+
+    <!-- Body -->
+    <div style="padding:9px 10px 10px;display:flex;flex-direction:column;gap:3px;flex:1;">
+      <span style="display:inline-block;font-size:8px;font-weight:700;padding:2px 7px;border-radius:20px;background:${cat.bg};color:${accentColor};margin-bottom:3px;width:fit-content;">${d.tag}</span>
+      <div style="font-family:'Outfit',sans-serif;font-size:11.5px;font-weight:800;line-height:1.25;color:var(--text);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;text-align:${isAr?'right':'left'};">${name}</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:5px;">
+        <span style="font-family:'Outfit',sans-serif;font-size:14px;font-weight:900;color:${accentColor};">${d.price} MAD</span>
+        <span style="font-size:9px;color:var(--muted);font-weight:600;">🔥 ${d.cal} kcal</span>
+      </div>
+      <!-- Macro bars -->
+      <div style="display:flex;flex-direction:column;gap:3px;margin-top:4px;">
+        <div style="display:flex;align-items:center;gap:4px;">
+          <span style="font-size:7.5px;color:var(--muted);font-weight:700;width:9px;">${isAr?'ب':'P'}</span>
+          <div style="flex:1;height:3px;border-radius:99px;background:var(--border);overflow:hidden;"><div style="height:100%;width:${pPct}%;border-radius:99px;background:#4ade80;"></div></div>
+          <span style="font-size:7.5px;color:var(--sub);font-weight:700;width:22px;text-align:right;">${d.p}g</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:4px;">
+          <span style="font-size:7.5px;color:var(--muted);font-weight:700;width:9px;">${isAr?'ك':'C'}</span>
+          <div style="flex:1;height:3px;border-radius:99px;background:var(--border);overflow:hidden;"><div style="height:100%;width:${cPct}%;border-radius:99px;background:#facc15;"></div></div>
+          <span style="font-size:7.5px;color:var(--sub);font-weight:700;width:22px;text-align:right;">${d.c}g</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:4px;">
+          <span style="font-size:7.5px;color:var(--muted);font-weight:700;width:9px;">${isAr?'د':'F'}</span>
+          <div style="flex:1;height:3px;border-radius:99px;background:var(--border);overflow:hidden;"><div style="height:100%;width:${fPct}%;border-radius:99px;background:#fb923c;"></div></div>
+          <span style="font-size:7.5px;color:var(--sub);font-weight:700;width:22px;text-align:right;">${d.f_g}g</span>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function scrollToMenuSection(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior:"smooth", block:"start" });
+}
+
+function updateMenuSectionNav() {
+  // Highlight active pill based on visible section
+  const sections = ["msec-muscle","msec-lean","msec-fast"];
+  const pillMap = { "msec-muscle":"mnav-muscle","msec-lean":"mnav-lean","msec-fast":"mnav-fast" };
+  const colorMap = { "msec-muscle":"mp-active","msec-lean":"mp-lean","msec-fast":"mp-fast" };
+  const menuObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        document.querySelectorAll(".mnav-pill").forEach(p => p.classList.remove("mp-active","mp-lean","mp-fast","mp-sweet"));
+        const pill = document.getElementById(pillMap[id]);
+        if (pill) pill.classList.add(colorMap[id]);
+      }
+    });
+  }, { threshold:0.4 });
+  sections.forEach(id => { const el=document.getElementById(id); if(el) menuObs.observe(el); });
+}
+
+
 function clearCart(){
   cart = [];
   try { localStorage.removeItem('savy_cart'); } catch(e){}
