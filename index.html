@@ -5125,6 +5125,26 @@ document.addEventListener("click", function(e) {
 function toggleTheme() {
   darkMode = !darkMode;
   applyTheme();
+  // Push theme change to menu if it's open
+  _syncMenuState();
+}
+
+// Sync current landing page state into the menu overlay (if loaded)
+function _syncMenuState() {
+  if (!_premiumMenuLoaded) return;
+  try {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const btn = document.getElementById('menu-theme-btn');
+    if (btn) btn.textContent = isDark ? '☀️' : '🌙';
+    if (typeof window._menuDark !== 'undefined') window._menuDark = isDark;
+
+    const menuLang = ['ar','en','fr'].includes(lang) ? lang : 'fr';
+    if (typeof setL === 'function') setL(menuLang);
+
+    const isFemale = document.body.classList.contains('female-mode');
+    const mc = document.getElementById('premium-menu-content');
+    if (mc) mc.classList.toggle('female-mode', isFemale);
+  } catch(e) {}
 }
 
 // Apply on load
@@ -5208,6 +5228,11 @@ function setLang(l) {
   try { localStorage.setItem('savy_lang', l); } catch(e){}
   document.documentElement.lang = l;
   document.body.dir = (l==="ar") ? "rtl" : "ltr";
+  // Push to menu if open
+  try {
+    const menuLang = ['ar','en','fr'].includes(l) ? l : 'fr';
+    if (_premiumMenuLoaded && typeof setL === 'function') setL(menuLang);
+  } catch(e) {}
   // Update hero value pills
   const vDelivery = document.getElementById('v-delivery');
   const vPrice    = document.getElementById('v-price');
@@ -7492,6 +7517,8 @@ function setSavyGender(g) {
   } else {
     document.body.classList.remove('female-mode');
   }
+  // Push to menu if open
+  _syncMenuState();
 }
 
 function _setOmGender(g) {
@@ -10208,7 +10235,6 @@ function openPremiumMenu() {
         return r.text();
       })
       .then(html => {
-        // Extract just <body> content + <style> + <script> blocks
         const parser = new DOMParser();
         const doc    = parser.parseFromString(html, 'text/html');
 
@@ -10225,8 +10251,6 @@ function openPremiumMenu() {
         // Inject body HTML
         const bodyDiv = document.createElement('div');
         bodyDiv.innerHTML = doc.body.innerHTML;
-
-        // Remove scripts (we'll re-run them)
         bodyDiv.querySelectorAll('script').forEach(s => s.remove());
         content.appendChild(bodyDiv);
 
@@ -10236,13 +10260,46 @@ function openPremiumMenu() {
           sc.textContent = s.textContent;
           content.appendChild(sc);
         });
+
+        // ── After menu scripts run, sync landing page state ──────────
+        // Theme
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        const menuThemeBtn = document.getElementById('menu-theme-btn');
+        if (menuThemeBtn) menuThemeBtn.textContent = isDark ? '☀️' : '🌙';
+        if (typeof window._menuDark !== 'undefined') window._menuDark = isDark;
+
+        // Language — map landing page lang to menu's supported langs
+        const currentLang = (typeof lang !== 'undefined' ? lang : null)
+          || localStorage.getItem('savy_lang') || 'fr';
+        const menuLang = ['ar','en','fr'].includes(currentLang) ? currentLang : 'fr';
+        if (typeof setL === 'function') setL(menuLang);
+
+        // Female mode — mirror on the menu container
+        const isFemale = document.body.classList.contains('female-mode');
+        const menuBody = document.getElementById('premium-menu-content');
+        if (menuBody) menuBody.classList.toggle('female-mode', isFemale);
+
       })
       .catch(() => {
-        // Fallback: open in new tab if fetch fails
         _premiumMenuLoaded = false;
         closePremiumMenu();
         window.open('savy-menu.html', '_blank');
       });
+  } else {
+    // Menu already loaded — re-sync state on every open
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const menuThemeBtn = document.getElementById('menu-theme-btn');
+    if (menuThemeBtn) menuThemeBtn.textContent = isDark ? '☀️' : '🌙';
+    if (typeof window._menuDark !== 'undefined') window._menuDark = isDark;
+
+    const currentLang = (typeof lang !== 'undefined' ? lang : null)
+      || localStorage.getItem('savy_lang') || 'fr';
+    const menuLang = ['ar','en','fr'].includes(currentLang) ? currentLang : 'fr';
+    if (typeof setL === 'function') setL(menuLang);
+
+    const isFemale = document.body.classList.contains('female-mode');
+    const menuBody = document.getElementById('premium-menu-content');
+    if (menuBody) menuBody.classList.toggle('female-mode', isFemale);
   }
 }
 
