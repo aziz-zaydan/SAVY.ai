@@ -633,7 +633,6 @@ function cycleStatus(id, el) {
 
 // ── Helper: resolve meals field ───────────────────────────
 function getMeals(o) {
-  // Chat sends "meals", menu sends "conversation" or "meals"
   return (o.meals || o.conversation || '').trim();
 }
 
@@ -688,8 +687,10 @@ function renderOrdersTable(orders) {
   const el = document.getElementById('orders-body');
   if (!list.length) { el.innerHTML = emptyRow(9, 'Aucune commande'); return; }
   el.innerHTML = list.map(o => {
-    const meals = getMeals(o);
-    return `<tr>
+    const meals   = getMeals(o);
+    const did     = 'detail-' + (o.order_id||Math.random()).replace(/[^a-z0-9]/gi,'');
+    const hasDet  = o.comment || o.scheduled_time || o.meal_count || o.meals_total || o.delivery_fee;
+    return `<tr style="cursor:pointer;" onclick="toggleDetail('${did}')">
       <td><span class="order-id">${o.order_id||'—'}</span></td>
       <td style="font-size:11px;color:var(--sub);white-space:nowrap;">${fmtDate(o.timestamp)}</td>
       <td><div class="customer-name">${o.name||'—'}</div><div class="customer-sub">${(o.city||'').slice(0,28)}</div></td>
@@ -698,7 +699,20 @@ function renderOrdersTable(orders) {
       <td><span class="total-val">${o.order_total||'—'} MAD</span></td>
       <td>${genderBadge(o.gender)}</td>
       <td>${sourceBadge(o.source)}</td>
-      <td>${statusBadge(o.order_id)}</td>
+      <td onclick="event.stopPropagation()">${statusBadge(o.order_id)}</td>
+    </tr>
+    <tr id="${did}" style="display:none;background:var(--card2);">
+      <td colspan="9" style="padding:10px 16px;">
+        <div style="display:flex;flex-wrap:wrap;gap:16px;font-size:12px;">
+          ${o.meal_count   ? '<span><strong style="color:var(--muted);">Nb plats:</strong> <span style="color:var(--text)">\${o.meal_count}</span></span>' : ''}
+          ${o.meals_total  ? '<span><strong style="color:var(--muted);">Sous-total:</strong> <span style="color:var(--text)">\${o.meals_total} MAD</span></span>' : ''}
+          ${o.delivery_fee !== '' && o.delivery_fee !== undefined ? '<span><strong style="color:var(--muted);">Livraison:</strong> <span style="color:var(--text)">\${o.delivery_fee == 0 ? \'🎉 Gratuite\' : o.delivery_fee + \' MAD\'}</span></span>' : ''}
+          ${o.scheduled_time && o.scheduled_time !== 'ASAP' ? '<span><strong style="color:var(--muted);">⏰ Heure:</strong> <span style="color:var(--text)">\${o.scheduled_time}</span></span>' : '<span><strong style="color:var(--muted);">⏰ Livraison:</strong> <span style="color:var(--green)">ASAP 45 min</span></span>'}
+          ${o.lang         ? '<span><strong style="color:var(--muted);">Langue:</strong> <span style="color:var(--text)">\${o.lang}</span></span>' : ''}
+          ${o.loyalty_tier ? '<span><strong style="color:var(--muted);">Fidélité:</strong> <span style="color:var(--gold)">\${o.loyalty_tier}</span></span>' : ''}
+          ${o.comment      ? '<span style="width:100%;"><strong style="color:var(--muted);">📝 Note:</strong> <span style="color:var(--text)">\${o.comment}</span></span>' : ''}
+        </div>
+      </td>
     </tr>`;
   }).join('');
 }
@@ -838,6 +852,11 @@ function renderCharts(orders) {
 }
 
 // ── Badge helpers ─────────────────────────────────────────
+function toggleDetail(id) {
+  const el = document.getElementById(id);
+  if (el) el.style.display = el.style.display === 'none' ? 'table-row' : 'none';
+}
+
 function genderBadge(g) {
   if (!g || g==='unknown') return '<span style="color:var(--muted);font-size:11px;">—</span>';
   const isFemale = g.toLowerCase()==='female';
