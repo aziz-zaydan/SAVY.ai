@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="fr">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
@@ -22,6 +22,8 @@
   <meta property="og:image:height" content="630"/>
   <meta property="og:locale"      content="fr_MA"/>
   <meta property="og:site_name"   content="SAVY"/>
+  <link rel="canonical" href="https://savy.netlify.app/"/>
+  <link rel="dns-prefetch" href="/.netlify"/>
 
   <!-- Twitter / X card -->
   <meta name="twitter:card"        content="summary_large_image"/>
@@ -32,7 +34,6 @@
   <!-- WhatsApp / iMessage preview -->
   <meta property="og:image:alt"   content="SAVY — Repas sains livrés en 45 min à Tétouan"/>
   <title>SAVY – Meal Engineer | الشيف الذكي</title>
-  <meta name="description" content="SAVY – Morocco's first AI Personal Chef. Specially Engineered meals, delivered in 45 min. Tétouan."/>
   <!-- PWA -->
   <link rel="manifest" href="/manifest.json"/>
   <meta name="theme-color" content="#089929"/>
@@ -1068,6 +1069,19 @@
       .loy-card-ord  { font-size:10px; }
 
       /* ── Order tracking ── */
+
+    /* ── Order success toast ── */
+    .savy-toast {
+      position:fixed; bottom:90px; left:50%; transform:translateX(-50%) translateY(20px);
+      z-index:9990; background:var(--green); color:#fff;
+      padding:12px 22px; border-radius:99px;
+      font-family:'Outfit',sans-serif; font-size:13px; font-weight:700;
+      box-shadow:0 8px 28px rgba(9,153,41,.4);
+      opacity:0; transition:opacity .25s, transform .25s;
+      white-space:nowrap; pointer-events:none;
+    }
+    .savy-toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+
       .ots-body      { grid-template-columns:1fr; gap:10px; }
       .ots-eta-card  { padding:14px 16px; border-radius:16px; }
       .ots-eta-num   { font-size:32px; }
@@ -3616,6 +3630,43 @@
     }
 
 </style>
+
+  <!-- Structured data — Restaurant schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FoodEstablishment",
+    "name": "SAVY",
+    "alternateName": "SAVY AI Chef",
+    "description": "Repas sains livrés en 45 min à Tétouan, M'diq et Martil — propulsés par l'IA",
+    "url": "https://savy.netlify.app",
+    "telephone": "+212708700830",
+    "servesCuisine": ["Moroccan", "Healthy", "Mediterranean", "High-Protein"],
+    "priceRange": "39–72 MAD",
+    "currenciesAccepted": "MAD",
+    "paymentAccepted": "Cash on delivery",
+    "areaServed": [
+      { "@type": "City", "name": "Tétouan" },
+      { "@type": "City", "name": "M'diq" },
+      { "@type": "City", "name": "Martil" }
+    ],
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Tétouan",
+      "addressRegion": "Tanger-Tétouan-Al Hoceïma",
+      "addressCountry": "MA"
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+      "opens": "10:00",
+      "closes": "21:00"
+    },
+    "sameAs": ["https://wa.me/212708700830"],
+    "hasMenu": "https://savy.netlify.app/savy-menu.html",
+    "image": "https://savy.netlify.app/images/slide_1.jpg"
+  }
+  </script>
 </head>
 <body>
 
@@ -3666,7 +3717,7 @@
       <button class="lang-btn"        onclick="setLang('fr')">🇫🇷 FR</button>
       <button class="lang-btn active" onclick="setLang('ar')">عربية</button>
     </div>
-    <button id="theme-btn" onclick="toggleTheme()"
+    <button id="theme-btn" onclick="toggleTheme()" aria-label="Basculer le thème"
       style="width:36px;height:36px;border-radius:50%;border:1.5px solid var(--border);background:var(--card);cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;"
       onmouseover="this.style.borderColor='var(--green)'" onmouseout="this.style.borderColor='var(--border)'">
       🌙
@@ -4410,7 +4461,17 @@
       <span class="lead-inp-icon">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
       </span>
-      <input class="lead-inp" id="om-city" type="text" autocomplete="street-address" placeholder="Adresse de livraison"/>
+      <input class="lead-inp" id="om-city" type="text" autocomplete="street-address" list="savy-cities" placeholder="Ville / Adresse de livraison"/><datalist id="savy-cities">
+  <option value="Tétouan — Centre"/>
+  <option value="Tétouan — Martil Road"/>
+  <option value="Tétouan — Sania"/>
+  <option value="Tétouan — Bab Mqabar"/>
+  <option value="Tétouan — Azla"/>
+  <option value="M'diq"/>
+  <option value="Martil"/>
+  <option value="Cabo Negro"/>
+  <option value="Fnideq"/>
+</datalist>
     </div>
 
     <div class="lead-inp-wrap">
@@ -4632,7 +4693,7 @@
           <span class="lead-inp-icon">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
           </span>
-          <input class="lead-inp" id="lead-city" type="text" autocomplete="street-address" placeholder="Adresse de livraison"/>
+          <input class="lead-inp" id="lead-city" type="text" autocomplete="street-address" list="savy-cities" placeholder="Ville / Adresse de livraison"/>
         </div>
 
         <div class="lead-inp-wrap">
@@ -4670,7 +4731,7 @@
     <div id="quick-chips" class="q-chips-scroll"></div>
     <div class="chat-input-row">
       <button class="chat-voice-btn" id="voice-btn" onclick="toggleVoice()" title="Entrée vocale">🎤</button>
-      <input class="chat-inp" id="chat-inp" placeholder="Écris à Chef SAVY..." onkeydown="if(event.key==='Enter')chatSend()"/>
+      <input class="chat-inp" id="chat-inp" placeholder="Écris à Chef SAVY..." inputmode="text" autocomplete="off" spellcheck="false" onkeydown="if(event.key==='Enter')chatSend()"/>
       <button class="chat-send" id="chat-send-btn" onclick="chatSend()">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <line x1="22" y1="2" x2="11" y2="13"></line>
@@ -6649,6 +6710,57 @@ function setQuickChips(chips) {
   });
 }
 
+
+/* ═══════════════════════════════════════════
+   CONTEXTUAL CHIPS — auto-generated after each bot reply
+═══════════════════════════════════════════ */
+function _autoChips(reply, l) {
+  if (!reply) return;
+  const r = reply.toLowerCase();
+  const cl = l || window._savyChatLang || lang || 'fr';
+
+  const C = {
+    fr: { menu:'📋 Voir le menu', order:'✅ Commander', delivery:'🛵 Délai de livraison',
+          price:'💳 Voir les prix', protein:'💪 Plat protéiné', light:'🥗 Plat léger',
+          dessert:'🍮 Desserts', combo:'🎁 Combo 2 plats' },
+    en: { menu:'📋 See the menu', order:'✅ Order now', delivery:'🛵 Delivery time',
+          price:'💳 See prices', protein:'💪 High protein', light:'🥗 Light dish',
+          dessert:'🍮 Desserts', combo:'🎁 Combo 2 dishes' },
+    ar: { menu:'📋 القائمة', order:'✅ اطلب الآن', delivery:'🛵 وقت التوصيل',
+          price:'💳 الأسعار', protein:'💪 بروتين عالٍ', light:'🥗 وجبة خفيفة',
+          dessert:'🍮 الحلويات', combo:'🎁 كومبو 2 أطباق' },
+    es: { menu:'📋 Ver el menú', order:'✅ Pedir ahora', delivery:'🛵 Tiempo de entrega',
+          price:'💳 Ver precios', protein:'💪 Alto proteínas', light:'🥗 Plato ligero',
+          dessert:'🍮 Postres', combo:'🎁 Combo 2 platos' },
+  };
+  const t = C[cl] || C.fr;
+  const chips = [];
+
+  // Intent signals → matching chip
+  if (/confir|c'est ça|parfait|perfect|ممتاز|perfecto/.test(r)) return; // post-order — no chips
+  if (/dessert|tiramisu|cheesecake|flan/.test(r))  chips.push(t.dessert);
+  if (/protein|protéine|sport|muscle|gain/.test(r)) chips.push(t.protein);
+  if (/léger|light|fit|mince|خفيف/.test(r))        chips.push(t.light);
+  if (/livr|deliv|توصيل/.test(r))                   chips.push(t.delivery);
+  if (/prix|price|سعر|coût/.test(r))                chips.push(t.price);
+  if (/2 plat|combo|offerte/.test(r))               chips.push(t.combo);
+
+  // Always end with menu or order
+  if (chips.length < 2) chips.push(t.menu);
+  if (chips.length < 3) chips.push(t.order);
+
+  setQuickChips(chips.slice(0, 3));
+}
+
+
+function _showToast(msg) {
+  const t = document.createElement('div');
+  t.className = 'savy-toast';
+  t.textContent = msg;
+  document.body.appendChild(t);
+  requestAnimationFrame(() => { requestAnimationFrame(() => { t.classList.add('show'); }); });
+  setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 300); }, 3800);
+}
 /* ═══════════════════════════════════════════
    CHAT SEND
 ═══════════════════════════════════════════ */
@@ -6724,7 +6836,7 @@ async function chatSendText(text) {
         method:"POST",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify({
-          messages: chatHistory.map(m => ({
+          messages: chatHistory.slice(-14).map(m => ({
             role: m.role,
             content: String(m.content||"").slice(0, 400)
           })),
@@ -6750,6 +6862,9 @@ async function chatSendText(text) {
     reply = reply.replace("SAVY_SHOW_MENU","").replace("SAVY_GET_LEAD","").trim();
     chatHistory.push({ role:"assistant", content:reply });
     addBotMsg(reply, isCouple);
+    if (!triggerMenu && !triggerLead) {
+      setTimeout(() => _autoChips(reply, window._savyChatLang || lang), 120);
+    }
 
     if (triggerMenu) {
       setTimeout(() => _showChatMenu(), 500);
@@ -8015,7 +8130,7 @@ function submitOrder() {
     const el = document.getElementById(id);
     if(el){ el.style.borderColor="#e53935"; setTimeout(()=>el.style.borderColor="",1500); }
   };
-  if(!name)  { showFieldError("om-name",  "required"); return; }
+  if(name.length < 2) { showFieldError("om-name",  "required"); return; }
   if(!city)  { showFieldError("om-city",  "required"); return; }
   if(!phone) { showFieldError("om-phone", "required"); return; }
   if(!validatePhone(phone)) { showFieldError("om-phone", "phone"); return; }
@@ -8107,6 +8222,8 @@ function submitOrder() {
       return;
     }
     window.open(`https://wa.me/212708700830?text=${encodeURIComponent(msg)}`, "_blank");
+    const _tl = {fr:"✅ Commande envoyée sur WhatsApp !",en:"✅ Order sent on WhatsApp!",ar:"✅ تم إرسال طلبك على واتساب!"};
+    _showToast(_tl[lang] || _tl.fr);
 
     // Reset
     const overlay = document.getElementById("order-modal-overlay");
@@ -9931,7 +10048,7 @@ function renderLoyaltyCheckerResult(count, phone) {
 
     <!-- Input row -->
     <div style="display:flex;gap:8px;margin-bottom:12px;">
-      <input id="lc-phone" type="tel"
+      <input id="lc-phone" type="tel" autocomplete="tel" inputmode="tel"
         placeholder="06XXXXXXXX"
         oninput="lcPhoneInput(this.value)"
         style="flex:1;padding:12px 14px;border-radius:12px;border:1.5px solid var(--border);
@@ -10216,6 +10333,8 @@ function openPremiumMenu() {
 
   overlay.style.display = 'block';
   document.body.style.overflow = 'hidden';
+  // Push state so Android/iOS back button closes the sheet
+  if (!history.state?.savyMenu) history.pushState({ savyMenu: true }, '');
 
   requestAnimationFrame(() => {
     overlay.style.background = 'rgba(0,0,0,0.6)';
@@ -10315,6 +10434,10 @@ document.getElementById('premium-menu-overlay').addEventListener('click', functi
 
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closePremiumMenu();
+});
+window.addEventListener('popstate', function(e) {
+  const overlay = document.getElementById('premium-menu-overlay');
+  if (overlay && overlay.style.display !== 'none') closePremiumMenu();
 });
 </script>
 
