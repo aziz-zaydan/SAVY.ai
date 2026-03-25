@@ -161,7 +161,7 @@ button { touch-action:manipulation; }
 .feat-scroll { display:flex; gap:11px; padding:0 15px 15px; overflow-x:auto; scrollbar-width:none; }
 .feat-scroll::-webkit-scrollbar { display:none; }
 .feat-card {
-  flex-shrink:0; width:215px; height:235px; border-radius:var(--rL);
+  flex-shrink:0; width:215px; height:235px; border-radius:var(--rL); cursor:pointer;
   overflow:hidden; position:relative; background:var(--card); box-shadow:var(--shadow);
   transition:transform .2s, box-shadow .2s; animation:fadeUp .4s both;
 }
@@ -193,7 +193,7 @@ button { touch-action:manipulation; }
 /* ═══ MEAL GRID ══════════════════════════════════════════════ */
 .mgrid { display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:0 15px 15px; }
 .mcard {
-  border-radius:var(--r); overflow:hidden;
+  border-radius:var(--r); overflow:hidden; cursor:pointer;
   background:var(--card); border:1px solid var(--border); box-shadow:var(--shadow);
   position:relative; transition:transform .2s, box-shadow .2s, border-color .2s;
   animation:fadeUp .4s both;
@@ -295,8 +295,7 @@ footer { margin:18px 15px 0; padding:15px; border-radius:var(--r); background:va
 .dh-right { display:flex; align-items:center; gap:5px; }
 .dh-ord   { font-size:11.5px; font-weight:600; color:rgba(255,255,255,.85); }
 .dh-arrow { font-size:10px; color:rgba(255,255,255,.7); transition:transform .25s; }
-#drawer-body.open + .drawer-handle .dh-arrow,
-.dh-arrow.up { transform:rotate(180deg); }
+#drawer.open.expanded .dh-arrow { transform:rotate(180deg); }
 #drawer-body {
   background:var(--card); border-top:1px solid var(--border);
   max-height:0; overflow:hidden;
@@ -351,6 +350,179 @@ footer { margin:18px 15px 0; padding:15px; border-radius:var(--r); background:va
 .di-q:hover  { background:var(--border); }
 .di-q:active { transform:scale(.88); }
 .di-qn       { font-family:var(--font); font-weight:800; font-size:13px; color:var(--text); min-width:14px; text-align:center; }
+
+
+/* ═══ ABANDONMENT NUDGE ══════════════════════════════════════ */
+#abandon-toast {
+  position:fixed; bottom:80px; left:50%;
+  transform:translateX(-50%) translateY(16px);
+  z-index:600;
+  background:var(--text); color:var(--bg);
+  padding:11px 18px 11px 14px;
+  border-radius:99px;
+  font-size:12px; font-weight:600;
+  box-shadow:0 8px 28px rgba(0,0,0,.22);
+  display:flex; align-items:center; gap:9px;
+  opacity:0; transition:opacity .25s, transform .25s;
+  pointer-events:none; white-space:nowrap; max-width:calc(100vw - 32px);
+}
+#abandon-toast.show { opacity:1; transform:translateX(-50%) translateY(0); pointer-events:auto; }
+#abandon-toast .at-cta {
+  background:var(--green); color:#fff;
+  padding:5px 11px; border-radius:99px;
+  font-size:11px; font-weight:800; font-family:var(--font);
+  cursor:pointer; border:none; flex-shrink:0;
+}
+#abandon-toast .at-x {
+  width:18px; height:18px; display:flex; align-items:center; justify-content:center;
+  opacity:.5; cursor:pointer; font-size:13px; flex-shrink:0; border:none; background:none; color:inherit;
+}
+
+
+/* ═══ MEAL DETAIL SHEET ══════════════════════════════════════ */
+#detail-overlay {
+  position:fixed; inset:0; z-index:700;
+  background:rgba(0,0,0,0); pointer-events:none;
+  transition:background .28s;
+}
+#detail-overlay.open { background:rgba(0,0,0,.5); pointer-events:auto; }
+
+#detail-sheet {
+  position:fixed; bottom:0; left:0; right:0; z-index:701;
+  max-width:600px; margin:0 auto;
+  background:var(--bg); border-radius:22px 22px 0 0;
+  box-shadow:0 -8px 40px rgba(0,0,0,.18);
+  transform:translateY(100%);
+  transition:transform .32s cubic-bezier(.4,0,.2,1);
+  max-height:92dvh; overflow-y:auto;
+  overscroll-behavior:contain;
+}
+#detail-sheet.open { transform:translateY(0); }
+
+.ds-grip {
+  width:36px; height:4px; background:var(--border);
+  border-radius:2px; margin:12px auto 0;
+}
+.ds-img-wrap {
+  height:200px; overflow:hidden; position:relative;
+  margin:12px 0 0;
+}
+.ds-img { width:100%; height:100%; object-fit:cover; display:block; }
+.ds-img-ph {
+  width:100%; height:100%; display:flex; align-items:center;
+  justify-content:center; font-size:72px;
+  background:linear-gradient(135deg,#1e1a30,#16122a);
+}
+.ds-grad { position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,.55) 0%,transparent 50%); }
+.ds-price-badge {
+  position:absolute; bottom:12px; right:14px;
+  background:var(--green); color:#fff;
+  font-family:var(--font); font-weight:800; font-size:16px;
+  padding:5px 13px; border-radius:99px;
+}
+.ds-rating-badge {
+  position:absolute; bottom:12px; left:14px;
+  background:rgba(0,0,0,.45); color:#fff; backdrop-filter:blur(6px);
+  font-size:12px; font-weight:600;
+  padding:4px 10px; border-radius:99px;
+}
+
+.ds-body { padding:16px 18px 100px; }
+.ds-tag { display:inline-block; padding:3px 9px; border-radius:99px; font-size:9px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; margin-bottom:8px; }
+
+.ds-share-btn {
+  display:inline-flex; align-items:center; gap:5px;
+  background:var(--card); border:1px solid var(--border);
+  color:var(--sub); border-radius:99px; padding:5px 12px;
+  font-size:11px; font-weight:600; cursor:pointer;
+  margin-bottom:14px; transition:all .15s;
+}
+.ds-share-btn:active { transform:scale(.95); }
+.ds-name { font-family:var(--font); font-weight:800; font-size:22px; letter-spacing:-.6px; color:var(--text); margin-bottom:16px; line-height:1.15; }
+
+/* Macro ring row */
+.ds-macros { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:18px; }
+.ds-macro {
+  background:var(--card); border:1px solid var(--border); border-radius:12px;
+  padding:10px 6px; text-align:center;
+}
+.ds-macro-val { font-family:var(--font); font-weight:800; font-size:15px; color:var(--text); }
+.ds-macro-lbl { font-size:9px; color:var(--muted); margin-top:2px; text-transform:uppercase; letter-spacing:.05em; }
+.ds-macro-dot { width:8px; height:8px; border-radius:50%; margin:0 auto 4px; }
+
+/* Macro bars */
+.ds-bars { display:flex; flex-direction:column; gap:6px; margin-bottom:18px; }
+.ds-bar-row { display:flex; align-items:center; gap:8px; }
+.ds-bar-lbl { font-size:10px; font-weight:700; color:var(--muted); width:48px; flex-shrink:0; }
+.ds-bar-track { flex:1; height:6px; background:var(--card2); border-radius:3px; overflow:hidden; }
+.ds-bar-fill { height:100%; border-radius:3px; transition:width .6s cubic-bezier(.4,0,.2,1); }
+.ds-bar-val { font-size:10px; color:var(--muted); width:28px; text-align:right; }
+
+/* Extra nutrition */
+.ds-extras { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-bottom:20px; }
+.ds-extra { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:8px 10px; }
+.ds-extra-lbl { font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; }
+.ds-extra-val { font-family:var(--font); font-weight:700; font-size:13px; color:var(--text); margin-top:2px; }
+
+/* Section headings */
+.ds-section-title { font-family:var(--font); font-weight:700; font-size:12px; color:var(--text); margin-bottom:8px; text-transform:uppercase; letter-spacing:.06em; }
+.ds-ingredients { font-size:12.5px; color:var(--sub); line-height:1.7; margin-bottom:18px; }
+.ds-ingredient-tag {
+  display:inline-block; background:var(--card); border:1px solid var(--border);
+  border-radius:99px; padding:3px 9px; font-size:11px; color:var(--sub);
+  margin:2px; font-weight:500;
+}
+.ds-allergens { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:24px; }
+.ds-allergen-tag {
+  background:rgba(244,114,182,.1); border:1px solid rgba(244,114,182,.25);
+  color:#db2777; border-radius:99px; padding:3px 10px;
+  font-size:10px; font-weight:700; letter-spacing:.04em;
+}
+.ds-allergen-none { font-size:11px; color:var(--muted); }
+
+/* CTA footer */
+.ds-footer {
+  position:fixed; bottom:0; left:0; right:0; max-width:600px; margin:0 auto;
+  z-index:702; background:var(--bg);
+  border-top:1px solid var(--border);
+  padding:12px 16px;
+  display:flex; gap:10px; align-items:center;
+  opacity:0; pointer-events:none; transition:opacity .2s;
+}
+#detail-sheet.open ~ #ds-footer,
+.ds-footer.visible { opacity:1; pointer-events:auto; }
+.ds-cta {
+  flex:1; padding:14px; border-radius:12px; border:none;
+  background:linear-gradient(135deg,var(--green),var(--greenL));
+  color:#fff; font-family:var(--font); font-size:14px; font-weight:800;
+  cursor:pointer; transition:all .15s;
+  box-shadow:0 4px 18px rgba(9,153,41,.28);
+}
+.ds-cta.added { background:var(--card2); color:var(--sub); box-shadow:none; border:1px solid var(--border); }
+.ds-cta:active { transform:scale(.98); }
+.ds-close-btn {
+  width:44px; height:44px; border-radius:12px;
+  background:var(--card); border:1px solid var(--border);
+  display:flex; align-items:center; justify-content:center;
+  font-size:18px; cursor:pointer; flex-shrink:0; color:var(--text);
+}
+.ds-close-btn:active { transform:scale(.9); }
+
+
+/* ═══ SCROLL TO TOP ══════════════════════════════════════════ */
+#scroll-top {
+  position:fixed; bottom:90px; right:16px; z-index:490;
+  width:38px; height:38px; border-radius:50%;
+  background:var(--card); border:1px solid var(--border);
+  color:var(--sub); font-size:17px;
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; box-shadow:var(--shadow);
+  opacity:0; transform:translateY(8px); pointer-events:none;
+  transition:opacity .22s, transform .22s;
+}
+#scroll-top.show { opacity:1; transform:translateY(0); pointer-events:auto; }
+#scroll-top:active { transform:scale(.9); }
+[data-theme="dark"] #scroll-top { background:var(--card); }
 
 @keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
 </style>
@@ -418,8 +590,8 @@ footer { margin:18px 15px 0; padding:15px; border-radius:var(--r); background:va
   </div>
   <div class="sec-div"></div>
   <div class="feat-scroll">
-    <div class="feat-card" data-id="m1">
-      <img class="feat-img" src="images/dish_08.jpg" onload="this.classList.add('vis')" alt="">
+    <div class="feat-card" data-id="m1" onclick="openDetail('m1')">
+      <img class="feat-img" src="images/dish_08.jpg" onload="this.classList.add('vis')" alt="Power Pasta Crevettes">
       <div class="feat-grad"></div>
       <button class="feat-add idle" id="fb-m1" onclick="tog(event,'m1')">+</button>
       <div class="feat-body">
@@ -431,8 +603,8 @@ footer { margin:18px 15px 0; padding:15px; border-radius:var(--r); background:va
         </div>
       </div>
     </div>
-    <div class="feat-card" data-id="m2">
-      <img class="feat-img" src="images/dish_02.jpg" onload="this.classList.add('vis')" alt="">
+    <div class="feat-card" data-id="m2" onclick="openDetail('m2')">
+      <img class="feat-img" src="images/dish_02.jpg" onload="this.classList.add('vis')" alt="Salad César Poulet">
       <div class="feat-grad"></div>
       <button class="feat-add idle" id="fb-m2" onclick="tog(event,'m2')">+</button>
       <div class="feat-body">
@@ -446,9 +618,9 @@ footer { margin:18px 15px 0; padding:15px; border-radius:var(--r); background:va
     </div>
   </div>
   <div class="mgrid">
-    <div class="mcard" data-id="m3">
+    <div class="mcard" data-id="m3" onclick="openDetail('m3')">
       <div class="mimg-wrap">
-        <img loading="lazy" decoding="async" class="mimg" src="images/dish_04.jpg" onload="this.classList.add('vis')" alt="">
+        <img loading="lazy" decoding="async" class="mimg" src="images/dish_04.jpg" onload="this.classList.add('vis')" alt="Salade Poulet Grillé">
         <div class="mgrad2"></div>
         <span class="meal-tag tl">Low Carb</span>
         <div class="tr-stack"><span class="trp">&#x23F1; 10m</span><span class="trp">&#x2605; 4.8</span></div>
@@ -465,9 +637,9 @@ footer { margin:18px 15px 0; padding:15px; border-radius:var(--r); background:va
         </div>
       </div>
     </div>
-    <div class="mcard" data-id="m4">
+    <div class="mcard" data-id="m4" onclick="openDetail('m4')">
       <div class="mimg-wrap">
-        <img loading="lazy" decoding="async" class="mimg" src="images/dish_03.jpg" onload="this.classList.add('vis')" alt="">
+        <img loading="lazy" decoding="async" class="mimg" src="images/dish_03.jpg" onload="this.classList.add('vis')" alt="Pasta aux Légumes">
         <div class="mgrad2"></div>
         <span class="meal-tag tl">Vegan</span>
         <div class="tr-stack"><span class="trp">&#x23F1; 18m</span><span class="trp">&#x2605; 4.6</span></div>
@@ -500,8 +672,8 @@ footer { margin:18px 15px 0; padding:15px; border-radius:var(--r); background:va
   </div>
   <div class="sec-div"></div>
   <div class="feat-scroll">
-    <div class="feat-card" data-id="l1">
-      <img class="feat-img" src="images/dish_01.jpg" onload="this.classList.add('vis')" alt="">
+    <div class="feat-card" data-id="l1" onclick="openDetail('l1')">
+      <img class="feat-img" src="images/dish_01.jpg" onload="this.classList.add('vis')" alt="Salad Russe Light">
       <div class="feat-grad"></div>
       <button class="feat-add idle" id="fb-l1" onclick="tog(event,'l1')">+</button>
       <div class="feat-body">
@@ -513,8 +685,8 @@ footer { margin:18px 15px 0; padding:15px; border-radius:var(--r); background:va
         </div>
       </div>
     </div>
-    <div class="feat-card" data-id="l2">
-      <img class="feat-img" src="images/dish_05.jpg" onload="this.classList.add('vis')" alt="">
+    <div class="feat-card" data-id="l2" onclick="openDetail('l2')">
+      <img class="feat-img" src="images/dish_05.jpg" onload="this.classList.add('vis')" alt="Salad de Pâte Fit">
       <div class="feat-grad"></div>
       <button class="feat-add idle" id="fb-l2" onclick="tog(event,'l2')">+</button>
       <div class="feat-body">
@@ -542,9 +714,9 @@ footer { margin:18px 15px 0; padding:15px; border-radius:var(--r); background:va
   </div>
   <div class="sec-div"></div>
   <div class="mgrid">
-    <div class="mcard" data-id="f1">
+    <div class="mcard" data-id="f1" onclick="openDetail('f1')">
       <div class="mimg-wrap">
-        <img loading="lazy" decoding="async" class="mimg" src="images/dish_05.jpg" onload="this.classList.add('vis')" alt="">
+        <img loading="lazy" decoding="async" class="mimg" src="images/dish_05.jpg" onload="this.classList.add('vis')" alt="Salad de Pâte Fit">
         <div class="mgrad2"></div>
         <span class="meal-tag tf">Cheat Smart</span>
         <div class="tr-stack"><span class="trp">&#x23F1; 15m</span><span class="trp">&#x2605; 4.7</span></div>
@@ -561,9 +733,9 @@ footer { margin:18px 15px 0; padding:15px; border-radius:var(--r); background:va
         </div>
       </div>
     </div>
-    <div class="mcard" data-id="f2">
+    <div class="mcard" data-id="f2" onclick="openDetail('f2')">
       <div class="mimg-wrap">
-        <img loading="lazy" decoding="async" class="mimg" src="images/dish_13.jpg" onload="this.classList.add('vis')" alt="">
+        <img loading="lazy" decoding="async" class="mimg" src="images/dish_13.jpg" onload="this.classList.add('vis')" alt="Quesadilla Massala">
         <div class="mgrad2"></div>
         <span class="meal-tag tg">&#x1F525; Top Pick</span>
         <div class="tr-stack"><span class="trp">&#x23F1; 18m</span><span class="trp">&#x2605; 4.7</span></div>
@@ -580,9 +752,9 @@ footer { margin:18px 15px 0; padding:15px; border-radius:var(--r); background:va
         </div>
       </div>
     </div>
-    <div class="mcard" data-id="f3" style="grid-column:1/-1;">
+    <div class="mcard" data-id="f3" style="grid-column:1/-1;" onclick="openDetail('f3')">
       <div class="mimg-wrap" style="height:155px;">
-        <img loading="lazy" decoding="async" class="mimg" src="images/dish_14.jpg" onload="this.classList.add('vis')" alt="">
+        <img loading="lazy" decoding="async" class="mimg" src="images/dish_14.jpg" onload="this.classList.add('vis')" alt="Burger Viande Hachée">
         <div class="mgrad2"></div>
         <span class="meal-tag tf">Trending</span>
         <div class="tr-stack"><span class="trp">&#x23F1; 20m</span><span class="trp">&#x2605; 4.8</span></div>
@@ -615,7 +787,7 @@ footer { margin:18px 15px 0; padding:15px; border-radius:var(--r); background:va
   </div>
   <div class="sec-div"></div>
   <div class="mgrid">
-    <div class="mcard" data-id="sw1">
+    <div class="mcard" data-id="sw1" onclick="openDetail('sw1')">
       <div class="mimg-wrap" style="background:linear-gradient(135deg,#1e1a30,#16122a);">
         <div class="mimg-ph">&#x1F36E;</div><div class="mgrad2"></div>
         <span class="meal-tag tp">Low Fat</span>
@@ -627,7 +799,7 @@ footer { margin:18px 15px 0; padding:15px; border-radius:var(--r); background:va
         <div class="price-row"><span class="meal-price" style="color:var(--plum);">28 MAD</span><span class="meal-kcal">5g prot.</span></div>
       </div>
     </div>
-    <div class="mcard" data-id="sw2">
+    <div class="mcard" data-id="sw2" onclick="openDetail('sw2')">
       <div class="mimg-wrap" style="background:linear-gradient(135deg,#1e1a30,#16122a);">
         <div class="mimg-ph">&#x1F370;</div><div class="mgrad2"></div>
         <span class="meal-tag tg">&#x1F525; Best Seller</span>
@@ -639,7 +811,7 @@ footer { margin:18px 15px 0; padding:15px; border-radius:var(--r); background:va
         <div class="price-row"><span class="meal-price" style="color:var(--plum);">32 MAD</span><span class="meal-kcal">8g prot.</span></div>
       </div>
     </div>
-    <div class="mcard" data-id="sw3">
+    <div class="mcard" data-id="sw3" onclick="openDetail('sw3')">
       <div class="mimg-wrap" style="background:linear-gradient(135deg,#1e1a30,#16122a);">
         <div class="mimg-ph">&#x1F370;</div><div class="mgrad2"></div>
         <span class="meal-tag tp">Chef's Pick</span>
@@ -651,7 +823,7 @@ footer { margin:18px 15px 0; padding:15px; border-radius:var(--r); background:va
         <div class="price-row"><span class="meal-price" style="color:var(--plum);">30 MAD</span><span class="meal-kcal">7g prot.</span></div>
       </div>
     </div>
-    <div class="mcard" data-id="sw4">
+    <div class="mcard" data-id="sw4" onclick="openDetail('sw4')">
       <div class="mimg-wrap" style="background:linear-gradient(135deg,#1e1a30,#16122a);">
         <div class="mimg-ph">&#x1F964;</div><div class="mgrad2"></div>
         <span class="meal-tag tn">New</span>
@@ -755,8 +927,81 @@ footer { margin:18px 15px 0; padding:15px; border-radius:var(--r); background:va
   </div>
 </div>
 
+<!-- MEAL DETAIL SHEET -->
+<div id="detail-overlay" onclick="closeDetail()"></div>
+<div id="detail-sheet">
+  <div class="ds-grip"></div>
+  <div id="ds-img-wrap" class="ds-img-wrap">
+    <div id="ds-img-ph" class="ds-img-ph">🍽️</div>
+    <img id="ds-img" class="ds-img" src="" alt="Photo du plat" style="display:none" onload="this.style.display='block';document.getElementById('ds-img-ph').style.display='none'"/>
+    <div class="ds-grad"></div>
+    <div id="ds-price-badge" class="ds-price-badge">-- MAD</div>
+    <div id="ds-rating-badge" class="ds-rating-badge">★ --</div>
+  </div>
+  <div class="ds-body">
+    <div id="ds-tag" class="ds-tag tg" style="background:rgba(9,184,48,.15);color:var(--green);">--</div>
+    <div id="ds-name" class="ds-name">--</div>
+    <div class="ds-macros">
+      <div class="ds-macro">
+        <div class="ds-macro-dot" style="background:#f97316;"></div>
+        <div class="ds-macro-val" id="ds-cal">--</div>
+        <div class="ds-macro-lbl" id="ds-cal-lbl">kcal</div>
+      </div>
+      <div class="ds-macro">
+        <div class="ds-macro-dot" style="background:#4ade80;"></div>
+        <div class="ds-macro-val" id="ds-p">--</div>
+        <div class="ds-macro-lbl" id="ds-p-lbl">Protéines</div>
+      </div>
+      <div class="ds-macro">
+        <div class="ds-macro-dot" style="background:#facc15;"></div>
+        <div class="ds-macro-val" id="ds-c">--</div>
+        <div class="ds-macro-lbl" id="ds-c-lbl">Glucides</div>
+      </div>
+      <div class="ds-macro">
+        <div class="ds-macro-dot" style="background:#60a5fa;"></div>
+        <div class="ds-macro-val" id="ds-f">--</div>
+        <div class="ds-macro-lbl" id="ds-f-lbl">Lipides</div>
+      </div>
+    </div>
+    <div class="ds-bars">
+      <div class="ds-bar-row"><span class="ds-bar-lbl" id="ds-bl-p">Protéines</span><div class="ds-bar-track"><div class="ds-bar-fill" id="ds-bf-p" style="background:#4ade80;width:0%"></div></div><span class="ds-bar-val" id="ds-bv-p">--</span></div>
+      <div class="ds-bar-row"><span class="ds-bar-lbl" id="ds-bl-c">Glucides</span><div class="ds-bar-track"><div class="ds-bar-fill" id="ds-bf-c" style="background:#facc15;width:0%"></div></div><span class="ds-bar-val" id="ds-bv-c">--</span></div>
+      <div class="ds-bar-row"><span class="ds-bar-lbl" id="ds-bl-f">Lipides</span><div class="ds-bar-track"><div class="ds-bar-fill" id="ds-bf-f" style="background:#60a5fa;width:0%"></div></div><span class="ds-bar-val" id="ds-bv-f">--</span></div>
+    </div>
+    <div class="ds-extras">
+      <div class="ds-extra"><div class="ds-extra-lbl" id="ds-el-fiber">Fibres</div><div class="ds-extra-val" id="ds-fiber">--</div></div>
+      <div class="ds-extra"><div class="ds-extra-lbl" id="ds-el-sugar">Sucres</div><div class="ds-extra-val" id="ds-sugar">--</div></div>
+      <div class="ds-extra"><div class="ds-extra-lbl" id="ds-el-sodium">Sodium</div><div class="ds-extra-val" id="ds-sodium">--</div></div>
+    </div>
+    <button class="ds-share-btn" id="ds-share-btn" onclick="dsShare()" aria-label="Partager">🔗 <span id="ds-share-lbl">Partager</span></button>
+    <div class="ds-section-title" id="ds-ing-title">Ingrédients</div>
+    <div id="ds-ingredients" class="ds-ingredients"></div>
+    <div class="ds-section-title" id="ds-al-title">Allergènes</div>
+    <div id="ds-allergens" class="ds-allergens"></div>
+  </div>
+</div>
+<div class="ds-footer" id="ds-footer">
+  <button class="ds-close-btn" onclick="closeDetail()">✕</button>
+  <button class="ds-cta" id="ds-cta-btn" onclick="dsToggleCart()">+ Ajouter à la commande</button>
+</div>
+
+<!-- SCROLL TO TOP -->
+<button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Retour en haut">↑</button>
+
+<!-- ABANDONMENT NUDGE TOAST -->
+<div id="abandon-toast">
+  <span id="at-msg">Tu as des plats dans ton panier 👀</span>
+  <button class="at-cta" onclick="toggleDrawer();_hideAbandon()">Commander</button>
+  <button class="at-x" onclick="_hideAbandon()">✕</button>
+</div>
+
 <script>
 (function() {
+// ── Early declarations — must precede renderCart/setL calls ──
+let _abandonTimer = null;
+let _abandonShown = false;
+let _dsCurrentId  = null;
+
 // ══════════════════════════════════════════════════════
 //  SAVY MENU — scoped IIFE to avoid conflicts with
 //  landing page globals when fetch-injected
@@ -915,6 +1160,11 @@ function setL(l){
   const cns=['cn-m','cn-l','cn-f','cn-s','cn-p'];
   cns.forEach((c,i)=>{const e=document.querySelector('.'+c);if(e)e.textContent=t.cnav[i];});
   renderCart();
+
+  // Refresh detail sheet labels if open
+  if (document.getElementById('detail-sheet')?.classList.contains('open') && _dsCurrentId) {
+    openDetail(_dsCurrentId);
+  }
 }
 
 // ═══════════════════════════════
@@ -995,6 +1245,7 @@ function checkout(){
 }
 
 function renderCart(){
+  _resetAbandon();
   const t=T[lang];
   const entries=Object.entries(cart);
   const count=entries.length;
@@ -1012,7 +1263,7 @@ function renderCart(){
 
   const drw=document.getElementById('drawer');
   if(count>0) drw?.classList.add('open');
-  else{drw?.classList.remove('open');drawerOpen=false;document.getElementById('drawer-body')?.classList.remove('open');}
+  else{drw?.classList.remove('open','expanded');drawerOpen=false;document.getElementById('drawer-body')?.classList.remove('open');}
 
   // Items
   const list=document.getElementById('drawer-items');
@@ -1041,6 +1292,7 @@ function toggleCart(){if(Object.keys(cart).length) toggleDrawer();}
 function toggleDrawer(){
   drawerOpen=!drawerOpen;
   document.getElementById('drawer-body')?.classList.toggle('open',drawerOpen);
+  document.getElementById('drawer')?.classList.toggle('expanded',drawerOpen);
 }
 
 // ── Scroll to section ──────────────────
@@ -1112,6 +1364,231 @@ function toggleMenuTheme() {
   setL(['ar','en','fr'].includes(l) ? l : 'fr');
 })();
 
+
+
+// ── Meal detail sheet ──────────────────────────────────────────────────
+const DETAIL = {"m1":{"name_fr":"Pasta aux Crevettes","name_ar":"باستا بالجمبري","cal":"420","p":"26","c":"52","f":"11","fiber":"3","sugar":"6","sodium":"560","r":"4.8","tag":"Mediterranean","ing_fr":"Crevettes fraîches · Pâtes linguine · Ail · Tomate · Crème légère · Persil · Parmesan","ing_ar":"جمبري طازج · مكرونة لينغويني · ثوم · طماطم · كريمة خفيفة · بقدونس · بارميزان","al_fr":"Crustacés · Gluten · Lait","al_ar":"قشريات · غلوتين · حليب","price":72},"m2":{"name_fr":"Salad César Poulet","name_ar":"سلطة سيزر بالدجاج","cal":"390","p":"32","c":"18","f":"14","fiber":"3","sugar":"4","sodium":"480","r":"4.8","tag":"High Protein","ing_fr":"Blanc de poulet grillé · Laitue romaine · Parmesan · Croûtons maison · Sauce César allégée","ing_ar":"صدر دجاج مشوي · خس روماني · بارميزان · خبز محمص · صوص سيزر خفيف","al_fr":"Gluten · Lait · Œufs · Poisson","al_ar":"غلوتين · حليب · بيض · سمك","price":49},"m3":{"name_fr":"Salade Poulet Grillé","name_ar":"سلطة دجاج مشوي","cal":"310","p":"28","c":"14","f":"10","fiber":"4","sugar":"3","sodium":"310","r":"4.8","tag":"Low Carb","ing_fr":"Blanc de poulet · Salade mélangée · Tomate · Concombre · Poivron · Huile d'olive · Citron","ing_ar":"صدر دجاج · سلطة مشكلة · طماطم · خيار · فلفل · زيت زيتون · ليمون","al_fr":"Aucun allergène majeur","al_ar":"لا حساسية رئيسية","price":45},"m4":{"name_fr":"Pasta aux Légumes","name_ar":"باستا بالخضار","cal":"360","p":"10","c":"56","f":"8","fiber":"7","sugar":"5","sodium":"280","r":"4.8","tag":"Vegan","ing_fr":"Pâtes · Courgette · Poivron · Champignons · Épinards · Huile d'olive · Herbes","ing_ar":"مكرونة · كوسة · فلفل · فطر · سبانخ · زيت زيتون · أعشاب","al_fr":"Gluten","al_ar":"غلوتين","price":52},"l1":{"name_fr":"Salad Russe Light","name_ar":"سلطة روسية لايت","cal":"280","p":"8","c":"32","f":"8","fiber":"4","sugar":"6","sodium":"320","r":"4.8","tag":"Vegetarian","ing_fr":"Pommes de terre · Carottes · Petits pois · Haricots verts · Œuf dur · Mayonnaise légère · Citron","ing_ar":"بطاطس · جزر · بازيلاء · فاصوليا خضراء · بيض مسلوق · مايونيز خفيف · ليمون","al_fr":"Œufs · Moutarde","al_ar":"بيض · خردل","price":39},"l2":{"name_fr":"Salad de Pâte Fit","name_ar":"سلطة باستا فيت","cal":"340","p":"12","c":"48","f":"7","fiber":"6","sugar":"5","sodium":"290","r":"4.8","tag":"Vegan","ing_fr":"Pâtes complètes · Tomates cerises · Concombre · Olives · Basilic · Vinaigrette citron","ing_ar":"مكرونة كاملة · طماطم كرزية · خيار · زيتون · ريحان · خل الليمون","al_fr":"Gluten","al_ar":"غلوتين","price":42},"f1":{"name_fr":"Mini Burger Gourmet","name_ar":"ميني برغر","cal":"240","p":"14","c":"22","f":"9","fiber":"3","sugar":"5","sodium":"520","r":"4.8","tag":"Balanced","ing_fr":"Pain burger complet · Bœuf haché 100% · Salade · Tomate · Sauce maison · Fromage","ing_ar":"خبز برغر · لحم بقري 100% · خس · طماطم · صوص محلي · جبن","al_fr":"Gluten · Lait · Sésame","al_ar":"غلوتين · حليب · سمسم","price":35},"f2":{"name_fr":"Quesadilla Massala","name_ar":"كيساديا مصالة","cal":"380","p":"24","c":"34","f":"13","fiber":"3","sugar":"4","sodium":"540","r":"4.8","tag":"Spicy Fusion","ing_fr":"Tortilla blé · Poulet mariné · Fromage fondu · Poivron · Oignon · Épices massala","ing_ar":"تورتيلا · دجاج متبّل · جبن مذاب · فلفل · بصل · بهارات مصالة","al_fr":"Gluten · Lait","al_ar":"غلوتين · حليب","price":52},"f3":{"name_fr":"Burger Viande Hachée","name_ar":"برغر لحم","cal":"460","p":"34","c":"36","f":"16","fiber":"3","sugar":"6","sodium":"590","r":"4.8","tag":"High Protein","ing_fr":"Pain burger · Steak haché 100% bœuf · Salade · Tomate · Cornichons · Sauce burger","ing_ar":"خبز برغر · ستيك لحم مفروم 100% · خس · طماطم · مخللات · صوص برغر","al_fr":"Gluten · Sésame · Moutarde","al_ar":"غلوتين · سمسم · خردل","price":58},"sw1":{"name_fr":"Flan Caramel Léger","name_ar":"فلان كراميل خفيف","cal":"180","p":"5","c":"28","f":"4","fiber":"1","sugar":"18","sodium":"95","r":"4.7","tag":"Low Fat","ing_fr":"Lait écrémé · Œufs · Caramel · Vanille","ing_ar":"حليب خالي الدسم · بيض · كراميل · فانيليا","al_fr":"Lait · Œufs","al_ar":"حليب · بيض","price":28},"sw2":{"name_fr":"Cheesecake Creamy","name_ar":"تشيزكيك كريمي","cal":"260","p":"8","c":"30","f":"11","fiber":"1","sugar":"22","sodium":"180","r":"4.9","tag":"Best Seller","ing_fr":"Fromage blanc · Biscuits · Beurre léger · Fruits rouges","ing_ar":"جبن أبيض · بسكويت · زبدة خفيفة · فواكه حمراء","al_fr":"Lait · Gluten · Œufs","al_ar":"حليب · غلوتين · بيض","price":32},"sw3":{"name_fr":"Tiramisu Healthy","name_ar":"تيراميسو صحي","cal":"240","p":"7","c":"32","f":"8","fiber":"1","sugar":"20","sodium":"120","r":"4.8","tag":"Chef's Pick","ing_fr":"Mascarpone allégé · Biscuits · Café · Cacao · Sirop d'agave","ing_ar":"ماسكاربوني خفيف · بسكويت · قهوة · كاكاو · شراب الأغاف","al_fr":"Lait · Gluten · Œufs","al_ar":"حليب · غلوتين · بيض","price":30},"sw4":{"name_fr":"Protein Shake Vanille","name_ar":"بروتين شيك فانيليا","cal":"190","p":"30","c":"14","f":"2","fiber":"2","sugar":"8","sodium":"160","r":"4.8","tag":"New","ing_fr":"Whey protéine · Lait d'amande · Vanille · Glace pilée","ing_ar":"بروتين واي · حليب لوز · فانيليا · ثلج مجروش","al_fr":"Lait","al_ar":"حليب","price":35}};
+
+const DS_LABELS = {
+  fr: { kcal:'kcal', prot:'Protéines', carb:'Glucides', fat:'Lipides',
+        fiber:'Fibres', sugar:'Sucres', sodium:'Sodium',
+        ing:'Ingrédients', al:'Allergènes', add:'+ Ajouter à la commande', added:'✓ Ajouté',close:'Fermer' },
+  en: { kcal:'kcal', prot:'Protein', carb:'Carbs', fat:'Fat',
+        fiber:'Fiber', sugar:'Sugar', sodium:'Sodium',
+        ing:'Ingredients', al:'Allergens', add:'+ Add to order', added:'✓ Added',close:'Close' },
+  ar: { kcal:'سعرة', prot:'بروتين', carb:'كربوهيدرات', fat:'دهون',
+        fiber:'ألياف', sugar:'سكر', sodium:'صوديوم',
+        ing:'المكونات', al:'مسببات الحساسية', add:'+ أضف للطلب', added:'✓ تمت الإضافة',close:'إغلاق' },
+};
+
+function openDetail(id) {
+  const d = DETAIL[id];
+  if (!d) return;
+  _dsCurrentId = id;
+  const l = lang || 'fr';
+  const lbl = DS_LABELS[l] || DS_LABELS.fr;
+  const isAr = l === 'ar';
+  const $ = (i) => document.getElementById(i);
+
+  // Name + tag
+  if($('ds-name')) $('ds-name').textContent = isAr ? d.name_ar : d.name_fr;
+  const imgEl2 = $('ds-img'); if(imgEl2) imgEl2.alt = isAr ? d.name_ar : d.name_fr;
+  if($('ds-tag'))  { $('ds-tag').textContent = d.tag||''; $('ds-tag').style.display = d.tag ? '' : 'none'; }
+
+  // Price + rating
+  if($('ds-price-badge')) $('ds-price-badge').textContent = (d.price || DATA[id]?.p || '--') + ' MAD';
+  if($('ds-rating-badge')) $('ds-rating-badge').textContent = '\u2605 ' + (d.r || '4.8');
+
+  // Image
+  const imgEl = $('ds-img');
+  const phEl  = $('ds-img-ph');
+  if (imgEl && d.img) {
+    imgEl.style.display = 'none';
+    if (phEl) phEl.style.display = 'flex';
+    imgEl.src = d.img;
+  } else if (phEl) {
+    phEl.textContent = DATA[id]?.e || '\uD83C\uDF7D\uFE0F';
+  }
+
+  // Macro pills
+  if($('ds-cal'))     $('ds-cal').textContent    = d.cal;
+  if($('ds-cal-lbl')) $('ds-cal-lbl').textContent = lbl.kcal;
+  if($('ds-p'))       $('ds-p').textContent       = d.p + 'g';
+  if($('ds-p-lbl'))   $('ds-p-lbl').textContent   = lbl.prot;
+  if($('ds-c'))       $('ds-c').textContent       = d.c + 'g';
+  if($('ds-c-lbl'))   $('ds-c-lbl').textContent   = lbl.carb;
+  if($('ds-f'))       $('ds-f').textContent       = d.f + 'g';
+  if($('ds-f-lbl'))   $('ds-f-lbl').textContent   = lbl.fat;
+
+  // Animated macro bars (calorie-weighted)
+  const pCal = (+d.p)*4, cCal = (+d.c)*4, fCal = (+d.f)*9;
+  const tot  = pCal + cCal + fCal || 1;
+  setTimeout(() => {
+    if($('ds-bf-p')) $('ds-bf-p').style.width = Math.round(pCal/tot*100) + '%';
+    if($('ds-bf-c')) $('ds-bf-c').style.width = Math.round(cCal/tot*100) + '%';
+    if($('ds-bf-f')) $('ds-bf-f').style.width = Math.round(fCal/tot*100) + '%';
+  }, 80);
+  if($('ds-bl-p')) $('ds-bl-p').textContent = lbl.prot;
+  if($('ds-bl-c')) $('ds-bl-c').textContent = lbl.carb;
+  if($('ds-bl-f')) $('ds-bl-f').textContent = lbl.fat;
+  if($('ds-bv-p')) $('ds-bv-p').textContent = d.p + 'g';
+  if($('ds-bv-c')) $('ds-bv-c').textContent = d.c + 'g';
+  if($('ds-bv-f')) $('ds-bv-f').textContent = d.f + 'g';
+
+  // Extra nutrition
+  if($('ds-el-fiber'))  $('ds-el-fiber').textContent  = lbl.fiber;
+  if($('ds-el-sugar'))  $('ds-el-sugar').textContent  = lbl.sugar;
+  if($('ds-el-sodium')) $('ds-el-sodium').textContent = lbl.sodium;
+  if($('ds-fiber'))     $('ds-fiber').textContent     = d.fiber + 'g';
+  if($('ds-sugar'))     $('ds-sugar').textContent     = d.sugar + 'g';
+  if($('ds-sodium'))    $('ds-sodium').textContent    = d.sodium + 'mg';
+
+  // Ingredients as pills
+  if($('ds-ing-title')) $('ds-ing-title').textContent = lbl.ing;
+  const ingStr = isAr ? d.ing_ar : d.ing_fr;
+  if($('ds-ingredients')) {
+    $('ds-ingredients').innerHTML = (ingStr||'').split('\xB7').map(s=>s.trim()).filter(Boolean)
+      .map(s => '<span class="ds-ingredient-tag">'+s+'</span>').join('');
+  }
+
+  // Allergens
+  if($('ds-al-title')) $('ds-al-title').textContent = lbl.al;
+  const alStr = isAr ? d.al_ar : d.al_fr;
+  if($('ds-allergens')) {
+    const tags = (alStr||'').split('\xB7').map(s=>s.trim()).filter(s=>s.length>1);
+    const none = isAr ? '\u0644\u0627 \u062D\u0633\u0627\u0633\u064A\u0629 \u0645\u0639\u0631\u0648\u0641\u0629'
+                      : (l==='en' ? 'No known allergens' : 'Aucun allergène connu');
+    $('ds-allergens').innerHTML = tags.length
+      ? tags.map(s=>'<span class="ds-allergen-tag">'+s+'</span>').join('')
+      : '<span class="ds-allergen-none">'+none+'</span>';
+  }
+
+  // CTA state
+  _dsUpdateCta();
+  // Share button label
+  const shareLbl = document.getElementById('ds-share-lbl');
+  const shareLabels = { fr:'Partager', en:'Share', ar:'مشاركة' };
+  if (shareLbl) shareLbl.textContent = shareLabels[l] || 'Partager';
+
+  // Open sheet
+  $('detail-overlay')?.classList.add('open');
+  $('detail-sheet')?.classList.add('open');
+  $('ds-footer')?.classList.add('visible');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeDetail() {
+  document.getElementById('detail-overlay')?.classList.remove('open');
+  document.getElementById('detail-sheet')?.classList.remove('open');
+  document.getElementById('ds-footer')?.classList.remove('visible');
+  document.body.style.overflow = '';
+  setTimeout(() => {
+    ['ds-bf-p','ds-bf-c','ds-bf-f'].forEach(id => {
+      const el = document.getElementById(id);
+      if(el) el.style.width = '0%';
+    });
+  }, 320);
+}
+
+function _dsUpdateCta() {
+  const btn = document.getElementById('ds-cta-btn');
+  if (!btn || !_dsCurrentId) return;
+  const lbl = DS_LABELS[lang||'fr'] || DS_LABELS.fr;
+  const inCart = !!cart[_dsCurrentId];
+  btn.textContent = inCart ? lbl.added : lbl.add;
+  btn.classList.toggle('added', inCart);
+}
+
+function dsToggleCart() {
+  if (!_dsCurrentId) return;
+  tog({ stopPropagation:()=>{}, preventDefault:()=>{} }, _dsCurrentId);
+  _dsUpdateCta();
+}
+
+
+// ── Scroll to top visibility ──────────────────────────────
+(function() {
+  const btn = document.getElementById('scroll-top');
+  if (!btn) return;
+  window.addEventListener('scroll', () => {
+    btn.classList.toggle('show', window.scrollY > 320);
+  }, { passive: true });
+})();
+
+
+// ── Swipe down to dismiss detail sheet ───────────────────
+(function() {
+  let _tsY = 0;
+  const sheet = document.getElementById('detail-sheet');
+  if (!sheet) return;
+  sheet.addEventListener('touchstart', e => { _tsY = e.touches[0].clientY; }, { passive: true });
+  sheet.addEventListener('touchend', e => {
+    const delta = e.changedTouches[0].clientY - _tsY;
+    if (delta > 72) closeDetail(); // swipe down 72px+ → close
+  }, { passive: true });
+})();
+
+
+function dsShare() {
+  const d = DETAIL[_dsCurrentId];
+  if (!d) return;
+  const l = lang || 'fr';
+  const isAr = l === 'ar';
+  const name = isAr ? d.name_ar : d.name_fr;
+  const price = d.price || DATA[_dsCurrentId]?.p || '';
+  const texts = {
+    fr: `🧬 ${name} — ${price} MAD\n✅ ${d.cal} kcal · ${d.p}g protéines\n🛵 Livraison 45 min à Tétouan\nsavy.netlify.app`,
+    en: `🧬 ${name} — ${price} MAD\n✅ ${d.cal} kcal · ${d.p}g protein\n🛵 45 min delivery in Tétouan\nsavy.netlify.app`,
+    ar: `🧬 ${name} — ${price} درهم\n✅ ${d.cal} سعرة · ${d.p}غ بروتين\n🛵 توصيل 45 دقيقة بتطوان\nsavy.netlify.app`,
+  };
+  const text = texts[l] || texts.fr;
+  if (navigator.share) {
+    navigator.share({ title: 'SAVY — ' + name, text });
+  } else {
+    navigator.clipboard?.writeText(text).then(() => {
+      const btn = document.getElementById('ds-share-btn');
+      const lbl = document.getElementById('ds-share-lbl');
+      if (lbl) { lbl.textContent = l === 'ar' ? 'تم النسخ ✓' : (l === 'en' ? 'Copied ✓' : 'Copié ✓'); }
+      setTimeout(() => {
+        if (lbl) lbl.textContent = l === 'ar' ? 'مشاركة' : (l === 'en' ? 'Share' : 'Partager');
+      }, 2000);
+    });
+  }
+}
+
+// ── Cart abandonment nudge ──────────────────────────────────
+function _resetAbandon() {
+  clearTimeout(_abandonTimer);
+  if (Object.keys(cart).length > 0 && !_abandonShown) {
+    _abandonTimer = setTimeout(_showAbandon, 25000);
+  }
+}
+function _showAbandon() {
+  if (!Object.keys(cart).length || _abandonShown) return;
+  _abandonShown = true;
+  const t = T[lang];
+  const msgs = {
+    fr: 'Tu as des plats dans ton panier 👀',
+    en: 'You left dishes in your cart 👀',
+    ar: 'لديك أطباق في سلتك 👀',
+  };
+  const ctaLabels = { fr:'Commander', en:'Order now', ar:'اطلب الآن' };
+  const el = document.getElementById('abandon-toast');
+  const msgEl = document.getElementById('at-msg');
+  const cta = el?.querySelector('.at-cta');
+  if (msgEl) msgEl.textContent = msgs[lang] || msgs.fr;
+  if (cta) cta.textContent = ctaLabels[lang] || ctaLabels.fr;
+  el?.classList.add('show');
+  setTimeout(_hideAbandon, 9000);
+}
+function _hideAbandon() {
+  document.getElementById('abandon-toast')?.classList.remove('show');
+}
+// Reset timer on user interaction
+['touchstart','mousedown','scroll'].forEach(ev =>
+  document.addEventListener(ev, _resetAbandon, { passive: true })
+);
+
 // Expose all onclick-callable functions to window scope
 window.setL            = setL;
 window.toggleMenuTheme = toggleMenuTheme;
@@ -1125,6 +1602,15 @@ window.removeItem      = removeItem;
 window.qtyUp           = qtyUp;
 window.qtyDown         = qtyDown;
 window.checkout        = checkout;
+window._hideAbandon    = _hideAbandon;
+window.openDetail      = openDetail;
+window.closeDetail     = closeDetail;
+// Close detail sheet on Escape key
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeDetail();
+});
+window.dsToggleCart    = dsToggleCart;
+window.dsShare         = dsShare;
 window._menuDark       = _menuDark;
 window._menuCart       = cart;
 
