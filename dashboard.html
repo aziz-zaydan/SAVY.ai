@@ -290,6 +290,37 @@ tr:hover td{background:rgba(255,255,255,.02);}
   th:nth-child(4),td:nth-child(4),
   th:nth-child(5),td:nth-child(5){display:none;}
 }
+
+.top-dishes-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin-bottom:24px;}
+.top-dish-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);}
+.top-dish-row:last-child{border-bottom:none;}
+.td-rank{font-family:var(--mono);font-size:11px;color:var(--muted);width:18px;flex-shrink:0;text-align:center;}
+.td-name{flex:1;font-size:12.5px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.td-bar-wrap{width:90px;height:5px;background:var(--muted);border-radius:3px;overflow:hidden;flex-shrink:0;}
+.td-bar{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--green),var(--greenL));transition:width .4s;}
+.td-cnt{font-family:var(--mono);font-size:11px;color:var(--sub);width:26px;text-align:right;flex-shrink:0;}
+.td-rev{font-family:var(--mono);font-size:10px;color:var(--gold);width:54px;text-align:right;flex-shrink:0;}
+.revenue-chart-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin-bottom:24px;}
+.rev-sparkline{width:100%;height:60px;display:block;}
+.rev-sparkline-row{display:flex;justify-content:space-between;margin-top:4px;}
+.rev-sparkline-lbl{font-size:9px;color:var(--muted);}
+.kpi-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;}
+.kpi-box{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:11px 13px;}
+.kpi-val{font-family:var(--font);font-weight:800;font-size:18px;color:var(--text);}
+.kpi-lbl{font-size:10px;color:var(--muted);margin-top:2px;}
+.kpi-delta{font-size:10px;font-weight:700;margin-top:3px;}
+.kpi-up{color:var(--green);}.kpi-dn{color:var(--red);}
+
+.wa-reply-btn {
+  display:inline-flex; align-items:center; gap:4px;
+  background:#25D366; color:#fff; border:none;
+  border-radius:7px; padding:4px 9px;
+  font-size:10px; font-weight:700; cursor:pointer;
+  transition:all .15s; font-family:var(--font);
+  white-space:nowrap;
+}
+.wa-reply-btn:hover { background:#128C7E; transform:translateY(-1px); }
+.wa-reply-btn:active { transform:scale(.95); }
 </style>
 </head>
 <body>
@@ -444,7 +475,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
             <th>ID</th><th>Date/Heure</th><th>Client</th><th>Téléphone</th><th>Plats</th><th>Total</th><th>Genre</th><th>Source</th><th>Statut</th>
           </tr></thead>
           <tbody id="orders-body">
-            <tr><td colspan="9" class="loading"><span class="spinner"></span>Chargement…</td></tr>
+            <tr><td colspan="10" class="loading"><span class="spinner"></span>Chargement…</td></tr>
           </tbody>
         </table>
       </div>
@@ -606,6 +637,17 @@ function loadDemoData() {
 }
 
 // ── Render all ────────────────────────────────────────────
+
+function waReply(phone, name, orderId) {
+  const p = phone.replace(/[^0-9]/g, '');
+  const waNum = p.startsWith('212') ? p : p.startsWith('0') ? '212' + p.slice(1) : '212' + p;
+  const msg = encodeURIComponent(
+    'Bonjour ' + (name || 'cher client') + ' 👋\n' +
+    'Votre commande SAVY ' + (orderId ? '#' + orderId : '') + ' est confirmée ! 🧬\n' +
+    'Livraison 45 min 🛵'
+  );
+  window.open('https://wa.me/' + waNum + '?text=' + msg, '_blank');
+}
 function renderAll(orders) {
   renderStats(orders);
   renderRecentOrders(orders.slice(0, 8));
@@ -613,6 +655,8 @@ function renderAll(orders) {
   renderCustomers(orders);
   renderRevenue(orders);
   renderCharts(orders);
+  renderTopDishes(orders);
+  renderRevenueSparkline(orders);
 }
 
 // ── Helpers: status ───────────────────────────────────────
@@ -700,9 +744,15 @@ function renderOrdersTable(orders) {
       <td>${genderBadge(o.gender)}</td>
       <td>${sourceBadge(o.source)}</td>
       <td onclick="event.stopPropagation()">${statusBadge(o.order_id)}</td>
+      <td onclick="event.stopPropagation()" style="white-space:nowrap;">
+        ${o.phone ? `<button class="wa-reply-btn" onclick="waReply('${o.phone}','${o.name||''}','${o.order_id||''}')">
+          <svg width="10" height="10" viewBox="0 0 32 32" fill="none"><path d="M16 2C8.27 2 2 8.27 2 16c0 2.48.67 4.81 1.84 6.82L2 30l7.38-1.81A13.94 13.94 0 0016 30c7.73 0 14-6.27 14-14S23.73 2 16 2z" fill="white"/><path d="M22.5 19.5c-.3-.15-1.8-.89-2.08-.99-.28-.1-.48-.15-.68.15s-.78.99-.96 1.19c-.18.2-.35.23-.66.08-.3-.15-1.29-.47-2.45-1.51-.91-.81-1.52-1.81-1.7-2.11-.18-.3-.02-.47.13-.62.14-.14.3-.35.46-.53.15-.18.2-.3.3-.51.1-.2.05-.38-.02-.53-.08-.15-.68-1.65-.94-2.26-.25-.59-.5-.51-.68-.52l-.58-.01c-.2 0-.53.08-.81.38s-1.06 1.04-1.06 2.53 1.09 2.94 1.24 3.14c.15.2 2.14 3.27 5.19 4.59.73.31 1.29.5 1.74.64.73.23 1.39.2 1.92.12.58-.09 1.8-.73 2.05-1.45.25-.71.25-1.32.18-1.45-.08-.13-.28-.2-.58-.35z" fill="#25D366"/></svg>
+          WA
+        </button>` : '—'}
+      </td>
     </tr>
     <tr id="${did}" style="display:none;background:var(--card2);">
-      <td colspan="9" style="padding:10px 16px;">
+      <td colspan="10" style="padding:10px 16px;">
         <div style="display:flex;flex-wrap:wrap;gap:16px;font-size:12px;">
           ${o.meal_count   ? '<span><strong style="color:var(--muted);">Nb plats:</strong> <span style="color:var(--text)">\${o.meal_count}</span></span>' : ''}
           ${o.meals_total  ? '<span><strong style="color:var(--muted);">Sous-total:</strong> <span style="color:var(--text)">\${o.meals_total} MAD</span></span>' : ''}
@@ -784,6 +834,98 @@ function renderRevenue(orders) {
 }
 
 // ── Charts ────────────────────────────────────────────────
+
+function renderTopDishes(orders) {
+  const counts = {};
+  const revMap  = {};
+  orders.forEach(o => {
+    const meals = (o.meals || o.conversation || '').split(/[,·|]/).map(m => m.trim()).filter(Boolean);
+    meals.forEach(m => {
+      const key = m.split('—')[0].split('-')[0].trim().slice(0, 32);
+      if (!key || key.length < 3) return;
+      counts[key] = (counts[key] || 0) + 1;
+      revMap[key]  = (revMap[key] || 0) + (parseFloat(o.order_total) || 0) / Math.max(meals.length, 1);
+    });
+  });
+  const sorted = Object.entries(counts).sort((a,b) => b[1]-a[1]).slice(0, 8);
+  const maxC   = sorted[0]?.[1] || 1;
+  const medals = ['🥇','🥈','🥉'];
+  const list   = document.getElementById('top-dishes-list');
+  if (!list) return;
+  if (!sorted.length) { list.innerHTML = '<div style="color:var(--muted);font-size:12px;padding:8px 0;">Aucune donnée</div>'; return; }
+  list.innerHTML = sorted.map(([name, cnt], i) => `
+    <div class="top-dish-row">
+      <div class="td-rank">${medals[i] || (i+1)}</div>
+      <div class="td-name">${name}</div>
+      <div class="td-bar-wrap"><div class="td-bar" style="width:${Math.round(cnt/maxC*100)}%"></div></div>
+      <div class="td-cnt">${cnt}x</div>
+      <div class="td-rev">${revMap[name]?Math.round(revMap[name])+'':''} MAD</div>
+    </div>`).join('');
+}
+
+function renderRevenueSparkline(orders) {
+  // Build 30-day buckets
+  const buckets = [];
+  for (let i = 29; i >= 0; i--) {
+    const d = new Date(); d.setDate(d.getDate() - i);
+    const ds = d.toDateString();
+    const day = orders.filter(o => new Date(o.timestamp).toDateString() === ds);
+    buckets.push({
+      lbl: i === 0 ? 'Auj.' : (i === 29 ? '-30j' : (i % 7 === 0 ? '-' + i + 'j' : '')),
+      rev: day.reduce((s,o) => s + (parseFloat(o.order_total) || 0), 0),
+      cnt: day.length,
+    });
+  }
+
+  // KPI row
+  const totalRev  = buckets.reduce((s,b) => s+b.rev, 0);
+  const totalOrds = buckets.reduce((s,b) => s+b.cnt, 0);
+  const avgOrder  = totalOrds ? Math.round(totalRev / totalOrds) : 0;
+  const thisWeek  = buckets.slice(-7).reduce((s,b) => s+b.rev, 0);
+  const lastWeek  = buckets.slice(-14,-7).reduce((s,b) => s+b.rev, 0);
+  const weekDelta = lastWeek ? Math.round((thisWeek - lastWeek) / lastWeek * 100) : 0;
+  const kpiRow = document.getElementById('rev-kpi-row');
+  if (kpiRow) kpiRow.innerHTML = [
+    { val: Math.round(totalRev) + ' MAD', lbl: '30 jours total', delta: null },
+    { val: Math.round(thisWeek) + ' MAD', lbl: 'Cette semaine', delta: weekDelta },
+    { val: avgOrder + ' MAD', lbl: 'Panier moyen', delta: null },
+  ].map(k => `<div class="kpi-box">
+    <div class="kpi-val">${k.val}</div>
+    <div class="kpi-lbl">${k.lbl}</div>
+    ${k.delta !== null ? '<div class="kpi-delta ' + (k.delta >= 0 ? 'kpi-up' : 'kpi-dn') + '">' + (k.delta >= 0 ? '▲' : '▼') + ' ' + Math.abs(k.delta) + '% vs semaine préc.</div>' : ''}
+  </div>`).join('');
+
+  // Sparkline SVG path
+  const maxRev = Math.max(...buckets.map(b => b.rev), 1);
+  const W = 400; const H = 58; const pad = 2;
+  const pts = buckets.map((b, i) => {
+    const x = pad + (i / (buckets.length - 1)) * (W - 2*pad);
+    const y = H - pad - (b.rev / maxRev) * (H - 2*pad);
+    return [x, y];
+  });
+  const pathD = pts.map((p,i) => (i===0?'M':'L') + p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
+  const areaD = pathD + ` L${pts[pts.length-1][0].toFixed(1)},${H} L${pts[0][0].toFixed(1)},${H} Z`;
+
+  const svg = document.getElementById('rev-sparkline');
+  if (svg) {
+    svg.innerHTML = `
+      <defs>
+        <linearGradient id="spkGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="var(--green)" stop-opacity="0.25"/>
+          <stop offset="100%" stop-color="var(--green)" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <path d="${areaD}" fill="url(#spkGrad)"/>
+      <path d="${pathD}" fill="none" stroke="var(--green)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      ${pts.map((p,i) => buckets[i].cnt > 0 ? `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="2.5" fill="var(--green)"/>` : '').join('')}
+    `;
+  }
+
+  // Labels — only show a few
+  const lblEl = document.getElementById('rev-spark-labels');
+  if (lblEl) lblEl.innerHTML = buckets.map(b => `<span class="rev-sparkline-lbl">${b.lbl}</span>`).join('');
+}
+
 function renderCharts(orders) {
   const days = [];
   for (let i=6; i>=0; i--) {
