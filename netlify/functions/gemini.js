@@ -21,6 +21,18 @@ function corsHeaders(origin) {
   };
 }
 
+
+// ─── Rate limiting ─────────────────────────────────────────────────────────
+const _rl = new Map(); // ip -> { n, t }
+function _rateOk(ip) {
+  const now = Date.now();
+  const r   = _rl.get(ip) || { n: 0, t: now };
+  if (now - r.t > 60_000) { r.n = 0; r.t = now; }
+  r.n++;
+  _rl.set(ip, r);
+  return r.n <= 30; // 30 req / min / IP
+}
+
 // ─── Menu ──────────────────────────────────────────────────────────────────
 const MENU_FR = `
 ENTRÉES & SALADES
@@ -66,7 +78,7 @@ const VOICE = {
   es: "IDIOMA: Español únicamente — cálido, breve, natural como un chef de verdad.",
 };
 
-function buildSystemPrompt(persona, chosenLang) {
+function buildSystemPrompt(persona, chosenLang, scheduledTime) {
   const voice = chosenLang ? (VOICE[chosenLang] || VOICE.fr) : VOICE.fr;
   const focus = PERSONA_FOCUS[persona] || PERSONA_FOCUS.employee;
 
@@ -151,6 +163,9 @@ Si le client veut commander à nouveau ou ajouter un plat :
 ━━ PROFIL ${persona.toUpperCase()} — PLATS RECOMMANDÉS ━━
 ${focus}
 
+━━ COMMANDE PLANIFIÉE ━━
+${scheduledTime ? `Le client a demandé une livraison à : ${scheduledTime}. Intègre cette info dans la confirmation.` : "Livraison dès que possible (45 min)."}
+
 ━━ MENU COMPLET ━━
 ${MENU_FR}`;
 }
@@ -217,6 +232,13 @@ exports.handler = async (event) => {
   if (event.httpMethod !== "POST")
     return { statusCode: 405, headers, body: JSON.stringify({ error: "Method Not Allowed" }) };
 
+  const clientIp = event.headers?.["x-forwarded-for"]?.split(",")[0]?.trim()
+                || event.headers?.["client-ip"]
+                || "unknown";
+  if (!_rateOk(clientIp)) {
+    return { statusCode: 429, headers, body: JSON.stringify({ error: "Too many requests. Please wait a moment." }) };
+  }
+
   const apiKey = process.env.GROQ_API_KEY;
   if (!apiKey) {
     console.error("[SAVY] GROQ_API_KEY not set");
@@ -227,19 +249,32 @@ exports.handler = async (event) => {
   try { reqBody = JSON.parse(event.body); }
   catch { return { statusCode: 400, headers, body: JSON.stringify({ error: "Invalid JSON" }) }; }
 
-  const { messages, persona = "employee" } = reqBody;
+  const { messages, persona = "employee", scheduledTime = null } = reqBody;
   if (!Array.isArray(messages))
     return { statusCode: 400, headers, body: JSON.stringify({ error: "messages required" }) };
 
   const safePersona  = ["employee","sportif","famille","couple"].includes(persona) ? persona : "employee";
   const chosenLang   = detectChosenLang(messages);
-  const systemPrompt = buildSystemPrompt(safePersona, chosenLang);
+  const systemPrompt = buildSystemPrompt(safePersona, chosenLang, scheduledTime);
+
+  // Strip prompt injection attempts from user messages
+  function _sanitize(text) {
+    return String(text || "")
+      .slice(0, MAX_CONTENT_LEN)
+      // Remove common injection patterns
+      .replace(/\bignore (previous|all|above|prior)\b/gi, "")
+      .replace(/\bforget (everything|all|your instructions)\b/gi, "")
+      .replace(/\byou are now\b/gi, "")
+      .replace(/\b(system|assistant|user):/gi, "")
+      .replace(/<\/?(?:system|instruction|prompt)>/gi, "")
+      .trim();
+  }
 
   const normalized = messages
     .slice(-MAX_TURNS)
     .map(m => ({
       role:    m.role === "model" ? "assistant" : m.role,
-      content: String(m.content || "").slice(0, MAX_CONTENT_LEN),
+      content: m.role === "user" ? _sanitize(m.content) : String(m.content || "").slice(0, MAX_CONTENT_LEN),
     }))
     .filter(m => m.content && (m.role === "user" || m.role === "assistant"));
 
@@ -248,8 +283,8 @@ exports.handler = async (event) => {
   // ── Primary: llama-3.1-8b-instant — fast, reliable, never rate-limited
   // ── Fallback: llama-3.3-70b-versatile — better quality when available
   const CHAIN = [
-    { model: "llama-3.1-8b-instant",    temp: 0.7, tokens: 200, ms: 6000 },
-    { model: "llama-3.3-70b-versatile", temp: 0.6, tokens: 220, ms: 8500 },
+    { model: "llama-3.1-8b-instant",    temp: 0.68, tokens: 220, ms: 6500 },
+    { model: "llama-3.3-70b-versatile", temp: 0.58, tokens: 240, ms: 9000 },
   ];
 
   const t0 = Date.now();
