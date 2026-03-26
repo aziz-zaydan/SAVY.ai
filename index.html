@@ -471,7 +471,8 @@
     }
     .slide.active { opacity:1; pointer-events:auto; }
     .slide img { width:100%; height:100%; object-fit:cover; display:block; }
-    .slide-btn {
+    .slide-btn { display:none !important; }
+    ._slide-btn-orig {
       position:absolute; top:50%; transform:translateY(-50%);
       background:rgba(255,255,255,0.85); border:none; cursor:pointer;
       width:30px; height:30px; border-radius:50%;
@@ -3734,10 +3735,6 @@
     <div class="hero-inner">
     <!-- Left -->
     <div class="hero-stagger">
-      <div class="city-badge su">
-        <span class="city-dot"></span>
-        <span class="label" id="hero-city">🇲🇦 Tétouan</span>
-      </div>
       <!-- ── Triple CTA row ── -->
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:12px 0 16px;" class="hero-cta-row">
 
@@ -3848,8 +3845,6 @@
       <div class="slide"><img src="images/slide_4.jpg" alt="SAVY — Chef" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;"/></div>
       
         </div>
-        <button class="slide-btn prev" onclick="prevSlide()">&#8249;</button>
-        <button class="slide-btn next" onclick="nextSlide()">&#8250;</button>
         <div class="slide-dots" id="slide-dots">
           <span class="slide-dot active" onclick="goSlide(0)"></span><span class="slide-dot" onclick="goSlide(1)"></span><span class="slide-dot" onclick="goSlide(2)"></span><span class="slide-dot" onclick="goSlide(3)"></span>
         </div>
@@ -7615,7 +7610,7 @@ function showLeadForm(p) {
    PRE-LAUNCH MODE
    Set to false when business opens to restore normal WhatsApp flow
 ═══════════════════════════════════════════ */
-const PRELAUNCH_MODE = true;
+const PRELAUNCH_MODE = false;
 
 let _leadGender = null;    // null = not yet chosen
 
@@ -10100,23 +10095,14 @@ function renderLoyaltyCheckerResult(count, phone) {
 <script>
 // ── Clear old service worker caches & re-register ─────────
 if("serviceWorker" in navigator && location.protocol === "https:") {
-  // First: unregister all old SWs and clear their caches to bust stale CSS
-  navigator.serviceWorker.getRegistrations().then(function(regs) {
-    regs.forEach(function(reg) { reg.unregister(); });
-  });
-  if("caches" in window) {
-    caches.keys().then(function(names) {
-      names.forEach(function(name) { caches.delete(name); });
-    });
-  }
+  // Register SW — keep existing registration if already active
   window.addEventListener("load", function() {
-    setTimeout(function() {
-      try {
-        navigator.serviceWorker.register("/sw.js")
-          .then(function() {}) // silent success
-          .catch(function() {}); // silent fail — app works without it
-      } catch(e) {} // silent catch
-    }, 2000);
+    navigator.serviceWorker.register("/sw.js", { scope: "/" })
+      .then(function(reg) {
+        // Check for updates every 60min
+        setInterval(() => reg.update(), 3600000);
+      })
+      .catch(function() {}); // silent — app works without SW
   });
 }
 
@@ -10173,6 +10159,48 @@ window.addEventListener("appinstalled", () => {
   if(_installBar) _installBar.classList.remove("show");
   _deferredPrompt = null;
 });
+
+
+// ── PWA Shortcut & Share Target Handler ──────────────────────
+(function() {
+  const params = new URLSearchParams(location.search);
+  const action = params.get('action');
+  const share  = params.get('share');
+
+  if (action === 'menu') {
+    // Auto-open menu 600ms after load
+    window.addEventListener('load', () => setTimeout(() => {
+      if (typeof openPremiumMenu === 'function') openPremiumMenu();
+    }, 600));
+  } else if (action === 'chat') {
+    // Auto-open chat
+    window.addEventListener('load', () => setTimeout(() => {
+      if (typeof openChat === 'function') openChat();
+    }, 600));
+  } else if (action === 'loyalty') {
+    // Scroll to loyalty section
+    window.addEventListener('load', () => setTimeout(() => {
+      const el = document.getElementById('loyalty') || document.querySelector('[id*="loyal"]');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }, 800));
+  }
+
+  // Share target handler — someone shared a URL to SAVY
+  if (share !== null || params.has('text') || params.has('url')) {
+    const sharedText = params.get('text') || params.get('url') || '';
+    if (sharedText) {
+      window.addEventListener('load', () => setTimeout(() => {
+        if (typeof openChat === 'function') {
+          openChat();
+          setTimeout(() => {
+            const inp = document.getElementById('chat-inp');
+            if (inp) { inp.value = sharedText; inp.focus(); }
+          }, 800);
+        }
+      }, 600));
+    }
+  }
+})();
 
 /* ═══════════════════════════════════════════
    PREMIUM UX UPGRADES
