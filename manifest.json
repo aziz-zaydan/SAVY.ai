@@ -1,41 +1,95 @@
 {
-  "name": "SAVY – Meal Engineer",
+  "name": "SAVY — Chef IA Personnel",
   "short_name": "SAVY",
-  "description": "أول شيف ذكاء اصطناعي في المغرب — وجبات صحية مُهندَسة، توصيل 45 دقيقة",
-  "start_url": "/",
+  "description": "Repas sains livrés en 45 min à Tétouan · Chef IA personnel · Dès 39 MAD",
+  "start_url": "/?source=pwa",
+  "scope": "/",
   "display": "standalone",
-  "orientation": "portrait",
+  "display_override": [
+    "window-controls-overlay",
+    "standalone",
+    "minimal-ui"
+  ],
+  "orientation": "portrait-primary",
   "background_color": "#EEF7F3",
   "theme_color": "#089929",
-  "lang": "ar",
-  "dir": "rtl",
-  "categories": ["food", "lifestyle", "health"],
+  "lang": "fr",
+  "dir": "ltr",
+  "categories": [
+    "food",
+    "lifestyle",
+    "health"
+  ],
   "icons": [
     {
-      "src": "images/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "src": "/images/icon-72.png",
+      "sizes": "72x72",
+      "type": "image/png"
     },
     {
-      "src": "images/icon-512.png",
+      "src": "/images/icon-96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/icon-128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/icon-144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/icon-152.png",
+      "sizes": "152x152",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/images/icon-192-maskable.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/images/icon-384.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "/images/icon-512-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ],
   "screenshots": [
     {
-      "src": "images/slide_2.jpg",
-      "sizes": "1280x720",
-      "type": "image/jpeg",
-      "form_factor": "wide"
+      "src": "/images/screenshot-mobile-1.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Accueil SAVY — Chef IA"
     },
     {
-      "src": "images/slide_1.jpg",
-      "sizes": "750x1334",
-      "type": "image/jpeg",
-      "form_factor": "narrow"
+      "src": "/images/screenshot-mobile-2.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Menu SAVY — Repas fitness"
     }
   ],
   "shortcuts": [
@@ -43,17 +97,53 @@
       "name": "Commander maintenant",
       "short_name": "Commander",
       "description": "Ouvrir le menu et commander",
-      "url": "/#menu",
-      "icons": [{ "src": "images/icon-192.png", "sizes": "192x192" }]
+      "url": "/?action=menu&source=shortcut",
+      "icons": [
+        {
+          "src": "/images/icon-96.png",
+          "sizes": "96x96"
+        }
+      ]
     },
     {
-      "name": "Chef IA",
-      "short_name": "Chef IA",
-      "description": "Parler au Chef SAVY IA",
-      "url": "/#chat",
-      "icons": [{ "src": "images/icon-192.png", "sizes": "192x192" }]
+      "name": "Chat avec Chef SAVY",
+      "short_name": "Chef SAVY",
+      "description": "Parler avec l'IA",
+      "url": "/?action=chat&source=shortcut",
+      "icons": [
+        {
+          "src": "/images/icon-96.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Mon statut fidélité",
+      "short_name": "Fidélité",
+      "description": "Voir mon statut fidélité",
+      "url": "/?action=loyalty&source=shortcut",
+      "icons": [
+        {
+          "src": "/images/icon-96.png",
+          "sizes": "96x96"
+        }
+      ]
     }
   ],
-  "related_applications": [],
+  "share_target": {
+    "action": "/?share",
+    "method": "GET",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  },
+  "related_applications": [
+    {
+      "platform": "webapp",
+      "url": "https://savy.netlify.app/manifest.json"
+    }
+  ],
   "prefer_related_applications": false
 }
