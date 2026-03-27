@@ -4,42 +4,51 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>SAVY — Menu</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@700;800;900&family=DM+Sans:wght@400;500;600;700&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet"/>
 <style>
 /* ═══ TOKENS ═════════════════════════════════════════════════ */
 :root {
-  --bg:      #EEF7F3;
-  --card:    #E5F1EB;
-  --card2:   #D8EBE1;
-  --green:   #089929;
-  --greenL:  #2BCE4E;
-  --greenXL: #E6F5EF;
-  --text:    #0D1F18;
-  --sub:     #4A7A66;
-  --muted:   #8FBFAA;
-  --border:  #D4EDE3;
-  --fire:    #FF6B35;
-  --plum:    #B47FFF;
-  --shadow:  0 2px 18px rgba(9,153,41,.09);
-  --shadowH: 0 8px 36px rgba(9,153,41,.16);
-  --r:       13px;
-  --rL:      18px;
-  --font:    'Syne', sans-serif;
+  --bg:      #F5FAF7;
+  --card:    #EDF5F0;
+  --card2:   #E0EDE6;
+  --green:   #076B1F;
+  --greenL:  #18A83C;
+  --greenXL: #EAF4EE;
+  --text:    #0A1910;
+  --sub:     #3D6B54;
+  --muted:   #7FAF96;
+  --border:  #C8E2D4;
+  --fire:    #D4580A;
+  --plum:    #8B5CF6;
+  --gold:    #B8962E;
+  --goldL:   #E8C547;
+  --goldXL:  #FDF6E3;
+  --shadow:  0 2px 24px rgba(7,107,31,.08), 0 1px 4px rgba(0,0,0,.04);
+  --shadowH: 0 16px 48px rgba(7,107,31,.15), 0 4px 14px rgba(0,0,0,.08);
+  --shadowG: 0 4px 24px rgba(184,150,46,.2);
+  --r:       14px;
+  --rL:      22px;
+  --font:    'Outfit', sans-serif;
+  --serif:   'Cormorant Garamond', Georgia, serif;
   --body:    'DM Sans', sans-serif;
 }
 [data-theme="dark"] {
-  --bg:      #060E0A;
-  --card:    #0C1810;
-  --card2:   #111D14;
-  --green:   #2BCE4E;
-  --greenL:  #3DD660;
-  --greenXL: #0A1F0E;
-  --text:    #E8F5F0;
-  --sub:     #7BBFA6;
-  --muted:   #3D7A62;
-  --border:  #162B1D;
-  --shadow:  0 2px 18px rgba(0,0,0,.5);
-  --shadowH: 0 8px 36px rgba(43,206,78,.18);
+  --bg:      #050C07;
+  --card:    #0B1610;
+  --card2:   #0F1D13;
+  --green:   #22C845;
+  --greenL:  #35D85A;
+  --greenXL: #081B0C;
+  --text:    #E5F2EC;
+  --sub:     #6DAF94;
+  --muted:   #365F4A;
+  --border:  #142619;
+  --gold:    #D4A83A;
+  --goldL:   #F0C845;
+  --goldXL:  #1C1608;
+  --shadow:  0 2px 24px rgba(0,0,0,.6), 0 1px 4px rgba(0,0,0,.35);
+  --shadowH: 0 16px 48px rgba(0,0,0,.65), 0 4px 14px rgba(34,200,69,.1);
+  --shadowG: 0 4px 24px rgba(212,168,58,.15);
 }
 body.female-mode {
   --green: #E91E8C; --greenL: #FF4DB8;
@@ -68,13 +77,15 @@ button { touch-action:manipulation; }
 .nav {
   position:sticky; top:0; z-index:400;
   background:var(--bg); border-bottom:1px solid var(--border);
-  backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
-  padding:9px 15px;
+  backdrop-filter:blur(24px); -webkit-backdrop-filter:blur(24px);
+  padding:8px 16px;
   display:flex; align-items:center; justify-content:space-between; gap:8px;
   transition:background .3s;
+  box-shadow:0 1px 0 var(--border);
 }
 [data-theme="dark"] .nav { background:rgba(6,14,10,.96); }
-.logo { font-family:var(--font); font-weight:800; font-size:18px; letter-spacing:-1px; color:var(--green); flex-shrink:0; }
+.logo { font-family:var(--font); font-weight:800; font-size:19px; letter-spacing:-1.2px; color:var(--green); flex-shrink:0; }
+.logo em { font-family:var(--serif); font-style:italic; font-weight:500; font-size:17px; color:var(--muted); letter-spacing:0; }
 .logo em { color:var(--text); font-style:normal; font-weight:300; }
 .nav-right { display:flex; align-items:center; gap:6px; }
 
@@ -90,9 +101,12 @@ button { touch-action:manipulation; }
 
 .cart-trig {
   display:flex; align-items:center; gap:5px;
-  background:var(--green); color:#fff; border-radius:99px;
-  padding:6px 11px 6px 9px; font-size:11px; font-weight:700; font-family:var(--font);
-  cursor:pointer; transition:all .15s; position:relative; border:none;
+  background:linear-gradient(135deg, var(--green), var(--greenL));
+  color:#fff; border-radius:99px;
+  padding:7px 13px 7px 10px; font-size:11px; font-weight:700; font-family:var(--font);
+  cursor:pointer; transition:all .18s; position:relative; border:none;
+  box-shadow:0 2px 10px rgba(7,107,31,.25);
+  letter-spacing:.02em;
 }
 .cart-trig:active { transform:scale(.96); filter:brightness(.9); }
 #cart-badge {
@@ -113,14 +127,14 @@ button { touch-action:manipulation; }
 [data-theme="dark"] .cat-strip { background:rgba(6,14,10,.96); }
 .cat-strip::-webkit-scrollbar { display:none; }
 .cpt {
-  flex-shrink:0; padding:5px 11px; border-radius:99px;
-  font-size:11px; font-weight:700; font-family:var(--font);
-  color:var(--muted); background:var(--card); border:1px solid var(--border);
-  cursor:pointer; transition:all .18s; white-space:nowrap;
+  flex-shrink:0; padding:5px 12px; border-radius:4px;
+  font-size:10px; font-weight:600; font-family:var(--font);
+  color:var(--muted); background:transparent; border:1px solid var(--border);
+  cursor:pointer; transition:all .18s; white-space:nowrap; letter-spacing:.04em; text-transform:uppercase;
 }
 .cpt:hover { color:var(--text); }
 .cpt:active { transform:scale(.94); opacity:.7; }
-.cpt.lime  { color:#22c55e; background:rgba(34,197,94,.1);  border-color:rgba(34,197,94,.25); }
+.cpt.lime  { color:var(--green); background:var(--greenXL); border-color:rgba(7,107,31,.25); }
 .cpt.rose  { color:#f472b6; background:rgba(244,114,182,.1); border-color:rgba(244,114,182,.25); }
 .cpt.fire  { color:#fb923c; background:rgba(251,146,60,.1);  border-color:rgba(251,146,60,.25); }
 .cpt.plum  { color:#c084fc; background:rgba(192,132,252,.1); border-color:rgba(192,132,252,.25); }
@@ -128,83 +142,89 @@ button { touch-action:manipulation; }
 
 /* ═══ HERO ═══════════════════════════════════════════════════ */
 .hero {
-  padding:28px 20px 24px;
-  background:radial-gradient(ellipse 90% 70% at 50% 0%, var(--greenXL) 0%, transparent 70%), var(--bg);
+  padding:32px 20px 28px;
+  background:radial-gradient(ellipse 100% 80% at 50% 0%, var(--greenXL) 0%, transparent 65%),
+             radial-gradient(ellipse 60% 40% at 80% 100%, rgba(9,153,41,.04) 0%, transparent 70%),
+             var(--bg);
 }
-.hero-label { font-size:10px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--green); margin-bottom:9px; }
-.hero-h { font-family:var(--font); font-weight:800; font-size:31px; line-height:1.08; letter-spacing:-1.5px; color:var(--text); margin-bottom:10px; }
+.hero-label { font-size:9.5px; font-weight:600; letter-spacing:.22em; text-transform:uppercase; color:var(--gold); margin-bottom:12px; opacity:.9; }
+.hero-h { font-family:var(--serif); font-weight:600; font-size:38px; line-height:1.06; letter-spacing:-.5px; color:var(--text); margin-bottom:14px; }
+.hero-h span { color:var(--green); font-style:italic; }
 .hero-h span { color:var(--green); }
-.hero-p { font-size:13px; color:var(--sub); line-height:1.55; margin-bottom:16px; max-width:290px; }
+.hero-p { font-size:13.5px; color:var(--sub); line-height:1.65; margin-bottom:20px; max-width:310px; font-weight:400; }
 .chips { display:flex; gap:7px; flex-wrap:wrap; }
-.chip { padding:5px 10px; border-radius:99px; background:var(--card); border:1px solid var(--border); font-size:11px; font-weight:500; color:var(--sub); }
+.chip { padding:5px 12px; border-radius:4px; background:transparent; border:1px solid var(--border); font-size:10.5px; font-weight:600; color:var(--sub); letter-spacing:.04em; text-transform:uppercase; }
 
 /* ═══ MOTO ═══════════════════════════════════════════════════ */
 .moto {
-  margin:0 15px 4px; padding:13px 15px; border-radius:var(--r);
-  background:linear-gradient(135deg, var(--greenXL), transparent); border:1px solid var(--border);
-  display:flex; align-items:center; gap:11px;
+  margin:0 15px 6px; padding:14px 16px; border-radius:var(--r);
+  background:linear-gradient(135deg, var(--goldXL), var(--greenXL));
+  border:1px solid rgba(184,150,46,.2);
+  display:flex; align-items:center; gap:12px;
 }
 .moto-i { font-size:22px; flex-shrink:0; }
-.moto-t { font-family:var(--font); font-weight:700; font-size:13px; color:var(--text); margin-bottom:2px; }
-.moto-s { font-size:11px; color:var(--muted); line-height:1.4; }
+.moto-t { font-family:var(--serif); font-weight:600; font-size:15px; color:var(--text); margin-bottom:3px; font-style:italic; }
+.moto-s { font-size:11.5px; color:var(--sub); line-height:1.45; }
 
 /* ═══ SECTION ════════════════════════════════════════════════ */
-.sec { padding-top:20px; margin-top:6px; }
+.sec { padding-top:24px; margin-top:8px; }
 .sec-inner { padding:0 15px 11px; }
 .sec-hd { display:flex; align-items:center; gap:11px; }
-.sec-ico { font-size:21px; flex-shrink:0; }
-.sec-title { font-family:var(--font); font-weight:800; font-size:16px; letter-spacing:-.4px; color:var(--text); }
-.sec-sub { font-size:11px; color:var(--muted); margin-top:2px; line-height:1.4; }
+.sec-ico { font-size:20px; flex-shrink:0; width:40px; height:40px; display:flex; align-items:center; justify-content:center; background:var(--goldXL); border:1px solid rgba(184,150,46,.2); border-radius:10px; }
+.sec-title { font-family:var(--serif); font-weight:600; font-size:20px; letter-spacing:0; color:var(--text); }
+.sec-sub { font-size:11.5px; color:var(--sub); margin-top:4px; line-height:1.45; font-style:italic; }
 .sec-div { height:1px; background:var(--border); margin:0 15px 12px; }
 
 /* ═══ FEATURED SCROLL ════════════════════════════════════════ */
 .feat-scroll { display:flex; gap:11px; padding:0 15px 15px; overflow-x:auto; scrollbar-width:none; }
 .feat-scroll::-webkit-scrollbar { display:none; }
 .feat-card {
-  flex-shrink:0; width:215px; height:235px; border-radius:var(--rL); cursor:pointer;
+  flex-shrink:0; width:230px; height:258px; border-radius:var(--rL); cursor:pointer;
   overflow:hidden; position:relative; background:var(--card); box-shadow:var(--shadow);
-  transition:transform .2s, box-shadow .2s; animation:fadeUp .4s both;
+  transition:transform .22s cubic-bezier(.4,0,.2,1), box-shadow .22s; animation:fadeUp .4s both;
 }
 .feat-card:hover { transform:translateY(-3px); box-shadow:var(--shadowH); }
 .feat-img { width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity .4s; display:block; }
 .feat-img.vis { opacity:1; }
-.feat-grad { position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,.72) 0%,rgba(0,0,0,.08) 55%,transparent 100%); }
+.feat-grad { position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,.78) 0%,rgba(0,0,0,.15) 50%,transparent 100%); }
 .feat-add {
-  position:absolute; top:10px; right:10px; z-index:2;
-  width:34px; height:34px; border-radius:50%;
-  font-size:18px; font-weight:700; font-family:var(--font);
-  border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all .15s;
+  position:absolute; top:11px; right:11px; z-index:2;
+  width:36px; height:36px; border-radius:50%;
+  font-size:19px; font-weight:700; font-family:var(--font);
+  border:none; cursor:pointer; display:flex; align-items:center; justify-content:center;
+  transition:all .18s cubic-bezier(.4,0,.2,1);
+  box-shadow:0 2px 8px rgba(0,0,0,.2);
 }
 .feat-add.idle { background:rgba(255,255,255,.18); color:#fff; backdrop-filter:blur(6px); }
 .feat-add.on   { background:var(--green); color:#fff; transform:scale(1.05); }
 .feat-add:active { transform:scale(.82) !important; }
 .feat-body { position:absolute; bottom:0; left:0; right:0; padding:12px 12px 13px; z-index:2; }
 .feat-badge { display:inline-block; padding:3px 8px; border-radius:99px; font-size:9px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; margin-bottom:5px; }
-.feat-badge.tg { background:rgba(255,165,0,.28); color:#FFD060; }
+.feat-badge.tg { background:rgba(184,150,46,.3); color:#F0D060; letter-spacing:.1em; }
 .feat-badge.tl { background:rgba(255,255,255,.15); color:rgba(255,255,255,.82); }
 .feat-badge.tr { background:rgba(244,114,182,.25); color:#f9a8d4; }
 .feat-badge.tp { background:rgba(192,132,252,.25); color:#e9d5ff; }
-.feat-name { font-family:var(--font); font-weight:700; font-size:14px; color:#fff; line-height:1.2; margin-bottom:7px; }
+.feat-name { font-family:var(--serif); font-weight:600; font-size:17px; color:#fff; line-height:1.2; margin-bottom:8px; letter-spacing:.1px; }
 .feat-row { display:flex; align-items:center; justify-content:space-between; }
 .feat-macros { display:flex; gap:4px; }
-.feat-mac { font-size:10px; font-weight:500; color:rgba(255,255,255,.65); background:rgba(255,255,255,.1); padding:2px 6px; border-radius:99px; }
-.feat-price { font-family:var(--font); font-weight:800; font-size:15px; color:#fff; }
+.feat-mac { font-size:10px; font-weight:600; color:rgba(255,255,255,.75); background:rgba(255,255,255,.14); padding:3px 7px; border-radius:99px; backdrop-filter:blur(4px); }
+.feat-price { font-family:var(--font); font-weight:700; font-size:15px; color:var(--goldL); letter-spacing:.02em; }
 
 /* ═══ MEAL GRID ══════════════════════════════════════════════ */
 .mgrid { display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:0 15px 15px; }
 .mcard {
   border-radius:var(--r); overflow:hidden; cursor:pointer;
   background:var(--card); border:1px solid var(--border); box-shadow:var(--shadow);
-  position:relative; transition:transform .2s, box-shadow .2s, border-color .2s;
-  animation:fadeUp .4s both;
+  position:relative; transition:transform .25s cubic-bezier(.4,0,.2,1), box-shadow .25s, border-color .25s;
+  animation:fadeUp .45s both;
 }
-.mcard:hover { transform:translateY(-2px); box-shadow:var(--shadowH); border-color:rgba(9,153,41,.2); }
+.mcard:hover { transform:translateY(-3px); box-shadow:var(--shadowH); border-color:rgba(184,150,46,.3); }
 @media(hover:none){.mcard:hover,.feat-card:hover,.plan:hover{transform:none;box-shadow:var(--shadow);}}
-.mimg-wrap { position:relative; height:128px; overflow:hidden; background:var(--card2); }
+.mimg-wrap { position:relative; height:148px; overflow:hidden; background:var(--card2); }
 .mimg { width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity .4s; display:block; }
 .mimg.vis { opacity:1; }
 .mimg-ph { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:40px; }
-.mgrad2 { position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,.42) 0%,transparent 52%); }
+.mgrad2 { position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,.55) 0%,transparent 55%); }
 .meal-tag {
   position:absolute; bottom:8px; left:9px; z-index:2;
   padding:3px 7px; border-radius:99px; font-size:9px; font-weight:800; letter-spacing:.06em; text-transform:uppercase;
@@ -217,61 +237,65 @@ button { touch-action:manipulation; }
 .tr-stack { position:absolute; top:8px; right:9px; display:flex; flex-direction:column; gap:3px; z-index:2; }
 .trp { background:rgba(0,0,0,.45); color:#fff; padding:2px 5px; border-radius:99px; font-size:9px; font-weight:600; backdrop-filter:blur(4px); }
 .meal-cta {
-  position:absolute; bottom:8px; right:9px; z-index:3;
-  width:30px; height:30px; border-radius:50%;
-  font-size:17px; font-weight:700; font-family:var(--font);
-  border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all .15s;
+  position:absolute; bottom:9px; right:9px; z-index:3;
+  width:32px; height:32px; border-radius:50%;
+  font-size:18px; font-weight:700; font-family:var(--font);
+  border:none; cursor:pointer; display:flex; align-items:center; justify-content:center;
+  transition:all .18s cubic-bezier(.4,0,.2,1);
+  box-shadow:0 2px 8px rgba(0,0,0,.2);
 }
 .meal-cta.idle { background:rgba(255,255,255,.22); color:#fff; backdrop-filter:blur(4px); }
 .meal-cta.on   { background:var(--green); color:#fff; }
 .meal-cta:active { transform:scale(.82) !important; }
-.mbody { padding:9px 10px 10px; }
-.stag { display:inline-block; padding:2px 7px; border-radius:99px; font-size:9px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; margin-bottom:4px; }
-.meal-name { font-family:var(--font); font-weight:700; font-size:12.5px; color:var(--text); line-height:1.3; margin-bottom:5px; }
+.mbody { padding:10px 11px 12px; }
+.stag { display:inline-block; padding:3px 8px; border-radius:99px; font-size:9px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; margin-bottom:5px; }
+.meal-name { font-family:var(--serif); font-weight:600; font-size:14.5px; color:var(--text); line-height:1.25; margin-bottom:6px; letter-spacing:.05px; }
 .price-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:7px; }
-.meal-price { font-family:var(--font); font-weight:800; font-size:14px; }
-.meal-kcal { font-size:10px; color:var(--muted); }
+.meal-price { font-family:var(--font); font-weight:700; font-size:14px; letter-spacing:.02em; }
+.meal-kcal { font-size:10.5px; color:var(--muted); font-weight:500; }
 .bars { display:flex; flex-direction:column; gap:3px; }
 .brow { display:flex; align-items:center; gap:4px; }
 .blbl { font-size:9px; font-weight:700; color:var(--muted); width:10px; flex-shrink:0; }
-.btrack { flex:1; height:4px; border-radius:2px; background:var(--card2); overflow:hidden; }
-.bfill  { height:100%; border-radius:2px; }
+.btrack { flex:1; height:5px; border-radius:3px; background:var(--card2); overflow:hidden; }
+.bfill  { height:100%; border-radius:3px; }
 .bval   { font-size:9px; color:var(--muted); width:22px; text-align:right; }
 
 /* ═══ PLANS ══════════════════════════════════════════════════ */
 .plans-sec {
-  margin:12px 15px 0; padding:24px 17px; border-radius:var(--rL);
-  background:radial-gradient(ellipse 80% 50% at 50% 0%, var(--greenXL) 0%, var(--card) 70%);
-  border:1px solid var(--border);
+  margin:10px 15px 0; padding:28px 18px 24px; border-radius:var(--rL);
+  background:radial-gradient(ellipse 90% 60% at 50% 0%, var(--greenXL) 0%, var(--card) 70%);
+  border:1px solid rgba(9,153,41,.18);
+  box-shadow:var(--shadow);
 }
 .plans-hd { text-align:center; margin-bottom:20px; }
-.plans-ey { font-size:10px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--green); }
-.plans-t  { font-family:var(--font); font-weight:800; font-size:20px; letter-spacing:-.7px; color:var(--text); margin:5px 0; }
-.plans-s  { font-size:12px; color:var(--muted); }
+.plans-ey { font-size:9.5px; font-weight:600; letter-spacing:.22em; text-transform:uppercase; color:var(--gold); }
+.plans-t  { font-family:var(--serif); font-weight:600; font-size:26px; letter-spacing:0; color:var(--text); margin:8px 0; font-style:italic; }
+.plans-s  { font-size:13px; color:var(--sub); opacity:.75; }
 .plans-grid { display:flex; flex-direction:column; gap:10px; }
-.plan { padding:15px 16px; border-radius:var(--r); background:var(--bg); border:1px solid var(--border); transition:border-color .2s, transform .2s; }
+.plan { padding:16px 17px; border-radius:var(--r); background:var(--bg); border:1.5px solid var(--border); transition:border-color .22s, transform .22s, box-shadow .22s; }
 .plan:hover { border-color:rgba(9,153,41,.25); transform:translateY(-1px); }
-.plan.feat { background:linear-gradient(145deg,var(--greenXL),var(--card)); border-color:var(--green); box-shadow:0 0 0 3px rgba(9,153,41,.07),var(--shadowH); }
-.plan-badge { display:inline-block; padding:3px 9px; border-radius:99px; font-size:9px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; background:var(--green); color:#fff; margin-bottom:4px; }
+.plan.feat { background:linear-gradient(145deg,var(--goldXL),var(--greenXL)); border-color:var(--gold); border-width:2px; box-shadow:0 0 0 4px rgba(184,150,46,.08),var(--shadowG); }
+.plan-badge { display:inline-block; padding:4px 11px; border-radius:99px; font-size:9px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; background:linear-gradient(135deg,var(--gold),var(--goldL)); color:#fff; margin-bottom:6px; box-shadow:var(--shadowG); }
 .plan-top { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:10px; }
-.plan-name { font-family:var(--font); font-weight:800; font-size:15px; color:var(--text); }
+.plan-name { font-family:var(--serif); font-weight:600; font-size:18px; color:var(--text); letter-spacing:.1px; }
 .plan-freq { font-size:11px; color:var(--muted); margin-top:2px; }
 .plan-price-wrap { text-align:right; }
-.plan-price { font-family:var(--font); font-weight:800; font-size:18px; color:var(--text); }
+.plan-price { font-family:var(--font); font-weight:800; font-size:22px; color:var(--text); letter-spacing:-.5px; line-height:1; }
 .plan-pw { font-size:10px; color:var(--muted); display:block; }
 .plan-feats { display:flex; flex-direction:column; gap:5px; margin-bottom:12px; }
-.pf { font-size:11.5px; color:var(--sub); display:flex; align-items:center; gap:6px; }
-.pf::before { content:'\2713'; color:var(--green); font-weight:700; flex-shrink:0; margin-right:2px; }
-.plan-btn { width:100%; padding:11px; border-radius:10px; font-family:var(--font); font-size:12.5px; font-weight:800; cursor:pointer; transition:all .15s; border:none; }
-.plan-btn:not(.btn-ol) { background:linear-gradient(135deg,var(--green),var(--greenL)); color:#fff; box-shadow:0 4px 16px rgba(9,153,41,.2); }
+.pf { font-size:12px; color:var(--sub); display:flex; align-items:center; gap:7px; line-height:1.4; }
+.pf::before { content:'\2713'; color:var(--green); font-weight:700; flex-shrink:0; font-size:12px; }
+.plan-btn { width:100%; padding:13px; border-radius:11px; font-family:var(--font); font-size:13px; font-weight:800; cursor:pointer; transition:all .18s; border:none; letter-spacing:.01em; }
+.plan.feat .plan-btn { background:linear-gradient(135deg,var(--gold),var(--goldL)) !important; color:#fff !important; box-shadow:var(--shadowG) !important; border:none !important; }
+.plan-btn:not(.btn-ol) { background:linear-gradient(135deg,var(--green),var(--greenL)); color:#fff; box-shadow:0 4px 18px rgba(9,153,41,.28); }
 .plan-btn:not(.btn-ol):hover { box-shadow:0 6px 22px rgba(9,153,41,.3); }
 .btn-ol { background:transparent; border:1.5px solid var(--border); color:var(--sub); }
 .btn-ol:hover { border-color:var(--green); color:var(--green); }
 .plan-btn:active { transform:scale(.97); }
 
 /* ═══ FOOTER ═════════════════════════════════════════════════ */
-footer { margin:18px 15px 0; padding:15px; border-radius:var(--r); background:var(--card); border:1px solid var(--border); text-align:center; }
-.ft-txt { font-size:11px; color:var(--muted); line-height:1.6; }
+footer { margin:18px 15px 0; padding:20px 18px; border-radius:var(--r); background:var(--card); border:1px solid rgba(184,150,46,.15); text-align:center; }
+.ft-txt { font-family:var(--serif); font-size:13px; color:var(--sub); line-height:1.7; opacity:.7; font-style:italic; }
 
 /* ═══ CART DRAWER ════════════════════════════════════════════ */
 #drawer {
@@ -281,17 +305,18 @@ footer { margin:18px 15px 0; padding:15px; border-radius:var(--r); background:va
 }
 #drawer.open { transform:translateY(0); }
 .drawer-handle {
-  background:linear-gradient(135deg,var(--green),var(--greenL));
-  padding:11px 15px; cursor:pointer;
+  background:linear-gradient(135deg,var(--green) 0%,var(--greenL) 80%, rgba(184,150,46,.6) 100%);
+  padding:14px 16px; cursor:pointer;
   display:flex; align-items:center; justify-content:space-between; gap:8px;
-  border-radius:16px 16px 0 0; box-shadow:0 -4px 24px rgba(9,153,41,.22);
+  border-radius:20px 20px 0 0;
+  box-shadow:0 -8px 32px rgba(7,107,31,.28), 0 -1px 0 rgba(255,255,255,.12) inset;
 }
 .drawer-handle:active { opacity:.9; }
 .dh-left  { display:flex; align-items:center; gap:7px; }
 .dh-icon  { font-size:15px; }
 .dh-count { background:rgba(255,255,255,.22); color:#fff; width:21px; height:21px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; font-family:var(--font); }
 .dh-sep   { color:rgba(255,255,255,.4); font-size:11px; }
-.dh-total { font-family:var(--font); font-weight:800; font-size:15px; color:#fff; }
+.dh-total { font-family:var(--font); font-weight:800; font-size:16px; color:#fff; letter-spacing:-.3px; }
 .dh-right { display:flex; align-items:center; gap:5px; }
 .dh-ord   { font-size:11.5px; font-weight:600; color:rgba(255,255,255,.85); }
 .dh-arrow { font-size:10px; color:rgba(255,255,255,.7); transition:transform .25s; }
@@ -309,9 +334,9 @@ footer { margin:18px 15px 0; padding:15px; border-radius:var(--r); background:va
 .combo-btn { background:var(--plum); color:#fff; border-radius:8px; padding:7px 11px; font-size:11px; font-weight:700; font-family:var(--font); flex-shrink:0; border:none; cursor:pointer; transition:all .15s; }
 .combo-btn:active { transform:scale(.9); opacity:.8; }
 .drawer-item { display:flex; align-items:center; gap:10px; padding:10px 14px; border-bottom:1px solid var(--border); }
-.di-img  { width:42px; height:42px; border-radius:10px; background:var(--card2); display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
+.di-img  { width:44px; height:44px; border-radius:11px; background:var(--card2); display:flex; align-items:center; justify-content:center; font-size:22px; flex-shrink:0; border:1px solid var(--border); }
 .di-info { flex:1; min-width:0; }
-.drawer-item-name { font-family:var(--font); font-weight:600; font-size:12px; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.drawer-item-name { font-family:var(--font); font-weight:700; font-size:12.5px; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .di-price { font-size:11px; color:var(--muted); margin-top:1px; }
 .di-rm { background:rgba(255,80,80,.07); color:#FF6060; width:28px; height:28px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:12px; flex-shrink:0; border:none; cursor:pointer; transition:background .15s; }
 .di-rm:hover { background:rgba(255,80,80,.16); }
@@ -320,16 +345,16 @@ footer { margin:18px 15px 0; padding:15px; border-radius:var(--r); background:va
 .d-clear { padding:11px 14px; border-radius:10px; background:var(--card2); color:var(--sub); border:1px solid var(--border); font-size:11.5px; font-weight:600; cursor:pointer; transition:all .15s; }
 .d-clear:hover { color:var(--text); }
 .d-clear:active { transform:scale(.95); }
-.d-order { flex:1; padding:12px; border-radius:10px; background:linear-gradient(135deg,var(--green),var(--greenL)); color:#fff; font-family:var(--font); font-size:12.5px; font-weight:800; cursor:pointer; box-shadow:0 4px 16px rgba(9,153,41,.25); transition:all .18s; border:none; }
+.d-order { flex:1; padding:14px; border-radius:12px; background:linear-gradient(135deg,var(--gold),var(--goldL)); color:#fff; font-family:var(--font); font-size:13px; font-weight:800; cursor:pointer; box-shadow:var(--shadowG); transition:all .18s; border:none; letter-spacing:.03em; }
 .d-order:hover { box-shadow:0 6px 22px rgba(9,153,41,.35); }
 .d-order:active { transform:scale(.97); }
 .d-empty { text-align:center; padding:24px; font-size:12px; color:var(--muted); }
 
 /* ═══ SECTION TINTS ══════════════════════════════════════════ */
-.sec-lime { background:linear-gradient(180deg, rgba(34,197,94,.04) 0%, transparent 120px), var(--bg); }
-.sec-rose { background:linear-gradient(180deg, rgba(244,114,182,.04) 0%, transparent 120px), var(--bg); }
-.sec-fire { background:linear-gradient(180deg, rgba(251,146,60,.04) 0%, transparent 120px), var(--bg); }
-.sec-plum { background:linear-gradient(180deg, rgba(192,132,252,.05) 0%, transparent 120px), var(--bg); }
+.sec-lime { background:linear-gradient(180deg, rgba(34,197,94,.06) 0%, transparent 140px), var(--bg); }
+.sec-rose { background:linear-gradient(180deg, rgba(244,114,182,.06) 0%, transparent 140px), var(--bg); }
+.sec-fire { background:linear-gradient(180deg, rgba(251,146,60,.06) 0%, transparent 140px), var(--bg); }
+.sec-plum { background:linear-gradient(180deg, rgba(192,132,252,.07) 0%, transparent 140px), var(--bg); }
 
 /* ═══ HERO CITY ═════════════════════════════════════════════ */
 .hero-city { display:inline-flex; align-items:center; gap:5px; padding:4px 10px; border-radius:99px; background:var(--card); border:1px solid var(--border); font-size:11px; font-weight:600; color:var(--sub); margin-bottom:10px; }
@@ -358,20 +383,20 @@ footer { margin:18px 15px 0; padding:15px; border-radius:var(--r); background:va
   transform:translateX(-50%) translateY(16px);
   z-index:600;
   background:var(--text); color:var(--bg);
-  padding:11px 18px 11px 14px;
-  border-radius:99px;
+  padding:12px 18px 12px 14px;
+  border-radius:14px;
   font-size:12px; font-weight:600;
-  box-shadow:0 8px 28px rgba(0,0,0,.22);
+  box-shadow:0 8px 32px rgba(0,0,0,.28), 0 0 0 1px rgba(184,150,46,.2);
   display:flex; align-items:center; gap:9px;
   opacity:0; transition:opacity .25s, transform .25s;
   pointer-events:none; white-space:nowrap; max-width:calc(100vw - 32px);
 }
 #abandon-toast.show { opacity:1; transform:translateX(-50%) translateY(0); pointer-events:auto; }
 #abandon-toast .at-cta {
-  background:var(--green); color:#fff;
-  padding:5px 11px; border-radius:99px;
-  font-size:11px; font-weight:800; font-family:var(--font);
-  cursor:pointer; border:none; flex-shrink:0;
+  background:linear-gradient(135deg,var(--gold),var(--goldL)); color:#fff;
+  padding:5px 11px; border-radius:6px;
+  font-size:11px; font-weight:700; font-family:var(--font);
+  cursor:pointer; border:none; flex-shrink:0; letter-spacing:.03em;
 }
 #abandon-toast .at-x {
   width:18px; height:18px; display:flex; align-items:center; justify-content:center;
@@ -513,10 +538,10 @@ footer { margin:18px 15px 0; padding:15px; border-radius:var(--r); background:va
 #scroll-top {
   position:fixed; bottom:90px; right:16px; z-index:490;
   width:38px; height:38px; border-radius:50%;
-  background:var(--card); border:1px solid var(--border);
-  color:var(--sub); font-size:17px;
+  background:var(--goldXL); border:1px solid rgba(184,150,46,.3);
+  color:var(--gold); font-size:17px;
   display:flex; align-items:center; justify-content:center;
-  cursor:pointer; box-shadow:var(--shadow);
+  cursor:pointer; box-shadow:var(--shadowG);
   opacity:0; transform:translateY(8px); pointer-events:none;
   transition:opacity .22s, transform .22s;
 }
@@ -524,7 +549,276 @@ footer { margin:18px 15px 0; padding:15px; border-radius:var(--r); background:va
 #scroll-top:active { transform:scale(.9); }
 [data-theme="dark"] #scroll-top { background:var(--card); }
 
-@keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+
+/* ═══ PLAN SAVINGS & PER-DAY ═════════════════════════════════ */
+.plan-save { display:inline-block; padding:2px 7px; border-radius:99px; font-size:9px; font-weight:800; background:rgba(9,153,41,.12); color:var(--green); margin-left:5px; letter-spacing:.04em; }
+.plan-perday { font-size:10px; color:var(--muted); display:block; margin-top:2px; }
+.plan-top-stack { display:flex; flex-direction:column; gap:0; }
+.plan-price-big { font-family:var(--font); font-weight:800; font-size:22px; color:var(--text); letter-spacing:-.5px; line-height:1; }
+.plan-price-unit { font-size:10px; color:var(--muted); display:block; margin-top:1px; }
+
+@keyframes fadeUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+
+/* ══ LUXURY TOKENS ══════════════════════════════════════════ */
+:root {
+  --gold:    #C9A84C;
+  --goldL:   #E8CC82;
+  --goldXL:  #FBF6E9;
+  --ink:     #0A1810;
+  --cream:   #F7FBF8;
+}
+
+/* ══ PREMIUM BODY ════════════════════════════════════════════ */
+body { letter-spacing:.01em; }
+
+/* ══ GLASS CARD ══════════════════════════════════════════════ */
+.glass-pill {
+  background:rgba(255,255,255,.12);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.2);
+  border-radius:99px;
+}
+
+/* ══ FULL-BLEED FEAT CARD — luxury upgrade ═══════════════════ */
+.feat-card {
+  width:250px; height:290px;
+}
+.feat-body { padding:14px 14px 16px; }
+.feat-badge {
+  font-size:8px; letter-spacing:.12em; padding:4px 10px;
+  border:1px solid rgba(255,255,255,.2);
+}
+.feat-badge.tg {
+  background:rgba(201,168,76,.22); color:#E8CC82;
+  border-color:rgba(201,168,76,.35);
+}
+
+/* ══ MEAL CARDS — full-bleed image, text float ═══════════════ */
+.mcard-lux {
+  border-radius:var(--rL); overflow:hidden; cursor:pointer;
+  position:relative; box-shadow:var(--shadow);
+  transition:transform .22s cubic-bezier(.4,0,.2,1), box-shadow .22s;
+  animation:fadeUp .4s both; aspect-ratio:1/1.1;
+  border:none; background:var(--card);
+}
+.mcard-lux:hover { transform:translateY(-3px); box-shadow:var(--shadowH); }
+@media(hover:none){ .mcard-lux:hover { transform:none; box-shadow:var(--shadow); } }
+.mcard-lux .mimg-wrap {
+  position:absolute; inset:0; height:100%;
+  border-radius:var(--rL); overflow:hidden;
+}
+.mcard-lux .mimg { width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity .45s; display:block; }
+.mcard-lux .mimg.vis { opacity:1; }
+.mcard-lux .mimg-ph { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:52px; }
+.mcard-lux .lux-overlay {
+  position:absolute; inset:0;
+  background:linear-gradient(to top,
+    rgba(5,12,8,.88) 0%,
+    rgba(5,12,8,.45) 45%,
+    rgba(5,12,8,.08) 75%,
+    transparent 100%);
+}
+.mcard-lux .lux-body {
+  position:absolute; bottom:0; left:0; right:0;
+  padding:12px 13px 14px;
+  display:flex; flex-direction:column; gap:4px;
+}
+.mcard-lux .lux-tag {
+  display:inline-block; padding:2px 8px; border-radius:99px;
+  font-size:8px; font-weight:800; letter-spacing:.1em; text-transform:uppercase;
+  background:rgba(255,255,255,.14); color:rgba(255,255,255,.82);
+  border:1px solid rgba(255,255,255,.2);
+  backdrop-filter:blur(4px); width:fit-content; margin-bottom:1px;
+}
+.mcard-lux .lux-name {
+  font-family:var(--font); font-weight:800; font-size:13.5px;
+  color:#fff; line-height:1.22; letter-spacing:-.15px;
+}
+.mcard-lux .lux-row {
+  display:flex; align-items:center; justify-content:space-between;
+}
+.mcard-lux .lux-price {
+  font-family:var(--font); font-weight:800; font-size:15px; color:#fff;
+}
+.mcard-lux .lux-cal {
+  font-size:10px; color:rgba(255,255,255,.6); font-weight:500;
+}
+.mcard-lux .lux-cta {
+  position:absolute; top:10px; right:10px; z-index:4;
+  width:34px; height:34px; border-radius:50%;
+  font-size:18px; font-weight:700; font-family:var(--font);
+  border:none; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  transition:all .18s cubic-bezier(.4,0,.2,1);
+  background:rgba(255,255,255,.18); color:#fff;
+  backdrop-filter:blur(6px);
+  box-shadow:0 2px 10px rgba(0,0,0,.2);
+}
+.mcard-lux .lux-cta.on { background:var(--green); color:#fff; }
+.mcard-lux .lux-cta:active { transform:scale(.82) !important; }
+.mcard-lux .lux-macro-bar {
+  display:flex; gap:2px; margin-top:3px;
+}
+.mcard-lux .lux-bar-seg {
+  height:2px; border-radius:1px; opacity:.7;
+}
+
+/* ══ LUXURY PLANS — horizontal on mobile ═════════════════════ */
+.plans-sec {
+  margin:14px 0 0 !important; padding:32px 20px 28px !important;
+  border-radius:0 !important; border-left:none !important; border-right:none !important;
+  background:var(--ink) !important;
+  border-color:rgba(255,255,255,.06) !important;
+  box-shadow:none !important;
+}
+[data-theme="dark"] .plans-sec {
+  background:#040A06 !important;
+}
+.plans-hd { margin-bottom:24px !important; }
+.plans-ey { color:var(--gold) !important; letter-spacing:.2em !important; }
+.plans-t  { color:#fff !important; font-size:24px !important; letter-spacing:-1px !important; }
+.plans-s  { color:rgba(255,255,255,.5) !important; opacity:1 !important; }
+.plans-grid {
+  display:flex !important; flex-direction:row !important; gap:12px !important;
+  overflow-x:auto !important; scrollbar-width:none !important;
+  padding-bottom:4px !important;
+  -webkit-overflow-scrolling:touch !important;
+  scroll-snap-type:x mandatory !important;
+}
+.plans-grid::-webkit-scrollbar { display:none !important; }
+.plan {
+  flex-shrink:0 !important; width:220px !important;
+  background:rgba(255,255,255,.06) !important;
+  border:1px solid rgba(255,255,255,.1) !important;
+  border-radius:var(--rL) !important;
+  padding:20px 18px !important;
+  scroll-snap-align:start !important;
+  transition:border-color .2s, background .2s !important;
+}
+.plan:hover { border-color:rgba(255,255,255,.22) !important; background:rgba(255,255,255,.09) !important; }
+.plan.feat {
+  background:linear-gradient(145deg, rgba(9,153,41,.25), rgba(43,206,78,.12)) !important;
+  border-color:var(--green) !important; border-width:1.5px !important;
+  box-shadow:0 0 0 1px rgba(9,153,41,.15), 0 16px 48px rgba(9,153,41,.15) !important;
+}
+.plan-name { color:#fff !important; font-size:17px !important; }
+.plan-freq { color:rgba(255,255,255,.45) !important; font-size:11px !important; }
+.plan-price { color:#fff !important; font-size:26px !important; letter-spacing:-.8px !important; }
+.plan-pw { color:rgba(255,255,255,.4) !important; }
+.plan-perday { color:rgba(255,255,255,.35) !important; }
+.plan-save { background:rgba(9,153,41,.2) !important; color:#4ade80 !important; }
+.plan-badge {
+  background:linear-gradient(135deg,var(--gold),var(--goldL)) !important;
+  color:var(--ink) !important; box-shadow:0 2px 10px rgba(201,168,76,.4) !important;
+}
+.pf { color:rgba(255,255,255,.7) !important; font-size:11.5px !important; }
+.pf::before { color:var(--green) !important; }
+.plan-btn:not(.btn-ol) {
+  background:linear-gradient(135deg,var(--green),var(--greenL)) !important;
+  box-shadow:0 4px 20px rgba(9,153,41,.35) !important;
+  font-size:13px !important;
+}
+.btn-ol {
+  background:rgba(255,255,255,.08) !important;
+  border:1px solid rgba(255,255,255,.18) !important;
+  color:rgba(255,255,255,.75) !important;
+}
+.btn-ol:hover { border-color:rgba(255,255,255,.4) !important; color:#fff !important; }
+
+/* ══ LUXURY CART DRAWER ══════════════════════════════════════ */
+#drawer-body {
+  background:var(--ink) !important;
+  border-color:rgba(255,255,255,.08) !important;
+}
+[data-theme="dark"] #drawer-body { background:#050D07 !important; }
+.combo { background:rgba(192,132,252,.08) !important; border-color:rgba(192,132,252,.2) !important; }
+.drawer-item {
+  padding:12px 16px !important;
+  border-color:rgba(255,255,255,.06) !important;
+}
+.di-img {
+  background:rgba(255,255,255,.08) !important;
+  border:1px solid rgba(255,255,255,.1) !important;
+}
+.drawer-item-name { color:#fff !important; font-size:13px !important; }
+.di-price { color:rgba(255,255,255,.5) !important; font-size:11.5px !important; }
+.di-q { background:rgba(255,255,255,.08) !important; color:#fff !important; border-color:rgba(255,255,255,.12) !important; }
+.di-q:hover { background:rgba(255,255,255,.15) !important; }
+.di-qn { color:#fff !important; }
+.di-rm { background:rgba(255,80,80,.1) !important; }
+.drawer-foot {
+  background:var(--ink) !important;
+  padding:12px 14px 16px !important;
+  border-top:1px solid rgba(255,255,255,.07) !important;
+}
+[data-theme="dark"] .drawer-foot { background:#050D07 !important; }
+.d-clear {
+  background:rgba(255,255,255,.07) !important;
+  border:1px solid rgba(255,255,255,.1) !important;
+  color:rgba(255,255,255,.6) !important;
+}
+.d-clear:hover { background:rgba(255,255,255,.12) !important; color:#fff !important; }
+.d-order {
+  font-size:13.5px !important; padding:14px !important;
+  box-shadow:0 6px 24px rgba(9,153,41,.35) !important;
+  border-radius:12px !important;
+}
+.d-empty { color:rgba(255,255,255,.35) !important; }
+
+/* ══ LUXURY COMBO STRIP ══════════════════════════════════════ */
+.combo-ey { color:rgba(192,132,252,.9) !important; }
+.combo-nm { color:rgba(255,255,255,.85) !important; }
+
+/* ══ DETAIL SHEET — luxury upgrade ══════════════════════════ */
+#detail-sheet {
+  background:var(--ink) !important;
+}
+[data-theme="dark"] #detail-sheet { background:#040A06 !important; }
+.ds-grip { background:rgba(255,255,255,.15) !important; }
+.ds-body { background:var(--ink) !important; padding:16px 18px 110px !important; }
+[data-theme="dark"] .ds-body { background:#040A06 !important; }
+.ds-tag { font-size:8px !important; letter-spacing:.12em !important; }
+.ds-name { color:#fff !important; font-size:24px !important; letter-spacing:-.6px !important; }
+.ds-macro { background:rgba(255,255,255,.07) !important; border:1px solid rgba(255,255,255,.1) !important; }
+.ds-macro-val { color:#fff !important; }
+.ds-macro-lbl { color:rgba(255,255,255,.45) !important; }
+.ds-bar-lbl { color:rgba(255,255,255,.45) !important; }
+.ds-bar-track { background:rgba(255,255,255,.08) !important; }
+.ds-bar-val { color:rgba(255,255,255,.5) !important; }
+.ds-extra { background:rgba(255,255,255,.06) !important; border:1px solid rgba(255,255,255,.08) !important; }
+.ds-extra-lbl { color:rgba(255,255,255,.4) !important; }
+.ds-extra-val { color:#fff !important; }
+.ds-section-title { color:rgba(255,255,255,.5) !important; }
+.ds-ingredients { color:rgba(255,255,255,.7) !important; }
+.ds-ingredient-tag { background:rgba(255,255,255,.08) !important; border:1px solid rgba(255,255,255,.12) !important; color:rgba(255,255,255,.75) !important; }
+.ds-allergen-tag { background:rgba(244,114,182,.1) !important; border-color:rgba(244,114,182,.2) !important; }
+.ds-allergen-none { color:rgba(255,255,255,.3) !important; }
+#ds-footer { background:var(--ink) !important; border-color:rgba(255,255,255,.08) !important; }
+[data-theme="dark"] #ds-footer { background:#040A06 !important; }
+.ds-close-btn { background:rgba(255,255,255,.08) !important; border:1px solid rgba(255,255,255,.12) !important; color:#fff !important; }
+.ds-share-btn { background:rgba(255,255,255,.08) !important; border:1px solid rgba(255,255,255,.12) !important; color:rgba(255,255,255,.7) !important; }
+
+/* ══ LUXURY SCROLL TOP BTN ═══════════════════════════════════ */
+#scroll-top { background:var(--ink) !important; border-color:rgba(255,255,255,.15) !important; color:rgba(255,255,255,.7) !important; }
+
+/* ══ LUXURY ABANDONMENT TOAST ════════════════════════════════ */
+#abandon-toast { background:var(--ink) !important; color:#fff !important; border:1px solid rgba(255,255,255,.12) !important; }
+
+/* ══ HERO — luxury enhancements ══════════════════════════════ */
+.hero-h span { 
+  background:linear-gradient(135deg, var(--green), var(--greenL));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+
+/* ══ SECTION DIVIDER — gold accent ══════════════════════════ */
+.sec-div {
+  height:1px !important;
+  background:linear-gradient(90deg, transparent, var(--border) 20%, var(--border) 80%, transparent) !important;
+}
+
 </style>
 </head>
 <body>
@@ -548,16 +842,15 @@ footer { margin:18px 15px 0; padding:15px; border-radius:var(--r); background:va
 
 <!-- CAT STRIP -->
 <div class="cat-strip">
+  <button class="cpt sky"  onclick="go('s-plans')">&#x1F48E; <span class="cn-p">Plans</span></button>
   <button class="cpt lime" onclick="go('s-muscle')">&#x1F4AA; <span class="cn-m">Muscle</span></button>
   <button class="cpt"      onclick="go('s-lean')"  >&#x1F338; <span class="cn-l">Lean &amp; Fit</span></button>
   <button class="cpt"      onclick="go('s-fast')"  >&#x26A1; <span class="cn-f">Fast Food</span></button>
   <button class="cpt"      onclick="go('s-sweet')" >&#x1F353; <span class="cn-s">Sweet</span></button>
-  <button class="cpt"      onclick="go('s-plans')" >&#x1F48E; <span class="cn-p">Plans</span></button>
 </div>
 
 <!-- HERO -->
 <div class="hero">
-  <div class="hero-city" id="el-city">&#x1F4CD; T&#233;touan &middot; 45 min</div>
   <div class="hero-label" id="el-ey">Repas Fitness Premium</div>
   <h1 class="hero-h" id="el-h">Mange intelligent.<br><span>Affiche ton meilleur.</span></h1>
   <p class="hero-p" id="el-hp">Repas &#233;quilibr&#233;s, pr&#233;par&#233;s avec soin. Livr&#233;s &#224; ta porte.</p>
@@ -576,6 +869,61 @@ footer { margin:18px 15px 0; padding:15px; border-radius:var(--r); background:va
     <div class="moto-s" id="el-ms">Chaque repas con&#231;u pour l'&#233;nergie, le go&#251;t et les r&#233;sultats.</div>
   </div>
 </div>
+
+<!-- PLANS -->
+<div class="plans-sec" id="s-plans">
+  <div class="plans-hd">
+    <span class="plans-ey" id="el-pey">Plans Hebdomadaires</span>
+    <h2 class="plans-t" id="el-pt">Engage-toi dans tes objectifs.</h2>
+    <p class="plans-s" id="el-ps">&#201;conomise. Mange mieux. Chaque semaine.</p>
+  </div>
+  <div class="plans-grid">
+    <div class="plan">
+      <div class="plan-top">
+        <div><div class="plan-name" id="el-p1n">Starter</div><div class="plan-freq" id="el-p1f">3 repas / semaine</div></div>
+        <div class="plan-price-wrap"><div class="plan-price"><span id="el-p1p">390</span> MAD</div><span class="plan-pw" id="el-p1pw">par semaine</span><span class="plan-perday">~55 MAD/repas</span></div>
+      </div>
+      <div class="plan-feats">
+        <div class="pf" id="el-pf11">3 repas s&#233;lectionn&#233;s par le chef</div>
+        <div class="pf" id="el-pf12">Livraison gratuite</div>
+        <div class="pf" id="el-pf13">Suivi des macros</div>
+      </div>
+      <button class="plan-btn btn-ol" id="el-pb1">S'abonner</button>
+    </div>
+    <div class="plan feat">
+      <div class="plan-top">
+        <div>
+          <div class="plan-badge" id="el-bv">MEILLEUR RAPPORT</div>
+          <div class="plan-name" id="el-p2n">Fitness</div>
+          <div class="plan-freq" id="el-p2f">5 repas / semaine</div>
+        </div>
+        <div class="plan-price-wrap"><div class="plan-price"><span id="el-p2p">590</span> MAD</div><span class="plan-pw" id="el-p2pw">par semaine</span><span class="plan-perday">~118 MAD/repas <span class="plan-save">-15%</span></span></div>
+      </div>
+      <div class="plan-feats">
+        <div class="pf" id="el-pf21">5 repas personnalis&#233;s</div>
+        <div class="pf" id="el-pf22">Livraison prioritaire gratuite</div>
+        <div class="pf" id="el-pf23">Coach nutrition IA</div>
+        <div class="pf" id="el-pf24">Rapport hebdomadaire</div>
+      </div>
+      <button class="plan-btn" id="el-pb2">S'abonner</button>
+    </div>
+    <div class="plan">
+      <div class="plan-top">
+        <div><div class="plan-name" id="el-p3n">Athlete</div><div class="plan-freq" id="el-p3f">7 repas / semaine</div></div>
+        <div class="plan-price-wrap"><div class="plan-price"><span id="el-p3p">790</span> MAD</div><span class="plan-pw" id="el-p3pw">par semaine</span><span class="plan-perday">~113 MAD/repas <span class="plan-save">-20%</span></span></div>
+      </div>
+      <div class="plan-feats">
+        <div class="pf" id="el-pf31">7 repas performance</div>
+        <div class="pf" id="el-pf32">Livraison express gratuite</div>
+        <div class="pf" id="el-pf33">Session chef d&#233;di&#233;</div>
+        <div class="pf" id="el-pf34">Macros personnalis&#233;s</div>
+        <div class="pf" id="el-pf35">Pack compl&#233;ments</div>
+      </div>
+      <button class="plan-btn btn-ol" id="el-pb3">S'abonner</button>
+    </div>
+  </div>
+</div>
+
 
 <!-- MUSCLE -->
 <div class="sec sec-lime" id="s-muscle">
@@ -618,41 +966,43 @@ footer { margin:18px 15px 0; padding:15px; border-radius:var(--r); background:va
     </div>
   </div>
   <div class="mgrid">
-    <div class="mcard" data-id="m3" onclick="openDetail('m3')">
+    <div class="mcard-lux" data-id="m3" onclick="openDetail('m3')">
       <div class="mimg-wrap">
         <img loading="lazy" decoding="async" class="mimg" src="images/dish_04.jpg" onload="this.classList.add('vis')" alt="Salade Poulet Grillé">
-        <div class="mgrad2"></div>
-        <span class="meal-tag tl">Low Carb</span>
-        <div class="tr-stack"><span class="trp">&#x23F1; 10m</span><span class="trp">&#x2605; 4.8</span></div>
-        <button class="meal-cta idle" id="gb-m3" onclick="tog(event,'m3')">+</button>
       </div>
-      <div class="mbody">
-        <span class="stag" style="background:rgba(9,184,48,.1);color:var(--green);">Keto</span>
-        <div class="meal-name" id="el-m3n">Salade Poulet Grill&#233;</div>
-        <div class="price-row"><span class="meal-price" style="color:var(--green);">45 MAD</span><span class="meal-kcal">310 kcal</span></div>
-        <div class="bars">
-          <div class="brow"><span class="blbl">P</span><div class="btrack"><div class="bfill" style="width:56%;background:#4ade80;"></div></div><span class="bval">28g</span></div>
-          <div class="brow"><span class="blbl">C</span><div class="btrack"><div class="bfill" style="width:18%;background:#facc15;"></div></div><span class="bval">14g</span></div>
-          <div class="brow"><span class="blbl">F</span><div class="btrack"><div class="bfill" style="width:33%;background:#fb923c;"></div></div><span class="bval">10g</span></div>
+      <div class="lux-overlay"></div>
+      <button class="lux-cta idle" id="gb-m3" onclick="tog(event,'m3')">+</button>
+      <div class="lux-body">
+        <span class="lux-tag">LOW CARB</span>
+        <div class="lux-name" id="el-m3n">Salade Poulet Grill&#233;</div>
+        <div class="lux-row">
+          <div class="lux-price" style="color:var(--green)">45 MAD</div>
+          <div class="lux-cal">310 kcal</div>
+        </div>
+        <div class="lux-macro-bar">
+          <div class="lux-bar-seg" style="width:43%;background:#4ade80;"></div>
+          <div class="lux-bar-seg" style="width:22%;background:#facc15;margin-left:1px;"></div>
+          <div class="lux-bar-seg" style="width:35%;background:#fb923c;margin-left:1px;"></div>
         </div>
       </div>
     </div>
-    <div class="mcard" data-id="m4" onclick="openDetail('m4')">
+    <div class="mcard-lux" data-id="m4" onclick="openDetail('m4')">
       <div class="mimg-wrap">
         <img loading="lazy" decoding="async" class="mimg" src="images/dish_03.jpg" onload="this.classList.add('vis')" alt="Pasta aux Légumes">
-        <div class="mgrad2"></div>
-        <span class="meal-tag tl">Vegan</span>
-        <div class="tr-stack"><span class="trp">&#x23F1; 18m</span><span class="trp">&#x2605; 4.6</span></div>
-        <button class="meal-cta idle" id="gb-m4" onclick="tog(event,'m4')">+</button>
       </div>
-      <div class="mbody">
-        <span class="stag" style="background:rgba(9,184,48,.1);color:var(--green);">Plant Power</span>
-        <div class="meal-name" id="el-m4n">Pasta aux L&#233;gumes</div>
-        <div class="price-row"><span class="meal-price" style="color:var(--green);">52 MAD</span><span class="meal-kcal">360 kcal</span></div>
-        <div class="bars">
-          <div class="brow"><span class="blbl">P</span><div class="btrack"><div class="bfill" style="width:20%;background:#4ade80;"></div></div><span class="bval">10g</span></div>
-          <div class="brow"><span class="blbl">C</span><div class="btrack"><div class="bfill" style="width:70%;background:#facc15;"></div></div><span class="bval">56g</span></div>
-          <div class="brow"><span class="blbl">F</span><div class="btrack"><div class="bfill" style="width:27%;background:#fb923c;"></div></div><span class="bval">8g</span></div>
+      <div class="lux-overlay"></div>
+      <button class="lux-cta idle" id="gb-m4" onclick="tog(event,'m4')">+</button>
+      <div class="lux-body">
+        <span class="lux-tag">VEGAN</span>
+        <div class="lux-name" id="el-m4n">Pasta aux L&#233;gumes</div>
+        <div class="lux-row">
+          <div class="lux-price" style="color:var(--green)">52 MAD</div>
+          <div class="lux-cal">360 kcal</div>
+        </div>
+        <div class="lux-macro-bar">
+          <div class="lux-bar-seg" style="width:12%;background:#4ade80;"></div>
+          <div class="lux-bar-seg" style="width:67%;background:#facc15;margin-left:1px;"></div>
+          <div class="lux-bar-seg" style="width:21%;background:#fb923c;margin-left:1px;"></div>
         </div>
       </div>
     </div>
@@ -714,60 +1064,63 @@ footer { margin:18px 15px 0; padding:15px; border-radius:var(--r); background:va
   </div>
   <div class="sec-div"></div>
   <div class="mgrid">
-    <div class="mcard" data-id="f1" onclick="openDetail('f1')">
+    <div class="mcard-lux" data-id="f1" onclick="openDetail('f1')">
       <div class="mimg-wrap">
-        <img loading="lazy" decoding="async" class="mimg" src="images/dish_05.jpg" onload="this.classList.add('vis')" alt="Salad de Pâte Fit">
-        <div class="mgrad2"></div>
-        <span class="meal-tag tf">Cheat Smart</span>
-        <div class="tr-stack"><span class="trp">&#x23F1; 15m</span><span class="trp">&#x2605; 4.7</span></div>
-        <button class="meal-cta idle" id="gb-f1" onclick="tog(event,'f1')">+</button>
+        <img loading="lazy" decoding="async" class="mimg" src="images/dish_05.jpg" onload="this.classList.add('vis')" alt="Mini Burger Gourmet">
       </div>
-      <div class="mbody">
-        <span class="stag" style="background:rgba(251,146,60,.1);color:#fb923c;">Balanced</span>
-        <div class="meal-name" id="el-f1n">Mini Burger Gourmet</div>
-        <div class="price-row"><span class="meal-price" style="color:var(--fire);">35 MAD</span><span class="meal-kcal">240 kcal</span></div>
-        <div class="bars">
-          <div class="brow"><span class="blbl">P</span><div class="btrack"><div class="bfill" style="width:28%;background:#4ade80;"></div></div><span class="bval">14g</span></div>
-          <div class="brow"><span class="blbl">C</span><div class="btrack"><div class="bfill" style="width:28%;background:#facc15;"></div></div><span class="bval">22g</span></div>
-          <div class="brow"><span class="blbl">F</span><div class="btrack"><div class="bfill" style="width:30%;background:#fb923c;"></div></div><span class="bval">9g</span></div>
+      <div class="lux-overlay"></div>
+      <button class="lux-cta idle" id="gb-f1" onclick="tog(event,'f1')">+</button>
+      <div class="lux-body">
+        <span class="lux-tag">CHEAT SMART</span>
+        <div class="lux-name" id="el-f1n">Mini Burger Gourmet</div>
+        <div class="lux-row">
+          <div class="lux-price" style="color:var(--fire);">35 MAD</div>
+          <div class="lux-cal">240 kcal</div>
+        </div>
+        <div class="lux-macro-bar">
+          <div class="lux-bar-seg" style="width:25%;background:#4ade80;"></div>
+          <div class="lux-bar-seg" style="width:39%;background:#facc15;margin-left:1px;"></div>
+          <div class="lux-bar-seg" style="width:36%;background:#fb923c;margin-left:1px;"></div>
         </div>
       </div>
     </div>
-    <div class="mcard" data-id="f2" onclick="openDetail('f2')">
+    <div class="mcard-lux" data-id="f2" onclick="openDetail('f2')">
       <div class="mimg-wrap">
         <img loading="lazy" decoding="async" class="mimg" src="images/dish_13.jpg" onload="this.classList.add('vis')" alt="Quesadilla Massala">
-        <div class="mgrad2"></div>
-        <span class="meal-tag tg">&#x1F525; Top Pick</span>
-        <div class="tr-stack"><span class="trp">&#x23F1; 18m</span><span class="trp">&#x2605; 4.7</span></div>
-        <button class="meal-cta idle" id="gb-f2" onclick="tog(event,'f2')">+</button>
       </div>
-      <div class="mbody">
-        <span class="stag" style="background:rgba(251,146,60,.1);color:#fb923c;">Spicy Fusion</span>
-        <div class="meal-name" id="el-f2n">Quesadilla Massala</div>
-        <div class="price-row"><span class="meal-price" style="color:var(--fire);">52 MAD</span><span class="meal-kcal">380 kcal</span></div>
-        <div class="bars">
-          <div class="brow"><span class="blbl">P</span><div class="btrack"><div class="bfill" style="width:48%;background:#4ade80;"></div></div><span class="bval">24g</span></div>
-          <div class="brow"><span class="blbl">C</span><div class="btrack"><div class="bfill" style="width:43%;background:#facc15;"></div></div><span class="bval">34g</span></div>
-          <div class="brow"><span class="blbl">F</span><div class="btrack"><div class="bfill" style="width:43%;background:#fb923c;"></div></div><span class="bval">13g</span></div>
+      <div class="lux-overlay"></div>
+      <button class="lux-cta idle" id="gb-f2" onclick="tog(event,'f2')">+</button>
+      <div class="lux-body">
+        <span class="lux-tag">TOP PICK</span>
+        <div class="lux-name" id="el-f2n">Quesadilla Massala</div>
+        <div class="lux-row">
+          <div class="lux-price" style="color:var(--fire)">52 MAD</div>
+          <div class="lux-cal">380 kcal</div>
+        </div>
+        <div class="lux-macro-bar">
+          <div class="lux-bar-seg" style="width:28%;background:#4ade80;"></div>
+          <div class="lux-bar-seg" style="width:39%;background:#facc15;margin-left:1px;"></div>
+          <div class="lux-bar-seg" style="width:34%;background:#fb923c;margin-left:1px;"></div>
         </div>
       </div>
     </div>
-    <div class="mcard" data-id="f3" style="grid-column:1/-1;" onclick="openDetail('f3')">
-      <div class="mimg-wrap" style="height:155px;">
+    <div class="mcard-lux" data-id="f3" style="grid-column:1/-1;aspect-ratio:16/7;" onclick="openDetail('f3')">
+      <div class="mimg-wrap">
         <img loading="lazy" decoding="async" class="mimg" src="images/dish_14.jpg" onload="this.classList.add('vis')" alt="Burger Viande Hachée">
-        <div class="mgrad2"></div>
-        <span class="meal-tag tf">Trending</span>
-        <div class="tr-stack"><span class="trp">&#x23F1; 20m</span><span class="trp">&#x2605; 4.8</span></div>
-        <button class="meal-cta idle" id="gb-f3" onclick="tog(event,'f3')">+</button>
       </div>
-      <div class="mbody">
-        <span class="stag" style="background:rgba(251,146,60,.1);color:#fb923c;">High Protein</span>
-        <div class="meal-name" id="el-f3n">Burger Viande Hach&#233;e</div>
-        <div class="price-row"><span class="meal-price" style="color:var(--fire);">58 MAD</span><span class="meal-kcal">460 kcal</span></div>
-        <div class="bars">
-          <div class="brow"><span class="blbl">P</span><div class="btrack"><div class="bfill" style="width:68%;background:#4ade80;"></div></div><span class="bval">34g</span></div>
-          <div class="brow"><span class="blbl">C</span><div class="btrack"><div class="bfill" style="width:45%;background:#facc15;"></div></div><span class="bval">36g</span></div>
-          <div class="brow"><span class="blbl">F</span><div class="btrack"><div class="bfill" style="width:53%;background:#fb923c;"></div></div><span class="bval">16g</span></div>
+      <div class="lux-overlay"></div>
+      <button class="lux-cta idle" id="gb-f3" onclick="tog(event,'f3')">+</button>
+      <div class="lux-body">
+        <span class="lux-tag">TRENDING &#x2605; 4.8</span>
+        <div class="lux-name" id="el-f3n">Burger Viande Hach&#233;e</div>
+        <div class="lux-row">
+          <div class="lux-price" style="color:var(--fire);">58 MAD</div>
+          <div class="lux-cal">460 kcal &middot; 34g P</div>
+        </div>
+        <div class="lux-macro-bar">
+          <div class="lux-bar-seg" style="width:32%;background:#4ade80;"></div>
+          <div class="lux-bar-seg" style="width:34%;background:#facc15;margin-left:1px;"></div>
+          <div class="lux-bar-seg" style="width:34%;background:#fb923c;margin-left:1px;"></div>
         </div>
       </div>
     </div>
@@ -787,107 +1140,77 @@ footer { margin:18px 15px 0; padding:15px; border-radius:var(--r); background:va
   </div>
   <div class="sec-div"></div>
   <div class="mgrid">
-    <div class="mcard" data-id="sw1" onclick="openDetail('sw1')">
-      <div class="mimg-wrap" style="background:linear-gradient(135deg,#1e1a30,#16122a);">
-        <div class="mimg-ph">&#x1F36E;</div><div class="mgrad2"></div>
-        <span class="meal-tag tp">Low Fat</span>
-        <button class="meal-cta idle" id="gb-sw1" onclick="tog(event,'sw1')">+</button>
-      </div>
-      <div class="mbody">
-        <span class="stag" style="background:rgba(192,132,252,.1);color:#c084fc;">180 kcal</span>
-        <div class="meal-name" id="el-sw1n">Flan Caramel L&#233;ger</div>
-        <div class="price-row"><span class="meal-price" style="color:var(--plum);">28 MAD</span><span class="meal-kcal">5g prot.</span></div>
-      </div>
-    </div>
-    <div class="mcard" data-id="sw2" onclick="openDetail('sw2')">
-      <div class="mimg-wrap" style="background:linear-gradient(135deg,#1e1a30,#16122a);">
-        <div class="mimg-ph">&#x1F370;</div><div class="mgrad2"></div>
-        <span class="meal-tag tg">&#x1F525; Best Seller</span>
-        <button class="meal-cta idle" id="gb-sw2" onclick="tog(event,'sw2')">+</button>
-      </div>
-      <div class="mbody">
-        <span class="stag" style="background:rgba(192,132,252,.1);color:#c084fc;">260 kcal</span>
-        <div class="meal-name" id="el-sw2n">Cheesecake Creamy</div>
-        <div class="price-row"><span class="meal-price" style="color:var(--plum);">32 MAD</span><span class="meal-kcal">8g prot.</span></div>
-      </div>
-    </div>
-    <div class="mcard" data-id="sw3" onclick="openDetail('sw3')">
-      <div class="mimg-wrap" style="background:linear-gradient(135deg,#1e1a30,#16122a);">
-        <div class="mimg-ph">&#x1F370;</div><div class="mgrad2"></div>
-        <span class="meal-tag tp">Chef's Pick</span>
-        <button class="meal-cta idle" id="gb-sw3" onclick="tog(event,'sw3')">+</button>
-      </div>
-      <div class="mbody">
-        <span class="stag" style="background:rgba(192,132,252,.1);color:#c084fc;">240 kcal</span>
-        <div class="meal-name" id="el-sw3n">Tiramisu Healthy</div>
-        <div class="price-row"><span class="meal-price" style="color:var(--plum);">30 MAD</span><span class="meal-kcal">7g prot.</span></div>
-      </div>
-    </div>
-    <div class="mcard" data-id="sw4" onclick="openDetail('sw4')">
-      <div class="mimg-wrap" style="background:linear-gradient(135deg,#1e1a30,#16122a);">
-        <div class="mimg-ph">&#x1F964;</div><div class="mgrad2"></div>
-        <span class="meal-tag tn">New</span>
-        <button class="meal-cta idle" id="gb-sw4" onclick="tog(event,'sw4')">+</button>
-      </div>
-      <div class="mbody">
-        <span class="stag" style="background:rgba(192,132,252,.1);color:#c084fc;">190 kcal</span>
-        <div class="meal-name" id="el-sw4n">Protein Shake Vanille</div>
-        <div class="price-row"><span class="meal-price" style="color:var(--plum);">35 MAD</span><span class="meal-kcal">30g prot.</span></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- PLANS -->
-<div class="plans-sec" id="s-plans">
-  <div class="plans-hd">
-    <span class="plans-ey" id="el-pey">Plans Hebdomadaires</span>
-    <h2 class="plans-t" id="el-pt">Engage-toi dans tes objectifs.</h2>
-    <p class="plans-s" id="el-ps">&#201;conomise. Mange mieux. Chaque semaine.</p>
-  </div>
-  <div class="plans-grid">
-    <div class="plan">
-      <div class="plan-top">
-        <div><div class="plan-name" id="el-p1n">Starter</div><div class="plan-freq" id="el-p1f">3 repas / semaine</div></div>
-        <div class="plan-price-wrap"><div class="plan-price"><span id="el-p1p">390</span> MAD</div><span class="plan-pw" id="el-p1pw">par semaine</span></div>
-      </div>
-      <div class="plan-feats">
-        <div class="pf" id="el-pf11">3 repas s&#233;lectionn&#233;s par le chef</div>
-        <div class="pf" id="el-pf12">Livraison gratuite</div>
-        <div class="pf" id="el-pf13">Suivi des macros</div>
-      </div>
-      <button class="plan-btn btn-ol" id="el-pb1">S'abonner</button>
-    </div>
-    <div class="plan feat">
-      <div class="plan-top">
-        <div>
-          <div class="plan-badge" id="el-bv">MEILLEUR RAPPORT</div>
-          <div class="plan-name" id="el-p2n">Fitness</div>
-          <div class="plan-freq" id="el-p2f">5 repas / semaine</div>
+    <div class="mcard-lux" data-id="sw1" style="background:linear-gradient(145deg,#120E22,#0E0A1C);" onclick="openDetail('sw1')">
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:64px;opacity:.2;">&#x1F36E;</div>
+      <div class="lux-overlay" style="background:linear-gradient(to top,rgba(18,14,34,.95) 0%,rgba(18,14,34,.4) 55%,transparent 100%);"></div>
+      <button class="lux-cta idle" id="gb-sw1" onclick="tog(event,'sw1')">+</button>
+      <div class="lux-body">
+        <span class="lux-tag" style="border-color:rgba(192,132,252,.3);color:rgba(192,132,252,.9);">LOW FAT</span>
+        <div class="lux-name" id="el-sw1n">Flan Caramel L&#233;ger</div>
+        <div class="lux-row">
+          <div class="lux-price" style="color:var(--plum);">28 MAD</div>
+          <div class="lux-cal">180 kcal</div>
         </div>
-        <div class="plan-price-wrap"><div class="plan-price"><span id="el-p2p">590</span> MAD</div><span class="plan-pw" id="el-p2pw">par semaine</span></div>
+        <div class="lux-macro-bar">
+          <div class="lux-bar-seg" style="width:12%;background:#4ade80;"></div>
+          <div class="lux-bar-seg" style="width:67%;background:#facc15;margin-left:1px;"></div>
+          <div class="lux-bar-seg" style="width:21%;background:#fb923c;margin-left:1px;"></div>
+        </div>
       </div>
-      <div class="plan-feats">
-        <div class="pf" id="el-pf21">5 repas personnalis&#233;s</div>
-        <div class="pf" id="el-pf22">Livraison prioritaire gratuite</div>
-        <div class="pf" id="el-pf23">Coach nutrition IA</div>
-        <div class="pf" id="el-pf24">Rapport hebdomadaire</div>
-      </div>
-      <button class="plan-btn" id="el-pb2">S'abonner</button>
     </div>
-    <div class="plan">
-      <div class="plan-top">
-        <div><div class="plan-name" id="el-p3n">Athlete</div><div class="plan-freq" id="el-p3f">7 repas / semaine</div></div>
-        <div class="plan-price-wrap"><div class="plan-price"><span id="el-p3p">790</span> MAD</div><span class="plan-pw" id="el-p3pw">par semaine</span></div>
+    <div class="mcard-lux" data-id="sw2" style="background:linear-gradient(145deg,#120E22,#0E0A1C);" onclick="openDetail('sw2')">
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:64px;opacity:.2;">&#x1F370;</div>
+      <div class="lux-overlay" style="background:linear-gradient(to top,rgba(18,14,34,.95) 0%,rgba(18,14,34,.4) 55%,transparent 100%);"></div>
+      <button class="lux-cta idle" id="gb-sw2" onclick="tog(event,'sw2')">+</button>
+      <div class="lux-body">
+        <span class="lux-tag" style="border-color:rgba(192,132,252,.3);color:rgba(192,132,252,.9);">BEST SELLER</span>
+        <div class="lux-name" id="el-sw2n">Cheesecake Creamy</div>
+        <div class="lux-row">
+          <div class="lux-price" style="color:var(--plum);">32 MAD</div>
+          <div class="lux-cal">260 kcal</div>
+        </div>
+        <div class="lux-macro-bar">
+          <div class="lux-bar-seg" style="width:13%;background:#4ade80;"></div>
+          <div class="lux-bar-seg" style="width:48%;background:#facc15;margin-left:1px;"></div>
+          <div class="lux-bar-seg" style="width:39%;background:#fb923c;margin-left:1px;"></div>
+        </div>
       </div>
-      <div class="plan-feats">
-        <div class="pf" id="el-pf31">7 repas performance</div>
-        <div class="pf" id="el-pf32">Livraison express gratuite</div>
-        <div class="pf" id="el-pf33">Session chef d&#233;di&#233;</div>
-        <div class="pf" id="el-pf34">Macros personnalis&#233;s</div>
-        <div class="pf" id="el-pf35">Pack compl&#233;ments</div>
+    </div>
+    <div class="mcard-lux" data-id="sw3" style="background:linear-gradient(145deg,#120E22,#0E0A1C);" onclick="openDetail('sw3')">
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:64px;opacity:.2;">&#x1F370;</div>
+      <div class="lux-overlay" style="background:linear-gradient(to top,rgba(18,14,34,.95) 0%,rgba(18,14,34,.4) 55%,transparent 100%);"></div>
+      <button class="lux-cta idle" id="gb-sw3" onclick="tog(event,'sw3')">+</button>
+      <div class="lux-body">
+        <span class="lux-tag" style="border-color:rgba(192,132,252,.3);color:rgba(192,132,252,.9);">CHEF'S PICK</span>
+        <div class="lux-name" id="el-sw3n">Tiramisu Healthy</div>
+        <div class="lux-row">
+          <div class="lux-price" style="color:var(--plum);">30 MAD</div>
+          <div class="lux-cal">240 kcal</div>
+        </div>
+        <div class="lux-macro-bar">
+          <div class="lux-bar-seg" style="width:12%;background:#4ade80;"></div>
+          <div class="lux-bar-seg" style="width:56%;background:#facc15;margin-left:1px;"></div>
+          <div class="lux-bar-seg" style="width:32%;background:#fb923c;margin-left:1px;"></div>
+        </div>
       </div>
-      <button class="plan-btn btn-ol" id="el-pb3">S'abonner</button>
+    </div>
+    <div class="mcard-lux" data-id="sw4" style="background:linear-gradient(145deg,#120E22,#0E0A1C);" onclick="openDetail('sw4')">
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:64px;opacity:.2;">&#x1F964;</div>
+      <div class="lux-overlay" style="background:linear-gradient(to top,rgba(18,14,34,.95) 0%,rgba(18,14,34,.4) 55%,transparent 100%);"></div>
+      <button class="lux-cta idle" id="gb-sw4" onclick="tog(event,'sw4')">+</button>
+      <div class="lux-body">
+        <span class="lux-tag" style="border-color:rgba(192,132,252,.3);color:rgba(192,132,252,.9);">NEW</span>
+        <div class="lux-name" id="el-sw4n">Protein Shake Vanille</div>
+        <div class="lux-row">
+          <div class="lux-price" style="color:var(--plum);">35 MAD</div>
+          <div class="lux-cal">190 kcal</div>
+        </div>
+        <div class="lux-macro-bar">
+          <div class="lux-bar-seg" style="width:62%;background:#4ade80;"></div>
+          <div class="lux-bar-seg" style="width:29%;background:#facc15;margin-left:1px;"></div>
+          <div class="lux-bar-seg" style="width:9%;background:#fb923c;margin-left:1px;"></div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -1299,9 +1622,9 @@ function toggleDrawer(){
 function go(id){document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'start'});}
 
 // ── Cat strip scroll spy ───────────────
-const secIds=['s-muscle','s-lean','s-fast','s-sweet','s-plans'];
+const secIds=['s-plans','s-muscle','s-lean','s-fast','s-sweet'];
 const cpts=document.querySelectorAll('.cpt');
-const colorCls=['lime','rose','fire','plum','sky'];
+const colorCls=['sky','lime','rose','fire','plum'];
 const obs=new IntersectionObserver(entries=>{
   entries.forEach(e=>{
     if(e.isIntersecting){
