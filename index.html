@@ -267,23 +267,24 @@
     }
 
     /* ── ORDER MODAL OVERLAY ── */
+    /* ═══ CHECKOUT MODAL ══════════════════════════════════════ */
     #order-modal-overlay {
       position:fixed; inset:0;
-      background:rgba(0,0,0,.55);
+      background:rgba(0,0,0,.62);
       z-index:1050; display:none; align-items:flex-end; justify-content:center;
-      backdrop-filter:blur(6px);
+      backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
       --kb: 0px;
       padding-bottom: var(--kb);
     }
     #order-modal-overlay.open { display:flex; }
     #order-modal {
-      background:var(--card);
-      border-radius:20px 20px 0 0;
-      width:100%; max-width:460px;
-      max-height:75dvh; overflow-y:auto;
-      padding:18px 18px 28px;
+      background:var(--bg);
+      border-radius:24px 24px 0 0;
+      width:100%; max-width:500px;
+      max-height:92dvh; overflow-y:auto;
+      padding:0 0 env(safe-area-inset-bottom,24px);
       position:relative;
-      box-shadow:0 -8px 40px rgba(0,0,0,.2);
+      box-shadow:0 -12px 60px rgba(0,0,0,.25);
       animation:slideUpSheet .32s cubic-bezier(.34,1.2,.64,1) both;
       -webkit-overflow-scrolling:touch;
     }
@@ -291,12 +292,192 @@
       from { transform:translateY(100%); opacity:0; }
       to   { transform:translateY(0);    opacity:1; }
     }
-    /* drag handle */
+    /* Grip */
     #order-modal::before {
       content:''; display:block;
-      width:40px; height:4px; border-radius:99px;
-      background:var(--border); margin:-12px auto 18px;
+      width:36px; height:4px; border-radius:99px;
+      background:var(--border); margin:12px auto 0;
     }
+    /* ── Checkout steps ─────────────────────────────────────── */
+    .co-step { display:none; padding:20px 18px 28px; }
+    .co-step.active { display:block; }
+    /* Step header */
+    .co-head {
+      display:flex; align-items:center; justify-content:space-between;
+      margin-bottom:20px;
+    }
+    .co-head-left { display:flex; flex-direction:column; gap:2px; }
+    .co-step-label { font-size:10px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); }
+    .co-step-title { font-family:'Outfit',sans-serif; font-weight:900; font-size:19px; letter-spacing:-.4px; color:var(--text); }
+    .co-close {
+      width:34px; height:34px; border-radius:50%;
+      background:var(--card2); border:none; cursor:pointer;
+      display:flex; align-items:center; justify-content:center;
+      font-size:15px; color:var(--sub); flex-shrink:0;
+      transition:all .15s;
+    }
+    .co-close:hover { background:var(--border); }
+    .co-close:active { transform:scale(.88); }
+    /* Step progress dots */
+    .co-progress {
+      display:flex; align-items:center; gap:6px; margin-bottom:20px;
+    }
+    .co-prog-step {
+      display:flex; align-items:center; gap:6px;
+      font-size:11px; font-weight:700;
+    }
+    .co-prog-dot {
+      width:20px; height:20px; border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      font-size:10px; font-weight:900; font-family:'Outfit',sans-serif;
+      transition:all .2s;
+    }
+    .co-prog-dot.active { background:var(--green); color:#fff; }
+    .co-prog-dot.done   { background:var(--green); color:#fff; }
+    .co-prog-dot.idle   { background:var(--card2); color:var(--muted); }
+    .co-prog-label { font-size:11px; font-weight:600; }
+    .co-prog-label.active { color:var(--text); }
+    .co-prog-label.idle   { color:var(--muted); }
+    .co-prog-line { flex:1; height:2px; background:var(--border); border-radius:1px; overflow:hidden; }
+    .co-prog-line-fill { height:100%; background:var(--green); width:0%; transition:width .4s; }
+    /* ── Step 1: Cart items ─────────────────────────────────── */
+    .co-cart-items { display:flex; flex-direction:column; gap:0; margin-bottom:16px; border:1.5px solid var(--border); border-radius:16px; overflow:hidden; }
+    .co-item {
+      display:flex; align-items:center; gap:11px;
+      padding:12px 14px; border-bottom:1px solid var(--border);
+      background:var(--bg);
+    }
+    .co-item:last-child { border-bottom:none; }
+    .co-item-ico { font-size:24px; flex-shrink:0; }
+    .co-item-info { flex:1; min-width:0; }
+    .co-item-name { font-family:'Outfit',sans-serif; font-weight:700; font-size:13px; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .co-item-kcal { font-size:10.5px; color:var(--muted); margin-top:1px; }
+    .co-item-right { display:flex; flex-direction:column; align-items:flex-end; gap:4px; flex-shrink:0; }
+    .co-item-price { font-family:'Outfit',sans-serif; font-weight:900; font-size:14px; color:var(--green); }
+    .co-item-rm { background:rgba(239,68,68,.08); color:#EF4444; border:none; border-radius:8px; width:26px; height:26px; display:flex; align-items:center; justify-content:center; font-size:12px; cursor:pointer; transition:background .15s; }
+    .co-item-rm:hover { background:rgba(239,68,68,.18); }
+    .co-item-rm:active { transform:scale(.88); }
+    /* Live total bar */
+    .co-total-bar {
+      display:flex; align-items:center; justify-content:space-between;
+      padding:12px 14px; background:var(--card);
+      border:1.5px solid var(--border); border-radius:14px;
+      margin-bottom:16px;
+    }
+    .co-total-label { font-size:12px; color:var(--sub); font-weight:600; }
+    .co-total-val   { font-family:'Outfit',sans-serif; font-weight:900; font-size:18px; color:var(--text); }
+    .co-total-sub   { font-size:10px; color:var(--muted); text-align:right; }
+    /* ── Upsell cards ───────────────────────────────────────── */
+    .co-upsells { display:flex; flex-direction:column; gap:8px; margin-bottom:16px; }
+    .co-upsell-card {
+      display:flex; align-items:center; gap:12px;
+      padding:12px 14px; border-radius:14px;
+      background:var(--card); border:1.5px solid var(--border);
+      cursor:pointer; transition:all .18s;
+    }
+    .co-upsell-card:hover { border-color:var(--green); background:var(--greenXL); }
+    .co-upsell-card.added { border-color:var(--green); background:var(--greenXL); pointer-events:none; }
+    .co-upsell-card:active { transform:scale(.98); }
+    .co-upsell-ico { font-size:28px; flex-shrink:0; }
+    .co-upsell-body { flex:1; min-width:0; }
+    .co-upsell-tag  { font-size:9px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--green); margin-bottom:3px; }
+    .co-upsell-name { font-family:'Outfit',sans-serif; font-weight:800; font-size:13px; color:var(--text); margin-bottom:1px; }
+    .co-upsell-desc { font-size:11px; color:var(--muted); }
+    .co-upsell-price {
+      flex-shrink:0; font-family:'Outfit',sans-serif;
+      font-weight:900; font-size:14px;
+    }
+    .co-upsell-add {
+      flex-shrink:0; width:32px; height:32px; border-radius:50%;
+      background:var(--green); color:#fff; border:none;
+      font-size:18px; font-weight:700; display:flex; align-items:center; justify-content:center;
+      cursor:pointer; transition:all .18s; box-shadow:0 2px 8px rgba(9,153,41,.25);
+    }
+    .co-upsell-add:active { transform:scale(.88); }
+    .co-upsell-done { font-size:18px; }
+    /* ── Subscription upgrade box ───────────────────────────── */
+    .co-sub-box {
+      padding:16px; border-radius:18px;
+      background:linear-gradient(145deg, #091811, #061009);
+      border:1.5px solid rgba(34,200,69,.3);
+      margin-bottom:18px; position:relative; overflow:hidden;
+    }
+    .co-sub-box::before {
+      content:''; position:absolute; inset:0;
+      background:radial-gradient(ellipse 80% 60% at 50% 0%, rgba(34,200,69,.08) 0%, transparent 70%);
+      pointer-events:none;
+    }
+    .co-sub-badge {
+      display:inline-flex; align-items:center; gap:4px;
+      background:linear-gradient(135deg,#22C845,#18A83C);
+      color:#fff; padding:4px 10px; border-radius:99px;
+      font-size:9px; font-weight:800; letter-spacing:.12em; text-transform:uppercase;
+      margin-bottom:10px; box-shadow:0 2px 10px rgba(34,200,69,.35);
+    }
+    .co-sub-title { font-family:'Outfit',sans-serif; font-weight:900; font-size:15px; color:#fff; letter-spacing:-.2px; margin-bottom:6px; }
+    .co-sub-compare { display:flex; gap:0; margin-bottom:12px; }
+    .co-sub-col { flex:1; padding:10px 12px; border-radius:10px; }
+    .co-sub-col.now { background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.08); margin-right:6px; }
+    .co-sub-col.plan { background:rgba(34,200,69,.12); border:1.5px solid rgba(34,200,69,.3); }
+    .co-sub-col-label { font-size:9px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,.45); margin-bottom:4px; }
+    .co-sub-col-price { font-family:'Outfit',sans-serif; font-weight:900; font-size:20px; color:#fff; letter-spacing:-.5px; line-height:1; }
+    .co-sub-col-price.plan-price { color:#22C845; }
+    .co-sub-col-desc { font-size:10px; color:rgba(255,255,255,.4); margin-top:3px; }
+    .co-sub-col-desc.plan-desc { color:rgba(34,200,69,.7); }
+    .co-sub-saving { font-size:11.5px; color:rgba(255,255,255,.55); margin-bottom:12px; line-height:1.45; }
+    .co-sub-saving strong { color:#22C845; }
+    .co-sub-cta {
+      width:100%; padding:13px; border-radius:12px; border:none; cursor:pointer;
+      background:linear-gradient(135deg,#22C845,#089929);
+      color:#fff; font-family:'Outfit',sans-serif; font-size:13px; font-weight:900;
+      box-shadow:0 4px 18px rgba(34,200,69,.35); transition:all .18s;
+      letter-spacing:.02em;
+    }
+    .co-sub-cta:hover { box-shadow:0 6px 28px rgba(34,200,69,.5); transform:translateY(-1px); }
+    .co-sub-cta:active { transform:scale(.97); }
+    /* ── Step 1 continue btn ────────────────────────────────── */
+    .co-continue {
+      width:100%; padding:16px; border-radius:15px; border:none; cursor:pointer;
+      background:var(--text); color:var(--bg);
+      font-family:'Outfit',sans-serif; font-size:15px; font-weight:900;
+      letter-spacing:.01em; transition:all .18s;
+    }
+    .co-continue:active { transform:scale(.98); filter:brightness(.9); }
+    /* ── Step 2: form fields ────────────────────────────────── */
+    .co-section-title { font-family:'Outfit',sans-serif; font-weight:800; font-size:13px; color:var(--text); margin-bottom:12px; letter-spacing:-.1px; }
+    /* Trust strip */
+    .co-trust {
+      display:grid; grid-template-columns:1fr 1fr 1fr;
+      gap:8px; margin-bottom:20px;
+    }
+    .co-trust-item {
+      background:var(--card); border:1.5px solid var(--border); border-radius:13px;
+      padding:11px 8px; text-align:center; display:flex; flex-direction:column; gap:4px;
+    }
+    .co-trust-ico  { font-size:20px; }
+    .co-trust-lbl  { font-size:10px; font-weight:700; color:var(--text); line-height:1.2; }
+    .co-trust-sub  { font-size:9px; color:var(--muted); }
+    /* Submit button */
+    .co-submit-btn {
+      width:100%; padding:17px; border-radius:16px; border:none; cursor:pointer;
+      background:linear-gradient(135deg, var(--green), var(--greenD, #065C19));
+      color:#fff; font-family:'Outfit',sans-serif; font-size:15.5px; font-weight:900;
+      box-shadow:0 6px 28px rgba(9,153,41,.32); transition:all .18s;
+      letter-spacing:.02em; position:relative; overflow:hidden;
+    }
+    .co-submit-btn::after {
+      content:''; position:absolute; inset:0;
+      background:linear-gradient(135deg, rgba(255,255,255,.08) 0%, transparent 60%);
+    }
+    .co-submit-btn:hover { box-shadow:0 8px 36px rgba(9,153,41,.45); transform:translateY(-1px); }
+    .co-submit-btn:active { transform:scale(.98); }
+    .co-urgency { text-align:center; font-size:11px; color:var(--muted); margin-top:8px; display:flex; align-items:center; justify-content:center; gap:5px; }
+    .co-urgency-dot { width:6px; height:6px; border-radius:50%; background:#22C845; animation:pulse 1.4s infinite; flex-shrink:0; }
+    /* Back button */
+    .co-back { display:flex; align-items:center; gap:5px; font-size:12px; color:var(--muted); background:none; border:none; cursor:pointer; padding:0; font-family:'DM Sans',sans-serif; margin-bottom:16px; }
+    .co-back:hover { color:var(--text); }
+    /* Loyalty badge reuse */
+    #om-loyalty-badge { display:none; border-radius:14px; padding:11px 14px; margin-bottom:14px; font-size:13px; }
 
     /* ── EXIT OVERLAY ── */
     #exit-overlay {
@@ -1032,25 +1213,28 @@
       .dish-star     { font-size:10px !important; }
       .menu-arrow    { display:none; }
 
-      /* ── Order modal ── */
+      /* ── Checkout modal ── */
       #order-modal-overlay { align-items:flex-end !important; padding:0 !important; }
       #order-modal         {
-        border-radius:22px 22px 0 0 !important;
+        border-radius:24px 24px 0 0 !important;
         width:100% !important; max-width:100% !important;
-        padding:20px 16px max(32px,env(safe-area-inset-bottom,32px)) !important;
         max-height:92dvh !important; overflow-y:auto !important;
+        padding:0 0 max(24px,env(safe-area-inset-bottom,24px)) !important;
       }
-      #order-modal h3           { font-size:17px; }
-      #om-sub                   { font-size:11px; }
-      #om-cart-summary          { padding:10px 12px; font-size:12px; border-radius:12px; }
-      .lead-inp                 { padding:12px 13px; font-size:13px; margin-bottom:9px; border-radius:12px; }
-      .lead-inp-wrap            { margin-bottom:9px; }
-      .lead-submit              { padding:14px; font-size:14px; border-radius:13px; }
-      .lead-gender-row          { gap:8px; margin-bottom:10px; }
-      .lead-gender-btn          { padding:9px 8px; font-size:12px; border-radius:10px; }
-      #om-trust                 { font-size:10px; gap:8px; }
-      .sched-btn                { font-size:11px; padding:8px 6px; }
-      .sched-select             { padding:9px 10px; font-size:12px; border-radius:10px; }
+      .co-step              { padding:18px 16px 24px !important; }
+      .co-step-title        { font-size:17px !important; }
+      .co-trust             { gap:7px !important; }
+      .co-trust-item        { padding:10px 7px !important; }
+      .co-submit-btn        { padding:15px !important; font-size:15px !important; border-radius:14px !important; }
+      .co-continue          { padding:15px !important; font-size:14px !important; border-radius:13px !important; }
+      .co-sub-col-price     { font-size:18px !important; }
+      .lead-inp             { padding:12px 13px; font-size:13px; margin-bottom:9px; border-radius:12px; }
+      .lead-inp-wrap        { margin-bottom:9px; }
+      .lead-gender-row      { gap:8px; margin-bottom:10px; }
+      .lead-gender-btn      { padding:9px 8px; font-size:12px; border-radius:10px; }
+      #om-trust             { font-size:10px; gap:8px; }
+      .sched-btn            { font-size:11px; padding:8px 6px; }
+      .sched-select         { padding:9px 10px; font-size:12px; border-radius:10px; }
 
       /* ── Reviews ── */
       .rev-summary   { flex-direction:column; gap:7px; padding:9px; border-radius:11px; }
@@ -1173,7 +1357,7 @@
       .loy-card      { padding:11px 8px; }
       .loy-badge     { font-size:20px; }
       .rev-card      { flex:0 0 60vw; min-width:60vw; }
-      #order-modal   { padding:16px 13px max(22px,env(safe-area-inset-bottom,22px)); }
+      #order-modal   { padding:0 0 max(22px,env(safe-area-inset-bottom,22px)) !important; } .co-step { padding:14px 14px 20px !important; }
       .lead-inp      { padding:10px 11px; font-size:12px; }
       .lead-submit   { padding:12px; font-size:13px; }
     }
@@ -2988,17 +3172,19 @@
       .macro-chip        { font-size:11px !important; padding:1px 5px !important; }
       .tag-cuisine       { font-size:11px !important; padding:2px 6px !important; }
 
-      /* ── Order modal (bottom sheet) ── */
+      /* ── Checkout modal (bottom sheet) ── */
       #order-modal-overlay { align-items:flex-end !important; padding:0 !important; }
-      #order-modal         { border-radius:20px 20px 0 0 !important; width:100% !important; max-width:100% !important;
-                             padding:18px 15px max(26px,env(safe-area-inset-bottom,26px)) !important; }
-      #order-modal::before { margin-bottom:12px !important; }
-      #om-title            { font-size:16px !important; }
-      #om-sub              { font-size:11px !important; }
-      #om-cart-summary     { padding:9px 10px !important; font-size:12px !important; border-radius:11px !important; }
+      #order-modal         { border-radius:24px 24px 0 0 !important; width:100% !important; max-width:100% !important;
+                             max-height:92dvh !important; overflow-y:auto !important;
+                             padding:0 0 max(20px,env(safe-area-inset-bottom,20px)) !important; }
+      .co-step             { padding:16px 15px 22px !important; }
+      .co-step-title       { font-size:16px !important; }
+      .co-submit-btn       { padding:15px !important; font-size:15px !important; border-radius:13px !important; }
+      .co-continue         { padding:14px !important; font-size:14px !important; border-radius:12px !important; }
+      .co-trust            { gap:6px !important; }
+      .co-trust-item       { padding:9px 6px !important; }
       #om-loyalty-badge    { padding:9px 10px !important; font-size:12px !important; border-radius:11px !important; }
       .lead-inp            { padding:11px 12px !important; font-size:13px !important; margin-bottom:8px !important; border-radius:11px !important; }
-      .lead-submit         { padding:13px !important; font-size:14px !important; border-radius:12px !important; }
       #om-trust            { font-size:10px !important; gap:7px !important; }
       .sched-btn           { font-size:11px !important; padding:8px 6px !important; }
       .sched-select        { padding:9px 10px !important; font-size:12px !important; border-radius:9px !important; }
@@ -3630,7 +3816,29 @@
       .lead-inp    { font-size:16px !important; }
     }
 
-</style>
+
+    /* ── Checkout polish ──────────────────────────────────────── */
+    .co-item { transition:opacity .2s, transform .2s; }
+    .co-item.removing { opacity:0; transform:translateX(20px); pointer-events:none; }
+    .co-upsell-card { transition:all .22s cubic-bezier(.4,0,.2,1); }
+    .co-upsell-card.added { border-color:var(--green) !important; background:var(--greenXL) !important; }
+    .co-sub-box { transition:opacity .2s; }
+    @keyframes coFadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
+    .co-upsell-card { animation:coFadeIn .3s both; }
+    .co-upsell-card:nth-child(2) { animation-delay:.07s; }
+    .co-upsell-card:nth-child(3) { animation-delay:.14s; }
+    /* Checkout sub-box — always dark regardless of theme */
+    .co-sub-box { color-scheme:dark; }
+    /* Trust strip icon sizing */
+    .co-trust-ico { line-height:1; }
+    /* Progress line fill */
+    .co-prog-line-fill { transition:width .4s cubic-bezier(.4,0,.2,1); }
+    /* Mobile: stack sub-compare vertically on very small screens */
+    @media(max-width:360px) {
+      .co-sub-compare { flex-direction:column; }
+      .co-sub-col.now { margin-right:0; margin-bottom:8px; }
+    }
+    </style>
 
   <!-- Structured data — Restaurant schema.org -->
   <script type="application/ld+json">
@@ -4408,107 +4616,221 @@
   </div>
 </div>
 
-<!-- ══ ORDER MODAL ═══════════════════════════════════════════ -->
+<!-- ══ ORDER MODAL — 2-step checkout ═══════════════════════ -->
 <div id="order-modal-overlay" onclick="closeOrderModal(event)">
   <div id="order-modal">
-    <button class="track-close" onclick="closeOrderModal()">✕</button>
-    <div style="text-align:center;margin-bottom:18px;">
-      <div style="font-size:28px;margin-bottom:4px;">🛵</div>
-      <h3 id="om-title" style="font-family:'Outfit',sans-serif;font-size:18px;font-weight:900;color:var(--text);">Finaliser ma commande</h3>
-      <!-- Upsell suggestion -->
-      <div id="om-upsell" style="
-        display:none; background:var(--greenXL); border:1.5px solid var(--border);
-        border-radius:12px; padding:10px 14px; margin:10px 0 0; text-align:left;
-        cursor:pointer; transition:all .2s;
-      " onclick="addUpsell()">
-        <div style="font-size:11px;font-weight:800;color:var(--green);font-family:'Outfit',sans-serif;margin-bottom:4px;">✨ Ajoutez un dessert pour seulement 28 MAD</div>
-        <div style="display:flex;align-items:center;justify-content:space-between;">
-          <span style="font-size:12px;color:var(--sub);">🍰 Flan Caramel Léger — 280 kcal</span>
-          <span style="font-size:12px;font-weight:900;color:var(--green);font-family:'Outfit',sans-serif;">+ 28 MAD</span>
+
+    <!-- ═══ STEP 1: ORDER REVIEW ════════════════════════════ -->
+    <div class="co-step active" id="co-step-1">
+
+      <!-- Header -->
+      <div class="co-head">
+        <div class="co-head-left">
+          <div class="co-step-label" id="co-lbl-step1">Étape 1 sur 2</div>
+          <div class="co-step-title" id="om-title">Ma commande</div>
+        </div>
+        <button class="co-close" onclick="closeOrderModal()">✕</button>
+      </div>
+
+      <!-- Step progress -->
+      <div class="co-progress">
+        <div class="co-prog-step">
+          <div class="co-prog-dot active">1</div>
+          <span class="co-prog-label active" id="co-lbl-review">Commande</span>
+        </div>
+        <div class="co-prog-line"><div class="co-prog-line-fill" id="co-prog-fill"></div></div>
+        <div class="co-prog-step">
+          <div class="co-prog-dot idle" id="co-dot-2">2</div>
+          <span class="co-prog-label idle" id="co-lbl-delivery">Livraison</span>
         </div>
       </div>
-      <p id="om-sub" style="font-size:12px;color:var(--muted);margin-top:4px;">Livraison en 45 min · Tétouan</p>
-    </div>
-    <!-- Cart summary -->
-    <div id="om-cart-summary" style="background:var(--greenXL);border-radius:14px;padding:12px 14px;margin-bottom:16px;font-size:13px;"></div>
-    <!-- Loyalty badge -->
-    <div id="om-loyalty-badge" style="display:none;border-radius:14px;padding:11px 14px;margin-bottom:12px;font-size:13px;"></div>
-    <!-- Personal info form — same structure as chat lead form -->
 
-    <!-- Gender toggle (required) -->
-    <div class="lead-gender-row" id="om-gender-row">
-      <button class="lead-gender-btn" id="om-gender-male" onclick="_setOmGender('male')">
-        👨 <span id="om-gender-male-lbl">Homme</span>
-      </button>
-      <button class="lead-gender-btn" id="om-gender-female" onclick="_setOmGender('female')">
-        👩 <span id="om-gender-female-lbl">Femme</span>
-      </button>
-    </div>
+      <!-- Cart items (injected by openOrderModal) -->
+      <div class="co-cart-items" id="om-cart-summary"></div>
 
-    <div class="lead-inp-wrap">
-      <span class="lead-inp-icon">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-      </span>
-      <input class="lead-inp" id="om-name" type="text" autocomplete="given-name" placeholder="Prénom complet"/>
-    </div>
-
-    <div class="lead-inp-wrap">
-      <span class="lead-inp-icon">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-      </span>
-      <input class="lead-inp" id="om-city" type="text" autocomplete="street-address" list="savy-cities" placeholder="Ville / Adresse de livraison"/><datalist id="savy-cities">
-  <option value="Tétouan — Centre"/>
-  <option value="Tétouan — Martil Road"/>
-  <option value="Tétouan — Sania"/>
-  <option value="Tétouan — Bab Mqabar"/>
-  <option value="Tétouan — Azla"/>
-  <option value="M'diq"/>
-  <option value="Martil"/>
-  <option value="Cabo Negro"/>
-  <option value="Fnideq"/>
-</datalist>
-    </div>
-
-    <div class="lead-inp-wrap">
-      <span class="lead-inp-icon">
-        <svg width="12" height="12" viewBox="0 0 32 32" fill="none"><path d="M16 2C8.268 2 2 8.268 2 16c0 2.484.668 4.81 1.836 6.818L2 30l7.384-1.812A13.94 13.94 0 0016 30c7.732 0 14-6.268 14-14S23.732 2 16 2z" fill="#25D366"/><path d="M22.498 19.533c-.305-.152-1.8-.888-2.079-.99-.278-.102-.481-.152-.683.152s-.783.99-.96 1.193c-.177.202-.354.228-.659.076-.305-.152-1.288-.475-2.453-1.513-.907-.808-1.518-1.806-1.697-2.111-.177-.304-.019-.469.133-.62.137-.136.305-.355.457-.532.152-.178.203-.305.304-.508.103-.203.051-.38-.025-.532-.077-.152-.684-1.648-.937-2.258-.246-.593-.497-.513-.683-.522l-.583-.01c-.203 0-.532.076-.81.38s-1.063 1.04-1.063 2.534 1.089 2.94 1.24 3.143c.152.203 2.143 3.272 5.191 4.586.726.314 1.293.5 1.735.641.729.23 1.392.198 1.916.12.584-.087 1.8-.735 2.054-1.446.254-.71.254-1.32.178-1.447-.077-.127-.278-.203-.583-.355z" fill="#fff"/></svg>
-      </span>
-      <input class="lead-inp" id="om-phone" type="tel" autocomplete="tel" placeholder="WhatsApp (+212 6XX XXX XXX)" oninput="debounceLoyaltyLookup(this.value)"/>
-    </div>
-
-    <div class="lead-inp-wrap">
-      <span class="lead-inp-icon" style="top:7px;transform:none;">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-      </span>
-      <textarea class="lead-inp" id="om-comment" placeholder="Note (allergies, étage, instructions...)"></textarea>
-    </div>
-    <!-- ── Scheduling ── -->
-    <div class="sched-wrap">
-      <span class="sched-label" id="sched-label">⏰ Livraison souhaitée :</span>
-      <div class="sched-toggle">
-        <button class="sched-btn active" id="sched-asap"  onclick="setScheduleMode('asap')">⚡ ASAP (45 min)</button>
-        <button class="sched-btn"        id="sched-later" onclick="setScheduleMode('later')">📅 Programmer</button>
+      <!-- Live total bar -->
+      <div class="co-total-bar" id="co-total-bar">
+        <div>
+          <div class="co-total-label" id="co-lbl-total">Total commande</div>
+          <div id="om-sub" style="font-size:11px;color:var(--muted);margin-top:2px;">Livraison en 45 min · Tétouan</div>
+        </div>
+        <div style="text-align:right;">
+          <div class="co-total-val" id="co-total-val">— MAD</div>
+          <div class="co-total-sub" id="co-lbl-free-del" style="color:var(--green);font-weight:700;font-size:10px;margin-top:2px;">🎉 Livraison offerte</div>
+        </div>
       </div>
-      <div class="sched-time-row" id="sched-time-row">
-        <select class="sched-select" id="sched-time-select" onchange="onScheduleTimeChange(this.value)">
-          <option value="">-- Choisir un créneau --</option>
-        </select>
+
+      <!-- Smart upsell cards -->
+      <div class="co-upsells" id="co-upsells">
+        <!-- Injected by JS -->
       </div>
-    </div>
-    <!-- Social proof before submit -->
-    <div id="om-trust" style="display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin:10px 0 4px;font-size:11px;color:var(--muted);">
-      <span>⭐⭐⭐⭐⭐ <strong style="color:var(--text);">4.9</strong></span>
-      <span>·</span>
-      <span id="om-trust-orders">125+ commandes</span>
-      <span>·</span>
-      <span id="om-trust-delivery">🛵 45 min garanties</span>
-    </div>
-    <button class="lead-submit" id="om-submit-btn" onclick="submitOrder()" style="margin-top:6px;">
-      🛵 Commander maintenant
-    </button>
-    <p style="font-size:11px;color:var(--muted);text-align:center;margin-top:8px;">🔒 Infos privées · jamais partagées</p>
-  </div>
-</div>
+
+      <!-- Subscription upgrade box -->
+      <div class="co-sub-box" id="co-sub-box">
+        <div class="co-sub-badge">🔥 Meilleur rapport qualité-prix</div>
+        <div class="co-sub-title" id="co-sub-title">Tu dépenses ça à l'unité…<br>Et si tu économisais chaque semaine ?</div>
+        <div class="co-sub-compare">
+          <div class="co-sub-col now">
+            <div class="co-sub-col-label" id="co-lbl-now">Ce soir</div>
+            <div class="co-sub-col-price" id="co-now-price">— MAD</div>
+            <div class="co-sub-col-desc">commande unique</div>
+          </div>
+          <div class="co-sub-col plan">
+            <div class="co-sub-col-label" id="co-lbl-plan">Plan Fitness</div>
+            <div class="co-sub-col-price plan-price">590 MAD</div>
+            <div class="co-sub-col-desc plan-desc" id="co-plan-desc">5 repas / semaine · -15%</div>
+          </div>
+        </div>
+        <div class="co-sub-saving" id="co-sub-saving">
+          Avec le plan Fitness, tu manges <strong>5 repas/semaine</strong> et économises jusqu'à <strong id="co-sub-save-val">— MAD/mois</strong>.
+        </div>
+        <button class="co-sub-cta" id="co-sub-cta" onclick="closeOrderModal();setTimeout(()=>go('s-plans'),200)">
+          Voir le plan Fitness →
+        </button>
+      </div>
+
+      <!-- Continue button -->
+      <button class="co-continue" id="co-btn-continue" onclick="coGoStep2()">
+        Continuer — Livraison <span id="co-continue-total"></span> →
+      </button>
+
+    </div><!-- /step-1 -->
+
+    <!-- ═══ STEP 2: DELIVERY INFO ════════════════════════════ -->
+    <div class="co-step" id="co-step-2">
+
+      <!-- Header -->
+      <div class="co-head">
+        <div class="co-head-left">
+          <div class="co-step-label" id="co-lbl-step2">Étape 2 sur 2</div>
+          <div class="co-step-title" id="co-title-2">Tes infos</div>
+        </div>
+        <button class="co-close" onclick="closeOrderModal()">✕</button>
+      </div>
+
+      <!-- Back + progress -->
+      <button class="co-back" onclick="coGoStep1()">← Modifier la commande</button>
+      <div class="co-progress" style="margin-bottom:20px;">
+        <div class="co-prog-step">
+          <div class="co-prog-dot done">✓</div>
+          <span class="co-prog-label idle" id="co-lbl-review2">Commande</span>
+        </div>
+        <div class="co-prog-line"><div class="co-prog-line-fill" style="width:100%"></div></div>
+        <div class="co-prog-step">
+          <div class="co-prog-dot active">2</div>
+          <span class="co-prog-label active" id="co-lbl-delivery2">Livraison</span>
+        </div>
+      </div>
+
+      <!-- Trust strip -->
+      <div class="co-trust">
+        <div class="co-trust-item">
+          <div class="co-trust-ico">🥗</div>
+          <div class="co-trust-lbl" id="co-t1">Repas frais</div>
+          <div class="co-trust-sub">Préparé le jour</div>
+        </div>
+        <div class="co-trust-item">
+          <div class="co-trust-ico">🛵</div>
+          <div class="co-trust-lbl" id="co-t2">45 min</div>
+          <div class="co-trust-sub">Livraison rapide</div>
+        </div>
+        <div class="co-trust-item">
+          <div class="co-trust-ico">✅</div>
+          <div class="co-trust-lbl" id="co-t3">Satisfait</div>
+          <div class="co-trust-sub">ou remboursé</div>
+        </div>
+      </div>
+
+      <!-- Loyalty badge -->
+      <div id="om-loyalty-badge"></div>
+
+      <!-- Gender toggle -->
+      <div class="lead-gender-row" id="om-gender-row" style="margin-bottom:14px;">
+        <button class="lead-gender-btn" id="om-gender-male" onclick="_setOmGender('male')">
+          👨 <span id="om-gender-male-lbl">Homme</span>
+        </button>
+        <button class="lead-gender-btn" id="om-gender-female" onclick="_setOmGender('female')">
+          👩 <span id="om-gender-female-lbl">Femme</span>
+        </button>
+      </div>
+
+      <!-- Form fields -->
+      <div class="lead-inp-wrap">
+        <span class="lead-inp-icon">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </span>
+        <input class="lead-inp" id="om-name" type="text" autocomplete="given-name" placeholder="Ton prénom"/>
+      </div>
+
+      <div class="lead-inp-wrap">
+        <span class="lead-inp-icon">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </span>
+        <input class="lead-inp" id="om-city" type="text" autocomplete="street-address" list="savy-cities" placeholder="Ville / Adresse de livraison"/>
+        <datalist id="savy-cities">
+          <option value="Tétouan — Centre"/>
+          <option value="Tétouan — Martil Road"/>
+          <option value="Tétouan — Sania"/>
+          <option value="Tétouan — Bab Mqabar"/>
+          <option value="Tétouan — Azla"/>
+          <option value="M'diq"/>
+          <option value="Martil"/>
+          <option value="Cabo Negro"/>
+          <option value="Fnideq"/>
+        </datalist>
+      </div>
+
+      <div class="lead-inp-wrap">
+        <span class="lead-inp-icon">
+          <svg width="12" height="12" viewBox="0 0 32 32" fill="none"><path d="M16 2C8.268 2 2 8.268 2 16c0 2.484.668 4.81 1.836 6.818L2 30l7.384-1.812A13.94 13.94 0 0016 30c7.732 0 14-6.268 14-14S23.732 2 16 2z" fill="#25D366"/><path d="M22.498 19.533c-.305-.152-1.8-.888-2.079-.99-.278-.102-.481-.152-.683.152s-.783.99-.96 1.193c-.177.202-.354.228-.659.076-.305-.152-1.288-.475-2.453-1.513-.907-.808-1.518-1.806-1.697-2.111-.177-.304-.019-.469.133-.62.137-.136.305-.355.457-.532.152-.178.203-.305.304-.508.103-.203.051-.38-.025-.532-.077-.152-.684-1.648-.937-2.258-.246-.593-.497-.513-.683-.522l-.583-.01c-.203 0-.532.076-.81.38s-1.063 1.04-1.063 2.534 1.089 2.94 1.24 3.143c.152.203 2.143 3.272 5.191 4.586.726.314 1.293.5 1.735.641.729.23 1.392.198 1.916.12.584-.087 1.8-.735 2.054-1.446.254-.71.254-1.32.178-1.447-.077-.127-.278-.203-.583-.355z" fill="#fff"/></svg>
+        </span>
+        <input class="lead-inp" id="om-phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="WhatsApp (+212 6XX XXX XXX)" oninput="debounceLoyaltyLookup(this.value)"/>
+      </div>
+
+      <div class="lead-inp-wrap">
+        <span class="lead-inp-icon" style="top:7px;transform:none;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        </span>
+        <textarea class="lead-inp" id="om-comment" placeholder="Note (allergies, étage, instructions...)"></textarea>
+      </div>
+
+      <!-- Scheduling -->
+      <div class="sched-wrap">
+        <span class="sched-label" id="sched-label">⏰ Livraison souhaitée :</span>
+        <div class="sched-toggle">
+          <button class="sched-btn active" id="sched-asap"  onclick="setScheduleMode('asap')">⚡ ASAP (45 min)</button>
+          <button class="sched-btn"        id="sched-later" onclick="setScheduleMode('later')">📅 Programmer</button>
+        </div>
+        <div class="sched-time-row" id="sched-time-row">
+          <select class="sched-select" id="sched-time-select" onchange="onScheduleTimeChange(this.value)">
+            <option value="">-- Choisir un créneau --</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Old trust (kept for JS compat — hidden) -->
+      <div id="om-trust" style="display:none;">
+        <span>⭐⭐⭐⭐⭐ <strong>4.9</strong></span>
+        <span id="om-trust-orders">125+ commandes</span>
+        <span id="om-trust-delivery">🛵 45 min garanties</span>
+      </div>
+      <!-- Old upsell (kept for JS compat — hidden) -->
+      <div id="om-upsell" style="display:none;"></div>
+
+      <!-- Submit CTA -->
+      <button class="co-submit-btn" id="om-submit-btn" onclick="submitOrder()">
+        🛵 Confirmer ma commande
+      </button>
+      <div class="co-urgency">
+        <div class="co-urgency-dot"></div>
+        <span id="co-urgency-txt">Livraison disponible maintenant à Tétouan</span>
+      </div>
+      <p style="font-size:11px;color:var(--muted);text-align:center;margin-top:10px;">🔒 Tes infos restent privées · jamais partagées</p>
+
+    </div><!-- /step-2 -->
+
+  </div><!-- /order-modal -->
+</div><!-- /overlay -->
 
 
 <!-- ══ STICKY ORDER BAR (appears after hero scroll) ══════════ -->
@@ -7759,7 +8081,156 @@ function checkUpsell() {
   upsell.style.display = (hasMain && !hasDessert && cart.length > 0) ? "block" : "none";
 }
 
+
+// ══════════════════════════════════════════════════════════════
+// CHECKOUT — step navigation, live cart, smart upsells, sub box
+// ══════════════════════════════════════════════════════════════
+
+function coGoStep2() {
+  document.getElementById('co-step-1')?.classList.remove('active');
+  document.getElementById('co-step-2')?.classList.add('active');
+  document.getElementById('co-dot-2')?.classList.replace('idle','active');
+  document.getElementById('co-prog-fill')?.style && (document.getElementById('co-prog-fill').style.width='100%');
+  // Scroll sheet to top
+  document.getElementById('order-modal')?.scrollTo({ top:0, behavior:'smooth' });
+}
+
+function coGoStep1() {
+  document.getElementById('co-step-2')?.classList.remove('active');
+  document.getElementById('co-step-1')?.classList.add('active');
+  document.getElementById('co-dot-2')?.classList.replace('active','idle');
+  const f = document.getElementById('co-prog-fill');
+  if (f) f.style.width = '0%';
+  document.getElementById('order-modal')?.scrollTo({ top:0, behavior:'smooth' });
+}
+
+function _coRenderCart() {
+  const items = dishes.filter(d => cart.includes(d.id));
+  const total  = items.reduce((s,d) => s + (d.price||0), 0);
+  const isAr   = lang === 'ar';
+
+  // Cart items list
+  const summaryEl = document.getElementById('om-cart-summary');
+  if (summaryEl) {
+    if (!items.length) {
+      summaryEl.innerHTML = `<div style="padding:16px;text-align:center;font-size:13px;color:var(--muted);">${isAr?'لا أطباق':'Aucun plat'}</div>`;
+    } else {
+      summaryEl.innerHTML = items.map(d => `
+        <div class="co-item">
+          <div class="co-item-ico">${d.e||'🍽️'}</div>
+          <div class="co-item-info">
+            <div class="co-item-name">${d.name}</div>
+            <div class="co-item-kcal">${d.cal||''}${d.cal?' kcal':''} ${d.protein?'· '+d.protein+'g P':''}</div>
+          </div>
+          <div class="co-item-right">
+            <div class="co-item-price">${d.price||''}${d.price?' MAD':''}</div>
+            <button class="co-item-rm" onclick="_coRemoveItem(${d.id})" title="Retirer">✕</button>
+          </div>
+        </div>`).join('');
+    }
+  }
+
+  // Total bar
+  const totalEl = document.getElementById('co-total-val');
+  if (totalEl) totalEl.textContent = total + ' MAD';
+  const contBtn = document.getElementById('co-continue-total');
+  if (contBtn) contBtn.textContent = total + ' MAD';
+
+  // Subscription box — compare current total vs plan
+  const nowPriceEl = document.getElementById('co-now-price');
+  if (nowPriceEl) nowPriceEl.textContent = total + ' MAD';
+  const monthSave = Math.round(total * 4 * 0.15);
+  const saveEl = document.getElementById('co-sub-save-val');
+  if (saveEl) saveEl.textContent = monthSave + ' MAD/mois';
+  // Show/hide sub box
+  const subBox = document.getElementById('co-sub-box');
+  if (subBox) subBox.style.display = items.length >= 1 ? 'block' : 'none';
+
+  // Smart upsells
+  _coRenderUpsells(items);
+}
+
+function _coRemoveItem(id) {
+  // Animate out then remove
+  const summaryEl = document.getElementById('om-cart-summary');
+  const items = summaryEl ? summaryEl.querySelectorAll('.co-item') : [];
+  let found = null;
+  items.forEach(el => {
+    if (el.querySelector('.co-item-rm')?.getAttribute('onclick')?.includes(String(id))) found = el;
+  });
+  if (found) { found.classList.add('removing'); }
+  setTimeout(() => {
+    const idx = cart.indexOf(id);
+    if (idx > -1) { cart.splice(idx, 1); }
+    try { localStorage.setItem('savy_cart', JSON.stringify(cart)); } catch(e){}
+    renderDishes();
+    _coRenderCart();
+  }, 180);
+}
+
+function _coRenderUpsells(cartItems) {
+  const upsellsEl = document.getElementById('co-upsells');
+  if (!upsellsEl) return;
+  const isAr = lang === 'ar';
+
+  const upsellPool = [
+    {
+      id: 18, // Protein Shake
+      cond: () => !cart.includes(18) && !cart.includes(19),
+      ico: '🥤',
+      tag: isAr ? 'مكمل غذائي' : 'Boost protéines',
+      name: isAr ? 'Protein Shake Vanille' : 'Protein Shake Vanille',
+      desc: isAr ? '30g \u0628\u0631\u0648\u062a\u064a\u0646 \xb7 \u0645\u062b\u0627\u0644\u064a \u0628\u0639\u062f \u0627\u0644\u062a\u0645\u0631\u064a\u0646' : '30g prot\xe9ines \xb7 Parfait apr\xe8s l\u2019entra\xeenement',
+      price: 35,
+      color: 'var(--green)',
+    },
+    {
+      id: 16, // Flan
+      cond: () => !cart.some(id => [16,17,18].includes(id)),
+      ico: '🍮',
+      tag: isAr ? 'حلوى صحية' : 'Dessert sain',
+      name: isAr ? 'Flan Caramel Léger' : 'Flan Caramel Léger',
+      desc: isAr ? '180 سعرة فقط · بدون ذنب' : '180 kcal · Sans culpabilité',
+      price: 28,
+      color: '#9333EA',
+    },
+  ];
+
+  const toShow = upsellPool.filter(u => u.cond());
+  if (!toShow.length) { upsellsEl.innerHTML = ''; return; }
+
+  upsellsEl.innerHTML = `<div style="font-size:11px;font-weight:700;color:var(--sub);margin-bottom:4px;">${isAr?'💡 يُقترح إضافته':'💡 Souvent commandé avec'}</div>` +
+    toShow.map(u => `
+      <div class="co-upsell-card" id="co-upsell-${u.id}" onclick="_coAddUpsell(${u.id})">
+        <div class="co-upsell-ico">${u.ico}</div>
+        <div class="co-upsell-body">
+          <div class="co-upsell-tag">${u.tag}</div>
+          <div class="co-upsell-name">${u.name}</div>
+          <div class="co-upsell-desc">${u.desc}</div>
+        </div>
+        <div class="co-upsell-price" style="color:${u.color}">+${u.price} MAD</div>
+        <button class="co-upsell-add" aria-label="Ajouter">+</button>
+      </div>`).join('');
+}
+
+function _coAddUpsell(id) {
+  if (!cart.includes(id)) {
+    cart.push(id);
+    try { localStorage.setItem('savy_cart', JSON.stringify(cart)); } catch(e){}
+    renderDishes();
+  }
+  const card = document.getElementById('co-upsell-' + id);
+  if (card) {
+    card.classList.add('added');
+    card.querySelector('.co-upsell-add').textContent = '✓';
+    card.querySelector('.co-upsell-add').style.background = '#22C845';
+  }
+  _coRenderCart();
+}
+
 function openOrderModal() {
+  // Reset to step 1 and re-render
+  coGoStep1();
   setTimeout(checkUpsell, 100);
   const isAr = lang === "ar" || false;
   const t = copy[lang] || copy.fr;
@@ -7780,7 +8251,43 @@ function openOrderModal() {
   if(!om) return;
   document.getElementById("om-title").textContent = isAr ? "تأكيد طلبي" : (lang==="en" ? "Confirm my order" : "Finaliser ma commande");
   document.getElementById("om-sub").textContent   = isAr ? "توصيل في 45 دقيقة · تطوان" : (lang==="en" ? "Delivery in 45 min · Tétouan" : "Livraison en 45 min · Tétouan");
-  document.getElementById("om-submit-btn").textContent = isAr ? "🛵 أكد طلبي الآن" : (lang==="en" ? "🛵 Place my order" : "🛵 Commander maintenant");
+  document.getElementById("om-submit-btn").textContent = isAr ? "🛵 أكد طلبي الآن" : (lang==="en" ? "🛵 Place my order" : "🛵 Confirmer ma commande");
+
+  // Localise new checkout elements
+  const _coLabels = {
+    fr: { step1:'Étape 1 sur 2', step2:'Étape 2 sur 2', review:'Commande', delivery:'Livraison',
+          title2:'Tes infos de livraison', subTitle:'Tu dépenses ça à l\'unité…\nEt si tu économisais ?',
+          lbl_now:'Ce soir', lbl_plan:'Plan Fitness', planDesc:'5 repas / semaine · -15%',
+          t1:'Repas frais', t2:'45 min', t3:'Satisfait', urgency:'Places disponibles maintenant à Tétouan',
+          lbl_total:'Total commande' },
+    en: { step1:'Step 1 of 2', step2:'Step 2 of 2', review:'Order', delivery:'Delivery',
+          title2:'Your delivery info', subTitle:'You spend this per order…\nSubscribe and save?',
+          lbl_now:'Tonight', lbl_plan:'Fitness Plan', planDesc:'5 meals/week · -15%',
+          t1:'Fresh meals', t2:'45 min', t3:'Satisfied', urgency:'Delivery slots open in Tétouan',
+          lbl_total:'Order total' },
+    ar: { step1:'الخطوة 1 من 2', step2:'الخطوة 2 من 2', review:'الطلب', delivery:'التوصيل',
+          title2:'بيانات التوصيل', subTitle:'هذا ما تدفعه اليوم…\nوفّر مع الاشتراك؟',
+          lbl_now:'الليلة', lbl_plan:'خطة فيتنس', planDesc:'5 وجبات/أسبوع · 15%-',
+          t1:'طازج', t2:'45 دقيقة', t3:'مضمون', urgency:'التوصيل متاح الآن بتطوان',
+          lbl_total:'مجموع الطلب' },
+  };
+  const _cl = _coLabels[lang] || _coLabels.fr;
+  const _$el = id => document.getElementById(id);
+  if(_$el('co-lbl-step1'))   _$el('co-lbl-step1').textContent   = _cl.step1;
+  if(_$el('co-lbl-step2'))   _$el('co-lbl-step2').textContent   = _cl.step2;
+  if(_$el('co-lbl-review'))  _$el('co-lbl-review').textContent  = _cl.review;
+  if(_$el('co-lbl-review2')) _$el('co-lbl-review2').textContent = _cl.review;
+  if(_$el('co-lbl-delivery'))_$el('co-lbl-delivery').textContent= _cl.delivery;
+  if(_$el('co-lbl-delivery2'))_$el('co-lbl-delivery2').textContent=_cl.delivery;
+  if(_$el('co-title-2'))     _$el('co-title-2').textContent     = _cl.title2;
+  if(_$el('co-lbl-now'))     _$el('co-lbl-now').textContent     = _cl.lbl_now;
+  if(_$el('co-lbl-plan'))    _$el('co-lbl-plan').textContent    = _cl.lbl_plan;
+  if(_$el('co-plan-desc'))   _$el('co-plan-desc').textContent   = _cl.planDesc;
+  if(_$el('co-t1'))          _$el('co-t1').textContent          = _cl.t1;
+  if(_$el('co-t2'))          _$el('co-t2').textContent          = _cl.t2;
+  if(_$el('co-t3'))          _$el('co-t3').textContent          = _cl.t3;
+  if(_$el('co-urgency-txt')) _$el('co-urgency-txt').textContent = _cl.urgency;
+  if(_$el('co-lbl-total'))   _$el('co-lbl-total').textContent   = _cl.lbl_total;
 
   // Localise placeholders
   document.getElementById("om-name").placeholder  = t.leadPlaceholderName  || "Nom complet";
@@ -7804,6 +8311,9 @@ function openOrderModal() {
   } else {
     summary.innerHTML = `<p style="color:var(--muted);font-size:12px;text-align:center;">${isAr?"لا توجد أطباق محددة":"Aucun plat sélectionné"}</p>`;
   }
+
+  // Render new checkout cart view
+  _coRenderCart();
 
   // Reset form state — then pre-fill from localStorage if available
   ["om-name","om-city","om-phone"].forEach(id => {
@@ -10362,7 +10872,7 @@ function openPremiumMenu() {
   overlay.style.display = 'block';
   document.body.style.overflow = 'hidden';
   // Push state so Android/iOS back button closes the sheet
-  if (!history.state?.savyMenu) history.pushState({ savyMenu: true }, '');
+  try { if (!history.state?.savyMenu) history.pushState({ savyMenu: true }, ''); } catch(e) {}
 
   requestAnimationFrame(() => {
     overlay.style.background = 'rgba(0,0,0,0.6)';
@@ -10463,10 +10973,10 @@ document.getElementById('premium-menu-overlay').addEventListener('click', functi
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closePremiumMenu();
 });
-window.addEventListener('popstate', function(e) {
+try { window.addEventListener('popstate', function(e) {
   const overlay = document.getElementById('premium-menu-overlay');
   if (overlay && overlay.style.display !== 'none') closePremiumMenu();
-});
+}); } catch(e) {}
 </script>
 
 </body>
