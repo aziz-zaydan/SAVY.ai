@@ -3,301 +3,498 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>SAVY — Menu</title>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@700;800;900&family=DM+Sans:wght@400;500;600;700&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet"/>
+<title>SAVY — Menu Premium</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=DM+Sans:wght@400;500;600;700&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet"/>
 <style>
-/* ═══ TOKENS ═════════════════════════════════════════════════ */
+
+/* ══════════════════════════════════════════════════════════════
+   TOKENS
+══════════════════════════════════════════════════════════════ */
 :root {
-  --bg:      #F5FAF7;
-  --card:    #EDF5F0;
-  --card2:   #E0EDE6;
-  --green:   #076B1F;
-  --greenL:  #18A83C;
-  --greenXL: #EAF4EE;
-  --text:    #0A1910;
-  --sub:     #3D6B54;
-  --muted:   #7FAF96;
-  --border:  #C8E2D4;
-  --fire:    #D4580A;
-  --plum:    #8B5CF6;
-  --gold:    #B8962E;
-  --goldL:   #E8C547;
-  --goldXL:  #FDF6E3;
-  --shadow:  0 2px 24px rgba(7,107,31,.08), 0 1px 4px rgba(0,0,0,.04);
-  --shadowH: 0 16px 48px rgba(7,107,31,.15), 0 4px 14px rgba(0,0,0,.08);
-  --shadowG: 0 4px 24px rgba(184,150,46,.2);
-  --r:       14px;
-  --rL:      22px;
-  --font:    'Outfit', sans-serif;
-  --serif:   'Cormorant Garamond', Georgia, serif;
-  --body:    'DM Sans', sans-serif;
+  --bg:       #F4FAF6;
+  --card:     #EBF5EF;
+  --card2:    #DCF0E4;
+  --green:    #089929;
+  --greenL:   #18B83C;
+  --greenXL:  #E6F5EE;
+  --greenD:   #065C19;
+  --text:     #0C1D13;
+  --sub:      #3D6B52;
+  --muted:    #7FAF96;
+  --border:   #C8E2D4;
+  --orange:   #F06A1D;
+  --orangeL:  #FF8C3E;
+  --orangeXL: #FFF0E8;
+  --pink:     #E91E8C;
+  --pinkL:    #FF4DB8;
+  --pinkXL:   #FFF0F8;
+  --gold:     #C49A28;
+  --shadow:   0 2px 20px rgba(9,153,41,.09), 0 1px 4px rgba(0,0,0,.04);
+  --shadowH:  0 12px 40px rgba(9,153,41,.18), 0 4px 12px rgba(0,0,0,.07);
+  --shadowC:  0 4px 28px rgba(240,106,29,.2);
+  --r:        14px;
+  --rL:       22px;
+  --rXL:      28px;
+  --font:     'Outfit', sans-serif;
+  --body:     'DM Sans', sans-serif;
 }
 [data-theme="dark"] {
-  --bg:      #050C07;
-  --card:    #0B1610;
-  --card2:   #0F1D13;
-  --green:   #22C845;
-  --greenL:  #35D85A;
-  --greenXL: #081B0C;
-  --text:    #E5F2EC;
-  --sub:     #6DAF94;
-  --muted:   #365F4A;
-  --border:  #142619;
-  --gold:    #D4A83A;
-  --goldL:   #F0C845;
-  --goldXL:  #1C1608;
-  --shadow:  0 2px 24px rgba(0,0,0,.6), 0 1px 4px rgba(0,0,0,.35);
-  --shadowH: 0 16px 48px rgba(0,0,0,.65), 0 4px 14px rgba(34,200,69,.1);
-  --shadowG: 0 4px 24px rgba(212,168,58,.15);
+  --bg:       #050C07;
+  --card:     #0A1610;
+  --card2:    #0E1C13;
+  --green:    #22C845;
+  --greenL:   #35D85A;
+  --greenXL:  #071508;
+  --greenD:   #0F3019;
+  --text:     #E4F2EB;
+  --sub:      #6DAF90;
+  --muted:    #345F48;
+  --border:   #132519;
+  --orange:   #FF7A38;
+  --orangeXL: #1A0D04;
+  --pinkXL:   #1A0410;
+  --shadow:   0 2px 20px rgba(0,0,0,.55), 0 1px 4px rgba(0,0,0,.3);
+  --shadowH:  0 12px 40px rgba(0,0,0,.6), 0 4px 12px rgba(34,200,69,.1);
 }
 body.female-mode {
   --green: #E91E8C; --greenL: #FF4DB8;
-  --greenXL: #FFF0F9; --border: #FFB3E0;
+  --greenXL: #FFF0F8; --border: #FFB3E0; --greenD: #8B005A;
 }
 
-/* ═══ BASE ══════════════════════════════════════════════════ */
-*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
-html { scroll-behavior:smooth; font-size:14px; }
-body { background:var(--bg); color:var(--text); font-family:var(--body); min-height:100vh; overflow-x:hidden; padding-bottom:96px; }
+/* ══════════════════════════════════════════════════════════════
+   BASE RESET
+══════════════════════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
+html { scroll-behavior:smooth; }
+body { background:var(--bg); color:var(--text); font-family:var(--body); min-height:100vh; overflow-x:hidden; padding-bottom:120px; }
 ::-webkit-scrollbar { width:3px; height:3px; }
 ::-webkit-scrollbar-thumb { background:var(--muted); border-radius:2px; }
-button,a { cursor:pointer; outline:none; border:none; background:none; text-decoration:none; }
+button, a { cursor:pointer; outline:none; border:none; background:none; text-decoration:none; touch-action:manipulation; }
 button:focus-visible { outline:2px solid var(--green); outline-offset:2px; }
-button { touch-action:manipulation; }
+img { display:block; }
+
 [lang="ar"] { direction:rtl; }
-[lang="ar"] .meal-name,[lang="ar"] .sec-title,[lang="ar"] .logo,
-[lang="ar"] .plan-name,[lang="ar"] .hero-h,[lang="ar"] .drawer-item-name {
-  font-family:'Tajawal',sans-serif; letter-spacing:0;
-}
+[lang="ar"] .meal-name,[lang="ar"] .sec-title,[lang="ar"] .logo,[lang="ar"] .plan-name,
+[lang="ar"] .hero-h,[lang="ar"] .drawer-item-name { font-family:'Tajawal',sans-serif; letter-spacing:0; }
 [lang="ar"] .meal-tag  { left:auto; right:9px; }
 [lang="ar"] .meal-cta  { right:auto; left:9px; }
 [lang="ar"] .tr-stack  { left:auto; right:9px; }
 
-/* ═══ NAV ════════════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════════════════════
+   NAV
+══════════════════════════════════════════════════════════════ */
 .nav {
-  position:sticky; top:0; z-index:400;
-  background:var(--bg); border-bottom:1px solid var(--border);
+  position:sticky; top:0; z-index:500;
+  background:rgba(244,250,246,.97);
   backdrop-filter:blur(24px); -webkit-backdrop-filter:blur(24px);
-  padding:8px 16px;
+  border-bottom:1px solid var(--border);
+  padding:10px 16px;
   display:flex; align-items:center; justify-content:space-between; gap:8px;
-  transition:background .3s;
-  box-shadow:0 1px 0 var(--border);
 }
-[data-theme="dark"] .nav { background:rgba(6,14,10,.96); }
-.logo { font-family:var(--font); font-weight:800; font-size:19px; letter-spacing:-1.2px; color:var(--green); flex-shrink:0; }
-.logo em { font-family:var(--serif); font-style:italic; font-weight:500; font-size:17px; color:var(--muted); letter-spacing:0; }
-.logo em { color:var(--text); font-style:normal; font-weight:300; }
-.nav-right { display:flex; align-items:center; gap:6px; }
+[data-theme="dark"] .nav { background:rgba(5,12,7,.97); }
+.logo { font-family:var(--font); font-weight:900; font-size:20px; letter-spacing:-1.2px; color:var(--green); flex-shrink:0; }
+.logo em { color:var(--text); font-style:normal; font-weight:400; }
+.nav-right { display:flex; align-items:center; gap:7px; }
 
 .lang-pill { display:flex; background:var(--card); border:1px solid var(--border); border-radius:99px; padding:2px; gap:1px; }
 .lb { padding:4px 8px; border-radius:99px; font-size:10px; font-weight:700; color:var(--muted); background:transparent; font-family:var(--font); transition:all .15s; border:none; cursor:pointer; }
 .lb.ar { font-family:'Tajawal',sans-serif; font-size:12px; padding:3px 8px; }
-.lb.on { background:var(--green); color:#fff; box-shadow:0 1px 6px rgba(9,184,48,.2); }
-.lb:active { transform:scale(.9); opacity:.8; }
+.lb.on { background:var(--green); color:#fff; }
+.lb:active { transform:scale(.9); }
 
-.theme-btn { width:31px; height:31px; border-radius:50%; background:var(--card); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:15px; cursor:pointer; transition:all .15s; }
-.theme-btn:hover { background:var(--card2); }
+.theme-btn { width:32px; height:32px; border-radius:50%; background:var(--card); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:15px; transition:all .15s; }
 .theme-btn:active { transform:scale(.9); }
 
 .cart-trig {
   display:flex; align-items:center; gap:5px;
-  background:linear-gradient(135deg, var(--green), var(--greenL));
-  color:#fff; border-radius:99px;
-  padding:7px 13px 7px 10px; font-size:11px; font-weight:700; font-family:var(--font);
-  cursor:pointer; transition:all .18s; position:relative; border:none;
-  box-shadow:0 2px 10px rgba(7,107,31,.25);
-  letter-spacing:.02em;
+  background:var(--green); color:#fff; border-radius:99px;
+  padding:7px 13px 7px 10px; font-size:11px; font-weight:800; font-family:var(--font);
+  position:relative; transition:all .15s;
+  box-shadow:0 2px 10px rgba(9,153,41,.25);
 }
 .cart-trig:active { transform:scale(.96); filter:brightness(.9); }
 #cart-badge {
-  position:absolute; top:-5px; right:-5px;
-  background:#FF3B30; color:#fff; width:18px; height:18px; border-radius:50%;
-  font-size:10px; font-weight:800; font-family:var(--font);
+  position:absolute; top:-6px; right:-6px;
+  background:#FF3B30; color:#fff; width:19px; height:19px; border-radius:50%;
+  font-size:10px; font-weight:900; font-family:var(--font);
   display:none; align-items:center; justify-content:center; border:2px solid var(--bg);
 }
 #cart-badge.show { display:flex; }
 
-/* ═══ CAT STRIP ══════════════════════════════════════════════ */
-.cat-strip {
-  position:sticky; top:52px; z-index:300;
-  background:var(--bg); border-bottom:1px solid var(--border);
-  display:flex; gap:6px; padding:8px 15px;
-  overflow-x:auto; scrollbar-width:none; transition:background .3s;
+/* ══════════════════════════════════════════════════════════════
+   TOP CONVERSION BANNER
+══════════════════════════════════════════════════════════════ */
+.top-banner {
+  background:linear-gradient(135deg, var(--green) 0%, var(--greenD) 100%);
+  padding:12px 16px;
+  display:flex; align-items:center; justify-content:space-between; gap:10px;
 }
-[data-theme="dark"] .cat-strip { background:rgba(6,14,10,.96); }
+.banner-left { flex:1; }
+.banner-eyebrow { font-size:9px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:rgba(255,255,255,.6); margin-bottom:3px; }
+.banner-msg { font-family:var(--font); font-weight:800; font-size:13px; color:#fff; line-height:1.3; letter-spacing:-.1px; }
+.banner-msg span { color:#7FFFA4; }
+.banner-btn {
+  flex-shrink:0; background:#fff; color:var(--green);
+  font-family:var(--font); font-weight:900; font-size:11px;
+  padding:8px 14px; border-radius:99px; letter-spacing:.02em;
+  box-shadow:0 2px 8px rgba(0,0,0,.12);
+  transition:all .15s; white-space:nowrap;
+}
+.banner-btn:active { transform:scale(.95); }
+
+/* ══════════════════════════════════════════════════════════════
+   CATEGORY STRIP
+══════════════════════════════════════════════════════════════ */
+.cat-strip {
+  position:sticky; top:56px; z-index:400;
+  background:var(--bg); border-bottom:1px solid var(--border);
+  display:flex; gap:6px; padding:10px 16px;
+  overflow-x:auto; scrollbar-width:none;
+  backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+}
+[data-theme="dark"] .cat-strip { background:rgba(5,12,7,.97); }
 .cat-strip::-webkit-scrollbar { display:none; }
 .cpt {
-  flex-shrink:0; padding:5px 12px; border-radius:4px;
-  font-size:10px; font-weight:600; font-family:var(--font);
-  color:var(--muted); background:transparent; border:1px solid var(--border);
-  cursor:pointer; transition:all .18s; white-space:nowrap; letter-spacing:.04em; text-transform:uppercase;
+  flex-shrink:0; padding:6px 14px; border-radius:99px;
+  font-size:11.5px; font-weight:700; font-family:var(--font);
+  color:var(--muted); background:var(--card); border:1.5px solid var(--border);
+  cursor:pointer; transition:all .2s; white-space:nowrap;
+  display:flex; align-items:center; gap:5px;
 }
-.cpt:hover { color:var(--text); }
-.cpt:active { transform:scale(.94); opacity:.7; }
-.cpt.lime  { color:var(--green); background:var(--greenXL); border-color:rgba(7,107,31,.25); }
-.cpt.rose  { color:#f472b6; background:rgba(244,114,182,.1); border-color:rgba(244,114,182,.25); }
-.cpt.fire  { color:#fb923c; background:rgba(251,146,60,.1);  border-color:rgba(251,146,60,.25); }
-.cpt.plum  { color:#c084fc; background:rgba(192,132,252,.1); border-color:rgba(192,132,252,.25); }
-.cpt.sky   { color:#38bdf8; background:rgba(56,189,248,.1);  border-color:rgba(56,189,248,.25); }
+.cpt:active { transform:scale(.94); }
+.cpt.lime  { color:#16A34A; background:rgba(22,163,74,.1);  border-color:rgba(22,163,74,.28); }
+.cpt.rose  { color:#DB2777; background:rgba(219,39,119,.09); border-color:rgba(219,39,119,.25); }
+.cpt.fire  { color:#EA580C; background:rgba(234,88,12,.09);  border-color:rgba(234,88,12,.25); }
+.cpt.plum  { color:#9333EA; background:rgba(147,51,234,.09); border-color:rgba(147,51,234,.25); }
+.cpt.sky   { color:#0284C7; background:rgba(2,132,199,.09);  border-color:rgba(2,132,199,.25); }
 
-/* ═══ HERO ═══════════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════════════════════
+   HERO
+══════════════════════════════════════════════════════════════ */
 .hero {
-  padding:32px 20px 28px;
-  background:radial-gradient(ellipse 100% 80% at 50% 0%, var(--greenXL) 0%, transparent 65%),
-             radial-gradient(ellipse 60% 40% at 80% 100%, rgba(9,153,41,.04) 0%, transparent 70%),
-             var(--bg);
+  padding:28px 18px 24px;
+  background:radial-gradient(ellipse 110% 80% at 50% 0%, var(--greenXL) 0%, transparent 65%), var(--bg);
+  position:relative; overflow:hidden;
 }
-.hero-label { font-size:9.5px; font-weight:600; letter-spacing:.22em; text-transform:uppercase; color:var(--gold); margin-bottom:12px; opacity:.9; }
-.hero-h { font-family:var(--serif); font-weight:600; font-size:38px; line-height:1.06; letter-spacing:-.5px; color:var(--text); margin-bottom:14px; }
-.hero-h span { color:var(--green); font-style:italic; }
+.hero::after {
+  content:'';
+  position:absolute; right:-30px; top:10px;
+  width:160px; height:160px; border-radius:50%;
+  background:radial-gradient(circle, rgba(9,153,41,.07) 0%, transparent 70%);
+  pointer-events:none;
+}
+.hero-label { font-size:10px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--green); margin-bottom:8px; }
+.hero-h { font-family:var(--font); font-weight:900; font-size:32px; line-height:1.06; letter-spacing:-1.6px; color:var(--text); margin-bottom:10px; }
 .hero-h span { color:var(--green); }
-.hero-p { font-size:13.5px; color:var(--sub); line-height:1.65; margin-bottom:20px; max-width:310px; font-weight:400; }
+.hero-p { font-size:13.5px; color:var(--sub); line-height:1.6; margin-bottom:18px; max-width:280px; }
 .chips { display:flex; gap:7px; flex-wrap:wrap; }
-.chip { padding:5px 12px; border-radius:4px; background:transparent; border:1px solid var(--border); font-size:10.5px; font-weight:600; color:var(--sub); letter-spacing:.04em; text-transform:uppercase; }
+.chip { padding:6px 12px; border-radius:99px; background:var(--card); border:1.5px solid var(--border); font-size:11px; font-weight:600; color:var(--sub); }
 
-/* ═══ MOTO ═══════════════════════════════════════════════════ */
-.moto {
-  margin:0 15px 6px; padding:14px 16px; border-radius:var(--r);
-  background:linear-gradient(135deg, var(--goldXL), var(--greenXL));
-  border:1px solid rgba(184,150,46,.2);
-  display:flex; align-items:center; gap:12px;
+/* ══════════════════════════════════════════════════════════════
+   SECTION STRUCTURE
+══════════════════════════════════════════════════════════════ */
+.sec { padding-top:28px; }
+.sec-inner { padding:0 16px 13px; }
+.sec-hd { display:flex; align-items:center; gap:12px; }
+.sec-ico {
+  font-size:20px; flex-shrink:0;
+  width:44px; height:44px; border-radius:13px;
+  display:flex; align-items:center; justify-content:center;
+  background:var(--card); border:1px solid var(--border);
 }
-.moto-i { font-size:22px; flex-shrink:0; }
-.moto-t { font-family:var(--serif); font-weight:600; font-size:15px; color:var(--text); margin-bottom:3px; font-style:italic; }
-.moto-s { font-size:11.5px; color:var(--sub); line-height:1.45; }
+.sec-title { font-family:var(--font); font-weight:900; font-size:18px; letter-spacing:-.5px; color:var(--text); }
+.sec-sub { font-size:12px; color:var(--sub); margin-top:3px; line-height:1.4; opacity:.85; }
+.sec-div { height:1px; background:var(--border); margin:12px 16px; }
 
-/* ═══ SECTION ════════════════════════════════════════════════ */
-.sec { padding-top:24px; margin-top:8px; }
-.sec-inner { padding:0 15px 11px; }
-.sec-hd { display:flex; align-items:center; gap:11px; }
-.sec-ico { font-size:20px; flex-shrink:0; width:40px; height:40px; display:flex; align-items:center; justify-content:center; background:var(--goldXL); border:1px solid rgba(184,150,46,.2); border-radius:10px; }
-.sec-title { font-family:var(--serif); font-weight:600; font-size:20px; letter-spacing:0; color:var(--text); }
-.sec-sub { font-size:11.5px; color:var(--sub); margin-top:4px; line-height:1.45; font-style:italic; }
-.sec-div { height:1px; background:var(--border); margin:0 15px 12px; }
+.sec-lime { background:linear-gradient(180deg, rgba(22,163,74,.06) 0%, transparent 140px), var(--bg); }
+.sec-rose { background:linear-gradient(180deg, rgba(219,39,119,.06) 0%, transparent 140px), var(--bg); }
+.sec-fire { background:linear-gradient(180deg, rgba(234,88,12,.06) 0%, transparent 140px), var(--bg); }
+.sec-plum { background:linear-gradient(180deg, rgba(147,51,234,.07) 0%, transparent 140px), var(--bg); }
 
-/* ═══ FEATURED SCROLL ════════════════════════════════════════ */
-.feat-scroll { display:flex; gap:11px; padding:0 15px 15px; overflow-x:auto; scrollbar-width:none; }
+/* ══════════════════════════════════════════════════════════════
+   FEATURED SCROLL CARDS
+══════════════════════════════════════════════════════════════ */
+.feat-scroll { display:flex; gap:12px; padding:0 16px 18px; overflow-x:auto; scrollbar-width:none; -webkit-overflow-scrolling:touch; scroll-snap-type:x mandatory; }
 .feat-scroll::-webkit-scrollbar { display:none; }
 .feat-card {
-  flex-shrink:0; width:230px; height:258px; border-radius:var(--rL); cursor:pointer;
+  flex-shrink:0; width:240px; height:270px; border-radius:var(--rL); cursor:pointer;
   overflow:hidden; position:relative; background:var(--card); box-shadow:var(--shadow);
-  transition:transform .22s cubic-bezier(.4,0,.2,1), box-shadow .22s; animation:fadeUp .4s both;
+  transition:transform .22s cubic-bezier(.4,0,.2,1), box-shadow .22s;
+  animation:fadeUp .4s both; scroll-snap-align:start;
 }
 .feat-card:hover { transform:translateY(-3px); box-shadow:var(--shadowH); }
-.feat-img { width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity .4s; display:block; }
+@media(hover:none){ .feat-card:hover { transform:none; box-shadow:var(--shadow); } }
+.feat-img { width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity .4s; }
 .feat-img.vis { opacity:1; }
-.feat-grad { position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,.78) 0%,rgba(0,0,0,.15) 50%,transparent 100%); }
+.feat-grad { position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,.82) 0%,rgba(0,0,0,.18) 52%,transparent 100%); }
 .feat-add {
-  position:absolute; top:11px; right:11px; z-index:2;
-  width:36px; height:36px; border-radius:50%;
-  font-size:19px; font-weight:700; font-family:var(--font);
+  position:absolute; top:12px; right:12px; z-index:3;
+  width:38px; height:38px; border-radius:50%;
+  font-size:20px; font-weight:800; font-family:var(--font);
   border:none; cursor:pointer; display:flex; align-items:center; justify-content:center;
   transition:all .18s cubic-bezier(.4,0,.2,1);
-  box-shadow:0 2px 8px rgba(0,0,0,.2);
+  box-shadow:0 2px 10px rgba(0,0,0,.25);
 }
-.feat-add.idle { background:rgba(255,255,255,.18); color:#fff; backdrop-filter:blur(6px); }
-.feat-add.on   { background:var(--green); color:#fff; transform:scale(1.05); }
+.feat-add.idle { background:rgba(255,255,255,.2); color:#fff; backdrop-filter:blur(8px); }
+.feat-add.on { background:var(--green); color:#fff; transform:scale(1.05); }
 .feat-add:active { transform:scale(.82) !important; }
-.feat-body { position:absolute; bottom:0; left:0; right:0; padding:12px 12px 13px; z-index:2; }
-.feat-badge { display:inline-block; padding:3px 8px; border-radius:99px; font-size:9px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; margin-bottom:5px; }
-.feat-badge.tg { background:rgba(184,150,46,.3); color:#F0D060; letter-spacing:.1em; }
-.feat-badge.tl { background:rgba(255,255,255,.15); color:rgba(255,255,255,.82); }
-.feat-badge.tr { background:rgba(244,114,182,.25); color:#f9a8d4; }
-.feat-badge.tp { background:rgba(192,132,252,.25); color:#e9d5ff; }
-.feat-name { font-family:var(--serif); font-weight:600; font-size:17px; color:#fff; line-height:1.2; margin-bottom:8px; letter-spacing:.1px; }
+.feat-body { position:absolute; bottom:0; left:0; right:0; padding:14px 13px 15px; z-index:2; }
+.feat-badge { display:inline-flex; align-items:center; gap:4px; padding:3px 9px; border-radius:99px; font-size:9px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; margin-bottom:6px; }
+.feat-badge.tg { background:rgba(255,165,0,.3); color:#FFD060; }
+.feat-badge.tl { background:rgba(255,255,255,.18); color:rgba(255,255,255,.9); }
+.feat-badge.tr { background:rgba(219,39,119,.28); color:#F9A8D4; }
+.feat-badge.tp { background:rgba(147,51,234,.28); color:#E9D5FF; }
+.feat-name { font-family:var(--font); font-weight:900; font-size:15.5px; color:#fff; line-height:1.2; margin-bottom:4px; letter-spacing:-.2px; }
+.feat-desc { font-size:11px; color:rgba(255,255,255,.6); line-height:1.35; margin-bottom:9px; }
 .feat-row { display:flex; align-items:center; justify-content:space-between; }
 .feat-macros { display:flex; gap:4px; }
-.feat-mac { font-size:10px; font-weight:600; color:rgba(255,255,255,.75); background:rgba(255,255,255,.14); padding:3px 7px; border-radius:99px; backdrop-filter:blur(4px); }
-.feat-price { font-family:var(--font); font-weight:700; font-size:15px; color:var(--goldL); letter-spacing:.02em; }
+.feat-mac { font-size:10px; font-weight:600; color:rgba(255,255,255,.75); background:rgba(255,255,255,.15); padding:3px 7px; border-radius:99px; backdrop-filter:blur(4px); }
+.feat-price { font-family:var(--font); font-weight:900; font-size:17px; color:#fff; letter-spacing:-.3px; }
 
-/* ═══ MEAL GRID ══════════════════════════════════════════════ */
-.mgrid { display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:0 15px 15px; }
+/* ══════════════════════════════════════════════════════════════
+   MEAL GRID
+══════════════════════════════════════════════════════════════ */
+.mgrid { display:grid; grid-template-columns:1fr 1fr; gap:11px; padding:0 16px 18px; }
 .mcard {
   border-radius:var(--r); overflow:hidden; cursor:pointer;
-  background:var(--card); border:1px solid var(--border); box-shadow:var(--shadow);
-  position:relative; transition:transform .25s cubic-bezier(.4,0,.2,1), box-shadow .25s, border-color .25s;
-  animation:fadeUp .45s both;
+  background:var(--card); border:1.5px solid var(--border); box-shadow:var(--shadow);
+  transition:transform .2s, box-shadow .2s, border-color .2s;
+  animation:fadeUp .4s both;
 }
-.mcard:hover { transform:translateY(-3px); box-shadow:var(--shadowH); border-color:rgba(184,150,46,.3); }
-@media(hover:none){.mcard:hover,.feat-card:hover,.plan:hover{transform:none;box-shadow:var(--shadow);}}
-.mimg-wrap { position:relative; height:148px; overflow:hidden; background:var(--card2); }
-.mimg { width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity .4s; display:block; }
+.mcard:hover { transform:translateY(-2px); box-shadow:var(--shadowH); border-color:rgba(9,153,41,.22); }
+@media(hover:none){ .mcard:hover { transform:none; box-shadow:var(--shadow); } }
+.mimg-wrap { position:relative; height:152px; overflow:hidden; background:var(--card2); }
+.mimg { width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity .4s; }
 .mimg.vis { opacity:1; }
-.mimg-ph { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:40px; }
-.mgrad2 { position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,.55) 0%,transparent 55%); }
+.mimg-ph { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:44px; }
+.mgrad2 { position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,.58) 0%,transparent 55%); }
 .meal-tag {
-  position:absolute; bottom:8px; left:9px; z-index:2;
-  padding:3px 7px; border-radius:99px; font-size:9px; font-weight:800; letter-spacing:.06em; text-transform:uppercase;
+  position:absolute; bottom:9px; left:10px; z-index:2;
+  padding:3px 8px; border-radius:99px; font-size:9px; font-weight:800; letter-spacing:.06em; text-transform:uppercase;
 }
-.tg  { background:rgba(34,197,94,.25);  color:#6EE99F; }
-.tl  { background:rgba(255,255,255,.18); color:#fff; }
-.tf  { background:rgba(251,146,60,.25);  color:#FDB97A; }
-.tp  { background:rgba(192,132,252,.25); color:#D8B4FE; }
-.tn  { background:rgba(56,189,248,.25);  color:#7DD3FC; }
-.tr-stack { position:absolute; top:8px; right:9px; display:flex; flex-direction:column; gap:3px; z-index:2; }
-.trp { background:rgba(0,0,0,.45); color:#fff; padding:2px 5px; border-radius:99px; font-size:9px; font-weight:600; backdrop-filter:blur(4px); }
+.tg { background:rgba(22,163,74,.28); color:#6EE99F; }
+.tl { background:rgba(255,255,255,.2); color:#fff; }
+.tf { background:rgba(234,88,12,.28); color:#FDBA74; }
+.tp { background:rgba(147,51,234,.28); color:#D8B4FE; }
+.tn { background:rgba(56,189,248,.28); color:#7DD3FC; }
+.tr-stack { position:absolute; top:9px; right:10px; display:flex; flex-direction:column; gap:3px; z-index:2; }
+.trp { background:rgba(0,0,0,.48); color:#fff; padding:2px 6px; border-radius:99px; font-size:9px; font-weight:600; backdrop-filter:blur(4px); }
 .meal-cta {
-  position:absolute; bottom:9px; right:9px; z-index:3;
-  width:32px; height:32px; border-radius:50%;
-  font-size:18px; font-weight:700; font-family:var(--font);
+  position:absolute; bottom:9px; right:10px; z-index:3;
+  width:34px; height:34px; border-radius:50%;
+  font-size:18px; font-weight:800; font-family:var(--font);
   border:none; cursor:pointer; display:flex; align-items:center; justify-content:center;
-  transition:all .18s cubic-bezier(.4,0,.2,1);
-  box-shadow:0 2px 8px rgba(0,0,0,.2);
+  transition:all .18s cubic-bezier(.4,0,.2,1); box-shadow:0 2px 8px rgba(0,0,0,.22);
 }
-.meal-cta.idle { background:rgba(255,255,255,.22); color:#fff; backdrop-filter:blur(4px); }
+.meal-cta.idle { background:rgba(255,255,255,.24); color:#fff; backdrop-filter:blur(6px); }
 .meal-cta.on   { background:var(--green); color:#fff; }
 .meal-cta:active { transform:scale(.82) !important; }
-.mbody { padding:10px 11px 12px; }
+.mbody { padding:11px 12px 13px; }
 .stag { display:inline-block; padding:3px 8px; border-radius:99px; font-size:9px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; margin-bottom:5px; }
-.meal-name { font-family:var(--serif); font-weight:600; font-size:14.5px; color:var(--text); line-height:1.25; margin-bottom:6px; letter-spacing:.05px; }
-.price-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:7px; }
-.meal-price { font-family:var(--font); font-weight:700; font-size:14px; letter-spacing:.02em; }
+.meal-name { font-family:var(--font); font-weight:800; font-size:13.5px; color:var(--text); line-height:1.25; margin-bottom:3px; letter-spacing:-.15px; }
+.meal-desc { font-size:10.5px; color:var(--muted); line-height:1.35; margin-bottom:7px; }
+.price-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
+.meal-price { font-family:var(--font); font-weight:900; font-size:15px; }
 .meal-kcal { font-size:10.5px; color:var(--muted); font-weight:500; }
-.bars { display:flex; flex-direction:column; gap:3px; }
-.brow { display:flex; align-items:center; gap:4px; }
+.bars { display:flex; flex-direction:column; gap:4px; }
+.brow { display:flex; align-items:center; gap:5px; }
 .blbl { font-size:9px; font-weight:700; color:var(--muted); width:10px; flex-shrink:0; }
 .btrack { flex:1; height:5px; border-radius:3px; background:var(--card2); overflow:hidden; }
 .bfill  { height:100%; border-radius:3px; }
-.bval   { font-size:9px; color:var(--muted); width:22px; text-align:right; }
+.bval   { font-size:9px; color:var(--muted); width:24px; text-align:right; }
 
-/* ═══ PLANS ══════════════════════════════════════════════════ */
-.plans-sec {
-  margin:10px 15px 0; padding:28px 18px 24px; border-radius:var(--rL);
-  background:radial-gradient(ellipse 90% 60% at 50% 0%, var(--greenXL) 0%, var(--card) 70%);
-  border:1px solid rgba(9,153,41,.18);
-  box-shadow:var(--shadow);
+/* ══════════════════════════════════════════════════════════════
+   UPSELL TOAST (fires when item added)
+══════════════════════════════════════════════════════════════ */
+#upsell-toast {
+  position:fixed; bottom:110px; left:50%;
+  transform:translateX(-50%) translateY(16px);
+  z-index:450; max-width:calc(100vw - 32px);
+  background:var(--text); color:var(--bg);
+  padding:10px 15px; border-radius:99px;
+  font-size:12px; font-weight:600; font-family:var(--font);
+  display:flex; align-items:center; gap:9px;
+  opacity:0; transition:opacity .25s, transform .25s; pointer-events:none;
+  white-space:nowrap; box-shadow:0 6px 24px rgba(0,0,0,.2);
 }
-.plans-hd { text-align:center; margin-bottom:20px; }
-.plans-ey { font-size:9.5px; font-weight:600; letter-spacing:.22em; text-transform:uppercase; color:var(--gold); }
-.plans-t  { font-family:var(--serif); font-weight:600; font-size:26px; letter-spacing:0; color:var(--text); margin:8px 0; font-style:italic; }
-.plans-s  { font-size:13px; color:var(--sub); opacity:.75; }
-.plans-grid { display:flex; flex-direction:column; gap:10px; }
-.plan { padding:16px 17px; border-radius:var(--r); background:var(--bg); border:1.5px solid var(--border); transition:border-color .22s, transform .22s, box-shadow .22s; }
-.plan:hover { border-color:rgba(9,153,41,.25); transform:translateY(-1px); }
-.plan.feat { background:linear-gradient(145deg,var(--goldXL),var(--greenXL)); border-color:var(--gold); border-width:2px; box-shadow:0 0 0 4px rgba(184,150,46,.08),var(--shadowG); }
-.plan-badge { display:inline-block; padding:4px 11px; border-radius:99px; font-size:9px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; background:linear-gradient(135deg,var(--gold),var(--goldL)); color:#fff; margin-bottom:6px; box-shadow:var(--shadowG); }
-.plan-top { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:10px; }
-.plan-name { font-family:var(--serif); font-weight:600; font-size:18px; color:var(--text); letter-spacing:.1px; }
-.plan-freq { font-size:11px; color:var(--muted); margin-top:2px; }
-.plan-price-wrap { text-align:right; }
-.plan-price { font-family:var(--font); font-weight:800; font-size:22px; color:var(--text); letter-spacing:-.5px; line-height:1; }
-.plan-pw { font-size:10px; color:var(--muted); display:block; }
-.plan-feats { display:flex; flex-direction:column; gap:5px; margin-bottom:12px; }
-.pf { font-size:12px; color:var(--sub); display:flex; align-items:center; gap:7px; line-height:1.4; }
-.pf::before { content:'\2713'; color:var(--green); font-weight:700; flex-shrink:0; font-size:12px; }
-.plan-btn { width:100%; padding:13px; border-radius:11px; font-family:var(--font); font-size:13px; font-weight:800; cursor:pointer; transition:all .18s; border:none; letter-spacing:.01em; }
-.plan.feat .plan-btn { background:linear-gradient(135deg,var(--gold),var(--goldL)) !important; color:#fff !important; box-shadow:var(--shadowG) !important; border:none !important; }
-.plan-btn:not(.btn-ol) { background:linear-gradient(135deg,var(--green),var(--greenL)); color:#fff; box-shadow:0 4px 18px rgba(9,153,41,.28); }
-.plan-btn:not(.btn-ol):hover { box-shadow:0 6px 22px rgba(9,153,41,.3); }
-.btn-ol { background:transparent; border:1.5px solid var(--border); color:var(--sub); }
-.btn-ol:hover { border-color:var(--green); color:var(--green); }
-.plan-btn:active { transform:scale(.97); }
+#upsell-toast.show { opacity:1; transform:translateX(-50%) translateY(0); pointer-events:auto; }
+#upsell-toast .ut-cta {
+  background:var(--green); color:#fff; padding:4px 10px; border-radius:99px;
+  font-size:11px; font-weight:800; cursor:pointer; border:none; flex-shrink:0;
+}
 
-/* ═══ FOOTER ═════════════════════════════════════════════════ */
-footer { margin:18px 15px 0; padding:20px 18px; border-radius:var(--r); background:var(--card); border:1px solid rgba(184,150,46,.15); text-align:center; }
-.ft-txt { font-family:var(--serif); font-size:13px; color:var(--sub); line-height:1.7; opacity:.7; font-style:italic; }
+/* ══════════════════════════════════════════════════════════════
+   PLANS SECTION — dark premium
+══════════════════════════════════════════════════════════════ */
+.plans-sec {
+  margin:8px 0 0;
+  padding:36px 16px 30px;
+  background:linear-gradient(165deg, #091811 0%, #050C07 100%);
+  position:relative; overflow:hidden;
+}
+.plans-sec::before {
+  content:''; position:absolute; inset:0;
+  background:radial-gradient(ellipse 80% 55% at 50% 0%, rgba(34,200,69,.09) 0%, transparent 70%);
+  pointer-events:none;
+}
+.plans-sec::after {
+  content:''; position:absolute; bottom:-40px; right:-40px;
+  width:200px; height:200px; border-radius:50%;
+  background:radial-gradient(circle, rgba(34,200,69,.05) 0%, transparent 70%);
+  pointer-events:none;
+}
 
-/* ═══ CART DRAWER ════════════════════════════════════════════ */
+.plans-hd { text-align:center; margin-bottom:6px; position:relative; }
+.plans-ey { font-size:10px; font-weight:700; letter-spacing:.22em; text-transform:uppercase; color:#22C845; opacity:.8; margin-bottom:10px; display:block; }
+.plans-t { font-family:var(--font); font-weight:900; font-size:26px; letter-spacing:-.8px; line-height:1.1; color:#fff; margin-bottom:8px; }
+.plans-t span { color:#22C845; }
+.plans-s { font-size:13px; color:rgba(255,255,255,.45); line-height:1.55; max-width:280px; margin:0 auto; }
+
+/* Trust pills */
+.plans-trust {
+  display:flex; justify-content:center; gap:14px; flex-wrap:wrap;
+  margin:18px 0 24px; position:relative;
+}
+.pt-item { display:flex; align-items:center; gap:5px; font-size:11px; font-weight:600; color:rgba(255,255,255,.4); }
+.pt-dot { width:5px; height:5px; border-radius:50%; background:#22C845; flex-shrink:0; }
+
+/* Plans grid */
+.plans-grid { display:flex; flex-direction:column; gap:10px; position:relative; }
+
+.plan {
+  border-radius:18px;
+  border:1.5px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.04);
+  padding:20px 18px 18px;
+  transition:transform .2s, border-color .2s;
+  backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+  position:relative; overflow:hidden;
+}
+.plan::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:1px;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,.08), transparent);
+}
+.plan.feat {
+  border:2px solid rgba(34,200,69,.42);
+  background:linear-gradient(145deg, rgba(34,200,69,.09), rgba(9,153,41,.04));
+  box-shadow:0 0 0 1px rgba(34,200,69,.12), 0 24px 60px rgba(0,0,0,.5);
+}
+.plan:active { transform:scale(.998); }
+
+/* Badge */
+.plan-badge {
+  display:inline-flex; align-items:center; gap:4px;
+  padding:4px 12px; border-radius:99px;
+  font-family:var(--font); font-size:9.5px; font-weight:800; letter-spacing:.12em; text-transform:uppercase;
+  background:linear-gradient(135deg, #22C845, #18A83C);
+  color:#fff; margin-bottom:10px;
+  box-shadow:0 2px 12px rgba(34,200,69,.4);
+}
+
+.plan-top { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:16px; }
+.plan-name { font-family:var(--font); font-weight:900; font-size:19px; color:#fff; letter-spacing:-.3px; line-height:1; }
+.plan-outcome { font-size:11px; color:rgba(255,255,255,.4); margin-top:5px; line-height:1.35; font-style:italic; }
+
+.plan-price-wrap { text-align:right; flex-shrink:0; }
+.plan-price { font-family:var(--font); font-weight:900; font-size:28px; color:#fff; letter-spacing:-.8px; line-height:1; }
+.plan-price sup { font-size:14px; font-weight:700; vertical-align:super; margin-right:2px; opacity:.8; }
+.plan-pw { font-size:10px; color:rgba(255,255,255,.35); display:block; margin-top:4px; }
+.plan-perday { font-size:10.5px; color:rgba(255,255,255,.35); margin-top:2px; display:flex; align-items:center; justify-content:flex-end; gap:5px; }
+.plan-save { padding:2px 6px; border-radius:99px; font-size:9px; font-weight:800; background:rgba(34,200,69,.22); color:#22C845; }
+
+.plan-feats { display:flex; flex-direction:column; gap:8px; margin-bottom:18px; }
+.pf { font-size:13px; color:rgba(255,255,255,.55); display:flex; align-items:flex-start; gap:9px; line-height:1.35; }
+.pf-ico {
+  width:17px; height:17px; border-radius:50%; flex-shrink:0; margin-top:1px;
+  background:rgba(34,200,69,.18); border:1px solid rgba(34,200,69,.32);
+  display:flex; align-items:center; justify-content:center;
+  font-size:9px; font-weight:900; color:#22C845;
+}
+.plan.feat .pf { color:rgba(255,255,255,.78); }
+.plan.feat .pf-ico { background:rgba(34,200,69,.28); border-color:rgba(34,200,69,.55); }
+
+.plan-btn {
+  width:100%; padding:15px; border-radius:13px;
+  font-family:var(--font); font-size:14px; font-weight:900; cursor:pointer;
+  transition:all .18s; border:none; letter-spacing:.02em;
+}
+.plan-btn:not(.btn-ol) {
+  background:linear-gradient(135deg, #22C845 0%, #089929 100%);
+  color:#fff; box-shadow:0 4px 22px rgba(34,200,69,.38);
+}
+.plan-btn:not(.btn-ol):hover { box-shadow:0 6px 30px rgba(34,200,69,.55); transform:translateY(-1px); }
+.btn-ol {
+  background:rgba(255,255,255,.07); border:1.5px solid rgba(255,255,255,.12); color:rgba(255,255,255,.6);
+}
+.btn-ol:hover { border-color:rgba(34,200,69,.4); color:#fff; }
+.plan-btn:active { transform:scale(.97) !important; }
+
+.plans-guarantee {
+  text-align:center; margin-top:20px; position:relative;
+  font-size:11px; color:rgba(255,255,255,.28);
+  display:flex; align-items:center; justify-content:center; gap:6px; flex-wrap:wrap;
+}
+
+/* Plans responsive */
+@media(min-width:520px) {
+  .plans-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; }
+  .plan.feat { transform:translateY(-5px); }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   BENEFITS SECTION
+══════════════════════════════════════════════════════════════ */
+.benefits-sec {
+  padding:32px 16px 28px;
+  background:var(--bg);
+}
+.benefits-title { font-family:var(--font); font-weight:900; font-size:20px; color:var(--text); letter-spacing:-.5px; margin-bottom:18px; text-align:center; }
+.benefits-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.benefit-card {
+  background:var(--card); border:1.5px solid var(--border); border-radius:var(--r);
+  padding:16px 14px; display:flex; flex-direction:column; gap:6px;
+}
+.benefit-ico { font-size:24px; }
+.benefit-title { font-family:var(--font); font-weight:800; font-size:13px; color:var(--text); line-height:1.2; }
+.benefit-desc { font-size:11px; color:var(--muted); line-height:1.45; }
+
+/* ══════════════════════════════════════════════════════════════
+   FINAL CTA SECTION
+══════════════════════════════════════════════════════════════ */
+.final-cta {
+  margin:0 16px 0;
+  padding:28px 22px;
+  background:linear-gradient(135deg, var(--green) 0%, var(--greenD) 100%);
+  border-radius:var(--rXL);
+  text-align:center;
+  position:relative; overflow:hidden;
+}
+.final-cta::before {
+  content:''; position:absolute; top:-40px; right:-40px;
+  width:180px; height:180px; border-radius:50%;
+  background:rgba(255,255,255,.05); pointer-events:none;
+}
+.fca-label { font-size:10px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.6); margin-bottom:8px; }
+.fca-title { font-family:var(--font); font-weight:900; font-size:22px; letter-spacing:-.6px; color:#fff; line-height:1.2; margin-bottom:8px; }
+.fca-sub { font-size:13px; color:rgba(255,255,255,.65); line-height:1.5; margin-bottom:20px; }
+.fca-btn {
+  display:inline-block; background:#fff; color:var(--green);
+  font-family:var(--font); font-weight:900; font-size:14px;
+  padding:14px 28px; border-radius:99px; letter-spacing:.02em;
+  box-shadow:0 4px 20px rgba(0,0,0,.15); transition:all .18s; cursor:pointer; border:none;
+}
+.fca-btn:hover { transform:translateY(-1px); box-shadow:0 6px 28px rgba(0,0,0,.2); }
+.fca-btn:active { transform:scale(.97); }
+
+/* ══════════════════════════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════════════════════════ */
+footer { margin:20px 16px 0; padding:18px; border-radius:var(--r); background:var(--card); border:1px solid var(--border); text-align:center; }
+.ft-txt { font-size:12px; color:var(--sub); line-height:1.7; opacity:.65; }
+
+/* ══════════════════════════════════════════════════════════════
+   CART DRAWER
+══════════════════════════════════════════════════════════════ */
 #drawer {
   position:fixed; bottom:0; left:0; right:0; z-index:500;
   max-width:600px; margin:0 auto;
@@ -305,525 +502,353 @@ footer { margin:18px 15px 0; padding:20px 18px; border-radius:var(--r); backgrou
 }
 #drawer.open { transform:translateY(0); }
 .drawer-handle {
-  background:linear-gradient(135deg,var(--green) 0%,var(--greenL) 80%, rgba(184,150,46,.6) 100%);
-  padding:14px 16px; cursor:pointer;
+  background:linear-gradient(135deg, var(--green) 0%, var(--greenD) 100%);
+  padding:14px 17px; cursor:pointer;
   display:flex; align-items:center; justify-content:space-between; gap:8px;
   border-radius:20px 20px 0 0;
-  box-shadow:0 -8px 32px rgba(7,107,31,.28), 0 -1px 0 rgba(255,255,255,.12) inset;
+  box-shadow:0 -6px 32px rgba(9,153,41,.3), 0 -1px 0 rgba(255,255,255,.1) inset;
 }
 .drawer-handle:active { opacity:.9; }
 .dh-left  { display:flex; align-items:center; gap:7px; }
-.dh-icon  { font-size:15px; }
-.dh-count { background:rgba(255,255,255,.22); color:#fff; width:21px; height:21px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; font-family:var(--font); }
-.dh-sep   { color:rgba(255,255,255,.4); font-size:11px; }
-.dh-total { font-family:var(--font); font-weight:800; font-size:16px; color:#fff; letter-spacing:-.3px; }
+.dh-icon  { font-size:16px; }
+.dh-count { background:rgba(255,255,255,.22); color:#fff; width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:900; font-family:var(--font); }
+.dh-sep   { color:rgba(255,255,255,.35); }
+.dh-total { font-family:var(--font); font-weight:900; font-size:16px; color:#fff; letter-spacing:-.3px; }
 .dh-right { display:flex; align-items:center; gap:5px; }
-.dh-ord   { font-size:11.5px; font-weight:600; color:rgba(255,255,255,.85); }
-.dh-arrow { font-size:10px; color:rgba(255,255,255,.7); transition:transform .25s; }
+.dh-ord   { font-size:12px; font-weight:600; color:rgba(255,255,255,.8); }
+.dh-arrow { font-size:10px; color:rgba(255,255,255,.6); transition:transform .25s; }
 #drawer.open.expanded .dh-arrow { transform:rotate(180deg); }
-#drawer-body {
-  background:var(--card); border-top:1px solid var(--border);
-  max-height:0; overflow:hidden;
-  transition:max-height .3s cubic-bezier(.4,0,.2,1);
-}
+#drawer-body { background:var(--card); border-top:1px solid var(--border); max-height:0; overflow:hidden; transition:max-height .3s cubic-bezier(.4,0,.2,1); }
 #drawer-body.open { max-height:55dvh; overflow-y:auto; }
-.combo { margin:10px 12px; padding:10px 12px; border-radius:10px; border:1px solid rgba(192,132,252,.2); background:rgba(192,132,252,.05); display:flex; align-items:center; gap:10px; }
+.combo { margin:10px 13px; padding:11px 13px; border-radius:11px; border:1px solid rgba(147,51,234,.22); background:rgba(147,51,234,.05); display:flex; align-items:center; gap:10px; }
 .combo-txt { flex:1; }
-.combo-ey { font-size:9px; font-weight:700; color:var(--plum); text-transform:uppercase; letter-spacing:.12em; margin-bottom:2px; }
+.combo-ey { font-size:9px; font-weight:700; color:#9333EA; text-transform:uppercase; letter-spacing:.12em; margin-bottom:2px; }
 .combo-nm { font-size:12px; font-weight:600; color:var(--text); }
-.combo-btn { background:var(--plum); color:#fff; border-radius:8px; padding:7px 11px; font-size:11px; font-weight:700; font-family:var(--font); flex-shrink:0; border:none; cursor:pointer; transition:all .15s; }
-.combo-btn:active { transform:scale(.9); opacity:.8; }
-.drawer-item { display:flex; align-items:center; gap:10px; padding:10px 14px; border-bottom:1px solid var(--border); }
-.di-img  { width:44px; height:44px; border-radius:11px; background:var(--card2); display:flex; align-items:center; justify-content:center; font-size:22px; flex-shrink:0; border:1px solid var(--border); }
+.combo-btn { background:#9333EA; color:#fff; border-radius:8px; padding:7px 12px; font-size:11px; font-weight:800; font-family:var(--font); flex-shrink:0; border:none; cursor:pointer; }
+.combo-btn:active { transform:scale(.9); opacity:.85; }
+.drawer-item { display:flex; align-items:center; gap:10px; padding:11px 15px; border-bottom:1px solid var(--border); }
+.di-img  { width:46px; height:46px; border-radius:12px; background:var(--card2); display:flex; align-items:center; justify-content:center; font-size:22px; flex-shrink:0; border:1px solid var(--border); }
 .di-info { flex:1; min-width:0; }
 .drawer-item-name { font-family:var(--font); font-weight:700; font-size:12.5px; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .di-price { font-size:11px; color:var(--muted); margin-top:1px; }
-.di-rm { background:rgba(255,80,80,.07); color:#FF6060; width:28px; height:28px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:12px; flex-shrink:0; border:none; cursor:pointer; transition:background .15s; }
-.di-rm:hover { background:rgba(255,80,80,.16); }
+.di-rm { background:rgba(255,60,60,.08); color:#FF4040; width:30px; height:30px; border-radius:9px; display:flex; align-items:center; justify-content:center; font-size:13px; flex-shrink:0; border:none; cursor:pointer; }
+.di-rm:hover { background:rgba(255,60,60,.18); }
 .di-rm:active { transform:scale(.88); }
-.drawer-foot { padding:10px 12px; display:flex; gap:7px; }
-.d-clear { padding:11px 14px; border-radius:10px; background:var(--card2); color:var(--sub); border:1px solid var(--border); font-size:11.5px; font-weight:600; cursor:pointer; transition:all .15s; }
-.d-clear:hover { color:var(--text); }
-.d-clear:active { transform:scale(.95); }
-.d-order { flex:1; padding:14px; border-radius:12px; background:linear-gradient(135deg,var(--gold),var(--goldL)); color:#fff; font-family:var(--font); font-size:13px; font-weight:800; cursor:pointer; box-shadow:var(--shadowG); transition:all .18s; border:none; letter-spacing:.03em; }
-.d-order:hover { box-shadow:0 6px 22px rgba(9,153,41,.35); }
-.d-order:active { transform:scale(.97); }
-.d-empty { text-align:center; padding:24px; font-size:12px; color:var(--muted); }
-
-/* ═══ SECTION TINTS ══════════════════════════════════════════ */
-.sec-lime { background:linear-gradient(180deg, rgba(34,197,94,.06) 0%, transparent 140px), var(--bg); }
-.sec-rose { background:linear-gradient(180deg, rgba(244,114,182,.06) 0%, transparent 140px), var(--bg); }
-.sec-fire { background:linear-gradient(180deg, rgba(251,146,60,.06) 0%, transparent 140px), var(--bg); }
-.sec-plum { background:linear-gradient(180deg, rgba(192,132,252,.07) 0%, transparent 140px), var(--bg); }
-
-/* ═══ HERO CITY ═════════════════════════════════════════════ */
-.hero-city { display:inline-flex; align-items:center; gap:5px; padding:4px 10px; border-radius:99px; background:var(--card); border:1px solid var(--border); font-size:11px; font-weight:600; color:var(--sub); margin-bottom:10px; }
-
-/* ═══ TOUCH SCROLL ══════════════════════════════════════════ */
-.feat-scroll { -webkit-overflow-scrolling:touch; scroll-snap-type:x mandatory; }
-.feat-card   { scroll-snap-align:start; }
-
-/* ═══ PLANS RESPONSIVE ═══════════════════════════════════════ */
-@media (min-width:520px) {
-  .plans-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; }
-  .plan.feat  { transform:translateY(-4px); }
-}
-
-/* ═══ CART QTY ═══════════════════════════════════════════════ */
-.di-qty      { display:flex; align-items:center; gap:6px; flex-shrink:0; }
-.di-q        { width:26px; height:26px; border-radius:8px; background:var(--card2); color:var(--text); font-size:14px; font-weight:700; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all .12s; }
-.di-q:hover  { background:var(--border); }
+.di-qty { display:flex; align-items:center; gap:6px; flex-shrink:0; }
+.di-q { width:28px; height:28px; border-radius:8px; background:var(--card2); color:var(--text); font-size:15px; font-weight:700; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all .12s; }
+.di-q:hover { background:var(--border); }
 .di-q:active { transform:scale(.88); }
-.di-qn       { font-family:var(--font); font-weight:800; font-size:13px; color:var(--text); min-width:14px; text-align:center; }
+.di-qn { font-family:var(--font); font-weight:800; font-size:13px; color:var(--text); min-width:14px; text-align:center; }
+.drawer-foot { padding:11px 13px; display:flex; gap:8px; }
+.d-clear { padding:12px 15px; border-radius:11px; background:var(--card2); color:var(--sub); border:1.5px solid var(--border); font-size:12px; font-weight:600; cursor:pointer; }
+.d-clear:active { transform:scale(.95); }
+.d-order { flex:1; padding:14px; border-radius:12px; background:linear-gradient(135deg,var(--green),var(--greenD)); color:#fff; font-family:var(--font); font-size:13.5px; font-weight:900; cursor:pointer; box-shadow:0 4px 20px rgba(9,153,41,.3); border:none; letter-spacing:.02em; }
+.d-order:hover { box-shadow:0 6px 28px rgba(9,153,41,.4); }
+.d-order:active { transform:scale(.97); }
+.d-empty { text-align:center; padding:28px; font-size:12px; color:var(--muted); }
 
+/* ══════════════════════════════════════════════════════════════
+   PLAN EXTRAS (savings badge + per-day)
+══════════════════════════════════════════════════════════════ */
+.plan-top-stack { display:flex; flex-direction:column; gap:0; }
+.plan-price-big { font-family:var(--font); font-weight:900; font-size:28px; color:#fff; letter-spacing:-.8px; line-height:1; }
+.plan-price-unit { font-size:10px; color:rgba(255,255,255,.35); display:block; margin-top:3px; }
 
-/* ═══ ABANDONMENT NUDGE ══════════════════════════════════════ */
-#abandon-toast {
-  position:fixed; bottom:80px; left:50%;
-  transform:translateX(-50%) translateY(16px);
-  z-index:600;
-  background:var(--text); color:var(--bg);
-  padding:12px 18px 12px 14px;
-  border-radius:14px;
-  font-size:12px; font-weight:600;
-  box-shadow:0 8px 32px rgba(0,0,0,.28), 0 0 0 1px rgba(184,150,46,.2);
-  display:flex; align-items:center; gap:9px;
-  opacity:0; transition:opacity .25s, transform .25s;
-  pointer-events:none; white-space:nowrap; max-width:calc(100vw - 32px);
-}
-#abandon-toast.show { opacity:1; transform:translateX(-50%) translateY(0); pointer-events:auto; }
-#abandon-toast .at-cta {
-  background:linear-gradient(135deg,var(--gold),var(--goldL)); color:#fff;
-  padding:5px 11px; border-radius:6px;
-  font-size:11px; font-weight:700; font-family:var(--font);
-  cursor:pointer; border:none; flex-shrink:0; letter-spacing:.03em;
-}
-#abandon-toast .at-x {
-  width:18px; height:18px; display:flex; align-items:center; justify-content:center;
-  opacity:.5; cursor:pointer; font-size:13px; flex-shrink:0; border:none; background:none; color:inherit;
-}
-
-
-/* ═══ MEAL DETAIL SHEET ══════════════════════════════════════ */
-#detail-overlay {
-  position:fixed; inset:0; z-index:700;
-  background:rgba(0,0,0,0); pointer-events:none;
-  transition:background .28s;
-}
-#detail-overlay.open { background:rgba(0,0,0,.5); pointer-events:auto; }
-
-#detail-sheet {
-  position:fixed; bottom:0; left:0; right:0; z-index:701;
-  max-width:600px; margin:0 auto;
-  background:var(--bg); border-radius:22px 22px 0 0;
-  box-shadow:0 -8px 40px rgba(0,0,0,.18);
-  transform:translateY(100%);
-  transition:transform .32s cubic-bezier(.4,0,.2,1);
-  max-height:92dvh; overflow-y:auto;
-  overscroll-behavior:contain;
-}
-#detail-sheet.open { transform:translateY(0); }
-
-.ds-grip {
-  width:36px; height:4px; background:var(--border);
-  border-radius:2px; margin:12px auto 0;
-}
-.ds-img-wrap {
-  height:200px; overflow:hidden; position:relative;
-  margin:12px 0 0;
-}
-.ds-img { width:100%; height:100%; object-fit:cover; display:block; }
-.ds-img-ph {
-  width:100%; height:100%; display:flex; align-items:center;
-  justify-content:center; font-size:72px;
-  background:linear-gradient(135deg,#1e1a30,#16122a);
-}
-.ds-grad { position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,.55) 0%,transparent 50%); }
-.ds-price-badge {
-  position:absolute; bottom:12px; right:14px;
-  background:var(--green); color:#fff;
-  font-family:var(--font); font-weight:800; font-size:16px;
-  padding:5px 13px; border-radius:99px;
-}
-.ds-rating-badge {
-  position:absolute; bottom:12px; left:14px;
-  background:rgba(0,0,0,.45); color:#fff; backdrop-filter:blur(6px);
-  font-size:12px; font-weight:600;
-  padding:4px 10px; border-radius:99px;
-}
-
-.ds-body { padding:16px 18px 100px; }
-.ds-tag { display:inline-block; padding:3px 9px; border-radius:99px; font-size:9px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; margin-bottom:8px; }
-
-.ds-share-btn {
-  display:inline-flex; align-items:center; gap:5px;
-  background:var(--card); border:1px solid var(--border);
-  color:var(--sub); border-radius:99px; padding:5px 12px;
-  font-size:11px; font-weight:600; cursor:pointer;
-  margin-bottom:14px; transition:all .15s;
-}
-.ds-share-btn:active { transform:scale(.95); }
-.ds-name { font-family:var(--font); font-weight:800; font-size:22px; letter-spacing:-.6px; color:var(--text); margin-bottom:16px; line-height:1.15; }
-
-/* Macro ring row */
-.ds-macros { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:18px; }
-.ds-macro {
-  background:var(--card); border:1px solid var(--border); border-radius:12px;
-  padding:10px 6px; text-align:center;
-}
-.ds-macro-val { font-family:var(--font); font-weight:800; font-size:15px; color:var(--text); }
-.ds-macro-lbl { font-size:9px; color:var(--muted); margin-top:2px; text-transform:uppercase; letter-spacing:.05em; }
-.ds-macro-dot { width:8px; height:8px; border-radius:50%; margin:0 auto 4px; }
-
-/* Macro bars */
-.ds-bars { display:flex; flex-direction:column; gap:6px; margin-bottom:18px; }
-.ds-bar-row { display:flex; align-items:center; gap:8px; }
-.ds-bar-lbl { font-size:10px; font-weight:700; color:var(--muted); width:48px; flex-shrink:0; }
-.ds-bar-track { flex:1; height:6px; background:var(--card2); border-radius:3px; overflow:hidden; }
-.ds-bar-fill { height:100%; border-radius:3px; transition:width .6s cubic-bezier(.4,0,.2,1); }
-.ds-bar-val { font-size:10px; color:var(--muted); width:28px; text-align:right; }
-
-/* Extra nutrition */
-.ds-extras { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-bottom:20px; }
-.ds-extra { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:8px 10px; }
-.ds-extra-lbl { font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; }
-.ds-extra-val { font-family:var(--font); font-weight:700; font-size:13px; color:var(--text); margin-top:2px; }
-
-/* Section headings */
-.ds-section-title { font-family:var(--font); font-weight:700; font-size:12px; color:var(--text); margin-bottom:8px; text-transform:uppercase; letter-spacing:.06em; }
-.ds-ingredients { font-size:12.5px; color:var(--sub); line-height:1.7; margin-bottom:18px; }
-.ds-ingredient-tag {
-  display:inline-block; background:var(--card); border:1px solid var(--border);
-  border-radius:99px; padding:3px 9px; font-size:11px; color:var(--sub);
-  margin:2px; font-weight:500;
-}
-.ds-allergens { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:24px; }
-.ds-allergen-tag {
-  background:rgba(244,114,182,.1); border:1px solid rgba(244,114,182,.25);
-  color:#db2777; border-radius:99px; padding:3px 10px;
-  font-size:10px; font-weight:700; letter-spacing:.04em;
-}
-.ds-allergen-none { font-size:11px; color:var(--muted); }
-
-/* CTA footer */
-.ds-footer {
-  position:fixed; bottom:0; left:0; right:0; max-width:600px; margin:0 auto;
-  z-index:702; background:var(--bg);
-  border-top:1px solid var(--border);
-  padding:12px 16px;
-  display:flex; gap:10px; align-items:center;
-  opacity:0; pointer-events:none; transition:opacity .2s;
-}
-#detail-sheet.open ~ #ds-footer,
-.ds-footer.visible { opacity:1; pointer-events:auto; }
-.ds-cta {
-  flex:1; padding:14px; border-radius:12px; border:none;
-  background:linear-gradient(135deg,var(--green),var(--greenL));
-  color:#fff; font-family:var(--font); font-size:14px; font-weight:800;
-  cursor:pointer; transition:all .15s;
-  box-shadow:0 4px 18px rgba(9,153,41,.28);
-}
-.ds-cta.added { background:var(--card2); color:var(--sub); box-shadow:none; border:1px solid var(--border); }
-.ds-cta:active { transform:scale(.98); }
-.ds-close-btn {
-  width:44px; height:44px; border-radius:12px;
-  background:var(--card); border:1px solid var(--border);
-  display:flex; align-items:center; justify-content:center;
-  font-size:18px; cursor:pointer; flex-shrink:0; color:var(--text);
-}
-.ds-close-btn:active { transform:scale(.9); }
-
-
-/* ═══ SCROLL TO TOP ══════════════════════════════════════════ */
+/* ══════════════════════════════════════════════════════════════
+   SCROLL TO TOP
+══════════════════════════════════════════════════════════════ */
 #scroll-top {
-  position:fixed; bottom:90px; right:16px; z-index:490;
-  width:38px; height:38px; border-radius:50%;
-  background:var(--goldXL); border:1px solid rgba(184,150,46,.3);
-  color:var(--gold); font-size:17px;
+  position:fixed; bottom:96px; right:16px; z-index:490;
+  width:40px; height:40px; border-radius:50%;
+  background:var(--card); border:1.5px solid var(--border);
+  color:var(--sub); font-size:17px;
   display:flex; align-items:center; justify-content:center;
-  cursor:pointer; box-shadow:var(--shadowG);
+  cursor:pointer; box-shadow:var(--shadow);
   opacity:0; transform:translateY(8px); pointer-events:none;
   transition:opacity .22s, transform .22s;
 }
 #scroll-top.show { opacity:1; transform:translateY(0); pointer-events:auto; }
 #scroll-top:active { transform:scale(.9); }
-[data-theme="dark"] #scroll-top { background:var(--card); }
+
+/* ══════════════════════════════════════════════════════════════
+   ABANDONMENT NUDGE
+══════════════════════════════════════════════════════════════ */
+#abandon-toast {
+  position:fixed; bottom:88px; left:50%;
+  transform:translateX(-50%) translateY(16px); z-index:600;
+  background:var(--text); color:var(--bg);
+  padding:11px 16px 11px 14px; border-radius:99px;
+  font-size:12px; font-weight:600;
+  box-shadow:0 8px 28px rgba(0,0,0,.22);
+  display:flex; align-items:center; gap:9px;
+  opacity:0; transition:opacity .25s, transform .25s;
+  pointer-events:none; white-space:nowrap; max-width:calc(100vw - 32px);
+}
+#abandon-toast.show { opacity:1; transform:translateX(-50%) translateY(0); pointer-events:auto; }
+#abandon-toast .at-cta { background:var(--green); color:#fff; padding:5px 12px; border-radius:99px; font-size:11px; font-weight:800; font-family:var(--font); cursor:pointer; border:none; flex-shrink:0; }
+#abandon-toast .at-x { width:18px; height:18px; display:flex; align-items:center; justify-content:center; opacity:.5; cursor:pointer; font-size:13px; flex-shrink:0; border:none; background:none; color:inherit; }
+
+/* ══════════════════════════════════════════════════════════════
+   DETAIL SHEET
+══════════════════════════════════════════════════════════════ */
+#detail-overlay { position:fixed; inset:0; z-index:700; background:rgba(0,0,0,0); pointer-events:none; transition:background .28s; }
+#detail-overlay.open { background:rgba(0,0,0,.55); pointer-events:auto; }
+#detail-sheet {
+  position:fixed; bottom:0; left:0; right:0; z-index:701;
+  max-width:600px; margin:0 auto;
+  background:var(--bg); border-radius:24px 24px 0 0;
+  box-shadow:0 -8px 44px rgba(0,0,0,.2);
+  transform:translateY(100%); transition:transform .32s cubic-bezier(.4,0,.2,1);
+  max-height:92dvh; overflow-y:auto; overscroll-behavior:contain;
+}
+#detail-sheet.open { transform:translateY(0); }
+.ds-grip { width:36px; height:4px; background:var(--border); border-radius:2px; margin:12px auto 0; }
+.ds-img-wrap { height:210px; overflow:hidden; position:relative; margin:12px 0 0; }
+.ds-img { width:100%; height:100%; object-fit:cover; display:block; }
+.ds-img-ph { width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-size:76px; background:linear-gradient(135deg,#1a1630,#120e24); }
+.ds-grad { position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,.58) 0%,transparent 52%); }
+.ds-price-badge { position:absolute; bottom:12px; right:14px; background:var(--green); color:#fff; font-family:var(--font); font-weight:900; font-size:17px; padding:5px 13px; border-radius:99px; }
+.ds-rating-badge { position:absolute; bottom:12px; left:14px; background:rgba(0,0,0,.48); color:#fff; backdrop-filter:blur(6px); font-size:12px; font-weight:600; padding:4px 10px; border-radius:99px; }
+.ds-body { padding:16px 18px 100px; }
+.ds-tag { display:inline-block; padding:3px 9px; border-radius:99px; font-size:9px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; margin-bottom:8px; }
+.ds-name { font-family:var(--font); font-weight:900; font-size:23px; letter-spacing:-.5px; color:var(--text); margin-bottom:16px; line-height:1.15; }
+.ds-share-btn { display:inline-flex; align-items:center; gap:5px; background:var(--card); border:1px solid var(--border); color:var(--sub); border-radius:99px; padding:5px 13px; font-size:11px; font-weight:600; cursor:pointer; margin-bottom:14px; }
+.ds-share-btn:active { transform:scale(.95); }
+.ds-macros { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:18px; }
+.ds-macro { background:var(--card); border:1px solid var(--border); border-radius:13px; padding:10px 6px; text-align:center; }
+.ds-macro-val { font-family:var(--font); font-weight:900; font-size:15px; color:var(--text); }
+.ds-macro-lbl { font-size:9px; color:var(--muted); margin-top:2px; text-transform:uppercase; letter-spacing:.05em; }
+.ds-macro-dot { width:8px; height:8px; border-radius:50%; margin:0 auto 4px; }
+.ds-bars { display:flex; flex-direction:column; gap:6px; margin-bottom:18px; }
+.ds-bar-row { display:flex; align-items:center; gap:8px; }
+.ds-bar-lbl { font-size:10px; font-weight:700; color:var(--muted); width:58px; flex-shrink:0; }
+.ds-bar-track { flex:1; height:6px; background:var(--card2); border-radius:3px; overflow:hidden; }
+.ds-bar-fill { height:100%; border-radius:3px; transition:width .6s cubic-bezier(.4,0,.2,1); }
+.ds-bar-val { font-size:10px; color:var(--muted); width:28px; text-align:right; }
+.ds-extras { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-bottom:20px; }
+.ds-extra { background:var(--card); border:1px solid var(--border); border-radius:11px; padding:9px 10px; }
+.ds-extra-lbl { font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; }
+.ds-extra-val { font-family:var(--font); font-weight:700; font-size:13px; color:var(--text); margin-top:2px; }
+.ds-section-title { font-family:var(--font); font-weight:700; font-size:12px; color:var(--text); margin-bottom:8px; text-transform:uppercase; letter-spacing:.06em; }
+.ds-ingredients { font-size:12.5px; color:var(--sub); line-height:1.7; margin-bottom:18px; }
+.ds-ingredient-tag { display:inline-block; background:var(--card); border:1px solid var(--border); border-radius:99px; padding:3px 9px; font-size:11px; color:var(--sub); margin:2px; font-weight:500; }
+.ds-allergens { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:24px; }
+.ds-allergen-tag { background:rgba(219,39,119,.1); border:1px solid rgba(219,39,119,.25); color:#DB2777; border-radius:99px; padding:3px 10px; font-size:10px; font-weight:700; letter-spacing:.04em; }
+.ds-allergen-none { font-size:11px; color:var(--muted); }
+.ds-footer { position:fixed; bottom:0; left:0; right:0; max-width:600px; margin:0 auto; z-index:702; background:var(--bg); border-top:1px solid var(--border); padding:12px 16px; display:flex; gap:10px; align-items:center; opacity:0; pointer-events:none; transition:opacity .2s; }
+.ds-footer.visible { opacity:1; pointer-events:auto; }
+.ds-cta { flex:1; padding:14px; border-radius:13px; border:none; background:linear-gradient(135deg,var(--green),var(--greenD)); color:#fff; font-family:var(--font); font-size:14px; font-weight:900; cursor:pointer; box-shadow:0 4px 18px rgba(9,153,41,.28); }
+.ds-cta.added { background:var(--card2); color:var(--sub); box-shadow:none; border:1px solid var(--border); }
+.ds-cta:active { transform:scale(.98); }
+.ds-close-btn { width:46px; height:46px; border-radius:13px; background:var(--card); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:18px; cursor:pointer; flex-shrink:0; color:var(--text); }
+.ds-close-btn:active { transform:scale(.9); }
+
+/* ══════════════════════════════════════════════════════════════
+   ANIMATIONS
+══════════════════════════════════════════════════════════════ */
+
+/* ── PRICE ANCHORING ─────────────────────────────────────────── */
+.meal-price-orig { font-size:11px; color:var(--muted); text-decoration:line-through; margin-right:4px; }
+.plan-orig-price { font-size:13px; color:rgba(255,255,255,.3); text-decoration:line-through; margin-right:6px; }
+
+/* ── SOCIAL PROOF BADGE (on cards) ───────────────────────────── */
+.social-badge {
+  position:absolute; top:9px; left:9px; z-index:4;
+  background:rgba(0,0,0,.52); backdrop-filter:blur(6px);
+  color:#fff; padding:3px 7px; border-radius:99px;
+  font-size:9px; font-weight:700; display:flex; align-items:center; gap:4px;
+  white-space:nowrap;
+}
+.social-badge-dot { width:5px; height:5px; border-radius:50%; background:#22C845; animation:pulse 1.4s infinite; flex-shrink:0; }
+
+/* ── FREE DELIVERY PROGRESS BAR ──────────────────────────────── */
+#free-del-bar {
+  background:linear-gradient(135deg,var(--green),var(--greenD));
+  padding:9px 16px; display:none;
+  align-items:center; gap:10px;
+}
+#free-del-bar.show { display:flex; }
+.fdl-msg { flex:1; font-size:11.5px; font-weight:700; color:#fff; font-family:var(--font); }
+.fdl-msg span { color:#7FFFA4; }
+.fdl-track { height:4px; background:rgba(255,255,255,.2); border-radius:2px; overflow:hidden; flex:1; min-width:60px; }
+.fdl-fill  { height:100%; background:#fff; border-radius:2px; transition:width .4s cubic-bezier(.4,0,.2,1); }
+
+/* ── SUBSCRIPTION NUDGE (inside cart drawer) ─────────────────── */
+#sub-nudge {
+  margin:10px 13px; padding:12px 13px; border-radius:13px;
+  background:linear-gradient(135deg,rgba(9,153,41,.12),rgba(9,153,41,.05));
+  border:1.5px solid rgba(9,153,41,.25);
+  display:none; flex-direction:column; gap:6px;
+}
+#sub-nudge.show { display:flex; }
+.sn-header { display:flex; align-items:center; gap:8px; }
+.sn-title { font-family:var(--font); font-weight:800; font-size:13px; color:var(--text); flex:1; }
+.sn-badge { background:var(--green); color:#fff; font-size:9px; font-weight:800; padding:2px 7px; border-radius:99px; font-family:var(--font); }
+.sn-body { font-size:11.5px; color:var(--sub); line-height:1.4; }
+.sn-saving { font-family:var(--font); font-weight:800; color:var(--green); }
+.sn-cta {
+  width:100%; padding:11px; border-radius:10px; border:none; cursor:pointer;
+  background:linear-gradient(135deg,var(--green),var(--greenD));
+  color:#fff; font-family:var(--font); font-size:13px; font-weight:800;
+  box-shadow:0 4px 16px rgba(9,153,41,.25);
+}
+.sn-cta:active { transform:scale(.97); }
+
+/* ── URGENCY STRIP (on plan cards) ───────────────────────────── */
+.plan-urgency {
+  font-size:10px; color:rgba(255,255,255,.45); margin-top:4px;
+  display:flex; align-items:center; gap:5px;
+}
+.plan-urgency-dot { width:5px; height:5px; border-radius:50%; background:#F97316; animation:pulse 1.4s infinite; flex-shrink:0; }
+
+/* ── SAVINGS CALLOUT (on feat plan) ──────────────────────────── */
+.feat-savings-strip {
+  background:rgba(34,200,69,.12); border:1px solid rgba(34,200,69,.22);
+  border-radius:8px; padding:8px 12px; margin-bottom:12px;
+  font-size:12px; color:rgba(255,255,255,.7); line-height:1.4;
+}
+.feat-savings-strip strong { color:#22C845; font-weight:800; }
+
+/* ── BUNDLE TAG (on grid cards) ──────────────────────────────── */
+.bundle-tag {
+  margin-top:7px; padding:7px 10px; border-radius:9px;
+  background:var(--greenXL); border:1px solid rgba(9,153,41,.18);
+  font-size:10.5px; color:var(--green); font-weight:600;
+  display:flex; align-items:center; gap:5px;
+}
+.bundle-tag strong { font-weight:800; }
+
+/* ── CART TOTAL SAVING LINE ──────────────────────────────────── */
+#cart-saving-row {
+  padding:8px 15px 0; display:none; align-items:center; justify-content:space-between;
+}
+#cart-saving-row.show { display:flex; }
+.csr-label { font-size:11px; color:var(--sub); }
+.csr-val   { font-family:var(--font); font-weight:800; font-size:11.5px; color:var(--green); }
+
+/* ── PLAN CARD POP ANIMATION ─────────────────────────────────── */
+@keyframes planPop { 0%{transform:scale(1)} 40%{transform:scale(1.02)} 100%{transform:scale(1)} }
+.plan-pop { animation:planPop .4s cubic-bezier(.4,0,.2,1); }
 
 
-/* ═══ PLAN SAVINGS & PER-DAY ═════════════════════════════════ */
-.plan-save { display:inline-block; padding:2px 7px; border-radius:99px; font-size:9px; font-weight:800; background:rgba(9,153,41,.12); color:var(--green); margin-left:5px; letter-spacing:.04em; }
-.plan-perday { font-size:10px; color:var(--muted); display:block; margin-top:2px; }
-.plan-top-stack { display:flex; flex-direction:column; gap:0; }
-.plan-price-big { font-family:var(--font); font-weight:800; font-size:22px; color:var(--text); letter-spacing:-.5px; line-height:1; }
-.plan-price-unit { font-size:10px; color:var(--muted); display:block; margin-top:1px; }
+/* ── COMPARISON ANCHOR (vs restaurant) ───────────────────────── */
+.compare-strip {
+  margin:0 16px 0;
+  padding:16px;
+  background:var(--card);
+  border:1.5px solid var(--border);
+  border-radius:var(--rL);
+  display:flex; flex-direction:column; gap:10px;
+}
+.compare-title { font-family:var(--font); font-weight:900; font-size:14px; color:var(--text); letter-spacing:-.2px; margin-bottom:2px; }
+.compare-row { display:flex; align-items:center; gap:10px; }
+.compare-label { font-size:12px; color:var(--sub); flex:1; }
+.compare-price { font-family:var(--font); font-weight:800; font-size:13px; }
+.compare-price.bad  { color:#EF4444; text-decoration:line-through; opacity:.7; }
+.compare-price.good { color:var(--green); }
+.compare-bar-wrap { flex:1.5; height:6px; background:var(--card2); border-radius:3px; overflow:hidden; }
+.compare-bar { height:100%; border-radius:3px; }
+.compare-note { font-size:10.5px; color:var(--muted); margin-top:2px; text-align:center; }
+
+/* ── TESTIMONIALS ─────────────────────────────────────────────── */
+.testimonials {
+  padding:28px 0 16px;
+}
+.testi-hd {
+  font-family:var(--font); font-weight:900; font-size:18px;
+  color:var(--text); letter-spacing:-.4px;
+  padding:0 16px 14px;
+}
+.testi-scroll {
+  display:flex; gap:11px; padding:0 16px 4px;
+  overflow-x:auto; scrollbar-width:none;
+}
+.testi-scroll::-webkit-scrollbar { display:none; }
+.testi-card {
+  flex-shrink:0; width:240px;
+  background:var(--card); border:1.5px solid var(--border);
+  border-radius:var(--r); padding:15px 14px;
+}
+.testi-stars { color:#F59E0B; font-size:12px; letter-spacing:1px; margin-bottom:7px; }
+.testi-quote { font-size:12.5px; color:var(--sub); line-height:1.55; margin-bottom:10px; font-style:italic; }
+.testi-author { display:flex; align-items:center; gap:8px; }
+.testi-avatar { width:28px; height:28px; border-radius:50%; background:var(--green); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; color:#fff; font-family:var(--font); flex-shrink:0; }
+.testi-name { font-family:var(--font); font-weight:700; font-size:12px; color:var(--text); }
+.testi-tag  { font-size:10px; color:var(--muted); margin-top:1px; }
+
+/* ── STICKY PLAN REMINDER ─────────────────────────────────────── */
+#plan-sticky {
+  position:fixed; top:108px; right:12px; z-index:350;
+  background:var(--green);
+  border-radius:14px;
+  padding:10px 13px;
+  box-shadow:0 6px 28px rgba(9,153,41,.35);
+  display:flex; flex-direction:column; gap:2px;
+  opacity:0; transform:translateX(110%);
+  transition:opacity .3s, transform .3s cubic-bezier(.4,0,.2,1);
+  pointer-events:none; max-width:160px;
+  cursor:pointer;
+}
+#plan-sticky.show { opacity:1; transform:translateX(0); pointer-events:auto; }
+.ps-label { font-size:9px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.7); }
+.ps-name  { font-family:var(--font); font-weight:900; font-size:13px; color:#fff; letter-spacing:-.2px; }
+.ps-price { font-family:var(--font); font-weight:800; font-size:11px; color:rgba(255,255,255,.85); }
+.ps-save  { display:inline-block; background:rgba(255,255,255,.2); color:#fff; border-radius:99px; font-size:9px; font-weight:800; padding:1px 6px; margin-top:2px; }
+
+/* ── CHECKOUT SAVING BANNER ───────────────────────────────────── */
+#checkout-saving {
+  display:none; align-items:center; justify-content:space-between;
+  padding:9px 14px;
+  background:linear-gradient(135deg,rgba(9,153,41,.1),rgba(9,153,41,.04));
+  border-top:1px solid rgba(9,153,41,.18);
+}
+#checkout-saving.show { display:flex; }
+.cs-left  { font-size:11px; color:var(--sub); }
+.cs-right { font-family:var(--font); font-weight:800; font-size:12px; color:var(--green); }
+
+
+/* ── PWA install banner ────────────────────────────────────── */
+#pwa-install-bar {
+  position:fixed; bottom:110px; left:50%;
+  transform:translateX(-50%) translateY(20px);
+  z-index:480; max-width:calc(100vw - 32px);
+  background:var(--text); color:var(--bg);
+  padding:10px 14px; border-radius:99px;
+  display:flex; align-items:center; gap:10px;
+  opacity:0; transition:opacity .25s, transform .25s; pointer-events:none;
+  box-shadow:0 6px 24px rgba(0,0,0,.22); white-space:nowrap;
+  font-size:12px; font-weight:600;
+}
+#pwa-install-bar.show { opacity:1; transform:translateX(-50%) translateY(0); pointer-events:auto; }
+.pwa-inst-btn {
+  background:var(--green); color:#fff; padding:5px 12px;
+  border-radius:99px; font-size:11px; font-weight:800;
+  border:none; cursor:pointer; font-family:var(--font);
+}
+.pwa-inst-btn:active { transform:scale(.95); }
+.pwa-dismiss { background:none; border:none; cursor:pointer; opacity:.5; color:inherit; font-size:14px; padding:0 2px; }
 
 @keyframes fadeUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+@keyframes pulse { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.15);opacity:.8} }
 
-/* ══ LUXURY TOKENS ══════════════════════════════════════════ */
-:root {
-  --gold:    #C9A84C;
-  --goldL:   #E8CC82;
-  --goldXL:  #FBF6E9;
-  --ink:     #0A1810;
-  --cream:   #F7FBF8;
-}
-
-/* ══ PREMIUM BODY ════════════════════════════════════════════ */
-body { letter-spacing:.01em; }
-
-/* ══ GLASS CARD ══════════════════════════════════════════════ */
-.glass-pill {
-  background:rgba(255,255,255,.12);
-  backdrop-filter:blur(8px);
-  -webkit-backdrop-filter:blur(8px);
-  border:1px solid rgba(255,255,255,.2);
-  border-radius:99px;
-}
-
-/* ══ FULL-BLEED FEAT CARD — luxury upgrade ═══════════════════ */
-.feat-card {
-  width:250px; height:290px;
-}
-.feat-body { padding:14px 14px 16px; }
-.feat-badge {
-  font-size:8px; letter-spacing:.12em; padding:4px 10px;
-  border:1px solid rgba(255,255,255,.2);
-}
-.feat-badge.tg {
-  background:rgba(201,168,76,.22); color:#E8CC82;
-  border-color:rgba(201,168,76,.35);
-}
-
-/* ══ MEAL CARDS — full-bleed image, text float ═══════════════ */
-.mcard-lux {
-  border-radius:var(--rL); overflow:hidden; cursor:pointer;
-  position:relative; box-shadow:var(--shadow);
-  transition:transform .22s cubic-bezier(.4,0,.2,1), box-shadow .22s;
-  animation:fadeUp .4s both; aspect-ratio:1/1.1;
-  border:none; background:var(--card);
-}
-.mcard-lux:hover { transform:translateY(-3px); box-shadow:var(--shadowH); }
-@media(hover:none){ .mcard-lux:hover { transform:none; box-shadow:var(--shadow); } }
-.mcard-lux .mimg-wrap {
-  position:absolute; inset:0; height:100%;
-  border-radius:var(--rL); overflow:hidden;
-}
-.mcard-lux .mimg { width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity .45s; display:block; }
-.mcard-lux .mimg.vis { opacity:1; }
-.mcard-lux .mimg-ph { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:52px; }
-.mcard-lux .lux-overlay {
-  position:absolute; inset:0;
-  background:linear-gradient(to top,
-    rgba(5,12,8,.88) 0%,
-    rgba(5,12,8,.45) 45%,
-    rgba(5,12,8,.08) 75%,
-    transparent 100%);
-}
-.mcard-lux .lux-body {
-  position:absolute; bottom:0; left:0; right:0;
-  padding:12px 13px 14px;
-  display:flex; flex-direction:column; gap:4px;
-}
-.mcard-lux .lux-tag {
-  display:inline-block; padding:2px 8px; border-radius:99px;
-  font-size:8px; font-weight:800; letter-spacing:.1em; text-transform:uppercase;
-  background:rgba(255,255,255,.14); color:rgba(255,255,255,.82);
-  border:1px solid rgba(255,255,255,.2);
-  backdrop-filter:blur(4px); width:fit-content; margin-bottom:1px;
-}
-.mcard-lux .lux-name {
-  font-family:var(--font); font-weight:800; font-size:13.5px;
-  color:#fff; line-height:1.22; letter-spacing:-.15px;
-}
-.mcard-lux .lux-row {
-  display:flex; align-items:center; justify-content:space-between;
-}
-.mcard-lux .lux-price {
-  font-family:var(--font); font-weight:800; font-size:15px; color:#fff;
-}
-.mcard-lux .lux-cal {
-  font-size:10px; color:rgba(255,255,255,.6); font-weight:500;
-}
-.mcard-lux .lux-cta {
-  position:absolute; top:10px; right:10px; z-index:4;
-  width:34px; height:34px; border-radius:50%;
-  font-size:18px; font-weight:700; font-family:var(--font);
-  border:none; cursor:pointer;
-  display:flex; align-items:center; justify-content:center;
-  transition:all .18s cubic-bezier(.4,0,.2,1);
-  background:rgba(255,255,255,.18); color:#fff;
-  backdrop-filter:blur(6px);
-  box-shadow:0 2px 10px rgba(0,0,0,.2);
-}
-.mcard-lux .lux-cta.on { background:var(--green); color:#fff; }
-.mcard-lux .lux-cta:active { transform:scale(.82) !important; }
-.mcard-lux .lux-macro-bar {
-  display:flex; gap:2px; margin-top:3px;
-}
-.mcard-lux .lux-bar-seg {
-  height:2px; border-radius:1px; opacity:.7;
-}
-
-/* ══ LUXURY PLANS — horizontal on mobile ═════════════════════ */
-.plans-sec {
-  margin:14px 0 0 !important; padding:32px 20px 28px !important;
-  border-radius:0 !important; border-left:none !important; border-right:none !important;
-  background:var(--ink) !important;
-  border-color:rgba(255,255,255,.06) !important;
-  box-shadow:none !important;
-}
-[data-theme="dark"] .plans-sec {
-  background:#040A06 !important;
-}
-.plans-hd { margin-bottom:24px !important; }
-.plans-ey { color:var(--gold) !important; letter-spacing:.2em !important; }
-.plans-t  { color:#fff !important; font-size:24px !important; letter-spacing:-1px !important; }
-.plans-s  { color:rgba(255,255,255,.5) !important; opacity:1 !important; }
-.plans-grid {
-  display:flex !important; flex-direction:row !important; gap:12px !important;
-  overflow-x:auto !important; scrollbar-width:none !important;
-  padding-bottom:4px !important;
-  -webkit-overflow-scrolling:touch !important;
-  scroll-snap-type:x mandatory !important;
-}
-.plans-grid::-webkit-scrollbar { display:none !important; }
-.plan {
-  flex-shrink:0 !important; width:220px !important;
-  background:rgba(255,255,255,.06) !important;
-  border:1px solid rgba(255,255,255,.1) !important;
-  border-radius:var(--rL) !important;
-  padding:20px 18px !important;
-  scroll-snap-align:start !important;
-  transition:border-color .2s, background .2s !important;
-}
-.plan:hover { border-color:rgba(255,255,255,.22) !important; background:rgba(255,255,255,.09) !important; }
-.plan.feat {
-  background:linear-gradient(145deg, rgba(9,153,41,.25), rgba(43,206,78,.12)) !important;
-  border-color:var(--green) !important; border-width:1.5px !important;
-  box-shadow:0 0 0 1px rgba(9,153,41,.15), 0 16px 48px rgba(9,153,41,.15) !important;
-}
-.plan-name { color:#fff !important; font-size:17px !important; }
-.plan-freq { color:rgba(255,255,255,.45) !important; font-size:11px !important; }
-.plan-price { color:#fff !important; font-size:26px !important; letter-spacing:-.8px !important; }
-.plan-pw { color:rgba(255,255,255,.4) !important; }
-.plan-perday { color:rgba(255,255,255,.35) !important; }
-.plan-save { background:rgba(9,153,41,.2) !important; color:#4ade80 !important; }
-.plan-badge {
-  background:linear-gradient(135deg,var(--gold),var(--goldL)) !important;
-  color:var(--ink) !important; box-shadow:0 2px 10px rgba(201,168,76,.4) !important;
-}
-.pf { color:rgba(255,255,255,.7) !important; font-size:11.5px !important; }
-.pf::before { color:var(--green) !important; }
-.plan-btn:not(.btn-ol) {
-  background:linear-gradient(135deg,var(--green),var(--greenL)) !important;
-  box-shadow:0 4px 20px rgba(9,153,41,.35) !important;
-  font-size:13px !important;
-}
-.btn-ol {
-  background:rgba(255,255,255,.08) !important;
-  border:1px solid rgba(255,255,255,.18) !important;
-  color:rgba(255,255,255,.75) !important;
-}
-.btn-ol:hover { border-color:rgba(255,255,255,.4) !important; color:#fff !important; }
-
-/* ══ LUXURY CART DRAWER ══════════════════════════════════════ */
-#drawer-body {
-  background:var(--ink) !important;
-  border-color:rgba(255,255,255,.08) !important;
-}
-[data-theme="dark"] #drawer-body { background:#050D07 !important; }
-.combo { background:rgba(192,132,252,.08) !important; border-color:rgba(192,132,252,.2) !important; }
-.drawer-item {
-  padding:12px 16px !important;
-  border-color:rgba(255,255,255,.06) !important;
-}
-.di-img {
-  background:rgba(255,255,255,.08) !important;
-  border:1px solid rgba(255,255,255,.1) !important;
-}
-.drawer-item-name { color:#fff !important; font-size:13px !important; }
-.di-price { color:rgba(255,255,255,.5) !important; font-size:11.5px !important; }
-.di-q { background:rgba(255,255,255,.08) !important; color:#fff !important; border-color:rgba(255,255,255,.12) !important; }
-.di-q:hover { background:rgba(255,255,255,.15) !important; }
-.di-qn { color:#fff !important; }
-.di-rm { background:rgba(255,80,80,.1) !important; }
-.drawer-foot {
-  background:var(--ink) !important;
-  padding:12px 14px 16px !important;
-  border-top:1px solid rgba(255,255,255,.07) !important;
-}
-[data-theme="dark"] .drawer-foot { background:#050D07 !important; }
-.d-clear {
-  background:rgba(255,255,255,.07) !important;
-  border:1px solid rgba(255,255,255,.1) !important;
-  color:rgba(255,255,255,.6) !important;
-}
-.d-clear:hover { background:rgba(255,255,255,.12) !important; color:#fff !important; }
-.d-order {
-  font-size:13.5px !important; padding:14px !important;
-  box-shadow:0 6px 24px rgba(9,153,41,.35) !important;
-  border-radius:12px !important;
-}
-.d-empty { color:rgba(255,255,255,.35) !important; }
-
-/* ══ LUXURY COMBO STRIP ══════════════════════════════════════ */
-.combo-ey { color:rgba(192,132,252,.9) !important; }
-.combo-nm { color:rgba(255,255,255,.85) !important; }
-
-/* ══ DETAIL SHEET — luxury upgrade ══════════════════════════ */
-#detail-sheet {
-  background:var(--ink) !important;
-}
-[data-theme="dark"] #detail-sheet { background:#040A06 !important; }
-.ds-grip { background:rgba(255,255,255,.15) !important; }
-.ds-body { background:var(--ink) !important; padding:16px 18px 110px !important; }
-[data-theme="dark"] .ds-body { background:#040A06 !important; }
-.ds-tag { font-size:8px !important; letter-spacing:.12em !important; }
-.ds-name { color:#fff !important; font-size:24px !important; letter-spacing:-.6px !important; }
-.ds-macro { background:rgba(255,255,255,.07) !important; border:1px solid rgba(255,255,255,.1) !important; }
-.ds-macro-val { color:#fff !important; }
-.ds-macro-lbl { color:rgba(255,255,255,.45) !important; }
-.ds-bar-lbl { color:rgba(255,255,255,.45) !important; }
-.ds-bar-track { background:rgba(255,255,255,.08) !important; }
-.ds-bar-val { color:rgba(255,255,255,.5) !important; }
-.ds-extra { background:rgba(255,255,255,.06) !important; border:1px solid rgba(255,255,255,.08) !important; }
-.ds-extra-lbl { color:rgba(255,255,255,.4) !important; }
-.ds-extra-val { color:#fff !important; }
-.ds-section-title { color:rgba(255,255,255,.5) !important; }
-.ds-ingredients { color:rgba(255,255,255,.7) !important; }
-.ds-ingredient-tag { background:rgba(255,255,255,.08) !important; border:1px solid rgba(255,255,255,.12) !important; color:rgba(255,255,255,.75) !important; }
-.ds-allergen-tag { background:rgba(244,114,182,.1) !important; border-color:rgba(244,114,182,.2) !important; }
-.ds-allergen-none { color:rgba(255,255,255,.3) !important; }
-#ds-footer { background:var(--ink) !important; border-color:rgba(255,255,255,.08) !important; }
-[data-theme="dark"] #ds-footer { background:#040A06 !important; }
-.ds-close-btn { background:rgba(255,255,255,.08) !important; border:1px solid rgba(255,255,255,.12) !important; color:#fff !important; }
-.ds-share-btn { background:rgba(255,255,255,.08) !important; border:1px solid rgba(255,255,255,.12) !important; color:rgba(255,255,255,.7) !important; }
-
-/* ══ LUXURY SCROLL TOP BTN ═══════════════════════════════════ */
-#scroll-top { background:var(--ink) !important; border-color:rgba(255,255,255,.15) !important; color:rgba(255,255,255,.7) !important; }
-
-/* ══ LUXURY ABANDONMENT TOAST ════════════════════════════════ */
-#abandon-toast { background:var(--ink) !important; color:#fff !important; border:1px solid rgba(255,255,255,.12) !important; }
-
-/* ══ HERO — luxury enhancements ══════════════════════════════ */
-.hero-h span { 
-  background:linear-gradient(135deg, var(--green), var(--greenL));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  background-clip:text;
-}
-
-/* ══ SECTION DIVIDER — gold accent ══════════════════════════ */
-.sec-div {
-  height:1px !important;
-  background:linear-gradient(90deg, transparent, var(--border) 20%, var(--border) 80%, transparent) !important;
-}
-
+#plan-nudge{position:fixed;bottom:82px;left:50%;transform:translateX(-50%) translateY(16px);z-index:601;background:linear-gradient(135deg,#0A1610,#0D2A18);color:#fff;padding:12px 16px;border-radius:16px;font-size:12px;font-weight:600;box-shadow:0 8px 32px rgba(0,0,0,.35);display:flex;align-items:center;gap:10px;opacity:0;transition:opacity .25s,transform .25s;pointer-events:none;max-width:300px;border:1px solid rgba(34,200,69,.2);}
+#plan-nudge.show{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:auto;}
+#plan-nudge .pn-txt{flex:1;line-height:1.3;color:rgba(255,255,255,.8);}
+#plan-nudge .pn-cta{background:#18B83A;color:#fff;padding:6px 12px;border-radius:99px;font-size:11px;font-weight:800;font-family:var(--font);border:none;cursor:pointer;flex-shrink:0;white-space:nowrap;}
+#plan-nudge .pn-x{background:none;border:none;color:rgba(255,255,255,.4);font-size:16px;cursor:pointer;padding:0;flex-shrink:0;}
+.conv-banner{background:linear-gradient(135deg,#0A1610 0%,#0D2A18 100%);padding:11px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.conv-banner-text{display:flex;align-items:center;gap:8px;}
+.conv-banner-ico{font-size:17px;flex-shrink:0;}
+.conv-banner-copy{font-size:11.5px;font-weight:600;color:rgba(255,255,255,.8);line-height:1.3;}
+.conv-banner-copy strong{color:#fff;font-weight:900;}
+.conv-banner-cta{flex-shrink:0;padding:7px 14px;border-radius:99px;background:var(--greenL);color:#fff;font-family:var(--font);font-size:11px;font-weight:800;border:none;cursor:pointer;white-space:nowrap;transition:all .15s;}
+.conv-banner-cta:active{transform:scale(.95);}
 </style>
 </head>
+
 <body>
 
-<!-- NAV -->
+<!-- ══ NAV ══════════════════════════════════════════════════════ -->
 <nav class="nav">
   <div class="logo">SAVY<em>menu</em></div>
   <div class="nav-right">
@@ -832,7 +857,7 @@ body { letter-spacing:.01em; }
       <button class="lb"    onclick="setL('en')">EN</button>
       <button class="lb ar" onclick="setL('ar')">&#x639;</button>
     </div>
-    <button class="theme-btn" id="menu-theme-btn" onclick="toggleMenuTheme()" title="Toggle theme">&#x1F319;</button>
+    <button class="theme-btn" id="menu-theme-btn" onclick="toggleMenuTheme()" aria-label="Basculer le thème">&#x1F319;</button>
     <button class="cart-trig" onclick="toggleCart()">
       &#x1F6D2; <span id="el-cart-txt">0 plats</span>
       <span id="cart-badge">0</span>
@@ -840,124 +865,228 @@ body { letter-spacing:.01em; }
   </div>
 </nav>
 
-<!-- CAT STRIP -->
+<div class="conv-banner">
+  <div class="conv-banner-text">
+    <div class="conv-banner-ico">&#x26A1;</div>
+    <div class="conv-banner-copy"><strong>Abonnement = &#x2212;20% sur chaque repas.</strong> Livraison incluse, z&#233;ro effort.</div>
+  </div>
+  <button class="conv-banner-cta" onclick="go('s-plans')">Voir les plans</button>
+</div>
+
+<!-- ══ TOP CONVERSION BANNER ═════════════════════════════════════ -->
+<div class="top-banner">
+  <div class="banner-left">
+    <div class="banner-eyebrow">Abonnement SAVY</div>
+    <div class="banner-msg">Économise jusqu'à <span>-20%</span> sur tes repas chaque semaine</div>
+  </div>
+  <button class="banner-btn" onclick="go('s-plans')">Voir les plans</button>
+</div>
+
+<!-- ══ CATEGORY STRIP ════════════════════════════════════════════ -->
 <div class="cat-strip">
-  <button class="cpt sky"  onclick="go('s-plans')">&#x1F48E; <span class="cn-p">Plans</span></button>
+  <button class="cpt sky"  onclick="go('s-plans')" >&#x1F48E; <span class="cn-p">Plans</span></button>
   <button class="cpt lime" onclick="go('s-muscle')">&#x1F4AA; <span class="cn-m">Muscle</span></button>
   <button class="cpt"      onclick="go('s-lean')"  >&#x1F338; <span class="cn-l">Lean &amp; Fit</span></button>
   <button class="cpt"      onclick="go('s-fast')"  >&#x26A1; <span class="cn-f">Fast Food</span></button>
   <button class="cpt"      onclick="go('s-sweet')" >&#x1F353; <span class="cn-s">Sweet</span></button>
 </div>
 
-<!-- HERO -->
+<!-- ══ HERO ══════════════════════════════════════════════════════ -->
 <div class="hero">
   <div class="hero-label" id="el-ey">Repas Fitness Premium</div>
   <h1 class="hero-h" id="el-h">Mange intelligent.<br><span>Affiche ton meilleur.</span></h1>
-  <p class="hero-p" id="el-hp">Repas &#233;quilibr&#233;s, pr&#233;par&#233;s avec soin. Livr&#233;s &#224; ta porte.</p>
+  <p class="hero-p" id="el-hp">Repas &#233;quilibr&#233;s, pr&#233;par&#233;s par un chef, livr&#233;s en 45 min &#224; T&#233;touan.</p>
   <div class="chips">
     <span class="chip" id="el-c1">&#x1F680; 45 min</span>
     <span class="chip" id="el-c2">&#x1F9EC; IA</span>
     <span class="chip" id="el-c3">&#x1F33F; Frais</span>
   </div>
+  <span id="el-mt" style="display:none">Ton corps mérite un meilleur carburant</span>
+  <span id="el-ms" style="display:none">Chaque repas conçu pour l'énergie, le goût et les résultats.</span>
 </div>
 
-<!-- MOTO -->
-<div class="moto">
-  <div class="moto-i">&#x1F525;</div>
-  <div>
-    <div class="moto-t" id="el-mt">Ton corps m&#233;rite un meilleur carburant</div>
-    <div class="moto-s" id="el-ms">Chaque repas con&#231;u pour l'&#233;nergie, le go&#251;t et les r&#233;sultats.</div>
-  </div>
-</div>
-
-<!-- PLANS -->
+<!-- ══ PLANS ═════════════════════════════════════════════════════ -->
 <div class="plans-sec" id="s-plans">
   <div class="plans-hd">
-    <span class="plans-ey" id="el-pey">Plans Hebdomadaires</span>
-    <h2 class="plans-t" id="el-pt">Engage-toi dans tes objectifs.</h2>
-    <p class="plans-s" id="el-ps">&#201;conomise. Mange mieux. Chaque semaine.</p>
+    <span class="plans-ey" id="el-pey">&#x1F4C5; Plans hebdomadaires</span>
+    <h2 class="plans-t" id="el-pt">Ton corps.<br><span>Ta transformation.</span></h2>
+    <p class="plans-s" id="el-ps">Arr&#234;te de compter les calories. On cuisine, tu progresses.</p>
+  </div>
+  <div class="plans-trust">
+    <div class="pt-item"><div class="pt-dot"></div>Sans engagement</div>
+    <div class="pt-item"><div class="pt-dot"></div>Livraison incluse</div>
+    <div class="pt-item"><div class="pt-dot"></div>1er repas offert</div>
   </div>
   <div class="plans-grid">
+
+    <!-- STARTER -->
     <div class="plan">
-      <div class="plan-top">
-        <div><div class="plan-name" id="el-p1n">Starter</div><div class="plan-freq" id="el-p1f">3 repas / semaine</div></div>
-        <div class="plan-price-wrap"><div class="plan-price"><span id="el-p1p">390</span> MAD</div><span class="plan-pw" id="el-p1pw">par semaine</span><span class="plan-perday">~55 MAD/repas</span></div>
-      </div>
-      <div class="plan-feats">
-        <div class="pf" id="el-pf11">3 repas s&#233;lectionn&#233;s par le chef</div>
-        <div class="pf" id="el-pf12">Livraison gratuite</div>
-        <div class="pf" id="el-pf13">Suivi des macros</div>
-      </div>
-      <button class="plan-btn btn-ol" id="el-pb1">S'abonner</button>
-    </div>
-    <div class="plan feat">
       <div class="plan-top">
         <div>
-          <div class="plan-badge" id="el-bv">MEILLEUR RAPPORT</div>
-          <div class="plan-name" id="el-p2n">Fitness</div>
-          <div class="plan-freq" id="el-p2f">5 repas / semaine</div>
+          <div class="plan-name" id="el-p1n">Starter</div>
+          <span id="el-p1f" style="display:none">3 repas / semaine</span>
+          <div class="plan-outcome">Commence ton changement</div>
         </div>
-        <div class="plan-price-wrap"><div class="plan-price"><span id="el-p2p">590</span> MAD</div><span class="plan-pw" id="el-p2pw">par semaine</span><span class="plan-perday">~118 MAD/repas <span class="plan-save">-15%</span></span></div>
+        <div class="plan-price-wrap">
+          <div class="plan-price"><sup>MAD</sup><span id="el-p1p">390</span></div>
+          <span class="plan-pw" id="el-p1pw">/ semaine</span>
+          <div class="plan-perday">~55 MAD/repas</div>
+        </div>
       </div>
       <div class="plan-feats">
-        <div class="pf" id="el-pf21">5 repas personnalis&#233;s</div>
-        <div class="pf" id="el-pf22">Livraison prioritaire gratuite</div>
-        <div class="pf" id="el-pf23">Coach nutrition IA</div>
-        <div class="pf" id="el-pf24">Rapport hebdomadaire</div>
+        <div class="pf"><div class="pf-ico">&#x2713;</div><span id="el-pf11">3 repas chef par semaine</span></div>
+        <div class="pf"><div class="pf-ico">&#x2713;</div><span id="el-pf12">Livraison gratuite incluse</span></div>
+        <div class="pf"><div class="pf-ico">&#x2713;</div><span id="el-pf13">Macros calcul&#233;s pour toi</span></div>
       </div>
-      <button class="plan-btn" id="el-pb2">S'abonner</button>
+      <button class="plan-btn btn-ol" id="el-pb1">Commencer &#8594;</button>
     </div>
+
+    <!-- FITNESS — FEATURED -->
+    <div class="plan feat">
+      <div class="plan-badge" id="el-bv">&#x2605; Plus populaire</div>
+      <div class="feat-savings-strip">Tu &#233;conomises <strong>105 MAD / semaine</strong> vs les commandes &#224; l'unit&#233; &#8212; soit <strong>420 MAD / mois</strong></div>
+      <div class="plan-top">
+        <div>
+          <div class="plan-name" id="el-p2n">Fitness</div>
+          <span id="el-p2f" style="display:none">5 repas / semaine</span>
+          <div class="plan-outcome">R&#233;sultats en 3 semaines</div>
+          <div class="plan-urgency"><div class="plan-urgency-dot"></div>7 personnes ont choisi ce plan cette semaine</div>
+        </div>
+        <div class="plan-price-wrap">
+          <div class="plan-price"><span class="plan-orig-price">695</span><sup>MAD</sup><span id="el-p2p">590</span></div>
+          <span class="plan-pw" id="el-p2pw">/ semaine</span>
+          <div class="plan-perday">~118 MAD/repas &nbsp;<span class="plan-save">&#8722;15%</span></div>
+        </div>
+      </div>
+      <div class="plan-feats">
+        <div class="pf"><div class="pf-ico">&#x2713;</div><span id="el-pf21">5 repas selon ton objectif</span></div>
+        <div class="pf"><div class="pf-ico">&#x2713;</div><span id="el-pf22">Livraison prioritaire gratuite</span></div>
+        <div class="pf"><div class="pf-ico">&#x2713;</div><span id="el-pf23">Coach nutrition IA inclus</span></div>
+        <div class="pf"><div class="pf-ico">&#x2713;</div><span id="el-pf24">Rapport progr&#232;s hebdomadaire</span></div>
+      </div>
+      <button class="plan-btn" id="el-pb2">Je veux ce plan &#8594;</button>
+    </div>
+
+    <!-- ATHLETE -->
     <div class="plan">
       <div class="plan-top">
-        <div><div class="plan-name" id="el-p3n">Athlete</div><div class="plan-freq" id="el-p3f">7 repas / semaine</div></div>
-        <div class="plan-price-wrap"><div class="plan-price"><span id="el-p3p">790</span> MAD</div><span class="plan-pw" id="el-p3pw">par semaine</span><span class="plan-perday">~113 MAD/repas <span class="plan-save">-20%</span></span></div>
+        <div>
+          <div class="plan-name" id="el-p3n">Athlete</div>
+          <span id="el-p3f" style="display:none">7 repas / semaine</span>
+          <div class="plan-outcome">Performance maximale chaque jour</div>
+        </div>
+        <div class="plan-price-wrap">
+          <div class="plan-price"><sup>MAD</sup><span id="el-p3p">790</span></div>
+          <span class="plan-pw" id="el-p3pw">/ semaine</span>
+          <div class="plan-perday">~113 MAD/repas &nbsp;<span class="plan-save">&#8722;20%</span></div>
+        </div>
       </div>
       <div class="plan-feats">
-        <div class="pf" id="el-pf31">7 repas performance</div>
-        <div class="pf" id="el-pf32">Livraison express gratuite</div>
-        <div class="pf" id="el-pf33">Session chef d&#233;di&#233;</div>
-        <div class="pf" id="el-pf34">Macros personnalis&#233;s</div>
-        <div class="pf" id="el-pf35">Pack compl&#233;ments</div>
+        <div class="pf"><div class="pf-ico">&#x2713;</div><span id="el-pf31">7 repas haute performance</span></div>
+        <div class="pf"><div class="pf-ico">&#x2713;</div><span id="el-pf32">Livraison express gratuite</span></div>
+        <div class="pf"><div class="pf-ico">&#x2713;</div><span id="el-pf33">Session priv&#233;e avec le chef</span></div>
+        <div class="pf"><div class="pf-ico">&#x2713;</div><span id="el-pf34">Macros enti&#232;rement sur-mesure</span></div>
+        <div class="pf"><div class="pf-ico">&#x2713;</div><span id="el-pf35">Pack compl&#233;ments sportifs</span></div>
       </div>
-      <button class="plan-btn btn-ol" id="el-pb3">S'abonner</button>
+      <button class="plan-btn btn-ol" id="el-pb3">Choisir Athlete &#8594;</button>
     </div>
+
+  </div>
+  <div class="plans-guarantee">
+    &#x1F512;&nbsp;Paiement s&#233;curis&#233;&nbsp; &middot; &nbsp;Annulation libre&nbsp; &middot; &nbsp;1er repas satisfait ou rembours&#233;
   </div>
 </div>
 
 
-<!-- MUSCLE -->
+<!-- ══ COMPARISON ANCHOR ═════════════════════════════════════════ -->
+<div class="compare-strip" id="compare-anchor">
+  <div class="compare-title">SAVY vs manger dehors 🍽️</div>
+  <div class="compare-row">
+    <span class="compare-label">Restaurant à Tétouan</span>
+    <div class="compare-bar-wrap"><div class="compare-bar" style="width:100%;background:#EF4444;opacity:.35;"></div></div>
+    <span class="compare-price bad">150&nbsp;MAD</span>
+  </div>
+  <div class="compare-row">
+    <span class="compare-label">Livraison classique</span>
+    <div class="compare-bar-wrap"><div class="compare-bar" style="width:80%;background:#F59E0B;opacity:.4;"></div></div>
+    <span class="compare-price bad">120&nbsp;MAD</span>
+  </div>
+  <div class="compare-row">
+    <span class="compare-label" style="font-weight:700;color:var(--text);">Plan Fitness SAVY</span>
+    <div class="compare-bar-wrap"><div class="compare-bar" style="width:79%;background:var(--green);"></div></div>
+    <span class="compare-price good">118&nbsp;MAD</span>
+  </div>
+  <div class="compare-note">Même prix qu'une livraison classique. Macros calculés, chef dédié, livraison offerte.</div>
+</div>
+
+
+<!-- ══ TESTIMONIALS ══════════════════════════════════════════════ -->
+<div class="testimonials">
+  <div class="testi-hd">Ce qu'ils disent 💬</div>
+  <div class="testi-scroll">
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-quote">« J'ai perdu 4kg en 3 semaines sans me priver. Le plan Fitness change tout — chaque repas est exactement ce qu'il me faut. »</div>
+      <div class="testi-author">
+        <div class="testi-avatar">S</div>
+        <div><div class="testi-name">Salma R.</div><div class="testi-tag">Abonnée Fitness · Tétouan</div></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-quote">« Livraison en 40 min, repas chaud et parfait. La Pasta Crevettes est incroyable. Je commande 3–4 fois par semaine. »</div>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:#E91E8C;">Y</div>
+        <div><div class="testi-name">Youssef K.</div><div class="testi-tag">Client Muscle Series · M'diq</div></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-quote">« L'IA nutritionnelle m'a recommandé exactement mon plan. 2 mois plus tard, mes résultats à la salle ont explosé. »</div>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:#7C3AED;">N</div>
+        <div><div class="testi-name">Nadia B.</div><div class="testi-tag">Abonnée Athlete · Martil</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MUSCLE ════════════════════════════════════════════════════ -->
 <div class="sec sec-lime" id="s-muscle">
   <div class="sec-inner">
     <div class="sec-hd">
       <div class="sec-ico">&#x1F4AA;</div>
       <div>
         <div class="sec-title" id="el-sm">Muscle Series</div>
-        <div class="sec-sub"  id="el-smd">Prot&#233;ines &#233;lev&#233;es. Vrais gains. Z&#233;ro compromis.</div>
+        <div class="sec-sub" id="el-smd">Prot&#233;ines &#233;lev&#233;es. Vrais gains. Z&#233;ro compromis.</div>
       </div>
     </div>
   </div>
   <div class="sec-div"></div>
   <div class="feat-scroll">
     <div class="feat-card" data-id="m1" onclick="openDetail('m1')">
-      <img class="feat-img" src="images/dish_08.jpg" onload="this.classList.add('vis')" alt="Power Pasta Crevettes">
+      <img class="feat-img" loading="lazy" decoding="async" src="images/dish_08.jpg" onload="this.classList.add('vis')" alt="Power Pasta Crevettes">
       <div class="feat-grad"></div>
+      <div class="social-badge"><div class="social-badge-dot"></div>12 command&#233;s aujourd'hui</div>
       <button class="feat-add idle" id="fb-m1" onclick="tog(event,'m1')">+</button>
       <div class="feat-body">
         <div class="feat-badge tg">&#x1F525; Best Seller</div>
         <div class="feat-name" id="el-m1n">Power Pasta Crevettes</div>
+        <div class="feat-desc">Linguine, crevettes fra&#238;ches, cr&#232;me l&#233;g&#232;re</div>
         <div class="feat-row">
           <div class="feat-macros"><span class="feat-mac">420 kcal</span><span class="feat-mac">26g P</span></div>
-          <div class="feat-price">72 MAD</div>
+          <div class="feat-price"><span class="meal-price-orig">85</span>72 MAD</div>
         </div>
       </div>
     </div>
     <div class="feat-card" data-id="m2" onclick="openDetail('m2')">
-      <img class="feat-img" src="images/dish_02.jpg" onload="this.classList.add('vis')" alt="Salad César Poulet">
+      <img class="feat-img" loading="lazy" decoding="async" src="images/dish_02.jpg" onload="this.classList.add('vis')" alt="Salad César Poulet">
       <div class="feat-grad"></div>
       <button class="feat-add idle" id="fb-m2" onclick="tog(event,'m2')">+</button>
       <div class="feat-body">
-        <div class="feat-badge tl">High Protein</div>
+        <div class="feat-badge tl">&#x1F4AA; High Protein</div>
         <div class="feat-name" id="el-m2n">Salad C&#233;sar Poulet</div>
+        <div class="feat-desc">Poulet grill&#233;, romaine, parmesan, cr&#233;meux</div>
         <div class="feat-row">
           <div class="feat-macros"><span class="feat-mac">390 kcal</span><span class="feat-mac">32g P</span></div>
           <div class="feat-price">49 MAD</div>
@@ -966,69 +1095,72 @@ body { letter-spacing:.01em; }
     </div>
   </div>
   <div class="mgrid">
-    <div class="mcard-lux" data-id="m3" onclick="openDetail('m3')">
+    <div class="mcard" data-id="m3" onclick="openDetail('m3')">
       <div class="mimg-wrap">
-        <img loading="lazy" decoding="async" class="mimg" src="images/dish_04.jpg" onload="this.classList.add('vis')" alt="Salade Poulet Grillé">
+        <img class="mimg" loading="lazy" decoding="async" src="images/dish_04.jpg" onload="this.classList.add('vis')" alt="Salade Poulet Grillé">
+        <div class="mgrad2"></div>
+        <span class="meal-tag tl">Low Carb</span>
+        <div class="tr-stack"><span class="trp">&#x23F1; 10m</span><span class="trp">&#x2605; 4.8</span></div>
+        <button class="meal-cta idle" id="gb-m3" onclick="tog(event,'m3')">+</button>
       </div>
-      <div class="lux-overlay"></div>
-      <button class="lux-cta idle" id="gb-m3" onclick="tog(event,'m3')">+</button>
-      <div class="lux-body">
-        <span class="lux-tag">LOW CARB</span>
-        <div class="lux-name" id="el-m3n">Salade Poulet Grill&#233;</div>
-        <div class="lux-row">
-          <div class="lux-price" style="color:var(--green)">45 MAD</div>
-          <div class="lux-cal">310 kcal</div>
-        </div>
-        <div class="lux-macro-bar">
-          <div class="lux-bar-seg" style="width:43%;background:#4ade80;"></div>
-          <div class="lux-bar-seg" style="width:22%;background:#facc15;margin-left:1px;"></div>
-          <div class="lux-bar-seg" style="width:35%;background:#fb923c;margin-left:1px;"></div>
+      <div class="mbody">
+        <span class="stag" style="background:rgba(9,153,41,.1);color:var(--green);">Keto</span>
+        <div class="meal-name" id="el-m3n">Salade Poulet Grill&#233;</div>
+        <div class="meal-desc">L&#233;ger, rassasiant, rich en prot&#233;ines</div>
+        <div class="price-row"><span class="meal-price" style="color:var(--green);">45 MAD</span><span class="meal-kcal">310 kcal</span></div>
+        <div class="bars">
+          <div class="brow"><span class="blbl">P</span><div class="btrack"><div class="bfill" style="width:56%;background:#4ade80;"></div></div><span class="bval">28g</span></div>
+          <div class="brow"><span class="blbl">C</span><div class="btrack"><div class="bfill" style="width:18%;background:#facc15;"></div></div><span class="bval">14g</span></div>
+          <div class="brow"><span class="blbl">F</span><div class="btrack"><div class="bfill" style="width:33%;background:#fb923c;"></div></div><span class="bval">10g</span></div>
+        <div class="bundle-tag">&#x1F381; + Shake prot&#233;in&#233; pour <strong>35 MAD</strong> de plus</div>
         </div>
       </div>
     </div>
-    <div class="mcard-lux" data-id="m4" onclick="openDetail('m4')">
+    <div class="mcard" data-id="m4" onclick="openDetail('m4')">
       <div class="mimg-wrap">
-        <img loading="lazy" decoding="async" class="mimg" src="images/dish_03.jpg" onload="this.classList.add('vis')" alt="Pasta aux Légumes">
+        <img class="mimg" loading="lazy" decoding="async" src="images/dish_03.jpg" onload="this.classList.add('vis')" alt="Pasta aux Légumes">
+        <div class="mgrad2"></div>
+        <span class="meal-tag tl">Vegan</span>
+        <div class="tr-stack"><span class="trp">&#x23F1; 18m</span><span class="trp">&#x2605; 4.6</span></div>
+        <button class="meal-cta idle" id="gb-m4" onclick="tog(event,'m4')">+</button>
       </div>
-      <div class="lux-overlay"></div>
-      <button class="lux-cta idle" id="gb-m4" onclick="tog(event,'m4')">+</button>
-      <div class="lux-body">
-        <span class="lux-tag">VEGAN</span>
-        <div class="lux-name" id="el-m4n">Pasta aux L&#233;gumes</div>
-        <div class="lux-row">
-          <div class="lux-price" style="color:var(--green)">52 MAD</div>
-          <div class="lux-cal">360 kcal</div>
-        </div>
-        <div class="lux-macro-bar">
-          <div class="lux-bar-seg" style="width:12%;background:#4ade80;"></div>
-          <div class="lux-bar-seg" style="width:67%;background:#facc15;margin-left:1px;"></div>
-          <div class="lux-bar-seg" style="width:21%;background:#fb923c;margin-left:1px;"></div>
+      <div class="mbody">
+        <span class="stag" style="background:rgba(9,153,41,.1);color:var(--green);">Plant Power</span>
+        <div class="meal-name" id="el-m4n">Pasta aux L&#233;gumes</div>
+        <div class="meal-desc">&#201;pinards, courgette, herbes fra&#238;ches</div>
+        <div class="price-row"><span class="meal-price" style="color:var(--green);">52 MAD</span><span class="meal-kcal">360 kcal</span></div>
+        <div class="bars">
+          <div class="brow"><span class="blbl">P</span><div class="btrack"><div class="bfill" style="width:20%;background:#4ade80;"></div></div><span class="bval">10g</span></div>
+          <div class="brow"><span class="blbl">C</span><div class="btrack"><div class="bfill" style="width:70%;background:#facc15;"></div></div><span class="bval">56g</span></div>
+          <div class="brow"><span class="blbl">F</span><div class="btrack"><div class="bfill" style="width:27%;background:#fb923c;"></div></div><span class="bval">8g</span></div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- LEAN & FIT -->
+<!-- ══ LEAN & FIT ════════════════════════════════════════════════ -->
 <div class="sec sec-rose" id="s-lean">
   <div class="sec-inner">
     <div class="sec-hd">
       <div class="sec-ico">&#x1F338;</div>
       <div>
         <div class="sec-title" id="el-sl">Lean &amp; Fit</div>
-        <div class="sec-sub"  id="el-sld">L&#233;ger, lumineux, puissant. Cr&#233;&#233; pour elle.</div>
+        <div class="sec-sub" id="el-sld">L&#233;ger, lumineux, puissant. Con&#231;u pour elle.</div>
       </div>
     </div>
   </div>
   <div class="sec-div"></div>
   <div class="feat-scroll">
     <div class="feat-card" data-id="l1" onclick="openDetail('l1')">
-      <img class="feat-img" src="images/dish_01.jpg" onload="this.classList.add('vis')" alt="Salad Russe Light">
+      <img class="feat-img" loading="lazy" decoding="async" src="images/dish_01.jpg" onload="this.classList.add('vis')" alt="Salad Russe Light">
       <div class="feat-grad"></div>
+      <div class="social-badge"><div class="social-badge-dot"></div>8 command&#233;s aujourd'hui</div>
       <button class="feat-add idle" id="fb-l1" onclick="tog(event,'l1')">+</button>
       <div class="feat-body">
         <div class="feat-badge tg">&#x1F525; Best Seller</div>
         <div class="feat-name" id="el-l1n">Salad Russe Light</div>
+        <div class="feat-desc">L&#233;gumes croquants, mayo l&#233;g&#232;re, vitamin&#233;e</div>
         <div class="feat-row">
           <div class="feat-macros"><span class="feat-mac">280 kcal</span><span class="feat-mac">8g P</span></div>
           <div class="feat-price">39 MAD</div>
@@ -1036,12 +1168,13 @@ body { letter-spacing:.01em; }
       </div>
     </div>
     <div class="feat-card" data-id="l2" onclick="openDetail('l2')">
-      <img class="feat-img" src="images/dish_05.jpg" onload="this.classList.add('vis')" alt="Salad de Pâte Fit">
+      <img class="feat-img" loading="lazy" decoding="async" src="images/dish_05.jpg" onload="this.classList.add('vis')" alt="Salad de Pâte Fit">
       <div class="feat-grad"></div>
       <button class="feat-add idle" id="fb-l2" onclick="tog(event,'l2')">+</button>
       <div class="feat-body">
-        <div class="feat-badge tr">Low Cal</div>
+        <div class="feat-badge tr">&#x1F338; Low Cal</div>
         <div class="feat-name" id="el-l2n">Salad de P&#226;te Fit</div>
+        <div class="feat-desc">P&#226;tes compl&#232;tes, olives, basilic frais</div>
         <div class="feat-row">
           <div class="feat-macros"><span class="feat-mac">340 kcal</span><span class="feat-mac">12g P</span></div>
           <div class="feat-price">42 MAD</div>
@@ -1051,182 +1184,203 @@ body { letter-spacing:.01em; }
   </div>
 </div>
 
-<!-- HEALTHY FAST FOOD -->
+<!-- ══ HEALTHY FAST FOOD ═════════════════════════════════════════ -->
 <div class="sec sec-fire" id="s-fast">
   <div class="sec-inner">
     <div class="sec-hd">
       <div class="sec-ico">&#x26A1;</div>
       <div>
         <div class="sec-title" id="el-sf">Healthy Fast Food</div>
-        <div class="sec-sub"  id="el-sfd">Les saveurs que tu veux. Les macros qu'il te faut.</div>
+        <div class="sec-sub" id="el-sfd">Les saveurs que tu veux. Les macros qu'il te faut.</div>
       </div>
     </div>
   </div>
   <div class="sec-div"></div>
   <div class="mgrid">
-    <div class="mcard-lux" data-id="f1" onclick="openDetail('f1')">
+    <div class="mcard" data-id="f1" onclick="openDetail('f1')">
       <div class="mimg-wrap">
-        <img loading="lazy" decoding="async" class="mimg" src="images/dish_05.jpg" onload="this.classList.add('vis')" alt="Mini Burger Gourmet">
+        <img class="mimg" loading="lazy" decoding="async" src="images/dish_05.jpg" onload="this.classList.add('vis')" alt="Mini Burger Gourmet">
+        <div class="mgrad2"></div>
+        <span class="meal-tag tf">Cheat Smart</span>
+        <div class="tr-stack"><span class="trp">&#x23F1; 15m</span><span class="trp">&#x2605; 4.7</span></div>
+        <button class="meal-cta idle" id="gb-f1" onclick="tog(event,'f1')">+</button>
       </div>
-      <div class="lux-overlay"></div>
-      <button class="lux-cta idle" id="gb-f1" onclick="tog(event,'f1')">+</button>
-      <div class="lux-body">
-        <span class="lux-tag">CHEAT SMART</span>
-        <div class="lux-name" id="el-f1n">Mini Burger Gourmet</div>
-        <div class="lux-row">
-          <div class="lux-price" style="color:var(--fire);">35 MAD</div>
-          <div class="lux-cal">240 kcal</div>
-        </div>
-        <div class="lux-macro-bar">
-          <div class="lux-bar-seg" style="width:25%;background:#4ade80;"></div>
-          <div class="lux-bar-seg" style="width:39%;background:#facc15;margin-left:1px;"></div>
-          <div class="lux-bar-seg" style="width:36%;background:#fb923c;margin-left:1px;"></div>
+      <div class="mbody">
+        <span class="stag" style="background:rgba(234,88,12,.1);color:var(--orange);">Balanced</span>
+        <div class="meal-name" id="el-f1n">Mini Burger Gourmet</div>
+        <div class="meal-desc">B&#339;uf 100%, sauce maison, fromage fondu</div>
+        <div class="price-row"><span class="meal-price" style="color:var(--orange);">35 MAD</span><span class="meal-kcal">240 kcal</span></div>
+        <div class="bars">
+          <div class="brow"><span class="blbl">P</span><div class="btrack"><div class="bfill" style="width:28%;background:#4ade80;"></div></div><span class="bval">14g</span></div>
+          <div class="brow"><span class="blbl">C</span><div class="btrack"><div class="bfill" style="width:28%;background:#facc15;"></div></div><span class="bval">22g</span></div>
+          <div class="brow"><span class="blbl">F</span><div class="btrack"><div class="bfill" style="width:30%;background:#fb923c;"></div></div><span class="bval">9g</span></div>
         </div>
       </div>
     </div>
-    <div class="mcard-lux" data-id="f2" onclick="openDetail('f2')">
+    <div class="mcard" data-id="f2" onclick="openDetail('f2')">
       <div class="mimg-wrap">
-        <img loading="lazy" decoding="async" class="mimg" src="images/dish_13.jpg" onload="this.classList.add('vis')" alt="Quesadilla Massala">
+        <img class="mimg" loading="lazy" decoding="async" src="images/dish_13.jpg" onload="this.classList.add('vis')" alt="Quesadilla Massala">
+        <div class="mgrad2"></div>
+        <span class="meal-tag tg">&#x1F525; Top Pick</span>
+        <div class="tr-stack"><span class="trp">&#x23F1; 18m</span><span class="trp">&#x2605; 4.7</span></div>
+        <button class="meal-cta idle" id="gb-f2" onclick="tog(event,'f2')">+</button>
       </div>
-      <div class="lux-overlay"></div>
-      <button class="lux-cta idle" id="gb-f2" onclick="tog(event,'f2')">+</button>
-      <div class="lux-body">
-        <span class="lux-tag">TOP PICK</span>
-        <div class="lux-name" id="el-f2n">Quesadilla Massala</div>
-        <div class="lux-row">
-          <div class="lux-price" style="color:var(--fire)">52 MAD</div>
-          <div class="lux-cal">380 kcal</div>
-        </div>
-        <div class="lux-macro-bar">
-          <div class="lux-bar-seg" style="width:28%;background:#4ade80;"></div>
-          <div class="lux-bar-seg" style="width:39%;background:#facc15;margin-left:1px;"></div>
-          <div class="lux-bar-seg" style="width:34%;background:#fb923c;margin-left:1px;"></div>
+      <div class="mbody">
+        <span class="stag" style="background:rgba(234,88,12,.1);color:var(--orange);">Spicy Fusion</span>
+        <div class="meal-name" id="el-f2n">Quesadilla Massala</div>
+        <div class="meal-desc">Poulet marin&#233;, froamage fondu, &#233;pices marocaines</div>
+        <div class="price-row"><span class="meal-price" style="color:var(--orange);">52 MAD</span><span class="meal-kcal">380 kcal</span></div>
+        <div class="bars">
+          <div class="brow"><span class="blbl">P</span><div class="btrack"><div class="bfill" style="width:48%;background:#4ade80;"></div></div><span class="bval">24g</span></div>
+          <div class="brow"><span class="blbl">C</span><div class="btrack"><div class="bfill" style="width:43%;background:#facc15;"></div></div><span class="bval">34g</span></div>
+          <div class="brow"><span class="blbl">F</span><div class="btrack"><div class="bfill" style="width:43%;background:#fb923c;"></div></div><span class="bval">13g</span></div>
         </div>
       </div>
     </div>
-    <div class="mcard-lux" data-id="f3" style="grid-column:1/-1;aspect-ratio:16/7;" onclick="openDetail('f3')">
-      <div class="mimg-wrap">
-        <img loading="lazy" decoding="async" class="mimg" src="images/dish_14.jpg" onload="this.classList.add('vis')" alt="Burger Viande Hachée">
+    <div class="mcard" data-id="f3" style="grid-column:1/-1;" onclick="openDetail('f3')">
+      <div class="mimg-wrap" style="height:170px;">
+        <img class="mimg" loading="lazy" decoding="async" src="images/dish_14.jpg" onload="this.classList.add('vis')" alt="Burger Viande Hachée">
+        <div class="mgrad2"></div>
+        <span class="meal-tag tf">Trending</span>
+        <div class="tr-stack"><span class="trp">&#x23F1; 20m</span><span class="trp">&#x2605; 4.8</span></div>
+        <button class="meal-cta idle" id="gb-f3" onclick="tog(event,'f3')">+</button>
       </div>
-      <div class="lux-overlay"></div>
-      <button class="lux-cta idle" id="gb-f3" onclick="tog(event,'f3')">+</button>
-      <div class="lux-body">
-        <span class="lux-tag">TRENDING &#x2605; 4.8</span>
-        <div class="lux-name" id="el-f3n">Burger Viande Hach&#233;e</div>
-        <div class="lux-row">
-          <div class="lux-price" style="color:var(--fire);">58 MAD</div>
-          <div class="lux-cal">460 kcal &middot; 34g P</div>
-        </div>
-        <div class="lux-macro-bar">
-          <div class="lux-bar-seg" style="width:32%;background:#4ade80;"></div>
-          <div class="lux-bar-seg" style="width:34%;background:#facc15;margin-left:1px;"></div>
-          <div class="lux-bar-seg" style="width:34%;background:#fb923c;margin-left:1px;"></div>
+      <div class="mbody">
+        <span class="stag" style="background:rgba(234,88,12,.1);color:var(--orange);">High Protein</span>
+        <div class="meal-name" id="el-f3n">Burger Viande Hach&#233;e</div>
+        <div class="meal-desc">Steak 100% b&#339;uf, sauce burger, cornichons maison</div>
+        <div class="price-row"><span class="meal-price" style="color:var(--orange);">58 MAD</span><span class="meal-kcal">460 kcal</span></div>
+        <div class="bars">
+          <div class="brow"><span class="blbl">P</span><div class="btrack"><div class="bfill" style="width:68%;background:#4ade80;"></div></div><span class="bval">34g</span></div>
+          <div class="brow"><span class="blbl">C</span><div class="btrack"><div class="bfill" style="width:45%;background:#facc15;"></div></div><span class="bval">36g</span></div>
+          <div class="brow"><span class="blbl">F</span><div class="btrack"><div class="bfill" style="width:53%;background:#fb923c;"></div></div><span class="bval">16g</span></div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- SWEET -->
+<!-- ══ SWEET & ADD-ONS ═══════════════════════════════════════════ -->
 <div class="sec sec-plum" id="s-sweet">
   <div class="sec-inner">
     <div class="sec-hd">
       <div class="sec-ico">&#x1F353;</div>
       <div>
         <div class="sec-title" id="el-ss">Douceurs &amp; Extras</div>
-        <div class="sec-sub"  id="el-ssd">Fais-toi plaisir. Intelligemment.</div>
+        <div class="sec-sub" id="el-ssd">Fais-toi plaisir. Intelligemment.</div>
       </div>
     </div>
   </div>
   <div class="sec-div"></div>
   <div class="mgrid">
-    <div class="mcard-lux" data-id="sw1" style="background:linear-gradient(145deg,#120E22,#0E0A1C);" onclick="openDetail('sw1')">
-      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:64px;opacity:.2;">&#x1F36E;</div>
-      <div class="lux-overlay" style="background:linear-gradient(to top,rgba(18,14,34,.95) 0%,rgba(18,14,34,.4) 55%,transparent 100%);"></div>
-      <button class="lux-cta idle" id="gb-sw1" onclick="tog(event,'sw1')">+</button>
-      <div class="lux-body">
-        <span class="lux-tag" style="border-color:rgba(192,132,252,.3);color:rgba(192,132,252,.9);">LOW FAT</span>
-        <div class="lux-name" id="el-sw1n">Flan Caramel L&#233;ger</div>
-        <div class="lux-row">
-          <div class="lux-price" style="color:var(--plum);">28 MAD</div>
-          <div class="lux-cal">180 kcal</div>
-        </div>
-        <div class="lux-macro-bar">
-          <div class="lux-bar-seg" style="width:12%;background:#4ade80;"></div>
-          <div class="lux-bar-seg" style="width:67%;background:#facc15;margin-left:1px;"></div>
-          <div class="lux-bar-seg" style="width:21%;background:#fb923c;margin-left:1px;"></div>
-        </div>
+    <div class="mcard" data-id="sw1" onclick="openDetail('sw1')">
+      <div class="mimg-wrap" style="background:linear-gradient(135deg,#1e1a30,#16122a);">
+        <div class="mimg-ph">&#x1F36E;</div><div class="mgrad2"></div>
+        <span class="meal-tag tp">Low Fat</span>
+        <button class="meal-cta idle" id="gb-sw1" onclick="tog(event,'sw1')">+</button>
+      </div>
+      <div class="mbody">
+        <span class="stag" style="background:rgba(147,51,234,.1);color:#9333EA;">180 kcal</span>
+        <div class="meal-name" id="el-sw1n">Flan Caramel L&#233;ger</div>
+        <div class="meal-desc">Lait &#233;cr&#233;m&#233;, caramel doux, vanille naturelle</div>
+        <div class="price-row"><span class="meal-price" style="color:#9333EA;">28 MAD</span><span class="meal-kcal">5g prot.</span></div>
       </div>
     </div>
-    <div class="mcard-lux" data-id="sw2" style="background:linear-gradient(145deg,#120E22,#0E0A1C);" onclick="openDetail('sw2')">
-      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:64px;opacity:.2;">&#x1F370;</div>
-      <div class="lux-overlay" style="background:linear-gradient(to top,rgba(18,14,34,.95) 0%,rgba(18,14,34,.4) 55%,transparent 100%);"></div>
-      <button class="lux-cta idle" id="gb-sw2" onclick="tog(event,'sw2')">+</button>
-      <div class="lux-body">
-        <span class="lux-tag" style="border-color:rgba(192,132,252,.3);color:rgba(192,132,252,.9);">BEST SELLER</span>
-        <div class="lux-name" id="el-sw2n">Cheesecake Creamy</div>
-        <div class="lux-row">
-          <div class="lux-price" style="color:var(--plum);">32 MAD</div>
-          <div class="lux-cal">260 kcal</div>
-        </div>
-        <div class="lux-macro-bar">
-          <div class="lux-bar-seg" style="width:13%;background:#4ade80;"></div>
-          <div class="lux-bar-seg" style="width:48%;background:#facc15;margin-left:1px;"></div>
-          <div class="lux-bar-seg" style="width:39%;background:#fb923c;margin-left:1px;"></div>
-        </div>
+    <div class="mcard" data-id="sw2" onclick="openDetail('sw2')">
+      <div class="mimg-wrap" style="background:linear-gradient(135deg,#1e1a30,#16122a);">
+        <div class="mimg-ph">&#x1F370;</div><div class="mgrad2"></div>
+        <span class="meal-tag tg">&#x1F525; Best Seller</span>
+        <button class="meal-cta idle" id="gb-sw2" onclick="tog(event,'sw2')">+</button>
+      </div>
+      <div class="mbody">
+        <span class="stag" style="background:rgba(147,51,234,.1);color:#9333EA;">260 kcal</span>
+        <div class="meal-name" id="el-sw2n">Cheesecake Creamy</div>
+        <div class="meal-desc">Fromage blanc onctueux, fruits rouges, base biscuit&#233;e</div>
+        <div class="price-row"><span class="meal-price" style="color:#9333EA;">32 MAD</span><span class="meal-kcal">8g prot.</span></div>
       </div>
     </div>
-    <div class="mcard-lux" data-id="sw3" style="background:linear-gradient(145deg,#120E22,#0E0A1C);" onclick="openDetail('sw3')">
-      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:64px;opacity:.2;">&#x1F370;</div>
-      <div class="lux-overlay" style="background:linear-gradient(to top,rgba(18,14,34,.95) 0%,rgba(18,14,34,.4) 55%,transparent 100%);"></div>
-      <button class="lux-cta idle" id="gb-sw3" onclick="tog(event,'sw3')">+</button>
-      <div class="lux-body">
-        <span class="lux-tag" style="border-color:rgba(192,132,252,.3);color:rgba(192,132,252,.9);">CHEF'S PICK</span>
-        <div class="lux-name" id="el-sw3n">Tiramisu Healthy</div>
-        <div class="lux-row">
-          <div class="lux-price" style="color:var(--plum);">30 MAD</div>
-          <div class="lux-cal">240 kcal</div>
-        </div>
-        <div class="lux-macro-bar">
-          <div class="lux-bar-seg" style="width:12%;background:#4ade80;"></div>
-          <div class="lux-bar-seg" style="width:56%;background:#facc15;margin-left:1px;"></div>
-          <div class="lux-bar-seg" style="width:32%;background:#fb923c;margin-left:1px;"></div>
-        </div>
+    <div class="mcard" data-id="sw3" onclick="openDetail('sw3')">
+      <div class="mimg-wrap" style="background:linear-gradient(135deg,#1e1a30,#16122a);">
+        <div class="mimg-ph">&#x1F370;</div><div class="mgrad2"></div>
+        <span class="meal-tag tp">Chef's Pick</span>
+        <button class="meal-cta idle" id="gb-sw3" onclick="tog(event,'sw3')">+</button>
+      </div>
+      <div class="mbody">
+        <span class="stag" style="background:rgba(147,51,234,.1);color:#9333EA;">240 kcal</span>
+        <div class="meal-name" id="el-sw3n">Tiramisu Healthy</div>
+        <div class="meal-desc">Mascarpone all&#233;g&#233;, caf&#233; intense, cacao pur</div>
+        <div class="price-row"><span class="meal-price" style="color:#9333EA;">30 MAD</span><span class="meal-kcal">7g prot.</span></div>
       </div>
     </div>
-    <div class="mcard-lux" data-id="sw4" style="background:linear-gradient(145deg,#120E22,#0E0A1C);" onclick="openDetail('sw4')">
-      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:64px;opacity:.2;">&#x1F964;</div>
-      <div class="lux-overlay" style="background:linear-gradient(to top,rgba(18,14,34,.95) 0%,rgba(18,14,34,.4) 55%,transparent 100%);"></div>
-      <button class="lux-cta idle" id="gb-sw4" onclick="tog(event,'sw4')">+</button>
-      <div class="lux-body">
-        <span class="lux-tag" style="border-color:rgba(192,132,252,.3);color:rgba(192,132,252,.9);">NEW</span>
-        <div class="lux-name" id="el-sw4n">Protein Shake Vanille</div>
-        <div class="lux-row">
-          <div class="lux-price" style="color:var(--plum);">35 MAD</div>
-          <div class="lux-cal">190 kcal</div>
-        </div>
-        <div class="lux-macro-bar">
-          <div class="lux-bar-seg" style="width:62%;background:#4ade80;"></div>
-          <div class="lux-bar-seg" style="width:29%;background:#facc15;margin-left:1px;"></div>
-          <div class="lux-bar-seg" style="width:9%;background:#fb923c;margin-left:1px;"></div>
-        </div>
+    <div class="mcard" data-id="sw4" onclick="openDetail('sw4')">
+      <div class="mimg-wrap" style="background:linear-gradient(135deg,#1e1a30,#16122a);">
+        <div class="mimg-ph">&#x1F964;</div><div class="mgrad2"></div>
+        <span class="meal-tag tn">New</span>
+        <button class="meal-cta idle" id="gb-sw4" onclick="tog(event,'sw4')">+</button>
+      </div>
+      <div class="mbody">
+        <span class="stag" style="background:rgba(147,51,234,.1);color:#9333EA;">190 kcal</span>
+        <div class="meal-name" id="el-sw4n">Protein Shake Vanille</div>
+        <div class="meal-desc">Whey premium, lait d'amande, glace, vanille</div>
+        <div class="price-row"><span class="meal-price" style="color:#9333EA;">35 MAD</span><span class="meal-kcal">30g prot.</span></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- FOOTER -->
+<!-- ══ BENEFITS ══════════════════════════════════════════════════ -->
+<div class="benefits-sec">
+  <h2 class="benefits-title">Pourquoi SAVY ?</h2>
+  <div class="benefits-grid">
+    <div class="benefit-card">
+      <div class="benefit-ico">&#x23F0;</div>
+      <div class="benefit-title">Gagne du temps</div>
+      <div class="benefit-desc">Ton repas livr&#233; en 45 min. Cuisiner, c'est fini.</div>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-ico">&#x1F957;</div>
+      <div class="benefit-title">Mange propre</div>
+      <div class="benefit-desc">Ingr&#233;dients frais, macros calcul&#233;s, z&#233;ro additifs.</div>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-ico">&#x1F3AF;</div>
+      <div class="benefit-title">Atteins tes objectifs</div>
+      <div class="benefit-desc">Muscle, minceur ou &#233;nergie — chaque repas est con&#231;u pour toi.</div>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-ico">&#x1F6D5;</div>
+      <div class="benefit-title">Livr&#233; chez toi</div>
+      <div class="benefit-desc">T&#233;touan, M'diq, Martil. 45 min, livraison offerte.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ FINAL CTA ═════════════════════════════════════════════════ -->
+<div class="final-cta">
+  <div class="fca-label">Prêt à commencer ?</div>
+  <div class="fca-title">Ton premier repas<br>t'attend.</div>
+  <div class="fca-sub">Rejoins les clients SAVY de T&#233;touan qui mangent mieux, vivent mieux.</div>
+  <button class="fca-btn" onclick="toggleCart()">Commander maintenant &#8594;</button>
+</div>
+
+<!-- ══ FOOTER ════════════════════════════════════════════════════ -->
 <footer>
-  <div class="ft-txt" id="el-ft">&#x1F9EC; Chef IA Personnel &#xB7; T&#233;touan &#xB7; Con&#231;u pour toi.</div>
+  <div class="ft-txt" id="el-ft">&#x1F9EC; Chef IA Personnel &middot; T&#233;touan &middot; Con&#231;u pour toi.</div>
 </footer>
 
-<!-- CART DRAWER -->
+<!-- ══ UPSELL TOAST ══════════════════════════════════════════════ -->
+<div id="upsell-toast">
+  <span id="ut-msg">&#x1F4AA; Ajoute un shake pour compléter !</span>
+  <button class="ut-cta" onclick="addCombo();_hideUpsell()">+&nbsp;35 MAD</button>
+</div>
+
+<!-- ══ CART DRAWER ═══════════════════════════════════════════════ -->
 <div id="drawer">
   <div class="drawer-handle" onclick="toggleDrawer()">
     <div class="dh-left">
       <div class="dh-icon">&#x1F6D2;</div>
       <div class="dh-count" id="dn">0</div>
-      <div class="dh-sep">&#xB7;</div>
+      <div class="dh-sep">&middot;</div>
       <div class="dh-total" id="dt">0 MAD</div>
     </div>
     <div class="dh-right">
@@ -1235,20 +1389,39 @@ body { letter-spacing:.01em; }
     </div>
   </div>
   <div id="drawer-body">
+    <div id="free-del-bar">
+      <div class="fdl-msg" id="fdl-msg">Livraison <span>gratuite</span> !</div>
+      <div class="fdl-track"><div class="fdl-fill" id="fdl-fill" style="width:0%"></div></div>
+    </div>
     <div id="combo-row" style="display:none;" class="combo">
       <div class="combo-txt">
         <div class="combo-ey" id="el-cey">&#x2728; Ajouter un shake</div>
-        <div class="combo-nm" id="el-cnm">Protein Shake Vanille &#x2014; 35 MAD</div>
+        <div class="combo-nm" id="el-cnm">Protein Shake Vanille &mdash; 35 MAD</div>
       </div>
       <button class="combo-btn" id="el-cadd" onclick="addCombo()">Ajouter +</button>
     </div>
+    <div id="sub-nudge">
+      <div class="sn-header"><div class="sn-title" id="sn-title">&#x1F4CA; Abonne-toi &amp; &#233;conomise</div><div class="sn-badge">SMART</div></div>
+      <div class="sn-body" id="sn-body">Ces 2 plats co&#251;tent <span class="sn-saving" id="sn-saving">-- MAD</span> / semaine avec le plan Fitness &#8212; au lieu de <span id="sn-normal">-- MAD</span>.</div>
+      <button class="sn-cta" onclick="go('s-plans');toggleDrawer()">Voir mon plan &#8594;</button>
+    </div>
     <div id="drawer-items"></div>
+    <div id="cart-saving-row">
+      <span class="csr-label">&#x1F4B0; Avec abonnement tu &#233;conomises</span>
+      <span class="csr-val" id="csr-val">-- MAD / sem.</span>
+    </div>
+    <div id="checkout-saving">
+      <span class="cs-left" id="cs-left">💰 Avec le plan Fitness tu économises</span>
+      <span class="cs-right" id="cs-right">-- MAD/mois</span>
+    </div>
     <div class="drawer-foot">
       <button class="d-clear" id="el-clr" onclick="clearCart()">Vider</button>
-      <button class="d-order" id="el-onow" onclick="checkout()">Commander &#xB7; <span id="dt2">0 MAD</span></button>
+      <button class="d-order" id="el-onow" onclick="checkout()">Commander &middot; <span id="dt2">0 MAD</span></button>
     </div>
   </div>
 </div>
+
+
 
 <!-- MEAL DETAIL SHEET -->
 <div id="detail-overlay" onclick="closeDetail()"></div>
@@ -1308,15 +1481,23 @@ body { letter-spacing:.01em; }
   <button class="ds-cta" id="ds-cta-btn" onclick="dsToggleCart()">+ Ajouter à la commande</button>
 </div>
 
+
 <!-- SCROLL TO TOP -->
 <button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Retour en haut">↑</button>
 
 <!-- ABANDONMENT NUDGE TOAST -->
+<div id="plan-nudge">
+  <div class="pn-txt" id="pn-txt">2 plats = abonnement moins cher. Passe au Fitness et &#233;conomise &#x2212;15%.</div>
+  <button class="pn-cta" onclick="go('s-plans');_hidePlanNudge()">Voir</button>
+  <button class="pn-x" onclick="_hidePlanNudge()">&#x2715;</button>
+</div>
+
 <div id="abandon-toast">
   <span id="at-msg">Tu as des plats dans ton panier 👀</span>
   <button class="at-cta" onclick="toggleDrawer();_hideAbandon()">Commander</button>
   <button class="at-x" onclick="_hideAbandon()">✕</button>
 </div>
+
 
 <script>
 (function() {
@@ -1511,6 +1692,18 @@ function tog(ev,id){
   else cart[id]={n:getName(id),p:DATA[id].p,e:DATA[id].e,qty:1};
   refreshBtn(id);
   renderCart();
+  const _cartCount = Object.keys(cart).length;
+  if(cart[id]) {
+    if (_cartCount === 1) setTimeout(_showUpsell, 400);
+    if (_cartCount === 2) {
+      // 2nd item: open drawer to show sub nudge
+      setTimeout(() => {
+        const drw = document.getElementById('drawer');
+        const body = document.getElementById('drawer-body');
+        if (drw && !drawerOpen) { drawerOpen=true; body?.classList.add('open'); drw?.classList.add('expanded'); }
+      }, 500);
+    }
+  }
   // Bounce feedback on the button
   ['fb-','gb-'].forEach(pre=>{
     const b=document.getElementById(pre+id);
@@ -1561,8 +1754,13 @@ function checkout(){
   const t=T[lang];
   const lines=entries.map(([,v])=>`• ${v.n} x${v.qty||1} — ${(v.p*(v.qty||1))} MAD`).join('%0A');
   const total=entries.reduce((s,[,v])=>s+(v.p*(v.qty||1)),0);
-  const intro={fr:'Bonjour SAVY, je voudrais commander%3A%0A',en:'Hello SAVY, I want to order%3A%0A',ar:'مرحبا SAVY، أريد طلب%3A%0A'};
-  const outro={fr:`%0A%0ATotal%3A ${total} MAD`,en:`%0A%0ATotal%3A ${total} MAD`,ar:`%0A%0Aالمجموع%3A ${total} درهم`};
+  const monthlySave = Math.round(total * 4 * 0.15);
+  const intro={fr:'Bonjour SAVY 👋, je voudrais commander%3A%0A',en:'Hello SAVY 👋, I want to order%3A%0A',ar:'مرحبا SAVY 👋، أريد طلب%3A%0A'};
+  const outro={
+    fr:`%0A%0A💰 Total%3A ${total} MAD%0A%0A💡 Info%3A Avec le plan Fitness j'économiserais ${monthlySave} MAD/mois — je suis intéressé(e) !`,
+    en:`%0A%0A💰 Total%3A ${total} MAD%0A%0A💡 FYI%3A With the Fitness plan I'd save ${monthlySave} MAD/month — interested!`,
+    ar:`%0A%0A💰 المجموع%3A ${total} درهم%0A%0A💡 ملاحظة%3A مع خطة فيتنس سأوفر ${monthlySave} درهم/شهر`
+  };
   const msg=(intro[lang]||intro.fr)+lines+(outro[lang]||outro.fr);
   window.open('https://wa.me/212708700830?text='+msg,'_blank');
 }
@@ -1609,6 +1807,84 @@ function renderCart(){
   // Combo
   const combo=document.getElementById('combo-row');
   if(combo) combo.style.display=count>0&&!cart['sw4']?'flex':'none';
+
+  // ── Free delivery progress bar ──────────────────────────────
+  const fdBar  = document.getElementById('free-del-bar');
+  const fdFill = document.getElementById('fdl-fill');
+  const fdMsg  = document.getElementById('fdl-msg');
+  const FREE_DEL_MIN = 80; // free delivery above 80 MAD
+  if (fdBar && fdFill) {
+    if (count > 0) {
+      fdBar.classList.add('show');
+      const pct = Math.min(100, Math.round(total / FREE_DEL_MIN * 100));
+      fdFill.style.width = pct + '%';
+      const msgs = {
+        fr: total >= FREE_DEL_MIN
+          ? 'Livraison <span>gratuite</span> offerte !'
+          : `Plus que <span>${FREE_DEL_MIN - total} MAD</span> pour la livraison offerte`,
+        en: total >= FREE_DEL_MIN
+          ? '<span>Free</span> delivery!'
+          : `<span>${FREE_DEL_MIN - total} MAD</span> away from free delivery`,
+        ar: total >= FREE_DEL_MIN
+          ? 'التوصيل <span>مجاني</span>!'
+          : `<span>${FREE_DEL_MIN - total} درهم</span> للتوصيل المجاني`,
+      };
+      if (fdMsg) fdMsg.innerHTML = msgs[lang] || msgs.fr;
+    } else {
+      fdBar.classList.remove('show');
+    }
+  }
+
+  // ── Subscription nudge in drawer ────────────────────────────
+  const subNudge = document.getElementById('sub-nudge');
+  const snSaving = document.getElementById('sn-saving');
+  const snNormal = document.getElementById('sn-normal');
+  const snTitle  = document.getElementById('sn-title');
+  const snBody   = document.getElementById('sn-body');
+  if (subNudge) {
+    if (count >= 1) {
+      subNudge.classList.add('show');
+      const weekSaving   = Math.round(total * 0.15);          // 15% off
+      const monthSaving  = Math.round(total * 4 * 0.15);      // × 4 weeks
+      const subPrice     = Math.round(total * 0.85);
+      if (snSaving) snSaving.textContent = monthSaving + ' MAD';
+      if (snNormal) snNormal.textContent = total + ' MAD';
+      // Sharper copy based on cart size
+      const l = lang || 'fr';
+      const nudgeCopy = {
+        fr: count === 1
+          ? `Ajoute ${Math.max(1, 4 - count)} plats de plus et rejoins le plan Fitness — tu économises <strong class="sn-saving">${monthSaving} MAD/mois</strong>.`
+          : `Avec le plan Fitness, ces ${count} commandes te coûtent <strong class="sn-saving">${subPrice} MAD</strong> au lieu de <strong>${total} MAD</strong>.`,
+        en: `Subscribe to Fitness and save <strong class="sn-saving">${monthSaving} MAD/month</strong> on orders like this.`,
+        ar: `اشترك في خطة فيتنس ووفّر <strong class="sn-saving">${monthSaving} درهم/شهر</strong>.`,
+      };
+      if (snBody) snBody.innerHTML = nudgeCopy[l] || nudgeCopy.fr;
+    } else {
+      subNudge.classList.remove('show');
+    }
+  }
+
+  // ── Cart saving callout ──────────────────────────────────────
+  const csrRow = document.getElementById('cart-saving-row');
+  const csrVal = document.getElementById('csr-val');
+  if (csrRow && count >= 2) {
+    csrRow.classList.add('show');
+    const monthlySave = Math.round(total * 4 * 0.15);
+    if (csrVal) csrVal.textContent = monthlySave + ' MAD / mois';
+  } else if (csrRow) {
+    csrRow.classList.remove('show');
+  }
+
+  // ── Checkout saving banner ───────────────────────────────────
+  const csEl   = document.getElementById('checkout-saving');
+  const csRight = document.getElementById('cs-right');
+  if (csEl && count >= 1) {
+    csEl.classList.add('show');
+    const monthlySave2 = Math.round(total * 4 * 0.15);
+    if (csRight) csRight.textContent = monthlySave2 + ' MAD/mois';
+  } else if (csEl) {
+    csEl.classList.remove('show');
+  }
 }
 
 function toggleCart(){if(Object.keys(cart).length) toggleDrawer();}
@@ -1644,6 +1920,9 @@ function _initButtons() {
     const newB = b.cloneNode(true);
     b.parentNode.replaceChild(newB, b);
     newB.addEventListener('click', () => {
+      newB.closest('.plan')?.classList.remove('plan-pop');
+      void newB.closest('.plan')?.offsetWidth; // reflow
+      newB.closest('.plan')?.classList.add('plan-pop');
       const msg = {
         fr:"🚀 Abonnements disponibles bientôt !",
         en:"🚀 Subscription plans launching soon!",
@@ -1829,6 +2108,69 @@ function dsToggleCart() {
 }
 
 
+
+// ── Sticky plan reminder ─────────────────────────────────────
+(function() {
+  const stickyPill = document.getElementById('plan-sticky');
+  if (!stickyPill) return;
+  let _stickyShown = false;
+  let _stickyDismissed = false;
+
+  window.addEventListener('scroll', () => {
+    if (_stickyDismissed) return;
+    const plansEl = document.getElementById('s-plans');
+    const muscleEl = document.getElementById('s-muscle');
+    if (!plansEl || !muscleEl) return;
+
+    const plansBottom = plansEl.getBoundingClientRect().bottom;
+    const pageBottom  = document.documentElement.scrollHeight - window.innerHeight - 100;
+    const pastPlans   = plansBottom < 0;
+    const nearBottom  = window.scrollY > pageBottom;
+
+    if (pastPlans && !nearBottom && !_stickyShown) {
+      stickyPill.classList.add('show');
+      _stickyShown = true;
+    } else if ((!pastPlans || nearBottom) && _stickyShown) {
+      stickyPill.classList.remove('show');
+      _stickyShown = false;
+    }
+  }, { passive: true });
+
+  stickyPill.addEventListener('click', () => {
+    _stickyDismissed = true;
+    stickyPill.classList.remove('show');
+  });
+})();
+
+
+// ── PWA install prompt ────────────────────────────────────────
+(function() {
+  let _pwaPrompt = null;
+  window.addEventListener('beforeinstallprompt', e => {
+    e.preventDefault();
+    _pwaPrompt = e;
+    // Show mini install banner after 12s if user has interacted
+    setTimeout(() => {
+      if (!_pwaPrompt || localStorage.getItem('savy_pwa_dismissed')) return;
+      const banner = document.getElementById('pwa-install-bar');
+      if (banner) banner.classList.add('show');
+    }, 12000);
+  });
+  window.addEventListener('appinstalled', () => {
+    const banner = document.getElementById('pwa-install-bar');
+    if (banner) banner.classList.remove('show');
+  });
+  window._pwaInstall = async function() {
+    if (!_pwaPrompt) return;
+    _pwaPrompt.prompt();
+    const { outcome } = await _pwaPrompt.userChoice;
+    _pwaPrompt = null;
+    const banner = document.getElementById('pwa-install-bar');
+    if (banner) banner.classList.remove('show');
+    if (outcome === 'dismissed') localStorage.setItem('savy_pwa_dismissed','1');
+  };
+})();
+
 // ── Scroll to top visibility ──────────────────────────────
 (function() {
   const btn = document.getElementById('scroll-top');
@@ -1877,6 +2219,24 @@ function dsShare() {
       }, 2000);
     });
   }
+}
+
+
+// ── Upsell toast ───────────────────────────────────────────────
+let _upsellTimer = null;
+function _showUpsell() {
+  if (cart['sw4']) return; // already has shake
+  const el = document.getElementById('upsell-toast');
+  if (!el) return;
+  const msgs = { fr:'&#x1F4AA; Ajoute un shake pour compl&#233;ter !', en:'&#x1F4AA; Add a shake to complete your order!', ar:'&#x1F4AA; &#x623;&#x636;&#x641; &#x634;&#x64A;&#x643;&#x627; &#x644;&#x625;&#x643;&#x645;&#x627;&#x644; &#x637;&#x644;&#x628;&#x643;!' };
+  const msgEl = document.getElementById('ut-msg');
+  if (msgEl) msgEl.innerHTML = msgs[lang] || msgs.fr;
+  el.classList.add('show');
+  clearTimeout(_upsellTimer);
+  _upsellTimer = setTimeout(_hideUpsell, 5500);
+}
+function _hideUpsell() {
+  document.getElementById('upsell-toast')?.classList.remove('show');
 }
 
 // ── Cart abandonment nudge ──────────────────────────────────
@@ -1928,6 +2288,7 @@ window.checkout        = checkout;
 window._hideAbandon    = _hideAbandon;
 window.openDetail      = openDetail;
 window.closeDetail     = closeDetail;
+window._hideUpsell     = _hideUpsell;
 // Close detail sheet on Escape key
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closeDetail();
@@ -1939,5 +2300,21 @@ window._menuCart       = cart;
 
 })();
 </script>
+
+<!-- ══ STICKY PLAN REMINDER ═════════════════════════════════════ -->
+<div id="plan-sticky" onclick="go('s-plans');this.classList.remove('show')" aria-label="Voir les plans">
+  <div class="ps-label">Plan hebdo</div>
+  <div class="ps-name">Fitness</div>
+  <div class="ps-price">590 MAD / sem.</div>
+  <div class="ps-save">-15% économie</div>
+</div>
+
+<!-- PWA INSTALL BANNER -->
+<div id="pwa-install-bar">
+  <span>📲 Installer l'app SAVY</span>
+  <button class="pwa-inst-btn" onclick="window._pwaInstall?.()">Installer</button>
+  <button class="pwa-dismiss" onclick="this.closest('#pwa-install-bar').classList.remove('show');localStorage.setItem('savy_pwa_dismissed','1')">✕</button>
+</div>
+
 </body>
 </html>
