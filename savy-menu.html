@@ -359,7 +359,7 @@ img { display:block; }
 .pt-dot { width:5px; height:5px; border-radius:50%; background:#22C845; flex-shrink:0; }
 
 /* Plans grid */
-.plans-grid { display:flex; flex-direction:column; gap:8px; position:relative; }
+.plans-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; position:relative; }
 
 .plan {
   border-radius:14px;
@@ -437,8 +437,7 @@ img { display:block; }
 
 /* Plans responsive */
 @media(min-width:520px) {
-  .plans-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; }
-  .plan.feat { transform:translateY(-5px); }
+  .plan.feat { transform:translateY(-4px); }
 }
 
 /* ══════════════════════════════════════════════════════════════
@@ -1659,7 +1658,9 @@ function setL(l){
   };
   Object.entries(mp).forEach(([id,v])=>{const e=document.getElementById(id);if(e)e.textContent=v;});
   const elH=document.getElementById('el-h'); if(elH) elH.innerHTML=t.h;
-  Object.entries(t.meals).forEach(([k,v])=>{const e=document.getElementById('el-'+k);if(e)e.textContent=v;});
+  // Meal names stay in French (brand names)
+  const _frMeals=T.fr.meals;
+  Object.entries(_frMeals).forEach(([k,v])=>{const e=document.getElementById('el-'+k);if(e)e.textContent=v;});
   document.querySelectorAll('.plan-btn').forEach(b=>b.textContent=t.sub);
   const cns=['cn-m','cn-l','cn-f','cn-s','cn-p'];
   cns.forEach((c,i)=>{const e=document.querySelector('.'+c);if(e)e.textContent=t.cnav[i];});
@@ -1683,7 +1684,7 @@ const DATA={
 let cart={};
 let drawerOpen=false;
 
-function getName(id){return T[lang].meals[id+'n']||id;}
+function getName(id){return T.fr.meals[id+'n']||id;}
 
 function tog(ev,id){
   ev.stopPropagation();
