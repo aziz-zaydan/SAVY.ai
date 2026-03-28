@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr" id="html-root">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Employé — SAVY Fitness</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F0F4FF;--bg2:#FFFFFF;--bg3:#E8EEFF;
+  --card:#FFFFFF;--card2:#F5F7FF;
+  --border:#E2E8F8;--border2:#D0D9F5;
+  --acc:#1744E6;--acc2:#2255F0;--accL:#EEF1FF;
+  --text:#0B1B3A;--sub:#4A5E8A;--muted:#8899BB;
+  --red:#EF4444;--gold:#F59E0B;
+  --r:12px;--r-lg:18px;--r-xl:24px;
+  --font:'Plus Jakarta Sans',sans-serif;
+  --shadow:0 2px 12px rgba(23,68,230,.1);
+  --shadow-lg:0 8px 32px rgba(23,68,230,.12);
+}
+body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font-family:var(--font);cursor:pointer;border:none;outline:none}
+.nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:12px 18px;display:flex;align-items:center;justify-content:space-between}
+.nav-back{display:flex;align-items:center;gap:6px;color:var(--sub);font-size:13px;font-weight:600}
+.nav-logo{font-weight:800;font-size:18px;color:var(--acc);letter-spacing:-.03em}
+.nav-logo span{color:var(--text);font-weight:600;font-size:14px;margin-left:4px}
+.nav-cart-btn{position:relative;width:40px;height:40px;background:var(--accL);border:1px solid var(--border2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;transition:.15s}
+.nav-cart-btn:active{transform:scale(.92)}
+.nav-badge{position:absolute;top:-5px;right:-5px;background:var(--acc);color:#fff;font-size:10px;font-weight:800;min-width:18px;height:18px;border-radius:99px;display:none;align-items:center;justify-content:center;padding:0 3px}
+.hero{background:linear-gradient(135deg,#0F2B8A 0%,#1744E6 50%,#2A5AF0 100%);padding:48px 20px 44px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-60px;right:-60px;width:280px;height:280px;border-radius:50%;background:rgba(255,255,255,.07);pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:-80px;left:-40px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.05);pointer-events:none}
+.hero-chip{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:5px 13px;border-radius:99px;margin-bottom:18px}
+.hero-title{font-size:clamp(36px,9vw,52px);font-weight:800;line-height:1.05;letter-spacing:-.03em;color:#fff;margin-bottom:12px}
+.hero-title strong{display:block;font-size:1.1em}
+.hero-sub{font-size:15px;color:rgba(255,255,255,.8);line-height:1.6;max-width:300px;margin-bottom:28px;font-weight:500}
+.hero-badges{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:30px}
+.hbadge{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:12px;font-weight:600;padding:6px 13px;border-radius:99px}
+.hero-cta{display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--acc);font-size:15px;font-weight:800;letter-spacing:-.02em;padding:14px 26px;border-radius:var(--r);border:none;cursor:pointer;transition:.18s;box-shadow:0 4px 20px rgba(0,0,0,.2)}
+.hero-cta:active{transform:scale(.96)}
+.sec{padding:32px 18px}
+.sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.sec-title{font-size:22px;font-weight:800;letter-spacing:-.03em;color:var(--text)}
+.sec-count{font-size:12px;font-weight:600;color:var(--muted)}
+.meals{display:flex;flex-direction:column;gap:14px}
+.mc{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;display:flex;align-items:stretch;transition:border-color .2s,box-shadow .2s;box-shadow:var(--shadow)}
+.mc.in-cart{border-color:var(--acc);box-shadow:0 0 0 3px rgba(23,68,230,.1),var(--shadow)}
+.mc-img{width:100px;flex-shrink:0;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:48px;position:relative}
+.mc-badge{position:absolute;top:8px;left:6px;font-size:9px;font-weight:800;padding:3px 7px;border-radius:99px;letter-spacing:.04em;z-index:1;white-space:nowrap}
+.mc-badge.bs{background:#F59E0B;color:#fff}
+.mc-badge.qk{background:var(--acc);color:#fff}
+.mc-badge.lc{background:#DB2777;color:#fff}
+.mc-body{flex:1;padding:14px 14px 12px;display:flex;flex-direction:column}
+.mc-name{font-size:16px;font-weight:800;letter-spacing:-.03em;color:var(--text);margin-bottom:4px}
+.mc-desc{font-size:12px;color:var(--sub);line-height:1.45;margin-bottom:10px;font-weight:500;flex:1}
+.mc-meta{display:flex;gap:8px;margin-bottom:10px}
+.met{background:var(--bg3);border-radius:7px;padding:4px 9px;font-size:11px;font-weight:700;color:var(--sub)}
+.met span{color:var(--acc);font-weight:800}
+.mc-foot{display:flex;align-items:center;justify-content:space-between}
+.mc-price{font-size:20px;font-weight:800;color:var(--text);letter-spacing:-.03em}
+.mc-price small{font-size:11px;font-weight:500;color:var(--muted)}
+.mc-add{background:var(--acc);color:#fff;font-size:13px;font-weight:700;padding:8px 16px;border-radius:9px;transition:.15s}
+.mc-add.on{background:var(--red)}
+.mc-add:active{transform:scale(.94)}
+#upsell-strip{display:none;margin:0 18px 8px;background:linear-gradient(135deg,#EEF1FF,#E4E9FF);border:1px solid var(--border2);border-radius:var(--r-lg);padding:14px 16px;align-items:center;gap:12px}
+#upsell-strip.show{display:flex}
+.us-ico{font-size:28px;flex-shrink:0}
+.us-info{flex:1}
+.us-title{font-size:14px;font-weight:800;color:var(--text);margin-bottom:2px}
+.us-desc{font-size:11px;color:var(--sub)}
+.us-btn{background:var(--acc);color:#fff;font-size:12px;font-weight:700;padding:8px 14px;border-radius:9px;white-space:nowrap;flex-shrink:0;border:none;cursor:pointer}
+.plans-sec{background:var(--text);padding:44px 18px;margin:8px 0}
+.plans-title{font-size:32px;font-weight:800;letter-spacing:-.04em;color:#fff;line-height:1.1;margin-bottom:6px}
+.plans-title em{color:#60A5FA;font-style:normal}
+.plans-sub-txt{font-size:13px;color:#8899BB;margin-bottom:28px;font-weight:500}
+.plans-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.plan{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-lg);padding:20px 12px;display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;transition:.2s}
+.plan.best{border-color:#60A5FA;background:rgba(96,165,250,.1)}
+.plan-tag{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:#60A5FA;color:var(--text);font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border-radius:99px;white-space:nowrap}
+.plan-ico{font-size:26px;margin-bottom:8px}
+.plan-name{font-size:14px;font-weight:800;color:#fff;margin-bottom:4px;letter-spacing:-.02em}
+.plan-meals{font-size:11px;color:#8899BB;margin-bottom:12px;line-height:1.4}
+.plan-price{font-size:26px;font-weight:800;color:#fff;letter-spacing:-.03em}
+.plan-price small{font-size:11px;color:#8899BB;font-weight:500}
+.plan-cta{width:100%;background:rgba(255,255,255,.1);color:#fff;font-size:13px;font-weight:700;padding:10px;border-radius:9px;margin-top:14px;transition:.18s;border:1px solid rgba(255,255,255,.15);cursor:pointer}
+.plan.best .plan-cta{background:#60A5FA;color:var(--text);border-color:transparent}
+.plan-cta:active{transform:scale(.96)}
+.final-cta{margin:12px 18px 28px;background:linear-gradient(135deg,#EEF2FF,#E8EEFF);border:2px solid var(--border2);border-radius:var(--r-xl);padding:34px 24px;text-align:center;position:relative;overflow:hidden}
+.final-cta::before{content:'💼';position:absolute;font-size:120px;opacity:.06;right:-10px;top:-10px;line-height:1;pointer-events:none}
+.fca-label{font-size:12px;font-weight:700;color:var(--acc);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}
+.fca-title{font-size:28px;font-weight:800;letter-spacing:-.04em;color:var(--text);line-height:1.1;margin-bottom:8px}
+.fca-sub{font-size:13px;color:var(--sub);margin-bottom:24px;font-weight:500}
+.fca-btn{display:inline-flex;align-items:center;gap:9px;background:#25D366;color:#fff;font-size:16px;font-weight:800;padding:15px 30px;border-radius:var(--r);border:none;cursor:pointer;transition:.18s;box-shadow:0 4px 20px rgba(37,211,102,.3)}
+.fca-btn:active{transform:scale(.96)}
+footer{text-align:center;padding:28px 18px calc(110px + env(safe-area-inset-bottom,0px));color:var(--muted);font-size:12px;border-top:1px solid var(--border)}
+footer a{color:var(--sub)}
+#cart-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:rgba(255,255,255,.97);border-top:1px solid var(--border2);padding:12px 18px calc(14px + env(safe-area-inset-bottom,0px));display:none;align-items:center;gap:12px;backdrop-filter:blur(20px)}
+#cart-bar.show{display:flex}
+#cb-info{flex:1}
+#cb-count{font-size:16px;font-weight:800;color:var(--text)}
+#cb-total{font-size:12px;color:var(--sub);margin-top:1px;font-weight:500}
+#cb-btn{background:var(--acc);color:#fff;font-size:14px;font-weight:700;padding:12px 20px;border-radius:var(--r);border:none;cursor:pointer;transition:.15s}
+#cb-btn:active{transform:scale(.96)}
+#cart-ov{position:fixed;inset:0;z-index:300;background:transparent;display:none;transition:background .28s}
+#cart-ov.open{display:block;background:rgba(11,27,58,.6)}
+#cart-dr{position:fixed;bottom:0;left:0;right:0;z-index:310;background:var(--bg2);border-top:2px solid var(--border2);border-radius:24px 24px 0 0;padding:0 0 calc(24px + env(safe-area-inset-bottom,0px));transform:translateY(100%);transition:transform .32s cubic-bezier(.34,1.2,.64,1);max-height:88vh;overflow-y:auto}
+#cart-dr.open{transform:translateY(0)}
+.dr-grip{width:36px;height:4px;background:var(--border2);border-radius:2px;margin:14px auto 0}
+.dr-head{padding:16px 18px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.dr-title{font-size:20px;font-weight:800;letter-spacing:-.03em}
+.dr-close{width:32px;height:32px;background:var(--bg3);border-radius:50%;border:1px solid var(--border);font-size:15px;color:var(--sub);display:flex;align-items:center;justify-content:center;cursor:pointer}
+#dr-items{padding:14px 18px;display:flex;flex-direction:column;gap:10px;min-height:44px}
+.ci{display:flex;align-items:center;gap:12px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:10px 12px}
+.ci-ico{font-size:22px;width:38px;height:38px;background:var(--bg2);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid var(--border)}
+.ci-info{flex:1}
+.ci-name{font-size:13px;font-weight:700;color:var(--text)}
+.ci-price{font-size:12px;color:var(--acc);font-weight:700;margin-top:2px}
+.ci-del{width:28px;height:28px;background:var(--bg2);border-radius:50%;border:1px solid var(--border);font-size:13px;color:var(--sub);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.dr-foot{padding:14px 18px;border-top:1px solid var(--border)}
+.dr-total-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.dr-total-lbl{font-size:13px;color:var(--sub);font-weight:500}
+.dr-total-val{font-size:24px;font-weight:800;color:var(--text);letter-spacing:-.03em}
+.dr-cta{width:100%;background:var(--acc);color:#fff;font-size:16px;font-weight:800;padding:16px;border-radius:var(--r-lg);display:flex;align-items:center;justify-content:center;gap:10px;border:none;cursor:pointer;transition:.15s}
+.dr-cta:active{transform:scale(.97)}
+#ai-fab{position:fixed;bottom:90px;right:18px;z-index:250;width:52px;height:52px;background:var(--acc);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 4px 24px rgba(23,68,230,.4);border:none;cursor:pointer;transition:.2s}
+#ai-fab:active{transform:scale(.9)}
+#ai-dot{position:absolute;top:1px;right:1px;width:12px;height:12px;background:#22C55E;border-radius:50%;border:2px solid #fff;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.35);opacity:.7}}
+#ai-panel{position:fixed;bottom:0;left:0;right:0;z-index:320;background:var(--bg2);border-top:1px solid var(--border2);border-radius:24px 24px 0 0;max-height:76vh;display:flex;flex-direction:column;transform:translateY(100%);transition:transform .32s cubic-bezier(.34,1.2,.64,1)}
+#ai-panel.open{transform:translateY(0)}
+.ai-head{padding:16px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
+.ai-avatar{width:40px;height:40px;background:linear-gradient(135deg,var(--acc),#4060F0);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.ai-name{font-size:18px;font-weight:800;letter-spacing:-.03em}
+.ai-status{font-size:11px;color:#22C55E;margin-top:1px;font-weight:600}
+.ai-xbtn{margin-left:auto;width:30px;height:30px;background:var(--bg3);border-radius:50%;border:1px solid var(--border);font-size:14px;color:var(--sub);display:flex;align-items:center;justify-content:center;cursor:pointer}
+#ai-msgs{flex:1;overflow-y:auto;padding:14px 18px;display:flex;flex-direction:column;gap:10px}
+.msg{max-width:84%;padding:10px 14px;border-radius:16px;font-size:13px;line-height:1.55;font-weight:500}
+.msg.bot{background:var(--bg3);color:var(--text);align-self:flex-start;border-radius:4px 16px 16px 16px}
+.msg.user{background:var(--acc);color:#fff;align-self:flex-end;border-radius:16px 16px 4px 16px;font-weight:600}
+#ai-chips{display:flex;flex-wrap:wrap;gap:7px;padding:0 18px 10px}
+.aichip{background:var(--bg3);border:1px solid var(--border2);color:var(--sub);font-size:12px;font-weight:600;padding:7px 13px;border-radius:99px;cursor:pointer;transition:.15s}
+.aichip:active{background:var(--border2)}
+.ai-inp-row{display:flex;gap:8px;padding:12px 18px calc(14px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--border)}
+.ai-inp{flex:1;background:var(--bg3);border:1px solid var(--border2);border-radius:12px;padding:10px 14px;color:var(--text);font-family:var(--font);font-size:14px;font-weight:500}
+.ai-inp::placeholder{color:var(--muted)}
+.ai-inp:focus{outline:none;border-color:var(--acc)}
+.ai-send{background:var(--acc);color:#fff;font-size:18px;width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:none;cursor:pointer}
+.toast{position:fixed;top:72px;left:18px;right:18px;z-index:400;background:#fff;border:1px solid var(--border2);border-radius:var(--r-lg);padding:14px 16px;display:flex;align-items:center;gap:12px;transform:translateY(-30px);opacity:0;transition:.3s;pointer-events:none;box-shadow:var(--shadow-lg)}
+.toast.show{transform:translateY(0);opacity:1;pointer-events:auto}
+.toast-ico{font-size:26px;flex-shrink:0}
+.toast-body{flex:1}
+.toast-t{font-size:13px;font-weight:800;color:var(--text);margin-bottom:2px}
+.toast-d{font-size:11px;color:var(--sub);font-weight:500}
+.toast-btn{background:var(--acc);color:#fff;font-size:12px;font-weight:700;padding:7px 12px;border-radius:9px;white-space:nowrap;flex-shrink:0;cursor:pointer;border:none}
+.top-strip{background:rgba(255,255,255,.98);border-bottom:1px solid var(--border);padding:7px 18px;display:flex;align-items:center;justify-content:space-between}
+.socials{display:flex;align-items:center;gap:8px}
+.soc-link{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg3);border:1px solid var(--border);transition:.15s;text-decoration:none}
+.soc-link:active{transform:scale(.9)}
+.lang-wrap{display:flex;gap:1px;background:var(--bg3);border-radius:99px;padding:2px;border:1px solid var(--border)}
+.lang-btn{padding:4px 9px;border-radius:99px;border:none;cursor:pointer;font-size:11px;font-weight:700;transition:.2s;background:transparent;color:var(--muted);font-family:var(--font)}
+.lang-btn.active{background:var(--acc);color:#fff}
+[dir=rtl] .nav-back svg{transform:scaleX(-1)}
+@keyframes slideIn{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:translateX(0)}}
+.mc:nth-child(1){animation:slideIn .3s .05s both}
+.mc:nth-child(2){animation:slideIn .3s .1s both}
+.mc:nth-child(3){animation:slideIn .3s .15s both}
+.mc:nth-child(4){animation:slideIn .3s .2s both}
+</style>
+</head>
+<body>
+
+<!-- SOCIAL / LANG STRIP -->
+<div class="top-strip">
+  <div class="socials">
+    <a class="soc-link" href="https://www.instagram.com/savy.mar?igsh=MWdzNjNkeWZ0NW93Zw==" target="_blank" rel="noopener" aria-label="Instagram">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--sub)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="var(--sub)" stroke="none"/></svg>
+    </a>
+    <a class="soc-link" href="https://www.tiktok.com/@savy.ma?_r=1&_t=ZS-94R6uvkwfhN" target="_blank" rel="noopener" aria-label="TikTok">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="var(--sub)"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.94a8.17 8.17 0 004.77 1.52V7a4.85 4.85 0 01-1-.31z"/></svg>
+    </a>
+  </div>
+  <div class="lang-wrap">
+    <button class="lang-btn active" data-lang="fr" onclick="setLang('fr')">FR</button>
+    <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" data-lang="ar" onclick="setLang('ar')">ع</button>
+  </div>
+</div>
+<nav class="nav">
+  <a href="../index.html" class="nav-back">
+    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    <span id="t-back">Accueil</span>
+  </a>
+  <div class="nav-logo">SAVY <span id="t-page-label">Employé</span></div>
+  <button class="nav-cart-btn" onclick="openDrawer()">
+    🛒<span class="nav-badge" id="nav-badge"></span>
+  </button>
+</nav>
+
+<section class="hero">
+  <div class="hero-chip" id="t-hero-label">💼 Menu Déjeuner</div>
+  <h1 class="hero-title" id="t-hero-title">Bien manger<br><strong>au bureau.</strong></h1>
+  <p class="hero-sub" id="t-hero-sub">Repas équilibrés, livrés en 45 min — frais, rassasiants, sans prise de tête.</p>
+  <div class="hero-badges">
+    <span class="hbadge">⚡ Livraison 45min</span>
+    <span class="hbadge">🥗 100% Frais</span>
+    <span class="hbadge">💳 Paiement facile</span>
+  </div>
+  <button class="hero-cta" onclick="document.getElementById('menu-sec').scrollIntoView({behavior:'smooth'})">
+    Voir le menu →
+  </button>
+</section>
+
+<section class="sec" id="menu-sec">
+  <div class="sec-head">
+    <h2 class="sec-title">Déjeuner du jour</h2>
+    <span class="sec-count">4 plats</span>
+  </div>
+  <div class="meals">
+    <div class="mc" id="mc-em1">
+      <div class="mc-img">🫔<div class="mc-badge qk">⚡ Rapide</div></div>
+      <div class="mc-body">
+        <div class="mc-name">Chicken Wrap</div>
+        <div class="mc-desc">Poulet mariné, légumes croquants, sauce yaourt citron, tortilla complète</div>
+        <div class="mc-meta">
+          <div class="met"><span>28g</span> protéine</div>
+          <div class="met"><span>420</span> kcal</div>
+        </div>
+        <div class="mc-foot">
+          <div class="mc-price">52 <small>MAD</small></div>
+          <button class="mc-add" id="add-em1" onclick="toggle('em1')">+ Ajouter</button>
+        </div>
+      </div>
+    </div>
+    <div class="mc" id="mc-em2">
+      <div class="mc-img">🥪<div class="mc-badge bs">🔥 Best Seller</div></div>
+      <div class="mc-body">
+        <div class="mc-name">Club Sandwich</div>
+        <div class="mc-desc">Poulet grillé, œuf, salade, tomate, mayo légère, pain de mie complet</div>
+        <div class="mc-meta">
+          <div class="met"><span>25g</span> protéine</div>
+          <div class="met"><span>460</span> kcal</div>
+        </div>
+        <div class="mc-foot">
+          <div class="mc-price">49 <small>MAD</small></div>
+          <button class="mc-add" id="add-em2" onclick="toggle('em2')">+ Ajouter</button>
+        </div>
+      </div>
+    </div>
+    <div class="mc" id="mc-em3">
+      <div class="mc-img">🍔<div class="mc-badge bs" style="background:#1744E6">💼 Populaire</div></div>
+      <div class="mc-body">
+        <div class="mc-name">Chicken Burger</div>
+        <div class="mc-desc">Escalope de poulet croustillante, cheddar, salade, sauce spéciale, brioche</div>
+        <div class="mc-meta">
+          <div class="met"><span>30g</span> protéine</div>
+          <div class="met"><span>490</span> kcal</div>
+        </div>
+        <div class="mc-foot">
+          <div class="mc-price">52 <small>MAD</small></div>
+          <button class="mc-add" id="add-em3" onclick="toggle('em3')">+ Ajouter</button>
+        </div>
+      </div>
+    </div>
+    <div class="mc" id="mc-em4">
+      <div class="mc-img">🍶<div class="mc-badge lc">🌸 Light</div></div>
+      <div class="mc-body">
+        <div class="mc-name">Yogurt Bowl</div>
+        <div class="mc-desc">Yaourt grec, granola maison, fruits frais de saison, miel naturel</div>
+        <div class="mc-meta">
+          <div class="met"><span>18g</span> protéine</div>
+          <div class="met"><span>280</span> kcal</div>
+        </div>
+        <div class="mc-foot">
+          <div class="mc-price">39 <small>MAD</small></div>
+          <button class="mc-add" id="add-em4" onclick="toggle('em4')">+ Ajouter</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="upsell-strip">
+  <div class="us-ico">🍶</div>
+  <div class="us-info">
+    <div class="us-title">Complète ton déjeuner</div>
+    <div class="us-desc">Ajoute un Yogurt Bowl — léger et rassasiant</div>
+  </div>
+  <button class="us-btn" onclick="toggle('em4');hideStrip()">Ajouter</button>
+</div>
+
+<section class="plans-sec">
+  <h2 class="plans-title">Plan <em>Mensuel</em><br>Employé</h2>
+  <p class="plans-sub-txt">Commandez pour toute l'équipe — tarifs dégressifs</p>
+  <div class="plans-grid">
+    <div class="plan">
+      <div class="plan-ico">🌱</div>
+      <div class="plan-name">Starter</div>
+      <div class="plan-meals">3 repas<br>par semaine</div>
+      <div class="plan-price">52 <small>MAD/j</small></div>
+      <button class="plan-cta" onclick="planWA('Starter','52')">Choisir</button>
+    </div>
+    <div class="plan best">
+      <div class="plan-tag">🔥 BEST VALUE</div>
+      <div class="plan-ico">💼</div>
+      <div class="plan-name">Bureau</div>
+      <div class="plan-meals">5 repas<br>par semaine</div>
+      <div class="plan-price">85 <small>MAD/j</small></div>
+      <button class="plan-cta" onclick="planWA('Bureau','85')">Choisir</button>
+    </div>
+    <div class="plan">
+      <div class="plan-ico">🏢</div>
+      <div class="plan-name">Corporate</div>
+      <div class="plan-meals">7 repas<br>par semaine</div>
+      <div class="plan-price">115 <small>MAD/j</small></div>
+      <button class="plan-cta" onclick="planWA('Corporate','115')">Choisir</button>
+    </div>
+  </div>
+</section>
+
+<div class="final-cta">
+  <div class="fca-label">🚀 Pause déjeuner ?</div>
+  <div class="fca-title">Commandez<br>en 30 secondes</div>
+  <div class="fca-sub">Livraison 45min à votre bureau — repas chaud et frais</div>
+  <button class="fca-btn" onclick="checkout()">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
+    Commander via WhatsApp
+  </button>
+</div>
+
+<footer><p>© 2025 SAVY Fitness — Tétouan · M'diq · Martil</p><p style="margin-top:6px"><a href="../index.html">← Retour à l'accueil</a></p></footer>
+
+<div id="cart-bar">
+  <div id="cb-info"><div id="cb-count">0 article</div><div id="cb-total">Total: 0 MAD</div></div>
+  <button id="cb-btn" onclick="openDrawer()">Voir le panier →</button>
+</div>
+<div id="cart-ov" onclick="closeDrawer()"></div>
+<div id="cart-dr">
+  <div class="dr-grip"></div>
+  <div class="dr-head"><div class="dr-title">Mon panier 🛒</div><button class="dr-close" onclick="closeDrawer()">✕</button></div>
+  <div id="dr-items"></div>
+  <div class="dr-foot">
+    <div class="dr-total-row"><span class="dr-total-lbl">Total</span><span class="dr-total-val" id="dr-total">0 MAD</span></div>
+    <button class="dr-cta" onclick="checkout()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
+      Commander via WhatsApp
+    </button>
+  </div>
+</div>
+<button id="ai-fab" onclick="toggleAI()">🤖<div id="ai-dot"></div></button>
+<div id="ai-panel">
+  <div class="ai-head">
+    <div class="ai-avatar">👨‍💼</div>
+    <div><div class="ai-name">Chef Savy</div><div class="ai-status">● Assistant déjeuner</div></div>
+    <button class="ai-xbtn" onclick="toggleAI()">✕</button>
+  </div>
+  <div id="ai-msgs"></div>
+  <div id="ai-chips">
+    <button class="aichip" onclick="sendMsg('Quel repas le plus rapide ?')">⚡ Rapide</button>
+    <button class="aichip" onclick="sendMsg('Repas léger pour le bureau ?')">🥗 Léger</button>
+    <button class="aichip" onclick="sendMsg('Quel est le plus populaire ?')">🔥 Populaire</button>
+  </div>
+  <div class="ai-inp-row">
+    <input class="ai-inp" id="ai-inp" placeholder="Pose ta question..." onkeydown="if(event.key==='Enter')sendMsg()">
+    <button class="ai-send" onclick="sendMsg()">➤</button>
+  </div>
+</div>
+<div class="toast" id="t-upsell">
+  <div class="toast-ico">🍶</div>
+  <div class="toast-body"><div class="toast-t">Complète avec le Yogurt Bowl !</div><div class="toast-d">Léger, protéiné — 39 MAD</div></div>
+  <button class="toast-btn" onclick="toggle('em4');hideT('t-upsell')">Ajouter</button>
+</div>
+<div class="toast" id="t-sub">
+  <div class="toast-ico">💼</div>
+  <div class="toast-body"><div class="toast-t">Abonnement Bureau — 85 MAD/j</div><div class="toast-d">5 déjeuners/semaine, livraison incluse</div></div>
+  <button class="toast-btn" onclick="planWA('Bureau','85');hideT('t-sub')">Voir</button>
+</div>
+
+<script>
+const MEALS={em1:{n:'Chicken Wrap',p:52,i:'🫔'},em2:{n:'Club Sandwich',p:49,i:'🥪'},em3:{n:'Chicken Burger',p:52,i:'🍔'},em4:{n:'Yogurt Bowl',p:39,i:'🍶'}};
+const WA='+212708700830';
+let cart={},_us=false,_sb=false,_ai=false,_ail=false,_aih=[];
+function toggle(id){
+  if(cart[id]){delete cart[id];document.getElementById('add-'+id)?.classList.remove('on');document.getElementById('mc-'+id)?.classList.remove('in-cart');if(document.getElementById('add-'+id))document.getElementById('add-'+id).textContent='+ Ajouter';}
+  else{cart[id]={...MEALS[id]};document.getElementById('mc-'+id)?.classList.add('in-cart');if(document.getElementById('add-'+id)){document.getElementById('add-'+id).classList.add('on');document.getElementById('add-'+id).textContent='✓ Ajouté';}
+    const n=Object.keys(cart).length;
+    if(n===1&&!_us&&id!=='em4'){_us=true;showT('t-upsell',5000);document.getElementById('upsell-strip').classList.add('show');}
+    if(n>=2&&!_sb){_sb=true;setTimeout(()=>showT('t-sub',6000),1200);}}
+  renderCart();}
+function renderCart(){
+  const ids=Object.keys(cart);const tot=ids.reduce((s,k)=>s+cart[k].p,0);
+  const badge=document.getElementById('nav-badge');badge.textContent=ids.length;badge.style.display=ids.length?'flex':'none';
+  document.getElementById('cart-bar').classList.toggle('show',ids.length>0);
+  document.getElementById('cb-count').textContent=ids.length+' article'+(ids.length>1?'s':'');
+  document.getElementById('cb-total').textContent='Total: '+tot+' MAD';
+  const el=document.getElementById('dr-items');
+  el.innerHTML=ids.length?'':`<div style="text-align:center;color:var(--muted);font-size:13px;padding:22px">Ton panier est vide 🛒</div>`;
+  ids.forEach(k=>{const it=cart[k];const d=document.createElement('div');d.className='ci';d.innerHTML=`<div class="ci-ico">${it.i}</div><div class="ci-info"><div class="ci-name">${it.n}</div><div class="ci-price">${it.p} MAD</div></div><button class="ci-del" onclick="toggle('${k}')">✕</button>`;el.appendChild(d);});
+  document.getElementById('dr-total').textContent=tot+' MAD';
+  document.getElementById('ai-fab').style.bottom=ids.length>0?'90px':'24px';}
+function openDrawer(){document.getElementById('cart-ov').classList.add('open');document.getElementById('cart-dr').classList.add('open');document.body.style.overflow='hidden';}
+function closeDrawer(){document.getElementById('cart-ov').classList.remove('open');document.getElementById('cart-dr').classList.remove('open');document.body.style.overflow='';}
+function checkout(){const ids=Object.keys(cart);if(!ids.length){openDrawer();return;}const lines=ids.map(k=>`• ${cart[k].n} — ${cart[k].p} MAD`).join('\n');const tot=ids.reduce((s,k)=>s+cart[k].p,0);window.open(`https://wa.me/${WA}?text=${encodeURIComponent(`Salam! Je veux commander (Menu Employé):\n\n${lines}\n\n💰 Total: ${tot} MAD\n⚡ savy.netlify.app`)}`, '_blank');}
+function planWA(n,p){window.open(`https://wa.me/${WA}?text=${encodeURIComponent(`Salam! Je veux m'abonner au plan ${n} Employé — ${p} MAD/jour. savy.netlify.app`)}`, '_blank');}
+function showT(id,d=4000){const t=document.getElementById(id);t.classList.add('show');setTimeout(()=>t.classList.remove('show'),d);}
+function hideT(id){document.getElementById(id).classList.remove('show');}
+function hideStrip(){document.getElementById('upsell-strip').classList.remove('show');}
+function toggleAI(){_ai=!_ai;document.getElementById('ai-panel').classList.toggle('open',_ai);document.getElementById('ai-dot').style.display=_ai?'none':'block';if(_ai&&!_aih.length)setTimeout(()=>addMsg('bot','Salam! 💼 Ana Chef Savy — j\'aide a choisir ton déjeuner parfait. Ash bghiti — kelshi rapide, léger, ou le best seller d\'aujourd\'hui?'),250);}
+function addMsg(r,t){const el=document.getElementById('ai-msgs');const d=document.createElement('div');d.className=`msg ${r}`;d.textContent=t;el.appendChild(d);el.scrollTop=el.scrollHeight;_aih.push({role:r==='bot'?'assistant':'user',content:t});}
+async function sendMsg(txt){const inp=document.getElementById('ai-inp');const msg=txt||inp.value.trim();if(!msg||_ail)return;inp.value='';addMsg('user',msg);document.getElementById('ai-chips').style.display='none';_ail=true;const tp=document.createElement('div');tp.className='msg bot';tp.id='tp';tp.textContent='⟳ ...';document.getElementById('ai-msgs').appendChild(tp);document.getElementById('ai-msgs').scrollTop=9999;
+  try{const r=await fetch('/.netlify/functions/gemini',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg,history:_aih.slice(-8),systemPrompt:'Tu es Chef Savy, assistant déjeuner SAVY. Page: Menu Employé. Parle en Darija marocain court et chaleureux. Focus: rapidité, praticité, repas équilibrés au bureau. Max 2 phrases. Plats: Chicken Wrap 52 MAD, Club Sandwich 49 MAD, Chicken Burger 52 MAD, Yogurt Bowl 39 MAD.'})});const data=await r.json();document.getElementById('tp')?.remove();addMsg('bot',data.reply||'Club Sandwich — meziyan w sari3! Best seller dyal l-bureau 💼');}
+  catch{document.getElementById('tp')?.remove();addMsg('bot','Club Sandwich — l-khyar l-mzyan pour la pause déjeuner 💼');}
+  _ail=false;}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeDrawer();if(_ai)toggleAI();}});
+renderCart();
+
+/* ── i18n ── */
+const T={
+  fr:{
+    't-back':'Accueil','t-page-label':'Employé',
+    't-hero-label':'💼 Menu Déjeuner',
+    't-hero-title':'Bien manger au bureau.',
+    't-hero-sub':'Repas équilibrés, livrés en 45 min — frais, rassasiants, sans prise de tête.',
+    't-sec-title':'Déjeuner du jour',
+    't-fca-label':'🚀 Pause déjeuner ?',
+    't-fca-title':'Commandez en 30 secondes',
+    't-fca-sub':'Livraison 45min à votre bureau — repas chaud et frais',
+  },
+  en:{
+    't-back':'Home','t-page-label':'Employee',
+    't-hero-label':'💼 Lunch Menu',
+    't-hero-title':'Eat well at the office.',
+    't-hero-sub':'Balanced meals delivered in 45 min — fresh, filling, no hassle.',
+    't-sec-title':'Today\'s Lunch',
+    't-fca-label':'🚀 Lunch break?',
+    't-fca-title':'Order in 30 seconds',
+    't-fca-sub':'45 min delivery to your office — hot and fresh meal',
+  },
+  ar:{
+    't-back':'الرئيسية','t-page-label':'الموظف',
+    't-hero-label':'💼 قائمة الغداء',
+    't-hero-title':'تناول طعاماً صحياً في العمل.',
+    't-hero-sub':'وجبات متوازنة تُوصَّل في 45 دقيقة — طازجة ومشبعة.',
+    't-sec-title':'غداء اليوم',
+    't-fca-label':'🚀 استراحة الغداء؟',
+    't-fca-title':'اطلب في 30 ثانية',
+    't-fca-sub':'توصيل 45 دقيقة لمكتبك — وجبة ساخنة وطازجة',
+  }
+};
+function setLang(l){
+  const html=document.getElementById('html-root');
+  html.lang=l;html.dir=l==='ar'?'rtl':'ltr';
+  localStorage.setItem('savy_lang',l);
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===l));
+  const t=T[l]||T.fr;
+  Object.keys(t).forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=t[id];});
+}
+(function(){
+  const s=localStorage.getItem('savy_lang');
+  const br=navigator.language||'fr';
+  setLang(s||(br.startsWith('ar')?'ar':br.startsWith('en')?'en':'fr'));
+})();
+window.addEventListener('storage',function(e){
+  if(e.key==='savy_lang'&&e.newValue)setLang(e.newValue);
+});
+</script>
+</body>
+</html>
