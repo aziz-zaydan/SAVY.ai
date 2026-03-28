@@ -135,30 +135,6 @@ footer a{color:var(--sub)}
 .dr-total-val{font-family:var(--font);font-size:24px;font-weight:700}
 .dr-cta{width:100%;background:var(--acc);color:#fff;font-size:16px;font-weight:800;padding:16px;border-radius:var(--r-lg);display:flex;align-items:center;justify-content:center;gap:10px;border:none;cursor:pointer;transition:.15s;font-family:var(--body)}
 .dr-cta:active{transform:scale(.97)}
-#ai-fab{position:fixed;bottom:90px;right:18px;z-index:250;width:52px;height:52px;background:transparent;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 4px 24px rgba(196,94,10,.4);border:none;cursor:pointer;transition:.2s}
-#ai-fab{overflow:hidden}
-#ai-fab:active{transform:scale(.9)}
-#ai-dot{position:absolute;top:1px;right:1px;width:12px;height:12px;background:#22C55E;border-radius:50%;border:2px solid var(--bg);animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.35);opacity:.7}}
-#ai-panel{position:fixed;bottom:0;left:0;right:0;z-index:320;background:var(--bg2);border-top:1px solid var(--border2);border-radius:24px 24px 0 0;max-height:76vh;display:flex;flex-direction:column;transform:translateY(100%);transition:transform .32s cubic-bezier(.34,1.2,.64,1)}
-#ai-panel.open{transform:translateY(0)}
-.ai-head{padding:16px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
-.ai-avatar{width:40px;height:40px;background:linear-gradient(135deg,#C45E0A,#E07020);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
-.ai-name{font-family:var(--font);font-size:19px;font-weight:700}
-.ai-status{font-size:11px;color:#22C55E;margin-top:1px;font-weight:700}
-.ai-xbtn{margin-left:auto;width:30px;height:30px;background:var(--bg3);border-radius:50%;border:1px solid var(--border);font-size:14px;color:var(--sub);display:flex;align-items:center;justify-content:center;cursor:pointer}
-#ai-msgs{flex:1;overflow-y:auto;padding:14px 18px;display:flex;flex-direction:column;gap:10px}
-.msg{max-width:84%;padding:10px 14px;border-radius:16px;font-size:13px;line-height:1.55;font-weight:600}
-.msg.bot{background:var(--card2);align-self:flex-start;border-radius:4px 16px 16px 16px}
-.msg.user{background:var(--acc);color:#fff;align-self:flex-end;border-radius:16px 16px 4px 16px}
-#ai-chips{display:flex;flex-wrap:wrap;gap:7px;padding:0 18px 10px}
-.aichip{background:var(--card2);border:1px solid var(--border2);color:var(--sub);font-size:12px;font-weight:700;padding:7px 13px;border-radius:99px;cursor:pointer;transition:.15s}
-.aichip:active{background:var(--border2)}
-.ai-inp-row{display:flex;gap:8px;padding:12px 18px calc(14px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--border)}
-.ai-inp{flex:1;background:var(--card2);border:1px solid var(--border2);border-radius:12px;padding:10px 14px;color:var(--text);font-family:var(--body);font-size:14px;font-weight:600}
-.ai-inp::placeholder{color:var(--muted)}
-.ai-inp:focus{outline:none;border-color:var(--acc)}
-.ai-send{background:var(--acc);color:#fff;font-size:18px;width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:none;cursor:pointer}
 .toast{position:fixed;top:72px;left:18px;right:18px;z-index:400;background:var(--card);border:2px solid var(--border2);border-radius:var(--r-lg);padding:14px 16px;display:flex;align-items:center;gap:12px;transform:translateY(-30px);opacity:0;transition:.3s;pointer-events:none;box-shadow:var(--shadow-lg)}
 .toast.show{transform:translateY(0);opacity:1;pointer-events:auto}
 .toast-ico{font-size:28px;flex-shrink:0}
@@ -200,6 +176,21 @@ footer a{color:var(--sub)}
 .op-submit:disabled{opacity:.6;cursor:not-allowed}
 [dir=rtl] .op-title,[dir=rtl] .op-lbl,[dir=rtl] .op-inp{text-align:right}
 
+
+/* ══ REVIEWS SECTION ══ */
+.rev-sec{padding:36px 18px 28px}
+.rev-head{margin-bottom:20px}
+.rev-eyebrow{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--acc);margin-bottom:6px}
+.rev-title{font-size:22px;font-weight:800;letter-spacing:-.03em;font-family:var(--font)}
+.rev-cards{display:flex;flex-direction:column;gap:12px}
+.rev-card{background:var(--card,#fff);border:1px solid var(--border,#eee);border-radius:16px;padding:16px}
+.rev-stars{color:#F59E0B;font-size:13px;margin-bottom:8px;letter-spacing:1px}
+.rev-text{font-size:13px;line-height:1.65;color:var(--text);font-weight:500;margin-bottom:12px}
+.rev-author{display:flex;align-items:center;gap:10px}
+.rev-avatar{width:34px;height:34px;border-radius:50%;background:var(--acc);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;flex-shrink:0;font-family:var(--font)}
+.rev-info{}
+.rev-name{font-size:12px;font-weight:800;color:var(--text)}
+.rev-role{font-size:11px;color:var(--muted);margin-top:1px}
 </style>
 </head>
 <body>
@@ -357,6 +348,48 @@ footer a{color:var(--sub)}
   </div>
 </section>
 
+<section class="rev-sec">
+  <div class="rev-head">
+    <div class="rev-eyebrow" data-t="rev-eyebrow">Ce que disent nos clients</div>
+    <div class="rev-title" data-t="rev-title">Avis clients</div>
+  </div>
+  <div class="rev-cards">
+    <div class="rev-card">
+      <div class="rev-stars" data-t="rev-stars-1">★★★★★</div>
+      <div class="rev-text" data-t="rev-text-1">La Chicken Family Box a nourri mes 4 enfants et mon mari. Tout le monde a adoré, c'était comme un repas fait maison.</div>
+      <div class="rev-author">
+        <div class="rev-avatar">F</div>
+        <div class="rev-info">
+          <div class="rev-name" data-t="rev-name-1">Fatima Z.</div>
+          <div class="rev-role" data-t="rev-role-1">Maman · Tétouan</div>
+        </div>
+      </div>
+    </div>
+    <div class="rev-card">
+      <div class="rev-stars" data-t="rev-stars-2">★★★★★</div>
+      <div class="rev-text" data-t="rev-text-2">On a commandé la Kefta Family Plate pour une soirée en famille. La chermoula était incroyable, livraison rapide.</div>
+      <div class="rev-author">
+        <div class="rev-avatar">H</div>
+        <div class="rev-info">
+          <div class="rev-name" data-t="rev-name-2">Hassan A.</div>
+          <div class="rev-role" data-t="rev-role-2">Papa · M'diq</div>
+        </div>
+      </div>
+    </div>
+    <div class="rev-card">
+      <div class="rev-stars" data-t="rev-stars-3">★★★★★</div>
+      <div class="rev-text" data-t="rev-text-3">Le Dessert Combo après le dîner — les enfants ont adoré. On recommande chaque vendredi maintenant.</div>
+      <div class="rev-author">
+        <div class="rev-avatar">R</div>
+        <div class="rev-info">
+          <div class="rev-name" data-t="rev-name-3">Rim B.</div>
+          <div class="rev-role" data-t="rev-role-3">Famille de 3 · Martil</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <div class="final-cta">
   <div class="fca-eyebrow" data-t="fca-eyebrow">🍽️ La table est prête</div>
   <div class="fca-title" data-t="fca-title">Régalez votre famille</div>
@@ -389,56 +422,6 @@ footer a{color:var(--sub)}
     </button>
   </div>
 </div>
-<button id="ai-fab" onclick="toggleAI()" style="padding:0;overflow:hidden;"><svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block">
-  <rect width="80" height="80" rx="20" fill="#089929"/>
-  <ellipse cx="40" cy="21" rx="13" ry="5" fill="#a7f3d0" opacity=".9"/>
-  <rect x="27" y="16" width="26" height="14" rx="4" fill="#a7f3d0" opacity=".9"/>
-  <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="#a7f3d0"/>
-  <rect x="26" y="28" width="28" height="20" rx="9" fill="#a7f3d0"/>
-  <circle cx="34" cy="37" r="3.2" fill="#089929"/>
-  <circle cx="46" cy="37" r="3.2" fill="#089929"/>
-  <circle cx="35" cy="36" r="1.2" fill="#a7f3d0" opacity=".6"/>
-  <circle cx="47" cy="36" r="1.2" fill="#a7f3d0" opacity=".6"/>
-  <rect x="28" y="50" width="24" height="18" rx="5" fill="#a7f3d0"/>
-  <text x="40" y="63" text-anchor="middle" font-size="8" font-weight="900" fill="#089929" font-family="system-ui">SAVY</text>
-  <circle cx="19" cy="58" r="5" fill="#a7f3d0" opacity=".9"/>
-  <line x1="24" y1="56" x2="28" y2="55" stroke="white" stroke-width="3" stroke-linecap="round"/>
-  <circle cx="61" cy="58" r="5" fill="#a7f3d0" opacity=".9"/>
-  <line x1="56" y1="56" x2="52" y2="55" stroke="white" stroke-width="3" stroke-linecap="round"/>
-</svg><div id="ai-dot"></div></button>
-<div id="ai-panel">
-  <div class="ai-head">
-    <div class="ai-avatar"><svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block">
-  <rect width="80" height="80" rx="20" fill="#089929"/>
-  <ellipse cx="40" cy="21" rx="13" ry="5" fill="#a7f3d0" opacity=".9"/>
-  <rect x="27" y="16" width="26" height="14" rx="4" fill="#a7f3d0" opacity=".9"/>
-  <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="#a7f3d0"/>
-  <rect x="26" y="28" width="28" height="20" rx="9" fill="#a7f3d0"/>
-  <circle cx="34" cy="37" r="3.2" fill="#089929"/>
-  <circle cx="46" cy="37" r="3.2" fill="#089929"/>
-  <circle cx="35" cy="36" r="1.2" fill="#a7f3d0" opacity=".6"/>
-  <circle cx="47" cy="36" r="1.2" fill="#a7f3d0" opacity=".6"/>
-  <rect x="28" y="50" width="24" height="18" rx="5" fill="#a7f3d0"/>
-  <text x="40" y="63" text-anchor="middle" font-size="8" font-weight="900" fill="#089929" font-family="system-ui">SAVY</text>
-  <circle cx="19" cy="58" r="5" fill="#a7f3d0" opacity=".9"/>
-  <line x1="24" y1="56" x2="28" y2="55" stroke="white" stroke-width="3" stroke-linecap="round"/>
-  <circle cx="61" cy="58" r="5" fill="#a7f3d0" opacity=".9"/>
-  <line x1="56" y1="56" x2="52" y2="55" stroke="white" stroke-width="3" stroke-linecap="round"/>
-</svg></div>
-    <div><div class="ai-name" data-t="ai-name">Chef Savy</div><div class="ai-status" data-t="ai-status">● Conseiller famille</div></div>
-    <button class="ai-xbtn" onclick="toggleAI()">✕</button>
-  </div>
-  <div id="ai-msgs"></div>
-  <div id="ai-chips">
-    <button class="aichip" onclick="sendChip('chip1')" data-t="chip1">👥 Taille famille</button>
-    <button class="aichip" onclick="sendChip('chip2')" data-t="chip2">🍽️ Best combo</button>
-    <button class="aichip" onclick="sendChip('chip3')" data-t="chip3">🚀 Livraison</button>
-  </div>
-  <div class="ai-inp-row">
-    <input class="ai-inp" id="ai-inp" data-tp="ai-placeholder" placeholder="Posez votre question..." onkeydown="if(event.key==='Enter')sendMsg()">
-    <button class="ai-send" onclick="sendMsg()">➤</button>
-  </div>
-</div>
 <div class="toast" id="t-upsell">
   <div class="toast-ico">🍮</div>
   <div class="toast-body"><div class="toast-t" data-t="upsell-toast-t">Finissez avec du sucré !</div><div class="toast-d" data-t="upsell-toast-d">Dessert Combo — 4 portions pour 120 MAD</div></div>
@@ -453,7 +436,7 @@ footer a{color:var(--sub)}
 <script>
 const MEALS={fa1:{n:'Chicken Family Box',p:185,i:'🍗'},fa2:{n:'Kefta Family Plate',p:175,i:'🥩'},fa3:{n:'Wrap Combo ×2',p:98,i:'🫔'},fa4:{n:'Dessert Combo',p:120,i:'🍮'}};
 const WA='+212708700830';
-let cart={},_us=false,_sb=false,_ai=false,_ail=false,_aih=[];
+let cart={},_us=false,_sb=false;
 function toggle(id){
   const t=PAGE_STRINGS[document.getElementById('html-root').lang]||PAGE_STRINGS.fr;
   if(cart[id]){delete cart[id];document.getElementById('mc-'+id)?.classList.remove('in-cart');const b=document.getElementById('add-'+id);if(b){b.classList.remove('on');b.textContent=t['btn-add']||'+ Commander';}}
@@ -472,8 +455,7 @@ function renderCart(){
   const el=document.getElementById('dr-items');
   el.innerHTML=ids.length?'':`<div style="text-align:center;color:var(--muted);font-size:13px;padding:22px">${t['cart-empty']||'Panier vide 🛒'}</div>`;
   ids.forEach(k=>{const it=cart[k];const d=document.createElement('div');d.className='ci';d.innerHTML=`<div class="ci-ico">${it.i}</div><div class="ci-info"><div class="ci-name">${it.n}</div><div class="ci-price">${it.p} MAD</div></div><button class="ci-del" onclick="toggle('${k}')">✕</button>`;el.appendChild(d);});
-  document.getElementById('dr-total').textContent=tot+' MAD';
-  document.getElementById('ai-fab').style.bottom=ids.length>0?'90px':'24px';}
+  document.getElementById('dr-total').textContent=tot+' MAD';}
 function openDrawer(){document.getElementById('cart-ov').classList.add('open');document.getElementById('cart-dr').classList.add('open');document.body.style.overflow='hidden';}
 function closeDrawer(){document.getElementById('cart-ov').classList.remove('open');document.getElementById('cart-dr').classList.remove('open');document.body.style.overflow='';}
 function checkout(){
@@ -486,14 +468,7 @@ function planWA(n,p){window.open(`https://wa.me/${WA}?text=${encodeURIComponent(
 function showT(id,d=4000){const t=document.getElementById(id);t.classList.add('show');setTimeout(()=>t.classList.remove('show'),d);}
 function hideT(id){document.getElementById(id).classList.remove('show');}
 function hideStrip(){document.getElementById('upsell-strip').classList.remove('show');}
-function toggleAI(){_ai=!_ai;document.getElementById('ai-panel').classList.toggle('open',_ai);document.getElementById('ai-dot').style.display=_ai?'none':'block';const l=document.getElementById('html-root').lang;const t=PAGE_STRINGS[l]||PAGE_STRINGS.fr;if(_ai&&!_aih.length)setTimeout(()=>addMsg('bot',t['ai-greeting']),250);}
-function addMsg(r,txt){const el=document.getElementById('ai-msgs');const d=document.createElement('div');d.className=`msg ${r}`;d.textContent=txt;el.appendChild(d);el.scrollTop=el.scrollHeight;_aih.push({role:r==='bot'?'assistant':'user',content:txt});}
-function sendChip(key){const l=document.getElementById('html-root').lang;const t=PAGE_STRINGS[l]||PAGE_STRINGS.fr;sendMsg(t[key]);}
-async function sendMsg(txt){const inp=document.getElementById('ai-inp');const msg=txt||inp.value.trim();if(!msg||_ail)return;inp.value='';addMsg('user',msg);document.getElementById('ai-chips').style.display='none';_ail=true;const tp=document.createElement('div');tp.className='msg bot';tp.id='tp';tp.textContent='⟳ ...';document.getElementById('ai-msgs').appendChild(tp);document.getElementById('ai-msgs').scrollTop=9999;
-  try{const r=await fetch('/.netlify/functions/gemini',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg,history:_aih.slice(-8),systemPrompt:'Tu es Chef Savy, conseiller famille SAVY. Menu Famille. Parle en Darija marocain chaleureux. Max 2 phrases. Plats: Chicken Family Box 185 MAD (4p), Kefta Family Plate 175 MAD (4p), Wrap Combo x2 98 MAD (2p), Dessert Combo 120 MAD.'})});const data=await r.json();document.getElementById('tp')?.remove();addMsg('bot',data.reply||'Chicken Family Box — 185 MAD pour 4 personnes! 🍗');}
-  catch{document.getElementById('tp')?.remove();addMsg('bot','Chicken Family Box — l-khyar dyal l-3a2ila! 🍗');}
-  _ail=false;}
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeDrawer();if(_ai)toggleAI();}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer();});
 
 const PAGE_STRINGS={
   fr:{
@@ -524,7 +499,8 @@ const PAGE_STRINGS={
     'sub-toast-t':'Plan Famille — 155 MAD/repas','sub-toast-d':'4 repas/semaine avec livraison gratuite',
     'ai-name':'Chef Savy','ai-status':'● Conseiller famille',
     'ai-greeting':'Salam! 🍽️ Ana Chef Savy — kat3awen l-3a2ilat f l-commander. Chem3an ch7al d-chwiyat?',
-    'chip1':'👥 Taille famille','chip2':'🍽️ Best combo','chip3':'🚀 Livraison','ai-placeholder':'Posez votre question...',
+    'chip1':'👥 Taille famille','chip2':'🍽️ Best combo','chip3':'🚀 Livraison',    'rev-eyebrow':'Ce que disent nos clients','rev-title':'Avis clients','rev-name-1':'Fatima Z.','rev-role-1':'Maman · Tétouan','rev-text-1':'La Chicken Family Box a nourri mes 4 enfants et mon mari. Tout le monde a adoré, c\'était comme un repas fait maison.','rev-name-2':'Hassan A.','rev-role-2':'Papa · M\'diq','rev-text-2':'On a commandé la Kefta Family Plate pour une soirée en famille. La chermoula était incroyable, livraison rapide.','rev-name-3':'Rim B.','rev-role-3':'Famille de 3 · Martil','rev-text-3':'Le Dessert Combo après le dîner — les enfants ont adoré. On recommande chaque vendredi maintenant.',
+    'ai-placeholder':'Posez votre question...',
   },
   en:{
     'back':'Home','page-label':'Family',
@@ -554,7 +530,8 @@ const PAGE_STRINGS={
     'sub-toast-t':'Family Plan — 155 MAD/meal','sub-toast-d':'4 meals/week with free delivery',
     'ai-name':'Chef Savy','ai-status':'● Family advisor',
     'ai-greeting':'Hello! 🍽️ I\'m Chef Savy — helping families order the perfect meal. How many people are you ordering for today?',
-    'chip1':'👥 Family size','chip2':'🍽️ Best combo','chip3':'🚀 Delivery','ai-placeholder':'Ask your question...',
+    'chip1':'👥 Family size','chip2':'🍽️ Best combo','chip3':'🚀 Delivery',    'rev-eyebrow':'What our customers say','rev-title':'Customer reviews','rev-name-1':'Fatima Z.','rev-role-1':'Mom · Tétouan','rev-text-1':'The Chicken Family Box fed my 4 kids and husband. Everyone loved it — felt like a homemade meal.','rev-name-2':'Hassan A.','rev-role-2':'Dad · M\'diq','rev-text-2':'We ordered the Kefta Family Plate for a family evening. The chermoula was incredible, fast delivery.','rev-name-3':'Rim B.','rev-role-3':'Family of 3 · Martil','rev-text-3':'The Dessert Combo after dinner — the kids loved it. We reorder every Friday now.',
+    'ai-placeholder':'Ask your question...',
   },
   ar:{
     'back':'الرئيسية','page-label':'العائلة',
@@ -584,7 +561,8 @@ const PAGE_STRINGS={
     'sub-toast-t':'باقة العائلة — 155 درهم/وجبة','sub-toast-d':'4 وجبات/أسبوع مع توصيل مجاني',
     'ai-name':'الشيف سافي','ai-status':'● مستشار عائلي',
     'ai-greeting':'سلام! 🍽️ أنا الشيف سافي — نساعد العائلات تطلب بسهولة. كم شخصاً تريد أن تطلب له اليوم؟',
-    'chip1':'👥 حجم العائلة','chip2':'🍽️ أفضل كومبو','chip3':'🚀 التوصيل','ai-placeholder':'اسأل سؤالك...',
+    'chip1':'👥 حجم العائلة','chip2':'🍽️ أفضل كومبو','chip3':'🚀 التوصيل',    'rev-eyebrow':'ما يقوله عملاؤنا','rev-title':'آراء العملاء','rev-name-1':'فاطمة ز.','rev-role-1':'أم · تطوان','rev-text-1':'Chicken Family Box أطعمت أطفالي الأربعة وزوجي. الجميع أحبها — طعمها مثل الطبخ المنزلي.','rev-name-2':'حسن أ.','rev-role-2':'أب · مدية','rev-text-2':'طلبنا Kefta Family Plate لسهرة عائلية. الشرمولة كانت رائعة، والتوصيل سريع.','rev-name-3':'ريم ب.','rev-role-3':'عائلة من 3 · مرتيل','rev-text-3':'Dessert Combo بعد العشاء — الأطفال أحبوه. أصبحنا نطلبه كل جمعة الآن.',
+    'ai-placeholder':'اسأل سؤالك...',
   }
 };
 
