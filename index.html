@@ -3840,67 +3840,61 @@
     }
     
     /* ═══ MENU CATEGORY PICKER ════════════════════════════════ */
+    /* ══ MENU PICKER — centered modal ══ */
     #menu-picker-overlay {
       position:fixed; inset:0; z-index:1100;
       background:rgba(0,0,0,0);
-      display:none; align-items:flex-end; justify-content:center;
+      display:none; align-items:center; justify-content:center;
       backdrop-filter:blur(0px); -webkit-backdrop-filter:blur(0px);
-      transition:background .28s, backdrop-filter .28s;
-      padding-bottom:env(safe-area-inset-bottom,0px);
+      transition:background .22s, backdrop-filter .22s;
+      padding:20px;
     }
     #menu-picker-overlay.open {
       display:flex;
-      background:rgba(0,0,0,.55);
-      backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+      background:rgba(0,0,0,.60);
+      backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
     }
     #menu-picker-sheet {
       background:var(--card);
-      border-radius:24px 24px 0 0;
-      width:100%; max-width:500px;
-      padding:0 0 28px;
-      transform:translateY(100%);
-      transition:transform .32s cubic-bezier(.34,1.2,.64,1);
-      box-shadow:0 -12px 50px rgba(0,0,0,.22);
-      position:relative;
+      border-radius:24px;
+      width:100%; max-width:420px;
+      padding:0 0 20px;
+      transform:scale(.92) translateY(12px);
+      opacity:0;
+      transition:transform .28s cubic-bezier(.34,1.2,.64,1), opacity .22s ease;
+      box-shadow:0 24px 64px rgba(0,0,0,.28);
     }
-    #menu-picker-sheet.open { transform:translateY(0); }
-    /* Grip */
-    .mp-grip {
-      width:36px; height:4px; border-radius:2px;
-      background:var(--border); margin:13px auto 0;
+    #menu-picker-sheet.open {
+      transform:scale(1) translateY(0);
+      opacity:1;
     }
-    /* Header */
     .mp-head {
-      padding:18px 20px 14px;
+      padding:16px 18px 13px;
       border-bottom:1px solid var(--border);
       display:flex; align-items:center; justify-content:space-between;
     }
     .mp-title {
       font-family:'Outfit',sans-serif; font-weight:900;
-      font-size:19px; letter-spacing:-.4px; color:var(--text);
+      font-size:17px; letter-spacing:-.4px; color:var(--text);
     }
-    .mp-sub {
-      font-size:12px; color:var(--muted); margin-top:2px;
-    }
+    .mp-sub { font-size:11px; color:var(--muted); margin-top:2px; }
     .mp-close {
-      width:34px; height:34px; border-radius:50%;
+      width:30px; height:30px; border-radius:50%;
       background:var(--card2); border:none; cursor:pointer;
       display:flex; align-items:center; justify-content:center;
-      font-size:16px; color:var(--sub); flex-shrink:0;
-      transition:all .15s;
+      font-size:14px; color:var(--sub); flex-shrink:0; transition:all .15s;
     }
     .mp-close:hover { background:var(--border); }
     .mp-close:active { transform:scale(.88); }
-    /* Grid of 4 categories */
     .mp-grid {
       display:grid; grid-template-columns:1fr 1fr;
-      gap:12px; padding:18px 18px 0;
+      gap:10px; padding:14px 14px 0;
     }
     .mp-cat {
       background:var(--bg); border:2px solid var(--border);
-      border-radius:18px; padding:20px 14px 16px;
+      border-radius:16px; padding:16px 10px 14px;
       cursor:pointer; display:flex; flex-direction:column;
-      align-items:center; gap:10px; text-align:center;
+      align-items:center; gap:7px; text-align:center;
       transition:all .18s cubic-bezier(.4,0,.2,1);
       position:relative; overflow:hidden;
     }
@@ -3909,39 +3903,25 @@
       background:var(--mp-color,var(--green));
       opacity:0; transition:opacity .18s;
     }
-    .mp-cat:hover::before, .mp-cat:focus::before { opacity:.06; }
-    .mp-cat:active { transform:scale(.96); }
+    .mp-cat:hover { border-color:var(--mp-color,var(--green)); transform:translateY(-2px); box-shadow:0 6px 20px rgba(0,0,0,.10); }
+    .mp-cat:hover::before { opacity:.06; }
+    .mp-cat:active { transform:scale(.96) translateY(0); }
     .mp-cat:active::before { opacity:.12; }
-    .mp-cat-ico {
-      font-size:38px; line-height:1;
-      filter:drop-shadow(0 2px 6px rgba(0,0,0,.12));
-    }
+    .mp-cat-ico { font-size:32px; line-height:1; }
     .mp-cat-name {
       font-family:'Outfit',sans-serif; font-weight:900;
-      font-size:15px; letter-spacing:-.3px; color:var(--text);
-      line-height:1.2;
+      font-size:14px; letter-spacing:-.3px; color:var(--text); line-height:1.2;
     }
-    .mp-cat-desc {
-      font-size:11px; color:var(--muted); line-height:1.4;
-    }
+    .mp-cat-desc { font-size:10px; color:var(--muted); line-height:1.4; }
     .mp-cat-pill {
-      display:inline-block; padding:3px 9px; border-radius:99px;
-      font-size:9px; font-weight:800; letter-spacing:.08em;
-      text-transform:uppercase;
-      background:var(--mp-color, var(--green));
-      color:#fff;
-      margin-top:2px;
+      display:inline-block; padding:2px 8px; border-radius:99px;
+      font-size:9px; font-weight:800; letter-spacing:.08em; text-transform:uppercase;
+      color:#fff; margin-top:1px;
     }
-    /* Color accents per category */
-    .mp-cat.emp   { --mp-color: #089929; }
+    .mp-cat.emp   { --mp-color: #1D4ED8; }
     .mp-cat.sport { --mp-color: #089929; }
-    .mp-cat.fam   { --mp-color: #EA580C; }
+    .mp-cat.fam   { --mp-color: #D97706; }
     .mp-cat.fast  { --mp-color: #EA580C; }
-    /* Active state — chosen card highlights */
-    .mp-cat.emp:active   { border-color:#089929; }
-    .mp-cat.sport:active { border-color:#089929; }
-    .mp-cat.fam:active   { border-color:#EA580C; }
-    .mp-cat.fast:active  { border-color:#EA580C; }
 
     </style>
 
@@ -4239,57 +4219,6 @@
     </div>
   </div>
 </div>
-
-<section id="menu">
-  <div class="menu-inner">
-
-    <!-- ── SAVY Premium Menu — 4 category sections ── -->
-
-    <!-- Sticky section nav inside menu -->
-    <div id="menu-section-nav" style="
-      display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;
-      padding:0 0 2px;margin-bottom:18px;
-      border-bottom:1px solid var(--border);
-    ">
-      <style>
-        #menu-section-nav::-webkit-scrollbar{display:none;}
-        .mnav-pill{
-          padding:9px 14px;font-size:11.5px;font-weight:700;
-          color:var(--muted);cursor:pointer;
-          border-bottom:2px solid transparent;
-          white-space:nowrap;font-family:'Outfit',sans-serif;
-          transition:all .2s;flex-shrink:0;background:none;border-top:none;border-left:none;border-right:none;
-        }
-        .mnav-pill:hover{color:var(--text);}
-        .mnav-pill.mp-active{color:var(--green);border-bottom-color:var(--green);}
-        .mnav-pill.mp-lean{color:#FF6B9D;border-bottom-color:#FF6B9D;}
-        .mnav-pill.mp-fast{color:#FF9F43;border-bottom-color:#FF9F43;}
-        .mnav-pill.mp-sweet{color:#C77DFF;border-bottom-color:#C77DFF;}
-      </style>
-      <button class="mnav-pill mp-active" id="mnav-muscle" onclick="scrollToMenuSection('msec-muscle')">💪 <span class="mnt-muscle">Muscle Series</span></button>
-      <button class="mnav-pill" id="mnav-lean"   onclick="scrollToMenuSection('msec-lean')"  >🌸 <span class="mnt-lean">Lean & Fit</span></button>
-      <button class="mnav-pill" id="mnav-fast"   onclick="scrollToMenuSection('msec-fast')"  >⚡ <span class="mnt-fast">Healthy Fast Food</span></button>
-      <button class="mnav-pill" id="mnav-sweet"  onclick="scrollToMenuSection('msec-sweet')" >🍓 <span class="mnt-sweet">Sweet & Add-ons</span></button>
-    </div>
-
-    <!-- Cart bar -->
-    <div id="cart-bar" style="display:none;align-items:center;justify-content:space-between;padding:12px 16px;border-radius:16px;background:linear-gradient(135deg,var(--green),#05a827);margin-bottom:18px;animation:popIn .3s ease;flex-wrap:wrap;gap:8px;box-shadow:0 6px 24px rgba(9,184,48,.3);">
-      <div style="display:flex;flex-direction:column;gap:2px;">
-        <span id="cart-txt" style="color:#fff;font-size:12px;font-weight:600;opacity:.9;">0 plat sélectionné</span>
-        <span id="cart-total" style="color:#fff;font-size:18px;font-weight:900;font-family:'Outfit',sans-serif;letter-spacing:-.5px;"></span>
-        <div id="cart-sched-display"></div>
-      </div>
-      <div style="display:flex;gap:8px;align-items:center;">
-        <button onclick="clearCart()" style="background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.28);color:#fff;border-radius:10px;padding:8px 13px;cursor:pointer;font-size:11.5px;font-weight:700;font-family:'DM Sans',sans-serif;">✕ <span id="cart-vider">Vider</span></button>
-        <button onclick="openOrderModal()" id="order-btn" style="background:#fff;color:var(--green);border:none;border-radius:10px;padding:9px 16px;font-size:12.5px;font-weight:800;cursor:pointer;font-family:'Outfit',sans-serif;">🛵 <span id="cart-commander">Commander</span></button>
-      </div>
-    </div>
-
-    <!-- Dish grid — rendered by renderDishes() below -->
-    <div id="dishes-list"></div>
-
-  </div>
-</section>
 
 </section>
 
@@ -4983,31 +4912,6 @@
 </div>
 
 <!-- ══ COMBINED SPEED-DIAL FAB ══════════════════════════════ -->
-<div id="fab-main-wrap">
-  <div id="fab-wa-label" style="
-    position:absolute;right:68px;bottom:14px;
-    background:var(--green);color:#fff;
-    border-radius:99px;padding:7px 14px;
-    font-size:12px;font-weight:800;white-space:nowrap;
-    font-family:'Outfit',sans-serif;
-    box-shadow:0 4px 16px rgba(9,184,48,.4);
-    animation:fadeInRight .5s ease 3s both;
-    pointer-events:none;
-  " id="fab-chat-label">Chat avec Chef SAVY 🤖</div>
-  <button id="fab-main" onclick="openChat()" aria-label="Chat SAVY">
-    <svg width="32" height="32" viewBox="0 0 80 80" fill="none">
-        <ellipse cx="40" cy="21" rx="13" ry="5" fill="#ffffff" opacity=".95"/>
-        <rect x="27" y="16" width="26" height="14" rx="4" fill="#ffffff" opacity=".95"/>
-        <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="#ffffff"/>
-        <rect x="26" y="28" width="28" height="20" rx="9" fill="#ffffff"/>
-        <circle cx="34" cy="37" r="3.2" fill="#089929"/>
-        <circle cx="46" cy="37" r="3.2" fill="#089929"/>
-        <rect x="28" y="50" width="24" height="18" rx="5" fill="#ffffff"/>
-      </svg>
-    <div class="fab-savy-badge" id="fab-main-badge">1</div>
-  </button>
-</div>
-<div id="fab-group" style="display:none"></div>
 
 <!-- ══ CHAT WINDOW ══════════════════════════════════════════ -->
 <div id="chat-backdrop" onclick="closeChat()"></div>
@@ -5826,7 +5730,7 @@ function setLang(l) {
   if(cartCmdEl)  cartCmdEl.textContent  = l==="ar"?"اطلب الآن":l==="en"?"Order Now":"Commander";
   $p("search",     t.search);
   $t("order-btn",  t.order);
-  renderCuisineTabs(); renderDietFilters(); renderDishes();
+  if (document.getElementById("dishes-list")) { renderCuisineTabs(); renderDietFilters(); renderDishes(); }
 
   $t("final-title",   t.finalTitle);  $t("final-cta-txt", t.finalCta);
   $t("final-sub",     t.finalSub);    $t("final-note",    t.finalNote);
@@ -6075,6 +5979,7 @@ function startInscritCounter() {
 ═══════════════════════════════════════════ */
 
 function renderCuisineTabs(){
+  if (!document.getElementById("dishes-list")) return;
   const isAr=lang==="ar"||false;
   const el = document.getElementById("cuisine-tabs");
   if(!el) return;
@@ -6085,6 +5990,7 @@ function renderCuisineTabs(){
 }
 function setCuisine(id){ activeCuis=id; renderCuisineTabs(); renderDishes(); }
 function renderDietFilters(){
+  if (!document.getElementById("dishes-list")) return;
   const el = document.getElementById("diet-filters");
   if(!el) return;
   el.innerHTML = dietFilters.map(f=>`
@@ -6092,6 +5998,7 @@ function renderDietFilters(){
 }
 function setDiet(f){ activeDiet=f; renderDietFilters(); renderDishes(); }
 function renderDishes(){
+  if (!document.getElementById('dishes-list')) return;
   const t=copy[lang]||copy['fr']||copy['en']; const isAr=lang==="ar"||false;
   const q=(document.getElementById("search")?.value||"").toLowerCase();
 
@@ -6124,6 +6031,7 @@ function renderDishes(){
   ];
 
   const dishesEl = document.getElementById("dishes-list");
+  if (!dishesEl) return;
   dishesEl.removeAttribute("class");
   dishesEl.removeAttribute("style");
 
@@ -6314,6 +6222,7 @@ function toggleCart(id){
 
 function menuSlide(dir) {
   const el = document.getElementById("dishes-list");
+  if (!el) return;
   if(!el) return;
   const cardW = el.querySelector(".dish-card")?.offsetWidth || 220;
   el.scrollBy({ left: dir * (cardW + 14) * 3, behavior:"smooth" });
@@ -9699,7 +9608,7 @@ const reviews = [
 renderWWD();
 renderCuisineTabs();
 renderDietFilters();
-renderDishes();
+if (document.getElementById("dishes-list")) renderDishes();
 
 
 
@@ -10883,6 +10792,7 @@ function applySpotlight() {
 const _origRenderDishes = window.renderDishes;
 if (typeof _origRenderDishes === "function") {
   window.renderDishes = function() {
+    if (!document.getElementById('dishes-list')) return;
     _origRenderDishes.apply(this, arguments);
     setTimeout(applySpotlight, 50);
   };
@@ -11178,7 +11088,6 @@ try { window.addEventListener('popstate', function(e) {
 <!-- ══ MENU CATEGORY PICKER ════════════════════════════════════ -->
 <div id="menu-picker-overlay" onclick="if(event.target===this)closeMenuPicker()">
   <div id="menu-picker-sheet">
-    <div class="mp-grip"></div>
     <div class="mp-head">
       <div>
         <div class="mp-title" id="mp-title">Pour qui tu commandes ?</div>
