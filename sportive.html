@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr" id="html-root">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Sportif — SAVY Fitness</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,800;0,900;1,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07100A;--bg2:#0D1A0F;--bg3:#122016;
+  --card:#111E14;--card2:#162B1B;
+  --border:#1E3B24;--border2:#254D2D;
+  --acc:#12F552;--acc2:#0BCB44;--accD:#09A336;
+  --text:#E8F5EC;--sub:#8BB899;--muted:#4A7056;
+  --red:#FF4040;--gold:#F5C842;
+  --r:14px;--r-lg:20px;--r-xl:26px;
+  --font:'Barlow Condensed',sans-serif;
+  --body:'DM Sans',sans-serif;
+  --shadow:0 4px 20px rgba(0,0,0,.5);
+  --glow:0 0 30px rgba(18,245,82,.15);
+}
+body{background:var(--bg);color:var(--text);font-family:var(--body);min-height:100vh;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font-family:var(--body);cursor:pointer;border:none;outline:none}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0}
+.nav{position:sticky;top:0;z-index:100;background:rgba(7,16,10,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:12px 18px;display:flex;align-items:center;justify-content:space-between}
+.nav-back{display:flex;align-items:center;gap:6px;color:var(--sub);font-size:13px;font-weight:500}
+.nav-logo{font-family:var(--font);font-weight:900;font-size:22px;letter-spacing:.06em;color:var(--acc)}
+.nav-logo span{color:var(--text);font-size:15px;font-weight:600;margin-left:2px}
+.nav-cart-btn{position:relative;width:40px;height:40px;background:var(--card2);border:1px solid var(--border2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;transition:.15s}
+.nav-cart-btn:active{transform:scale(.92)}
+.nav-badge{position:absolute;top:-5px;right:-5px;background:var(--acc);color:#07100A;font-family:var(--font);font-size:11px;font-weight:900;min-width:18px;height:18px;border-radius:99px;display:none;align-items:center;justify-content:center;padding:0 3px}
+.hero{position:relative;padding:48px 20px 44px;overflow:hidden;background:linear-gradient(160deg,#0D2015 0%,#07100A 65%)}
+.hero-orb{position:absolute;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(18,245,82,.2) 0%,transparent 70%);top:-100px;right:-80px;pointer-events:none}
+.hero-orb2{position:absolute;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(18,245,82,.1) 0%,transparent 70%);bottom:-50px;left:-30px;pointer-events:none}
+.hero-label{display:inline-flex;align-items:center;gap:6px;background:rgba(18,245,82,.1);border:1px solid rgba(18,245,82,.3);color:var(--acc);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 12px;border-radius:99px;margin-bottom:20px}
+.hero-title{font-family:var(--font);font-size:clamp(52px,13vw,76px);font-weight:900;line-height:.93;letter-spacing:-.02em;color:var(--text);margin-bottom:16px}
+.hero-title em{font-style:italic;color:var(--acc)}
+.hero-sub{font-size:15px;color:var(--sub);line-height:1.6;max-width:290px;margin-bottom:30px}
+.hero-stats{display:flex;gap:24px;margin-bottom:34px}
+.stat-val{font-family:var(--font);font-size:30px;font-weight:900;color:var(--acc);display:block}
+.stat-lbl{font-size:10px;font-weight:600;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-top:1px;display:block}
+.hero-cta{display:inline-flex;align-items:center;gap:9px;background:var(--acc);color:#07100A;font-family:var(--font);font-size:17px;font-weight:900;letter-spacing:.05em;text-transform:uppercase;padding:15px 28px;border-radius:var(--r);border:none;cursor:pointer;transition:.18s}
+.hero-cta:active{transform:scale(.96)}
+.sec{padding:36px 18px}
+.sec-head{display:flex;align-items:center;gap:10px;margin-bottom:22px}
+.sec-title{font-family:var(--font);font-size:34px;font-weight:900;letter-spacing:-.01em}
+.sec-pill{background:var(--acc);color:#07100A;font-size:10px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border-radius:99px}
+.meals{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mc{background:var(--card);border:2px solid var(--border);border-radius:var(--r-lg);overflow:hidden;transition:border-color .2s,box-shadow .2s;position:relative}
+.mc.in-cart{border-color:var(--acc);box-shadow:var(--glow)}
+.mc-img{position:relative;height:136px;overflow:hidden;background:var(--card2);display:flex;align-items:center;justify-content:center;font-size:56px}
+.mc-grad{position:absolute;inset:0;background:linear-gradient(to top,rgba(7,16,10,.85) 0%,transparent 55%)}
+.mc-badge{position:absolute;top:8px;left:8px;background:var(--gold);color:#111;font-size:9px;font-weight:900;padding:3px 8px;border-radius:99px;letter-spacing:.04em;z-index:1}
+.mc-badge.v2{background:var(--acc);color:#07100A}
+.mc-badge.v3{background:#DB2777;color:#fff}
+.mc-badge.v4{background:#9333EA;color:#fff}
+.mc-btn{position:absolute;bottom:8px;right:8px;width:32px;height:32px;border-radius:50%;background:var(--acc);color:#07100A;font-size:20px;font-weight:900;display:flex;align-items:center;justify-content:center;transition:.15s;z-index:1}
+.mc-btn.on{background:var(--red);color:#fff;font-size:14px}
+.mc-btn:active{transform:scale(.88)}
+.mc-body{padding:12px 12px 14px}
+.mc-name{font-family:var(--font);font-size:18px;font-weight:800;letter-spacing:-.01em;margin-bottom:4px;line-height:1.2}
+.mc-desc{font-size:11px;color:var(--muted);line-height:1.45;margin-bottom:10px}
+.mc-macros{display:flex;gap:6px;margin-bottom:10px}
+.macro{flex:1;background:var(--bg3);border-radius:8px;padding:6px 4px;text-align:center}
+.macro-val{font-family:var(--font);font-size:15px;font-weight:900;color:var(--acc);display:block}
+.macro-lbl{font-size:8px;font-weight:600;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;display:block;margin-top:1px}
+.mc-foot{display:flex;align-items:center;justify-content:space-between}
+.mc-price{font-family:var(--font);font-size:23px;font-weight:900}
+.mc-price small{font-size:12px;font-weight:400;color:var(--muted)}
+.mc-add{background:var(--card2);border:1px solid var(--border2);color:var(--sub);font-family:var(--font);font-size:13px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;padding:7px 12px;border-radius:10px;transition:.15s}
+.mc-add.on{background:var(--red);color:#fff;border-color:transparent}
+.mc-add:active{transform:scale(.94)}
+#upsell-strip{display:none;margin:0 18px 8px;background:linear-gradient(135deg,#0D2015,#122016);border:1px solid var(--border2);border-radius:var(--r-lg);padding:14px 16px;align-items:center;gap:12px;animation:fadeUp .3s both}
+#upsell-strip.show{display:flex}
+.us-ico{font-size:30px;flex-shrink:0}
+.us-info{flex:1}
+.us-title{font-family:var(--font);font-size:16px;font-weight:800;margin-bottom:2px}
+.us-desc{font-size:11px;color:var(--sub)}
+.us-btn{background:var(--acc);color:#07100A;font-family:var(--font);font-size:12px;font-weight:900;letter-spacing:.04em;padding:8px 14px;border-radius:10px;white-space:nowrap;flex-shrink:0;border:none;cursor:pointer}
+.plans-sec{background:linear-gradient(160deg,#0C1E10 0%,#07100A 100%);padding:44px 18px}
+.plans-hero-title{font-family:var(--font);font-size:40px;font-weight:900;line-height:1;letter-spacing:-.02em;margin-bottom:6px}
+.plans-hero-title em{color:var(--acc);font-style:italic}
+.plans-sub{font-size:13px;color:var(--sub);margin-bottom:30px}
+.plans-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.plan{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px 12px;display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;transition:.2s}
+.plan.best{border-color:var(--acc);box-shadow:var(--glow)}
+.plan-tag{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--acc);color:#07100A;font-size:9px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border-radius:99px;white-space:nowrap}
+.plan-ico{font-size:28px;margin-bottom:8px}
+.plan-name{font-family:var(--font);font-size:15px;font-weight:900;letter-spacing:.05em;text-transform:uppercase;margin-bottom:4px}
+.plan-meals{font-size:11px;color:var(--sub);margin-bottom:12px;line-height:1.4}
+.plan-price{font-family:var(--font);font-size:28px;font-weight:900}
+.plan-price small{font-size:11px;color:var(--muted);font-family:var(--body);font-weight:400}
+.plan-cta{width:100%;background:var(--card2);color:var(--sub);font-family:var(--font);font-size:14px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;padding:10px;border-radius:10px;margin-top:14px;transition:.18s;border:1px solid var(--border2);cursor:pointer}
+.plan.best .plan-cta{background:var(--acc);color:#07100A;border-color:transparent}
+.plan-cta:active{transform:scale(.96)}
+.final-cta{margin:12px 18px 28px;background:linear-gradient(135deg,#102018,#1A3020);border:1px solid var(--border2);border-radius:var(--r-xl);padding:36px 24px;text-align:center;position:relative;overflow:hidden}
+.final-cta::before{content:'💪';position:absolute;font-size:130px;opacity:.05;right:-15px;top:-15px;line-height:1;pointer-events:none}
+.fca-eyebrow{font-size:11px;font-weight:700;color:var(--acc);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px}
+.fca-title{font-family:var(--font);font-size:38px;font-weight:900;letter-spacing:-.02em;line-height:1.02;margin-bottom:8px}
+.fca-sub{font-size:13px;color:var(--sub);margin-bottom:24px}
+.fca-btn{display:inline-flex;align-items:center;gap:9px;background:#25D366;color:#fff;font-family:var(--font);font-size:18px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;padding:16px 32px;border-radius:var(--r);border:none;cursor:pointer;transition:.18s;box-shadow:0 4px 20px rgba(37,211,102,.3)}
+.fca-btn:active{transform:scale(.96)}
+footer{text-align:center;padding:28px 18px calc(110px + env(safe-area-inset-bottom,0px));color:var(--muted);font-size:12px;border-top:1px solid var(--border)}
+footer a{color:var(--sub)}
+#cart-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:rgba(13,26,15,.96);border-top:1px solid var(--border2);padding:12px 18px calc(14px + env(safe-area-inset-bottom,0px));display:none;align-items:center;gap:12px;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+#cart-bar.show{display:flex}
+#cb-info{flex:1}
+#cb-count{font-family:var(--font);font-size:18px;font-weight:900}
+#cb-total{font-size:12px;color:var(--sub);margin-top:1px}
+#cb-btn{background:var(--acc);color:#07100A;font-family:var(--font);font-size:16px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;padding:13px 22px;border-radius:var(--r);border:none;cursor:pointer;transition:.15s}
+#cb-btn:active{transform:scale(.96)}
+#cart-ov{position:fixed;inset:0;z-index:300;background:transparent;display:none;transition:background .28s}
+#cart-ov.open{display:block;background:rgba(0,0,0,.75)}
+#cart-dr{position:fixed;bottom:0;left:0;right:0;z-index:310;background:var(--bg2);border-top:2px solid var(--border2);border-radius:24px 24px 0 0;padding:0 0 calc(24px + env(safe-area-inset-bottom,0px));transform:translateY(100%);transition:transform .32s cubic-bezier(.34,1.2,.64,1);max-height:88vh;overflow-y:auto}
+#cart-dr.open{transform:translateY(0)}
+.dr-grip{width:36px;height:4px;background:var(--border2);border-radius:2px;margin:14px auto 0}
+.dr-head{padding:16px 18px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.dr-title{font-family:var(--font);font-size:24px;font-weight:900}
+.dr-close{width:32px;height:32px;background:var(--card);border-radius:50%;border:1px solid var(--border);font-size:15px;color:var(--sub);display:flex;align-items:center;justify-content:center;cursor:pointer}
+#dr-items{padding:14px 18px;display:flex;flex-direction:column;gap:10px;min-height:44px}
+.ci{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:10px 12px}
+.ci-ico{font-size:24px;width:40px;height:40px;background:var(--card2);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ci-info{flex:1}
+.ci-name{font-size:13px;font-weight:600}
+.ci-price{font-size:12px;color:var(--acc);font-weight:700;margin-top:2px}
+.ci-del{width:28px;height:28px;background:var(--bg3);border-radius:50%;border:1px solid var(--border);font-size:13px;color:var(--sub);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.dr-foot{padding:14px 18px;border-top:1px solid var(--border)}
+.dr-total-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.dr-total-lbl{font-size:13px;color:var(--sub)}
+.dr-total-val{font-family:var(--font);font-size:26px;font-weight:900}
+.dr-cta{width:100%;background:var(--acc);color:#07100A;font-family:var(--font);font-size:18px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;padding:16px;border-radius:var(--r-lg);display:flex;align-items:center;justify-content:center;gap:10px;border:none;cursor:pointer;transition:.15s}
+.dr-cta:active{transform:scale(.97)}
+#ai-fab{position:fixed;bottom:90px;right:18px;z-index:250;width:54px;height:54px;background:var(--acc);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 4px 24px rgba(18,245,82,.4);border:none;cursor:pointer;transition:.2s}
+#ai-fab:active{transform:scale(.9)}
+#ai-dot{position:absolute;top:1px;right:1px;width:12px;height:12px;background:#07F542;border-radius:50%;border:2px solid var(--bg);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.35);opacity:.7}}
+#ai-panel{position:fixed;bottom:0;left:0;right:0;z-index:320;background:var(--bg2);border-top:1px solid var(--border2);border-radius:24px 24px 0 0;max-height:76vh;display:flex;flex-direction:column;transform:translateY(100%);transition:transform .32s cubic-bezier(.34,1.2,.64,1)}
+#ai-panel.open{transform:translateY(0)}
+.ai-head{padding:16px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
+.ai-avatar{width:40px;height:40px;background:linear-gradient(135deg,var(--acc),var(--accD));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.ai-name{font-family:var(--font);font-size:20px;font-weight:900}
+.ai-status{font-size:11px;color:var(--acc);margin-top:1px}
+.ai-xbtn{margin-left:auto;width:30px;height:30px;background:var(--card);border-radius:50%;border:1px solid var(--border);font-size:14px;color:var(--sub);display:flex;align-items:center;justify-content:center;cursor:pointer}
+#ai-msgs{flex:1;overflow-y:auto;padding:14px 18px;display:flex;flex-direction:column;gap:10px}
+.msg{max-width:84%;padding:10px 14px;border-radius:16px;font-size:13px;line-height:1.55}
+.msg.bot{background:var(--card);align-self:flex-start;border-radius:4px 16px 16px 16px}
+.msg.user{background:var(--acc);color:#07100A;align-self:flex-end;border-radius:16px 16px 4px 16px;font-weight:600}
+#ai-chips{display:flex;flex-wrap:wrap;gap:7px;padding:0 18px 10px}
+.aichip{background:var(--card2);border:1px solid var(--border2);color:var(--sub);font-size:12px;font-weight:600;padding:7px 13px;border-radius:99px;cursor:pointer;transition:.15s}
+.aichip:active{background:var(--border2)}
+.ai-inp-row{display:flex;gap:8px;padding:12px 18px calc(14px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--border)}
+.ai-inp{flex:1;background:var(--card);border:1px solid var(--border2);border-radius:12px;padding:10px 14px;color:var(--text);font-family:var(--body);font-size:14px}
+.ai-inp::placeholder{color:var(--muted)}
+.ai-inp:focus{outline:none;border-color:var(--acc)}
+.ai-send{background:var(--acc);color:#07100A;font-size:18px;width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:none;cursor:pointer}
+.toast{position:fixed;top:72px;left:18px;right:18px;z-index:400;background:var(--card2);border:1px solid var(--border2);border-radius:var(--r-lg);padding:14px 16px;display:flex;align-items:center;gap:12px;transform:translateY(-30px);opacity:0;transition:.3s;pointer-events:none}
+.toast.show{transform:translateY(0);opacity:1;pointer-events:auto}
+.toast-ico{font-size:28px;flex-shrink:0}
+.toast-body{flex:1}
+.toast-t{font-size:13px;font-weight:700;margin-bottom:2px}
+.toast-d{font-size:11px;color:var(--sub)}
+.toast-btn{background:var(--acc);color:#07100A;font-family:var(--font);font-size:12px;font-weight:900;padding:7px 12px;border-radius:9px;white-space:nowrap;flex-shrink:0;cursor:pointer;border:none}
+.top-strip{background:rgba(7,16,10,.96);border-bottom:1px solid var(--border);padding:7px 18px;display:flex;align-items:center;justify-content:space-between}
+.socials{display:flex;align-items:center;gap:8px}
+.soc-link{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--card2);border:1px solid var(--border);transition:.15s;text-decoration:none}
+.soc-link:active{transform:scale(.9)}
+.lang-wrap{display:flex;gap:1px;background:var(--card2);border-radius:99px;padding:2px;border:1px solid var(--border)}
+.lang-btn{padding:4px 9px;border-radius:99px;border:none;cursor:pointer;font-size:11px;font-weight:700;transition:.2s;background:transparent;color:var(--muted);font-family:var(--body)}
+.lang-btn.active{background:var(--acc);color:#07100A}
+[dir=rtl] .nav-back svg{transform:scaleX(-1)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.mc:nth-child(1){animation:fadeUp .35s .05s both}
+.mc:nth-child(2){animation:fadeUp .35s .1s both}
+.mc:nth-child(3){animation:fadeUp .35s .15s both}
+.mc:nth-child(4){animation:fadeUp .35s .2s both}
+</style>
+</head>
+<body>
+
+<!-- SOCIAL / LANG STRIP -->
+<div class="top-strip">
+  <div class="socials">
+    <a class="soc-link" href="https://www.instagram.com/savy.mar?igsh=MWdzNjNkeWZ0NW93Zw==" target="_blank" rel="noopener" aria-label="Instagram">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--sub)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="var(--sub)" stroke="none"/></svg>
+    </a>
+    <a class="soc-link" href="https://www.tiktok.com/@savy.ma?_r=1&_t=ZS-94R6uvkwfhN" target="_blank" rel="noopener" aria-label="TikTok">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="var(--sub)"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.94a8.17 8.17 0 004.77 1.52V7a4.85 4.85 0 01-1-.31z"/></svg>
+    </a>
+  </div>
+  <div class="lang-wrap">
+    <button class="lang-btn active" data-lang="fr" onclick="setLang('fr')">FR</button>
+    <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" data-lang="ar" onclick="setLang('ar')">ع</button>
+  </div>
+</div>
+<nav class="nav">
+  <a href="../index.html" class="nav-back">
+    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    <span id="t-back">Accueil</span>
+  </a>
+  <div class="nav-logo">SAVY <span style="color:var(--text);font-size:15px;font-weight:600;margin-left:2px;font-family:var(--body)" id="t-page-label">Sportif</span></div>
+  <button class="nav-cart-btn" onclick="openDrawer()">
+    🛒<span class="nav-badge" id="nav-badge"></span>
+  </button>
+</nav>
+
+<section class="hero">
+  <div class="hero-orb"></div><div class="hero-orb2"></div>
+  <div class="hero-label" id="t-hero-label">💪 Performance Menu</div>
+  <h1 class="hero-title" id="t-hero-title">Fuel Your<br><em>Performance.</em></h1>
+  <p class="hero-sub" id="t-hero-sub">Repas haute protéine conçus par des nutritionnistes pour tes objectifs sportifs.</p>
+  <div class="hero-stats">
+    <div><span class="stat-val">42g+</span><span class="stat-lbl">Protéine</span></div>
+    <div><span class="stat-val">45min</span><span class="stat-lbl">Livraison</span></div>
+    <div><span class="stat-val">100%</span><span class="stat-lbl">Fresh</span></div>
+  </div>
+  <button class="hero-cta" onclick="document.getElementById('menu-sec').scrollIntoView({behavior:'smooth'})">
+    Voir le menu 💪
+  </button>
+</section>
+
+<section class="sec" id="menu-sec">
+  <div class="sec-head">
+    <h2 class="sec-title">Muscle Menu</h2>
+    <span class="sec-pill">4 plats</span>
+  </div>
+  <div class="meals">
+    <div class="mc" id="mc-sp1">
+      <div class="mc-img">🍛<div class="mc-grad"></div><div class="mc-badge">🏆 Best Seller</div><button class="mc-btn" id="btn-sp1" onclick="toggle('sp1')">+</button></div>
+      <div class="mc-body">
+        <div class="mc-name">Chicken Rice Bowl</div>
+        <div class="mc-desc">Riz basmati, poulet grillé, légumes croquants, sauce tahini</div>
+        <div class="mc-macros">
+          <div class="macro"><span class="macro-val">42g</span><span class="macro-lbl">Prot.</span></div>
+          <div class="macro"><span class="macro-val">480</span><span class="macro-lbl">kcal</span></div>
+          <div class="macro"><span class="macro-val">Low</span><span class="macro-lbl">Grasse</span></div>
+        </div>
+        <div class="mc-foot">
+          <div class="mc-price">72 <small>MAD</small></div>
+          <button class="mc-add" id="add-sp1" onclick="toggle('sp1')">+ Ajouter</button>
+        </div>
+      </div>
+    </div>
+    <div class="mc" id="mc-sp2">
+      <div class="mc-img">🥙<div class="mc-grad"></div><div class="mc-badge v2">💪 High Protein</div><button class="mc-btn" id="btn-sp2" onclick="toggle('sp2')">+</button></div>
+      <div class="mc-body">
+        <div class="mc-name">Kefta Plate</div>
+        <div class="mc-desc">Kefta maison, salade fraîche, pain complet, sauce chermoula</div>
+        <div class="mc-macros">
+          <div class="macro"><span class="macro-val">38g</span><span class="macro-lbl">Prot.</span></div>
+          <div class="macro"><span class="macro-val">520</span><span class="macro-lbl">kcal</span></div>
+          <div class="macro"><span class="macro-val">Med</span><span class="macro-lbl">Grasse</span></div>
+        </div>
+        <div class="mc-foot">
+          <div class="mc-price">68 <small>MAD</small></div>
+          <button class="mc-add" id="add-sp2" onclick="toggle('sp2')">+ Ajouter</button>
+        </div>
+      </div>
+    </div>
+    <div class="mc" id="mc-sp3">
+      <div class="mc-img">🥚<div class="mc-grad"></div><div class="mc-badge v3">🌸 Low Cal</div><button class="mc-btn" id="btn-sp3" onclick="toggle('sp3')">+</button></div>
+      <div class="mc-body">
+        <div class="mc-name">Egg Protein Plate</div>
+        <div class="mc-desc">Œufs bio, avocat frais, épinards, sauce yaourt citron</div>
+        <div class="mc-macros">
+          <div class="macro"><span class="macro-val">34g</span><span class="macro-lbl">Prot.</span></div>
+          <div class="macro"><span class="macro-val">390</span><span class="macro-lbl">kcal</span></div>
+          <div class="macro"><span class="macro-val">Low</span><span class="macro-lbl">Carb</span></div>
+        </div>
+        <div class="mc-foot">
+          <div class="mc-price">55 <small>MAD</small></div>
+          <button class="mc-add" id="add-sp3" onclick="toggle('sp3')">+ Ajouter</button>
+        </div>
+      </div>
+    </div>
+    <div class="mc" id="mc-sp4">
+      <div class="mc-img">🥤<div class="mc-grad"></div><div class="mc-badge v4">⚡ Recovery</div><button class="mc-btn" id="btn-sp4" onclick="toggle('sp4')">+</button></div>
+      <div class="mc-body">
+        <div class="mc-name">Protein Shake</div>
+        <div class="mc-desc">Whey naturelle, banane, lait d'amande, cacao pur</div>
+        <div class="mc-macros">
+          <div class="macro"><span class="macro-val">30g</span><span class="macro-lbl">Prot.</span></div>
+          <div class="macro"><span class="macro-val">220</span><span class="macro-lbl">kcal</span></div>
+          <div class="macro"><span class="macro-val">Low</span><span class="macro-lbl">Sucre</span></div>
+        </div>
+        <div class="mc-foot">
+          <div class="mc-price">35 <small>MAD</small></div>
+          <button class="mc-add" id="add-sp4" onclick="toggle('sp4')">+ Ajouter</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="upsell-strip">
+  <div class="us-ico">⚡</div>
+  <div class="us-info">
+    <div class="us-title">Boost ta récupération</div>
+    <div class="us-desc">Ajoute un Protein Shake — idéal post-workout</div>
+  </div>
+  <button class="us-btn" onclick="toggle('sp4');hideStrip()">Ajouter</button>
+</div>
+
+<section class="plans-sec">
+  <h2 class="plans-hero-title">Abonnement<br><em>Sportif</em></h2>
+  <p class="plans-sub">Économise jusqu'à 30% — livraison incluse tous les jours</p>
+  <div class="plans-grid">
+    <div class="plan">
+      <div class="plan-ico">🌱</div>
+      <div class="plan-name">Starter</div>
+      <div class="plan-meals">3 repas<br>par semaine</div>
+      <div class="plan-price">72 <small>MAD/j</small></div>
+      <button class="plan-cta" onclick="planWA('Starter','72')">Choisir</button>
+    </div>
+    <div class="plan best">
+      <div class="plan-tag">🔥 BEST VALUE</div>
+      <div class="plan-ico">💪</div>
+      <div class="plan-name">Fitness</div>
+      <div class="plan-meals">5 repas<br>par semaine</div>
+      <div class="plan-price">115 <small>MAD/j</small></div>
+      <button class="plan-cta" onclick="planWA('Fitness','115')">Choisir</button>
+    </div>
+    <div class="plan">
+      <div class="plan-ico">🏆</div>
+      <div class="plan-name">Athlete</div>
+      <div class="plan-meals">7 repas<br>par semaine</div>
+      <div class="plan-price">155 <small>MAD/j</small></div>
+      <button class="plan-cta" onclick="planWA('Athlete','155')">Choisir</button>
+    </div>
+  </div>
+</section>
+
+<div class="final-cta">
+  <div class="fca-eyebrow">🏁 Prêt à performer ?</div>
+  <div class="fca-title">Commande ton<br>repas maintenant</div>
+  <div class="fca-sub">Livraison en 45 min — repas frais, macros optimisés</div>
+  <button class="fca-btn" onclick="checkout()">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
+    Commander via WhatsApp
+  </button>
+</div>
+
+<footer><p>© 2025 SAVY Fitness — Tétouan · M'diq · Martil</p><p style="margin-top:6px"><a href="../index.html">← Retour à l'accueil</a></p></footer>
+
+<div id="cart-bar">
+  <div id="cb-info"><div id="cb-count">0 article</div><div id="cb-total">Total: 0 MAD</div></div>
+  <button id="cb-btn" onclick="openDrawer()">Voir le panier →</button>
+</div>
+<div id="cart-ov" onclick="closeDrawer()"></div>
+<div id="cart-dr">
+  <div class="dr-grip"></div>
+  <div class="dr-head"><div class="dr-title">Mon panier 🛒</div><button class="dr-close" onclick="closeDrawer()">✕</button></div>
+  <div id="dr-items"></div>
+  <div class="dr-foot">
+    <div class="dr-total-row"><span class="dr-total-lbl">Total</span><span class="dr-total-val" id="dr-total">0 MAD</span></div>
+    <button class="dr-cta" onclick="checkout()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
+      Commander via WhatsApp
+    </button>
+  </div>
+</div>
+<button id="ai-fab" onclick="toggleAI()">🤖<div id="ai-dot"></div></button>
+<div id="ai-panel">
+  <div class="ai-head">
+    <div class="ai-avatar">💪</div>
+    <div><div class="ai-name">Chef Savy</div><div class="ai-status">● Coach nutrition SAVY</div></div>
+    <button class="ai-xbtn" onclick="toggleAI()">✕</button>
+  </div>
+  <div id="ai-msgs"></div>
+  <div id="ai-chips">
+    <button class="aichip" onclick="sendMsg('Quel repas pour la prise de masse ?')">💪 Prise de masse</button>
+    <button class="aichip" onclick="sendMsg('Repas post-entraînement ?')">⚡ Post-workout</button>
+    <button class="aichip" onclick="sendMsg('Repas faible en calories ?')">🌸 Low cal</button>
+  </div>
+  <div class="ai-inp-row">
+    <input class="ai-inp" id="ai-inp" placeholder="Pose ta question..." onkeydown="if(event.key==='Enter')sendMsg()">
+    <button class="ai-send" onclick="sendMsg()">➤</button>
+  </div>
+</div>
+<div class="toast" id="t-upsell">
+  <div class="toast-ico">🥤</div>
+  <div class="toast-body"><div class="toast-t">Boost ta récupération !</div><div class="toast-d">+Protein Shake — 35 MAD seulement</div></div>
+  <button class="toast-btn" onclick="toggle('sp4');hideT('t-upsell')">Ajouter</button>
+</div>
+<div class="toast" id="t-sub">
+  <div class="toast-ico">🔥</div>
+  <div class="toast-body"><div class="toast-t">Économise avec un abonnement !</div><div class="toast-d">Plan Fitness à 115 MAD/j — économise 20%</div></div>
+  <button class="toast-btn" onclick="planWA('Fitness','115');hideT('t-sub')">Voir</button>
+</div>
+
+<script>
+const MEALS={sp1:{n:'Chicken Rice Bowl',p:72,i:'🍛'},sp2:{n:'Kefta Plate',p:68,i:'🥙'},sp3:{n:'Egg Protein Plate',p:55,i:'🥚'},sp4:{n:'Protein Shake',p:35,i:'🥤'}};
+const WA='+212708700830';
+let cart={},_us=false,_sb=false,_ai=false,_ail=false,_aih=[];
+
+function toggle(id){
+  if(cart[id]){
+    delete cart[id];
+    document.getElementById('btn-'+id)?.classList.remove('on');
+    document.getElementById('add-'+id)?.classList.remove('on');
+    document.getElementById('mc-'+id)?.classList.remove('in-cart');
+    if(document.getElementById('add-'+id)) document.getElementById('add-'+id).textContent='+ Ajouter';
+  } else {
+    cart[id]={...MEALS[id]};
+    document.getElementById('btn-'+id)?.classList.add('on');
+    document.getElementById('mc-'+id)?.classList.add('in-cart');
+    if(document.getElementById('add-'+id)){document.getElementById('add-'+id).classList.add('on');document.getElementById('add-'+id).textContent='✓ Ajouté';}
+    const n=Object.keys(cart).length;
+    if(n===1&&!_us&&id!=='sp4'){_us=true;showT('t-upsell',5000);document.getElementById('upsell-strip').classList.add('show');}
+    if(n>=2&&!_sb){_sb=true;setTimeout(()=>showT('t-sub',6000),1200);}
+  }
+  renderCart();
+}
+function renderCart(){
+  const ids=Object.keys(cart);
+  const tot=ids.reduce((s,k)=>s+cart[k].p,0);
+  const badge=document.getElementById('nav-badge');
+  badge.textContent=ids.length;badge.style.display=ids.length?'flex':'none';
+  document.getElementById('cart-bar').classList.toggle('show',ids.length>0);
+  document.getElementById('cb-count').textContent=ids.length+' article'+(ids.length>1?'s':'');
+  document.getElementById('cb-total').textContent='Total: '+tot+' MAD';
+  const el=document.getElementById('dr-items');
+  el.innerHTML=ids.length?'':`<div style="text-align:center;color:var(--muted);font-size:13px;padding:22px">Ton panier est vide 🛒</div>`;
+  ids.forEach(k=>{
+    const it=cart[k];const d=document.createElement('div');d.className='ci';
+    d.innerHTML=`<div class="ci-ico">${it.i}</div><div class="ci-info"><div class="ci-name">${it.n}</div><div class="ci-price">${it.p} MAD</div></div><button class="ci-del" onclick="toggle('${k}')">✕</button>`;
+    el.appendChild(d);
+  });
+  document.getElementById('dr-total').textContent=tot+' MAD';
+  document.getElementById('ai-fab').style.bottom=ids.length>0?'90px':'24px';
+}
+function openDrawer(){document.getElementById('cart-ov').classList.add('open');document.getElementById('cart-dr').classList.add('open');document.body.style.overflow='hidden';}
+function closeDrawer(){document.getElementById('cart-ov').classList.remove('open');document.getElementById('cart-dr').classList.remove('open');document.body.style.overflow='';}
+function checkout(){
+  const ids=Object.keys(cart);if(!ids.length){openDrawer();return;}
+  const lines=ids.map(k=>`• ${cart[k].n} — ${cart[k].p} MAD`).join('\n');
+  const tot=ids.reduce((s,k)=>s+cart[k].p,0);
+  window.open(`https://wa.me/${WA}?text=${encodeURIComponent(`Salam ! Je veux commander (Menu Sportif):\n\n${lines}\n\n💰 Total: ${tot} MAD\n⚡ savy.netlify.app`)}`, '_blank');
+}
+function planWA(n,p){window.open(`https://wa.me/${WA}?text=${encodeURIComponent(`Salam ! Je veux m'abonner au plan ${n} Sportif — ${p} MAD/jour. savy.netlify.app`)}`, '_blank');}
+function showT(id,d=4000){const t=document.getElementById(id);t.classList.add('show');setTimeout(()=>t.classList.remove('show'),d);}
+function hideT(id){document.getElementById(id).classList.remove('show');}
+function hideStrip(){document.getElementById('upsell-strip').classList.remove('show');}
+function toggleAI(){
+  _ai=!_ai;
+  document.getElementById('ai-panel').classList.toggle('open',_ai);
+  document.getElementById('ai-dot').style.display=_ai?'none':'block';
+  if(_ai&&!_aih.length)setTimeout(()=>addMsg('bot','Salam! 💪 Ana Chef Savy — coach nutrition dyal SAVY. Ash khassak? Repas pour prise de masse, sèche, ou récupération?'),250);
+}
+function addMsg(r,t){
+  const el=document.getElementById('ai-msgs');
+  const d=document.createElement('div');d.className=`msg ${r}`;d.textContent=t;el.appendChild(d);el.scrollTop=el.scrollHeight;
+  _aih.push({role:r==='bot'?'assistant':'user',content:t});
+}
+async function sendMsg(txt){
+  const inp=document.getElementById('ai-inp');const msg=txt||inp.value.trim();
+  if(!msg||_ail)return;inp.value='';addMsg('user',msg);
+  document.getElementById('ai-chips').style.display='none';_ail=true;
+  const tp=document.createElement('div');tp.className='msg bot';tp.id='tp';tp.textContent='⟳ ...';
+  document.getElementById('ai-msgs').appendChild(tp);document.getElementById('ai-msgs').scrollTop=9999;
+  try{
+    const r=await fetch('/.netlify/functions/gemini',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg,history:_aih.slice(-8),systemPrompt:'Tu es Chef Savy, coach nutrition SAVY Fitness. Page: Menu Sportif. Parle en Darija marocain court et chaleureux. Focus: protéines, performance, récupération. Max 2 phrases. Plats: Chicken Rice Bowl 72 MAD, Kefta Plate 68 MAD, Egg Protein Plate 55 MAD, Protein Shake 35 MAD.'})});
+    const data=await r.json();document.getElementById('tp')?.remove();
+    addMsg('bot',data.reply||'Chicken Rice Bowl — 42g protéine, ideal li bghiti! 💪');
+  }catch{document.getElementById('tp')?.remove();addMsg('bot','Chicken Rice Bowl hiya l-khyar — 42g protéine 💪');}
+  _ail=false;
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeDrawer();if(_ai)toggleAI();}});
+renderCart();
+
+/* ── i18n ── */
+const T={
+  fr:{
+    't-back':'Accueil','t-page-label':'Sportif',
+    't-hero-label':'💪 Performance Menu',
+    't-hero-title':'Fuel Your Performance.',
+    't-hero-sub':'Repas haute protéine conçus par des nutritionnistes pour tes objectifs sportifs.',
+    't-hero-cta':'Voir le menu 💪',
+    't-sec-title':'Muscle Menu',
+    't-plans-title':'Abonnement Sportif',
+    't-plans-sub':'Économise jusqu\'à 30% — livraison incluse tous les jours',
+    't-fca-eyebrow':'🏁 Prêt à performer ?',
+    't-fca-title':'Commande ton repas maintenant',
+    't-fca-sub':'Livraison en 45 min — repas frais, macros optimisés',
+  },
+  en:{
+    't-back':'Home','t-page-label':'Sportive',
+    't-hero-label':'💪 Performance Menu',
+    't-hero-title':'Fuel Your Performance.',
+    't-hero-sub':'High-protein meals designed by nutritionists for your athletic goals.',
+    't-hero-cta':'See the menu 💪',
+    't-sec-title':'Muscle Menu',
+    't-plans-title':'Sportive Plan',
+    't-plans-sub':'Save up to 30% — daily delivery included',
+    't-fca-eyebrow':'🏁 Ready to perform?',
+    't-fca-title':'Order your meal now',
+    't-fca-sub':'45 min delivery — fresh meals, optimized macros',
+  },
+  ar:{
+    't-back':'الرئيسية','t-page-label':'الرياضي',
+    't-hero-label':'💪 قائمة الأداء',
+    't-hero-title':'وقود أدائك.',
+    't-hero-sub':'وجبات غنية بالبروتين صممها خبراء التغذية لأهدافك الرياضية.',
+    't-hero-cta':'اطلب الآن 💪',
+    't-sec-title':'قائمة العضلات',
+    't-plans-title':'اشتراك رياضي',
+    't-plans-sub':'وفّر حتى 30% — توصيل يومي مجاني',
+    't-fca-eyebrow':'🏁 مستعد للإنجاز؟',
+    't-fca-title':'اطلب وجبتك الآن',
+    't-fca-sub':'توصيل خلال 45 دقيقة — وجبات طازجة ومتوازنة',
+  }
+};
+function setLang(l){
+  const html=document.getElementById('html-root');
+  html.lang=l;html.dir=l==='ar'?'rtl':'ltr';
+  localStorage.setItem('savy_lang',l);
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===l));
+  const t=T[l]||T.fr;
+  Object.keys(t).forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=t[id];});
+}
+(function(){
+  const s=localStorage.getItem('savy_lang');
+  const br=navigator.language||'fr';
+  setLang(s||(br.startsWith('ar')?'ar':br.startsWith('en')?'en':'fr'));
+})();
+window.addEventListener('storage',function(e){
+  if(e.key==='savy_lang'&&e.newValue)setLang(e.newValue);
+});
+</script>
+</body>
+</html>
