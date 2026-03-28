@@ -11155,10 +11155,9 @@ function closeMenuPicker() {
 }
 
 function openMenuSection(pageSlug) {
-  // Animate the picker out then redirect
   closeMenuPicker();
   setTimeout(() => {
-    window.location.href = 'menu/' + pageSlug + '.html';
+    window.location.href = pageSlug + '.html';
   }, 260);
 }
 
