@@ -630,11 +630,40 @@ footer { margin:18px var(--gap) 0; padding:16px; border-radius:var(--r); backgro
 #plan-nudge .pn-txt { flex:1; line-height:1.3; color:rgba(255,255,255,.78); }
 #plan-nudge .pn-cta { background:#18B83A; color:#fff; padding:6px 11px; border-radius:99px; font-size:11px; font-weight:800; font-family:var(--font); border:none; cursor:pointer; flex-shrink:0; white-space:nowrap; }
 #plan-nudge .pn-x { background:none; border:none; color:rgba(255,255,255,.38); font-size:16px; cursor:pointer; padding:0; flex-shrink:0; }
-#pwa-install-bar { position:fixed; bottom:112px; left:50%; transform:translateX(-50%) translateY(20px); z-index:480; max-width:calc(100vw - 32px); background:var(--text); color:var(--bg); padding:10px 13px; border-radius:99px; display:flex; align-items:center; gap:10px; opacity:0; transition:opacity .25s, transform .25s; pointer-events:none; box-shadow:0 6px 22px rgba(0,0,0,.2); white-space:nowrap; font-size:12px; font-weight:600; }
-#pwa-install-bar.show { opacity:1; transform:translateX(-50%) translateY(0); pointer-events:auto; }
-.pwa-inst-btn { background:var(--green); color:#fff; padding:5px 12px; border-radius:99px; font-size:11px; font-weight:800; border:none; cursor:pointer; font-family:var(--font); }
-.pwa-inst-btn:active { transform:scale(.95); }
-.pwa-dismiss { background:none; border:none; cursor:pointer; opacity:.45; color:inherit; font-size:14px; padding:0 2px; }
+#pwa-install-bar {
+  position:fixed; bottom:100px; left:var(--gap); right:var(--gap);
+  z-index:480; max-width:420px; margin:0 auto;
+  background:var(--bg); color:var(--text);
+  border:1.5px solid var(--border);
+  padding:14px 15px; border-radius:18px;
+  display:flex; align-items:center; gap:12px;
+  opacity:0; transform:translateY(20px); pointer-events:none;
+  transition:opacity .28s, transform .28s cubic-bezier(.4,0,.2,1);
+  box-shadow:0 8px 32px rgba(0,0,0,.14);
+}
+#pwa-install-bar.show { opacity:1; transform:translateY(0); pointer-events:auto; }
+.pwa-ico { font-size:26px; flex-shrink:0; }
+.pwa-copy { flex:1; }
+.pwa-copy-title { font-family:var(--font); font-weight:800; font-size:13px; color:var(--text); margin-bottom:2px; }
+.pwa-copy-sub { font-size:11px; color:var(--muted); }
+.pwa-inst-btn {
+  background:var(--green); color:#fff;
+  padding:9px 16px; border-radius:10px;
+  font-size:12px; font-weight:800; border:none; cursor:pointer;
+  font-family:var(--font); flex-shrink:0;
+  box-shadow:0 2px 10px rgba(9,153,41,.25);
+  transition:all .15s;
+}
+.pwa-inst-btn:active { transform:scale(.95); filter:brightness(.9); }
+.pwa-dismiss {
+  width:32px; height:32px; flex-shrink:0;
+  background:var(--card2); border:1px solid var(--border);
+  border-radius:50%; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  font-size:15px; color:var(--muted); transition:all .15s;
+}
+.pwa-dismiss:hover { background:var(--border); }
+.pwa-dismiss:active { transform:scale(.88); }
 
 /* ══════════════════════════════════════════════════════════════
    MISC CONVERSION
@@ -1966,6 +1995,16 @@ function dsToggleCart() {
     const banner = document.getElementById('pwa-install-bar');
     if (banner) banner.classList.remove('show');
   });
+  // Dismiss button — robust handler
+  const _pwaDismissBtn = document.getElementById('pwa-btn-dismiss');
+  if (_pwaDismissBtn) {
+    _pwaDismissBtn.addEventListener('click', function() {
+      const bar = document.getElementById('pwa-install-bar');
+      if (bar) bar.classList.remove('show');
+      try { localStorage.setItem('savy_pwa_dismissed', '1'); } catch(e) {}
+    });
+  }
+
   window._pwaInstall = async function() {
     const banner = document.getElementById('pwa-install-bar');
     if (_pwaPrompt) {
@@ -2092,6 +2131,11 @@ function _hideAbandon() {
 );
 
 // Expose all onclick-callable functions to window scope
+function _hidePlanNudge() {
+  const el = document.getElementById('plan-nudge');
+  if (el) el.classList.remove('show');
+}
+window._hidePlanNudge  = _hidePlanNudge;
 window.setL            = setL;
 window.toggleMenuTheme = toggleMenuTheme;
 window.tog             = tog;
@@ -2130,9 +2174,13 @@ window._menuCart       = cart;
 
 <!-- PWA INSTALL BANNER -->
 <div id="pwa-install-bar">
-  <span>📲 Installer l'app SAVY</span>
-  <button class="pwa-inst-btn" onclick="window._pwaInstall?.()">Installer</button>
-  <button class="pwa-dismiss" onclick="this.closest('#pwa-install-bar').classList.remove('show');localStorage.setItem('savy_pwa_dismissed','1')">✕</button>
+  <div class="pwa-ico">📲</div>
+  <div class="pwa-copy">
+    <div class="pwa-copy-title">Installer l'app SAVY</div>
+    <div class="pwa-copy-sub">Accès rapide · Hors ligne · Sans App Store</div>
+  </div>
+  <button class="pwa-inst-btn" id="pwa-btn-install" onclick="window._pwaInstall?.()">Installer</button>
+  <button class="pwa-dismiss" id="pwa-btn-dismiss" aria-label="Fermer">✕</button>
 </div>
 
 </body>
