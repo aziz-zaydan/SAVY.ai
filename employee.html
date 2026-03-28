@@ -134,7 +134,8 @@ footer a{color:var(--sub)}
 .dr-total-val{font-size:24px;font-weight:800;letter-spacing:-.03em}
 .dr-cta{width:100%;background:var(--acc);color:#fff;font-size:16px;font-weight:800;padding:16px;border-radius:var(--r-lg);display:flex;align-items:center;justify-content:center;gap:10px;border:none;cursor:pointer;transition:.15s}
 .dr-cta:active{transform:scale(.97)}
-#ai-fab{position:fixed;bottom:90px;right:18px;z-index:250;width:52px;height:52px;background:var(--acc);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 4px 24px rgba(23,68,230,.4);border:none;cursor:pointer;transition:.2s}
+#ai-fab{position:fixed;bottom:90px;right:18px;z-index:250;width:52px;height:52px;background:transparent;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 4px 24px rgba(23,68,230,.4);border:none;cursor:pointer;transition:.2s}
+#ai-fab{overflow:hidden}
 #ai-fab:active{transform:scale(.9)}
 #ai-dot{position:absolute;top:1px;right:1px;width:12px;height:12px;background:#22C55E;border-radius:50%;border:2px solid #fff;animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.35);opacity:.7}}
@@ -169,6 +170,35 @@ footer a{color:var(--sub)}
 .mc:nth-child(2){animation:slideIn .3s .1s both}
 .mc:nth-child(3){animation:slideIn .3s .15s both}
 .mc:nth-child(4){animation:slideIn .3s .2s both}
+
+/* ══ ORDER POPUP ══ */
+#op-overlay{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.65);display:none;align-items:flex-end;justify-content:center;backdrop-filter:blur(4px)}
+#op-overlay.open{display:flex}
+#op-modal{background:var(--bg2,#fff);width:100%;max-width:480px;border-radius:24px 24px 0 0;padding:0 0 calc(20px + env(safe-area-inset-bottom,0px));max-height:92vh;overflow-y:auto;animation:opSlide .35s cubic-bezier(.34,1.2,.64,1)}
+@keyframes opSlide{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}
+.op-grip{width:36px;height:4px;background:var(--border2,#ddd);border-radius:2px;margin:14px auto 0}
+.op-head{padding:14px 18px 12px;border-bottom:1px solid var(--border,#eee);display:flex;align-items:center;justify-content:space-between}
+.op-title{font-size:18px;font-weight:800;letter-spacing:-.02em;font-family:var(--font,'inherit')}
+.op-close{width:30px;height:30px;background:var(--bg3,#f5f5f5);border:1px solid var(--border,#ddd);border-radius:50%;font-size:14px;color:var(--sub,#666);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+.op-summary{padding:12px 18px;background:var(--bg3,#f7f7f7);border-bottom:1px solid var(--border,#eee);font-size:13px;color:var(--sub,#666);font-weight:600;line-height:1.5}
+.op-summary strong{color:var(--acc);font-size:15px}
+.op-body{padding:16px 18px 4px;display:flex;flex-direction:column;gap:12px}
+.op-gender-row{display:flex;gap:8px}
+.op-g-btn{flex:1;padding:10px 8px;border-radius:12px;border:2px solid var(--border,#ddd);background:var(--bg3,#f5f5f5);font-size:14px;font-weight:700;cursor:pointer;transition:.15s;font-family:var(--body,'inherit')}
+.op-g-btn.sel-m{background:#EFF6FF;border-color:#3B82F6;color:#1D4ED8}
+.op-g-btn.sel-f{background:#FDF2F8;border-color:#EC4899;color:#BE185D}
+.op-field{display:flex;flex-direction:column;gap:4px}
+.op-lbl{font-size:11px;font-weight:800;color:var(--sub,#666);letter-spacing:.06em;text-transform:uppercase}
+.op-inp{background:var(--bg3,#f5f5f5);border:1.5px solid var(--border,#ddd);border-radius:12px;padding:11px 14px;color:var(--text,#111);font-family:var(--body,'inherit');font-size:14px;font-weight:600;outline:none;transition:.15s;width:100%}
+.op-inp:focus{border-color:var(--acc);background:var(--bg2,#fff)}
+.op-inp.err{border-color:#ef4444!important}
+.op-err{font-size:11px;color:#ef4444;font-weight:700;margin-top:-4px;display:none}
+.op-err.show{display:block}
+.op-submit{margin:14px 18px 0;background:var(--acc);color:#fff;width:calc(100% - 36px);padding:15px;border-radius:14px;font-size:16px;font-weight:800;letter-spacing:.02em;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:.15s;font-family:var(--body,'inherit')}
+.op-submit:active{transform:scale(.97)}
+.op-submit:disabled{opacity:.6;cursor:not-allowed}
+[dir=rtl] .op-title,[dir=rtl] .op-lbl,[dir=rtl] .op-inp{text-align:right}
+
 </style>
 </head>
 <body>
@@ -337,10 +367,42 @@ footer a{color:var(--sub)}
     </button>
   </div>
 </div>
-<button id="ai-fab" onclick="toggleAI()">🤖<div id="ai-dot"></div></button>
+<button id="ai-fab" onclick="toggleAI()" style="padding:0;overflow:hidden;"><svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block">
+  <rect width="80" height="80" rx="20" fill="#089929"/>
+  <ellipse cx="40" cy="21" rx="13" ry="5" fill="#a7f3d0" opacity=".9"/>
+  <rect x="27" y="16" width="26" height="14" rx="4" fill="#a7f3d0" opacity=".9"/>
+  <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="#a7f3d0"/>
+  <rect x="26" y="28" width="28" height="20" rx="9" fill="#a7f3d0"/>
+  <circle cx="34" cy="37" r="3.2" fill="#089929"/>
+  <circle cx="46" cy="37" r="3.2" fill="#089929"/>
+  <circle cx="35" cy="36" r="1.2" fill="#a7f3d0" opacity=".6"/>
+  <circle cx="47" cy="36" r="1.2" fill="#a7f3d0" opacity=".6"/>
+  <rect x="28" y="50" width="24" height="18" rx="5" fill="#a7f3d0"/>
+  <text x="40" y="63" text-anchor="middle" font-size="8" font-weight="900" fill="#089929" font-family="system-ui">SAVY</text>
+  <circle cx="19" cy="58" r="5" fill="#a7f3d0" opacity=".9"/>
+  <line x1="24" y1="56" x2="28" y2="55" stroke="white" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="61" cy="58" r="5" fill="#a7f3d0" opacity=".9"/>
+  <line x1="56" y1="56" x2="52" y2="55" stroke="white" stroke-width="3" stroke-linecap="round"/>
+</svg><div id="ai-dot"></div></button>
 <div id="ai-panel">
   <div class="ai-head">
-    <div class="ai-avatar">👨‍💼</div>
+    <div class="ai-avatar"><svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block">
+  <rect width="80" height="80" rx="20" fill="#089929"/>
+  <ellipse cx="40" cy="21" rx="13" ry="5" fill="#a7f3d0" opacity=".9"/>
+  <rect x="27" y="16" width="26" height="14" rx="4" fill="#a7f3d0" opacity=".9"/>
+  <ellipse cx="40" cy="13" rx="9.5" ry="8" fill="#a7f3d0"/>
+  <rect x="26" y="28" width="28" height="20" rx="9" fill="#a7f3d0"/>
+  <circle cx="34" cy="37" r="3.2" fill="#089929"/>
+  <circle cx="46" cy="37" r="3.2" fill="#089929"/>
+  <circle cx="35" cy="36" r="1.2" fill="#a7f3d0" opacity=".6"/>
+  <circle cx="47" cy="36" r="1.2" fill="#a7f3d0" opacity=".6"/>
+  <rect x="28" y="50" width="24" height="18" rx="5" fill="#a7f3d0"/>
+  <text x="40" y="63" text-anchor="middle" font-size="8" font-weight="900" fill="#089929" font-family="system-ui">SAVY</text>
+  <circle cx="19" cy="58" r="5" fill="#a7f3d0" opacity=".9"/>
+  <line x1="24" y1="56" x2="28" y2="55" stroke="white" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="61" cy="58" r="5" fill="#a7f3d0" opacity=".9"/>
+  <line x1="56" y1="56" x2="52" y2="55" stroke="white" stroke-width="3" stroke-linecap="round"/>
+</svg></div>
     <div><div class="ai-name" data-t="ai-name">Chef Savy</div><div class="ai-status" data-t="ai-status">● Assistant déjeuner</div></div>
     <button class="ai-xbtn" onclick="toggleAI()">✕</button>
   </div>
@@ -392,7 +454,12 @@ function renderCart(){
   document.getElementById('ai-fab').style.bottom=ids.length>0?'90px':'24px';}
 function openDrawer(){document.getElementById('cart-ov').classList.add('open');document.getElementById('cart-dr').classList.add('open');document.body.style.overflow='hidden';}
 function closeDrawer(){document.getElementById('cart-ov').classList.remove('open');document.getElementById('cart-dr').classList.remove('open');document.body.style.overflow='';}
-function checkout(){const ids=Object.keys(cart);if(!ids.length){openDrawer();return;}const lines=ids.map(k=>`• ${cart[k].n} — ${cart[k].p} MAD`).join('\n');const tot=ids.reduce((s,k)=>s+cart[k].p,0);window.open(`https://wa.me/${WA}?text=${encodeURIComponent(`Salam! Menu Employé:\n\n${lines}\n\n💰 Total: ${tot} MAD\n savy.netlify.app`)}`,'_blank');}
+function checkout(){
+  const ids=Object.keys(cart);
+  if(!ids.length){openDrawer();return;}
+  closeDrawer();
+  setTimeout(()=>openOrderPopup(), 200);
+}
 function planWA(n,p){window.open(`https://wa.me/${WA}?text=${encodeURIComponent(`Salam! Plan ${n} Employé — ${p} MAD/j. savy.netlify.app`)}`,'_blank');}
 function showT(id,d=4000){const t=document.getElementById(id);t.classList.add('show');setTimeout(()=>t.classList.remove('show'),d);}
 function hideT(id){document.getElementById(id).classList.remove('show');}
@@ -506,6 +573,255 @@ function setLang(l){
 (function(){const s=localStorage.getItem('savy_lang');const br=(navigator.language||'fr').toLowerCase();setLang(s||(br.startsWith('ar')?'ar':br.startsWith('en')?'en':'fr'));})();
 window.addEventListener('storage',function(e){if(e.key==='savy_lang'&&e.newValue)setLang(e.newValue);});
 renderCart();
+
+/* ══ ORDER POPUP ENGINE ══ */
+const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbx3yMAFQaLqHwg9HjZnF5Sly3hFstj1AX7afxEFnAm5br2GHToIO-Awb3GKWIGn68D33w/exec';
+const WA_NUM     = '212708700830';
+let _opGender = '';
+
+function openOrderPopup() {
+  const ids = Object.keys(cart);
+  if (!ids.length) return;
+  const l = document.getElementById('html-root').lang || 'fr';
+  const t = PAGE_STRINGS[l] || PAGE_STRINGS.fr;
+
+  // Pre-fill if remembered
+  const savedName  = localStorage.getItem('savy_name')  || '';
+  const savedPhone = localStorage.getItem('savy_phone') || '';
+  const savedAddr  = localStorage.getItem('savy_addr')  || '';
+  if (savedName)  document.getElementById('op-name').value  = savedName;
+  if (savedPhone) document.getElementById('op-phone').value = savedPhone;
+  if (savedAddr)  document.getElementById('op-addr').value  = savedAddr;
+
+  // Build order summary
+  const lines = ids.map(k => cart[k].i + ' ' + cart[k].n + ' — ' + cart[k].p + ' MAD').join('\n');
+  const tot   = ids.reduce((s,k) => s + cart[k].p, 0);
+  document.getElementById('op-summary').innerHTML =
+    ids.map(k => `<span>${cart[k].i} ${cart[k].n}</span> — <strong>${cart[k].p} MAD</strong>`).join(' &nbsp;·&nbsp; ') +
+    `<br><strong style="font-size:16px">Total: ${tot} MAD</strong>`;
+
+  // Translate popup labels
+  const OPT = {
+    fr:{ title:'Finaliser la commande', gender:'Genre', male:'Homme', female:'Femme',
+         genderErr:'Choisissez votre genre 👆', name:'Nom complet', nameErr:'Nom requis',
+         phone:'WhatsApp', phoneErr:'Numéro invalide', addr:'Adresse de livraison', addrErr:'Adresse requise',
+         comment:'Commentaire (optionnel)', submit:'Commander via WhatsApp' },
+    en:{ title:'Complete your order', gender:'Gender', male:'Male', female:'Female',
+         genderErr:'Please choose your gender 👆', name:'Full name', nameErr:'Name required',
+         phone:'WhatsApp', phoneErr:'Invalid number', addr:'Delivery address', addrErr:'Address required',
+         comment:'Comment (optional)', submit:'Order via WhatsApp' },
+    ar:{ title:'إتمام الطلب', gender:'الجنس', male:'ذكر', female:'أنثى',
+         genderErr:'اختر جنسك 👆', name:'الاسم الكامل', nameErr:'الاسم مطلوب',
+         phone:'واتساب', phoneErr:'رقم غير صالح', addr:'عنوان التوصيل', addrErr:'العنوان مطلوب',
+         comment:'تعليق (اختياري)', submit:'اطلب عبر واتساب' }
+  };
+  const o = OPT[l] || OPT.fr;
+  document.getElementById('op-title').textContent       = o.title;
+  document.getElementById('op-lbl-gender').textContent  = o.gender;
+  document.getElementById('op-lbl-m').textContent       = o.male;
+  document.getElementById('op-lbl-f').textContent       = o.female;
+  document.getElementById('op-err-gender').textContent  = o.genderErr;
+  document.getElementById('op-lbl-name').textContent    = o.name;
+  document.getElementById('op-err-name').textContent    = o.nameErr;
+  document.getElementById('op-lbl-phone').textContent   = o.phone;
+  document.getElementById('op-err-phone').textContent   = o.phoneErr;
+  document.getElementById('op-lbl-addr').textContent    = o.addr;
+  document.getElementById('op-err-addr').textContent    = o.addrErr;
+  document.getElementById('op-lbl-comment').firstChild.textContent = o.comment;
+  document.getElementById('op-submit-lbl').textContent  = o.submit;
+  document.getElementById('op-submit-btn').disabled     = false;
+  document.getElementById('op-submit-btn').style.opacity = '';
+
+  // Placeholders RTL-aware
+  document.getElementById('op-name').placeholder    = l==='ar' ? 'الاسم الكامل' : (l==='en' ? 'Your full name' : 'Votre nom complet');
+  document.getElementById('op-phone').placeholder   = '+212 6XX XXX XXX';
+  document.getElementById('op-addr').placeholder    = l==='ar' ? 'الشارع، الحي، المدينة' : (l==='en' ? 'Street, district, city' : 'Rue, quartier, ville');
+  document.getElementById('op-comment').placeholder = l==='ar' ? 'حساسيات، تفضيلات...' : (l==='en' ? 'Allergies, preferences...' : 'Allergies, préférences...');
+
+  // Reset gender
+  _opGender = localStorage.getItem('savy_gender') || '';
+  opSetGender(_opGender, true);
+
+  // Clear previous errors
+  ['op-err-gender','op-err-name','op-err-phone','op-err-addr'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('show');
+  });
+  ['op-name','op-phone','op-addr'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('err');
+  });
+
+  document.getElementById('op-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeOrderPopup() {
+  document.getElementById('op-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function opClickOut(e) {
+  if (e.target === document.getElementById('op-overlay')) closeOrderPopup();
+}
+
+function opSetGender(g, silent) {
+  _opGender = g;
+  if (g) localStorage.setItem('savy_gender', g);
+  const bm = document.getElementById('op-g-m');
+  const bf = document.getElementById('op-g-f');
+  if (!bm || !bf) return;
+  bm.className = 'op-g-btn' + (g === 'm' ? ' sel-m' : '');
+  bf.className = 'op-g-btn' + (g === 'f' ? ' sel-f' : '');
+  if (!silent) document.getElementById('op-err-gender').classList.remove('show');
+}
+
+function opNormalizePhone(raw) {
+  let p = (raw || '').replace(/[\s\-().]/g, '');
+  p = p.replace(/^(\+|00)212/, '0');
+  p = p.replace(/^2126/, '06').replace(/^2127/, '07');
+  if (/^[67]\d{8}$/.test(p)) p = '0' + p;
+  return p;
+}
+
+function submitOrderPopup() {
+  const l   = document.getElementById('html-root').lang || 'fr';
+  const name = (document.getElementById('op-name').value || '').trim();
+  const raw  = document.getElementById('op-phone').value || '';
+  const phone = opNormalizePhone(raw);
+  const addr  = (document.getElementById('op-addr').value || '').trim();
+  const comment = (document.getElementById('op-comment').value || '').trim();
+  let ok = true;
+
+  // Validate gender
+  if (!_opGender) {
+    document.getElementById('op-err-gender').classList.add('show');
+    const row = document.getElementById('op-g-m').parentNode;
+    let sh=0; const iv = setInterval(()=>{ row.style.transform=sh%2?'translateX(-5px)':'translateX(5px)'; if(++sh>=6){clearInterval(iv);row.style.transform='';} },60);
+    ok = false;
+  }
+
+  const setErr = (fieldId, errId, cond) => {
+    const el = document.getElementById(fieldId);
+    const er = document.getElementById(errId);
+    if (cond) { el.classList.add('err'); er.classList.add('show'); ok = false; }
+    else { el.classList.remove('err'); er.classList.remove('show'); }
+  };
+
+  setErr('op-name',  'op-err-name',  name.length < 2);
+  setErr('op-addr',  'op-err-addr',  addr.length < 2);
+  setErr('op-phone', 'op-err-phone', !/^[0-9]{8,15}$/.test(phone));
+
+  if (!ok) return;
+
+  // Remember for next time
+  localStorage.setItem('savy_name',  name);
+  localStorage.setItem('savy_phone', phone);
+  localStorage.setItem('savy_addr',  addr);
+
+  // Disable button
+  const btn = document.getElementById('op-submit-btn');
+  btn.disabled = true;
+  btn.style.opacity = '.65';
+  document.getElementById('op-submit-lbl').textContent = l==='ar' ? '⏳ جاري...' : (l==='en' ? '⏳ Sending...' : '⏳ En cours...');
+
+  const ids   = Object.keys(cart);
+  const items = ids.map(k => cart[k].n).join(', ');
+  const tot   = ids.reduce((s,k) => s + cart[k].p, 0);
+  const orderId = 'SAVY-' + Math.floor(1000 + Math.random() * 9000);
+  const pageName = document.getElementById('html-root').querySelector ? 
+    (document.title.split('—')[0]||'').trim() : 'Menu';
+
+  // Save to Google Sheets
+  try {
+    const iframe = document.createElement('iframe');
+    iframe.name = 'savy-sf';
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = SHEETS_URL;
+    form.target = 'savy-sf';
+    const fields = {
+      order_id: orderId, source: 'menu-page', page: document.title.split('—')[0].trim(),
+      gender: _opGender === 'm' ? 'male' : 'female',
+      name, phone: "'" + phone, address: addr, comment,
+      meals: items, meal_count: ids.length, order_total: tot,
+      lang: l, scheduled_time: 'ASAP'
+    };
+    Object.entries(fields).forEach(([k,v]) => {
+      const inp = document.createElement('input');
+      inp.type='hidden'; inp.name=k; inp.value=v||'';
+      form.appendChild(inp);
+    });
+    document.body.appendChild(form);
+    form.submit();
+    setTimeout(() => { form.remove(); iframe.remove(); }, 3000);
+  } catch(e) { console.warn('Sheets error', e); }
+
+  // Build WhatsApp message
+  setTimeout(() => {
+    const gLabel = _opGender === 'm'
+      ? (l==='ar' ? 'ذكر' : (l==='en' ? 'Male' : 'Homme'))
+      : (l==='ar' ? 'أنثى' : (l==='en' ? 'Female' : 'Femme'));
+
+    const msg = l === 'ar'
+      ? `سلام SAVY! أؤكد طلبي ${orderId} ✅\n━━━━━━━━━━━━━━\n👤 الاسم: ${name} (${gLabel})\n📱 الهاتف: ${phone}\n📍 العنوان: ${addr}\n🍽️ الطلب:\n${ids.map(k=>'• '+cart[k].n+' — '+cart[k].p+' MAD').join('\n')}\n💰 المجموع: ${tot} MAD${comment ? '\n💬 تعليق: '+comment : ''}\n⏰ أسرع وقت — 45 دقيقة`
+      : (l === 'en'
+        ? `Hi SAVY! I confirm order ${orderId} ✅\n━━━━━━━━━━━━━━\n👤 Name: ${name} (${gLabel})\n📱 Phone: ${phone}\n📍 Address: ${addr}\n🍽️ Order:\n${ids.map(k=>'• '+cart[k].n+' — '+cart[k].p+' MAD').join('\n')}\n💰 Total: ${tot} MAD${comment ? '\n💬 Note: '+comment : ''}\n⏰ ASAP — 45 min`
+        : `Salam SAVY! Je confirme ma commande ${orderId} ✅\n━━━━━━━━━━━━━━\n👤 Nom: ${name} (${gLabel})\n📱 Tél: ${phone}\n📍 Adresse: ${addr}\n🍽️ Commande:\n${ids.map(k=>'• '+cart[k].n+' — '+cart[k].p+' MAD').join('\n')}\n💰 Total: ${tot} MAD${comment ? '\n💬 Note: '+comment : ''}\n⏰ Dès que possible — 45 min`);
+
+    closeOrderPopup();
+    window.open(`https://wa.me/${WA_NUM}?text=${encodeURIComponent(msg)}`, '_blank');
+  }, 400);
+}
+
 </script>
+
+<!-- ══ ORDER POPUP ══ -->
+<div id="op-overlay" onclick="opClickOut(event)">
+  <div id="op-modal">
+    <div class="op-grip"></div>
+    <div class="op-head">
+      <div class="op-title" id="op-title">Finaliser la commande</div>
+      <button class="op-close" onclick="closeOrderPopup()">✕</button>
+    </div>
+    <div class="op-summary" id="op-summary"></div>
+    <div class="op-body">
+      <div>
+        <div class="op-lbl" id="op-lbl-gender" style="margin-bottom:6px">Genre</div>
+        <div class="op-gender-row">
+          <button class="op-g-btn" id="op-g-m" onclick="opSetGender('m')">👨 <span id="op-lbl-m">Homme</span></button>
+          <button class="op-g-btn" id="op-g-f" onclick="opSetGender('f')">👩 <span id="op-lbl-f">Femme</span></button>
+        </div>
+        <div class="op-err" id="op-err-gender">⚠ Choisissez votre genre</div>
+      </div>
+      <div class="op-field">
+        <label class="op-lbl" id="op-lbl-name">Nom complet</label>
+        <input class="op-inp" id="op-name" type="text" autocomplete="name" placeholder="Votre nom complet">
+        <div class="op-err" id="op-err-name">⚠ Nom requis</div>
+      </div>
+      <div class="op-field">
+        <label class="op-lbl" id="op-lbl-phone">WhatsApp</label>
+        <input class="op-inp" id="op-phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+212 6XX XXX XXX">
+        <div class="op-err" id="op-err-phone">⚠ Numéro invalide</div>
+      </div>
+      <div class="op-field">
+        <label class="op-lbl" id="op-lbl-addr">Adresse</label>
+        <input class="op-inp" id="op-addr" type="text" autocomplete="street-address" placeholder="Rue, quartier, ville">
+        <div class="op-err" id="op-err-addr">⚠ Adresse requise</div>
+      </div>
+      <div class="op-field">
+        <label class="op-lbl" id="op-lbl-comment">Commentaire <span style="font-weight:500;text-transform:none;opacity:.6">(optionnel)</span></label>
+        <input class="op-inp" id="op-comment" type="text" placeholder="Allergies, préférences...">
+      </div>
+    </div>
+    <button class="op-submit" id="op-submit-btn" onclick="submitOrderPopup()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
+      <span id="op-submit-lbl">Commander via WhatsApp</span>
+    </button>
+  </div>
+</div>
+
 </body>
 </html>
