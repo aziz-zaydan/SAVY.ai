@@ -4028,7 +4028,7 @@
     <div class="hero-inner">
     <!-- Left -->
     <div class="hero-stagger">
-      <!-- ── Triple CTA row with video background ── -->
+      <!-- ── Full video block: text + buttons all on the video ── -->
       <div class="hero-vid-cta-wrap">
         <!-- looping background video -->
         <video
@@ -4037,63 +4037,83 @@
           autoplay muted loop playsinline preload="auto"
           aria-hidden="true"
         ></video>
-        <!-- dark overlay so buttons stay readable -->
+        <!-- dark gradient overlay -->
         <div class="hero-vid-cta-overlay"></div>
-        <!-- the three buttons -->
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;" class="hero-cta-row">
 
-          <button onclick="openChat()" id="hero-cta-primary" class="hero-cta-primary">
-            <span style="font-size:20px;line-height:1;">🧬</span>
-            <span style="display:flex;flex-direction:column;align-items:center;gap:1px;">
-              <span style="font-size:9px;opacity:.85;font-weight:600;letter-spacing:.05em;text-transform:uppercase;">SAVY AI</span>
-              <span id="hero-cta-primary-txt" style="font-size:13px;font-weight:900;white-space:nowrap;">Chef IA</span>
-            </span>
-          </button>
+        <!-- content layer: text top, buttons bottom -->
+        <div class="hero-vid-content">
 
-          <a href="#" style="text-decoration:none;" onclick="event.preventDefault();openMenuPicker()">
-            <button id="hero-cta-secondary" class="hero-cta-secondary">
-              <span style="font-size:20px;line-height:1;">🍽️</span>
+          <!-- tagline + title + sub -->
+          <div class="hero-vid-text">
+            <p class="su hero-vid-tagline" id="hero-tagline">Morocco's First AI Personal Chef</p>
+            <h1 class="hero-title fh hero-vid-h1" id="hero-h1">
+              Engineered for you.<br>
+              <span class="accent" style="color:#2BCE4E;">Cooked with love.</span>
+            </h1>
+            <p class="hero-sub fb hero-vid-sub" id="hero-sub">
+              SAVY is your personal Meal Engineer — combining AI precision with a Chef's heart to create meals that fuel your goals, your glow, and your grind.
+            </p>
+          </div>
+
+          <!-- three CTA buttons -->
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;" class="hero-cta-row">
+
+            <button onclick="openChat()" id="hero-cta-primary" class="hero-cta-primary">
+              <span style="font-size:20px;line-height:1;">🧬</span>
               <span style="display:flex;flex-direction:column;align-items:center;gap:1px;">
-                <span style="font-size:9px;opacity:.75;font-weight:600;letter-spacing:.05em;text-transform:uppercase;">MENU</span>
-                <span id="hero-cta-secondary-txt" style="font-size:13px;font-weight:900;white-space:nowrap;">Voir le menu</span>
+                <span style="font-size:9px;opacity:.85;font-weight:600;letter-spacing:.05em;text-transform:uppercase;">SAVY AI</span>
+                <span id="hero-cta-primary-txt" style="font-size:13px;font-weight:900;white-space:nowrap;">Chef IA</span>
               </span>
             </button>
-          </a>
 
-          <a href="#nutri-calc" style="text-decoration:none;">
-            <button id="hero-cta-nutri" class="hero-cta-nutri">
-              <span style="font-size:20px;line-height:1;">🔥</span>
-              <span style="display:flex;flex-direction:column;align-items:center;gap:1px;">
-                <span style="font-size:9px;opacity:.75;font-weight:600;letter-spacing:.05em;text-transform:uppercase;">CALORIES</span>
-                <span id="hero-cta-nutri-txt" style="font-size:13px;font-weight:900;white-space:nowrap;">Calculer</span>
-              </span>
-            </button>
-          </a>
+            <a href="#" style="text-decoration:none;" onclick="event.preventDefault();openMenuPicker()">
+              <button id="hero-cta-secondary" class="hero-cta-secondary">
+                <span style="font-size:20px;line-height:1;">🍽️</span>
+                <span style="display:flex;flex-direction:column;align-items:center;gap:1px;">
+                  <span style="font-size:9px;opacity:.75;font-weight:600;letter-spacing:.05em;text-transform:uppercase;">MENU</span>
+                  <span id="hero-cta-secondary-txt" style="font-size:13px;font-weight:900;white-space:nowrap;">Voir le menu</span>
+                </span>
+              </button>
+            </a>
 
-        </div>
+            <a href="#nutri-calc" style="text-decoration:none;">
+              <button id="hero-cta-nutri" class="hero-cta-nutri">
+                <span style="font-size:20px;line-height:1;">🔥</span>
+                <span style="display:flex;flex-direction:column;align-items:center;gap:1px;">
+                  <span style="font-size:9px;opacity:.75;font-weight:600;letter-spacing:.05em;text-transform:uppercase;">CALORIES</span>
+                  <span id="hero-cta-nutri-txt" style="font-size:13px;font-weight:900;white-space:nowrap;">Calculer</span>
+                </span>
+              </button>
+            </a>
+
+          </div>
+        </div><!-- /hero-vid-content -->
       </div>
 
       <style>
         /* ── Video CTA wrapper ── */
+        /* ── Full-bleed video hero block ── */
         .hero-vid-cta-wrap {
           position: relative;
           border-radius: 0;
           overflow: hidden;
-          margin: 12px 0 16px;
-          /* Negative margin trick: escape ALL parent padding + max-width */
-          /* Pull out of hero padding + hero-inner max-width constraints */
+          /* escape ALL parent padding and max-width */
           width: 100vw;
           max-width: 100vw;
-          position: relative;
           left: 50%;
-          right: 50%;
           margin-left: -50vw;
           margin-right: -50vw;
-          transform: none;
-          aspect-ratio: 16 / 9;
+          margin-top: 0;
+          margin-bottom: 20px; /* small gap before slider */
+          /* tall enough for text + buttons */
+          min-height: 56vw; /* roughly 16:9 */
           background: #000;
-          border-radius: 0;
           box-shadow: none;
+          display: flex;
+          flex-direction: column;
+        }
+        @media (max-width: 768px) {
+          .hero-vid-cta-wrap { min-height: 72vw; }
         }
         .hero-vid-cta-bg {
           position: absolute;
@@ -4105,27 +4125,57 @@
           display: block;
           z-index: 0;
         }
-        /* dark gradient — stronger at bottom where buttons sit */
+        /* heavy bottom gradient for text + button readability */
         .hero-vid-cta-overlay {
           position: absolute;
           inset: 0;
           z-index: 1;
           background:
             linear-gradient(to top,
-              rgba(0,0,0,0.65) 0%,
-              rgba(0,0,0,0.25) 50%,
-              rgba(0,0,0,0.08) 100%
+              rgba(0,0,0,0.82) 0%,
+              rgba(0,0,0,0.50) 40%,
+              rgba(0,0,0,0.15) 70%,
+              transparent      100%
             );
           pointer-events: none;
         }
-        /* buttons row sits on top */
-        .hero-vid-cta-wrap .hero-cta-row {
+        /* content layer: text at top, buttons at bottom */
+        .hero-vid-content {
           position: absolute;
-          bottom: 0; left: 0; right: 0;
+          inset: 0;
           z-index: 2;
-          padding: 16px 14px;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-end;
+          padding: clamp(16px,4vw,48px);
+          gap: 14px;
         }
-        /* glass style for secondary + nutri buttons over video */
+        /* text block */
+        .hero-vid-text { display: flex; flex-direction: column; gap: 6px; }
+        .hero-vid-tagline {
+          color: rgba(255,255,255,0.75) !important;
+          font-size: 11px; letter-spacing:.14em;
+          text-transform: uppercase; font-weight: 700;
+          margin: 0;
+        }
+        .hero-vid-h1 {
+          color: #fff !important;
+          font-size: clamp(22px,5vw,52px) !important;
+          margin: 0 !important;
+          line-height: 1.1 !important;
+        }
+        .hero-vid-sub {
+          color: rgba(255,255,255,0.80) !important;
+          font-size: clamp(12px,1.8vw,15px) !important;
+          line-height: 1.7 !important;
+          margin: 0 !important;
+          max-width: 560px;
+        }
+        /* buttons row */
+        .hero-vid-cta-wrap .hero-cta-row {
+          width: 100%;
+        }
+        /* glass buttons over video */
         .hero-vid-cta-wrap #hero-cta-secondary {
           background: rgba(255,255,255,0.15) !important;
           border-color: rgba(255,255,255,0.35) !important;
@@ -4199,16 +4249,7 @@
           .hero-cta-row { grid-template-columns:1fr !important; }
         }
       </style>
-      <p class="su" id="hero-tagline" style="color:var(--muted);font-size:12px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px;font-weight:700;">
-        Morocco's First AI Personal Chef
-      </p>
-      <h1 class="hero-title fh su2" id="hero-h1">
-        Engineered for you.<br>
-        <span class="accent">Cooked with love.</span>
-      </h1>
-      <p class="hero-sub fb su3" id="hero-sub">
-        SAVY is your personal Meal Engineer — combining AI precision with a Chef's heart to create meals that fuel your goals, your glow, and your grind.
-      </p>
+
 
 
 
