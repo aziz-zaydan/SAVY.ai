@@ -73,6 +73,51 @@
       --navbar-bg: rgba(238,247,243,0.97);
     }
 
+
+    /* ── Hero text overrides for video background ── */
+    #hero .hero-stagger p,
+    #hero .su,
+    #hero #hero-tagline { color: rgba(255,255,255,0.75) !important; }
+
+    #hero h1.hero-title,
+    #hero h1.hero-title .accent { color: #fff !important; }
+
+    #hero .hero-sub { color: rgba(255,255,255,0.80) !important; }
+
+    /* CTA secondary + nutri buttons: glass style on dark bg */
+    #hero #hero-cta-secondary {
+      background: rgba(255,255,255,0.12) !important;
+      border-color: rgba(255,255,255,0.30) !important;
+      color: #fff !important;
+      backdrop-filter: blur(8px);
+    }
+    #hero #hero-cta-nutri {
+      background: rgba(255,255,255,0.10) !important;
+      border-color: rgba(240,180,41,0.55) !important;
+      color: #FFD97A !important;
+      backdrop-filter: blur(8px);
+    }
+    #hero #hero-cta-nutri:hover { color:#FFE9A0 !important; }
+    #hero #hero-cta-secondary:hover { border-color:rgba(255,255,255,.7) !important; }
+
+    /* Chips on dark background */
+    #hero .chip {
+      background: rgba(255,255,255,0.10) !important;
+      border-color: rgba(255,255,255,0.18) !important;
+      backdrop-filter: blur(8px);
+    }
+    #hero .chip-val,
+    #hero .chip-lbl { color: #fff !important; }
+
+    /* Persona card glass */
+    #hero #persona-highlight {
+      background: rgba(255,255,255,0.10) !important;
+      border-color: rgba(255,255,255,0.18) !important;
+      backdrop-filter: blur(12px);
+    }
+    #hero #ph-title { color: #fff !important; }
+    #hero #ph-desc  { color: rgba(255,255,255,0.70) !important; }
+
     /* ── RESPONSIVE: phone-first, adapts to all screens ── */
     html {
       overflow-x: hidden;
@@ -589,29 +634,69 @@
     #banner a { color:#fff; text-decoration:underline; margin-left:8px; cursor:pointer; }
 
     /* ── HERO ── */
+    /* ── VIDEO HERO ─────────────────────────────────────────── */
     #hero {
-      padding:18px clamp(16px,4vw,48px) 22px;
-      background: linear-gradient(160deg, var(--greenXL) 0%, var(--bg) 55%, var(--mint) 100%);
-      position:relative; overflow:hidden;
+      padding: 0;
+      position: relative;
+      overflow: hidden;
+      min-height: 56.25vw; /* 16:9 ratio */
+      max-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: #000;
     }
-    [data-theme="dark"] #hero {
-      background: linear-gradient(160deg, #0A2016 0%, var(--bg) 55%, #0D2016 100%);
+    [data-theme="dark"] #hero { background: #000; }
+
+    /* The video itself */
+    #hero-video-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      z-index: 0;
+      will-change: transform;
     }
 
-    /* Subtle static accent shapes */
+    /* Dark gradient overlay — bottom-heavy so logo in video stays visible */
     #hero::before {
-      content:'';
-      position:absolute; top:-80px; right:-80px;
-      width:320px; height:320px; border-radius:50%;
-      background:radial-gradient(circle, rgba(9,184,48,0.12) 0%, transparent 70%);
-      pointer-events:none;
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background:
+        linear-gradient(to top,
+          rgba(0,0,0,0.72) 0%,
+          rgba(0,0,0,0.35) 35%,
+          rgba(0,0,0,0.10) 60%,
+          transparent      100%
+        ),
+        linear-gradient(to bottom,
+          rgba(0,0,0,0.30) 0%,
+          transparent      25%
+        );
+      pointer-events: none;
     }
+
+    /* Smooth fade from hero into next section */
     #hero::after {
-      content:'';
-      position:absolute; bottom:-60px; left:-40px;
-      width:240px; height:240px; border-radius:50%;
-      background:radial-gradient(circle, rgba(9,184,48,0.08) 0%, transparent 70%);
-      pointer-events:none;
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0; right: 0;
+      height: 130px;
+      z-index: 2;
+      background: linear-gradient(to bottom, transparent 0%, var(--bg) 100%);
+      pointer-events: none;
+    }
+
+    /* All hero content sits above overlays */
+    #hero > * { position: relative; z-index: 3; }
+    #hero-particles { position: absolute !important; inset: 0; z-index: 1 !important; }
+
+    @media (max-width: 768px) {
+      #hero { min-height: 100svh; max-height: none; }
     }
 
     /* ── HERO STATIC BG ── */
@@ -1130,7 +1215,7 @@
       .btn-cta       { padding:9px 14px; font-size:12px; }
 
       /* ── Hero ── */
-      #hero          { padding:14px 16px 16px; }
+      #hero          { padding:0; }
       .hero-inner    { grid-template-columns:1fr; gap:14px; }
       .hero-right    { display:none; }
       h1.hero-title  { font-size:clamp(26px,7.5vw,38px); line-height:1.08; margin-bottom:10px; }
@@ -3102,7 +3187,7 @@
       .loy-heading   { font-size:clamp(18px,5vw,24px)   !important; }
 
       /* ── Hero ── */
-      #hero                  { padding:12px 14px 16px !important; }
+      #hero                  { padding:0 !important; }
       .hero-inner            { grid-template-columns:1fr !important; gap:14px !important; }
       .hero-right            { display:none !important; }
       h1.hero-title          { font-size:clamp(24px,7vw,34px) !important; line-height:1.1 !important; margin-bottom:10px !important; }
@@ -3964,96 +4049,6 @@
 </head>
 <body>
 
-<!-- ══ OPENING VIDEO ANIMATION ══════════════════════════ -->
-<div id="savy-intro-overlay" style="
-  position:fixed;
-  inset:0;
-  z-index:99999;
-  background:#000;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  transition:opacity .8s ease;
-">
-  <video
-    id="page-intro-vid"
-    src="./savy-intro.mp4"
-    playsinline
-    autoplay
-    muted
-    preload="auto"
-    style="
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-    "
-  ></video>
-
-  <!-- skip button -->
-  <button id="intro-skip-btn" onclick="skipIntro()" style="
-    position:absolute;
-    bottom:28px;
-    right:20px;
-    background:rgba(255,255,255,0.15);
-    backdrop-filter:blur(8px);
-    border:1px solid rgba(255,255,255,0.25);
-    color:#fff;
-    font-family:'DM Sans',sans-serif;
-    font-size:13px;
-    font-weight:700;
-    padding:8px 18px;
-    border-radius:99px;
-    cursor:pointer;
-    letter-spacing:.04em;
-    opacity:0;
-    transition:opacity .4s ease;
-  ">Skip ›</button>
-</div>
-
-<style>
-  /* Lock scroll while intro plays */
-  body.intro-active { overflow:hidden; }
-  #savy-intro-overlay.hidden {
-    opacity:0;
-    pointer-events:none;
-  }
-</style>
-
-<script>
-(function(){
-  var overlay = document.getElementById('savy-intro-overlay');
-  var vid     = document.getElementById('page-intro-vid');
-  var skipBtn = document.getElementById('intro-skip-btn');
-  var done    = false;
-
-  /* Lock page scroll */
-  document.body.classList.add('intro-active');
-
-  function skipIntro() {
-    if (done) return;
-    done = true;
-    overlay.classList.add('hidden');
-    document.body.classList.remove('intro-active');
-    setTimeout(function(){ overlay.style.display = 'none'; }, 850);
-  }
-  window.skipIntro = skipIntro;
-
-  /* Show skip button after 1.5 s */
-  setTimeout(function(){ skipBtn.style.opacity = '1'; }, 1500);
-
-  /* Auto-dismiss when video ends */
-  vid.addEventListener('ended', skipIntro);
-
-  /* Fallback: dismiss after 12 s max */
-  setTimeout(skipIntro, 12000);
-
-  /* If video can't load/play, dismiss immediately */
-  vid.addEventListener('error', skipIntro);
-  vid.play().catch(skipIntro);
-})();
-</script>
-
 <!-- ══ URGENCY STRIP ════════════════════════════════════ -->
 <div id="urgency-strip">
   <div id="urgency-inner">
@@ -4114,8 +4109,20 @@
 
 <!-- ══ HERO ════════════════════════════════════════════ -->
 <section id="hero">
+  <!-- ── Background video: 16:9, autoplay, muted, loops, no border ── -->
+  <video
+    id="hero-video-bg"
+    src="./savy-intro.mp4"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="auto"
+    aria-hidden="true"
+  ></video>
+
     <div id="hero-particles"></div>
-    <div class="hero-inner">
+    <div class="hero-inner" style="padding:clamp(80px,12vw,140px) clamp(16px,4vw,56px) clamp(60px,8vw,100px);">
     <!-- Left -->
     <div class="hero-stagger">
       <!-- ── Triple CTA row ── -->
