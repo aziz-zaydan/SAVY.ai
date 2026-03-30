@@ -74,50 +74,6 @@
     }
 
 
-    /* ── Hero text overrides for video background ── */
-    #hero .hero-stagger p,
-    #hero .su,
-    #hero #hero-tagline { color: rgba(255,255,255,0.75) !important; }
-
-    #hero h1.hero-title,
-    #hero h1.hero-title .accent { color: #fff !important; }
-
-    #hero .hero-sub { color: rgba(255,255,255,0.80) !important; }
-
-    /* CTA secondary + nutri buttons: glass style on dark bg */
-    #hero #hero-cta-secondary {
-      background: rgba(255,255,255,0.12) !important;
-      border-color: rgba(255,255,255,0.30) !important;
-      color: #fff !important;
-      backdrop-filter: blur(8px);
-    }
-    #hero #hero-cta-nutri {
-      background: rgba(255,255,255,0.10) !important;
-      border-color: rgba(240,180,41,0.55) !important;
-      color: #FFD97A !important;
-      backdrop-filter: blur(8px);
-    }
-    #hero #hero-cta-nutri:hover { color:#FFE9A0 !important; }
-    #hero #hero-cta-secondary:hover { border-color:rgba(255,255,255,.7) !important; }
-
-    /* Chips on dark background */
-    #hero .chip {
-      background: rgba(255,255,255,0.10) !important;
-      border-color: rgba(255,255,255,0.18) !important;
-      backdrop-filter: blur(8px);
-    }
-    #hero .chip-val,
-    #hero .chip-lbl { color: #fff !important; }
-
-    /* Persona card glass */
-    #hero #persona-highlight {
-      background: rgba(255,255,255,0.10) !important;
-      border-color: rgba(255,255,255,0.18) !important;
-      backdrop-filter: blur(12px);
-    }
-    #hero #ph-title { color: #fff !important; }
-    #hero #ph-desc  { color: rgba(255,255,255,0.70) !important; }
-
     /* ── RESPONSIVE: phone-first, adapts to all screens ── */
     html {
       overflow-x: hidden;
@@ -158,7 +114,7 @@
     }
     [data-theme="dark"] #navbar      { background:var(--navbar-bg); }
     [data-theme="dark"] .lang-wrap   { background:var(--card); }
-    [data-theme="dark"] #hero        { background:#000; } /* video hero */
+    [data-theme="dark"] #hero        { background:radial-gradient(ellipse 80% 60% at 70% 50%, rgba(9,184,48,0.1) 0%, transparent 70%), var(--bg); }
     [data-theme="dark"] #how         { background:var(--card); }
     [data-theme="dark"] #menu        { background:var(--card); }
     [data-theme="dark"] #final       { background:linear-gradient(135deg, #0A2016, var(--bg)); }
@@ -634,69 +590,28 @@
     #banner a { color:#fff; text-decoration:underline; margin-left:8px; cursor:pointer; }
 
     /* ── HERO ── */
-    /* ── VIDEO HERO ─────────────────────────────────────────── */
     #hero {
-      padding: 0;
-      position: relative;
-      overflow: hidden;
-      min-height: 56.25vw; /* 16:9 ratio */
-      max-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      background: #000;
+      padding:18px clamp(16px,4vw,48px) 22px;
+      background: linear-gradient(160deg, var(--greenXL) 0%, var(--bg) 55%, var(--mint) 100%);
+      position:relative; overflow:hidden;
     }
-    [data-theme="dark"] #hero { background: #000; }
-
-    /* The video itself */
-    #hero-video-bg {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      display: block;
-      z-index: 0;
-      will-change: transform;
+    [data-theme="dark"] #hero {
+      background: linear-gradient(160deg, #0A2016 0%, var(--bg) 55%, #0D2016 100%);
     }
-
-    /* Dark gradient overlay — bottom-heavy so logo in video stays visible */
+    /* Subtle static accent shapes */
     #hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      background:
-        linear-gradient(to top,
-          rgba(0,0,0,0.72) 0%,
-          rgba(0,0,0,0.35) 35%,
-          rgba(0,0,0,0.10) 60%,
-          transparent      100%
-        ),
-        linear-gradient(to bottom,
-          rgba(0,0,0,0.30) 0%,
-          transparent      25%
-        );
-      pointer-events: none;
+      content:'';
+      position:absolute; top:-80px; right:-80px;
+      width:320px; height:320px; border-radius:50%;
+      background:radial-gradient(circle, rgba(9,184,48,0.12) 0%, transparent 70%);
+      pointer-events:none;
     }
-
-    /* Smooth fade from hero into next section */
     #hero::after {
-      content: '';
-      position: absolute;
-      bottom: -2px; left: 0; right: 0;
-      height: 130px;
-      z-index: 2;
-      background: linear-gradient(to bottom, transparent 0%, var(--card) 100%);
-      pointer-events: none;
-    }
-
-    /* All hero content sits above overlays */
-    #hero > * { position: relative; z-index: 3; }
-    #hero-particles { position: absolute !important; inset: 0; z-index: 1 !important; }
-
-    @media (max-width: 768px) {
-      #hero { min-height: 100svh; max-height: none; }
+      content:'';
+      position:absolute; bottom:-60px; left:-40px;
+      width:240px; height:240px; border-radius:50%;
+      background:radial-gradient(circle, rgba(9,184,48,0.08) 0%, transparent 70%);
+      pointer-events:none;
     }
 
     /* ── HERO STATIC BG ── */
@@ -1215,7 +1130,7 @@
       .btn-cta       { padding:9px 14px; font-size:12px; }
 
       /* ── Hero ── */
-      #hero          { padding:0; }
+      #hero          { padding:14px 16px 16px; }
       .hero-inner    { grid-template-columns:1fr; gap:14px; }
       .hero-right    { display:none; }
       h1.hero-title  { font-size:clamp(26px,7.5vw,38px); line-height:1.08; margin-bottom:10px; }
@@ -1544,6 +1459,7 @@
 
     /* ── Page background ── */
     body.female-mode,
+    body.female-mode #hero,
     body.female-mode #menu,
     body.female-mode #how,
     body.female-mode #nutri-calc,
@@ -1556,7 +1472,9 @@
     body.female-mode footer {
       background-color: #FFF5F8 !important;
     }
-    body.female-mode #hero { background:#000 !important; } /* video hero */
+    body.female-mode #hero {
+      background: radial-gradient(ellipse 70% 50% at 60% 50%, rgba(194,24,91,0.09) 0%, transparent 65%), #FFF5F8 !important;
+    }
     body.female-mode #how  { background: linear-gradient(180deg,#FFF5F8,#FFF0F7) !important; }
     body.female-mode #menu { background: linear-gradient(180deg,#FFF0F7,#FFF5F8) !important; }
     body.female-mode #final{ background: linear-gradient(135deg,#FFF0F7,#FFF5F8) !important; }
@@ -3184,7 +3102,7 @@
       .loy-heading   { font-size:clamp(18px,5vw,24px)   !important; }
 
       /* ── Hero ── */
-      #hero                  { padding:0 !important; }
+      #hero                  { padding:12px 14px 16px !important; }
       .hero-inner            { grid-template-columns:1fr !important; gap:14px !important; }
       .hero-right            { display:none !important; }
       h1.hero-title          { font-size:clamp(24px,7vw,34px) !important; line-height:1.1 !important; margin-bottom:10px !important; }
@@ -4106,54 +4024,116 @@
 
 <!-- ══ HERO ════════════════════════════════════════════ -->
 <section id="hero">
-  <!-- ── Background video: 16:9, autoplay, muted, loops, no border ── -->
-  <video
-    id="hero-video-bg"
-    src="./savy-intro.mp4"
-    autoplay
-    muted
-    loop
-    playsinline
-    preload="auto"
-    aria-hidden="true"
-  ></video>
-
     <div id="hero-particles"></div>
-    <div class="hero-inner" style="padding:clamp(80px,12vw,140px) clamp(16px,4vw,56px) clamp(60px,8vw,100px);">
+    <div class="hero-inner">
     <!-- Left -->
     <div class="hero-stagger">
-      <!-- ── Triple CTA row ── -->
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:12px 0 16px;" class="hero-cta-row">
+      <!-- ── Triple CTA row with video background ── -->
+      <div class="hero-vid-cta-wrap">
+        <!-- looping background video -->
+        <video
+          class="hero-vid-cta-bg"
+          src="./savy-intro.mp4"
+          autoplay muted loop playsinline preload="auto"
+          aria-hidden="true"
+        ></video>
+        <!-- dark overlay so buttons stay readable -->
+        <div class="hero-vid-cta-overlay"></div>
+        <!-- the three buttons -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;" class="hero-cta-row">
 
-        <button onclick="openChat()" id="hero-cta-primary" class="hero-cta-primary">
-          <span style="font-size:20px;line-height:1;">🧬</span>
-          <span style="display:flex;flex-direction:column;align-items:center;gap:1px;">
-            <span style="font-size:9px;opacity:.85;font-weight:600;letter-spacing:.05em;text-transform:uppercase;">SAVY AI</span>
-            <span id="hero-cta-primary-txt" style="font-size:13px;font-weight:900;white-space:nowrap;">Chef IA</span>
-          </span>
-        </button>
-
-        <a href="#" style="text-decoration:none;" onclick="event.preventDefault();openMenuPicker()">
-          <button id="hero-cta-secondary" class="hero-cta-secondary">
-            <span style="font-size:20px;line-height:1;">🍽️</span>
+          <button onclick="openChat()" id="hero-cta-primary" class="hero-cta-primary">
+            <span style="font-size:20px;line-height:1;">🧬</span>
             <span style="display:flex;flex-direction:column;align-items:center;gap:1px;">
-              <span style="font-size:9px;opacity:.75;font-weight:600;letter-spacing:.05em;text-transform:uppercase;">MENU</span>
-              <span id="hero-cta-secondary-txt" style="font-size:13px;font-weight:900;white-space:nowrap;">Voir le menu</span>
+              <span style="font-size:9px;opacity:.85;font-weight:600;letter-spacing:.05em;text-transform:uppercase;">SAVY AI</span>
+              <span id="hero-cta-primary-txt" style="font-size:13px;font-weight:900;white-space:nowrap;">Chef IA</span>
             </span>
           </button>
-        </a>
 
-        <a href="#nutri-calc" style="text-decoration:none;">
-          <button id="hero-cta-nutri" class="hero-cta-nutri">
-            <span style="font-size:20px;line-height:1;">🔥</span>
-            <span style="display:flex;flex-direction:column;align-items:center;gap:1px;">
-              <span style="font-size:9px;opacity:.75;font-weight:600;letter-spacing:.05em;text-transform:uppercase;">CALORIES</span>
-              <span id="hero-cta-nutri-txt" style="font-size:13px;font-weight:900;white-space:nowrap;">Calculer</span>
-            </span>
-          </button>
-        </a>
+          <a href="#" style="text-decoration:none;" onclick="event.preventDefault();openMenuPicker()">
+            <button id="hero-cta-secondary" class="hero-cta-secondary">
+              <span style="font-size:20px;line-height:1;">🍽️</span>
+              <span style="display:flex;flex-direction:column;align-items:center;gap:1px;">
+                <span style="font-size:9px;opacity:.75;font-weight:600;letter-spacing:.05em;text-transform:uppercase;">MENU</span>
+                <span id="hero-cta-secondary-txt" style="font-size:13px;font-weight:900;white-space:nowrap;">Voir le menu</span>
+              </span>
+            </button>
+          </a>
 
+          <a href="#nutri-calc" style="text-decoration:none;">
+            <button id="hero-cta-nutri" class="hero-cta-nutri">
+              <span style="font-size:20px;line-height:1;">🔥</span>
+              <span style="display:flex;flex-direction:column;align-items:center;gap:1px;">
+                <span style="font-size:9px;opacity:.75;font-weight:600;letter-spacing:.05em;text-transform:uppercase;">CALORIES</span>
+                <span id="hero-cta-nutri-txt" style="font-size:13px;font-weight:900;white-space:nowrap;">Calculer</span>
+              </span>
+            </button>
+          </a>
+
+        </div>
       </div>
+
+      <style>
+        /* ── Video CTA wrapper ── */
+        .hero-vid-cta-wrap {
+          position: relative;
+          border-radius: 20px;
+          overflow: hidden;
+          margin: 12px 0 16px;
+          /* aspect-ratio 16:9 */
+          aspect-ratio: 16 / 9;
+          width: 100%;
+          background: #000;
+          box-shadow: 0 8px 32px rgba(9,184,48,0.18), 0 2px 8px rgba(0,0,0,0.10);
+        }
+        .hero-vid-cta-bg {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
+          display: block;
+          z-index: 0;
+        }
+        /* dark gradient — stronger at bottom where buttons sit */
+        .hero-vid-cta-overlay {
+          position: absolute;
+          inset: 0;
+          z-index: 1;
+          background:
+            linear-gradient(to top,
+              rgba(0,0,0,0.65) 0%,
+              rgba(0,0,0,0.25) 50%,
+              rgba(0,0,0,0.08) 100%
+            );
+          pointer-events: none;
+        }
+        /* buttons row sits on top */
+        .hero-vid-cta-wrap .hero-cta-row {
+          position: absolute;
+          bottom: 0; left: 0; right: 0;
+          z-index: 2;
+          padding: 16px 14px;
+        }
+        /* glass style for secondary + nutri buttons over video */
+        .hero-vid-cta-wrap #hero-cta-secondary {
+          background: rgba(255,255,255,0.15) !important;
+          border-color: rgba(255,255,255,0.35) !important;
+          color: #fff !important;
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+        }
+        .hero-vid-cta-wrap #hero-cta-nutri {
+          background: rgba(255,255,255,0.12) !important;
+          border-color: rgba(240,180,41,0.60) !important;
+          color: #FFE080 !important;
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+        }
+        .hero-vid-cta-wrap #hero-cta-secondary:hover { border-color: rgba(255,255,255,.75) !important; }
+        .hero-vid-cta-wrap #hero-cta-nutri:hover     { color: #FFD040 !important; }
+      </style>
       <style>
         /* ── Shared base ── */
         .hero-cta-primary,
