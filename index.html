@@ -3964,6 +3964,96 @@
 </head>
 <body>
 
+<!-- ══ OPENING VIDEO ANIMATION ══════════════════════════ -->
+<div id="savy-intro-overlay" style="
+  position:fixed;
+  inset:0;
+  z-index:99999;
+  background:#000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:opacity .8s ease;
+">
+  <video
+    id="page-intro-vid"
+    src="./savy-intro.mp4"
+    playsinline
+    autoplay
+    muted
+    preload="auto"
+    style="
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    "
+  ></video>
+
+  <!-- skip button -->
+  <button id="intro-skip-btn" onclick="skipIntro()" style="
+    position:absolute;
+    bottom:28px;
+    right:20px;
+    background:rgba(255,255,255,0.15);
+    backdrop-filter:blur(8px);
+    border:1px solid rgba(255,255,255,0.25);
+    color:#fff;
+    font-family:'DM Sans',sans-serif;
+    font-size:13px;
+    font-weight:700;
+    padding:8px 18px;
+    border-radius:99px;
+    cursor:pointer;
+    letter-spacing:.04em;
+    opacity:0;
+    transition:opacity .4s ease;
+  ">Skip ›</button>
+</div>
+
+<style>
+  /* Lock scroll while intro plays */
+  body.intro-active { overflow:hidden; }
+  #savy-intro-overlay.hidden {
+    opacity:0;
+    pointer-events:none;
+  }
+</style>
+
+<script>
+(function(){
+  var overlay = document.getElementById('savy-intro-overlay');
+  var vid     = document.getElementById('page-intro-vid');
+  var skipBtn = document.getElementById('intro-skip-btn');
+  var done    = false;
+
+  /* Lock page scroll */
+  document.body.classList.add('intro-active');
+
+  function skipIntro() {
+    if (done) return;
+    done = true;
+    overlay.classList.add('hidden');
+    document.body.classList.remove('intro-active');
+    setTimeout(function(){ overlay.style.display = 'none'; }, 850);
+  }
+  window.skipIntro = skipIntro;
+
+  /* Show skip button after 1.5 s */
+  setTimeout(function(){ skipBtn.style.opacity = '1'; }, 1500);
+
+  /* Auto-dismiss when video ends */
+  vid.addEventListener('ended', skipIntro);
+
+  /* Fallback: dismiss after 12 s max */
+  setTimeout(skipIntro, 12000);
+
+  /* If video can't load/play, dismiss immediately */
+  vid.addEventListener('error', skipIntro);
+  vid.play().catch(skipIntro);
+})();
+</script>
+
 <!-- ══ URGENCY STRIP ════════════════════════════════════ -->
 <div id="urgency-strip">
   <div id="urgency-inner">
@@ -4028,69 +4118,6 @@
     <div class="hero-inner">
     <!-- Left -->
     <div class="hero-stagger">
-      <!-- ══ INTRO VIDEO — inline animation ══════════════════════ -->
-      <div id="intro-video-section" style="
-        position:relative;
-        width:100%;
-        border-radius:20px;
-        overflow:hidden;
-        margin-bottom:16px;
-        background:#000;
-        aspect-ratio:9/16;
-        max-height:70vh;
-      ">
-        <video
-          id="page-intro-vid"
-          src="./savy-intro.mp4"
-          playsinline
-          muted
-          loop
-          preload="metadata"
-          style="
-            position:absolute;
-            inset:0;
-            width:100%;
-            height:100%;
-            object-fit:cover;
-            display:block;
-            opacity:0;
-            transition:opacity .6s ease;
-          "
-        ></video>
-
-        <!-- SAVY watermark -->
-        <div style="
-          position:absolute;bottom:14px;left:16px;
-          background:rgba(0,0,0,.5);border-radius:10px;
-          padding:5px 12px;
-          color:#fff;font-family:'DM Sans',sans-serif;
-          font-size:13px;font-weight:800;letter-spacing:.06em;
-          pointer-events:none;
-        ">SAVY</div>
-      </div>
-
-      <style>
-        #intro-video-section video.vid-playing { opacity:1 !important; }
-      </style>
-      <script>
-      (function(){
-        var vid = document.getElementById('page-intro-vid');
-        if (!vid) return;
-        var io = new IntersectionObserver(function(entries){
-          entries.forEach(function(e){
-            if(e.isIntersecting){
-              vid.play().catch(function(){});
-              vid.classList.add('vid-playing');
-            } else {
-              vid.pause();
-              vid.classList.remove('vid-playing');
-            }
-          });
-        }, { threshold: 0.25 });
-        io.observe(vid);
-      })();
-      </script>
-
       <!-- ── Triple CTA row ── -->
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:12px 0 16px;" class="hero-cta-row">
 
