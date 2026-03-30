@@ -3964,6 +3964,61 @@
 </head>
 <body>
 
+<!-- ══ VIDEO INTRO ═══════════════════════════════════════ -->
+<div id="video-intro" style="
+  position:fixed;inset:0;z-index:99999;
+  background:#000;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+  transition:opacity .6s ease;
+">
+  <video id="intro-vid"
+    src="./savy-intro.mp4"
+    playsinline autoplay muted
+    style="width:100%;height:100%;object-fit:cover;display:block;"
+  ></video>
+  <div id="intro-skip" style="
+    position:absolute;bottom:28px;right:24px;
+    background:rgba(0,0,0,.55);border:1.5px solid rgba(255,255,255,.35);
+    color:#fff;font-size:13px;font-family:sans-serif;letter-spacing:.04em;
+    padding:7px 16px;border-radius:20px;
+    pointer-events:none;
+    opacity:0;transition:opacity .4s;
+  ">Appuyez pour ignorer ▶</div>
+</div>
+
+<script>
+(function(){
+  /* Show only once per browser session */
+  if(sessionStorage.getItem('savy_intro_seen')){
+    document.getElementById('video-intro').style.display='none';
+    return;
+  }
+  var wrap = document.getElementById('video-intro');
+  var vid  = document.getElementById('intro-vid');
+  var skip = document.getElementById('intro-skip');
+
+  function dismiss(){
+    wrap.style.opacity='0';
+    setTimeout(function(){ wrap.style.display='none'; }, 650);
+    sessionStorage.setItem('savy_intro_seen','1');
+  }
+
+  /* Show skip hint after 1.2 s */
+  setTimeout(function(){ skip.style.opacity='1'; }, 1200);
+
+  /* Auto-dismiss on video end */
+  vid.addEventListener('ended', dismiss);
+
+  /* Tap/click to skip */
+  wrap.addEventListener('click', dismiss);
+
+  /* Fallback: dismiss after 12 s if video doesn't fire 'ended' */
+  setTimeout(dismiss, 12000);
+})();
+</script>
+<!-- ══ END VIDEO INTRO ════════════════════════════════════ -->
+
 <!-- ══ URGENCY STRIP ════════════════════════════════════ -->
 <div id="urgency-strip">
   <div id="urgency-inner">
