@@ -158,7 +158,7 @@
     }
     [data-theme="dark"] #navbar      { background:var(--navbar-bg); }
     [data-theme="dark"] .lang-wrap   { background:var(--card); }
-    [data-theme="dark"] #hero        { background:radial-gradient(ellipse 80% 60% at 70% 50%, rgba(9,184,48,0.1) 0%, transparent 70%), var(--bg); }
+    [data-theme="dark"] #hero        { background:#000; } /* video hero */
     [data-theme="dark"] #how         { background:var(--card); }
     [data-theme="dark"] #menu        { background:var(--card); }
     [data-theme="dark"] #final       { background:linear-gradient(135deg, #0A2016, var(--bg)); }
@@ -687,7 +687,7 @@
       bottom: -2px; left: 0; right: 0;
       height: 130px;
       z-index: 2;
-      background: linear-gradient(to bottom, transparent 0%, var(--bg) 100%);
+      background: linear-gradient(to bottom, transparent 0%, var(--card) 100%);
       pointer-events: none;
     }
 
@@ -1544,7 +1544,6 @@
 
     /* ── Page background ── */
     body.female-mode,
-    body.female-mode #hero,
     body.female-mode #menu,
     body.female-mode #how,
     body.female-mode #nutri-calc,
@@ -1557,9 +1556,7 @@
     body.female-mode footer {
       background-color: #FFF5F8 !important;
     }
-    body.female-mode #hero {
-      background: radial-gradient(ellipse 70% 50% at 60% 50%, rgba(194,24,91,0.09) 0%, transparent 65%), #FFF5F8 !important;
-    }
+    body.female-mode #hero { background:#000 !important; } /* video hero */
     body.female-mode #how  { background: linear-gradient(180deg,#FFF5F8,#FFF0F7) !important; }
     body.female-mode #menu { background: linear-gradient(180deg,#FFF0F7,#FFF5F8) !important; }
     body.female-mode #final{ background: linear-gradient(135deg,#FFF0F7,#FFF5F8) !important; }
@@ -4283,42 +4280,223 @@
 </section>
 
 
-<!-- ══ MENU ═══════════════════════════════════════════════ -->
+<!-- ══ SOCIAL PROOF BRIDGE ══════════════════════════════ -->
+<section id="social-proof-strip">
+  <div class="sp-inner">
 
-<!-- ── Social proof strip: between slider and menu ── -->
-<div style="
-  padding:10px clamp(14px,4vw,48px);
-  background:var(--bg);
-  display:flex; flex-direction:column; gap:10px;
-">
-  <!-- Pill badges row -->
-  <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
-    <span style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:99px;background:var(--green);color:#fff;font-size:12px;font-weight:700;font-family:'DM Sans',sans-serif;white-space:nowrap;">
-      🛵 <span id="strip-delivery">Livraison 45 min</span>
-    </span>
-    <span style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:99px;background:var(--card);border:1.5px solid var(--border);color:var(--text);font-size:12px;font-weight:700;font-family:'DM Sans',sans-serif;white-space:nowrap;">
-      💰 <span id="strip-price">À partir de 39 MAD</span>
-    </span>
-    <span style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:99px;background:var(--card);border:1.5px solid var(--border);color:var(--text);font-size:12px;font-weight:700;font-family:'DM Sans',sans-serif;white-space:nowrap;">
-      ★ 4.9 · <span id="strip-reviews">+125 avis</span>
-    </span>
-  </div>
-  <!-- Avatars + customer count -->
-  <div style="display:flex;align-items:center;gap:10px;">
-    <div style="display:flex;margin-right:2px;">
-      <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#089929,#2BCE4E);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;border:2px solid var(--bg);margin-right:-8px;z-index:4;">Y</div>
-      <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#E91E8C,#FF4DB8);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;border:2px solid var(--bg);margin-right:-8px;z-index:3;">K</div>
-      <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#F59E0B,#FCD34D);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;border:2px solid var(--bg);margin-right:-8px;z-index:2;">N</div>
-      <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#2BCE4E,#4DB6AC);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;border:2px solid var(--bg);z-index:1;">123</div>
-    </div>
-    <div>
-      <div style="font-size:12.5px;font-weight:700;color:var(--text);font-family:'DM Sans',sans-serif;"><em id="strip-count" style="color:var(--green);font-style:normal;">+125</em> <span id="strip-happy">happy customers this week</span></div>
-      <div style="font-size:10px;color:var(--muted);margin-top:1px;">⭐⭐⭐⭐⭐ <span id="strip-cities">Tétouan</span></div>
-    </div>
-  </div>
-</div>
+    <!-- Trust stat cards -->
+    <div class="sp-cards">
 
+      <div class="sp-card">
+        <div class="sp-card-icon">🛵</div>
+        <div class="sp-card-body">
+          <div class="sp-card-val" id="strip-delivery">45 min</div>
+          <div class="sp-card-lbl">Livraison garantie</div>
+        </div>
+      </div>
+
+      <div class="sp-card sp-card--accent">
+        <div class="sp-card-icon">⭐</div>
+        <div class="sp-card-body">
+          <div class="sp-card-val">4.9 / 5</div>
+          <div class="sp-card-lbl"><span id="strip-reviews">+125 avis</span> vérifiés</div>
+        </div>
+      </div>
+
+      <div class="sp-card">
+        <div class="sp-card-icon">💰</div>
+        <div class="sp-card-body">
+          <div class="sp-card-val" id="strip-price">Dès 39 MAD</div>
+          <div class="sp-card-lbl">Par repas complet</div>
+        </div>
+      </div>
+
+      <div class="sp-card">
+        <div class="sp-card-icon">🧬</div>
+        <div class="sp-card-body">
+          <div class="sp-card-val">100 %</div>
+          <div class="sp-card-lbl">Macros calculées</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Divider -->
+    <div class="sp-divider"></div>
+
+    <!-- Social proof row -->
+    <div class="sp-social-row">
+      <!-- Stacked avatars -->
+      <div class="sp-avatars">
+        <div class="sp-avatar" style="background:linear-gradient(135deg,#089929,#2BCE4E);">Y</div>
+        <div class="sp-avatar" style="background:linear-gradient(135deg,#E91E8C,#FF4DB8);">K</div>
+        <div class="sp-avatar" style="background:linear-gradient(135deg,#F59E0B,#FCD34D);">N</div>
+        <div class="sp-avatar" style="background:linear-gradient(135deg,#2BCE4E,#4DB6AC);font-size:9px;">+</div>
+      </div>
+      <div class="sp-social-text">
+        <div class="sp-social-main">
+          <em id="strip-count" class="sp-count">+125</em>
+          <span id="strip-happy"> clients satisfaits cette semaine</span>
+        </div>
+        <div class="sp-stars">⭐⭐⭐⭐⭐ &nbsp;<span id="strip-cities" style="color:var(--muted);font-weight:600;">Tétouan</span></div>
+      </div>
+
+      <!-- CTA pill -->
+      <a href="#" onclick="event.preventDefault();openMenuPicker()" class="sp-cta-pill">
+        Voir le menu &rarr;
+      </a>
+    </div>
+
+  </div>
 </section>
+
+<style>
+/* ── Social Proof Strip ─────────────────────────────────── */
+#social-proof-strip {
+  background: var(--card);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: clamp(20px,4vw,40px) clamp(16px,4vw,56px);
+}
+[data-theme="dark"] #social-proof-strip {
+  background: var(--card);
+  border-color: var(--border);
+}
+.sp-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Stat cards row */
+.sp-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+@media (max-width: 640px) {
+  .sp-cards { grid-template-columns: repeat(2, 1fr); }
+}
+
+.sp-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 16px;
+  transition: box-shadow .2s, transform .2s;
+}
+.sp-card:hover {
+  box-shadow: var(--shadowH);
+  transform: translateY(-2px);
+}
+.sp-card--accent {
+  background: var(--greenXL);
+  border-color: rgba(9,184,48,.25);
+}
+[data-theme="dark"] .sp-card--accent {
+  background: rgba(9,184,48,.08);
+  border-color: rgba(9,184,48,.2);
+}
+.sp-card-icon {
+  font-size: 22px;
+  flex-shrink: 0;
+  width: 40px; height: 40px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--card);
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+.sp-card--accent .sp-card-icon {
+  background: rgba(9,184,48,.12);
+  border-color: rgba(9,184,48,.2);
+}
+.sp-card-val {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 900;
+  font-size: 15px;
+  color: var(--text);
+  line-height: 1.1;
+}
+.sp-card--accent .sp-card-val { color: var(--green); }
+.sp-card-lbl {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+/* Divider */
+.sp-divider {
+  width: 100%;
+  height: 1px;
+  background: var(--border);
+}
+
+/* Social row */
+.sp-social-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.sp-avatars {
+  display: flex;
+  flex-shrink: 0;
+}
+.sp-avatar {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 900; color: #fff;
+  border: 2px solid var(--card);
+  margin-right: -8px;
+}
+.sp-social-text { flex: 1; min-width: 160px; }
+.sp-social-main {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+}
+.sp-count {
+  color: var(--green);
+  font-style: normal;
+  font-weight: 900;
+}
+.sp-stars {
+  font-size: 11px;
+  color: var(--sub);
+  margin-top: 2px;
+}
+.sp-cta-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 9px 20px;
+  border-radius: 99px;
+  background: var(--green);
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(9,184,48,.30);
+  transition: transform .2s, box-shadow .2s;
+  flex-shrink: 0;
+}
+.sp-cta-pill:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(9,184,48,.45);
+}
+@media (max-width: 500px) {
+  .sp-cta-pill { width: 100%; justify-content: center; }
+}
+</style>
 
 
 <!-- ══ NUTRITIONAL CALCULATOR ══════════════════════════════════ -->
