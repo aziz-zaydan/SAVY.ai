@@ -4088,56 +4088,70 @@
 
           </div>
         </div><!-- /hero-vid-content -->
+        <!-- scroll hint -->
+        <div class="hero-vid-scroll-hint" aria-hidden="true">↓</div>
       </div>
 
       <style>
-        /* ═══════════════════════════════════════════════
-           VIDEO HERO — phone-first
-        ═══════════════════════════════════════════════ */
+        /* ═══════════════════════════════════════════════════════
+           SAVY VIDEO HERO — phone-first, professional
+           Fills the visible viewport below urgency bar + navbar
+           (~37px urgency + ~66px navbar = 103px total chrome)
+        ═══════════════════════════════════════════════════════ */
+
+        /* ── Wrapper: true full-bleed, fills visible screen ── */
         .hero-vid-cta-wrap {
           position: relative;
+          /* pull out of hero padding on both sides */
+          margin-left: calc(-1 * clamp(16px, 4vw, 48px));
+          margin-right: calc(-1 * clamp(16px, 4vw, 48px));
+          width: auto;
+          /* height = screen minus sticky bars */
+          height: calc(100dvh - 103px);
+          min-height: 420px;
+          max-height: 900px;
           overflow: hidden;
-          border-radius: 0;
-          /* full-bleed escape */
-          width: 100vw;
-          left: 50%;
-          transform: translateX(-50%);
-          margin-top: 0;
-          margin-bottom: 16px;
-          /* phone: nearly full screen height */
-          height: 92svh;
-          max-height: 92svh;
           background: #000;
+          margin-top: -18px;
+          margin-bottom: 24px;
         }
 
-        /* video fills container */
+        /* ── Video: covers entire container ── */
         .hero-vid-cta-bg {
           position: absolute;
           inset: 0;
           width: 100%;
           height: 100%;
           object-fit: cover;
-          object-position: center;
+          object-position: center top;
           display: block;
           z-index: 0;
         }
 
-        /* gradient: transparent top → dark bottom */
+        /* ── Gradient overlay ──
+             Top: subtle dark so top of video readable
+             Bottom: strong dark for text + button legibility
+             Middle: mostly transparent so video shines through
+        ── */
         .hero-vid-cta-overlay {
           position: absolute;
           inset: 0;
           z-index: 1;
-          background: linear-gradient(
-            to top,
-            rgba(0,0,0,0.88) 0%,
-            rgba(0,0,0,0.55) 35%,
-            rgba(0,0,0,0.10) 65%,
-            transparent      100%
-          );
+          background:
+            linear-gradient(to top,
+              rgba(0,0,0,0.90) 0%,
+              rgba(0,0,0,0.60) 28%,
+              rgba(0,0,0,0.10) 55%,
+              transparent      75%
+            ),
+            linear-gradient(to bottom,
+              rgba(0,0,0,0.35) 0%,
+              transparent      20%
+            );
           pointer-events: none;
         }
 
-        /* content: pinned to bottom */
+        /* ── Content: bottom-anchored, full padding ── */
         .hero-vid-content {
           position: absolute;
           inset: 0;
@@ -4145,76 +4159,139 @@
           display: flex;
           flex-direction: column;
           justify-content: flex-end;
-          padding: 20px 16px 20px;
-          gap: 12px;
+          padding: 24px 20px 24px;
+          gap: 16px;
         }
 
-        /* text stack */
+        /* ── Text block ── */
         .hero-vid-text {
           display: flex;
           flex-direction: column;
-          gap: 6px;
+          gap: 8px;
         }
+
+        /* Eyebrow — live dot + label */
         .hero-vid-tagline {
-          color: rgba(255,255,255,0.70) !important;
-          font-size: 10px !important;
-          letter-spacing: .16em;
+          display: inline-flex !important;
+          align-items: center;
+          gap: 7px;
+          color: rgba(255,255,255,0.85) !important;
+          font-size: 11px !important;
+          letter-spacing: .14em;
           text-transform: uppercase;
           font-weight: 700;
           margin: 0;
         }
-        .hero-vid-h1 {
-          color: #fff !important;
-          font-size: 28px !important;
-          font-weight: 900 !important;
-          line-height: 1.1 !important;
-          margin: 0 !important;
+        .hero-vid-tagline::before {
+          content: '';
+          width: 7px; height: 7px;
+          border-radius: 50%;
+          background: #2BCE4E;
+          box-shadow: 0 0 0 3px rgba(43,206,78,0.35);
+          animation: liveDot 1.8s ease-in-out infinite;
+          flex-shrink: 0;
         }
-        .hero-vid-sub {
-          color: rgba(255,255,255,0.78) !important;
-          font-size: 13px !important;
-          line-height: 1.6 !important;
-          margin: 0 !important;
-          max-width: 100%;
+        @keyframes liveDot {
+          0%,100% { box-shadow: 0 0 0 3px rgba(43,206,78,0.35); }
+          50%      { box-shadow: 0 0 0 6px rgba(43,206,78,0.10); }
         }
 
-        /* buttons row — full width, bigger touch targets */
+        /* H1 */
+        .hero-vid-h1 {
+          color: #fff !important;
+          font-size: 30px !important;
+          font-weight: 900 !important;
+          line-height: 1.08 !important;
+          margin: 0 !important;
+          letter-spacing: -0.02em;
+        }
+
+        /* Description — hidden on very small screens to save space */
+        .hero-vid-sub {
+          color: rgba(255,255,255,0.75) !important;
+          font-size: 13px !important;
+          line-height: 1.65 !important;
+          margin: 0 !important;
+        }
+        @media (max-height: 580px) {
+          .hero-vid-sub { display: none !important; }
+        }
+
+        /* ── Three CTA buttons ── */
         .hero-vid-cta-wrap .hero-cta-row {
           width: 100%;
           gap: 8px !important;
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
         }
+        /* all three: taller touch target */
         .hero-vid-cta-wrap .hero-cta-primary,
         .hero-vid-cta-wrap .hero-cta-secondary,
         .hero-vid-cta-wrap .hero-cta-nutri {
-          padding: 16px 8px !important;
-          font-size: 12px !important;
+          padding: 14px 6px !important;
+          border-radius: 16px !important;
         }
-
-        /* glass buttons over video */
+        /* green button — keep as-is, already looks great */
+        /* glass: Menu */
         .hero-vid-cta-wrap #hero-cta-secondary {
-          background: rgba(255,255,255,0.15) !important;
-          border-color: rgba(255,255,255,0.35) !important;
+          background: rgba(255,255,255,0.12) !important;
+          border-color: rgba(255,255,255,0.30) !important;
           color: #fff !important;
-          backdrop-filter: blur(12px);
-          -webkit-backdrop-filter: blur(12px);
+          backdrop-filter: blur(14px);
+          -webkit-backdrop-filter: blur(14px);
         }
+        /* glass: Calories */
         .hero-vid-cta-wrap #hero-cta-nutri {
           background: rgba(255,255,255,0.10) !important;
-          border-color: rgba(240,180,41,0.55) !important;
+          border-color: rgba(240,180,41,0.50) !important;
           color: #FFE080 !important;
-          backdrop-filter: blur(12px);
-          -webkit-backdrop-filter: blur(12px);
+          backdrop-filter: blur(14px);
+          -webkit-backdrop-filter: blur(14px);
+        }
+        .hero-vid-cta-wrap #hero-cta-secondary:hover {
+          border-color: rgba(255,255,255,.65) !important;
+          background: rgba(255,255,255,0.20) !important;
+        }
+        .hero-vid-cta-wrap #hero-cta-nutri:hover {
+          color: #FFD040 !important;
+          border-color: rgba(240,180,41,0.80) !important;
         }
 
-        /* desktop: cap height at 16:9 */
-        @media (min-width: 768px) {
+        /* ── Scroll hint arrow at bottom center ── */
+        .hero-vid-scroll-hint {
+          position: absolute;
+          bottom: 10px;
+          left: 50%;
+          transform: translateX(-50%);
+          z-index: 3;
+          color: rgba(255,255,255,0.45);
+          font-size: 18px;
+          animation: scrollBounce 2s ease-in-out infinite;
+          pointer-events: none;
+        }
+        @keyframes scrollBounce {
+          0%,100% { transform: translateX(-50%) translateY(0); }
+          50%      { transform: translateX(-50%) translateY(5px); }
+        }
+
+        /* ── Tablet / desktop ── */
+        @media (min-width: 640px) {
           .hero-vid-cta-wrap {
-            height: 56vw;
-            max-height: 90vh;
+            height: calc(100dvh - 110px);
+            max-height: 820px;
           }
-          .hero-vid-h1  { font-size: clamp(32px,4vw,56px) !important; }
-          .hero-vid-sub { font-size: 15px !important; }
-          .hero-vid-content { padding: 40px 48px; }
+          .hero-vid-h1  { font-size: 38px !important; }
+          .hero-vid-sub { font-size: 14px !important; }
+          .hero-vid-content { padding: 36px 36px 28px; gap: 20px; }
+        }
+        @media (min-width: 1024px) {
+          .hero-vid-cta-wrap {
+            height: calc(100dvh - 110px);
+            max-height: 780px;
+          }
+          .hero-vid-content { padding: 48px 56px; }
+          .hero-vid-h1 { font-size: clamp(40px,4.5vw,64px) !important; }
+          .hero-vid-sub { font-size: 16px !important; max-width: 520px; }
         }
       </style>
       <style>
