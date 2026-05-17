@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>180-Day Challenge · SAVY</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #0a0d13;
+    --surface:   #111520;
+    --card:      #161b27;
+    --border:    #1e2535;
+    --text:      #e8eaf0;
+    --muted:     #6b7280;
+    --dim:       #2e3548;
+    --green:     #09b830;
+    --green-dim: rgba(9,184,48,.12);
+    --gold:      #f59e0b;
+    --spiritual: #7c3aed;
+    --mind:      #2563eb;
+    --discipline:#e11d48;
+    --health:    #09b830;
+    --fitness:   #f59e0b;
+    --done-txt:  #ffffff;
+    --score-hi:  #09b830;
+    --score-mid: #f59e0b;
+    --score-lo:  #e11d48;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 24px 20px 48px;
+    font-size: 14px;
+  }
+  a.back {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--muted); font-size: 12px; text-decoration: none;
+    margin-bottom: 20px;
+  }
+  a.back:hover { color: var(--text); }
+
+  /* Header */
+  .header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: 18px; border-bottom: 1px solid var(--border);
+    margin-bottom: 18px; flex-wrap: wrap; gap: 14px;
+  }
+  .header h1 { font-size: 20px; font-weight: 600; letter-spacing: -0.4px; }
+  .header p  { font-size: 12px; color: var(--muted); margin-top: 3px; }
+  .stats { display: flex; gap: 24px; }
+  .stat  { text-align: center; }
+  .stat-val { font-size: 22px; font-weight: 600; line-height: 1; }
+  .stat-lbl { font-size: 10px; color: var(--muted); margin-top: 2px; letter-spacing: 0.3px; }
+
+  /* Legend */
+  .legend {
+    display: flex; gap: 14px; margin-bottom: 16px;
+    flex-wrap: wrap; align-items: center; font-size: 11px; color: var(--muted);
+  }
+  .legend-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+  .legend-item { display: flex; align-items: center; gap: 5px; }
+
+  /* Tabs + Nav */
+  .toolbar {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 16px; flex-wrap: wrap; gap: 10px;
+  }
+  .tabs { display: flex; gap: 6px; }
+  .tab {
+    padding: 5px 14px; font-size: 12px; border-radius: 6px;
+    border: 1px solid var(--border); background: transparent;
+    color: var(--muted); cursor: pointer; font-family: inherit;
+    transition: all 0.15s;
+  }
+  .tab.active { background: var(--green-dim); color: var(--green); border-color: rgba(9,184,48,.3); font-weight: 600; }
+  .week-nav { display: flex; align-items: center; gap: 10px; }
+  .nav-btn {
+    background: none; border: 1px solid var(--border); border-radius: 6px;
+    padding: 3px 12px; cursor: pointer; color: var(--text);
+    font-size: 16px; line-height: 1.4;
+    transition: background 0.1s;
+  }
+  .nav-btn:hover { background: var(--surface); }
+  .week-label { font-size: 12px; color: var(--muted); text-align: center; min-width: 110px; }
+  .week-label strong { color: var(--text); font-weight: 500; }
+
+  /* Grid table */
+  .grid-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+  col.cat-col { width: 188px; }
+  col.day-col { width: 66px; }
+  thead th {
+    padding: 5px 4px 10px; font-weight: 500;
+    border-bottom: 1.5px solid var(--border);
+  }
+  thead th.cat-hd {
+    text-align: left; padding-left: 12px;
+    font-size: 11px; color: var(--muted);
+  }
+  thead th.day-hd { text-align: center; }
+  .day-name { font-size: 10px; color: var(--dim); letter-spacing: 0.3px; }
+  .day-num {
+    font-size: 14px; font-weight: 500; width: 28px; height: 28px;
+    border-radius: 6px; display: inline-flex; align-items: center;
+    justify-content: center; margin: 3px 0 1px; transition: background 0.2s;
+  }
+  .day-num.perfect { background: var(--score-hi); color: #fff; }
+  .day-pct { font-size: 10px; font-weight: 500; }
+
+  tbody tr { border-bottom: 1px solid #1e2236; }
+  tbody tr.tag-last { border-bottom: 1.5px solid var(--border); }
+  tbody tr:hover { background: #161925; }
+  td.cat-td {
+    padding: 5px 8px 5px 12px;
+    border-left-width: 3px; border-left-style: solid;
+  }
+  .tag-badge {
+    font-size: 9px; font-weight: 600; letter-spacing: 0.6px;
+    text-transform: uppercase; margin-bottom: 1px;
+  }
+  .cat-name { font-size: 12px; line-height: 1.3; }
+  td.cell-td { text-align: center; padding: 4px 5px; }
+  .cell {
+    width: 42px; height: 32px; border-radius: 6px;
+    border: 1px solid var(--border); background: var(--surface);
+    color: transparent; cursor: pointer; font-size: 14px; font-weight: 600;
+    font-family: inherit; transition: transform 0.08s, opacity 0.1s;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .cell:hover { opacity: 0.82; transform: scale(0.96); }
+  .cell.done  { border: none; color: #fff; }
+  .cell.rest  { border: none; background: var(--dim); color: var(--muted); font-size: 12px; }
+
+  /* Score panel */
+  .score-panel {
+    margin-top: 16px; padding: 14px 16px;
+    background: var(--surface); border-radius: 10px; border: 1px solid var(--border);
+  }
+  .score-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 13px; }
+  .score-row span:last-child { font-weight: 600; }
+  .bar-track { height: 7px; background: var(--card); border-radius: 4px; overflow: hidden; }
+  .bar-fill  { height: 100%; border-radius: 4px; transition: width 0.4s ease; }
+  .tag-breakdown { display: flex; gap: 14px; margin-top: 12px; flex-wrap: wrap; }
+  .tag-item { min-width: 80px; display: flex; flex-direction: column; gap: 3px; }
+  .tag-item-header { display: flex; align-items: center; gap: 4px; }
+  .tag-dot { width: 7px; height: 7px; border-radius: 1px; }
+  .tag-name-sm { font-size: 10px; color: var(--muted); }
+  .tag-bar { height: 3px; background: var(--card); border-radius: 2px; overflow: hidden; }
+  .tag-pct { font-size: 10px; font-weight: 600; }
+
+  /* Month jumper */
+  .month-jumper { margin-top: 12px; display: flex; gap: 6px; flex-wrap: wrap; }
+  .month-btn {
+    padding: 4px 12px; font-size: 11px; font-family: inherit;
+    border-radius: 6px; border: 1px solid var(--border);
+    background: transparent; color: var(--muted); cursor: pointer;
+    transition: background 0.1s, color 0.1s;
+  }
+  .month-btn.active { background: var(--green-dim); color: var(--green); border-color: rgba(9,184,48,.3); font-weight: 600; }
+
+  /* Overview */
+  .overview-hint { font-size: 12px; color: var(--muted); margin-bottom: 14px; }
+  .ov-row { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 9px; }
+  .ov-label {
+    width: 168px; flex-shrink: 0;
+    border-left-width: 3px; border-left-style: solid;
+    padding-left: 8px;
+  }
+  .ov-label-name  { font-size: 11px; color: var(--text); line-height: 1.3; }
+  .ov-label-stats { font-size: 10px; margin-top: 2px; }
+  .dot-grid { display: flex; flex-wrap: wrap; gap: 2px; flex: 1; padding-top: 1px; }
+  .dot {
+    width: 11px; height: 11px; border-radius: 2px;
+    border: 1px solid var(--border); background: var(--surface);
+    cursor: pointer; padding: 0; transition: transform 0.07s;
+  }
+  .dot:hover { transform: scale(1.3); }
+  .dot.done { border: none; }
+  .dot.rest { border: none; background: var(--dim); }
+
+  /* Monthly grid */
+  .monthly-grid {
+    display: grid; grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 8px; margin-top: 14px;
+  }
+  .month-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 10px 10px 8px;
+  }
+  .month-card-lbl { font-size: 10px; color: var(--muted); margin-bottom: 4px; }
+  .month-card-pct { font-size: 20px; font-weight: 600; line-height: 1; }
+  .month-card-days { font-size: 9px; color: var(--dim); margin-top: 4px; }
+  .overall-panel {
+    margin-top: 16px; padding: 14px 16px;
+    background: var(--surface); border-radius: 10px; border: 1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+
+<!-- SAVY top bar -->
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;padding-bottom:16px;border-bottom:1px solid var(--border);">
+  <a href="./index.html" style="display:inline-flex;align-items:center;gap:8px;text-decoration:none;">
+    <svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="border-radius:8px;background:#09b830;">
+      <rect width="40" height="40" rx="8" fill="#09b830"/>
+      <ellipse cx="20" cy="17" rx="9" ry="10" fill="#e0ffe6" stroke="#fff" stroke-width="1.2"/>
+      <circle cx="16.5" cy="16" r="2" fill="#09b830"/>
+      <circle cx="23.5" cy="16" r="2" fill="#09b830"/>
+      <path d="M16 21 Q20 24.5 24 21" stroke="#09b830" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <line x1="11" y1="20" x2="7" y2="25" stroke="#e0ffe6" stroke-width="2" stroke-linecap="round"/>
+      <line x1="29" y1="20" x2="33" y2="25" stroke="#e0ffe6" stroke-width="2" stroke-linecap="round"/>
+      <text x="20" y="35" text-anchor="middle" fill="#fff" font-size="7" font-weight="800" font-family="DM Sans,sans-serif" letter-spacing="1">SAVY</text>
+    </svg>
+    <span style="font-size:13px;font-weight:700;color:var(--muted);letter-spacing:.02em;">← Retour à SAVY</span>
+  </a>
+  <span style="font-size:11px;color:var(--muted);background:var(--green-dim);border:1px solid rgba(9,184,48,.2);color:var(--green);border-radius:20px;padding:4px 12px;font-weight:600;">🔥 SAVY Challenge</span>
+</div>
+
+<div class="header">
+  <div>
+    <h1 style="background:linear-gradient(135deg,#09b830,#2BCE4E);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">180-Day Challenge</h1>
+    <p id="sub-title" style="color:var(--muted);">Discipline · Growth · Excellence · Day 1 of 180</p>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="stat-val" id="stat-streak" style="color:var(--gold)">0d</div><div class="stat-lbl">streak</div></div>
+    <div class="stat"><div class="stat-val" id="stat-done"   style="color:var(--green)">0</div><div class="stat-lbl">done</div></div>
+    <div class="stat"><div class="stat-val" id="stat-week"   style="color:#2563eb">0%</div><div class="stat-lbl">this week</div></div>
+  </div>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#7c3aed"></div>Spiritual</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#2563eb"></div>Mind</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#b91c1c"></div>Discipline</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div>Health</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#d97706"></div>Fitness</div>
+  <div style="margin-left:auto; display:flex; gap:14px;">
+    <span style="color:#059669">✓ Done</span>
+    <span style="color:var(--muted)">— Rest</span>
+    <span style="color:var(--dim)">· Empty</span>
+  </div>
+</div>
+
+<div class="toolbar">
+  <div class="tabs">
+    <button class="tab active" onclick="setView('week')">Weekly Grid</button>
+    <button class="tab"        onclick="setView('overview')">All 180 Days</button>
+  </div>
+  <div class="week-nav" id="week-nav">
+    <button class="nav-btn" onclick="shiftWeek(-1)">‹</button>
+    <div class="week-label" id="week-label"></div>
+    <button class="nav-btn" onclick="shiftWeek(1)">›</button>
+  </div>
+</div>
+
+<div id="view-week">
+  <div class="grid-wrap">
+    <table id="grid-table"><colgroup id="colgroup"></colgroup><thead id="grid-head"></thead><tbody id="grid-body"></tbody></table>
+  </div>
+  <div class="score-panel">
+    <div class="score-row"><span>Week <span id="score-week-num">1</span> score</span><span id="score-pct" style="color:#059669">0%</span></div>
+    <div class="bar-track"><div class="bar-fill" id="score-bar" style="width:0%;background:var(--green)"></div></div>
+    <div class="tag-breakdown" id="tag-breakdown"></div>
+  </div>
+  <div class="month-jumper" id="month-jumper"></div>
+</div>
+
+<div id="view-overview" style="display:none">
+  <div class="overview-hint">All 180 days · Click any dot to toggle · Each row = one habit</div>
+  <div id="ov-rows"></div>
+  <div class="score-panel">
+    <div style="font-size:13px;font-weight:500;margin-bottom:14px">Monthly Breakdown</div>
+    <div class="monthly-grid" id="monthly-grid"></div>
+  </div>
+  <div class="overall-panel">
+    <div class="score-row"><span style="color:var(--muted)">Overall Progress</span><span id="ov-overall-txt">0 / 2520 habits done</span></div>
+    <div class="bar-track" style="margin-top:8px"><div class="bar-fill" id="ov-bar" style="width:0%;background:var(--green)"></div></div>
+  </div>
+</div>
+
+<script>
+const TOTAL = 180;
+const CATS = [
+  { id:0,  label:"Five Daily Prayers",       tag:"Spiritual" },
+  { id:1,  label:"Quran Reading",            tag:"Spiritual" },
+  { id:2,  label:"Book Reading",             tag:"Mind"      },
+  { id:3,  label:"Avoid Bad Habits",         tag:"Discipline"},
+  { id:4,  label:"Brush Teeth (2×)",         tag:"Health"    },
+  { id:5,  label:"No Music",                 tag:"Discipline"},
+  { id:6,  label:"No Social Media",          tag:"Discipline"},
+  { id:7,  label:"Push-ups / Workout",       tag:"Fitness"   },
+  { id:8,  label:"Running",                  tag:"Fitness"   },
+  { id:9,  label:"Cycling",                  tag:"Fitness"   },
+  { id:10, label:"Swimming",                 tag:"Fitness"   },
+  { id:11, label:"Professional Learning",    tag:"Mind"      },
+  { id:12, label:"Sleep Target (7–8h)",      tag:"Health"    },
+  { id:13, label:"Mental Health / Journal",  tag:"Mind"      },
+];
+const TC = {
+  Spiritual:"#7c3aed", Mind:"#2563eb",
+  Discipline:"#b91c1c", Health:"#059669", Fitness:"#d97706"
+};
+const DAYS_ABR = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+const TOTAL_WEEKS = Math.ceil(TOTAL/7);
+
+// Load saved data
+let data = {};
+try { data = JSON.parse(localStorage.getItem("savy_180_data") || "{}"); } catch(e) {}
+
+let currentWeek = 0;
+let currentView = "week";
+
+function save() { try { localStorage.setItem("savy_180_data", JSON.stringify(data)); } catch(e){} }
+function k(c,d) { return c+"_"+d; }
+function toggle(c,d) {
+  data[k(c,d)] = ((data[k(c,d)]||0)+1)%3;
+  save(); render();
+}
+function weekDays(w) {
+  const s = w*7;
+  return Array.from({length:7},(_,i)=>s+i+1).filter(d=>d<=TOTAL);
+}
+function score(days, cats) {
+  let done=0,total=0;
+  days.forEach(d=>cats.forEach(c=>{
+    const v=data[k(c.id,d)]||0;
+    if(v!==2){total++;if(v===1)done++;}
+  }));
+  return total>0?Math.round(done/total*100):0;
+}
+function scoreColor(p) {
+  return p>=80?"#059669":p>=50?"#d97706":"#b91c1c";
+}
+function currentStreak() {
+  let s=0;
+  for(let d=1;d<=TOTAL;d++){
+    let done=0,total=0;
+    CATS.forEach(c=>{const v=data[k(c.id,d)]||0;if(v!==2){total++;if(v===1)done++;}});
+    if(total>0&&done/total>=0.8)s++;
+    else if(total>0)s=0;
+  }
+  return s;
+}
+function totalDone() { return Object.values(data).filter(v=>v===1).length; }
+
+function setView(v) {
+  currentView = v;
+  document.getElementById("view-week").style.display     = v==="week"?"block":"none";
+  document.getElementById("view-overview").style.display = v==="overview"?"block":"none";
+  document.getElementById("week-nav").style.display      = v==="week"?"flex":"none";
+  document.querySelectorAll(".tab").forEach((t,i)=>t.classList.toggle("active",[v==="week",v==="overview"][i]));
+  render();
+}
+function shiftWeek(d) {
+  currentWeek = Math.max(0, Math.min(TOTAL_WEEKS-1, currentWeek+d));
+  render();
+}
+
+function render() {
+  const days = weekDays(currentWeek);
+  const ws   = score(days, CATS);
+  const td   = totalDone();
+  const cs   = currentStreak();
+
+  // Header stats
+  document.getElementById("stat-streak").textContent = cs+"d";
+  document.getElementById("stat-done").textContent   = td;
+  document.getElementById("stat-week").textContent   = ws+"%";
+  document.getElementById("sub-title").textContent   =
+    "Discipline · Growth · Excellence · Day "+(currentWeek*7+1)+" of "+TOTAL;
+
+  if(currentView==="week") renderWeek(days, ws);
+  else renderOverview();
+}
+
+function renderWeek(days, ws) {
+  // Week label
+  document.getElementById("week-label").innerHTML =
+    "<strong>Week "+(currentWeek+1)+"</strong> / "+TOTAL_WEEKS+
+    "<br><small style='font-size:10px'>Days "+(currentWeek*7+1)+"–"+Math.min(currentWeek*7+7,TOTAL)+"</small>";
+
+  // Colgroup
+  const cg = document.getElementById("colgroup");
+  cg.innerHTML = '<col class="cat-col">'+days.map(()=>'<col class="day-col">').join("");
+
+  // Head
+  const head = document.getElementById("grid-head");
+  head.innerHTML = "<tr>" +
+    '<th class="cat-hd">Habit / Category</th>' +
+    days.map((day,i)=>{
+      const ds=score([day],CATS);
+      return `<th class="day-hd">
+        <div class="day-name">${DAYS_ABR[i%7]}</div>
+        <div class="day-num${ds===100?" perfect":""}">${day}</div>
+        <div class="day-pct" style="color:${ds>0?scoreColor(ds):"var(--dim)"}">${ds>0?ds+"%":"·"}</div>
+      </th>`;
+    }).join("") + "</tr>";
+
+  // Body
+  const body = document.getElementById("grid-body");
+  body.innerHTML = CATS.map((cat,idx)=>{
+    const isFirst = idx===0||CATS[idx-1].tag!==cat.tag;
+    const isLast  = idx===CATS.length-1||CATS[idx+1].tag!==cat.tag;
+    const tagBadge = isFirst?`<div class="tag-badge" style="color:${TC[cat.tag]}">${cat.tag}</div>`:"";
+    const cells = days.map(day=>{
+      const v=data[k(cat.id,day)]||0;
+      const cls = v===1?"cell done":v===2?"cell rest":"cell";
+      const lbl = v===1?"✓":v===2?"—":"";
+      const bg  = v===1?TC[cat.tag]:"";
+      return `<td class="cell-td"><button class="${cls}" style="${bg?"background:"+bg:""}opacity:1" onclick="toggle(${cat.id},${day})">${lbl}</button></td>`;
+    }).join("");
+    return `<tr class="${isLast?"tag-last":""}">
+      <td class="cat-td" style="border-left-color:${TC[cat.tag]}">
+        ${tagBadge}<div class="cat-name">${cat.label}</div>
+      </td>${cells}
+    </tr>`;
+  }).join("");
+
+  // Score bar
+  document.getElementById("score-week-num").textContent = currentWeek+1;
+  document.getElementById("score-pct").textContent = ws+"%";
+  document.getElementById("score-pct").style.color = scoreColor(ws);
+  const bar = document.getElementById("score-bar");
+  bar.style.width = ws+"%"; bar.style.background = scoreColor(ws);
+
+  // Tag breakdown
+  document.getElementById("tag-breakdown").innerHTML = Object.entries(TC).map(([tag,color])=>{
+    const cats=CATS.filter(c=>c.tag===tag);
+    const pct=score(days,cats);
+    return `<div class="tag-item">
+      <div class="tag-item-header"><div class="tag-dot" style="background:${color}"></div><span class="tag-name-sm">${tag}</span></div>
+      <div class="tag-bar"><div style="height:100%;width:${pct}%;background:${color};border-radius:2px"></div></div>
+      <span class="tag-pct" style="color:${color}">${pct}%</span>
+    </div>`;
+  }).join("");
+
+  // Month jumper
+  document.getElementById("month-jumper").innerHTML = Array.from({length:6},(_,m)=>
+    `<button class="month-btn${currentWeek>=m*4&&currentWeek<(m+1)*4?" active":""}" onclick="currentWeek=${m*4};render()">Month ${m+1}</button>`
+  ).join("");
+}
+
+function renderOverview() {
+  const allDays = Array.from({length:TOTAL},(_,i)=>i+1);
+
+  document.getElementById("ov-rows").innerHTML = CATS.map(cat=>{
+    const doneDays = allDays.filter(d=>(data[k(cat.id,d)]||0)===1).length;
+    let maxS=0,cur=0;
+    allDays.forEach(d=>{
+      const v=data[k(cat.id,d)]||0;
+      if(v===1){cur++;maxS=Math.max(maxS,cur);}else if(v===0)cur=0;
+    });
+    const dots = allDays.map(d=>{
+      const v=data[k(cat.id,d)]||0;
+      const cls=v===1?"dot done":v===2?"dot rest":"dot";
+      const bg=v===1?TC[cat.tag]:"";
+      return `<button class="${cls}" style="${bg?"background:"+bg+";border:none":""}" onclick="toggle(${cat.id},${d})" title="Day ${d}"></button>`;
+    }).join("");
+    return `<div class="ov-row">
+      <div class="ov-label" style="border-left-color:${TC[cat.tag]}">
+        <div class="ov-label-name">${cat.label}</div>
+        <div class="ov-label-stats" style="color:${TC[cat.tag]}">${doneDays}d done · ${maxS}d best streak</div>
+      </div>
+      <div class="dot-grid">${dots}</div>
+    </div>`;
+  }).join("");
+
+  document.getElementById("monthly-grid").innerHTML = Array.from({length:6},(_,m)=>{
+    const s=m*30+1, e=Math.min((m+1)*30,TOTAL);
+    const days=Array.from({length:e-s+1},(_,i)=>s+i);
+    const pct=score(days,CATS);
+    const logged=days.some(d=>CATS.some(c=>(data[k(c.id,d)]||0)>0));
+    return `<div class="month-card">
+      <div class="month-card-lbl">Month ${m+1}</div>
+      <div class="month-card-pct" style="color:${logged?scoreColor(pct):"var(--dim)"}">${logged?pct+"%":"—"}</div>
+      <div class="bar-track" style="margin-top:6px">
+        ${logged?`<div class="bar-fill" style="width:${pct}%;background:${scoreColor(pct)}"></div>`:""}
+      </div>
+      <div class="month-card-days">D${s}–D${e}</div>
+    </div>`;
+  }).join("");
+
+  const td = totalDone();
+  const ovPct = Math.round(td/(TOTAL*CATS.length)*100);
+  document.getElementById("ov-overall-txt").textContent = td+" / "+(TOTAL*CATS.length)+" habits done";
+  const ovBar = document.getElementById("ov-bar");
+  ovBar.style.width=ovPct+"%"; ovBar.style.background=scoreColor(ovPct);
+}
+
+render();
+</script>
+</body>
+</html>
