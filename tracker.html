@@ -1,40 +1,332 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark" dir="ltr">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>180-Day Challenge · SAVY</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Space+Grotesk:wght@400;500;600;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+/* ── DARK MODE (default) ─────────────────── */
 :root{
-  --bg:        #05060d;
-  --surface:   #090c18;
-  --card:      #0d1120;
-  --card2:     #111729;
-  --glass:     rgba(13,17,32,.7);
-  --border:    rgba(255,255,255,.06);
-  --border2:   rgba(255,255,255,.1);
-  --text:      #f0f2f8;
-  --sub:       #8891a8;
-  --muted:     #4a536a;
-  --dim:       #1e2740;
-  --green:     #0dcc35;
-  --greenD:    #09b830;
-  --greenL:    #34e85a;
-  --green-glow:rgba(13,204,53,.25);
-  --green-dim: rgba(13,204,53,.1);
-  --gold:      #f59e0b;
-  --goldL:     #fbbf24;
-  --gold-dim:  rgba(245,158,11,.1);
+  --bg:        #0d0f18;
+  --surface:   #13172a;
+  --card:      #181e34;
+  --card2:     #1e2540;
+  --glass:     rgba(18,23,42,.82);
+  --border:    rgba(255,255,255,.08);
+  --border2:   rgba(255,255,255,.14);
+  --text:      #e2e6f3;
+  --sub:       #909ab8;
+  --muted:     #505a78;
+  --dim:       #222c48;
+  --green:     #22c55e;
+  --greenD:    #16a34a;
+  --greenL:    #4ade80;
+  --green-glow:rgba(34,197,94,.2);
+  --green-dim: rgba(34,197,94,.1);
+  --gold:      #eab308;
+  --goldL:     #facc15;
+  --gold-dim:  rgba(234,179,8,.1);
   --spiritual: #a78bfa;
   --mind:      #60a5fa;
-  --disc:      #fb7185;
+  --disc:      #f87171;
   --health:    #34d399;
   --fitness:   #fbbf24;
-  --r-hi:      #0dcc35;
-  --r-mid:     #f59e0b;
-  --r-lo:      #fb7185;
+  --r-hi:      #22c55e;
+  --r-mid:     #eab308;
+  --r-lo:      #f87171;
+  --input-bg:  rgba(255,255,255,.04);
+  --shadow:    0 4px 32px rgba(0,0,0,.35);
+  --shadow-sm: 0 2px 12px rgba(0,0,0,.25);
+  --yellow:    #eab308;
+  --yellow-dim:rgba(234,179,8,.12);
+  --yellow-bdr:rgba(234,179,8,.45);
+  --red:       #f87171;
+  --red-dim:   rgba(248,113,113,.1);
+  --red-bdr:   rgba(248,113,113,.4);
+  --purple:    #a78bfa;
+  --purple-dim:rgba(167,139,250,.12);
+  --purple-bdr:rgba(167,139,250,.45);
+}
+/* ── LIGHT MODE ──────────────────────────── */
+[data-theme="light"]{
+  --bg:        #f0f2f8;
+  --surface:   #ffffff;
+  --card:      #f7f8fc;
+  --card2:     #eef0f7;
+  --glass:     rgba(255,255,255,.92);
+  --border:    rgba(30,40,80,.09);
+  --border2:   rgba(30,40,80,.15);
+  --text:      #1a1d2e;
+  --sub:       #4a5068;
+  --muted:     #8b90a8;
+  --dim:       #dde0ec;
+  --green:     #15803d;
+  --greenD:    #166534;
+  --greenL:    #22c55e;
+  --green-glow:rgba(21,128,61,.15);
+  --green-dim: rgba(21,128,61,.08);
+  --gold:      #92400e;
+  --goldL:     #b45309;
+  --gold-dim:  rgba(146,64,14,.07);
+  --spiritual: #6d28d9;
+  --mind:      #1e40af;
+  --disc:      #b91c1c;
+  --health:    #065f46;
+  --fitness:   #92400e;
+  --r-hi:      #15803d;
+  --r-mid:     #92400e;
+  --r-lo:      #b91c1c;
+  --input-bg:  rgba(30,40,80,.04);
+  --shadow:    0 4px 20px rgba(30,40,80,.1);
+  --shadow-sm: 0 2px 8px rgba(30,40,80,.07);
+  --yellow:    #92400e;
+  --yellow-dim:rgba(146,64,14,.08);
+  --yellow-bdr:rgba(146,64,14,.3);
+  --red:       #b91c1c;
+  --red-dim:   rgba(185,28,28,.07);
+  --red-bdr:   rgba(185,28,28,.3);
+  --purple:    #6d28d9;
+  --purple-dim:rgba(109,40,217,.08);
+  --purple-bdr:rgba(109,40,217,.3);
+}
+[data-theme="light"] body::before{
+  background:
+    radial-gradient(ellipse 70% 60% at 15% 10%, rgba(21,128,61,.06) 0%, transparent 60%),
+    radial-gradient(ellipse 55% 45% at 88% 85%, rgba(109,40,217,.05) 0%, transparent 60%),
+    radial-gradient(ellipse 45% 40% at 70% 18%, rgba(30,64,175,.04) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 35% at 5% 80%, rgba(146,64,14,.04) 0%, transparent 55%);
+}
+[data-theme="light"] .top-nav{
+  background:rgba(240,242,248,.94);
+  border-bottom:1px solid rgba(30,40,80,.1);
+  box-shadow:0 1px 0 rgba(255,255,255,.9),0 4px 16px rgba(30,40,80,.06);
+}
+[data-theme="light"] .top-nav::after{
+  background:linear-gradient(90deg,transparent,rgba(21,128,61,.18),transparent);
+}
+[data-theme="light"] .grid-wrap{
+  background:rgba(255,255,255,.9);
+  border-color:rgba(30,40,80,.1);
+  box-shadow:0 4px 24px rgba(30,40,80,.08),inset 0 1px 0 rgba(255,255,255,.9);
+}
+[data-theme="light"] .hero{
+  background:linear-gradient(150deg,#ffffff 0%,#f4f6ff 45%,#eef4ff 100%);
+  border:1px solid rgba(30,40,80,.1);
+  box-shadow:0 4px 32px rgba(30,40,80,.1),0 1px 0 rgba(255,255,255,.9);
+}
+[data-theme="light"] .hero::before{
+  background:
+    radial-gradient(ellipse 70% 80% at 90% -10%, rgba(21,128,61,.08) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 60% at -10% 90%, rgba(30,64,175,.05) 0%, transparent 50%);
+}
+[data-theme="light"] .hero-title{
+  background:linear-gradient(135deg,#1a1d2e 0%,#1e3a5f 40%,#15803d 70%,#065f46 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+[data-theme="light"] .hero-eyebrow{color:var(--green)}
+[data-theme="light"] .hero-day{background:rgba(21,128,61,.07);border-color:rgba(21,128,61,.18)}
+[data-theme="light"] .stat-card{
+  background:rgba(255,255,255,.95);
+  box-shadow:0 2px 12px rgba(30,40,80,.08),inset 0 1px 0 rgba(255,255,255,.9);
+}
+[data-theme="light"] .stat-card:hover{
+  box-shadow:0 8px 28px rgba(30,40,80,.12),inset 0 1px 0 rgba(255,255,255,.9);
+}
+[data-theme="light"] .daily-section{
+  background:rgba(255,255,255,.92);
+  box-shadow:0 4px 20px rgba(30,40,80,.08);
+}
+[data-theme="light"] .score-panel{
+  background:rgba(255,255,255,.9);
+  box-shadow:0 2px 12px rgba(30,40,80,.07);
+}
+[data-theme="light"] .hadith-card{background:rgba(255,255,255,.95)}
+[data-theme="light"] .pro-card{background:rgba(255,255,255,.95)}
+[data-theme="light"] .reflection-card{background:rgba(255,255,255,.95)}
+[data-theme="light"] .hadith-info-grid{background:rgba(30,40,80,.03);border-color:rgba(30,40,80,.08)}
+[data-theme="light"] .cell{
+  background:linear-gradient(145deg,#fcd34d,#f59e0b);
+  border:none;
+  box-shadow:0 2px 10px rgba(245,158,11,.3),inset 0 1px 0 rgba(255,255,255,.3);
+  color:#fff;
+}
+[data-theme="light"] .cell.done{
+  background:linear-gradient(145deg,#34d399,#15803d);
+  box-shadow:0 2px 10px rgba(21,128,61,.3),inset 0 1px 0 rgba(255,255,255,.2);
+}
+[data-theme="light"] .cell.skip{
+  background:rgba(185,28,28,.12);
+  border:1.5px solid rgba(185,28,28,.35);
+  box-shadow:none;
+  color:#b91c1c;
+}
+[data-theme="light"] .cell.off{
+  background:rgba(109,40,217,.1);
+  border:1.5px solid rgba(109,40,217,.3);
+  box-shadow:none;
+  color:#6d28d9;
+}
+[data-theme="light"] td.cat-td{background:rgba(247,248,252,.95)}
+[data-theme="light"] td.cell-td{background:rgba(240,242,248,.6)}
+[data-theme="light"] thead th{background:rgba(238,240,247,.9)}
+[data-theme="light"] tbody tr{border-bottom-color:rgba(30,40,80,.05)}
+[data-theme="light"] .tabs-bar{
+  background:rgba(255,255,255,.8);
+  border-color:rgba(30,40,80,.1);
+  box-shadow:0 2px 8px rgba(30,40,80,.06);
+}
+[data-theme="light"] .tab.active{
+  background:linear-gradient(145deg,rgba(21,128,61,.12),rgba(21,128,61,.07));
+  color:var(--green);
+  border-color:rgba(21,128,61,.25);
+  box-shadow:0 0 16px rgba(21,128,61,.1);
+  text-shadow:none;
+}
+[data-theme="light"] .quote-card{
+  background:linear-gradient(145deg,rgba(109,40,217,.06),rgba(30,64,175,.04));
+  border-color:rgba(109,40,217,.14);
+  box-shadow:0 4px 24px rgba(109,40,217,.06);
+}
+[data-theme="light"] .quote-btn{
+  background:rgba(30,40,80,.06);
+  border-color:rgba(30,40,80,.12);
+}
+[data-theme="light"] .quote-btn:hover{background:rgba(30,40,80,.1)}
+[data-theme="light"] .quote-dot{background:rgba(30,40,80,.15)}
+[data-theme="light"] .quote-dot.active{background:var(--spiritual)}
+[data-theme="light"] .score-panel{background:rgba(255,255,255,.9)}
+[data-theme="light"] .tag-item{
+  background:rgba(240,242,248,.9);
+  border-color:rgba(30,40,80,.1);
+}
+[data-theme="light"] .nav-btn{
+  background:rgba(30,40,80,.06);
+  border-color:rgba(30,40,80,.12);
+  color:var(--sub);
+}
+[data-theme="light"] .month-card{
+  background:rgba(255,255,255,.9);
+  border-color:rgba(30,40,80,.1);
+}
+[data-theme="light"] .legend{
+  background:rgba(255,255,255,.85);
+  border-color:rgba(30,40,80,.1);
+}
+[data-theme="light"] .ov-row{
+  background:rgba(255,255,255,.9);
+  border-color:rgba(30,40,80,.1);
+}
+[data-theme="light"] .dot{
+  border-color:rgba(245,158,11,.4);
+  background:rgba(245,158,11,.15);
+}
+[data-theme="light"] .reward-card{
+  background:rgba(255,255,255,.95);
+  box-shadow:0 2px 10px rgba(30,40,80,.07);
+}
+[data-theme="light"] .reward-card.unlocked{
+  background:rgba(21,128,61,.06);
+  border-color:rgba(21,128,61,.25);
+}
+[data-theme="light"] .hadith-lesson-box{
+  background:linear-gradient(145deg,rgba(109,40,217,.06),rgba(30,64,175,.04));
+  border-color:rgba(109,40,217,.16);
+}
+[data-theme="light"] .pro-takeaway{
+  background:rgba(21,128,61,.07);
+  border-color:rgba(21,128,61,.2);
+}
+[data-theme="light"] .refl-input{
+  background:rgba(30,40,80,.04);
+  border-color:rgba(30,40,80,.12);
+  color:var(--text);
+}
+[data-theme="light"] .refl-input::placeholder{color:var(--muted)}
+[data-theme="light"] .mood-btn{
+  background:rgba(30,40,80,.05);
+  border-color:rgba(30,40,80,.1);
+}
+[data-theme="light"] .overall-panel{
+  background:rgba(255,255,255,.9);
+  border-color:rgba(30,40,80,.1);
+}
+[data-theme="light"] .bar-track{background:rgba(30,40,80,.08)}
+[data-theme="light"] .month-jumper .month-btn{
+  background:rgba(255,255,255,.8);
+  border-color:rgba(30,40,80,.12);
+  color:var(--sub);
+}
+[data-theme="light"] .month-btn.active{
+  background:rgba(21,128,61,.1);
+  border-color:rgba(21,128,61,.25);
+  color:var(--green);
+}
+[data-theme="light"] #particles-canvas{opacity:.12}
+
+/* ── RTL Arabic ──────────────────────────── */
+[dir="rtl"]{
+  font-family:'Noto Naskh Arabic','DM Sans',sans-serif;
+}
+[dir="rtl"] .top-nav,
+[dir="rtl"] .hero-row,
+[dir="rtl"] .stats-row,
+[dir="rtl"] .daily-sec-header,
+[dir="rtl"] .daily-nav,
+[dir="rtl"] .week-nav-bar,
+[dir="rtl"] .nav-btns,
+[dir="rtl"] .legend,
+[dir="rtl"] .score-row,
+[dir="rtl"] .hadith-meta,
+[dir="rtl"] .quote-footer,
+[dir="rtl"] .refl-mood-btns,
+[dir="rtl"] .tag-breakdown,
+[dir="rtl"] .overall-row,
+[dir="rtl"] .month-jumper,
+[dir="rtl"] .rewards-grid,
+[dir="rtl"] .section-title-row{
+  direction:rtl;
+}
+[dir="rtl"] .nav-logo-txt::before{content:'SAVY → '}
+[dir="rtl"] .nav-logo-txt{font-size:0}
+[dir="rtl"] .nav-logo-txt::before{font-size:13px}
+[dir="rtl"] .cat-td{border-left:none;border-right-width:2.5px;border-right-style:solid;padding-left:10px;padding-right:14px}
+[dir="rtl"] .ov-label{border-left:none;border-right-width:2.5px;border-right-style:solid;padding-left:0;padding-right:10px}
+[dir="rtl"] .pro-takeaway{border-left:none;border-right:3px solid var(--green)}
+[dir="rtl"] .quote-tag::before{display:none}
+[dir="rtl"] .quote-tag::after{content:'';width:18px;height:1.5px;background:var(--spiritual);border-radius:99px;margin-right:0;margin-left:6px}
+[dir="rtl"] .hadith-arabic{direction:rtl;text-align:right}
+[dir="rtl"] .hero-title{letter-spacing:0}
+[dir="rtl"] .stat-card::before{left:auto;right:0;border-radius:0 14px 0 0}
+[dir="rtl"] .daily-sec-title,[dir="rtl"] .section-title,[dir="rtl"] .pro-title,
+[dir="rtl"] .hadith-meaning,[dir="rtl"] .pro-content,[dir="rtl"] .refl-prompt{
+  direction:rtl;text-align:right;
+}
+
+/* ── THEME & LANG CONTROLS ───────────────── */
+.nav-controls{display:flex;align-items:center;gap:8px}
+.theme-btn,.lang-btn{
+  height:30px;padding:0 10px;border-radius:8px;
+  background:rgba(255,255,255,.06);
+  border:1px solid var(--border);
+  color:var(--sub);font-size:12px;font-weight:600;
+  cursor:pointer;font-family:inherit;
+  transition:all .15s;display:flex;align-items:center;gap:5px;
+  white-space:nowrap;
+}
+.theme-btn:hover,.lang-btn:hover{
+  background:rgba(255,255,255,.1);color:var(--text);border-color:var(--border2);
+}
+[data-theme="light"] .theme-btn,
+[data-theme="light"] .lang-btn{
+  background:rgba(0,0,0,.05);
+  border-color:var(--border);
+  color:var(--sub);
+}
+[data-theme="light"] .theme-btn:hover,
+[data-theme="light"] .lang-btn:hover{
+  background:rgba(0,0,0,.09);color:var(--text);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -53,9 +345,10 @@ body::before{
   content:'';
   position:fixed;inset:0;
   background:
-    radial-gradient(ellipse 60% 50% at 20% 10%, rgba(13,204,53,.07) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 40% at 80% 80%, rgba(167,139,250,.06) 0%, transparent 60%),
-    radial-gradient(ellipse 40% 35% at 60% 20%, rgba(96,165,250,.04) 0%, transparent 55%);
+    radial-gradient(ellipse 70% 55% at 15% 12%, rgba(34,197,94,.06) 0%, transparent 65%),
+    radial-gradient(ellipse 55% 45% at 85% 85%, rgba(167,139,250,.05) 0%, transparent 65%),
+    radial-gradient(ellipse 45% 40% at 65% 22%, rgba(96,165,250,.04) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 35% at 88% 42%, rgba(234,179,8,.03) 0%, transparent 60%);
   pointer-events:none;
   z-index:0;
 }
@@ -72,8 +365,8 @@ body::before{
   position:sticky;top:0;z-index:200;
   display:flex;align-items:center;justify-content:space-between;
   padding:0 20px;height:56px;
-  background:rgba(5,6,13,.8);
-  backdrop-filter:blur(24px) saturate(160%);
+  background:rgba(13,15,24,.88);
+  backdrop-filter:blur(28px) saturate(180%);
   -webkit-backdrop-filter:blur(24px) saturate(160%);
   border-bottom:1px solid var(--border);
 }
@@ -102,9 +395,9 @@ body::before{
   position:relative;overflow:hidden;
   padding:32px 32px 28px;margin-bottom:20px;
   border-radius:24px;
-  background:linear-gradient(145deg, #0c1024 0%, #0f1530 50%, #0a1020 100%);
-  border:1px solid var(--border2);
-  box-shadow:0 0 0 1px rgba(13,204,53,.05), 0 32px 64px rgba(0,0,0,.4);
+  background:linear-gradient(150deg,#0e1528 0%,#121d3a 40%,#0d1624 75%,#0a1118 100%);
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:0 0 0 1px rgba(34,197,94,.06),0 40px 80px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.05);
 }
 .hero::before{
   content:'';position:absolute;inset:0;
@@ -144,7 +437,7 @@ body::before{
   font-family:'Space Grotesk',sans-serif;
   font-size:clamp(24px,5vw,36px);font-weight:700;
   letter-spacing:-.8px;line-height:1.1;
-  background:linear-gradient(135deg,#fff 0%,rgba(255,255,255,.8) 30%,var(--greenL) 65%,var(--goldL) 100%);
+  background:linear-gradient(135deg,#ffffff 0%,rgba(255,255,255,.92) 25%,#4ade80 60%,#86efac 100%);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
 }
 .hero-sub{
@@ -193,15 +486,16 @@ body::before{
   position:relative;overflow:hidden;
   padding:16px 16px 14px;border-radius:16px;
   border:1px solid var(--border);
-  background:var(--glass);
-  backdrop-filter:blur(16px);
-  transition:border-color .25s,transform .2s,box-shadow .25s;
+  background:linear-gradient(145deg,rgba(255,255,255,.04) 0%,rgba(255,255,255,.01) 100%),var(--glass);
+  backdrop-filter:blur(20px);
+  box-shadow:0 1px 0 rgba(255,255,255,.06) inset,var(--shadow-sm);
+  transition:border-color .25s,transform .22s,box-shadow .25s;
   cursor:default;
 }
 .stat-card:hover{
   border-color:var(--border2);
-  transform:translateY(-2px);
-  box-shadow:0 12px 32px rgba(0,0,0,.3);
+  transform:translateY(-3px);
+  box-shadow:0 16px 40px rgba(0,0,0,.35),0 1px 0 rgba(255,255,255,.08) inset;
 }
 .stat-card::before{
   content:'';position:absolute;inset:0;
@@ -230,9 +524,9 @@ body::before{
 .quote-card{
   position:relative;overflow:hidden;
   border-radius:18px;padding:24px 28px;margin-bottom:20px;
-  background:linear-gradient(135deg,rgba(167,139,250,.07) 0%,rgba(96,165,250,.04) 100%);
-  border:1px solid rgba(167,139,250,.15);
-  box-shadow:0 0 40px rgba(167,139,250,.05);
+  background:linear-gradient(145deg,rgba(139,92,246,.09) 0%,rgba(96,165,250,.05) 50%,rgba(139,92,246,.04) 100%);
+  border:1px solid rgba(139,92,246,.18);
+  box-shadow:0 0 50px rgba(139,92,246,.07),inset 0 1px 0 rgba(255,255,255,.04);
 }
 .quote-card::before{
   content:'"';position:absolute;top:-20px;left:14px;
@@ -285,26 +579,28 @@ body::before{
 /* ── TABS ────────────────────────────────── */
 .tabs-bar{
   display:flex;align-items:center;gap:4px;
-  background:rgba(9,12,24,.6);
+  background:rgba(13,15,24,.7);
   border:1px solid var(--border);
-  border-radius:14px;padding:5px;
-  margin-bottom:20px;
-  backdrop-filter:blur(12px);
+  border-radius:16px;padding:5px;
+  margin-bottom:22px;
+  backdrop-filter:blur(16px);
   flex-wrap:wrap;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
 }
 .tab{
   flex:1;min-width:90px;padding:10px 14px;
-  font-size:12px;font-weight:600;border-radius:10px;border:none;
+  font-size:12px;font-weight:600;border-radius:11px;border:none;
   background:transparent;color:var(--muted);
-  cursor:pointer;font-family:inherit;transition:all .2s;text-align:center;
+  cursor:pointer;font-family:inherit;transition:all .22s;text-align:center;
   letter-spacing:.02em;
 }
-.tab:hover:not(.active){background:rgba(255,255,255,.04);color:var(--sub)}
+.tab:hover:not(.active){background:rgba(255,255,255,.05);color:var(--sub)}
 .tab.active{
-  background:linear-gradient(135deg,rgba(13,204,53,.15),rgba(13,204,53,.08));
-  color:var(--green);
-  border:1px solid rgba(13,204,53,.25);
-  box-shadow:0 0 20px rgba(13,204,53,.1),inset 0 1px 0 rgba(255,255,255,.06);
+  background:linear-gradient(145deg,rgba(34,197,94,.18),rgba(34,197,94,.09));
+  color:#4ade80;
+  border:1px solid rgba(34,197,94,.28);
+  box-shadow:0 0 24px rgba(34,197,94,.12),inset 0 1px 0 rgba(255,255,255,.08);
+  text-shadow:0 0 20px rgba(34,197,94,.4);
 }
 .tab-sep{width:1px;height:18px;background:var(--border);flex-shrink:0}
 
@@ -339,28 +635,29 @@ body::before{
 
 /* ── GRID TABLE ──────────────────────────── */
 .grid-wrap{
-  overflow-x:auto;border-radius:16px;
+  overflow-x:hidden;border-radius:16px;
   border:1px solid var(--border);
-  background:var(--glass);
-  backdrop-filter:blur(12px);
+  background:rgba(13,17,30,.75);
+  backdrop-filter:blur(16px);
+  box-shadow:0 4px 32px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.05);
 }
-table{width:100%;border-collapse:collapse;table-layout:fixed;min-width:480px}
-col.cat-col{width:175px}
-col.day-col{width:62px}
+table{width:100%;border-collapse:collapse;table-layout:fixed}
+col.cat-col{width:130px}
+col.day-col{width:auto}
 thead th{
-  padding:10px 4px;
+  padding:6px 2px;
   border-bottom:1px solid var(--border);
-  background:rgba(9,12,24,.4);
+  background:rgba(8,10,20,.6);
 }
-thead th:first-child{text-align:left;padding-left:16px;font-size:10px;color:var(--muted);font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+thead th:first-child{text-align:left;padding-left:10px;font-size:9px;color:var(--muted);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
 .day-hd{text-align:center}
-.day-name{font-size:9px;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;font-weight:700}
+.day-name{font-size:8px;color:var(--muted);letter-spacing:.3px;text-transform:uppercase;font-weight:700}
 .day-num{
   font-family:'Space Grotesk',sans-serif;
-  font-size:14px;font-weight:600;
-  width:30px;height:30px;border-radius:8px;
+  font-size:11px;font-weight:700;
+  width:22px;height:22px;border-radius:6px;
   display:inline-flex;align-items:center;justify-content:center;
-  margin:3px auto;transition:all .2s;
+  margin:2px auto;transition:all .2s;
 }
 .day-num.perfect{
   background:linear-gradient(135deg,var(--green),var(--greenL));
@@ -371,61 +668,86 @@ thead th:first-child{text-align:left;padding-left:16px;font-size:10px;color:var(
   background:rgba(13,204,53,.12);color:var(--green);
   border:1px solid rgba(13,204,53,.3);
 }
-.day-pct{font-size:10px;font-weight:600}
+.day-pct{font-size:8px;font-weight:600}
 
 tbody tr{border-bottom:1px solid rgba(255,255,255,.03)}
 tbody tr.tag-last{border-bottom:1px solid rgba(255,255,255,.07)}
 tbody tr:hover td.cat-td,tbody tr:hover td.cell-td{background:rgba(255,255,255,.02)}
 tbody tr:last-child{border-bottom:none}
 td.cat-td{
-  padding:9px 10px 9px 16px;
+  padding:6px 6px 6px 10px;
   border-left-width:2px;border-left-style:solid;
-  background:rgba(9,12,24,.3);
+  background:rgba(9,12,20,.5);
   transition:background .15s;
 }
 .tag-badge{
-  font-size:9px;font-weight:700;letter-spacing:.5px;
-  text-transform:uppercase;margin-bottom:3px;
-  display:flex;align-items:center;gap:4px;
+  font-size:8px;font-weight:700;letter-spacing:.4px;
+  text-transform:uppercase;margin-bottom:2px;
+  display:flex;align-items:center;gap:3px;
 }
-.cat-name{font-size:12px;color:var(--text);line-height:1.35;font-weight:500}
+.cat-name{font-size:11px;color:var(--text);line-height:1.25;font-weight:500}
 td.cell-td{
-  text-align:center;padding:5px 4px;
-  background:rgba(5,6,13,.4);transition:background .15s;
+  text-align:center;padding:4px 2px;
+  background:rgba(7,8,16,.5);transition:background .15s;
 }
 .cell{
-  width:42px;height:34px;border-radius:8px;
-  border:1px solid rgba(255,255,255,.07);
-  background:rgba(255,255,255,.03);
-  color:transparent;cursor:pointer;font-size:15px;font-weight:700;
+  width:100%;height:28px;border-radius:7px;
+  border:none;
+  background:linear-gradient(145deg,#fcd34d,#d97706);
+  color:#fff;cursor:pointer;
+  font-size:10px;font-weight:700;letter-spacing:.03em;
   font-family:inherit;
   display:inline-flex;align-items:center;justify-content:center;
-  transition:transform .1s,box-shadow .1s,background .12s;
+  box-shadow:0 1px 6px rgba(234,179,8,.25),inset 0 1px 0 rgba(255,255,255,.2);
+  transition:transform .1s,opacity .15s;
 }
 .cell:hover{
-  transform:scale(.94);
-  background:rgba(255,255,255,.07);
-  border-color:rgba(255,255,255,.14);
+  transform:scale(.92);
+  opacity:.85;
 }
-.cell:active{transform:scale(.86)}
+.cell:active{transform:scale(.84)}
 .cell.done{
-  border:none;color:#fff;
-  box-shadow:0 2px 12px rgba(0,0,0,.3);
+  border:none;
+  background:linear-gradient(135deg,var(--greenL),var(--green));
+  box-shadow:0 2px 14px rgba(34,197,94,.32);
+  font-size:0;
+  position:relative;
 }
-.cell.rest{
-  border:1px solid rgba(255,255,255,.04);
-  background:rgba(255,255,255,.04);
-  color:var(--muted);font-size:11px;
+.cell.done::after{
+  content:'';
+  display:block;
+  width:10px;height:7px;
+  border-left:2px solid #fff;
+  border-bottom:2px solid #fff;
+  border-radius:1px;
+  transform:rotate(-45deg) translateY(-1px);
+  flex-shrink:0;
 }
-@keyframes cellPop{0%{transform:scale(1)}45%{transform:scale(1.2)}100%{transform:scale(1)}}
-.cell.done.pulse{animation:cellPop .28s cubic-bezier(.4,0,.2,1)}
+
+.cell.skip{
+  border:none;
+  background:linear-gradient(135deg,#f87171,#ef4444);
+  box-shadow:0 1px 6px rgba(239,68,68,.22);
+  color:#fff;font-size:10px;font-weight:700;letter-spacing:.03em;
+}
+.cell.skip:hover{opacity:.85}
+.cell.off{
+  border:none;
+  background:linear-gradient(135deg,#c4b5fd,#a78bfa);
+  box-shadow:0 1px 6px rgba(167,139,250,.22);
+  color:#fff;font-size:10px;font-weight:700;letter-spacing:.03em;
+}
+.cell.off:hover{opacity:.85}
+@keyframes cellPop{0%{transform:scale(1)}45%{transform:scale(1.25)}100%{transform:scale(1)}}
+.cell.done.pulse{animation:cellPop .3s cubic-bezier(.4,0,.2,1)}
 
 /* ── SCORE PANEL ─────────────────────────── */
 .score-panel{
   margin-top:14px;padding:20px 22px;
-  background:var(--glass);
-  backdrop-filter:blur(16px);
+  background:rgba(13,17,30,.8);
+  backdrop-filter:blur(20px);
   border:1px solid var(--border);
+  box-shadow:0 4px 24px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.04);
   border-radius:16px;
 }
 .score-row{
@@ -491,7 +813,7 @@ td.cell-td{
 .legend{
   display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;
   align-items:center;font-size:11px;
-  background:rgba(255,255,255,.02);border:1px solid var(--border);
+  background:rgba(255,255,255,.025);border:1px solid var(--border);
   border-radius:10px;padding:10px 14px;
 }
 .legend-item{display:flex;align-items:center;gap:5px;font-weight:600;color:var(--muted)}
@@ -513,14 +835,25 @@ td.cell-td{
 .ov-label-stats{font-size:10px;margin-top:3px;font-weight:500}
 .dot-grid{display:flex;flex-wrap:wrap;gap:2px;flex:1;padding-top:1px}
 .dot{
-  width:10px;height:10px;border-radius:2px;
-  border:1px solid rgba(255,255,255,.06);
-  background:rgba(255,255,255,.03);
-  cursor:pointer;padding:0;transition:transform .07s;
+  width:11px;height:11px;border-radius:3px;
+  border:none;
+  background:linear-gradient(135deg,#fbbf24,#eab308);
+  box-shadow:0 1px 4px rgba(234,179,8,.2);
+  cursor:pointer;padding:0;transition:transform .08s,opacity .08s;
 }
-.dot:hover{transform:scale(1.5)}
-.dot.done{border:none}
-.dot.rest{border:none;background:var(--dim)}
+.dot:hover{transform:scale(1.5);opacity:.8}
+.dot.done{
+  background:linear-gradient(135deg,var(--greenL),var(--green));
+  box-shadow:0 1px 5px rgba(34,197,94,.3);
+}
+.dot.skip{
+  background:linear-gradient(135deg,#f87171,#ef4444);
+  box-shadow:0 1px 5px rgba(239,68,68,.25);
+}
+.dot.off{
+  background:linear-gradient(135deg,#c4b5fd,#a78bfa);
+  box-shadow:0 1px 5px rgba(167,139,250,.25);
+}
 
 /* ── MONTHLY GRID ────────────────────────── */
 .monthly-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
@@ -620,7 +953,7 @@ td.cell-td{
   pointer-events:none;
 }
 /* ── VIEW FADE ───────────────────────────── */
-#view-week,#view-overview,#view-rewards{
+#view-week,#view-overview,#view-rewards,#view-daily,#view-expenses{
   animation:fadeSlideIn .3s ease;
 }
 @keyframes fadeSlideIn{
@@ -632,16 +965,502 @@ td.cell-td{
   border-color:rgba(13,204,53,.35);
   box-shadow:0 0 30px rgba(13,204,53,.12);
 }
+/* ── DAILY CONTENT ───────────────────────── */
+.daily-section{
+  margin-bottom:22px;
+  background:var(--glass);
+  border:1px solid var(--border);
+  border-radius:22px;
+  overflow:hidden;
+  backdrop-filter:blur(20px);
+  transition:all .2s cubic-bezier(.4,0,.2,1);
+  box-shadow:0 4px 24px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.04);
+}
+.daily-section:hover{border-color:var(--border2);box-shadow:0 6px 32px rgba(0,0,0,.25)}
+
+.daily-sec-header{
+  display:flex;align-items:center;gap:14px;
+  padding:18px 22px;
+  border-bottom:1px solid var(--border);
+  background:rgba(255,255,255,.025);
+}
+.daily-sec-icon{
+  width:42px;height:42px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;flex-shrink:0;
+  border:1px solid transparent;
+}
+.daily-sec-info{flex:1}
+.daily-sec-title{font-size:14px;font-weight:700;font-family:'Space Grotesk',sans-serif}
+.daily-sec-sub{font-size:11px;color:var(--muted);margin-top:2px;font-weight:500}
+.daily-nav{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.daily-nav-btn{
+  width:30px;height:30px;border-radius:8px;
+  background:rgba(255,255,255,.05);
+  border:1px solid var(--border);
+  color:var(--sub);font-size:16px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .15s;font-family:inherit;
+}
+.daily-nav-btn:hover{background:rgba(255,255,255,.1);color:var(--text);border-color:var(--border2)}
+.daily-counter{
+  font-size:11px;font-weight:700;color:var(--muted);
+  white-space:nowrap;min-width:44px;text-align:center;
+}
+
+/* Hadith */
+.hadith-card{padding:24px 24px 20px}
+.hadith-theme-badge{
+  display:inline-flex;align-items:center;
+  font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--spiritual);background:rgba(139,92,246,.1);
+  border:1px solid rgba(139,92,246,.2);
+  border-radius:20px;padding:4px 12px;margin-bottom:18px;
+}
+.hadith-arabic{
+  direction:rtl;text-align:right;
+  font-size:clamp(18px,4vw,24px);
+  line-height:2;color:var(--text);
+  font-weight:500;letter-spacing:.02em;
+  font-family:'DM Sans',sans-serif;
+  margin-bottom:16px;
+}
+.hadith-divider{
+  height:1px;background:var(--border);
+  margin:16px 0;position:relative;
+}
+.hadith-divider::after{
+  content:'✦';position:absolute;left:50%;top:50%;
+  transform:translate(-50%,-50%);
+  background:var(--card);padding:0 10px;
+  font-size:10px;color:var(--muted);
+}
+.hadith-meaning{
+  font-size:15px;line-height:1.8;color:var(--text);
+  font-weight:400;font-style:italic;
+  margin-bottom:18px;
+}
+.hadith-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.hadith-source{
+  font-size:11px;font-weight:700;color:var(--spiritual);
+  background:rgba(167,139,250,.1);
+  border:1px solid rgba(167,139,250,.2);
+  border-radius:6px;padding:3px 10px;
+}
+.hadith-narrator-txt{font-size:11px;color:var(--muted);font-weight:500}
+
+/* Hadith detail grid */
+.hadith-info-grid{
+  margin-top:18px;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:14px;
+  overflow:hidden;
+}
+[data-theme="light"] .hadith-info-grid{
+  background:rgba(0,0,0,.03);
+}
+.hadith-info-row{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:10px 14px;
+  border-bottom:1px solid var(--border);
+}
+.hadith-info-row:last-child{border-bottom:none}
+.hadith-info-label{
+  font-size:11px;font-weight:700;color:var(--muted);
+  letter-spacing:.03em;white-space:nowrap;
+  min-width:130px;flex-shrink:0;padding-top:1px;
+}
+[dir="rtl"] .hadith-info-label{min-width:120px;text-align:right}
+.hadith-info-val{
+  font-size:12px;color:var(--sub);font-weight:500;line-height:1.6;
+}
+.hadith-chain{
+  font-size:11px;color:var(--muted);
+  font-style:italic;line-height:1.7;
+}
+.hadith-grade-badge{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:10px;font-weight:700;letter-spacing:.05em;
+  padding:3px 10px;border-radius:20px;
+}
+.hadith-grade-sahih{
+  background:rgba(13,204,53,.1);color:var(--green);
+  border:1px solid rgba(13,204,53,.2);
+}
+.hadith-grade-hasan{
+  background:rgba(245,158,11,.1);color:var(--gold);
+  border:1px solid rgba(245,158,11,.2);
+}
+
+/* Lesson box */
+.hadith-lesson-box{
+  margin-top:16px;
+  background:linear-gradient(145deg,rgba(139,92,246,.09),rgba(96,165,250,.05));
+  border:1px solid rgba(139,92,246,.2);
+  border-left:3px solid var(--spiritual);
+  border-radius:12px;
+  padding:14px 18px;
+  box-shadow:0 0 20px rgba(139,92,246,.06);
+}
+[dir="rtl"] .hadith-lesson-box{
+  border-left:none;
+  border-right:3px solid var(--spiritual);
+}
+.hadith-lesson-title{
+  font-size:10px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--spiritual);
+  margin-bottom:7px;
+}
+.hadith-lesson-text{
+  font-size:13px;color:var(--sub);line-height:1.7;font-weight:500;
+}
+
+/* Professional Learning */
+.pro-card{padding:24px}
+.pro-cat-badge{
+  display:inline-flex;
+  font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--mind);background:rgba(59,130,246,.1);
+  border:1px solid rgba(59,130,246,.2);
+  border-radius:20px;padding:4px 12px;margin-bottom:14px;
+}
+.pro-title{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(17px,3vw,22px);font-weight:700;
+  color:var(--text);line-height:1.3;
+  letter-spacing:-.3px;margin-bottom:14px;
+}
+.pro-content{
+  font-size:14px;line-height:1.85;color:var(--sub);
+  margin-bottom:18px;font-weight:400;
+}
+.pro-takeaway{
+  background:rgba(34,197,94,.07);
+  border:1px solid rgba(34,197,94,.18);
+  border-left:3px solid var(--green);
+  border-radius:12px;padding:14px 18px;
+  box-shadow:0 0 20px rgba(34,197,94,.05);
+  margin-bottom:16px;
+}
+.pro-takeaway-label{
+  font-size:10px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--green);margin-bottom:6px;
+}
+.pro-takeaway-text{font-size:13px;color:var(--text);line-height:1.6;font-weight:500}
+.pro-source{font-size:11px;color:var(--muted);font-weight:600}
+
+/* Evening Reflection */
+.reflection-card{padding:22px 24px}
+.refl-prompt-group{margin-bottom:16px}
+.refl-prompt{
+  font-size:13px;font-weight:700;color:var(--sub);
+  margin-bottom:8px;
+}
+.refl-input{
+  width:100%;background:rgba(255,255,255,.03);
+  border:1px solid var(--border);border-radius:10px;
+  color:var(--text);font-size:13px;font-family:'DM Sans',sans-serif;
+  padding:12px 14px;resize:none;height:80px;
+  transition:border-color .2s,box-shadow .2s;
+  outline:none;line-height:1.6;
+}
+.refl-input:focus{
+  border-color:rgba(249,115,22,.5);
+  box-shadow:0 0 0 4px rgba(249,115,22,.07),0 0 20px rgba(249,115,22,.1);
+}
+.refl-input::placeholder{color:var(--muted)}
+.refl-mood-row{margin-bottom:20px}
+.refl-mood-btns{display:flex;gap:8px;flex-wrap:wrap}
+.mood-btn{
+  flex:1;min-width:60px;
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  padding:10px 8px;border-radius:12px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+  cursor:pointer;transition:all .15s;font-family:inherit;
+}
+.mood-btn:hover{background:rgba(255,255,255,.07);border-color:var(--border2)}
+.mood-btn.active{
+  background:rgba(249,115,22,.12);
+  border-color:rgba(249,115,22,.35);
+  box-shadow:0 0 14px rgba(249,115,22,.12);
+}
+.mood-btn span{font-size:9px;color:var(--muted);font-weight:600;letter-spacing:.04em}
+.mood-btn.active span{color:#f97316}
+.refl-save-btn{
+  width:100%;padding:13px;border-radius:12px;
+  background:linear-gradient(145deg,#fb923c,#ea580c);
+  border:none;color:#fff;font-size:13px;font-weight:700;
+  font-family:inherit;cursor:pointer;letter-spacing:.04em;
+  transition:all .22s;
+  box-shadow:0 4px 20px rgba(249,115,22,.3),inset 0 1px 0 rgba(255,255,255,.2);
+}
+.refl-save-btn:hover{box-shadow:0 0 30px rgba(249,115,22,.4);transform:translateY(-1px)}
+.refl-save-btn:active{transform:translateY(0)}
+.refl-saved-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:11px;font-weight:700;color:#f97316;
+  background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.2);
+  border-radius:20px;padding:4px 12px;margin-bottom:14px;
+}
+/* ── INLINE EXPENSES ROW ─────────────────── */
+.inline-exp-row{
+  border-top:2px solid var(--border);
+  background:rgba(234,179,8,.03);
+}
+.inline-exp-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:5px 10px 4px 10px;
+  font-size:9px;font-weight:700;color:#f59e0b;
+  letter-spacing:.06em;text-transform:uppercase;
+  border-bottom:1px solid rgba(234,179,8,.1);
+}
+.inline-exp-grand-total{
+  font-size:12px;font-weight:800;
+  color:var(--green);letter-spacing:-.3px;
+  transition:all .25s ease;
+}
+.inline-exp-cells{display:flex;align-items:stretch;}
+.inline-exp-label{
+  width:130px;flex-shrink:0;
+  padding:5px 6px 5px 10px;
+  border-right:1px solid var(--border);
+  display:flex;align-items:center;
+  font-size:10px;color:var(--muted);font-weight:600;
+}
+.inline-exp-day-cells{display:flex;flex:1;}
+.inline-exp-cell{
+  flex:1;padding:5px 2px;
+  display:flex;flex-direction:column;align-items:center;gap:2px;
+  border-right:1px solid var(--border);
+}
+.inline-exp-cell:last-child{border-right:none}
+.inline-exp-input{
+  width:100%;height:22px;
+  background:rgba(234,179,8,.09);
+  border:1px solid rgba(234,179,8,.3);
+  border-radius:6px;
+  color:var(--text);
+  font-size:10px;font-weight:700;font-family:inherit;
+  text-align:center;outline:none;
+  transition:border-color .15s,box-shadow .15s;
+  padding:0 2px;
+}
+.inline-exp-input:focus{
+  border-color:rgba(234,179,8,.7);
+  box-shadow:0 0 0 2px rgba(234,179,8,.1);
+  background:rgba(234,179,8,.14);
+}
+.inline-exp-input::placeholder{color:var(--muted);font-size:9px}
+.inline-exp-dh{font-size:8px;color:var(--muted);font-weight:600}
+/* Light mode */
+[data-theme="light"] .inline-exp-row{background:rgba(245,158,11,.03)}
+[data-theme="light"] .inline-exp-input{
+  background:rgba(245,158,11,.08);border-color:rgba(180,83,9,.3);color:var(--text);
+}
+[data-theme="light"] .inline-exp-input:focus{
+  border-color:rgba(180,83,9,.6);box-shadow:0 0 0 2px rgba(180,83,9,.08);
+}
+[data-theme="light"] .inline-exp-grand-total{color:var(--green)}
+/* ── EXPENSES ────────────────────────────── */
+.exp-summary-row{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:10px;margin-bottom:18px;
+}
+.exp-sum-card{
+  background:var(--glass);border:1px solid var(--border);
+  border-radius:14px;padding:16px 14px;text-align:center;
+  position:relative;overflow:hidden;
+  backdrop-filter:blur(14px);
+  transition:transform .2s,border-color .2s;
+}
+.exp-sum-card:hover{transform:translateY(-2px);border-color:var(--border2)}
+.exp-sum-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2.5px;border-radius:14px 14px 0 0}
+.exp-sum-card.green::before{background:linear-gradient(90deg,var(--green),var(--greenL))}
+.exp-sum-card.gold::before{background:linear-gradient(90deg,var(--gold),var(--goldL))}
+.exp-sum-card.blue::before{background:var(--mind)}
+.exp-sum-card.purple::before{background:var(--spiritual)}
+.exp-sum-icon{font-size:20px;margin-bottom:6px}
+.exp-sum-val{font-size:18px;font-weight:800;letter-spacing:-.5px;line-height:1}
+.exp-sum-card.green .exp-sum-val{color:var(--green)}
+.exp-sum-card.gold .exp-sum-val{color:var(--gold)}
+.exp-sum-card.blue .exp-sum-val{color:var(--mind)}
+.exp-sum-card.purple .exp-sum-val{color:var(--spiritual)}
+.exp-sum-lbl{font-size:10px;color:var(--muted);font-weight:600;letter-spacing:.04em;margin-top:4px;text-transform:uppercase}
+
+.exp-form-card,.exp-log-card,.exp-chart-card{
+  background:rgba(13,17,30,.8);
+  border:1px solid var(--border);border-radius:18px;
+  margin-bottom:14px;overflow:hidden;
+  backdrop-filter:blur(16px);
+  box-shadow:0 4px 24px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.04);
+}
+.exp-form-header,.exp-log-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 20px;border-bottom:1px solid var(--border);
+  background:rgba(255,255,255,.02);
+}
+.exp-form-title,.exp-log-title{font-size:14px;font-weight:700}
+.exp-log-total{
+  font-size:16px;font-weight:800;color:var(--green);
+  letter-spacing:-.3px;
+}
+.exp-date-nav{display:flex;align-items:center;gap:8px}
+.exp-date-lbl{
+  font-size:12px;font-weight:700;color:var(--sub);
+  min-width:80px;text-align:center;
+}
+.exp-form-body{padding:18px 20px;display:flex;flex-direction:column;gap:14px}
+.exp-form-row{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap}
+.exp-field{display:flex;flex-direction:column;gap:7px;min-width:120px}
+.exp-label{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.05em;text-transform:uppercase}
+.exp-amount-wrap{position:relative;display:flex;align-items:center}
+.exp-input{
+  width:100%;background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.1);border-radius:10px;
+  color:var(--text);font-size:14px;font-family:inherit;
+  padding:10px 14px;outline:none;transition:border-color .2s,box-shadow .2s;
+}
+.exp-input:focus{
+  border-color:rgba(34,197,94,.45);
+  box-shadow:0 0 0 3px rgba(34,197,94,.08);
+}
+.exp-amount{padding-right:44px;font-size:18px;font-weight:700;letter-spacing:-.3px}
+.exp-currency{
+  position:absolute;right:12px;
+  font-size:12px;font-weight:700;color:var(--muted);
+}
+.exp-cats{display:flex;flex-wrap:wrap;gap:6px}
+.exp-cat-btn{
+  padding:6px 12px;border-radius:20px;
+  border:1px solid var(--border2);
+  background:rgba(255,255,255,.04);
+  color:var(--sub);font-size:11px;font-weight:600;
+  font-family:inherit;cursor:pointer;transition:all .15s;
+  white-space:nowrap;
+}
+.exp-cat-btn:hover{background:rgba(255,255,255,.08);color:var(--text)}
+.exp-cat-btn.active{
+  background:rgba(34,197,94,.15);color:var(--green);
+  border-color:rgba(34,197,94,.35);
+  box-shadow:0 0 12px rgba(34,197,94,.1);
+}
+.exp-add-btn{
+  padding:10px 22px;border-radius:11px;border:none;
+  background:linear-gradient(145deg,var(--greenL),var(--green));
+  color:#fff;font-size:13px;font-weight:700;font-family:inherit;
+  cursor:pointer;white-space:nowrap;flex-shrink:0;
+  box-shadow:0 3px 16px rgba(34,197,94,.3),inset 0 1px 0 rgba(255,255,255,.2);
+  transition:all .2s;align-self:flex-end;
+}
+.exp-add-btn:hover{opacity:.88;transform:translateY(-1px)}
+.exp-add-btn:active{transform:translateY(0)}
+
+/* Daily log list */
+.exp-log-list-inner{padding:8px 12px}
+.exp-item{
+  display:flex;align-items:center;gap:12px;
+  padding:11px 14px;margin:6px 0;
+  background:rgba(255,255,255,.03);
+  border:1px solid var(--border);border-radius:12px;
+  transition:border-color .15s;
+}
+.exp-item:hover{border-color:var(--border2)}
+.exp-item-cat{
+  font-size:11px;font-weight:700;color:var(--sub);
+  background:rgba(255,255,255,.06);border-radius:20px;
+  padding:3px 10px;white-space:nowrap;flex-shrink:0;
+}
+.exp-item-note{font-size:12px;color:var(--muted);flex:1;font-style:italic}
+.exp-item-amount{
+  font-size:15px;font-weight:800;color:var(--text);
+  letter-spacing:-.3px;white-space:nowrap;
+}
+.exp-item-dh{font-size:10px;font-weight:600;color:var(--muted);margin-left:2px}
+.exp-item-del{
+  width:26px;height:26px;border-radius:7px;border:none;
+  background:rgba(248,113,113,.1);color:var(--red);
+  font-size:13px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .15s;flex-shrink:0;
+}
+.exp-item-del:hover{background:rgba(248,113,113,.2)}
+.exp-empty{
+  padding:24px;text-align:center;
+  font-size:13px;color:var(--muted);font-style:italic;
+}
+
+/* Bar chart */
+.exp-bars{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  gap:6px;padding:18px 20px 10px;height:140px;
+}
+.exp-bar-wrap{
+  display:flex;flex-direction:column;align-items:center;
+  gap:4px;flex:1;height:100%;justify-content:flex-end;
+}
+.exp-bar{
+  width:100%;border-radius:6px 6px 0 0;
+  min-height:4px;
+  background:linear-gradient(180deg,rgba(34,197,94,.7),rgba(34,197,94,.35));
+  transition:height .5s cubic-bezier(.4,0,.2,1);
+  position:relative;
+}
+.exp-bar.today{background:linear-gradient(180deg,var(--green),rgba(34,197,94,.5))}
+.exp-bar-val{font-size:9px;font-weight:700;color:var(--sub);white-space:nowrap}
+.exp-bar-day{font-size:9px;color:var(--muted);font-weight:600;letter-spacing:.04em}
+
+/* Category breakdown */
+.exp-cat-breakdown{padding:10px 14px 14px}
+.exp-cat-row{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 6px;border-bottom:1px solid rgba(255,255,255,.04);
+}
+.exp-cat-row:last-child{border-bottom:none}
+.exp-cat-name{font-size:12px;font-weight:600;color:var(--sub);min-width:110px;flex-shrink:0}
+.exp-cat-bar-wrap{flex:1;height:6px;background:rgba(255,255,255,.06);border-radius:99px;overflow:hidden}
+.exp-cat-bar-fill{height:100%;border-radius:99px;transition:width .5s ease}
+.exp-cat-amount{font-size:12px;font-weight:700;color:var(--text);min-width:70px;text-align:right;flex-shrink:0}
+
+/* Light mode expenses */
+[data-theme="light"] .exp-form-card,
+[data-theme="light"] .exp-log-card,
+[data-theme="light"] .exp-chart-card{
+  background:rgba(255,255,255,.92);
+  box-shadow:0 4px 20px rgba(30,40,80,.08);
+}
+[data-theme="light"] .exp-sum-card{
+  background:rgba(255,255,255,.92);
+  box-shadow:0 2px 12px rgba(30,40,80,.07);
+}
+[data-theme="light"] .exp-input{
+  background:rgba(30,40,80,.04);
+  border-color:rgba(30,40,80,.12);
+  color:var(--text);
+}
+[data-theme="light"] .exp-cat-btn{
+  background:rgba(30,40,80,.05);
+  border-color:rgba(30,40,80,.12);
+  color:var(--sub);
+}
+[data-theme="light"] .exp-item{
+  background:rgba(30,40,80,.03);
+  border-color:rgba(30,40,80,.1);
+}
+[data-theme="light"] .exp-bar{background:linear-gradient(180deg,rgba(21,128,61,.7),rgba(21,128,61,.3))}
+[data-theme="light"] .exp-bar.today{background:linear-gradient(180deg,var(--green),rgba(21,128,61,.5))}
+
 /* ── MOBILE ──────────────────────────────── */
 @media(max-width:640px){
+  .exp-summary-row{grid-template-columns:repeat(2,1fr)}
+  .exp-form-row{flex-direction:column}
+  .exp-add-btn{width:100%;margin-top:4px}
   .stats-row{grid-template-columns:repeat(2,1fr)}
   .monthly-grid{grid-template-columns:repeat(2,1fr)}
   .hero{padding:22px 18px 20px}
   .hero-progress{display:none}
   .page{padding:16px 12px 80px}
-  col.cat-col{width:138px}
-  col.day-col{width:52px}
-  .cell{width:36px;height:30px;font-size:13px}
+  col.cat-col{width:110px}
   .tag-breakdown{flex-direction:column}
   .tag-item{min-width:unset}
   .rewards-grid{grid-template-columns:repeat(2,1fr)}
@@ -675,7 +1494,11 @@ td.cell-td{
     </svg>
     <span class="nav-logo-txt">← Retour à SAVY</span>
   </a>
-  <span class="nav-badge">🔥 180-Day Challenge</span>
+  <div class="nav-controls">
+    <button class="lang-btn" onclick="cycleLang()" id="lang-btn">🌐 FR</button>
+    <button class="theme-btn" onclick="toggleTheme()" id="theme-btn">🌙 Dark</button>
+    <span class="nav-badge" id="nav-badge-txt">🔥 180-Day Challenge</span>
+  </div>
 </nav>
 
 <div class="page">
@@ -777,6 +1600,10 @@ td.cell-td{
     <div class="tab-sep"></div>
     <button class="tab" onclick="setView('overview')">🗓 All 180 Days</button>
     <div class="tab-sep"></div>
+    <button class="tab" onclick="setView('daily')">📖 Daily Content</button>
+    <div class="tab-sep"></div>
+    <button class="tab" onclick="setView('expenses')">💰 Expenses</button>
+    <div class="tab-sep"></div>
     <button class="tab" onclick="setView('rewards')">🏆 Rewards</button>
   </div>
 
@@ -801,8 +1628,10 @@ td.cell-td{
       <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div>Health</div>
       <div class="legend-item"><div class="legend-dot" style="background:#f59e0b"></div>Fitness</div>
       <div class="legend-sep"></div>
-      <div class="legend-item" style="color:var(--green)">✓ Done</div>
-      <div class="legend-item" style="color:var(--muted)">— Rest</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--yellow);border-radius:3px"></div><span style="color:var(--yellow)">Do</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--green);border-radius:3px"></div><span style="color:var(--green)">✔ Done</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--red);border-radius:3px"></div><span style="color:var(--red)">Not</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--purple);border-radius:3px"></div><span style="color:var(--purple)">Off</span></div>
     </div>
 
     <div class="grid-wrap">
@@ -811,6 +1640,8 @@ td.cell-td{
         <thead id="grid-head"></thead>
         <tbody id="grid-body"></tbody>
       </table>
+      <!-- Inline expenses row -->
+      <div class="inline-exp-row" id="inline-exp-row"></div>
     </div>
 
     <div class="score-panel">
@@ -842,6 +1673,231 @@ td.cell-td{
     </div>
   </div>
 
+  <!-- DAILY CONTENT -->
+  <div id="view-daily" style="display:none">
+
+    <!-- HADITH -->
+    <div class="daily-section">
+      <div class="daily-sec-header">
+        <div class="daily-sec-icon" style="background:rgba(139,92,246,.12);border-color:rgba(139,92,246,.2)">🙏</div>
+        <div class="daily-sec-info">
+          <div class="daily-sec-title">Hadith of the Day</div>
+          <div class="daily-sec-sub">Read · Understand · Apply</div>
+        </div>
+        <div class="daily-nav">
+          <button class="daily-nav-btn" onclick="shiftHadith(-1)">‹</button>
+          <span class="daily-counter" id="hadith-counter">1 / 30</span>
+          <button class="daily-nav-btn" onclick="shiftHadith(1)">›</button>
+        </div>
+      </div>
+      <div class="hadith-card">
+        <div class="hadith-theme-badge" id="hadith-theme"></div>
+        <div class="hadith-arabic" id="hadith-arabic"></div>
+        <div class="hadith-divider"></div>
+        <div class="hadith-meaning" id="hadith-meaning"></div>
+
+        <!-- Full scholarly info block -->
+        <div class="hadith-info-grid">
+          <div class="hadith-info-row">
+            <span class="hadith-info-label" data-t="hd-narrator">📖 Narrated by</span>
+            <span class="hadith-info-val" id="hadith-narrator"></span>
+          </div>
+          <div class="hadith-info-row">
+            <span class="hadith-info-label" data-t="hd-chain">🔗 Chain (Isnad)</span>
+            <span class="hadith-info-val hadith-chain" id="hadith-chain"></span>
+          </div>
+          <div class="hadith-info-row">
+            <span class="hadith-info-label" data-t="hd-book">📚 Source Book</span>
+            <span class="hadith-info-val" id="hadith-book"></span>
+          </div>
+          <div class="hadith-info-row">
+            <span class="hadith-info-label" data-t="hd-num">🔢 Hadith Number</span>
+            <span class="hadith-info-val" id="hadith-num"></span>
+          </div>
+          <div class="hadith-info-row">
+            <span class="hadith-info-label" data-t="hd-grade">✅ Grade</span>
+            <span class="hadith-info-val" id="hadith-grade"></span>
+          </div>
+        </div>
+
+        <div class="hadith-lesson-box">
+          <div class="hadith-lesson-title" data-t="hd-lesson">💡 Lesson for Today</div>
+          <div class="hadith-lesson-text" id="hadith-lesson"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROFESSIONAL LEARNING -->
+    <div class="daily-section">
+      <div class="daily-sec-header">
+        <div class="daily-sec-icon" style="background:rgba(59,130,246,.12);border-color:rgba(59,130,246,.2)">📚</div>
+        <div class="daily-sec-info">
+          <div class="daily-sec-title">Professional Learning</div>
+          <div class="daily-sec-sub">One insight per day builds mastery</div>
+        </div>
+        <div class="daily-nav">
+          <button class="daily-nav-btn" onclick="shiftPro(-1)">‹</button>
+          <span class="daily-counter" id="pro-counter">1 / 30</span>
+          <button class="daily-nav-btn" onclick="shiftPro(1)">›</button>
+        </div>
+      </div>
+      <div class="pro-card">
+        <div class="pro-cat-badge" id="pro-category"></div>
+        <div class="pro-title" id="pro-title"></div>
+        <div class="pro-content" id="pro-content"></div>
+        <div class="pro-takeaway">
+          <div class="pro-takeaway-label">⚡ Today's Action</div>
+          <div class="pro-takeaway-text" id="pro-takeaway"></div>
+        </div>
+        <div class="pro-source" id="pro-source"></div>
+      </div>
+    </div>
+
+    <!-- EVENING REFLECTION -->
+    <div class="daily-section">
+      <div class="daily-sec-header">
+        <div class="daily-sec-icon" style="background:rgba(249,115,22,.12);border-color:rgba(249,115,22,.2)">🪞</div>
+        <div class="daily-sec-info">
+          <div class="daily-sec-title">Evening Reflection</div>
+          <div class="daily-sec-sub">Day <span id="refl-day-num">1</span> · Takes 3 minutes</div>
+        </div>
+        <div class="daily-nav">
+          <button class="daily-nav-btn" onclick="shiftReflection(-1)">‹</button>
+          <span class="daily-counter" id="refl-counter">Day 1</span>
+          <button class="daily-nav-btn" onclick="shiftReflection(1)">›</button>
+        </div>
+      </div>
+      <div class="reflection-card" id="reflection-card">
+        <div class="refl-prompt-group">
+          <div class="refl-prompt">🏆 What was my biggest win today?</div>
+          <textarea class="refl-input" id="refl-1" placeholder="Write here..."></textarea>
+        </div>
+        <div class="refl-prompt-group">
+          <div class="refl-prompt">🔥 What challenged me most?</div>
+          <textarea class="refl-input" id="refl-2" placeholder="Write here..."></textarea>
+        </div>
+        <div class="refl-prompt-group">
+          <div class="refl-prompt">💚 What am I grateful for today?</div>
+          <textarea class="refl-input" id="refl-3" placeholder="Write here..."></textarea>
+        </div>
+        <div class="refl-prompt-group">
+          <div class="refl-prompt">🎯 One thing I'll do better tomorrow?</div>
+          <textarea class="refl-input" id="refl-4" placeholder="Write here..."></textarea>
+        </div>
+        <div class="refl-mood-row">
+          <div class="refl-prompt" style="margin-bottom:10px">😊 My energy today</div>
+          <div class="refl-mood-btns" id="refl-mood-btns">
+            <button class="mood-btn" onclick="setMood(1)">😴<span>Low</span></button>
+            <button class="mood-btn" onclick="setMood(2)">😐<span>Okay</span></button>
+            <button class="mood-btn" onclick="setMood(3)">🙂<span>Good</span></button>
+            <button class="mood-btn" onclick="setMood(4)">😊<span>Great</span></button>
+            <button class="mood-btn" onclick="setMood(5)">🔥<span>Elite</span></button>
+          </div>
+        </div>
+        <button class="refl-save-btn" onclick="saveReflection()">Save Reflection ✓</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- EXPENSES VIEW -->
+  <div id="view-expenses" style="display:none">
+
+    <!-- Summary cards -->
+    <div class="exp-summary-row">
+      <div class="exp-sum-card green">
+        <div class="exp-sum-icon">📅</div>
+        <div class="exp-sum-val" id="exp-today-val">0 DH</div>
+        <div class="exp-sum-lbl">Today</div>
+      </div>
+      <div class="exp-sum-card gold">
+        <div class="exp-sum-icon">📆</div>
+        <div class="exp-sum-val" id="exp-week-val">0 DH</div>
+        <div class="exp-sum-lbl">This Week</div>
+      </div>
+      <div class="exp-sum-card blue">
+        <div class="exp-sum-icon">🗓</div>
+        <div class="exp-sum-val" id="exp-month-val">0 DH</div>
+        <div class="exp-sum-lbl">This Month</div>
+      </div>
+      <div class="exp-sum-card purple">
+        <div class="exp-sum-icon">📊</div>
+        <div class="exp-sum-val" id="exp-total-val">0 DH</div>
+        <div class="exp-sum-lbl">Total (180d)</div>
+      </div>
+    </div>
+
+    <!-- Add expense form -->
+    <div class="exp-form-card">
+      <div class="exp-form-header">
+        <div class="exp-form-title">➕ Add Expense</div>
+        <div class="exp-date-nav">
+          <button class="daily-nav-btn" onclick="shiftExpDay(-1)">‹</button>
+          <span class="exp-date-lbl" id="exp-date-lbl">Today</span>
+          <button class="daily-nav-btn" onclick="shiftExpDay(1)">›</button>
+        </div>
+      </div>
+      <div class="exp-form-body">
+        <div class="exp-form-row">
+          <div class="exp-field">
+            <label class="exp-label">Amount (DH)</label>
+            <div class="exp-amount-wrap">
+              <input class="exp-input exp-amount" id="exp-amount" type="number" min="0" step="0.5" placeholder="0.00"/>
+              <span class="exp-currency">DH</span>
+            </div>
+          </div>
+          <div class="exp-field" style="flex:2">
+            <label class="exp-label">Category</label>
+            <div class="exp-cats" id="exp-cats">
+              <button class="exp-cat-btn active" data-cat="🍔 Food" onclick="selectCat(this)">🍔 Food</button>
+              <button class="exp-cat-btn" data-cat="🚗 Transport" onclick="selectCat(this)">🚗 Transport</button>
+              <button class="exp-cat-btn" data-cat="🛒 Shopping" onclick="selectCat(this)">🛒 Shopping</button>
+              <button class="exp-cat-btn" data-cat="💊 Health" onclick="selectCat(this)">💊 Health</button>
+              <button class="exp-cat-btn" data-cat="📱 Bills" onclick="selectCat(this)">📱 Bills</button>
+              <button class="exp-cat-btn" data-cat="☕ Café" onclick="selectCat(this)">☕ Café</button>
+              <button class="exp-cat-btn" data-cat="🏋️ Sport" onclick="selectCat(this)">🏋️ Sport</button>
+              <button class="exp-cat-btn" data-cat="📦 Other" onclick="selectCat(this)">📦 Other</button>
+            </div>
+          </div>
+        </div>
+        <div class="exp-form-row">
+          <div class="exp-field" style="flex:1">
+            <label class="exp-label">Note (optional)</label>
+            <input class="exp-input" id="exp-note" type="text" placeholder="What was this for?"/>
+          </div>
+          <button class="exp-add-btn" onclick="addExpense()">Add ➕</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Daily log -->
+    <div class="exp-log-card">
+      <div class="exp-log-header">
+        <div class="exp-log-title">📋 Daily Log</div>
+        <div class="exp-log-total" id="exp-log-total">0 DH</div>
+      </div>
+      <div id="exp-log-list"><div class="exp-empty">No expenses logged for this day.</div></div>
+    </div>
+
+    <!-- 7-day bar chart -->
+    <div class="exp-chart-card">
+      <div class="exp-log-header">
+        <div class="exp-log-title">📊 Last 7 Days</div>
+        <div class="exp-log-total" id="exp-chart-avg"></div>
+      </div>
+      <div class="exp-bars" id="exp-bars"></div>
+    </div>
+
+    <!-- Category breakdown -->
+    <div class="exp-log-card">
+      <div class="exp-log-header">
+        <div class="exp-log-title">🏷 By Category — This Month</div>
+      </div>
+      <div class="exp-cat-breakdown" id="exp-cat-breakdown"><div class="exp-empty">No data yet.</div></div>
+    </div>
+
+  </div>
+
   <!-- REWARDS -->
   <div id="view-rewards" style="display:none">
     <div class="rewards-section">
@@ -860,27 +1916,48 @@ td.cell-td{
 <script>
 const TOTAL = 180;
 const CATS = [
-  { id:0,  label:"Five Daily Prayers",      tag:"Spiritual" },
-  { id:1,  label:"Quran Reading",           tag:"Spiritual" },
-  { id:2,  label:"Book Reading",            tag:"Mind"      },
-  { id:3,  label:"Avoid Bad Habits",        tag:"Discipline"},
-  { id:4,  label:"Brush Teeth (2×)",        tag:"Health"    },
-  { id:5,  label:"No Music",                tag:"Discipline"},
-  { id:6,  label:"No Social Media",         tag:"Discipline"},
-  { id:7,  label:"Push-ups / Workout",      tag:"Fitness"   },
-  { id:8,  label:"Running",                 tag:"Fitness"   },
-  { id:9,  label:"Cycling",                 tag:"Fitness"   },
-  { id:10, label:"Swimming",                tag:"Fitness"   },
-  { id:11, label:"Professional Learning",   tag:"Mind"      },
-  { id:12, label:"Sleep Target (7–8h)",     tag:"Health"    },
-  { id:13, label:"Mental Health / Journal", tag:"Mind"      },
+  // ── Spiritual ──────────────────────────────
+  { id:0,  label:"Five Daily Prayers",           tag:"Spiritual"  },
+  { id:1,  label:"Quran Reading",                tag:"Spiritual"  },
+  { id:22, label:"Hadith with Meaning",          tag:"Spiritual"  },
+  // ── Mind ───────────────────────────────────
+  { id:2,  label:"Book Reading",                 tag:"Mind"       },
+  { id:11, label:"Professional Learning",        tag:"Mind"       },
+  { id:13, label:"Mental Health / Journal",      tag:"Mind"       },
+  // ── Discipline ─────────────────────────────
+  { id:14, label:"Wake Up on Time (no snooze)",  tag:"Discipline" },
+  { id:15, label:"Cold Shower",                  tag:"Discipline" },
+  { id:5,  label:"No Music",                     tag:"Discipline" },
+  { id:6,  label:"No Social Media",              tag:"Discipline" },
+  { id:3,  label:"Avoid Bad Habits",             tag:"Discipline" },
+  // ── Health ─────────────────────────────────
+  { id:16, label:"2L Water Daily",               tag:"Health"     },
+  { id:17, label:"No Junk Food / No Sugar",      tag:"Health"     },
+  { id:4,  label:"Brush Teeth (2×)",             tag:"Health"     },
+  { id:12, label:"Sleep Target (7–8h)",          tag:"Health"     },
+  // ── Fitness ────────────────────────────────
+  { id:7,  label:"Push-ups / Workout",           tag:"Fitness"    },
+  { id:8,  label:"Running",                      tag:"Fitness"    },
+  { id:9,  label:"Cycling",                      tag:"Fitness"    },
+  { id:10, label:"Swimming",                     tag:"Fitness"    },
+  { id:18, label:"Stretching / Mobility (10m)",  tag:"Fitness"    },
+  // ── Character ──────────────────────────────
+  { id:19, label:"No Complaining",               tag:"Character"  },
+  { id:20, label:"No Gossip / Backbiting",       tag:"Character"  },
+  { id:21, label:"Digital Sunset (1h no screen)",tag:"Character"  },
+  { id:23, label:"Evening Reflection",           tag:"Character"  },
+  { id:24, label:"Say Something Kind",           tag:"Character"  },
 ];
 const TC = {
   Spiritual:"#8b5cf6", Mind:"#3b82f6",
-  Discipline:"#f43f5e", Health:"#09b830", Fitness:"#f59e0b"
+  Discipline:"#f43f5e", Health:"#09b830",
+  Fitness:"#f59e0b",   Character:"#f97316"
 };
-const TAG_ICONS = { Spiritual:"🙏", Mind:"📚", Discipline:"🎯", Health:"💚", Fitness:"💪" };
-const DAYS_ABR = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+const TAG_ICONS = {
+  Spiritual:"🙏", Mind:"📚", Discipline:"🎯",
+  Health:"💚",    Fitness:"💪", Character:"🪞"
+};
+const DAYS_ABR = ["Mo","Tu","We","Th","Fr","Sa","Su"];
 const TOTAL_WEEKS = Math.ceil(TOTAL/7);
 
 const QUOTES = [
@@ -907,18 +1984,21 @@ const QUOTES = [
 ];
 
 const REWARDS = [
-  { icon:"🌱", name:"First Step",       cond:"Log your very first habit",    check:()=>totalDone()>=1 },
-  { icon:"🔥", name:"On Fire",          cond:"Achieve a 3-day streak",       check:()=>currentStreak()>=3 },
-  { icon:"⚡", name:"Week Warrior",    cond:"Score 80%+ in a week",          check:()=>score(weekDays(0),CATS)>=80 },
-  { icon:"💪", name:"Fitness Starter",  cond:"Log 10 workouts total",        check:()=>fitnessTotal()>=10 },
-  { icon:"📚", name:"Knowledge Seeker", cond:"Best reading streak of 14d",   check:()=>bestStreak(2)>=14 },
-  { icon:"🙏", name:"Devoted",          cond:"Complete 30 prayer days",      check:()=>catTotal(0)>=30 },
-  { icon:"🎯", name:"Month Master",     cond:"Score 80%+ in Month 1",        check:()=>score(range(1,30),CATS)>=80 },
-  { icon:"🧘", name:"Mind & Body",      cond:"Log 50 habits total",          check:()=>totalDone()>=50 },
-  { icon:"🌟", name:"Consistency King", cond:"Achieve a 7-day streak",       check:()=>currentStreak()>=7 },
-  { icon:"🏅", name:"Halfway There",    cond:"Reach Day 90 of the challenge",check:()=>currentDay()>=90 },
-  { icon:"💎", name:"Elite",            cond:"Log 200 habits total",         check:()=>totalDone()>=200 },
-  { icon:"🏆", name:"Champion",         cond:"Complete all 180 days at 70%+",check:()=>currentDay()>=180&&score(range(1,180),CATS)>=70 },
+  { icon:"🌱", name:"First Step",        cond:"Log your very first habit",      check:()=>totalDone()>=1 },
+  { icon:"🔥", name:"On Fire",           cond:"Achieve a 3-day streak",         check:()=>currentStreak()>=3 },
+  { icon:"⚡", name:"Week Warrior",     cond:"Score 80%+ in a week",            check:()=>score(weekDays(0),CATS)>=80 },
+  { icon:"💪", name:"Fitness Starter",   cond:"Log 10 workouts total",          check:()=>fitnessTotal()>=10 },
+  { icon:"📚", name:"Knowledge Seeker",  cond:"Best reading streak of 14 days", check:()=>bestStreak(2)>=14 },
+  { icon:"🙏", name:"Devoted",           cond:"Complete 30 prayer days",        check:()=>catTotal(0)>=30 },
+  { icon:"🎯", name:"Month Master",      cond:"Score 80%+ in Month 1",          check:()=>score(range(1,30),CATS)>=80 },
+  { icon:"🧘", name:"Mind & Body",       cond:"Log 50 habits total",            check:()=>totalDone()>=50 },
+  { icon:"🌟", name:"Consistency King",  cond:"Achieve a 7-day streak",         check:()=>currentStreak()>=7 },
+  { icon:"🏅", name:"Halfway There",     cond:"Reach Day 90 of the challenge",  check:()=>currentDay()>=90 },
+  { icon:"💎", name:"Elite",             cond:"Log 200 habits total",           check:()=>totalDone()>=200 },
+  { icon:"🪞", name:"Inner Work",        cond:"30 days no complaining",         check:()=>catTotal(19)>=30 },
+  { icon:"🧊", name:"Ice Warrior",       cond:"21 cold showers done",           check:()=>catTotal(15)>=21 },
+  { icon:"💧", name:"Hydration Hero",    cond:"30 days 2L water",               check:()=>catTotal(16)>=30 },
+  { icon:"🏆", name:"Champion",          cond:"Complete all 180 days at 70%+",  check:()=>currentDay()>=180&&score(range(1,180),CATS)>=70 },
 ];
 
 let data = {};
@@ -936,7 +2016,7 @@ function score(days,cats){
   let done=0,total=0;
   days.forEach(d=>cats.forEach(c=>{
     const v=data[k(c.id,d)]||0;
-    if(v!==2){total++;if(v===1)done++;}
+    if(v!==3){total++;if(v===1)done++;} // 0=todo,1=done,2=skip counted; 3=off excluded
   }));
   return total>0?Math.round(done/total*100):0;
 }
@@ -945,9 +2025,10 @@ function currentStreak(){
   let s=0;
   for(let d=1;d<=TOTAL;d++){
     let done=0,total=0;
-    CATS.forEach(c=>{const v=data[k(c.id,d)]||0;if(v!==2){total++;if(v===1)done++;}});
+    CATS.forEach(c=>{const v=data[k(c.id,d)]||0;if(v!==3){total++;if(v===1)done++;}});
     if(total>0&&done/total>=0.8) s++;
     else if(total>0) s=0;
+    // off day (3) = neutral, doesn't affect streak
   }
   return s;
 }
@@ -962,7 +2043,7 @@ function catTotal(catId){
   return Array.from({length:TOTAL},(_,i)=>i+1).filter(d=>(data[k(catId,d)]||0)===1).length;
 }
 function fitnessTotal(){
-  return [7,8,9,10].reduce((sum,id)=>sum+catTotal(id),0);
+  return [7,8,9,10,18].reduce((sum,id)=>sum+catTotal(id),0);
 }
 function totalDone(){ return Object.values(data).filter(v=>v===1).length; }
 function currentDay(){
@@ -976,17 +2057,21 @@ function currentDay(){
 /* Toggle */
 function toggle(c,d,btn){
   const prev=data[k(c,d)]||0;
-  data[k(c,d)]=(prev+1)%3;
+  data[k(c,d)]=(prev+1)%4;
   save();
   const next=data[k(c,d)];
   if(next===1){
-    showToast("✅ Habit logged!");
+    showToast("✔ Done!");
     btn.classList.add("pulse");
     setTimeout(()=>btn.classList.remove("pulse"),300);
     spawnSparkles(btn);
     checkNewRewards(prev);
   } else if(next===2){
-    showToast("😴 Marked as rest");
+    showToast("Not — marked as skipped");
+  } else if(next===3){
+    showToast("Off — rest day marked");
+  } else {
+    showToast("Do — reset to pending");
   }
   render();
 }
@@ -1024,11 +2109,14 @@ function prevQuote(){ setQuote(quoteIdx-1); }
 /* View */
 function setView(v){
   currentView=v;
-  ["week","overview","rewards"].forEach(id=>{
-    document.getElementById("view-"+id).style.display=v===id?"block":"none";
+  ['week','overview','daily','expenses','rewards'].forEach(id=>{
+    document.getElementById('view-'+id).style.display=v===id?'block':'none';
   });
-  document.querySelectorAll(".tab").forEach((t,i)=>t.classList.toggle("active",["week","overview","rewards"][i]===v));
-  render();
+  document.querySelectorAll('.tab').forEach((t,i)=>
+    t.classList.toggle('active',['week','overview','daily','expenses','rewards'][i]===v)
+  );
+  if(v==='expenses') renderExpenses();
+  else render();
 }
 function shiftWeek(d){ currentWeek=Math.max(0,Math.min(TOTAL_WEEKS-1,currentWeek+d)); render(); }
 function goToday(){
@@ -1071,8 +2159,708 @@ function render(){
 
   if(currentView==="week") renderWeek(days,ws);
   else if(currentView==="overview") renderOverview(td,overall);
+  else if(currentView==="daily") renderDaily();
   else if(currentView==="rewards") renderRewards();
 }
+
+/* ─────────────────────────────────────────────
+   HADITHS
+───────────────────────────────────────────── */
+const HADITHS = [
+  { theme:"Intention", themeAr:"النية",
+    arabic:"إِنَّمَا الْأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى",
+    meaning:"Actions are judged by intentions, and every person will get what they intended. Whoever emigrated for Allah and His Messenger, his emigration was for Allah and His Messenger; and whoever emigrated for worldly gain or to marry a woman, his emigration was for that which he emigrated.",
+    narrator:"Umar ibn al-Khattab (RA) — رضي الله عنه",
+    chain:"Umar ibn al-Khattab → Alqama ibn Waqqas al-Laythi → Muhammad ibn Ibrahim al-Taymi → Yahya ibn Sa'id al-Ansari → Sufyan al-Thawri → transmitted to Imam Bukhari",
+    book:"Sahih al-Bukhari", num:"Hadith #1 — Kitab Bad' al-Wahy", grade:"sahih",
+    lesson:"Every habit in this tracker is an action. Its real value is decided by why you are doing it. Before you log a habit today, ask yourself: is this truly for Allah and for your growth, or just to fill a checkbox?" },
+
+  { theme:"Brotherhood", themeAr:"الأخوة",
+    arabic:"لَا يُؤْمِنُ أَحَدُكُمْ حَتَّى يُحِبَّ لِأَخِيهِ مَا يُحِبُّ لِنَفْسِهِ",
+    meaning:"None of you truly believes until he loves for his brother what he loves for himself.",
+    narrator:"Anas ibn Malik (RA) — رضي الله عنه",
+    chain:"Anas ibn Malik → Qatada → Shu'ba → transmitted to Imam Bukhari and Imam Muslim",
+    book:"Sahih al-Bukhari & Sahih Muslim", num:"Bukhari #13 · Muslim #45", grade:"sahih",
+    lesson:"You are growing through this challenge. Think of someone in your life who would benefit from this same journey. Share the tracker with them today — wishing good for your brother is part of your iman." },
+
+  { theme:"Quran", themeAr:"القرآن",
+    arabic:"خَيْرُكُمْ مَنْ تَعَلَّمَ الْقُرْآنَ وَعَلَّمَهُ",
+    meaning:"The best among you are those who learn the Quran and then teach it to others.",
+    narrator:"Uthman ibn Affan (RA) — رضي الله عنه",
+    chain:"Uthman ibn Affan → Sa'd ibn Ubayda → Abu Abd al-Rahman al-Sulami → transmitted to Imam Bukhari",
+    book:"Sahih al-Bukhari", num:"Hadith #5027 — Kitab Fadail al-Quran", grade:"sahih",
+    lesson:"Reading Quran is one of your daily habits. Today, don't just read — try to understand even one ayah deeply. Then share its meaning with someone, even by sending a voice note." },
+
+  { theme:"Cleanliness", themeAr:"الطهارة",
+    arabic:"الطَّهُورُ شَطْرُ الْإِيمَانِ",
+    meaning:"Cleanliness is half of faith. Alhamdulillah fills the scale. SubhanAllah and Alhamdulillah together fill what is between the heavens and the earth.",
+    narrator:"Abu Malik al-Ash'ari (RA) — رضي الله عنه",
+    chain:"Abu Malik al-Ash'ari → Shaqiq ibn Salama → transmitted to Imam Muslim",
+    book:"Sahih Muslim", num:"Hadith #223 — Kitab al-Taharah", grade:"sahih",
+    lesson:"Your brush-teeth and hygiene habits are not just health habits — they are acts of faith. Treat your daily cleanliness routine as worship, and you will do it with more care and consistency." },
+
+  { theme:"Strength", themeAr:"القوة",
+    arabic:"الْمُؤْمِنُ الْقَوِيُّ خَيْرٌ وَأَحَبُّ إِلَى اللَّهِ مِنَ الْمُؤْمِنِ الضَّعِيفِ، وَفِي كُلٍّ خَيْرٌ",
+    meaning:"A strong believer is better and more beloved to Allah than a weak believer, though both are good. Strive for what benefits you, seek Allah's help, and do not give up. If something befalls you, do not say 'if only I had done this' — say 'Allah decreed it and what He wills He does.'",
+    narrator:"Abu Hurairah (RA) — رضي الله عنه",
+    chain:"Abu Hurairah → Abd al-Rahman ibn Ya'qub → al-Ala ibn Abd al-Rahman → transmitted to Imam Muslim",
+    book:"Sahih Muslim", num:"Hadith #2664 — Kitab al-Qadr", grade:"sahih",
+    lesson:"This hadith is the spiritual foundation of your fitness habits. Your workout today is an act of worship. A strong, disciplined body serves your deen, your family, and your work. Never see exercise as separate from your faith." },
+
+  { theme:"Generosity", themeAr:"الكرم",
+    arabic:"الْيَدُ الْعُلْيَا خَيْرٌ مِنَ الْيَدِ السُّفْلَى، وَالْيَدُ الْعُلْيَا هِيَ الْمُنْفِقَةُ",
+    meaning:"The upper hand is better than the lower hand. The upper hand is the one that gives, and the lower hand is the one that receives.",
+    narrator:"Abdullah ibn Umar (RA) — رضي الله عنه",
+    chain:"Ibn Umar → Nafi' → Malik ibn Anas → transmitted to Imam Bukhari and Imam Muslim",
+    book:"Sahih al-Bukhari & Sahih Muslim", num:"Bukhari #1427 · Muslim #1033", grade:"sahih",
+    lesson:"Build yourself to give more — time, money, knowledge, energy. Your professional growth, your business, your health — all of it should increase your capacity to be the upper hand, not the lower." },
+
+  { theme:"Ease", themeAr:"التيسير",
+    arabic:"يَسِّرُوا وَلَا تُعَسِّرُوا، وَبَشِّرُوا وَلَا تُنَفِّرُوا",
+    meaning:"Make things easy and do not make things difficult. Give good news and do not drive people away.",
+    narrator:"Anas ibn Malik (RA) — رضي الله عنه",
+    chain:"Anas ibn Malik → Humaid al-Tawil → transmitted to Imam Bukhari",
+    book:"Sahih al-Bukhari", num:"Hadith #69 — Kitab al-Ilm", grade:"sahih",
+    lesson:"If a habit feels impossible today, make it easier — not zero. Can't run 5km? Walk for 10 minutes. Can't read a full chapter? Read one page. The Prophet ﷺ commanded ease. Apply it to yourself." },
+
+  { theme:"Kindness", themeAr:"المعروف",
+    arabic:"كُلُّ مَعْرُوفٍ صَدَقَةٌ",
+    meaning:"Every act of kindness is charity. Even your smile in the face of your brother is charity. Removing a stone, thorn, or bone from the road is charity. Guiding a man to his goal is charity.",
+    narrator:"Jabir ibn Abdullah (RA) — رضي الله عنه",
+    chain:"Jabir ibn Abdullah → Abu al-Zubayr → transmitted to Imam Bukhari and Imam Muslim",
+    book:"Sahih al-Bukhari & Sahih Muslim", num:"Bukhari #6021 · Muslim #1005", grade:"sahih",
+    lesson:"Your 'Say Something Kind' habit today is worth more than you think. It is sadaqa. It costs you nothing and could change someone's entire day. Today, be intentional — pick someone and make them feel seen." },
+
+  { theme:"Speech", themeAr:"الكلام",
+    arabic:"مَنْ كَانَ يُؤْمِنُ بِاللَّهِ وَالْيَوْمِ الْآخِرِ فَلْيَقُلْ خَيْرًا أَوْ لِيَصْمُتْ",
+    meaning:"Whoever believes in Allah and the Last Day should speak good or remain silent. Whoever believes in Allah and the Last Day should honour his neighbour. Whoever believes in Allah and the Last Day should honour his guest.",
+    narrator:"Abu Hurairah (RA) — رضي الله عنه",
+    chain:"Abu Hurairah → Sa'id ibn al-Musayyab → al-Zuhri → Malik ibn Anas → transmitted to Bukhari and Muslim",
+    book:"Sahih al-Bukhari & Sahih Muslim", num:"Bukhari #6018 · Muslim #47", grade:"sahih",
+    lesson:"Today's no-gossip and no-complaining habits are directly from this hadith. Guard your tongue — every complaint is a word you chose when silence was better. Practice choosing silence or gratitude instead." },
+
+  { theme:"Service", themeAr:"خدمة الناس",
+    arabic:"خَيْرُ النَّاسِ أَنْفَعُهُمْ لِلنَّاسِ",
+    meaning:"The best of people are those who are most beneficial to people. The most beloved deed to Allah is making a Muslim happy, or removing a hardship from them.",
+    narrator:"Jabir ibn Abdullah (RA) — رضي الله عنه",
+    chain:"Jabir ibn Abdullah → transmitted via multiple chains — recorded by al-Tabarani and al-Quda'i",
+    book:"Al-Mu'jam al-Awsat (Tabarani)", num:"Hadith #6026 — graded Hasan by al-Albani", grade:"hasan",
+    lesson:"You are building SAVY to make people eat better. Every meal you deliver is an act of service. Every healthy customer is a fulfilled sadaqa. Build your work as if it is worship — because with the right intention, it is." },
+
+  { theme:"Tawakkul", themeAr:"التوكل",
+    arabic:"اعْقِلْهَا وَتَوَكَّلْ",
+    meaning:"Tie your camel, then put your trust in Allah. A man asked the Prophet ﷺ: 'Should I tie my camel and trust in Allah, or leave it untied and trust in Allah?' He said: 'Tie it, then put your trust in Allah.'",
+    narrator:"Anas ibn Malik (RA) — رضي الله عنه",
+    chain:"Anas ibn Malik → transmitted by Amr ibn Umayyah → recorded by al-Tirmidhi",
+    book:"Sunan al-Tirmidhi", num:"Hadith #2517 — Kitab Sifat al-Qiyama — graded Hasan", grade:"hasan",
+    lesson:"Do your habits fully today — exercise, water, sleep, learning. Take every action with complete effort. Then hand the outcome to Allah. This is not laziness or fatalism — it is the prophetic balance of effort and reliance." },
+
+  { theme:"Anger", themeAr:"الغضب",
+    arabic:"لَا تَغْضَبْ",
+    meaning:"Do not become angry. A man came to the Prophet ﷺ and asked for advice. The Prophet said: 'Do not become angry.' The man repeated his request several times, and each time the Prophet replied: 'Do not become angry.'",
+    narrator:"Abu Hurairah (RA) — رضي الله عنه",
+    chain:"Abu Hurairah → Humayd ibn Abd al-Rahman → al-Zuhri → transmitted to Imam Bukhari",
+    book:"Sahih al-Bukhari", num:"Hadith #6116 — Kitab al-Adab", grade:"sahih",
+    lesson:"Anger destroys your discipline. When you're tired from work, overwhelmed with SAVY, or missing habits — anger is the first response. Today, when you feel it rising: sit down, make wudu, take a breath. Protect your discipline from your emotions." },
+
+  { theme:"Sincerity", themeAr:"الإخلاص",
+    arabic:"إِنَّ اللَّهَ لَا يَنْظُرُ إِلَى صُوَرِكُمْ وَأَمْوَالِكُمْ، وَلَكِنْ يَنْظُرُ إِلَى قُلُوبِكُمْ وَأَعْمَالِكُمْ",
+    meaning:"Verily, Allah does not look at your forms or your possessions, but He looks at your hearts and your deeds.",
+    narrator:"Abu Hurairah (RA) — رضي الله عنه",
+    chain:"Abu Hurairah → Hamam ibn Munabbih → Ma'mar ibn Rashid → transmitted to Imam Muslim",
+    book:"Sahih Muslim", num:"Hadith #2564 — Kitab al-Birr wa al-Sila", grade:"sahih",
+    lesson:"On days when nobody sees your habits, when nobody checks your tracker — that is the most important day. Allah sees the action you do in private. Your 2am habit, your cold shower when you're tired, your silent dhikr — these are what matter most." },
+
+  { theme:"Knowledge", themeAr:"العلم",
+    arabic:"طَلَبُ الْعِلْمِ فَرِيضَةٌ عَلَى كُلِّ مُسْلِمٍ",
+    meaning:"Seeking knowledge is an obligation upon every Muslim.",
+    narrator:"Anas ibn Malik (RA) — رضي الله عنه",
+    chain:"Anas ibn Malik → multiple chains — recorded by Ibn Majah, al-Bayhaqi, and others",
+    book:"Sunan Ibn Majah", num:"Hadith #224 — Kitab al-Sunnah", grade:"hasan",
+    lesson:"Your professional learning and book reading habits are not optional extras — they are a religious duty. Today's lesson is for you: read something that makes you better at serving people and growing your livelihood." },
+
+  { theme:"Consistency", themeAr:"المداومة",
+    arabic:"أَحَبُّ الْأَعْمَالِ إِلَى اللَّهِ أَدْوَمُهَا وَإِنْ قَلَّ",
+    meaning:"The most beloved deeds to Allah are the most consistent ones, even if they are small. So do not take on more than you can handle.",
+    narrator:"Aisha (RA) — رضي الله عنها",
+    chain:"Aisha → Urwa ibn al-Zubayr → Hisham ibn Urwa → transmitted to Imam Bukhari and Imam Muslim",
+    book:"Sahih al-Bukhari & Sahih Muslim", num:"Bukhari #6465 · Muslim #782", grade:"sahih",
+    lesson:"This hadith is the entire philosophy behind the 180-day challenge. One pushup done every day for 180 days is more beloved to Allah than 100 pushups done twice. Show up today, even if imperfectly." },
+
+  { theme:"Helping Others", themeAr:"نصرة المؤمن",
+    arabic:"مَنْ نَفَّسَ عَنْ مُؤْمِنٍ كُرْبَةً مِنْ كُرَبِ الدُّنْيَا، نَفَّسَ اللَّهُ عَنْهُ كُرْبَةً مِنْ كُرَبِ يَوْمِ الْقِيَامَةِ",
+    meaning:"Whoever relieves a believer from one of the hardships of this world, Allah will relieve him from one of the hardships of the Day of Resurrection. Whoever makes things easier for one who is in difficulty, Allah will ease his affairs in this world and the next.",
+    narrator:"Abu Hurairah (RA) — رضي الله عنه",
+    chain:"Abu Hurairah → Abu Salih → al-Amash → transmitted to Imam Muslim",
+    book:"Sahih Muslim", num:"Hadith #2699 — Kitab al-Dhikr wa al-Du'a", grade:"sahih",
+    lesson:"Your SAVY brand relieves a real hardship: people who want to eat well but don't know how. Every meal you prepare with care is a sadaqa that earns you ease on the hardest day. Serve today like it counts — because it does." },
+
+  { theme:"Character", themeAr:"الخلق",
+    arabic:"الْمُسْلِمُ مَنْ سَلِمَ الْمُسْلِمُونَ مِنْ لِسَانِهِ وَيَدِهِ",
+    meaning:"The Muslim is one from whose tongue and hand the Muslims are safe.",
+    narrator:"Abdullah ibn Amr (RA) — رضي الله عنه",
+    chain:"Abdullah ibn Amr → Amr ibn Shu'ayb → transmitted to Imam Bukhari and Imam Muslim",
+    book:"Sahih al-Bukhari & Sahih Muslim", num:"Bukhari #10 · Muslim #40", grade:"sahih",
+    lesson:"Your no-gossip habit today is the practical application of this hadith. The people around you — your team, your customers, your family — should feel completely safe from your words and actions. This is the definition of a Muslim." },
+
+  { theme:"Character", themeAr:"حسن الخلق",
+    arabic:"إِنَّ مِنْ أَكْمَلِ الْمُؤْمِنِينَ إِيمَانًا أَحْسَنُهُمْ خُلُقًا",
+    meaning:"The most complete of the believers in faith are those with the best character. And the best of them are those who are best to their wives.",
+    narrator:"Abu Hurairah (RA) — رضي الله عنه",
+    chain:"Abu Hurairah → Muhammad ibn Amr → transmitted to Abu Dawud and al-Tirmidhi",
+    book:"Sunan Abi Dawud & Sunan al-Tirmidhi", num:"Abu Dawud #4682 · Tirmidhi #1162", grade:"sahih",
+    lesson:"Your iman is measured not by how long you pray, but by how well you treat people. Today, be intentional with your character — especially with those closest to you, who see you most." },
+
+  { theme:"Truthfulness", themeAr:"الصدق",
+    arabic:"عَلَيْكُمْ بِالصِّدْقِ، فَإِنَّ الصِّدْقَ يَهْدِي إِلَى الْبِرِّ، وَإِنَّ الْبِرَّ يَهْدِي إِلَى الْجَنَّةِ",
+    meaning:"Hold to truthfulness, for truthfulness leads to righteousness, and righteousness leads to Paradise. A man keeps being truthful and strives for truthfulness until he is recorded with Allah as thoroughly truthful (Siddiq). Beware of lying, for lying leads to wickedness, and wickedness leads to Hell.",
+    narrator:"Abdullah ibn Mas'ud (RA) — رضي الله عنه",
+    chain:"Ibn Mas'ud → Alqama → Ibrahim al-Nakha'i → Mansur → transmitted to Imam Bukhari and Imam Muslim",
+    book:"Sahih al-Bukhari & Sahih Muslim", num:"Bukhari #6094 · Muslim #2607", grade:"sahih",
+    lesson:"Honesty in your tracker is more important than a perfect score. Did you actually do the habit? Mark it honestly. A truthful 60% is more valuable to your soul and your growth than a dishonest 100%." },
+
+  { theme:"Joy", themeAr:"البشاشة",
+    arabic:"تَبَسُّمُكَ فِي وَجْهِ أَخِيكَ صَدَقَةٌ",
+    meaning:"Your smile in the face of your brother is an act of charity. Commanding good and forbidding evil is charity. Guiding someone who is lost is charity. Helping a man with poor eyesight is charity. Removing a stone, thorn or bone from the road is charity.",
+    narrator:"Abu Dharr al-Ghifari (RA) — رضي الله عنه",
+    chain:"Abu Dharr al-Ghifari → multiple companions — recorded by al-Tirmidhi",
+    book:"Sunan al-Tirmidhi", num:"Hadith #1956 — Kitab al-Birr — graded Sahih by al-Albani", grade:"sahih",
+    lesson:"Your 'Say Something Kind' habit today might be as simple as a genuine smile. It is a sadaqa that costs nothing. Make it real — not forced. Let your face be a source of warmth for everyone you meet at work and at home." },
+
+  { theme:"Taqwa", themeAr:"التقوى",
+    arabic:"اتَّقِ اللَّهَ حَيْثُمَا كُنْتَ، وَأَتْبِعِ السَّيِّئَةَ الْحَسَنَةَ تَمْحُهَا، وَخَالِقِ النَّاسَ بِخُلُقٍ حَسَنٍ",
+    meaning:"Fear Allah wherever you are. Follow a bad deed with a good deed and it will erase it. And treat people with good character.",
+    narrator:"Mu'adh ibn Jabal (RA) — رضي الله عنه",
+    chain:"Mu'adh ibn Jabal → Abu Idris al-Khawlani → transmitted to al-Tirmidhi and Ahmad",
+    book:"Sunan al-Tirmidhi", num:"Hadith #1987 — Kitab al-Birr — graded Hasan Sahih", grade:"hasan",
+    lesson:"Missed a habit yesterday? Today is your erasing day. The Prophet ﷺ gave us the solution: follow the lapse with a good action. Don't spiral into guilt — come back immediately and resume." },
+
+  { theme:"Gentleness", themeAr:"الرفق",
+    arabic:"إِنَّ اللَّهَ رَفِيقٌ يُحِبُّ الرِّفْقَ فِي الْأَمْرِ كُلِّهِ",
+    meaning:"Allah is gentle and loves gentleness in all matters. Gentleness does not enter into anything without adorning it, and it is not removed from anything without disgracing it.",
+    narrator:"Aisha (RA) — رضي الله عنها",
+    chain:"Aisha → Urwa ibn al-Zubayr → Hisham ibn Urwa → transmitted to Imam Bukhari and Imam Muslim",
+    book:"Sahih al-Bukhari & Sahih Muslim", num:"Bukhari #6024 · Muslim #2593", grade:"sahih",
+    lesson:"Be gentle with yourself on hard days, and gentle with others in your work and family. Discipline does not require harshness. The most consistent athletes and entrepreneurs are those who push hard and recover gently." },
+
+  { theme:"Effort", themeAr:"الحرص",
+    arabic:"احْرِصْ عَلَى مَا يَنْفَعُكَ، وَاسْتَعِنْ بِاللَّهِ وَلَا تَعْجَزْ",
+    meaning:"Be keen to do what benefits you. Seek Allah's help and do not feel incapable. If something befalls you, do not say 'if only I had done this, such and such would have happened' — rather say 'Allah decreed it and He does what He wills', for 'if only' opens the door to the work of the Shaitan.",
+    narrator:"Abu Hurairah (RA) — رضي الله عنه",
+    chain:"Abu Hurairah → Abd al-Rahman ibn Ya'qub → al-Ala ibn Abd al-Rahman → transmitted to Imam Muslim",
+    book:"Sahih Muslim", num:"Hadith #2664 — Kitab al-Qadr", grade:"sahih",
+    lesson:"You have 9 hours of work and responsibilities today. 'La ta'jaz' — do not feel helpless. After every obligation, there is margin for your habits. Seek Allah's help before each one and you will find the energy you didn't think you had." },
+
+  { theme:"Silence", themeAr:"الصمت",
+    arabic:"مَنْ صَمَتَ نَجَا",
+    meaning:"Whoever remains silent is saved. Most of what throws people into Hell face-first is the harvest of their tongues.",
+    narrator:"Abdullah ibn Amr (RA) — رضي الله عنه",
+    chain:"Abdullah ibn Amr → transmitted by multiple chains — recorded by al-Tirmidhi and Ahmad",
+    book:"Sunan al-Tirmidhi", num:"Hadith #2501 — graded Sahih by al-Albani", grade:"sahih",
+    lesson:"Today's no-social-media habit protects you from the consequences of hasty speech. Most regretted words are typed, not spoken. Every moment you don't scroll is a moment you can't say something you'll regret." },
+
+  { theme:"Self-Control", themeAr:"ضبط النفس",
+    arabic:"لَيْسَ الشَّدِيدُ بِالصُّرَعَةِ، إِنَّمَا الشَّدِيدُ الَّذِي يَمْلِكُ نَفْسَهُ عِنْدَ الْغَضَبِ",
+    meaning:"The strong man is not the one who can overpower others in wrestling. The truly strong man is the one who controls himself when he is angry.",
+    narrator:"Abu Hurairah (RA) — رضي الله عنه",
+    chain:"Abu Hurairah → Abd al-Rahman ibn Ya'qub → al-Ala ibn Abd al-Rahman → transmitted to Bukhari and Muslim",
+    book:"Sahih al-Bukhari & Sahih Muslim", num:"Bukhari #6114 · Muslim #2609", grade:"sahih",
+    lesson:"The cold shower, the discipline habits, the no-social-media rule — all of them train the same muscle: nafs control. The Prophet ﷺ defined strength not as physical power, but as ruling over yourself. That is what this challenge is." },
+
+  { theme:"Detachment", themeAr:"الزهد",
+    arabic:"كُنْ فِي الدُّنْيَا كَأَنَّكَ غَرِيبٌ أَوْ عَابِرُ سَبِيلٍ",
+    meaning:"Be in this world as though you are a stranger or a traveler passing through. When evening comes, do not wait for morning. When morning comes, do not wait for evening. Take from your health before your illness, and from your life before your death.",
+    narrator:"Abdullah ibn Umar (RA) — رضي الله عنه",
+    chain:"Ibn Umar → Mujahid → Layt ibn Abi Sulaim → transmitted to Imam Bukhari",
+    book:"Sahih al-Bukhari", num:"Hadith #6416 — Kitab al-Riqaq", grade:"sahih",
+    lesson:"'Take from your health before your illness' — the Prophet ﷺ named health as one of the five things to use before it is taken away. Your fitness habits today are an act of gratitude for the body Allah gave you. Use it." },
+
+  { theme:"Dua", themeAr:"الدعاء",
+    arabic:"اللَّهُمَّ لَا سَهْلَ إِلَّا مَا جَعَلْتَهُ سَهْلًا، وَأَنْتَ تَجْعَلُ الْحَزْنَ إِذَا شِئْتَ سَهْلًا",
+    meaning:"O Allah, there is no ease except what You make easy, and You make difficulty easy when You will.",
+    narrator:"Anas ibn Malik (RA) — رضي الله عنه",
+    chain:"Anas ibn Malik → narrated by multiple chains — recorded by Ibn Hibban and Ibn al-Sunni",
+    book:"Sahih Ibn Hibban & Amal al-Yawm wal-Layla", num:"Ibn Hibban #3/255 — graded Sahih", grade:"sahih",
+    lesson:"Say this dua before starting your hardest habit today. Whether it's the cold shower, the workout, or waking up on time — remind yourself that nothing is difficult if Allah makes it easy. Ask, then act." },
+
+  { theme:"Excellence", themeAr:"الإتقان",
+    arabic:"إِنَّ اللَّهَ يُحِبُّ إِذَا عَمِلَ أَحَدُكُمْ عَمَلًا أَنْ يُتْقِنَهُ",
+    meaning:"Verily, Allah loves that when any of you does a deed, he perfects it (Itqan — does it with complete excellence).",
+    narrator:"Aisha (RA) — رضي الله عنها",
+    chain:"Aisha — recorded by al-Tabarani and al-Bayhaqi with multiple supporting chains",
+    book:"Al-Mu'jam al-Awsat (Tabarani)", num:"Hadith #897 — graded Sahih by al-Albani", grade:"sahih",
+    lesson:"Don't just check a habit today — do it with itqan. Don't just brush your teeth — do it properly. Don't just read a page — read it and think. Allah loves the deed done beautifully. Quality over quantity, every time." },
+
+  { theme:"Akhirah", themeAr:"الآخرة",
+    arabic:"مَنْ أَحَبَّ لِقَاءَ اللَّهِ أَحَبَّ اللَّهُ لِقَاءَهُ، وَمَنْ كَرِهَ لِقَاءَ اللَّهِ كَرِهَ اللَّهُ لِقَاءَهُ",
+    meaning:"Whoever loves to meet Allah, Allah loves to meet him. Whoever hates to meet Allah, Allah hates to meet him. Meeting Allah refers to the moment of death and what follows it — not a dislike of death itself.",
+    narrator:"Abu Hurairah (RA) — رضي الله عنه",
+    chain:"Abu Hurairah → Abu Salih → al-Amash → transmitted to Bukhari and Muslim",
+    book:"Sahih al-Bukhari & Sahih Muslim", num:"Bukhari #6508 · Muslim #2683", grade:"sahih",
+    lesson:"Every day of this 180-day challenge is a step toward a better version of yourself — in this life and the next. Build habits that you would be proud to present on the Day of Meeting. Live each day like it is a letter to Allah." },
+
+  { theme:"Gratitude", themeAr:"الشكر",
+    arabic:"مَنْ لَمْ يَشْكُرِ النَّاسَ لَمْ يَشْكُرِ اللَّهَ",
+    meaning:"Whoever is not grateful to people is not grateful to Allah.",
+    narrator:"Abu Hurairah (RA) — رضي الله عنه",
+    chain:"Abu Hurairah → multiple chains — recorded by Abu Dawud and al-Tirmidhi",
+    book:"Sunan Abi Dawud & Sunan al-Tirmidhi", num:"Abu Dawud #4811 · Tirmidhi #1954", grade:"sahih",
+    lesson:"In your evening reflection tonight, write the name of one person you are grateful to. Then tell them. Gratitude completed — felt, reflected, and expressed — is what separates people who grow from those who stagnate." },
+];
+
+const PRO_TIPS = [
+  { category:"Productivity", title:"The 80/20 Rule — Focus on What Moves the Needle",
+    content:"80% of your results come from 20% of your efforts. Most tasks feel urgent but deliver little. As an entrepreneur, your real job is to identify and protect that 20% — the actions that directly grow revenue, build your brand, or serve your customers.",
+    takeaway:"Before starting work today, list your 5 tasks. Circle the one that would make everything else easier or irrelevant. Do that one first.",
+    source:"Vilfredo Pareto · Applied by Tim Ferriss in The 4-Hour Workweek" },
+  { category:"Mindset", title:"Growth Mindset — Your Abilities Are Not Fixed",
+    content:"People with a fixed mindset believe their qualities are carved in stone. People with a growth mindset believe that their most basic abilities can be developed through dedication. Every challenge you face is not a test of your worth — it's an opportunity to grow.",
+    takeaway:"Next time you struggle with something today, replace 'I can't do this' with 'I can't do this yet.'",
+    source:"Carol Dweck · Mindset: The New Psychology of Success" },
+  { category:"Entrepreneurship", title:"Talk to Your Customers — Not About Them",
+    content:"Most entrepreneurs build products based on assumptions. The biggest waste is building something nobody wants. The solution is simple but rare: actually talk to your customers. Not to pitch, but to listen. Ask about their problems, their frustrations, their workarounds.",
+    takeaway:"This week, message one SAVY customer and ask: 'What's the hardest part of eating healthy for you?' Listen fully before you respond.",
+    source:"Rob Fitzpatrick · The Mom Test" },
+  { category:"Focus", title:"Deep Work — The Superpower of the Modern Age",
+    content:"The ability to focus without distraction on a cognitively demanding task is becoming increasingly rare and increasingly valuable. Shallow work — emails, meetings, social media — feels productive but doesn't move you forward. One hour of deep work creates more value than four hours of scattered effort.",
+    takeaway:"Block 9:00–11:00am tomorrow as a deep work session. Phone on airplane mode. One task only. No exceptions.",
+    source:"Cal Newport · Deep Work" },
+  { category:"Leadership", title:"The Best Leaders Develop Other Leaders",
+    content:"True leadership isn't about being indispensable — it's about making yourself replaceable. If your business stops when you stop, you've built a job, not a company. The goal is to build systems, train people, and delegate in a way that multiplies your impact.",
+    takeaway:"Write down one task you do every week that someone else could learn to do. Plan to teach it to someone this week.",
+    source:"John C. Maxwell · The 21 Irrefutable Laws of Leadership" },
+  { category:"Finance", title:"Cash Flow Is Oxygen — Revenue Is Vanity",
+    content:"Many profitable businesses die because they run out of cash. You need to know exactly how much money comes in, goes out, and when. Profit is what's left after expenses. Cash flow is whether you can pay your team and suppliers on time. Never confuse the two.",
+    takeaway:"Look at SAVY's cash flow for the last 30 days. What was the gap between revenue received and expenses paid?",
+    source:"Mike Michalowicz · Profit First" },
+  { category:"Marketing", title:"Sell the Transformation, Not the Product",
+    content:"People don't buy healthy meals — they buy the version of themselves that is lean, energetic, and confident. They don't buy a gym membership — they buy the feeling of being fit. SAVY doesn't sell food. It sells the transformation from where customers are to where they want to be.",
+    takeaway:"Rewrite one SAVY WhatsApp message or landing page headline to focus on the result, not the product.",
+    source:"Donald Miller · Building a StoryBrand" },
+  { category:"Habits", title:"The Compound Effect — Small Daily Actions Win",
+    content:"A 1% improvement every day leads to 37x better results in a year. A 1% decline leads to near zero. You don't rise to the level of your goals — you fall to the level of your systems. The habits you're building in this challenge aren't about today. They're compounding every single day.",
+    takeaway:"Look at your tracker. Which habit, if done consistently for 180 days, would change your life most? Focus on that one today.",
+    source:"Darren Hardy · The Compound Effect · James Clear · Atomic Habits" },
+  { category:"Strategy", title:"Second-Order Thinking — What Happens After What Happens",
+    content:"Most people only think about the immediate result of a decision. Second-order thinking asks: and then what? Cutting prices attracts customers (1st order), but it trains them to expect discounts and reduces your margin (2nd order). Every decision has downstream consequences.",
+    takeaway:"Think of one decision you're considering for SAVY. Ask 'and then what?' three times. What do you discover?",
+    source:"Howard Marks · Shane Parrish · Farnam Street" },
+  { category:"Productivity", title:"Energy Management Over Time Management",
+    content:"You can't create more hours. But you can increase your energy during the hours you have. Sleep, exercise, nutrition, and recovery aren't luxuries — they are your performance tools. A tired entrepreneur makes poor decisions, misses opportunities, and treats people badly.",
+    takeaway:"Rate your energy this past week from 1–10. What's the one habit that most affected it — positively or negatively?",
+    source:"Tony Schwartz · The Power of Full Engagement" },
+  { category:"Communication", title:"Active Listening — The Most Underrated Business Skill",
+    content:"Most people listen to reply, not to understand. When you truly listen to a customer, employee, or partner — without planning your response — they feel valued. That feeling builds loyalty. You also hear things you'd otherwise miss: insights, objections, needs.",
+    takeaway:"In your next important conversation today, don't speak until the other person has completely finished. Then pause 3 seconds before responding.",
+    source:"Stephen R. Covey · The 7 Habits of Highly Effective People" },
+  { category:"Entrepreneurship", title:"Build Systems, Not Goals",
+    content:"Goals tell you where you want to go. Systems are what actually get you there. A goal to 'grow SAVY revenue by 50%' without a repeatable system for customer acquisition, retention, and delivery is just a wish. Build the system and the results follow automatically.",
+    takeaway:"Pick one part of SAVY (ordering, delivery, customer follow-up). Write down each step as if explaining it to a new employee.",
+    source:"James Clear · Atomic Habits · Scott Adams · How to Fail at Almost Everything" },
+  { category:"Mindset", title:"Embrace Discomfort — Growth Lives There",
+    content:"Everything you want is just outside your comfort zone. The cold shower, the hard conversation, the scary business idea — your brain labels all of these as threats and pushes you to avoid them. But that discomfort is the exact signal that you're growing.",
+    takeaway:"Do one uncomfortable thing today intentionally. The cold shower counts.",
+    source:"David Goggins · Can't Hurt Me" },
+  { category:"Networking", title:"Give First — Relationships Are Long-Term Investments",
+    content:"The most connected people in business aren't transactional. They give first — introductions, ideas, help, information — without expecting anything back. That generosity creates goodwill that comes back in unexpected ways, often years later.",
+    takeaway:"Think of one person in your network you haven't spoken to in months. Send them a genuine message — not to ask for something, just to reconnect.",
+    source:"Adam Grant · Give and Take" },
+  { category:"Marketing", title:"Social Proof Is Your Strongest Marketing Tool",
+    content:"Before buying, people look for evidence that others have bought and are happy. A real customer photo with a real result beats any ad copy you'll ever write. For SAVY, one authentic WhatsApp message from a happy customer sharing their result is more powerful than a week of content.",
+    takeaway:"Ask one satisfied SAVY customer today for a short testimonial or photo. Offer a free meal discount in exchange.",
+    source:"Robert Cialdini · Influence" },
+  { category:"Finance", title:"Know Your Numbers — What Gets Measured Gets Managed",
+    content:"Most small business owners know their revenue but not their real profit. Hidden costs — packaging, delivery, time — erode margins silently. Track cost per meal, cost per customer acquired, and average order value. These three numbers tell you almost everything.",
+    takeaway:"Calculate SAVY's cost per meal this month including all ingredients, packaging, and delivery. Is it where it needs to be?",
+    source:"Peter Drucker · Management: Tasks, Responsibilities, Practices" },
+  { category:"Focus", title:"The One Thing — Eliminate to Dominate",
+    content:"Success is actually sequential, not simultaneous. You cannot do two things at once with full effectiveness. The secret to extraordinary results is asking: what is the ONE thing that, by doing it, will make everything else easier or unnecessary?",
+    takeaway:"What is the ONE thing for SAVY right now that would have the biggest impact if you focused on it this week?",
+    source:"Gary Keller · The One Thing" },
+  { category:"Leadership", title:"Feedback Is a Gift — Ask for It Regularly",
+    content:"Most people never improve because they never get honest feedback. As an entrepreneur, you are surrounded by people who won't tell you the truth unless you specifically invite it. Create a habit of asking for critical feedback. The discomfort is temporary. The insight is priceless.",
+    takeaway:"Ask one customer today: 'What's one thing SAVY could do better?' Write down what they say without defending or explaining.",
+    source:"Kim Scott · Radical Candor" },
+  { category:"Mindset", title:"The Stoic Morning — Prepare for Adversity Before It Arrives",
+    content:"The Stoics practiced negative visualization: imagining what could go wrong before the day starts. This isn't pessimism — it's preparation. When you've already mentally rehearsed the bad, you respond rather than react when it happens.",
+    takeaway:"Spend 2 minutes this morning asking: 'What could go wrong today? How will I handle it calmly if it does?'",
+    source:"Marcus Aurelius · Meditations · Ryan Holiday · The Daily Stoic" },
+  { category:"Productivity", title:"Time Blocking — Own Your Calendar Before Others Do",
+    content:"If you don't fill your calendar with what matters, others will fill it with what matters to them. Time blocking means assigning every hour a job. Deep work, admin, customer calls, rest — all scheduled in advance. The result is more output in less time.",
+    takeaway:"Open your calendar. Block tomorrow's first 2 hours for your most important work. Treat it as non-negotiable.",
+    source:"Cal Newport · Deep Work · Michael Hyatt · Free to Focus" },
+  { category:"Entrepreneurship", title:"The MVP Mindset — Launch Before You're Ready",
+    content:"Waiting until your product is perfect is the enemy of progress. The market will teach you more in one week of real feedback than one year of planning. Launch a minimal version, learn fast, and improve. SAVY's best features probably came from customer feedback, not a planning session.",
+    takeaway:"Think of one new SAVY idea you've been sitting on. What is the absolute smallest version you could test this week?",
+    source:"Eric Ries · The Lean Startup" },
+  { category:"Habits", title:"Habit Stacking — Link New Habits to Existing Ones",
+    content:"The most effective way to build a new habit is to attach it to something you already do automatically. 'After I make my morning coffee, I will read one page of a book.' The existing habit becomes the trigger for the new one.",
+    takeaway:"Look at your tracker. Choose one habit you're struggling with. What existing daily routine can you attach it to?",
+    source:"James Clear · Atomic Habits" },
+  { category:"Strategy", title:"Pricing Psychology — Price Shapes Perception",
+    content:"Price is not just a number — it's a signal. Too cheap, and people question quality. The right price communicates value. Customers paying more are also more committed, more satisfied, and more likely to refer others. Never compete on price. Compete on value.",
+    takeaway:"Review SAVY's current pricing. Is there a premium tier or bundle you could offer that delivers more value and generates more revenue?",
+    source:"Dan Ariely · Predictably Irrational" },
+  { category:"Communication", title:"Write to Think, Not Just to Communicate",
+    content:"Writing forces clarity. The act of putting thoughts on paper reveals what you actually understand and what you're fuzzy on. The best entrepreneurs and leaders write daily — journals, memos, plans. Not to share, but to think.",
+    takeaway:"Spend 5 minutes tonight writing your thoughts on where SAVY is right now and where you want it to be in 90 days.",
+    source:"Jeff Bezos · Paul Graham · Writing, Briefly" },
+  { category:"Marketing", title:"Build in Public — Transparency Builds Trust",
+    content:"Sharing your journey — the wins AND the struggles — builds authentic connection with your audience. People don't just buy products, they buy into founders they believe in. In Morocco's market, trust is currency. Document the SAVY story.",
+    takeaway:"Post one authentic story on Instagram or TikTok this week — something real about building SAVY. No filters needed.",
+    source:"Nathan Barry · David Perell · Writing & Building in Public" },
+  { category:"Mindset", title:"Delayed Gratification — The Ultimate Competitive Advantage",
+    content:"The ability to choose long-term gain over short-term pleasure is the single most reliable predictor of success. Every time you skip the shortcut and do the hard thing — the workout, the cold shower, the difficult conversation — you are investing in your future self.",
+    takeaway:"Identify one area today where you're choosing short-term comfort over long-term growth. What is it costing you?",
+    source:"Walter Mischel · The Marshmallow Test · Daniel Goleman · Emotional Intelligence" },
+  { category:"Finance", title:"Recurring Revenue — Build Income That Doesn't Require Constant Selling",
+    content:"One-time sales require constant effort. Subscriptions build momentum. Every SAVY customer who subscribes weekly is revenue you don't have to earn again. The goal is to grow the recurring base so that your baseline revenue covers all costs before the month begins.",
+    takeaway:"What percentage of SAVY's revenue is recurring this month? What would it take to double that percentage?",
+    source:"John Warrillow · The Automatic Customer" },
+  { category:"Focus", title:"Single-Tasking — The Lost Art of One Thing at a Time",
+    content:"Multitasking is a myth. The brain switches between tasks rapidly, losing time and quality at every switch. Research shows that constant task-switching reduces IQ by more than sleep deprivation. The professionals who produce the most do one thing, fully, before moving to the next.",
+    takeaway:"Choose one task this morning. Close all other tabs and apps. Do only that for 45 minutes. Notice the quality of your output.",
+    source:"Daniel Levitin · The Organized Mind" },
+  { category:"Leadership", title:"Culture Eats Strategy for Breakfast",
+    content:"You can have the best business strategy in the world, but if your team's culture doesn't support it, the strategy will fail. Culture is built not through words but through what you reward, what you tolerate, and how you behave when things get hard.",
+    takeaway:"What behaviour do you model for the people around you in SAVY? What culture are you creating, intentionally or not?",
+    source:"Peter Drucker · Attributed saying · Ed Catmull · Creativity Inc." },
+  { category:"Strategy", title:"The OODA Loop — Decide Faster Than Your Competition",
+    content:"Observe, Orient, Decide, Act — then repeat. The winner in competitive markets isn't the strongest, it's the fastest learner. Businesses that observe their market, orient quickly to new information, and act decisively beat those who plan endlessly.",
+    takeaway:"Think of one recent market signal you've noticed (customer feedback, competitor move, trend). What decision does it point to?",
+    source:"John Boyd · Military Strategist · Applied to business by Chet Richards" },
+  { category:"Mindset", title:"The Two Versions of You — Who Are You Becoming?",
+    content:"Every choice you make today is a vote for the person you're becoming. The accumulation of small daily votes determines your identity over time. You are not your current habits. You are the person your habits are turning you into. Choose that person deliberately.",
+    takeaway:"Write down in one sentence: who is the person you are working to become through this 180-day challenge?",
+    source:"James Clear · Atomic Habits · Viktor Frankl · Man's Search for Meaning" },
+];
+
+/* ─────────────────────────────────────────────
+   DAILY CONTENT STATE
+───────────────────────────────────────────── */
+let hadithIdx = 0;
+let proIdx = 0;
+let reflDay = 1;
+
+(function(){
+  const d = new Date();
+  hadithIdx = (d.getDate() + d.getMonth()*31) % HADITHS.length;
+  proIdx    = (d.getDate() + d.getMonth()*31 + 7) % PRO_TIPS.length;
+  reflDay   = currentDay() || 1;
+})();
+
+function shiftHadith(d){ hadithIdx=(hadithIdx+d+HADITHS.length)%HADITHS.length; renderDaily(); }
+function shiftPro(d){ proIdx=(proIdx+d+PRO_TIPS.length)%PRO_TIPS.length; renderDaily(); }
+function shiftReflection(d){
+  reflDay = Math.max(1, Math.min(TOTAL, reflDay+d));
+  renderDaily();
+}
+
+let currentMood = 0;
+function setMood(m){
+  currentMood = m;
+  document.querySelectorAll('.mood-btn').forEach((b,i)=>b.classList.toggle('active',i===m-1));
+}
+
+function saveReflection(){
+  const key = 'savy_refl_'+reflDay;
+  const refl = {
+    r1: document.getElementById('refl-1').value,
+    r2: document.getElementById('refl-2').value,
+    r3: document.getElementById('refl-3').value,
+    r4: document.getElementById('refl-4').value,
+    mood: currentMood,
+    saved: new Date().toISOString()
+  };
+  try{ localStorage.setItem(key, JSON.stringify(refl)); }catch(e){}
+  showToast('🪞 Reflection saved for Day '+reflDay);
+  renderDaily();
+}
+
+function loadReflection(day){
+  try{
+    const raw = localStorage.getItem('savy_refl_'+day);
+    return raw ? JSON.parse(raw) : null;
+  }catch(e){ return null; }
+}
+
+function renderDaily(){
+  // ── Hadith
+  const h = HADITHS[hadithIdx];
+  document.getElementById('hadith-theme').textContent   = currentLang==='ar' ? h.themeAr : h.theme;
+  document.getElementById('hadith-arabic').textContent  = h.arabic;
+  document.getElementById('hadith-meaning').textContent = h.meaning;
+  document.getElementById('hadith-narrator').textContent= h.narrator;
+  document.getElementById('hadith-chain').textContent   = h.chain;
+  document.getElementById('hadith-book').textContent    = h.book;
+  document.getElementById('hadith-num').textContent     = h.num;
+  // Grade badge
+  const gradeEl = document.getElementById('hadith-grade');
+  const gradeTxt = h.grade==='sahih'
+    ? (currentLang==='ar'?'صحيح':'Sahih ✓')
+    : (currentLang==='ar'?'حسن':'Hasan ✓');
+  gradeEl.innerHTML = `<span class="hadith-grade-badge hadith-grade-${h.grade}">${gradeTxt}</span>`;
+  document.getElementById('hadith-lesson').textContent  = h.lesson;
+  document.getElementById('hadith-counter').textContent = (hadithIdx+1)+' / '+HADITHS.length;
+
+  // ── Pro tip
+  const p = PRO_TIPS[proIdx];
+  document.getElementById('pro-category').textContent = p.category;
+  document.getElementById('pro-title').textContent    = p.title;
+  document.getElementById('pro-content').textContent  = p.content;
+  document.getElementById('pro-takeaway').textContent = p.takeaway;
+  document.getElementById('pro-source').textContent   = '📌 '+p.source;
+  document.getElementById('pro-counter').textContent  = (proIdx+1)+' / '+PRO_TIPS.length;
+
+  // ── Reflection
+  document.getElementById('refl-day-num').textContent = reflDay;
+  document.getElementById('refl-counter').textContent = (currentLang==='ar'?'يوم ':'Day ')+reflDay;
+  const saved = loadReflection(reflDay);
+  const card = document.getElementById('reflection-card');
+  const existingBadge = card.querySelector('.refl-saved-badge');
+  if(existingBadge) existingBadge.remove();
+  if(saved){
+    const badge = document.createElement('div');
+    badge.className='refl-saved-badge';
+    badge.textContent='✓ '+new Date(saved.saved).toLocaleDateString('fr-FR');
+    card.insertBefore(badge, card.firstChild);
+  }
+  document.getElementById('refl-1').value = saved&&saved.r1||'';
+  document.getElementById('refl-2').value = saved&&saved.r2||'';
+  document.getElementById('refl-3').value = saved&&saved.r3||'';
+  document.getElementById('refl-4').value = saved&&saved.r4||'';
+  currentMood = saved&&saved.mood||0;
+  document.querySelectorAll('.mood-btn').forEach((b,i)=>b.classList.toggle('active',i===currentMood-1));
+}
+
+/* ═══════════════════════════════════════════════
+   THEME TOGGLE
+═══════════════════════════════════════════════ */
+function toggleTheme(){
+  const html = document.documentElement;
+  const isDark = html.getAttribute('data-theme')==='dark';
+  html.setAttribute('data-theme', isDark?'light':'dark');
+  const btn = document.getElementById('theme-btn');
+  btn.textContent = isDark ? '🌙 Dark' : '☀️ Light';
+  try{ localStorage.setItem('savy_theme', isDark?'light':'dark'); }catch(e){}
+}
+
+/* ═══════════════════════════════════════════════
+   LANGUAGE SYSTEM
+═══════════════════════════════════════════════ */
+let currentLang = 'fr';
+const LANGS = ['fr','en','ar'];
+
+const I18N = {
+  fr:{
+    back:'← Retour à SAVY',
+    badge:'🔥 180-Day Challenge',
+    themeBtn:'☀️ Light',
+    tabWeek:'📅 Grille Semaine',
+    tabAll:'🗓 180 Jours',
+    tabDaily:'📖 Contenu Quotidien',
+    tabRewards:'🏆 Récompenses',
+    heroTitle:'Build the Best<br>Version of Yourself',
+    heroSub:'Discipline · Croissance · Excellence',
+    streakLbl:'Jours consécutifs',
+    doneLbl:'Habitudes faites',
+    weekLbl:'Cette semaine',
+    overallLbl:'Total',
+    quotetag:'Citation du jour',
+    prevQ:'‹ Préc',
+    nextQ:'Suiv ›',
+    weekLabel:'Semaine',
+    of:'/',
+    days:'Jours',
+    todayBtn:'AUJOURD\'HUI',
+    habitCol:'Habitude',
+    winDay:'Ma plus grande victoire aujourd\'hui ?',
+    challengeDay:'Mon plus grand défi ?',
+    gratefulDay:'Pour quoi je suis reconnaissant ?',
+    tomorrowDay:'Une chose à améliorer demain ?',
+    energyLbl:'Mon énergie aujourd\'hui',
+    saveBtn:'Enregistrer la réflexion ✓',
+    hd_narrator:'📖 Rapporté par',
+    hd_chain:'🔗 Chaîne (Isnad)',
+    hd_book:'📚 Source',
+    hd_num:'🔢 Numéro',
+    hd_grade:'✅ Degré',
+    hd_lesson:'💡 Leçon du jour',
+    ovHint:'180 jours · Tapez un point pour basculer',
+    monthBreak:'📊 Par mois',
+    overallProg:'Progression totale',
+  },
+  en:{
+    back:'← Back to SAVY',
+    badge:'🔥 180-Day Challenge',
+    themeBtn:'☀️ Light',
+    tabWeek:'📅 Weekly Grid',
+    tabAll:'🗓 All 180 Days',
+    tabDaily:'📖 Daily Content',
+    tabRewards:'🏆 Rewards',
+    heroTitle:'Build the Best<br>Version of Yourself',
+    heroSub:'Discipline · Growth · Excellence',
+    streakLbl:'Day Streak',
+    doneLbl:'Habits Done',
+    weekLbl:'This Week',
+    overallLbl:'Overall',
+    quotetag:'Quote of the Day',
+    prevQ:'‹ Prev',
+    nextQ:'Next ›',
+    weekLabel:'Week',
+    of:'/',
+    days:'Days',
+    todayBtn:'TODAY',
+    habitCol:'Habit',
+    winDay:'What was my biggest win today?',
+    challengeDay:'What challenged me most?',
+    gratefulDay:'What am I grateful for today?',
+    tomorrowDay:'One thing I\'ll do better tomorrow?',
+    energyLbl:'My energy today',
+    saveBtn:'Save Reflection ✓',
+    hd_narrator:'📖 Narrated by',
+    hd_chain:'🔗 Chain (Isnad)',
+    hd_book:'📚 Source Book',
+    hd_num:'🔢 Hadith Number',
+    hd_grade:'✅ Grade',
+    hd_lesson:'💡 Lesson for Today',
+    ovHint:'All 180 days · Tap any dot to toggle',
+    monthBreak:'📊 Monthly Breakdown',
+    overallProg:'Overall Progress',
+  },
+  ar:{
+    back:'العودة إلى SAVY →',
+    badge:'🔥 تحدي 180 يوم',
+    themeBtn:'☀️ فاتح',
+    tabWeek:'📅 شبكة الأسبوع',
+    tabAll:'🗓 كل 180 يوم',
+    tabDaily:'📖 المحتوى اليومي',
+    tabRewards:'🏆 الجوائز',
+    heroTitle:'ابنِ أفضل نسخة<br>من نفسك',
+    heroSub:'الانضباط · النمو · التميز',
+    streakLbl:'أيام متتالية',
+    doneLbl:'عادات منجزة',
+    weekLbl:'هذا الأسبوع',
+    overallLbl:'الإجمالي',
+    quotetag:'اقتباس اليوم',
+    prevQ:'‹ السابق',
+    nextQ:'التالي ›',
+    weekLabel:'الأسبوع',
+    of:'من',
+    days:'الأيام',
+    todayBtn:'اليوم',
+    habitCol:'العادة',
+    winDay:'ما كان أكبر إنجاز لي اليوم؟',
+    challengeDay:'ما كان أصعب تحدٍّ واجهته؟',
+    gratefulDay:'على ماذا أشكر الله اليوم؟',
+    tomorrowDay:'شيء واحد سأحسّنه غداً؟',
+    energyLbl:'مستوى طاقتي اليوم',
+    saveBtn:'حفظ التأمل ✓',
+    hd_narrator:'📖 رواه',
+    hd_chain:'🔗 سلسلة الإسناد',
+    hd_book:'📚 المصدر',
+    hd_num:'🔢 رقم الحديث',
+    hd_grade:'✅ درجة الحديث',
+    hd_lesson:'💡 درس اليوم',
+    ovHint:'١٨٠ يوماً · اضغط على أي نقطة للتبديل',
+    monthBreak:'📊 التفصيل الشهري',
+    overallProg:'التقدم الإجمالي',
+  }
+};
+
+function cycleLang(){
+  const idx = LANGS.indexOf(currentLang);
+  currentLang = LANGS[(idx+1)%LANGS.length];
+  applyLang();
+  try{ localStorage.setItem('savy_lang_tracker', currentLang); }catch(e){}
+}
+
+function applyLang(){
+  const t = I18N[currentLang];
+  const html = document.documentElement;
+  const isAr = currentLang==='ar';
+
+  html.setAttribute('lang', currentLang);
+  html.setAttribute('dir', isAr?'rtl':'ltr');
+
+  // Nav
+  document.querySelector('.nav-logo-txt').textContent = t.back;
+  document.getElementById('nav-badge-txt').textContent = t.badge;
+  const isDark = html.getAttribute('data-theme')==='dark';
+  document.getElementById('theme-btn').textContent = isDark ? t.themeBtn.replace('☀️','🌙').replace('Light','Dark').replace('فاتح','مظلم') : t.themeBtn;
+  document.getElementById('lang-btn').textContent = '🌐 '+(currentLang==='fr'?'FR':currentLang==='en'?'EN':'ع');
+
+  // Tabs
+  const tabs = document.querySelectorAll('.tab');
+  if(tabs[0]) tabs[0].textContent = t.tabWeek;
+  if(tabs[1]) tabs[1].textContent = t.tabAll;
+  if(tabs[2]) tabs[2].textContent = t.tabDaily;
+  if(tabs[3]) tabs[3].textContent = t.tabRewards;
+
+  // Hero
+  document.querySelector('.hero-title').innerHTML = t.heroTitle;
+  document.getElementById('hero-sub').textContent = t.heroSub;
+
+  // Stat labels
+  const statLbls = document.querySelectorAll('.stat-lbl');
+  const lblKeys = ['streakLbl','doneLbl','weekLbl','overallLbl'];
+  statLbls.forEach((el,i)=>{
+    const icons=['🔥 ','✅ ','📅 ','🏆 '];
+    if(lblKeys[i]) el.textContent = icons[i]+t[lblKeys[i]];
+  });
+
+  // Quote tag
+  const qtag = document.querySelector('.quote-tag');
+  if(qtag) qtag.innerHTML = `<span class="quote-tag-line"></span>${t.quotetag}`;
+
+  // Quote nav buttons
+  const qbtns = document.querySelectorAll('.quote-btn');
+  if(qbtns[0]) qbtns[0].textContent = t.prevQ;
+  if(qbtns[1]) qbtns[1].textContent = t.nextQ;
+
+  // Today btn
+  const todayBtn = document.querySelector('.today-btn');
+  if(todayBtn) todayBtn.textContent = t.todayBtn;
+
+  // Hadith info labels
+  const hdLabels = document.querySelectorAll('.hadith-info-label');
+  const hdKeys = ['hd_narrator','hd_chain','hd_book','hd_num','hd_grade'];
+  hdLabels.forEach((el,i)=>{ if(hdKeys[i]) el.textContent = t[hdKeys[i]]; });
+
+  // Hadith lesson title
+  const lessonTitle = document.querySelector('.hadith-lesson-title');
+  if(lessonTitle) lessonTitle.textContent = t.hd_lesson;
+
+  // Reflection prompts
+  const prompts = document.querySelectorAll('.refl-prompt');
+  const promptKeys=['winDay','challengeDay','gratefulDay','tomorrowDay','energyLbl'];
+  prompts.forEach((el,i)=>{
+    if(promptKeys[i]&&i<4) el.textContent = t[promptKeys[i]];
+    if(i===4) el.textContent = t.energyLbl;
+  });
+
+  // Save button
+  const saveBtn = document.querySelector('.refl-save-btn');
+  if(saveBtn) saveBtn.textContent = t.saveBtn;
+
+  // Overview hint
+  const ovHint = document.querySelector('.ov-hint');
+  if(ovHint) ovHint.textContent = t.ovHint;
+
+  // Re-render if on daily view to refresh hadith theme label
+  if(currentView==='daily') renderDaily();
+}
+
+// Init lang from storage
+(function(){
+  try{
+    const saved = localStorage.getItem('savy_lang_tracker');
+    if(saved && LANGS.includes(saved)) currentLang = saved;
+    const savedTheme = localStorage.getItem('savy_theme');
+    if(savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+  }catch(e){}
+  applyLang();
+})();
 
 function renderWeek(days,ws){
   document.getElementById("week-label-main").textContent="Week "+(currentWeek+1)+" / "+TOTAL_WEEKS;
@@ -1092,15 +2880,16 @@ function renderWeek(days,ws){
       </th>`;
     }).join("")+"</tr>";
 
-  document.getElementById("grid-body").innerHTML=CATS.map((cat,idx)=>{
-    const isFirst=idx===0||CATS[idx-1].tag!==cat.tag;
-    const isLast=idx===CATS.length-1||CATS[idx+1].tag!==cat.tag;
+  const GRID_CATS=CATS.filter(c=>c.tag!=="Character");
+  document.getElementById("grid-body").innerHTML=GRID_CATS.map((cat,idx)=>{
+    const isFirst=idx===0||GRID_CATS[idx-1].tag!==cat.tag;
+    const isLast=idx===GRID_CATS.length-1||GRID_CATS[idx+1].tag!==cat.tag;
     const tagBadge=isFirst?`<div class="tag-badge" style="color:${TC[cat.tag]}">${TAG_ICONS[cat.tag]} ${cat.tag}</div>`:"";
     const cells=days.map(day=>{
       const v=data[k(cat.id,day)]||0;
-      const cls=v===1?"cell done":v===2?"cell rest":"cell";
-      const lbl=v===1?"✓":v===2?"—":"";
-      const bg=v===1?"background:"+TC[cat.tag]+";":"";
+      const cls=v===1?"cell done":v===2?"cell skip":v===3?"cell off":"cell";
+      const lbl=v===1?"":v===2?"Not":v===3?"Off":"Do";
+      const bg="";
       return `<td class="cell-td"><button class="${cls}" style="${bg}" onclick="toggle(${cat.id},${day},this)">${lbl}</button></td>`;
     }).join("");
     return `<tr class="${isLast?"tag-last":""}">
@@ -1117,7 +2906,8 @@ function renderWeek(days,ws){
   const scorePanel=document.querySelector(".score-panel");
   if(scorePanel) scorePanel.classList.toggle("perfect-week", ws>=100);
 
-  document.getElementById("tag-breakdown").innerHTML=Object.entries(TC).map(([tag,color])=>{
+  const gridTags=Object.entries(TC).filter(([tag])=>tag!=="Character");
+  document.getElementById("tag-breakdown").innerHTML=gridTags.map(([tag,color])=>{
     const pct=score(weekDays(currentWeek),CATS.filter(c=>c.tag===tag));
     return `<div class="tag-item">
       <div class="tag-item-header"><div class="tag-dot" style="background:${color}"></div><span class="tag-name-sm">${TAG_ICONS[tag]} ${tag}</span></div>
@@ -1125,6 +2915,9 @@ function renderWeek(days,ws){
       <span class="tag-pct" style="color:${color}">${pct}%</span>
     </div>`;
   }).join("");
+
+  // ── Daily expenses row
+  renderInlineExpenses(days);
 
   document.getElementById("month-jumper").innerHTML=Array.from({length:6},(_,m)=>
     `<button class="month-btn${currentWeek>=m*4&&currentWeek<(m+1)*4?" active":""}" onclick="currentWeek=${m*4};render()">Month ${m+1}</button>`
@@ -1138,8 +2931,8 @@ function renderOverview(td,overall){
     const ms=bestStreak(cat.id);
     const dots=allDays.map(d=>{
       const v=data[k(cat.id,d)]||0;
-      const cls=v===1?"dot done":v===2?"dot rest":"dot";
-      const bg=v===1?"background:"+TC[cat.tag]+";border:none;":"";
+      const cls=v===1?"dot done":v===2?"dot skip":v===3?"dot off":"dot";
+      const bg="";
       return `<button class="${cls}" style="${bg}" onclick="toggle(${cat.id},${d},this)" title="Day ${d}"></button>`;
     }).join("");
     return `<div class="ov-row">
@@ -1182,6 +2975,211 @@ function renderRewards(){
 }
 
 /* Init */
+/* ═══════════════════════════════════════════════
+   INLINE EXPENSES (weekly grid row)
+═══════════════════════════════════════════════ */
+/* Per-day expense helpers (keyed by challenge day number) */
+function getDayExp(day){
+  try{ return parseFloat(localStorage.getItem('savy_dexp_'+day)||'0')||0; }
+  catch(e){ return 0; }
+}
+function setDayExp(day,amt){
+  try{
+    if(amt>0) localStorage.setItem('savy_dexp_'+day,amt);
+    else localStorage.removeItem('savy_dexp_'+day);
+  }catch(e){}
+}
+function getAllDaysTotal(){
+  let t=0;
+  for(let d=1;d<=TOTAL;d++) t+=getDayExp(d);
+  return t;
+}
+function fmtExp(n){ return n>0?(n%1===0?n:n.toFixed(2)):''; }
+
+function renderInlineExpenses(days){
+  const row=document.getElementById('inline-exp-row');
+  if(!row) return;
+  const dayAmts=days.map(d=>getDayExp(d));
+  const grandTotal=getAllDaysTotal();
+  const gt=grandTotal>0?grandTotal.toFixed(grandTotal%1===0?0:2)+' DH':'0 DH';
+  row.innerHTML=`
+    <div class="inline-exp-header">
+      <span>💰 Expenses (DH)</span>
+      <span class="inline-exp-grand-total">Total: ${gt}</span>
+    </div>
+    <div class="inline-exp-cells">
+      <div class="inline-exp-label">DH / day</div>
+      <div class="inline-exp-day-cells">
+        ${days.map((day,i)=>{
+          const v=dayAmts[i];
+          return `<div class="inline-exp-cell">
+            <input class="inline-exp-input" type="number" min="0" step="0.5"
+              placeholder="0" value="${fmtExp(v)}"
+              data-day="${day}"
+              onchange="saveInlineExpense(${day},this.value,this)"
+              onfocus="this.select()"/>
+            <span class="inline-exp-dh">DH</span>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+}
+
+function challengeDayToDateKey(challengeDay){
+  // Day 1 of challenge = today - (currentDay()-1) days ago
+  // We store per calendar date
+  const startOffset = (currentDay()||1) - challengeDay;
+  const d = new Date();
+  d.setDate(d.getDate() - startOffset);
+  return d.toISOString().slice(0,10);
+}
+
+function saveInlineExpense(challengeDay, val, inputEl){
+  const amt = parseFloat(val)||0;
+  setDayExp(challengeDay, amt);
+  // Flash green on success
+  inputEl.style.borderColor='rgba(34,197,94,.8)';
+  inputEl.style.boxShadow='0 0 0 3px rgba(34,197,94,.15)';
+  setTimeout(()=>{ inputEl.style.borderColor=''; inputEl.style.boxShadow=''; }, 700);
+  // Re-render to update cumulative row instantly
+  renderInlineExpenses(weekDays(currentWeek));
+}
+
+/* ═══════════════════════════════════════════════
+   EXPENSES
+═══════════════════════════════════════════════ */
+let expDay = 0;
+let selectedCat = '🍔 Food';
+const CAT_COLORS = {
+  '🍔 Food':'#22c55e','🚗 Transport':'#60a5fa','🛒 Shopping':'#f59e0b',
+  '💊 Health':'#34d399','📱 Bills':'#a78bfa','☕ Café':'#fb923c',
+  '🏋️ Sport':'#f43f5e','📦 Other':'#8b95ae'
+};
+function expDateKey(offset){
+  const d=new Date(); d.setDate(d.getDate()+offset);
+  return d.toISOString().slice(0,10);
+}
+function expDateLabel(offset){
+  if(offset===0) return 'Today';
+  if(offset===-1) return 'Yesterday';
+  const d=new Date(); d.setDate(d.getDate()+offset);
+  return d.toLocaleDateString('fr-FR',{day:'numeric',month:'short'});
+}
+function loadExp(dateKey){
+  try{ return JSON.parse(localStorage.getItem('savy_exp_'+dateKey)||'[]'); }
+  catch(e){ return []; }
+}
+function saveExp(dateKey,items){
+  try{ localStorage.setItem('savy_exp_'+dateKey,JSON.stringify(items)); }catch(e){}
+}
+function shiftExpDay(d){
+  expDay=Math.max(-179,Math.min(0,expDay+d));
+  renderExpenses();
+}
+function selectCat(btn){
+  document.querySelectorAll('.exp-cat-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  selectedCat=btn.dataset.cat;
+}
+function addExpense(){
+  const amtEl=document.getElementById('exp-amount');
+  const noteEl=document.getElementById('exp-note');
+  const amt=parseFloat(amtEl.value);
+  if(!amt||amt<=0){ amtEl.focus(); showToast('⚠️ Enter an amount'); return; }
+  const key=expDateKey(expDay);
+  const items=loadExp(key);
+  items.push({id:Date.now(),cat:selectedCat,amount:amt,note:noteEl.value.trim()});
+  saveExp(key,items);
+  amtEl.value=''; noteEl.value='';
+  showToast('💰 '+amt.toFixed(2)+' DH added');
+  renderExpenses();
+}
+function deleteExpense(dateKey,id){
+  const items=loadExp(dateKey).filter(i=>i.id!==id);
+  saveExp(dateKey,items);
+  renderExpenses();
+}
+function fmtDH(n){ return n.toFixed(2).replace(/\.00$/,'')+' DH'; }
+
+function renderExpenses(){
+  if(currentView!=='expenses') return;
+  const todayKey=expDateKey(0), curKey=expDateKey(expDay);
+  const todayTotal=loadExp(todayKey).reduce((s,i)=>s+i.amount,0);
+  let weekTotal=0;
+  for(let d=0;d>=-6;d--) loadExp(expDateKey(d)).forEach(i=>weekTotal+=i.amount);
+  let monthTotal=0;
+  const now=new Date();
+  for(let d=0;d>=-29;d--){
+    const dd=new Date(); dd.setDate(dd.getDate()+d);
+    if(dd.getMonth()===now.getMonth()) loadExp(expDateKey(d)).forEach(i=>monthTotal+=i.amount);
+  }
+  let allTotal=0;
+  for(let d=0;d>=-179;d--) loadExp(expDateKey(d)).forEach(i=>allTotal+=i.amount);
+
+  document.getElementById('exp-today-val').textContent=fmtDH(todayTotal);
+  document.getElementById('exp-week-val').textContent=fmtDH(weekTotal);
+  document.getElementById('exp-month-val').textContent=fmtDH(monthTotal);
+  document.getElementById('exp-total-val').textContent=fmtDH(allTotal);
+  document.getElementById('exp-date-lbl').textContent=expDateLabel(expDay);
+
+  const curItems=loadExp(curKey);
+  const curTotal=curItems.reduce((s,i)=>s+i.amount,0);
+  document.getElementById('exp-log-total').textContent=fmtDH(curTotal);
+  const listEl=document.getElementById('exp-log-list');
+  if(curItems.length===0){
+    listEl.innerHTML='<div class="exp-empty">No expenses logged for this day.</div>';
+  } else {
+    listEl.innerHTML='<div class="exp-log-list-inner">'+
+      [...curItems].reverse().map(item=>`
+        <div class="exp-item">
+          <span class="exp-item-cat">${item.cat}</span>
+          <span class="exp-item-note">${item.note||'—'}</span>
+          <span class="exp-item-amount">${item.amount.toFixed(2)}<span class="exp-item-dh">DH</span></span>
+          <button class="exp-item-del" onclick="deleteExpense('${curKey}',${item.id})" title="Delete">✕</button>
+        </div>`).join('')+
+      '</div>';
+  }
+
+  // 7-day chart
+  const days7=Array.from({length:7},(_,i)=>i-6);
+  const totals7=days7.map(d=>loadExp(expDateKey(d)).reduce((s,i)=>s+i.amount,0));
+  const max7=Math.max(...totals7,1);
+  const avg7=totals7.reduce((a,b)=>a+b,0)/7;
+  document.getElementById('exp-chart-avg').textContent='Avg: '+fmtDH(avg7);
+  const dayNames=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  document.getElementById('exp-bars').innerHTML=days7.map((d,i)=>{
+    const pct=Math.round(totals7[i]/max7*100);
+    const isToday=d===0;
+    const dd=new Date(); dd.setDate(dd.getDate()+d);
+    const dn=dayNames[dd.getDay()===0?6:dd.getDay()-1];
+    return `<div class="exp-bar-wrap">
+      <div class="exp-bar-val">${totals7[i]>0?totals7[i].toFixed(0):''}</div>
+      <div class="exp-bar${isToday?' today':''}" style="height:${Math.max(pct,3)}%"></div>
+      <div class="exp-bar-day" style="color:${isToday?'var(--green)':'var(--muted)'}">${dn}</div>
+    </div>`;
+  }).join('');
+
+  // Category breakdown
+  const catMap={};
+  for(let d=0;d>=-29;d--){
+    const dd2=new Date(); dd2.setDate(dd2.getDate()+d);
+    if(dd2.getMonth()===now.getMonth())
+      loadExp(expDateKey(d)).forEach(i=>{ catMap[i.cat]=(catMap[i.cat]||0)+i.amount; });
+  }
+  const catEntries=Object.entries(catMap).sort((a,b)=>b[1]-a[1]);
+  const catMax=catEntries[0]?catEntries[0][1]:1;
+  const catEl=document.getElementById('exp-cat-breakdown');
+  catEl.innerHTML=catEntries.length===0?'<div class="exp-empty">No data yet.</div>':
+    catEntries.map(([cat,amt])=>`
+      <div class="exp-cat-row">
+        <span class="exp-cat-name">${cat}</span>
+        <div class="exp-cat-bar-wrap">
+          <div class="exp-cat-bar-fill" style="width:${Math.round(amt/catMax*100)}%;background:${CAT_COLORS[cat]||'var(--green)'}"></div>
+        </div>
+        <span class="exp-cat-amount">${fmtDH(amt)}</span>
+      </div>`).join('');
+}
+
 renderQuote();
 render();
 setInterval(()=>setQuote(quoteIdx+1), 30000);
