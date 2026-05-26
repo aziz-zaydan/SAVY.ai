@@ -953,7 +953,7 @@ td.cell-td{
   pointer-events:none;
 }
 /* ── VIEW FADE ───────────────────────────── */
-#view-week,#view-overview,#view-rewards,#view-daily,#view-expenses{
+#view-overview,#view-daily,#view-expenses,#view-rewards{
   animation:fadeSlideIn .3s ease;
 }
 @keyframes fadeSlideIn{
@@ -1546,67 +1546,6 @@ td.cell-td{
     </div>
   </div>
 
-  <!-- STATS -->
-  <div class="stats-row">
-    <div class="stat-card green">
-      <div class="stat-card-glow" style="background:#0dcc35"></div>
-      <div class="stat-accent" style="background:linear-gradient(90deg,#0dcc35,#34e85a)"></div>
-      <div class="stat-icon">🔥</div>
-      <div class="stat-val" id="stat-streak" style="color:var(--green)">0</div>
-      <div class="stat-lbl">Day Streak</div>
-      <div class="stat-sub" id="stat-streak-sub">Keep going!</div>
-    </div>
-    <div class="stat-card gold">
-      <div class="stat-card-glow" style="background:#f59e0b"></div>
-      <div class="stat-accent" style="background:linear-gradient(90deg,#f59e0b,#fbbf24)"></div>
-      <div class="stat-icon">✅</div>
-      <div class="stat-val" id="stat-done" style="color:var(--gold)">0</div>
-      <div class="stat-lbl">Habits Done</div>
-      <div class="stat-sub" id="stat-done-sub">Total logged</div>
-    </div>
-    <div class="stat-card blue">
-      <div class="stat-card-glow" style="background:#3b82f6"></div>
-      <div class="stat-accent" style="background:linear-gradient(90deg,#3b82f6,#60a5fa)"></div>
-      <div class="stat-icon">📅</div>
-      <div class="stat-val" id="stat-week" style="color:var(--mind)">0%</div>
-      <div class="stat-lbl">This Week</div>
-      <div class="stat-sub" id="stat-week-sub">Weekly score</div>
-    </div>
-    <div class="stat-card purple">
-      <div class="stat-card-glow" style="background:#8b5cf6"></div>
-      <div class="stat-accent" style="background:linear-gradient(90deg,#8b5cf6,#a78bfa)"></div>
-      <div class="stat-icon">🏆</div>
-      <div class="stat-val" id="stat-overall" style="color:var(--spiritual)">0%</div>
-      <div class="stat-lbl">Overall</div>
-      <div class="stat-sub" id="stat-overall-sub">All 180 days</div>
-    </div>
-  </div>
-
-  <!-- QUOTE -->
-  <div class="quote-card">
-    <div class="quote-tag"><span class="quote-tag-line"></span>Quote of the Day</div>
-    <div class="quote-text" id="quote-text"></div>
-    <div class="quote-author" id="quote-author"></div>
-    <div class="quote-footer">
-      <button class="quote-btn" onclick="prevQuote()">‹ Prev</button>
-      <button class="quote-btn" onclick="nextQuote()">Next ›</button>
-      <div class="quote-dots" id="quote-dots"></div>
-    </div>
-  </div>
-
-  <!-- TABS -->
-  <div class="tabs-bar">
-    <button class="tab active" onclick="setView('week')">📅 Weekly Grid</button>
-    <div class="tab-sep"></div>
-    <button class="tab" onclick="setView('overview')">🗓 All 180 Days</button>
-    <div class="tab-sep"></div>
-    <button class="tab" onclick="setView('daily')">📖 Daily Content</button>
-    <div class="tab-sep"></div>
-    <button class="tab" onclick="setView('expenses')">💰 Expenses</button>
-    <div class="tab-sep"></div>
-    <button class="tab" onclick="setView('rewards')">🏆 Rewards</button>
-  </div>
-
   <!-- WEEKLY VIEW -->
   <div id="view-week">
     <div class="week-nav-bar">
@@ -1913,34 +1852,44 @@ td.cell-td{
 
 <div class="toast" id="toast"></div>
 
-<script>
+<script>/* ── safe element setter — prevents null errors on hidden views */
+function safeSet(id, prop, val){
+  const el = document.getElementById(id);
+  if(el) el[prop] = val;
+}
+function safeStyle(id, prop, val){
+  const el = document.getElementById(id);
+  if(el) el.style[prop] = val;
+}
+
+
 const TOTAL = 180;
 const CATS = [
   // ── Spiritual ──────────────────────────────
   { id:0,  label:"Five Daily Prayers",           tag:"Spiritual"  },
   { id:1,  label:"Quran Reading",                tag:"Spiritual"  },
   { id:22, label:"Hadith with Meaning",          tag:"Spiritual"  },
+  { id:27, label:"صدقة في سبيل الله",            tag:"Spiritual"  },
+  { id:28, label:"اذكار اليوم",                  tag:"Spiritual"  },
   // ── Mind ───────────────────────────────────
   { id:2,  label:"Book Reading",                 tag:"Mind"       },
   { id:11, label:"Professional Learning",        tag:"Mind"       },
-  { id:13, label:"Mental Health / Journal",      tag:"Mind"       },
   // ── Discipline ─────────────────────────────
   { id:14, label:"Wake Up on Time (no snooze)",  tag:"Discipline" },
-  { id:15, label:"Cold Shower",                  tag:"Discipline" },
   { id:5,  label:"No Music",                     tag:"Discipline" },
   { id:6,  label:"No Social Media",              tag:"Discipline" },
   { id:3,  label:"Avoid Bad Habits",             tag:"Discipline" },
   // ── Health ─────────────────────────────────
   { id:16, label:"2L Water Daily",               tag:"Health"     },
-  { id:17, label:"No Junk Food / No Sugar",      tag:"Health"     },
   { id:4,  label:"Brush Teeth (2×)",             tag:"Health"     },
   { id:12, label:"Sleep Target (7–8h)",          tag:"Health"     },
+  { id:25, label:"Washing Clothes",              tag:"Health"     },
+  { id:26, label:"Cleaning Home",                tag:"Health"     },
   // ── Fitness ────────────────────────────────
   { id:7,  label:"Push-ups / Workout",           tag:"Fitness"    },
   { id:8,  label:"Running",                      tag:"Fitness"    },
   { id:9,  label:"Cycling",                      tag:"Fitness"    },
   { id:10, label:"Swimming",                     tag:"Fitness"    },
-  { id:18, label:"Stretching / Mobility (10m)",  tag:"Fitness"    },
   // ── Character ──────────────────────────────
   { id:19, label:"No Complaining",               tag:"Character"  },
   { id:20, label:"No Gossip / Backbiting",       tag:"Character"  },
@@ -2004,7 +1953,7 @@ const REWARDS = [
 let data = {};
 try { data = JSON.parse(localStorage.getItem("savy_180_data")||"{}"); } catch(e){}
 let currentWeek = 0;
-let currentView = "week";
+let currentView = 'week'; // grid always visible; other tabs overlay below
 let quoteIdx = 0;
 
 /* Helpers */
@@ -2097,10 +2046,9 @@ function showToast(msg,dur=1800){
 (function(){ const d=new Date(); quoteIdx=(d.getDate()+d.getMonth()*31)%QUOTES.length; })();
 function renderQuote(){
   const q=QUOTES[quoteIdx];
-  document.getElementById("quote-text").textContent=q.text;
-  document.getElementById("quote-author").textContent="— "+q.author;
-  document.getElementById("quote-dots").innerHTML=
-    QUOTES.map((_,i)=>`<button class="quote-dot${i===quoteIdx?" active":""}" onclick="setQuote(${i})"></button>`).join("");
+  {const _el=document.getElementById("quote-text");if(_el)_el.textContent=q.text;}
+  {const _el=document.getElementById("quote-author");if(_el)_el.textContent="— "+q.author;}
+  {const _el=document.getElementById("quote-dots");if(_el)_el.innerHTML=QUOTES.map((_,i)=>`<button class="quote-dot${i===quoteIdx?" active":""}" onclick="setQuote(${i})"></button>`).join("");}
 }
 function setQuote(i){ quoteIdx=(i+QUOTES.length)%QUOTES.length; renderQuote(); }
 function nextQuote(){ setQuote(quoteIdx+1); }
@@ -2109,11 +2057,11 @@ function prevQuote(){ setQuote(quoteIdx-1); }
 /* View */
 function setView(v){
   currentView=v;
-  ['week','overview','daily','expenses','rewards'].forEach(id=>{
-    document.getElementById('view-'+id).style.display=v===id?'block':'none';
+  ['overview','daily','expenses','rewards'].forEach(id=>{
+    {const _vw=document.getElementById('view-'+id);if(_vw)_vw.style.display=v===id?'block':'none';}
   });
   document.querySelectorAll('.tab').forEach((t,i)=>
-    t.classList.toggle('active',['week','overview','daily','expenses','rewards'][i]===v)
+    t.classList.toggle('active',['overview','daily','expenses','rewards'][i]===v)
   );
   if(v==='expenses') renderExpenses();
   else render();
@@ -2134,8 +2082,8 @@ function render(){
   const cd=currentDay()||1;
   const overall=Math.round(td/(TOTAL*CATS.length)*100);
 
-  document.getElementById("hero-day-num").textContent=cd;
-  document.getElementById("hero-sub").textContent="Day "+cd+" of "+TOTAL+" · Keep pushing!";
+  {const _el=document.getElementById('hero-day-num');if(_el)_el.textContent=cd;}
+  {const _el=document.getElementById('hero-sub');if(_el)_el.textContent="Day "+cd+" of "+TOTAL+" · Keep pushing!";}
 
   // Update progress ring
   const ringPct = overall;
@@ -2146,16 +2094,16 @@ function render(){
   const rp = document.getElementById("ring-pct");
   if(rp){ rp.textContent = ringPct+"%"; }
 
-  document.getElementById("stat-streak").textContent=cs;
-  document.getElementById("stat-streak-sub").textContent=cs>=7?"You're on fire! 🔥":cs>=3?"Great momentum":"Stay consistent";
-  document.getElementById("stat-done").textContent=td;
-  document.getElementById("stat-done-sub").textContent=Math.round(td/CATS.length*10)/10+" days equiv.";
-  document.getElementById("stat-week").textContent=ws+"%";
-  document.getElementById("stat-week").style.color=scoreColor(ws);
-  document.getElementById("stat-week-sub").textContent=ws>=80?"Excellent week!":ws>=50?"Keep going!":"Push harder";
-  document.getElementById("stat-overall").textContent=overall+"%";
-  document.getElementById("stat-overall").style.color=scoreColor(overall);
-  document.getElementById("stat-overall-sub").textContent="Of all habits";
+  {const _el=document.getElementById('stat-streak');if(_el)_el.textContent=cs;}
+  {const _el=document.getElementById('stat-streak-sub');if(_el)_el.textContent=cs>=7?"You're on fire! 🔥":cs>=3?"Great momentum":"Stay consistent";}
+  {const _el=document.getElementById('stat-done');if(_el)_el.textContent=td;}
+  {const _el=document.getElementById('stat-done-sub');if(_el)_el.textContent=Math.round(td/CATS.length*10)/10+" days equiv.";}
+  {const _el=document.getElementById('stat-week');if(_el)_el.textContent=ws+"%";}
+  {const _el=document.getElementById('stat-week');if(_el)_el.style.color=scoreColor(ws);}
+  {const _el=document.getElementById('stat-week-sub');if(_el)_el.textContent=ws>=80?"Excellent week!":ws>=50?"Keep going!":"Push harder";}
+  {const _el=document.getElementById('stat-overall');if(_el)_el.textContent=overall+"%";}
+  {const _el=document.getElementById('stat-overall');if(_el)_el.style.color=scoreColor(overall);}
+  {const _el=document.getElementById('stat-overall-sub');if(_el)_el.textContent="Of all habits";}
 
   if(currentView==="week") renderWeek(days,ws);
   else if(currentView==="overview") renderOverview(td,overall);
@@ -2587,34 +2535,34 @@ function loadReflection(day){
 function renderDaily(){
   // ── Hadith
   const h = HADITHS[hadithIdx];
-  document.getElementById('hadith-theme').textContent   = currentLang==='ar' ? h.themeAr : h.theme;
-  document.getElementById('hadith-arabic').textContent  = h.arabic;
-  document.getElementById('hadith-meaning').textContent = h.meaning;
-  document.getElementById('hadith-narrator').textContent= h.narrator;
-  document.getElementById('hadith-chain').textContent   = h.chain;
-  document.getElementById('hadith-book').textContent    = h.book;
-  document.getElementById('hadith-num').textContent     = h.num;
+  {const _e=document.getElementById('hadith-theme');if(_e)_e.textContent=currentLang==='ar' ? h.themeAr : h.theme;}
+  {const _e=document.getElementById('hadith-arabic');if(_e)_e.textContent=h.arabic;}
+  {const _e=document.getElementById('hadith-meaning');if(_e)_e.textContent=h.meaning;}
+  {const _e=document.getElementById('hadith-narrator');if(_e)_e.textContent=h.narrator;}
+  {const _e=document.getElementById('hadith-chain');if(_e)_e.textContent=h.chain;}
+  {const _e=document.getElementById('hadith-book');if(_e)_e.textContent=h.book;}
+  {const _e=document.getElementById('hadith-num');if(_e)_e.textContent=h.num;}
   // Grade badge
   const gradeEl = document.getElementById('hadith-grade');
   const gradeTxt = h.grade==='sahih'
     ? (currentLang==='ar'?'صحيح':'Sahih ✓')
     : (currentLang==='ar'?'حسن':'Hasan ✓');
   gradeEl.innerHTML = `<span class="hadith-grade-badge hadith-grade-${h.grade}">${gradeTxt}</span>`;
-  document.getElementById('hadith-lesson').textContent  = h.lesson;
-  document.getElementById('hadith-counter').textContent = (hadithIdx+1)+' / '+HADITHS.length;
+  {const _e=document.getElementById('hadith-lesson');if(_e)_e.textContent=h.lesson;}
+  {const _e=document.getElementById('hadith-counter');if(_e)_e.textContent=(hadithIdx+1)+' / '+HADITHS.length;}
 
   // ── Pro tip
   const p = PRO_TIPS[proIdx];
-  document.getElementById('pro-category').textContent = p.category;
-  document.getElementById('pro-title').textContent    = p.title;
-  document.getElementById('pro-content').textContent  = p.content;
-  document.getElementById('pro-takeaway').textContent = p.takeaway;
-  document.getElementById('pro-source').textContent   = '📌 '+p.source;
-  document.getElementById('pro-counter').textContent  = (proIdx+1)+' / '+PRO_TIPS.length;
+  {const _e=document.getElementById('pro-category');if(_e)_e.textContent=p.category;}
+  {const _e=document.getElementById('pro-title');if(_e)_e.textContent=p.title;}
+  {const _e=document.getElementById('pro-content');if(_e)_e.textContent=p.content;}
+  {const _e=document.getElementById('pro-takeaway');if(_e)_e.textContent=p.takeaway;}
+  {const _e=document.getElementById('pro-source');if(_e)_e.textContent='📌 '+p.source;}
+  {const _e=document.getElementById('pro-counter');if(_e)_e.textContent=(proIdx+1)+' / '+PRO_TIPS.length;}
 
   // ── Reflection
-  document.getElementById('refl-day-num').textContent = reflDay;
-  document.getElementById('refl-counter').textContent = (currentLang==='ar'?'يوم ':'Day ')+reflDay;
+  {const _e=document.getElementById('refl-day-num');if(_e)_e.textContent=reflDay;}
+  {const _e=document.getElementById('refl-counter');if(_e)_e.textContent=(currentLang==='ar'?'يوم ':'Day ')+reflDay;}
   const saved = loadReflection(reflDay);
   const card = document.getElementById('reflection-card');
   const existingBadge = card.querySelector('.refl-saved-badge');
@@ -2784,11 +2732,11 @@ function applyLang(){
   html.setAttribute('dir', isAr?'rtl':'ltr');
 
   // Nav
-  document.querySelector('.nav-logo-txt').textContent = t.back;
-  document.getElementById('nav-badge-txt').textContent = t.badge;
+  {const _qs=document.querySelector('.nav-logo-txt');if(_qs)_qs.textContent=t.back;}
+  {const _el=document.getElementById('nav-badge-txt');if(_el)_el.textContent=t.badge;}
   const isDark = html.getAttribute('data-theme')==='dark';
-  document.getElementById('theme-btn').textContent = isDark ? t.themeBtn.replace('☀️','🌙').replace('Light','Dark').replace('فاتح','مظلم') : t.themeBtn;
-  document.getElementById('lang-btn').textContent = '🌐 '+(currentLang==='fr'?'FR':currentLang==='en'?'EN':'ع');
+  {const _el=document.getElementById('theme-btn');if(_el)_el.textContent=isDark ? t.themeBtn.replace('☀️','🌙').replace('Light','Dark').replace('فاتح','مظلم') : t.themeBtn;}
+  {const _el=document.getElementById('lang-btn');if(_el)_el.textContent='🌐 '+(currentLang==='fr'?'FR':currentLang==='en'?'EN':'ع');}
 
   // Tabs
   const tabs = document.querySelectorAll('.tab');
@@ -2798,8 +2746,8 @@ function applyLang(){
   if(tabs[3]) tabs[3].textContent = t.tabRewards;
 
   // Hero
-  document.querySelector('.hero-title').innerHTML = t.heroTitle;
-  document.getElementById('hero-sub').textContent = t.heroSub;
+  {const _qs=document.querySelector('.hero-title');if(_qs)_qs.innerHTML=t.heroTitle;}
+  {const _el=document.getElementById('hero-sub');if(_el)_el.textContent=t.heroSub;}
 
   // Stat labels
   const statLbls = document.querySelectorAll('.stat-lbl');
@@ -2863,13 +2811,17 @@ function applyLang(){
 })();
 
 function renderWeek(days,ws){
-  document.getElementById("week-label-main").textContent="Week "+(currentWeek+1)+" / "+TOTAL_WEEKS;
-  document.getElementById("week-label-days").textContent="Days "+(currentWeek*7+1)+"–"+Math.min(currentWeek*7+7,TOTAL);
+  const el_wlm=document.getElementById("week-label-main");
+  if(el_wlm) el_wlm.textContent="Week "+(currentWeek+1)+" / "+TOTAL_WEEKS;
+  const el_wld=document.getElementById("week-label-days");
+  if(el_wld) el_wld.textContent="Days "+(currentWeek*7+1)+"–"+Math.min(currentWeek*7+7,TOTAL);
 
-  document.getElementById("colgroup").innerHTML='<col class="cat-col">'+days.map(()=>'<col class="day-col">').join("");
+  const cg=document.getElementById("colgroup");
+  if(cg) cg.innerHTML='<col class="cat-col">'+days.map(()=>'<col class="day-col">').join("");
 
   const cd=currentDay()||1;
-  document.getElementById("grid-head").innerHTML="<tr>"+
+  const gh=document.getElementById("grid-head");
+  if(gh) gh.innerHTML="<tr>"+
     '<th class="cat-hd">Habit</th>'+
     days.map((day,i)=>{
       const ds=score([day],CATS);
@@ -2881,7 +2833,8 @@ function renderWeek(days,ws){
     }).join("")+"</tr>";
 
   const GRID_CATS=CATS.filter(c=>c.tag!=="Character");
-  document.getElementById("grid-body").innerHTML=GRID_CATS.map((cat,idx)=>{
+  const gb=document.getElementById("grid-body");
+  if(gb) gb.innerHTML=GRID_CATS.map((cat,idx)=>{
     const isFirst=idx===0||GRID_CATS[idx-1].tag!==cat.tag;
     const isLast=idx===GRID_CATS.length-1||GRID_CATS[idx+1].tag!==cat.tag;
     const tagBadge=isFirst?`<div class="tag-badge" style="color:${TC[cat.tag]}">${TAG_ICONS[cat.tag]} ${cat.tag}</div>`:"";
@@ -2889,8 +2842,7 @@ function renderWeek(days,ws){
       const v=data[k(cat.id,day)]||0;
       const cls=v===1?"cell done":v===2?"cell skip":v===3?"cell off":"cell";
       const lbl=v===1?"":v===2?"Not":v===3?"Off":"Do";
-      const bg="";
-      return `<td class="cell-td"><button class="${cls}" style="${bg}" onclick="toggle(${cat.id},${day},this)">${lbl}</button></td>`;
+      return `<td class="cell-td"><button class="${cls}" onclick="toggle(${cat.id},${day},this)">${lbl}</button></td>`;
     }).join("");
     return `<tr class="${isLast?"tag-last":""}">
       <td class="cat-td" style="border-left-color:${TC[cat.tag]}">${tagBadge}<div class="cat-name">${cat.label}</div></td>
@@ -2898,16 +2850,16 @@ function renderWeek(days,ws){
     </tr>`;
   }).join("");
 
-  document.getElementById("score-week-num").textContent=currentWeek+1;
+  const swn=document.getElementById("score-week-num");
+  if(swn) swn.textContent=currentWeek+1;
   const sp=document.getElementById("score-pct");
-  sp.textContent=ws+"%"; sp.style.color=scoreColor(ws);
+  if(sp){sp.textContent=ws+"%";sp.style.color=scoreColor(ws);}
   const bar=document.getElementById("score-bar");
-  bar.style.width=ws+"%"; bar.style.background=scoreColor(ws);
-  const scorePanel=document.querySelector(".score-panel");
-  if(scorePanel) scorePanel.classList.toggle("perfect-week", ws>=100);
+  if(bar){bar.style.width=ws+"%";bar.style.background=scoreColor(ws);}
 
   const gridTags=Object.entries(TC).filter(([tag])=>tag!=="Character");
-  document.getElementById("tag-breakdown").innerHTML=gridTags.map(([tag,color])=>{
+  const tb=document.getElementById("tag-breakdown");
+  if(tb) tb.innerHTML=gridTags.map(([tag,color])=>{
     const pct=score(weekDays(currentWeek),CATS.filter(c=>c.tag===tag));
     return `<div class="tag-item">
       <div class="tag-item-header"><div class="tag-dot" style="background:${color}"></div><span class="tag-name-sm">${TAG_ICONS[tag]} ${tag}</span></div>
@@ -2916,24 +2868,25 @@ function renderWeek(days,ws){
     </div>`;
   }).join("");
 
-  // ── Daily expenses row
-  renderInlineExpenses(days);
-
-  document.getElementById("month-jumper").innerHTML=Array.from({length:6},(_,m)=>
+  const mj=document.getElementById("month-jumper");
+  if(mj) mj.innerHTML=Array.from({length:6},(_,m)=>
     `<button class="month-btn${currentWeek>=m*4&&currentWeek<(m+1)*4?" active":""}" onclick="currentWeek=${m*4};render()">Month ${m+1}</button>`
   ).join("");
+
+  renderInlineExpenses(days);
 }
+
 
 function renderOverview(td,overall){
   const allDays=range(1,TOTAL);
-  document.getElementById("ov-rows").innerHTML=CATS.map(cat=>{
+  const ovRows=document.getElementById('ov-rows');
+  if(ovRows) ovRows.innerHTML=CATS.map(cat=>{
     const doneDays=allDays.filter(d=>(data[k(cat.id,d)]||0)===1).length;
     const ms=bestStreak(cat.id);
     const dots=allDays.map(d=>{
       const v=data[k(cat.id,d)]||0;
       const cls=v===1?"dot done":v===2?"dot skip":v===3?"dot off":"dot";
-      const bg="";
-      return `<button class="${cls}" style="${bg}" onclick="toggle(${cat.id},${d},this)" title="Day ${d}"></button>`;
+      return `<button class="${cls}" onclick="toggle(${cat.id},${d},this)" title="Day ${d}"></button>`;
     }).join("");
     return `<div class="ov-row">
       <div class="ov-label" style="border-left-color:${TC[cat.tag]}">
@@ -2944,41 +2897,30 @@ function renderOverview(td,overall){
     </div>`;
   }).join("");
 
-  document.getElementById("monthly-grid").innerHTML=Array.from({length:6},(_,m)=>{
-    const s=m*30+1,e=Math.min((m+1)*30,TOTAL);
-    const days=range(s,e);
+  const mgEl=document.getElementById('monthly-grid');
+  if(mgEl) mgEl.innerHTML=Array.from({length:6},(_,m)=>{
+    const s=m*30+1,e2=Math.min((m+1)*30,TOTAL);
+    const days=range(s,e2);
     const pct=score(days,CATS);
-    const logged=days.some(d=>CATS.some(c=>(data[k(c.id,d)]||0)>0));
+    const logged=days.some(d=>CATS.some(cat=>(data[k(cat.id,d)]||0)>0));
     return `<div class="month-card">
       <div class="month-card-lbl">Month ${m+1}</div>
       <div class="month-card-pct" style="color:${logged?scoreColor(pct):"var(--dim)"}">${logged?pct+"%":"—"}</div>
       <div class="bar-track" style="margin-top:8px">${logged?`<div class="bar-fill" style="width:${pct}%;background:${scoreColor(pct)}"></div>`:""}</div>
-      <div class="month-card-days">D${s}–D${e}</div>
+      <div class="month-card-days">D${s}–D${e2}</div>
     </div>`;
   }).join("");
 
-  document.getElementById("ov-overall-txt").textContent=td+" / "+(TOTAL*CATS.length)+" habits done";
+  const ovTxt=document.getElementById('ov-overall-txt');
+  if(ovTxt) ovTxt.textContent=td+" / "+(TOTAL*CATS.length)+" habits done";
   const ob=document.getElementById("ov-bar");
-  ob.style.width=overall+"%"; ob.style.background=scoreColor(overall);
+  if(ob){ob.style.width=overall+"%";ob.style.background=scoreColor(overall);}
 }
 
-function renderRewards(){
-  document.getElementById("rewards-grid").innerHTML=REWARDS.map(r=>{
-    const unlocked=r.check();
-    return `<div class="reward-card${unlocked?" unlocked":""}">
-      <span class="reward-icon">${r.icon}</span>
-      <div class="reward-name">${r.name}</div>
-      <div class="reward-cond">${r.cond}</div>
-      <span class="reward-badge">${unlocked?"✓ Unlocked":"Locked"}</span>
-    </div>`;
-  }).join("");
-}
 
-/* Init */
 /* ═══════════════════════════════════════════════
-   INLINE EXPENSES (weekly grid row)
+   INLINE EXPENSES (weekly grid)
 ═══════════════════════════════════════════════ */
-/* Per-day expense helpers (keyed by challenge day number) */
 function getDayExp(day){
   try{ return parseFloat(localStorage.getItem('savy_dexp_'+day)||'0')||0; }
   catch(e){ return 0; }
@@ -2994,7 +2936,7 @@ function getAllDaysTotal(){
   for(let d=1;d<=TOTAL;d++) t+=getDayExp(d);
   return t;
 }
-function fmtExp(n){ return n>0?(n%1===0?n:n.toFixed(2)):''; }
+function fmtExp(n){ return n>0?(n%1===0?String(n):n.toFixed(2)):''; }
 
 function renderInlineExpenses(days){
   const row=document.getElementById('inline-exp-row');
@@ -3025,32 +2967,21 @@ function renderInlineExpenses(days){
     </div>`;
 }
 
-function challengeDayToDateKey(challengeDay){
-  // Day 1 of challenge = today - (currentDay()-1) days ago
-  // We store per calendar date
-  const startOffset = (currentDay()||1) - challengeDay;
-  const d = new Date();
-  d.setDate(d.getDate() - startOffset);
-  return d.toISOString().slice(0,10);
-}
-
-function saveInlineExpense(challengeDay, val, inputEl){
-  const amt = parseFloat(val)||0;
-  setDayExp(challengeDay, amt);
-  // Flash green on success
+function saveInlineExpense(day,val,inputEl){
+  const amt=parseFloat(val)||0;
+  setDayExp(day,amt);
   inputEl.style.borderColor='rgba(34,197,94,.8)';
   inputEl.style.boxShadow='0 0 0 3px rgba(34,197,94,.15)';
-  setTimeout(()=>{ inputEl.style.borderColor=''; inputEl.style.boxShadow=''; }, 700);
-  // Re-render to update cumulative row instantly
+  setTimeout(()=>{inputEl.style.borderColor='';inputEl.style.boxShadow='';},700);
   renderInlineExpenses(weekDays(currentWeek));
 }
 
 /* ═══════════════════════════════════════════════
-   EXPENSES
+   FULL EXPENSES TAB
 ═══════════════════════════════════════════════ */
-let expDay = 0;
-let selectedCat = '🍔 Food';
-const CAT_COLORS = {
+let expDay=0;
+let selectedCat='🍔 Food';
+const CAT_COLORS={
   '🍔 Food':'#22c55e','🚗 Transport':'#60a5fa','🛒 Shopping':'#f59e0b',
   '💊 Health':'#34d399','📱 Bills':'#a78bfa','☕ Café':'#fb923c',
   '🏋️ Sport':'#f43f5e','📦 Other':'#8b95ae'
@@ -3085,7 +3016,7 @@ function addExpense(){
   const amtEl=document.getElementById('exp-amount');
   const noteEl=document.getElementById('exp-note');
   const amt=parseFloat(amtEl.value);
-  if(!amt||amt<=0){ amtEl.focus(); showToast('⚠️ Enter an amount'); return; }
+  if(!amt||amt<=0){amtEl.focus();showToast('⚠️ Enter an amount');return;}
   const key=expDateKey(expDay);
   const items=loadExp(key);
   items.push({id:Date.now(),cat:selectedCat,amount:amt,note:noteEl.value.trim()});
@@ -3095,8 +3026,7 @@ function addExpense(){
   renderExpenses();
 }
 function deleteExpense(dateKey,id){
-  const items=loadExp(dateKey).filter(i=>i.id!==id);
-  saveExp(dateKey,items);
+  saveExp(dateKey,loadExp(dateKey).filter(i=>i.id!==id));
   renderExpenses();
 }
 function fmtDH(n){ return n.toFixed(2).replace(/\.00$/,'')+' DH'; }
@@ -3116,28 +3046,32 @@ function renderExpenses(){
   let allTotal=0;
   for(let d=0;d>=-179;d--) loadExp(expDateKey(d)).forEach(i=>allTotal+=i.amount);
 
-  document.getElementById('exp-today-val').textContent=fmtDH(todayTotal);
-  document.getElementById('exp-week-val').textContent=fmtDH(weekTotal);
-  document.getElementById('exp-month-val').textContent=fmtDH(monthTotal);
-  document.getElementById('exp-total-val').textContent=fmtDH(allTotal);
-  document.getElementById('exp-date-lbl').textContent=expDateLabel(expDay);
+  const s=id=>{const e=document.getElementById(id);return e;};
+  if(s('exp-today-val')) s('exp-today-val').textContent=fmtDH(todayTotal);
+  if(s('exp-week-val'))  s('exp-week-val').textContent=fmtDH(weekTotal);
+  if(s('exp-month-val')) s('exp-month-val').textContent=fmtDH(monthTotal);
+  if(s('exp-total-val')) s('exp-total-val').textContent=fmtDH(allTotal);
+  if(s('exp-date-lbl'))  s('exp-date-lbl').textContent=expDateLabel(expDay);
 
   const curItems=loadExp(curKey);
-  const curTotal=curItems.reduce((s,i)=>s+i.amount,0);
-  document.getElementById('exp-log-total').textContent=fmtDH(curTotal);
-  const listEl=document.getElementById('exp-log-list');
-  if(curItems.length===0){
-    listEl.innerHTML='<div class="exp-empty">No expenses logged for this day.</div>';
-  } else {
-    listEl.innerHTML='<div class="exp-log-list-inner">'+
-      [...curItems].reverse().map(item=>`
-        <div class="exp-item">
-          <span class="exp-item-cat">${item.cat}</span>
-          <span class="exp-item-note">${item.note||'—'}</span>
-          <span class="exp-item-amount">${item.amount.toFixed(2)}<span class="exp-item-dh">DH</span></span>
-          <button class="exp-item-del" onclick="deleteExpense('${curKey}',${item.id})" title="Delete">✕</button>
-        </div>`).join('')+
-      '</div>';
+  const curTotal=curItems.reduce((a,i)=>a+i.amount,0);
+  if(s('exp-log-total')) s('exp-log-total').textContent=fmtDH(curTotal);
+
+  const listEl=s('exp-log-list');
+  if(listEl){
+    if(curItems.length===0){
+      listEl.innerHTML='<div class="exp-empty">No expenses logged for this day.</div>';
+    } else {
+      listEl.innerHTML='<div class="exp-log-list-inner">'+
+        [...curItems].reverse().map(item=>`
+          <div class="exp-item">
+            <span class="exp-item-cat">${item.cat}</span>
+            <span class="exp-item-note">${item.note||'—'}</span>
+            <span class="exp-item-amount">${item.amount.toFixed(2)}<span class="exp-item-dh">DH</span></span>
+            <button class="exp-item-del" onclick="deleteExpense('${curKey}',${item.id})" title="Delete">✕</button>
+          </div>`).join('')+
+        '</div>';
+    }
   }
 
   // 7-day chart
@@ -3145,9 +3079,9 @@ function renderExpenses(){
   const totals7=days7.map(d=>loadExp(expDateKey(d)).reduce((s,i)=>s+i.amount,0));
   const max7=Math.max(...totals7,1);
   const avg7=totals7.reduce((a,b)=>a+b,0)/7;
-  document.getElementById('exp-chart-avg').textContent='Avg: '+fmtDH(avg7);
+  if(s('exp-chart-avg')) s('exp-chart-avg').textContent='Avg: '+fmtDH(avg7);
   const dayNames=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-  document.getElementById('exp-bars').innerHTML=days7.map((d,i)=>{
+  if(s('exp-bars')) s('exp-bars').innerHTML=days7.map((d,i)=>{
     const pct=Math.round(totals7[i]/max7*100);
     const isToday=d===0;
     const dd=new Date(); dd.setDate(dd.getDate()+d);
@@ -3164,21 +3098,34 @@ function renderExpenses(){
   for(let d=0;d>=-29;d--){
     const dd2=new Date(); dd2.setDate(dd2.getDate()+d);
     if(dd2.getMonth()===now.getMonth())
-      loadExp(expDateKey(d)).forEach(i=>{ catMap[i.cat]=(catMap[i.cat]||0)+i.amount; });
+      loadExp(expDateKey(d)).forEach(i=>{catMap[i.cat]=(catMap[i.cat]||0)+i.amount;});
   }
   const catEntries=Object.entries(catMap).sort((a,b)=>b[1]-a[1]);
   const catMax=catEntries[0]?catEntries[0][1]:1;
-  const catEl=document.getElementById('exp-cat-breakdown');
-  catEl.innerHTML=catEntries.length===0?'<div class="exp-empty">No data yet.</div>':
+  const catEl=s('exp-cat-breakdown');
+  if(catEl) catEl.innerHTML=catEntries.length===0?
+    '<div class="exp-empty">No data yet.</div>':
     catEntries.map(([cat,amt])=>`
       <div class="exp-cat-row">
         <span class="exp-cat-name">${cat}</span>
-        <div class="exp-cat-bar-wrap">
-          <div class="exp-cat-bar-fill" style="width:${Math.round(amt/catMax*100)}%;background:${CAT_COLORS[cat]||'var(--green)'}"></div>
-        </div>
+        <div class="exp-cat-bar-wrap"><div class="exp-cat-bar-fill" style="width:${Math.round(amt/catMax*100)}%;background:${CAT_COLORS[cat]||'var(--green)'}"></div></div>
         <span class="exp-cat-amount">${fmtDH(amt)}</span>
       </div>`).join('');
 }
+
+function renderRewards(){
+  const rg=document.getElementById('rewards-grid');
+  if(rg) rg.innerHTML=REWARDS.map(r=>{
+    const unlocked=r.check();
+    return `<div class="reward-card${unlocked?" unlocked":""}">
+      <span class="reward-icon">${r.icon}</span>
+      <div class="reward-name">${r.name}</div>
+      <div class="reward-cond">${r.cond}</div>
+      <span class="reward-badge">${unlocked?"✓ Unlocked":"Locked"}</span>
+    </div>`;
+  }).join("");
+}
+
 
 renderQuote();
 render();
@@ -3298,13 +3245,70 @@ function spawnSparkles(el){
 })();
 
 /* ── PAGE FADE IN ─────────────────────────── */
-document.querySelector('.page').style.cssText += 'opacity:0;transform:translateY(12px);transition:opacity .5s ease,transform .5s ease;';
+{const _pg=document.querySelector('.page');if(_pg)_pg.style.cssText+='opacity:0;transform:translateY(12px);transition:opacity .5s ease,transform .5s ease;';}
 requestAnimationFrame(()=>{
   requestAnimationFrame(()=>{
-    document.querySelector('.page').style.opacity='1';
-    document.querySelector('.page').style.transform='translateY(0)';
+    {const _pg=document.querySelector('.page');if(_pg){_pg.style.opacity='1';_pg.style.transform='translateY(0)';}}
   });
 });
 </script>
 </body>
 </html>
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-card green">
+      <div class="stat-card-glow" style="background:#0dcc35"></div>
+      <div class="stat-accent" style="background:linear-gradient(90deg,#0dcc35,#34e85a)"></div>
+      <div class="stat-icon">🔥</div>
+      <div class="stat-val" id="stat-streak" style="color:var(--green)">0</div>
+      <div class="stat-lbl">Day Streak</div>
+      <div class="stat-sub" id="stat-streak-sub">Keep going!</div>
+    </div>
+    <div class="stat-card gold">
+      <div class="stat-card-glow" style="background:#f59e0b"></div>
+      <div class="stat-accent" style="background:linear-gradient(90deg,#f59e0b,#fbbf24)"></div>
+      <div class="stat-icon">✅</div>
+      <div class="stat-val" id="stat-done" style="color:var(--gold)">0</div>
+      <div class="stat-lbl">Habits Done</div>
+      <div class="stat-sub" id="stat-done-sub">Total logged</div>
+    </div>
+    <div class="stat-card blue">
+      <div class="stat-card-glow" style="background:#3b82f6"></div>
+      <div class="stat-accent" style="background:linear-gradient(90deg,#3b82f6,#60a5fa)"></div>
+      <div class="stat-icon">📅</div>
+      <div class="stat-val" id="stat-week" style="color:var(--mind)">0%</div>
+      <div class="stat-lbl">This Week</div>
+      <div class="stat-sub" id="stat-week-sub">Weekly score</div>
+    </div>
+    <div class="stat-card purple">
+      <div class="stat-card-glow" style="background:#8b5cf6"></div>
+      <div class="stat-accent" style="background:linear-gradient(90deg,#8b5cf6,#a78bfa)"></div>
+      <div class="stat-icon">🏆</div>
+      <div class="stat-val" id="stat-overall" style="color:var(--spiritual)">0%</div>
+      <div class="stat-lbl">Overall</div>
+      <div class="stat-sub" id="stat-overall-sub">All 180 days</div>
+    </div>
+  </div>
+
+  <!-- QUOTE -->
+  <div class="quote-card">
+    <div class="quote-tag"><span class="quote-tag-line"></span>Quote of the Day</div>
+    <div class="quote-text" id="quote-text"></div>
+    <div class="quote-author" id="quote-author"></div>
+    <div class="quote-footer">
+      <button class="quote-btn" onclick="prevQuote()">‹ Prev</button>
+      <button class="quote-btn" onclick="nextQuote()">Next ›</button>
+      <div class="quote-dots" id="quote-dots"></div>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs-bar">
+<button class="tab" onclick="setView('overview')">🗓 All 180 Days</button>
+    <div class="tab-sep"></div>
+    <button class="tab" onclick="setView('daily')">📖 Daily Content</button>
+    <div class="tab-sep"></div>
+    <button class="tab" onclick="setView('expenses')">💰 Expenses</button>
+    <div class="tab-sep"></div>
+    <button class="tab" onclick="setView('rewards')">🏆 Rewards</button>
+  </div>
